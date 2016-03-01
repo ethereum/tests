@@ -1,0 +1,8 @@
+language: python
+python: 2.7
+sudo: false
+script:
+# won't fail, but print problems
+- find . -name "*.json" -exec echo {} \; -exec python -mjson.tool {} /dev/null \; 2>&1 |grep --before 1 "Expecting" | cat
+# will fail, if linting fails
+- find . -name "*.json" -print0 | xargs -I file -n1 -0 python -mjson.tool file /dev/null 
