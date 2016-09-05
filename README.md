@@ -1,7 +1,7 @@
 tests   [![Build Status](https://travis-ci.org/ethereum/tests.svg?branch=develop)](https://travis-ci.org/ethereum/tests)
 =====
 
-Common tests for all clients to test against.
+Common tests for all clients to test against. See the documentation http://www.ethdocs.org/en/latest/contracts-and-transactions/ethereum-tests/index.html
 
 All files should be of the form:
 
