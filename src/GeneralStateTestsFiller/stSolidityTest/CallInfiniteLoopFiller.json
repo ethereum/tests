@@ -15,7 +15,7 @@
                     "gas" : -1,
                     "value" : -1
                 },
-                "network" : "Frontier",
+                "network" : ["ALL"],
                 "result" : {
                     "2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
                         "balance" : "300000"
@@ -25,8 +25,24 @@
         ],
         "pre" : {
             "095e7baea6a6c7c4c2dfeb977efac326af552d87" : {
-                "//" : "}",
                 "balance" : "100000",
+		"//" : "contract recursiveMethods		",
+		"//" : "{					",
+		"//" : "    function testInfiniteLoop()		",
+		"//" : "    {					",
+		"//" : "        while(true){}			",
+		"//" : "    }					",
+		"//" : "    					",
+		"//" : "    function testRecursiveMethods()	",
+		"//" : "    {					",
+		"//" : "        testRecursiveMethods2();	",
+		"//" : "    }					",
+		"//" : "    					",
+		"//" : "    function testRecursiveMethods2()	",
+		"//" : "    {					",
+		"//" : "        testRecursiveMethods();		",
+		"//" : "    }					",
+		"//" : "}",
                 "code" : "0x60003560e060020a90048063296df0df1460295780634893d88a146035578063981a316514604157005b602f604d565b60006000f35b603b6062565b60006000f35b6047605a565b60006000f35b5b600115605857604e565b565b60606062565b565b6068605a565b56",
                 "nonce" : "0",
                 "storage" : {
