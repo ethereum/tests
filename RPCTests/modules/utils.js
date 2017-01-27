@@ -1,7 +1,5 @@
 const fs = require('fs');
-function sleep(ms) {
-   return new Promise(resolve => setTimeout(resolve, ms));
- }
+var debug = true;
 
 module.exports = {
 
@@ -9,14 +7,20 @@ module.exports = {
    return new Promise(resolve => setTimeout(resolve, ms));
  },
 
+ setDebug: function setDebug(value) { debug = value; },
 
- mkdir: function mkdir(path, callback, arg) {
+ getDebug: function getDebug() { return debug; },
+
+ cLog: function cLog(value) { if (debug) console.log(value); },
+
+ testLog: function testLog(value) { console.log(value); },
+
+ mkdir: function mkdir(path) {
   try {
     fs.mkdirSync(path);
   } catch(e) {
     if ( e.code != 'EEXIST' ) throw e;
   }
-  callback(arg);
  },
 
  rmdir: function rmdir(path) {
@@ -33,12 +37,27 @@ module.exports = {
   }
  },
 
- readFile: function readFile(path, callback) {
-    fs.readFile(path, 'utf8',  (err, data) => { callback (err, data) });
+ readFile: function readFile(path, callback, cb) {
+    fs.readFile(path, 'utf8',  (err, data) => { callback (err, data, cb) });
  },
 
  writeFile: function writeFile(path, data) {
    fs.writeFile(path, data, (err) => { if (err) throw err;});
- }
-}
+ },
 
+ listFiles: function listFiles(dir) {
+
+    var results = [];
+    fs.readdirSync(dir).forEach(function(file) {
+        file = dir+'/'+file;
+        var stat = fs.statSync(file);
+
+        if (stat && stat.isDirectory()) {
+            results = results.concat(listFiles(file))
+        } else results.push(file);
+    });
+
+    return results;
+ }
+
+} //exports

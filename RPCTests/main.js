@@ -1,66 +1,119 @@
-var exec = require('child_process').exec;
+//requires installed node v6
+//requires ETHEREUM_TEST_PATH env variable set  (for full path to the ipc sockets)
+//requires ethereum eth path
 
+var async = require("./modules/async");
 var utils = require('./modules/utils.js');
-var startNode = require('./modules/startnode.js');
+var testutils = require('./modules/testutils.js');
+var ethconsole = require('./modules/ethconsole.js');
 
 var ethpath = '/home/wins/Ethereum/cpp-ethereum/build/eth/eth';
 var testdir = process.env.ETHEREUM_TEST_PATH + "/RPCTests/dynamic";
 
-var async = require("./modules/async");
+var dynamic = {};
 
-function cb(err, data)
-{
-console.log(data);
-}
-
-function main(goto, args)
+function cb(){}
+function main()
 {
 
+testutils.readTestsInFolder("./scripts");
 async.series([
-function(cb) { utils.readFile('./scripts/genesis.json', cb); },
-function(cb) { cb(); console.log("as2"); },
-function(cb) { cb(); console.log("as3"); }
-], function() { console.log("as4") })
+function(cb) {
+	utils.setDebug(false);
+	ethconsole.startNode(ethpath, testdir + "/ethnode1", testdir + "/genesis.json", 30305, cb);
+},
+function(cb) {
+	prepareDynamicVars(cb);
+},
+function(cb) {
+	ethconsole.stopNode(testdir + "/ethnode1", cb);
+},
+function(cb) {
+	ethconsole.startNode(ethpath, testdir + "/ethnode1", testdir + "/genesis.json", 30305, cb);
+	dynamic["node1_port"] = "30305";
+},
+function(cb) {
+	ethconsole.startNode(ethpath, testdir + "/ethnode2", testdir + "/genesis.json", 30306, cb);
+	dynamic["node2_port"] = "30306";
+},
+function(cb) {
+	runAllTests(cb);	
+},
+function(cb) {
+	ethconsole.stopNode(testdir + "/ethnode1", cb);
+	ethconsole.stopNode(testdir + "/ethnode2", cb);
+}
+], function() { 
+	utils.rmdir(testdir); }
+)
+}//main
 
-/*utils.sleep(2000).then(() => {
-     console.log('Result: ');
-});*/
 
-/*switch(goto)
+
+function prepareDynamicVars(finished)
 {
-case 1:	utils.mkdir('./dynamic', main, 2); break;
-case 2:	utils.readFile('./scripts/genesis.json', main, 3); break;
-case 3:	console.log(args); break;
-}*/
-
-
-//utils.writeFile('./dynamic/genesis.json', data, (err) => { if (err) throw err;});
-//startNode(ethpath, testdir + "/ethnode1", testdir + "/genesis.json", 30305);
+  async.series([
+	function(cb) {
+		ethconsole.runScriptOnNode(testdir + "/ethnode1", "./scripts/testNewAccount.js", {}, cb);
+	},
+	function(cb) {
+		dynamic["account"] = ethconsole.getLastResponse();
+		utils.mkdir(testdir);
+		testutils.generateCustomGenesis(testdir + '/genesis.json', "./scripts/genesis.json", dynamic["account"], cb);
+	},
+	function(cb) {
+		ethconsole.runScriptOnNode(testdir + "/ethnode1", "./scripts/getNodeInfo.js", {}, cb);
+	},
+	function(cb) {
+		dynamic["node1_ID"] = ethconsole.getLastResponse().id;
+		cb();
+	}
+  ], function() { finished(); })
 }
 
-/*var callback1 = function (err, data) {};
-fs.readFile('./scripts/genesis.json', 'utf8',  (err, data) => { callback1 (err,data) });
-startNode = require('./modules/startnode.js');
-
-
-
-callback1 = function (err, data)
+function runAllTests(finished)
 {
-  if (err) throw err;
-  data = data.replace("[ADDRESS]", "0x112233445566778899");
-  mkdir('./dynamic');
-  fs.writeFile('./dynamic/genesis.json', data, (err) => { if (err) throw err;});
+	var currentTest = -1;
+	var updateDynamic = function(){};
 
+	function nextTest()
+	{
+	   currentTest++;
+	   if (currentTest == testutils.getTestCount())
+		finished();
+	   else
+	   {
+		var testObject = testutils.getTestNumber(currentTest);
+		var nodepath;
+		if (testObject.node == '01')
+			nodepath = testdir + "/ethnode1";
+		if (testObject.node == '02')
+			nodepath = testdir + "/ethnode2";
 
-   exec('pwd', function callback(error, stdout, stderr){  
-	dir = stdout; 
-	startNode(ethpath, 'privatechain', testdir + "/ethnode1", 30305);
-   });
-  
-  //rmdir('./dynamic');
-}*/
+		ethconsole.runScriptOnNode(nodepath, testObject.file, dynamic, updateDynamic);
+	   }
+	}
 
+	updateDynamic = function updateDynamic()
+	{
+		async.series([
+			function(cb) {
+				ethconsole.runScriptOnNode(testdir + "/ethnode1", "./scripts/getLastBlock.js", {}, cb);
+			},
+			function(cb) {
+				dynamic["node1_lastblock"] = ethconsole.getLastResponse();
+				cb();
+			},
+			function(cb) {
+				ethconsole.runScriptOnNode(testdir + "/ethnode2", "./scripts/getLastBlock.js", {}, cb);
+			},
+			function(cb) {
+				dynamic["node2_lastblock"] = ethconsole.getLastResponse();
+				cb();
+			}
+	    	], function() { nextTest(); });
+	}
+	nextTest();
+}
 
-main(1);
-
-
+main();
