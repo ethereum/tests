@@ -16,10 +16,10 @@ function cb(){}
 function main()
 {
 
-testutils.readTestsInFolder("./scripts");
+testutils.readTestsInFolder("./scripts/tests");
 async.series([
 function(cb) {
-	utils.setDebug(false);
+	utils.setDebug(true);
 	ethconsole.startNode(ethpath, testdir + "/ethnode1", testdir + "/genesis.json", 30305, cb);
 },
 function(cb) {
@@ -53,7 +53,7 @@ function(cb) {
 function prepareDynamicVars(finished)
 {
   async.series([
-	function(cb) {
+	function(cb) {		
 		ethconsole.runScriptOnNode(testdir + "/ethnode1", "./scripts/testNewAccount.js", {}, cb);
 	},
 	function(cb) {
@@ -117,3 +117,4 @@ function runAllTests(finished)
 }
 
 main();
+//testutils.readTestsInFolder("./scripts/tests");

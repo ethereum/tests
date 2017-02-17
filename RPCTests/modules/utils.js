@@ -45,7 +45,22 @@ module.exports = {
    fs.writeFile(path, data, (err) => { if (err) throw err;});
  },
 
- listFiles: function listFiles(dir) {
+ listFiles: function listFiles(dir, recursive = false) {
+
+    var results = [];
+    fs.readdirSync(dir).forEach(function(file) {
+        file = dir+'/'+file;
+        var stat = fs.statSync(file);
+
+        if (stat && stat.isDirectory() && recursive) {
+            results = results.concat(listFiles(file, recursive))
+        } else results.push(file);
+    });
+
+    return results;
+ },
+
+ listFolders: function listFolders(dir) {
 
     var results = [];
     fs.readdirSync(dir).forEach(function(file) {
@@ -53,8 +68,8 @@ module.exports = {
         var stat = fs.statSync(file);
 
         if (stat && stat.isDirectory()) {
-            results = results.concat(listFiles(file))
-        } else results.push(file);
+            results.push(file);
+        }
     });
 
     return results;
