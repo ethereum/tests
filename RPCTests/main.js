@@ -1,14 +1,15 @@
+//requires npm
 //requires installed node v6
-//requires ETHEREUM_TEST_PATH env variable set  (for full path to the ipc sockets)
-//requires ethereum eth path
+//requires ethereum eth path on input
 
 var async = require("./modules/async");
 var utils = require('./modules/utils.js');
 var testutils = require('./modules/testutils.js');
 var ethconsole = require('./modules/ethconsole.js');
 
-var ethpath = '/home/wins/Ethereum/cpp-ethereum/build/eth/eth';
-var testdir = process.env.ETHEREUM_TEST_PATH + "/RPCTests/dynamic";
+var ethpath = process.argv[2];
+var testdir = __dirname + "/dynamic";
+var workdir = __dirname;
 
 var dynamic = {};
 
@@ -16,7 +17,7 @@ function cb(){}
 function main()
 {
 
-testutils.readTestsInFolder("./scripts/tests");
+testutils.readTestsInFolder(workdir + "/scripts/tests");
 async.series([
 function(cb) {
 	utils.setDebug(false);
@@ -54,15 +55,15 @@ function prepareDynamicVars(finished)
 {
   async.series([
 	function(cb) {		
-		ethconsole.runScriptOnNode(testdir + "/ethnode1", "./scripts/testNewAccount.js", {}, cb);
+		ethconsole.runScriptOnNode(testdir + "/ethnode1", workdir + "/scripts/testNewAccount.js", {}, cb);
 	},
 	function(cb) {
 		dynamic["account"] = ethconsole.getLastResponse();
 		utils.mkdir(testdir);
-		testutils.generateCustomGenesis(testdir + '/genesis.json', "./scripts/genesis.json", dynamic["account"], cb);
+		testutils.generateCustomGenesis(testdir + '/genesis.json', workdir + "/scripts/genesis.json", dynamic["account"], cb);
 	},
 	function(cb) {
-		ethconsole.runScriptOnNode(testdir + "/ethnode1", "./scripts/getNodeInfo.js", {}, cb);
+		ethconsole.runScriptOnNode(testdir + "/ethnode1", workdir + "/scripts/getNodeInfo.js", {}, cb);
 	},
 	function(cb) {
 		dynamic["node1_ID"] = ethconsole.getLastResponse().id;
@@ -98,14 +99,14 @@ function runAllTests(finished)
 	{
 		async.series([
 			function(cb) {
-				ethconsole.runScriptOnNode(testdir + "/ethnode1", "./scripts/getLastBlock.js", {}, cb);
+				ethconsole.runScriptOnNode(testdir + "/ethnode1", workdir + "/scripts/getLastBlock.js", {}, cb);
 			},
 			function(cb) {
 				dynamic["node1_lastblock"] = ethconsole.getLastResponse();
 				cb();
 			},
 			function(cb) {
-				ethconsole.runScriptOnNode(testdir + "/ethnode2", "./scripts/getLastBlock.js", {}, cb);
+				ethconsole.runScriptOnNode(testdir + "/ethnode2", workdir +  "/scripts/getLastBlock.js", {}, cb);
 			},
 			function(cb) {
 				dynamic["node2_lastblock"] = ethconsole.getLastResponse();
