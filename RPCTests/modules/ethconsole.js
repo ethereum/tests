@@ -52,8 +52,8 @@ runScriptOnNode: function runScriptOnNode(dataDir, jsScript, args, finished)
 	var utils = require('./utils.js');
 	var ipcPath = dataDir + '/geth.ipc';
 
-	var Web3 = require('./ethereum-console/node_modules/web3');
-	var web3admin = require('./ethereum-console/web3Admin.js');
+	var Web3 = require('web3');
+	var web3admin = require('./web3Admin.js');
 	var net = require('net');
 
 	utils.cLog("Connecting to node at " + ipcPath);

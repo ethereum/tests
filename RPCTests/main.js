@@ -19,7 +19,7 @@ function main()
 testutils.readTestsInFolder("./scripts/tests");
 async.series([
 function(cb) {
-	utils.setDebug(true);
+	utils.setDebug(false);
 	ethconsole.startNode(ethpath, testdir + "/ethnode1", testdir + "/genesis.json", 30305, cb);
 },
 function(cb) {
@@ -117,4 +117,4 @@ function runAllTests(finished)
 }
 
 main();
-//testutils.readTestsInFolder("./scripts/tests");
+
