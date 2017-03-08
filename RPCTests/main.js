@@ -2,7 +2,7 @@
 //requires installed node v6
 //requires ethereum eth path on input
 
-var async = require("./modules/async");
+var async = require("async");
 var utils = require('./modules/utils.js');
 var testutils = require('./modules/testutils.js');
 var ethconsole = require('./modules/ethconsole.js');
