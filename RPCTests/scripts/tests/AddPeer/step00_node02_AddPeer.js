@@ -1,4 +1,6 @@
-process.stdout.write("TEST_addPeerOnNode2 ");
+var testname = "TEST_addPeerOnNode2 ";
+process.stdout.write(testname);
+
 var onResult = {};
 web3.admin.addPeer("enode://" + args["node1_ID"] + "@127.0.0.1:" + args["node1_port"], function(err, res){ onResult(err, res); })
 
@@ -20,7 +22,10 @@ onGetPeerCount = function (err, res)
    if (res == 1)
 	console.log("OK");
    else
+   {
 	console.log("FAILED");
+	console.error(testname + "FAILED");
+   }
    callback(err, res);
 }
 

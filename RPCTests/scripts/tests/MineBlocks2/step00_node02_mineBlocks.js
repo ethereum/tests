@@ -1,4 +1,5 @@
-process.stdout.write("TEST_mineBlockOnNode2 ");
+var testname = "TEST_mineBlockOnNode2 ";
+process.stdout.write(testname);
 
 var latestBlock;
 web3.eth.getBlockNumber(function(err, res){ onGetBlockNumber1(err, res); })
@@ -26,6 +27,9 @@ onGetBlockNumber = function (err, res)
    if (res == latestBlock + 1)
 	console.log("OK");
    else
+   {
 	console.log("FAILED");
+	console.error(testname + "FAILED");
+   }
    callback(err, res);
 }
