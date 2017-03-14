@@ -37,6 +37,13 @@ module.exports = {
   }
  },
 
+ fileExists: function fileExists(path)
+ {
+    if(fs.existsSync(path))
+	return true;
+    return false;
+ },
+
  readFile: function readFile(path, callback, cb) {
     fs.readFile(path, 'utf8',  (err, data) => { callback (err, data, cb) });
  },

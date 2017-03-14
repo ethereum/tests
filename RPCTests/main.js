@@ -16,6 +16,12 @@ var dynamic = {};
 function cb(){}
 function main()
 {
+if (!ethpath || !utils.fileExists(ethpath))
+{
+	utils.cLog("Executable '" + ethpath + "' not found!");
+	utils.cLog("Please, set eth path. Usage: node main.js <ethpath>");
+	return;
+}
 
 testutils.readTestsInFolder(workdir + "/scripts/tests");
 async.series([
