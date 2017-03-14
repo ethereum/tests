@@ -31,7 +31,7 @@ startNode: function startNode (nodeExec, dataDir, genesisPath, listeningPort, fi
   })
 
   nodes[dataDir] = node;
-  utils.sleep(10000).then(() => {
+  utils.sleep(14000).then(() => {
 	utils.cLog("Node Started");
 	finished();
   });
