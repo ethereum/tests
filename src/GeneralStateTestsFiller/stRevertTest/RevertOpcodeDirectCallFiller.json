@@ -1,5 +1,5 @@
 {
-    "RevertOpcodeCreate" : {
+    "RevertOpcodeDirectCall" : {
         "env" : {
             "currentCoinbase" : "2adc25665018aa1fe0e6bc666dac8fc2697ff9ba",
             "currentDifficulty" : "0x020000",
@@ -33,15 +33,16 @@
                 },
                 "network" : ["Metropolis"],
                 "result" : {
-		    "f1ecf98489fa9ed60a664fc4998db699cfa39d40" : {
-		        "shouldnotexist" : "1"
+		    "c94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+		        "storage" : {
+                        }
 		    },
 		    "b94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-			"nonce" : "1",
+			"nonce" : "0",
 			"storage" : {
-			    "0x00" : "0x0c",
-			    "0x01" : "0x00"
-                	}
+                            "0x00" : "0x01",
+                            "0x02" : "0x0e"
+                        }
 		     }
                 }
             },
@@ -53,11 +54,13 @@
                 },
                 "network" : ["Metropolis"],
                 "result" : {
-		    "f1ecf98489fa9ed60a664fc4998db699cfa39d40" : {
-		        "shouldnotexist" : "1"
+		    "c94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+		        "storage" : {
+                        }
 		    },
 		    "b94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-			"nonce" : "0"
+			"storage" : {
+                        }
 		     }
                 }
             }
@@ -71,10 +74,24 @@
                 "storage" : {
                 }
             },
+	     "094f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                "balance" : "1",
+                "code" : "{  [[10]] (CALL 60000 (CALLDATALOAD 0) 0 0 0 0 0)}",
+                "nonce" : "0",
+                "storage" : {
+                }
+            },
 	    "b94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
                 "balance" : "1",
-		"code" : "{ [[0]] 1 (REVERT 0 1) [[1]] 12 }",
-                "code" : "{ (MSTORE 0 0x600160005560016000fd6011600155 ) [[1]](CREATE 1 17 15) [[0]] 12 }",
+		"code" : "!!! STRANGE:   CALL works, but if called from 094...  it wont work. even if gas is enough. seems to be OOG.",
+                "code" : "{ [[0]] (CALL 50000 0xc94f5374fce5edbc8e2a8697c15331677e6ebf0b 0 0 0 0 0) [[2]] 14 }",
+                "nonce" : "0",
+                "storage" : {
+                }
+            },
+	    "c94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                "balance" : "1",
+                "code" : "{ [[1]] 12 (REVERT 0 1) [[3]] 13 }",
                 "nonce" : "0",
                 "storage" : {
                 }
@@ -82,7 +99,7 @@
         },
         "transaction" : {
             "data" : [
-		"0x600160005560016000fe6011600155"
+		"0x000000000000000000000000b94f5374fce5edbc8e2a8697c15331677e6ebf0b"
             ],
             "gasLimit" : [
                 "460000", "70000"

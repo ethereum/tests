@@ -1,5 +1,5 @@
 {
-    "RevertOpcodeCreate" : {
+    "RevertOpcodeInInit" : {
         "env" : {
             "currentCoinbase" : "2adc25665018aa1fe0e6bc666dac8fc2697ff9ba",
             "currentDifficulty" : "0x020000",
@@ -12,15 +12,47 @@
 	    {
                 "indexes" : {
                     "data" : -1,
-                    "gas" : -1,
+                    "gas" : 0,
                     "value" : -1
                 },
-                "network" : ["Frontier", "Homestead", "EIP150", "EIP158"],
+                "network" : ["Frontier", "Homestead", "EIP158", "EIP150"],
                 "result" : {
-		    "f1ecf98489fa9ed60a664fc4998db699cfa39d40" : {
+		    "6295ee1b4f6dd65047762f924ecd367c17eabf8f" : {
 		        "shouldnotexist" : "1"
 		    },
-		    "b94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+		    "a94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+			"nonce" : "1"
+		     }
+                }
+            },
+	    {
+                "indexes" : {
+                    "data" : -1,
+                    "gas" : 1,
+                    "value" : -1
+                },
+                "network" : ["Frontier"],
+                "result" : {
+		    "6295ee1b4f6dd65047762f924ecd367c17eabf8f" : {
+		        "shouldnotexist" : "1"
+		    },
+		    "a94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+			"nonce" : "1"
+		     }
+                }
+            },
+	    {
+                "indexes" : {
+                    "data" : -1,
+                    "gas" : 1,
+                    "value" : -1
+                },
+                "network" : ["Homestead", "EIP158", "EIP150"],
+                "result" : {
+		    "6295ee1b4f6dd65047762f924ecd367c17eabf8f" : {
+		        "shouldnotexist" : "1"
+		    },
+		    "a94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
 			"nonce" : "0"
 		     }
                 }
@@ -33,15 +65,11 @@
                 },
                 "network" : ["Metropolis"],
                 "result" : {
-		    "f1ecf98489fa9ed60a664fc4998db699cfa39d40" : {
+		    "6295ee1b4f6dd65047762f924ecd367c17eabf8f" : {
 		        "shouldnotexist" : "1"
 		    },
-		    "b94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-			"nonce" : "1",
-			"storage" : {
-			    "0x00" : "0x0c",
-			    "0x01" : "0x00"
-                	}
+		    "a94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+			"nonce" : "1"
 		     }
                 }
             },
@@ -53,10 +81,10 @@
                 },
                 "network" : ["Metropolis"],
                 "result" : {
-		    "f1ecf98489fa9ed60a664fc4998db699cfa39d40" : {
+		    "6295ee1b4f6dd65047762f924ecd367c17eabf8f" : {
 		        "shouldnotexist" : "1"
 		    },
-		    "b94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+		    "a94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
 			"nonce" : "0"
 		     }
                 }
@@ -70,29 +98,22 @@
                 "nonce" : "0",
                 "storage" : {
                 }
-            },
-	    "b94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-                "balance" : "1",
-		"code" : "{ [[0]] 1 (REVERT 0 1) [[1]] 12 }",
-                "code" : "{ (MSTORE 0 0x600160005560016000fd6011600155 ) [[1]](CREATE 1 17 15) [[0]] 12 }",
-                "nonce" : "0",
-                "storage" : {
-                }
             }
         },
         "transaction" : {
+	    "data" : "{ [[0]] 1 (REVERT 0 1) [[1]] 12 }",
             "data" : [
-		"0x600160005560016000fe6011600155"
+                "0x600160005560016000fd6011600155"
             ],
             "gasLimit" : [
-                "460000", "70000"
+                "160000", "40000"
             ],
             "gasPrice" : "1",
             "nonce" : "0",
             "secretKey" : "45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8",
-            "to" : "b94f5374fce5edbc8e2a8697c15331677e6ebf0b",
+            "to" : "",
             "value" : [
-                "0"
+                "0", "10"
             ]
         }
     }
