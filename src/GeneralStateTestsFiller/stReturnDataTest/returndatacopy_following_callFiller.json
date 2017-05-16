@@ -1,5 +1,5 @@
 {
-    "returndatacopy_initial" : {
+    "returndatacopy_following_call" : {
         "env" : {
             "currentCoinbase" : "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba",
             "currentDifficulty" : "0x20000",
@@ -32,7 +32,7 @@
                 "result" : {
                     "0x0f572e5295c57f15886f9b263e2f6d2d6c7b5ec6" : {
                         "storage" : {
-                            "0x00" : "0x00"
+                            "0x00" : "0x0000111122223333444455556666777788889999aaaabbbbccccddddeeeeffff"
                         }
                     }
                 }
@@ -40,13 +40,17 @@
         ],
         "pre" : {
             "0x0aabbccdd5c57f15886f9b263e2f6d2d6c7b5ec6" : {
-                "code" : "{ (MSTORE 0 0x0000111122223333444455556666777788889999aaaabbbbccccddddeeeeffff) (RETURN 0 32) }",
+				"balance" : "0x00",
+                "code" : "{ (seq (MSTORE 0 0x0000111122223333444455556666777788889999aaaabbbbccccddddeeeeffff) (RETURN 0 32)) }",
+                "code" : "0x7d111122223333444455556666777788889999aaaabbbbccccddddeeeeffff60005260206000f3",
                 "nonce" : "0x00",
                 "storage" : {
                 }
             },
             "0x0f572e5295c57f15886f9b263e2f6d2d6c7b5ec6" : {
-                "code" : "{ (CALL 0x0900000000 0x0aabbccdd5c57f15886f9b263e2f6d2d6c7b5ec6 0 0 0 0 32) (RETURNDATACOPY 0 0 32) (SSTORE 0 (MLOAD 0)) }",
+				"balance" : "0x00",
+                "code" : "{ (seq (CALL 0x0900000000 0x0aabbccdd5c57f15886f9b263e2f6d2d6c7b5ec6 0 0 0 0 0) (RETURNDATACOPY 0 0 32) (SSTORE 0 (MLOAD 0)) )}",
+                "code" : "0x60206000600060006000730aabbccdd5c57f15886f9b263e2f6d2d6c7b5ec6640900000000f1506020600060000e600051600055",
                 "nonce" : "0x00",
                 "storage" : {
                     "0x00" : "0x01"
