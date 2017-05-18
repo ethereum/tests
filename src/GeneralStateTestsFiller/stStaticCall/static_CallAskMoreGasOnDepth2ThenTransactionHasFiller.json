@@ -11,7 +11,7 @@
         "expect" : [
             {
                 "indexes" : {
-                    "data" : -1,
+                    "data" : 0,
                     "gas" : -1,
                     "value" : -1
                 },
@@ -19,8 +19,8 @@
                 "result" : {
 		    "b94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
 		        "storage" : {
-		            "0x08" : "0x08d5b6",
-		            "0x09" : "0x00"
+		            "0x08" : "0x08aa2f",
+		            "0x09" : "0x01"
 		        }
 		    },
 		    "1000000000000000000000000000000000000107" : {
@@ -33,6 +33,45 @@
 		        "storage" : {
 		            "0x08" : "0x00"
 		        }
+		    },
+		    "1000000000000000000000000000000000000000" : {
+		        "storage" : {
+			    "0x00" : "0x01",
+			    "0x01" : "0x04df0e"
+		        }
+		    }
+                }
+            },
+	    {
+                "indexes" : {
+                    "data" : 1,
+                    "gas" : -1,
+                    "value" : -1
+                },
+                "network" : ["Metropolis"],
+                "result" : {
+		    "c94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+		        "storage" : {
+		            "0x08" : "0x08aa2f",
+		            "0x09" : "0x01"
+		        }
+		    },
+		    "2000000000000000000000000000000000000107" : {
+		        "storage" : {
+		            "0x08" : "0x00",
+		            "0x09" : "0x00"
+		        }
+		    },
+		    "2000000000000000000000000000000000000108" : {
+		        "storage" : {
+		            "0x08" : "0x00"
+		        }
+		    },
+		    "1000000000000000000000000000000000000000" : {
+		        "storage" : {
+			    "0x00" : "0x01",
+			    "0x01" : "0x07dd3b"
+		        }
 		    }
                 }
             }
@@ -42,6 +81,13 @@
             "a94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
                 "balance" : "1000000000000",
                 "code" : "",
+                "nonce" : "0",
+                "storage" : {
+                }
+            },
+	    "1000000000000000000000000000000000000000" : {
+                "balance" : "0",
+                "code" : "{  [[ 0 ]] (CALL (GAS) (CALLDATALOAD 0) (CALLVALUE) 0 0 0 0) [[ 1 ]] (GAS) }",
                 "nonce" : "0",
                 "storage" : {
                 }
@@ -57,7 +103,7 @@
 	    "1000000000000000000000000000000000000107" : {
                 "balance" : "0",
 		"nonce" : "0",
-		"code" : "{ (SSTORE 8 (GAS)) (SSTORE 9 (STATICCALL 600000 0x1000000000000000000000000000000000000108 0 0 0 0)) } ",
+		"code" : "{ (MSTORE 8 (GAS)) (MSTORE 9 (STATICCALL 600000 0x1000000000000000000000000000000000000108 0 0 0 0)) } ",
 		"storage": {
 		}
             },
@@ -68,11 +114,35 @@
 		"code" : "{ (SSTORE 8 (GAS))} ",
 		"storage": {
 		}
+            },
+	    "c94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                "balance" : "0",
+		"nonce" : "0",
+		"code" : "ordinal call should work but on second depth it has call that asks more gas than left",
+		"code" : "{ (SSTORE 8 (GAS)) (SSTORE 9 (STATICCALL 200000 0x2000000000000000000000000000000000000107 0 0 0 0)) } ",
+		"storage": {
+		}
+            },
+	    "2000000000000000000000000000000000000107" : {
+                "balance" : "0",
+		"nonce" : "0",
+		"code" : "{ (MSTORE 8 (GAS)) (MSTORE 9 (STATICCALL 600000 0x2000000000000000000000000000000000000108 0 0 0 0)) } ",
+		"storage": {
+		}
+            },
+	    "2000000000000000000000000000000000000108" : {
+                "balance" : "0",
+		"nonce" : "0",
+		"code" : "should be set in the post state",
+		"code" : "{ (MSTORE 8 (GAS))} ",
+		"storage": {
+		}
             }
         },
         "transaction" : {
             "data" : [
-                ""
+                "0x000000000000000000000000b94f5374fce5edbc8e2a8697c15331677e6ebf0b",
+		"0x000000000000000000000000c94f5374fce5edbc8e2a8697c15331677e6ebf0b"
             ],
             "gasLimit" : [
                 "600000"
@@ -80,7 +150,7 @@
             "gasPrice" : "1",
             "nonce" : "0",
             "secretKey" : "45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8",
-            "to" : "b94f5374fce5edbc8e2a8697c15331677e6ebf0b",
+            "to" : "1000000000000000000000000000000000000000",
             "value" : [
                 "0"
             ]
