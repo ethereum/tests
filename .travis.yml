@@ -3,6 +3,6 @@ python: 2.7
 sudo: false
 script:
 # won't fail, but print problems
-- find . -name "*.json" -exec echo {} \; -exec python -mjson.tool {} /dev/null \; 2>&1 |grep --before 1 "Expecting" | cat
+- find . -name "*.json" -not -name "*Filler.json" -exec echo {} \; -exec python -mjson.tool {} /dev/null \; 2>&1 |grep -v -B 1 "^\./"
 # will fail, if linting fails
-- find . -name "*.json" -print0 | xargs -I file -n1 -0 python -mjson.tool file /dev/null 
+- find . -name "*.json" -not -name "*Filler.json" -print0 | xargs -I file -n1 -0 python -mjson.tool file /dev/null 
