@@ -3,7 +3,7 @@ tests   [![Build Status](https://travis-ci.org/ethereum/tests.svg?branch=develop
 
 Common tests for all clients to test against. See the documentation http://www.ethdocs.org/en/latest/contracts-and-transactions/ethereum-tests/index.html
 
-Do not chagne test files in folders: 
+Do not change test files in folders: 
 * StateTests
 * BlockchainTests
 * TransactionTests 
