@@ -9,7 +9,7 @@ Do not chagne test files in folders:
 * TransactionTests 
 * VMTests
 
-It is being created by the testFillers which could be found at https://github.com/ethereum/cpp-ethereum/tree/develop/test/tools/jsontests
+It is being created by the testFillers which could be found at https://github.com/ethereum/cpp-ethereum/tree/develop/test/tools/jsontests at src folder. The filler specification and wiki are in development so please ask on gitter channel for more details.
 
 If you want to modify a test filler or add a new test please contact @winsvega at https://gitter.im/ethereum/cpp-ethereum
 
