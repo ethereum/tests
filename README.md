@@ -36,3 +36,7 @@ All files should be of the form:
 
 Arrays are allowed, but don't use them for sets of properties - only use them for data that is clearly a continuous contiguous sequence of values.
 
+Links
+-----
+
+* [cpp-ethereum guide to generate test cases](https://github.com/ethereum/cpp-ethereum/blob/develop/doc/generating_tests.rst)
