@@ -15,14 +15,12 @@ var rl = readline.createInterface({
 });
 
 rl.on('line', function(line){
-    fs.readFile('simple-schema.json', function(err, data) {
+    fs.readFile('schema.json', function(err, data) {
         if (err) {
             throw err;
         }
 
-
         schema = JSON.parse(data);
-
 
         fs.readFile(line, function(err, data) {
             if (err) {
@@ -32,35 +30,19 @@ rl.on('line', function(line){
             try {
                 testCode = JSON.parse(data);
             } catch(e) {
-                debugger;
+                console.log(e);
             }
 
             try {
                 var x = validate(testCode, schema);
+
+                if (x.errors.length > 0) {
+                    console.log(line+':\n');
+                    console.log(x.errors+'\n')
+                }
             } catch(e) {
-                console.log(line);
+                console.log(e);
             }
-            
         });
     });
 });
-
-/*
-fs.readFile('simple-schema.json', function(err, data) {
-    if (err) {
-        throw err;
-    }
-
-    schema = JSON.parse(data);
-    fs.readFile('example.json', function(err, data) {
-        if (err) {
-            throw err;
-        }
-
-        testCode = JSON.parse(data);
-        var x = validate(testCode, schema);
-        console.log(x);
-        debugger;
-    });
-});
-*/
