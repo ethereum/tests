@@ -1,71 +1,136 @@
 {
     "type": "object",
-    "additionalProperties": {
-        "env": {
+    "patternProperties": {
+        "^.*$": {
             "type": "object",
-            "additionalProperties": {
-                "currentCoinbase": {
-                    "type": "string"
+            "properties": {
+                "post": {
+                    "type": "object",
+                    "properties": {
+                        "EIP150": {
+                            "type": "array"
+                        },
+                        "EIP158": {
+                            "type": "array"
+                        },
+                        "Frontier": {
+                            "type": "array"
+                        },
+                        "Homestead": {
+                            "type": "array"
+                        },
+                        "Metropolis": {
+                            "type": "array"
+                        }
+                    },
+                    "additionalProperties": false
                 },
-                "currentDifficulty": {
-                    "type": "string"
+                "env": {
+                    "type": "object",
+                    "properties": {
+                        "currentCoinbase": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-f]*$"
+                        },
+                        "currentDifficulty": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-f]*$"
+                        },
+                        "currentGasLimit": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-f]*$"
+                        },
+                        "currentNumber": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-f]*$"
+                        },
+                        "currentTimestamp": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-f]*$"
+                        },
+                        "previousHash": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-f]*$"
+                        }
+                    },
+                    "additionalProperties": false
                 },
-                "currentGasLimit": {
-                    "type": "string"
-                },
-                "currentNumber": {
-                    "type": "string"
-                },
-                "currentTimestamp": {
-                    "type": "string"
-                },
-                "previousHash": {
-                    "type": "string"
-                }
-            }
-        },
-        "post": {
-            "type": "object",
-            "additionalProperties": {
-                "EIP150": {
-                    "type": "array"
-                },
-                "EIP158": {
-                    "type": "array"
-                },
-                "Frontier": {
-                    "type": "array"
-                },
-                "Homestead": {
-                    "type": "array"
-                }
-            }
-        },
-        "pre": {
+                "pre": {
+                    "type": "object",
+                    "patternProperties": {
+                        "^0x[0-9a-f]*": {
+                            "type": "object",
+                            "properties": {
+                                "balance":  {
+                                    "type": "string",
+                                    "pattern": "^0x[0-9a-f]*$"
+                                },
+                                "code": {
+                                    "type": "string",
+                                    "pattern": "^(0x[0-9a-f]*)?$"
+                                },
+                                "nonce": {
+                                    "type": "string",
+                                    "pattern": "^0x[0-9a-f]*$"
 
+                                },
+                                "storage": {
+                                    "type": "object"
+                                }
+                            },
+                            "additionalProperties": false
+                        },
+                        "additionalProperties": false
+                    },
+                    "additionalProperties": false
+                },
+                "transaction": {
+                    "type": "object",
+                    "properties": {
+                        "data": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "pattern": "^(0x[0-9a-f]*)?$"
+                            }
+                        },
+                        "gasLimit": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "pattern": "^0x[0-9a-f]*$"
+                            }
+                        },
+                        "gasPrice": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-f]*$"
+                        },
+                        "nonce": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-f]*$"
+                        },
+                        "secretKey": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-f]*$"
+                        },
+                        "to": {
+                            "type": "string",
+                            "pattern": "^0x[0-9a-f]*$"
+                        },
+                        "value": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "pattern": "^0x[0-9a-f]*$"
+                            }
+                        }
+                    },
+                    "additionalProperties": false
+                }
+            },
+            "additionalProperties": false
         },
-        "transaction": {
-            "data": {
-                "type": "array"
-            },
-            "gasLimit": {
-                "type": "array"
-            },
-            "gasPrice": {
-                "type": "string"
-            },
-            "nonce": {
-                "type": "string"
-            },
-            "secretKey": {
-                "type": "string"
-            },
-            "to": {
-                "type": "string"
-            },
-            "value": {
-                "type": "array"
-            }
-        }
-    }
+        "additionalProperties": false
+    },
+    "additionalProperties": false
 }
