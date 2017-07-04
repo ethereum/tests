@@ -1,8 +1,11 @@
 language: python
 python: 2.7
 sudo: false
+install: "pip install jsonschema"
 script:
 # won't fail, but print problems
 - find . -name "*.json" -not -name "*Filler.json" -exec echo {} \; -exec python -mjson.tool {} /dev/null \; 2>&1 | grep -v -B 1 "^\./" | cat
 # will fail, if linting fails
 - find . -name "*.json" -not -name "*Filler.json" -print0 | xargs -I file -n1 -0 python -mjson.tool file /dev/null 
+# run schema tests against GeneralStateTests
+- echo "$(find GeneralStateTests -name '*.json' ! -path '../schema/*.json')" | python JSONSchema/validate.py
