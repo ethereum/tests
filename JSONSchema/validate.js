@@ -38,7 +38,9 @@ rl.on('line', function(line){
 
                 if (x.errors.length > 0) {
                     console.log(line+':\n');
-                    console.log(x.errors+'\n')
+                    for (var i = 0; i < x.errors.length; i++) {
+                        console.log('   '+x.errors[i]+'\n')
+                    }
                 }
             } catch(e) {
                 console.log(e);
