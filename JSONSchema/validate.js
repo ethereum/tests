@@ -15,7 +15,7 @@ var rl = readline.createInterface({
 });
 
 rl.on('line', function(line){
-    fs.readFile('schema.json', function(err, data) {
+    fs.readFile('JSONSchema/schema.json', function(err, data) {
         if (err) {
             throw err;
         }
