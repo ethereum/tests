@@ -4,7 +4,6 @@ var validate = require('jsonschema').validate;
 var fs = require('fs');
 
 var readline = require('readline');
-var process = require('process');
 
 var schema = '';
 var testCode = '';
