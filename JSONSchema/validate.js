@@ -4,17 +4,20 @@ var validate = require('jsonschema').validate;
 var fs = require('fs');
 
 var readline = require('readline');
+var process = require('process');
+
 var schema = '';
 var testCode = '';
+var success = true;
 
 var readline = require('readline');
 var rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout,
-  terminal: false
+    input: process.stdin,
+    output: process.stdout,
+    terminal: false
 });
 
-rl.on('line', function(line){
+rl.on('line', function(line) {
     fs.readFile('JSONSchema/schema.json', function(err, data) {
         if (err) {
             throw err;
@@ -29,7 +32,7 @@ rl.on('line', function(line){
 
             try {
                 testCode = JSON.parse(data);
-            } catch(e) {
+            } catch (e) {
                 console.log(e);
             }
 
@@ -37,12 +40,13 @@ rl.on('line', function(line){
                 var x = validate(testCode, schema);
 
                 if (x.errors.length > 0) {
-                    console.log(line+':\n');
+                    success = false;
+                    console.log(line + ':\n');
                     for (var i = 0; i < x.errors.length; i++) {
-                        console.log('   '+x.errors[i]+'\n')
+                        console.log('   ' + x.errors[i] + '\n')
                     }
                 }
-            } catch(e) {
+            } catch (e) {
                 console.log(e);
             }
         });
