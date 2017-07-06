@@ -27,7 +27,7 @@
         "pre" : {
             "0x0f572e5295c57f15886f9b263e2f6d2d6c7b5ec6" : {
                 "balance" : "0x0de0b6b3a7640000",
-                "code" : "{ (MSTORE 0 0x112233445566778899aabbccddeeff) (RETURNDATACOPY (- 0 32) 0 32) (SSTORE 0 (MLOAD 0)) }",
+                "code" : "{ (CALLDATACOPY 0 0 32) (RETURNDATACOPY (- 0 (MLOAD 0)) 0 0x64) (MSTORE 0 0x112233445566778899aabbccddeeff) (SSTORE 0 (MLOAD 0)) }",
                 "nonce" : "0x00",
                 "storage" : {
                     "0x00" : "0x01"
@@ -43,7 +43,14 @@
         },
         "transaction" : {
             "data" : [
-                ""
+                "0: the sum of RETURNDATACOPY's first and third arguments is 2^256",
+                "1: one smaller",
+                "2: one bigger", "anyway the RETURNDATACOPY should cause an exceptional halt."
+            ],
+            "data" : [
+                "0x0000000000000000000000000000000000000000000000000000000000000064",
+                "0x0000000000000000000000000000000000000000000000000000000000000063",
+                "0x0000000000000000000000000000000000000000000000000000000000000065"
             ],
             "gasLimit" : [
                 "0x0a00000000"
