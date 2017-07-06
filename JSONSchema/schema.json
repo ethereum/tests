@@ -8,21 +8,22 @@
                     "type":"object",
                     "properties":{
                         "EIP150":{
-                            "type":"array"
+                            "$ref":"#/definitions/TransactionResults"
                         },
                         "EIP158":{
-                            "type":"array"
+                            "$ref":"#/definitions/TransactionResults"
                         },
                         "Frontier":{
-                            "type":"array"
+                            "$ref":"#/definitions/TransactionResults"
                         },
                         "Homestead":{
-                            "type":"array"
+                            "$ref":"#/definitions/TransactionResults"
                         },
                         "Metropolis":{
-                            "type":"array"
+                            "$ref":"#/definitions/TransactionResults"
                         }
-                    }
+                    },
+                    "additionalProperties": false
                 },
                 "explanation":{
                     "type":"string"
@@ -128,5 +129,40 @@
                 }
             }
         }
+    },
+    "definitions": {
+        "TransactionResults": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "hash": {
+                        "type": "string",
+                        "pattern":"^0x[0-9a-f]*$"
+                    },
+                    "indexes": {
+                        "type": "object",
+                        "properties": {
+                            "data": {
+                                "type": "integer"
+                            },
+                            "gas": {
+                                "type": "integer"
+                            },
+                            "value": {
+                                "type": "integer"
+                            }
+                        },
+                        "additionalProperties": false
+                    }
+                },
+                "additionalProperties": false
+            }
+        },
+        "HexString": {
+            "type": "string",
+            "pattern":"^0x[0-9a-f]*$"
+        }
+
     }
 }

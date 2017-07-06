@@ -1,15 +1,17 @@
 #! /bin/env node
 
-var validate = require('jsonschema').validate;
 var fs = require('fs');
-
+var validate = require('jsonschema').validate;
 var readline = require('readline');
 
 var schema = '';
 var testCode = '';
 var success = true;
+var numFiles = 0;
+var numFailed = 0;
+var numSucceeded = 0;
+var fileNames = [];
 
-var readline = require('readline');
 var rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
@@ -17,37 +19,42 @@ var rl = readline.createInterface({
 });
 
 rl.on('line', function(line) {
-    fs.readFile('JSONSchema/schema.json', function(err, data) {
-        if (err) {
-            throw err;
+    fileNames.push(line);
+});
+
+rl.on('close', function() {
+    schema = JSON.parse(fs.readFileSync('JSONSchema/schema.json'));
+    
+    for (var i = 0; i < fileNames.length; i++) {
+        try {
+            testCode = JSON.parse(fs.readFileSync(fileNames[i]));
+        } catch(e) {
+            console.log(e);
+            numFailed++;
         }
 
-        schema = JSON.parse(data);
+        try {
+            var x = validate(testCode, schema);
 
-        fs.readFile(line, function(err, data) {
-            if (err) {
-                throw err;
-            }
-
-            try {
-                testCode = JSON.parse(data);
-            } catch (e) {
-                console.log(e);
-            }
-
-            try {
-                var x = validate(testCode, schema);
-
-                if (x.errors.length > 0) {
-                    success = false;
-                    console.log(line + ':\n');
-                    for (var i = 0; i < x.errors.length; i++) {
-                        console.log('   ' + x.errors[i] + '\n')
-                    }
+            if (x.errors.length > 0) {
+                numFailed++;
+                console.log(fileNames[i]+ ':\n');
+                for (var j = 0; j < x.errors.length; j++) {
+                    console.log('   ' + x.errors[j] + '\n')
                 }
-            } catch (e) {
-                console.log(e);
+            } else {
+                numSucceeded++;
             }
-        });
-    });
+        } catch (e) {
+            console.log(e);
+            numFailed++;
+        }
+    }
+    
+    console.log("Valid: "+numSucceeded+"\n");
+    console.log("Failed: "+numFailed+"\n");
+
+    if(numFailed > 0) {
+        process.exit(-1);
+    }
 });
