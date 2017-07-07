@@ -25,6 +25,17 @@ rl.on('line', function(line) {
 rl.on('close', function() {
     schema = JSON.parse(fs.readFileSync('JSONSchema/schema.json'));
     
+    //sort file names alphabetically so that log output ordering is consistent
+    fileNames.sort((a,b) => {
+        if(a<b) {
+            return -1;
+        } else {
+            return 1;
+        }
+
+        return 0;
+    });
+
     for (var i = 0; i < fileNames.length; i++) {
         try {
             testCode = JSON.parse(fs.readFileSync(fileNames[i]));
