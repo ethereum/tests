@@ -26,7 +26,7 @@ rl.on('close', function() {
     schema = JSON.parse(fs.readFileSync('JSONSchema/schema.json'));
     
     //sort file names alphabetically so that log output ordering is consistent
-    fileNames.sort((a,b) => {
+    fileNames.sort(function(a,b) {
         if(a<b) {
             return -1;
         } else {
