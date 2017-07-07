@@ -40,8 +40,7 @@
                             "pattern":"^0x[0-9a-f]*$"
                         },
                         "currentGasLimit":{
-                            "type":"string",
-                            "pattern":"^0x[0-9a-f]*$"
+                            "$ref": "#/definitions/GasAmount"
                         },
                         "currentNumber":{
                             "type":"string",
@@ -56,6 +55,7 @@
                             "pattern":"^0x[0-9a-f]*$"
                         }
                     },
+                    "required": ["currentCoinbase", "currentDifficulty", "currentGasLimit", "currentNumber", "currentTimestamp", "previousHash"],
                     "additionalproperties":false
                 },
                 "pre":{
@@ -79,7 +79,9 @@
                                 "storage":{
                                     "type":"object"
                                 }
-                            }
+                            },
+                            "required": ["balance", "code", "nonce"],
+                            "additionalproperties": false
                         }
                     },
                     "additionalProperties":false
@@ -114,8 +116,8 @@
                             "pattern":"^0x[0-9a-f]*$"
                         },
                         "to":{
-                            "type":"string",
-                            "pattern":"^0x[0-9a-f]*$"
+                            "type": "string",
+                            "pattern":"^(0x([0-9a-f]*){10})?$"
                         },
                         "value":{
                             "type":"array",
@@ -123,8 +125,18 @@
                                 "type":"string",
                                 "pattern":"^0x[0-9a-f]*$"
                             }
+                        },
+                        "r": {
+                            "type": "string"
+                        },
+                        "s": {
+                            "type": "string"
+                        },
+                        "v": {
+                            "type": "string"
                         }
                     },
+                    "required": ["data", "gasLimit", "gasPrice", "nonce", "secretKey", "to", "value"],
                     "additionalProperties":false
                 }
             }
@@ -153,16 +165,21 @@
                                 "type": "integer"
                             }
                         },
+                        "required": ["data", "gas", "value"],
                         "additionalProperties": false
                     }
                 },
+                "required": ["hash", "indexes"],
                 "additionalProperties": false
             }
         },
-        "HexString": {
+        "Address": {
             "type": "string",
-            "pattern":"^0x[0-9a-f]*$"
+            "pattern":"^(0x[0-9a-f]*)?$"
+        },
+        "GasAmount": {
+            "type":"string",
+            "pattern": "(^0x[76543210][0-9a-f]{15}$)|(^0x[0-9a-f]{0,15}$)"
         }
-
     }
 }
