@@ -13,8 +13,6 @@ It is being created by the testFillers which could be found at https://github.co
 
 If you want to modify a test filler or add a new test please contact @winsvega at https://gitter.im/ethereum/cpp-ethereum
 
-
-
 All files should be of the form:
 
 ```
