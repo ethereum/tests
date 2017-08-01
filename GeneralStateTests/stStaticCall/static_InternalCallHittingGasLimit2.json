@@ -2,88 +2,55 @@
     "static_InternalCallHittingGasLimit2" : {
         "_info" : {
             "comment" : "",
-            "filledwith" : "cpp-1.3.0+commit.57f8eb2b.Linux.g++",
+            "filledwith" : "cpp-1.3.0+commit.16292201.Linux.g++",
             "source" : "/src/GeneralStateTestsFiller/stStaticCall/static_InternalCallHittingGasLimit2Filler.json"
         },
         "env" : {
-            "currentCoinbase" : "0x2adf5374fce5edbc8e2a8697c15331677e6ebf0b",
+            "currentCoinbase" : "2adf5374fce5edbc8e2a8697c15331677e6ebf0b",
             "currentDifficulty" : "0x020000",
-            "currentGasLimit" : "0xba96",
-            "currentNumber" : "0x01",
-            "currentTimestamp" : "0x03e8",
-            "previousHash" : "0x5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6"
+            "currentGasLimit" : "47766",
+            "currentNumber" : "1",
+            "currentTimestamp" : "1000",
+            "previousHash" : "5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6"
         },
-        "post" : {
-            "EIP150" : [
-                {
-                    "hash" : "0x864a7b976668d9025f681b3270b906b7f9c360c2df8e6fabfdf2d0d01c5ea645",
-                    "indexes" : {
-                        "data" : 0,
-                        "gas" : 0,
-                        "value" : 0
+        "expect" : [
+            {
+                "indexes" : {
+                    "data" : -1,
+                    "gas" : -1,
+                    "value" : -1
+                },
+                "network" : [
+                    "Metropolis"
+                ],
+                "result" : {
+                    "b94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                        "storage" : {
+                            "0x01" : "0x00"
+                        }
                     }
                 }
-            ],
-            "EIP158" : [
-                {
-                    "hash" : "0x864a7b976668d9025f681b3270b906b7f9c360c2df8e6fabfdf2d0d01c5ea645",
-                    "indexes" : {
-                        "data" : 0,
-                        "gas" : 0,
-                        "value" : 0
-                    }
-                }
-            ],
-            "Frontier" : [
-                {
-                    "hash" : "0x864a7b976668d9025f681b3270b906b7f9c360c2df8e6fabfdf2d0d01c5ea645",
-                    "indexes" : {
-                        "data" : 0,
-                        "gas" : 0,
-                        "value" : 0
-                    }
-                }
-            ],
-            "Homestead" : [
-                {
-                    "hash" : "0x864a7b976668d9025f681b3270b906b7f9c360c2df8e6fabfdf2d0d01c5ea645",
-                    "indexes" : {
-                        "data" : 0,
-                        "gas" : 0,
-                        "value" : 0
-                    }
-                }
-            ],
-            "Metropolis" : [
-                {
-                    "hash" : "0x864a7b976668d9025f681b3270b906b7f9c360c2df8e6fabfdf2d0d01c5ea645",
-                    "indexes" : {
-                        "data" : 0,
-                        "gas" : 0,
-                        "value" : 0
-                    }
-                }
-            ]
-        },
+            }
+        ],
         "pre" : {
-            "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-                "balance" : "0x0f4240",
+            "a94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                "balance" : "1000000",
                 "code" : "",
-                "nonce" : "0x00",
+                "nonce" : "0",
                 "storage" : {
                 }
             },
-            "0xb94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-                "balance" : "0x00",
-                "code" : "0x600060006000600073c94f5374fce5edbc8e2a8697c15331677e6ebf0b6161a8fa600155",
-                "nonce" : "0x00",
+            "b94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                "balance" : "0",
+                "code" : "{ [[ 1 ]] (STATICCALL 25000 0xc94f5374fce5edbc8e2a8697c15331677e6ebf0b 0 0 0 0) }",
+                "nonce" : "0",
                 "storage" : {
                 }
             },
-            "0xc94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-                "balance" : "0x00",
-                "code" : "0x5b61c35060805110156018576001608051016080526000565b",
-                "nonce" : "0x00",
+            "c94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                "balance" : "0",
+                "code" : "{ (def 'i 0x80) (for {} (< @i 50000) [i](+ @i 1) (EXTCODESIZE 1)) }",
+                "nonce" : "0",
                 "storage" : {
                 }
             }
@@ -93,14 +60,14 @@
                 ""
             ],
             "gasLimit" : [
-                "0xba96"
+                "47766"
             ],
-            "gasPrice" : "0x01",
-            "nonce" : "0x00",
-            "secretKey" : "0x45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8",
-            "to" : "0xb94f5374fce5edbc8e2a8697c15331677e6ebf0b",
+            "gasPrice" : "1",
+            "nonce" : "",
+            "secretKey" : "45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8",
+            "to" : "b94f5374fce5edbc8e2a8697c15331677e6ebf0b",
             "value" : [
-                "0x0a"
+                "10"
             ]
         }
     }

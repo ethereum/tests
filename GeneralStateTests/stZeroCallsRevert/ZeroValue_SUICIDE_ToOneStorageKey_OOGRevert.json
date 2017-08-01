@@ -2,97 +2,72 @@
     "ZeroValue_SUICIDE_ToOneStorageKey_OOGRevert" : {
         "_info" : {
             "comment" : "",
-            "filledwith" : "cpp-1.3.0+commit.57f8eb2b.Linux.g++",
+            "filledwith" : "cpp-1.3.0+commit.16292201.Linux.g++",
             "source" : "/src/GeneralStateTestsFiller/stZeroCallsRevert/ZeroValue_SUICIDE_ToOneStorageKey_OOGRevertFiller.json"
         },
         "env" : {
-            "currentCoinbase" : "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba",
+            "currentCoinbase" : "2adc25665018aa1fe0e6bc666dac8fc2697ff9ba",
             "currentDifficulty" : "0x020000",
-            "currentGasLimit" : "0x989680",
-            "currentNumber" : "0x01",
-            "currentTimestamp" : "0x03e8",
-            "previousHash" : "0x5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6"
+            "currentGasLimit" : "10000000",
+            "currentNumber" : "1",
+            "currentTimestamp" : "1000",
+            "previousHash" : "5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6"
         },
-        "post" : {
-            "EIP150" : [
-                {
-                    "hash" : "0x495b5fecb621447ae3999b739863351849b934844896fce657781b3b8888a4b3",
-                    "indexes" : {
-                        "data" : 0,
-                        "gas" : 0,
-                        "value" : 0
+        "expect" : [
+            {
+                "indexes" : {
+                    "data" : -1,
+                    "gas" : -1,
+                    "value" : -1
+                },
+                "network" : [
+                    "ALL"
+                ],
+                "result" : {
+                    "a94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                        "nonce" : "1"
+                    },
+                    "b94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                        "storage" : {
+                            "0x00" : "0x01"
+                        }
+                    },
+                    "c94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                        "storage" : {
+                            "0x00" : "0x01"
+                        }
                     }
                 }
-            ],
-            "EIP158" : [
-                {
-                    "hash" : "0x495b5fecb621447ae3999b739863351849b934844896fce657781b3b8888a4b3",
-                    "indexes" : {
-                        "data" : 0,
-                        "gas" : 0,
-                        "value" : 0
-                    }
-                }
-            ],
-            "Frontier" : [
-                {
-                    "hash" : "0x495b5fecb621447ae3999b739863351849b934844896fce657781b3b8888a4b3",
-                    "indexes" : {
-                        "data" : 0,
-                        "gas" : 0,
-                        "value" : 0
-                    }
-                }
-            ],
-            "Homestead" : [
-                {
-                    "hash" : "0x495b5fecb621447ae3999b739863351849b934844896fce657781b3b8888a4b3",
-                    "indexes" : {
-                        "data" : 0,
-                        "gas" : 0,
-                        "value" : 0
-                    }
-                }
-            ],
-            "Metropolis" : [
-                {
-                    "hash" : "0x495b5fecb621447ae3999b739863351849b934844896fce657781b3b8888a4b3",
-                    "indexes" : {
-                        "data" : 0,
-                        "gas" : 0,
-                        "value" : 0
-                    }
-                }
-            ]
-        },
+            }
+        ],
         "pre" : {
-            "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-                "balance" : "0xe8d4a51000",
+            "a94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                "balance" : "1000000000000",
                 "code" : "",
-                "nonce" : "0x00",
+                "nonce" : "0",
                 "storage" : {
                 }
             },
-            "0xb94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-                "balance" : "0x00",
-                "code" : "0x6000600060006000600073d94f5374fce5edbc8e2a8697c15331677e6ebf0b61c350f150600c600255600c600355600c600455",
-                "nonce" : "0x00",
+            "b94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                "balance" : "0",
+                "code" : "{ (CALL 50000 0xd94f5374fce5edbc8e2a8697c15331677e6ebf0b 0 0 0 0 0) [[2]]12 [[3]]12 [[4]]12 }",
+                "nonce" : "0",
                 "storage" : {
                     "0x00" : "0x01"
                 }
             },
-            "0xc94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-                "balance" : "0x00",
+            "c94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                "balance" : "0",
                 "code" : "",
-                "nonce" : "0x00",
+                "nonce" : "0",
                 "storage" : {
                     "0x00" : "0x01"
                 }
             },
-            "0xd94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-                "balance" : "0x00",
-                "code" : "0x73c94f5374fce5edbc8e2a8697c15331677e6ebf0bff",
-                "nonce" : "0x00",
+            "d94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                "balance" : "0",
+                "code" : "{ (SELFDESTRUCT 0xc94f5374fce5edbc8e2a8697c15331677e6ebf0b) }",
+                "nonce" : "0",
                 "storage" : {
                     "0x00" : "0x01"
                 }
@@ -103,14 +78,14 @@
                 ""
             ],
             "gasLimit" : [
-                "0x0124f8"
+                "75000"
             ],
-            "gasPrice" : "0x01",
-            "nonce" : "0x00",
-            "secretKey" : "0x45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8",
-            "to" : "0xb94f5374fce5edbc8e2a8697c15331677e6ebf0b",
+            "gasPrice" : "1",
+            "nonce" : "0",
+            "secretKey" : "45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8",
+            "to" : "b94f5374fce5edbc8e2a8697c15331677e6ebf0b",
             "value" : [
-                "0x00"
+                "0"
             ]
         }
     }

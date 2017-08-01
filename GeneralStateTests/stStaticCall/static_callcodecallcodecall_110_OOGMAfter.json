@@ -2,102 +2,70 @@
     "static_callcodecallcodecall_110_OOGMAfter" : {
         "_info" : {
             "comment" : "",
-            "filledwith" : "cpp-1.3.0+commit.57f8eb2b.Linux.g++",
+            "filledwith" : "cpp-1.3.0+commit.16292201.Linux.g++",
             "source" : "/src/GeneralStateTestsFiller/stStaticCall/static_callcodecallcodecall_110_OOGMAfterFiller.json"
         },
         "env" : {
-            "currentCoinbase" : "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba",
+            "currentCoinbase" : "2adc25665018aa1fe0e6bc666dac8fc2697ff9ba",
             "currentDifficulty" : "0x20000",
-            "currentGasLimit" : "0x01c9c380",
-            "currentNumber" : "0x01",
-            "currentTimestamp" : "0x03e8",
-            "previousHash" : "0x5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6"
+            "currentGasLimit" : "30000000",
+            "currentNumber" : "1",
+            "currentTimestamp" : "1000",
+            "previousHash" : "5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6"
         },
-        "post" : {
-            "EIP150" : [
-                {
-                    "hash" : "0x7fabecc5d5316e1cf649ff86c051855a1ad1912cf86eaa69d63df1eb286fd05e",
-                    "indexes" : {
-                        "data" : 0,
-                        "gas" : 0,
-                        "value" : 0
+        "expect" : [
+            {
+                "indexes" : {
+                    "data" : -1,
+                    "gas" : -1,
+                    "value" : -1
+                },
+                "network" : [
+                    "Metropolis"
+                ],
+                "result" : {
+                    "1000000000000000000000000000000000000000" : {
+                        "storage" : {
+                            "0x00" : "0x00",
+                            "0x01" : "0x014c81"
+                        }
                     }
                 }
-            ],
-            "EIP158" : [
-                {
-                    "hash" : "0x7fabecc5d5316e1cf649ff86c051855a1ad1912cf86eaa69d63df1eb286fd05e",
-                    "indexes" : {
-                        "data" : 0,
-                        "gas" : 0,
-                        "value" : 0
-                    }
-                }
-            ],
-            "Frontier" : [
-                {
-                    "hash" : "0xfc0d01a29029ad68f6fd82940192224a99824507ec7015a316c793631088e315",
-                    "indexes" : {
-                        "data" : 0,
-                        "gas" : 0,
-                        "value" : 0
-                    }
-                }
-            ],
-            "Homestead" : [
-                {
-                    "hash" : "0x50969bc8949f698299526bb1063fa10d84c4d70bddeff39c9641ec0c441c8c39",
-                    "indexes" : {
-                        "data" : 0,
-                        "gas" : 0,
-                        "value" : 0
-                    }
-                }
-            ],
-            "Metropolis" : [
-                {
-                    "hash" : "0x7fabecc5d5316e1cf649ff86c051855a1ad1912cf86eaa69d63df1eb286fd05e",
-                    "indexes" : {
-                        "data" : 0,
-                        "gas" : 0,
-                        "value" : 0
-                    }
-                }
-            ]
-        },
+            }
+        ],
         "pre" : {
-            "0x1000000000000000000000000000000000000000" : {
-                "balance" : "0x0de0b6b3a7640000",
-                "code" : "0x604060006040600073100000000000000000000000000000000000000161eaf6f46000555a600155",
-                "nonce" : "0x00",
+            "1000000000000000000000000000000000000000" : {
+                "balance" : "1000000000000000000",
+                "code" : "{  [[ 0 ]] (DELEGATECALL 60150 0x1000000000000000000000000000000000000001 0 64 0 64 ) [[ 1 ]] (GAS) }",
+                "nonce" : "0",
                 "storage" : {
                 }
             },
-            "0x1000000000000000000000000000000000000001" : {
-                "balance" : "0x00",
-                "code" : "0x6040600060406000731000000000000000000000000000000000000002619c90f4505b61c3506080511015603a576001608051016080526022565b",
-                "nonce" : "0x00",
+            "1000000000000000000000000000000000000001" : {
+                "balance" : "0",
+                "code" : "{  (DELEGATECALL 40080 0x1000000000000000000000000000000000000002 0 64 0 64 ) (def 'i 0x80) (for {} (< @i 50000) [i](+ @i 1) (EXTCODESIZE 1)) }",
+                "nonce" : "0",
                 "storage" : {
                 }
             },
-            "0x1000000000000000000000000000000000000002" : {
-                "balance" : "0x00",
-                "code" : "0x6040600060406000731000000000000000000000000000000000000003614e34fa",
-                "nonce" : "0x00",
+            "1000000000000000000000000000000000000002" : {
+                "balance" : "0",
+                "code" : "{ (STATICCALL 20020 0x1000000000000000000000000000000000000003 0 64 0 64 ) }",
+                "nonce" : "0",
                 "storage" : {
                 }
             },
-            "0x1000000000000000000000000000000000000003" : {
-                "balance" : "0x00",
-                "code" : "0x6001600352",
-                "nonce" : "0x00",
+            "1000000000000000000000000000000000000003" : {
+                "balance" : "0",
+                "code" : "{  (MSTORE 3 1) }",
+                "nonce" : "0",
                 "storage" : {
                 }
             },
-            "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-                "balance" : "0x0de0b6b3a7640000",
+            "a94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                "balance" : "1000000000000000000",
                 "code" : "",
-                "nonce" : "0x00",
+                "nonce" : "0",
                 "storage" : {
                 }
             }
@@ -107,14 +75,14 @@
                 ""
             ],
             "gasLimit" : [
-                "0x029fe0"
+                "172000"
             ],
-            "gasPrice" : "0x01",
-            "nonce" : "0x00",
-            "secretKey" : "0x45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8",
-            "to" : "0x1000000000000000000000000000000000000000",
+            "gasPrice" : "1",
+            "nonce" : "0",
+            "secretKey" : "45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8",
+            "to" : "1000000000000000000000000000000000000000",
             "value" : [
-                "0x00"
+                "0"
             ]
         }
     }
