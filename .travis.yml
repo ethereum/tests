@@ -12,3 +12,4 @@ script:
 - find . -name "*.json" -not -name "*Filler.json" -print0 | xargs -I file -n1 -0 python -mjson.tool file /dev/null 
 # run schema tests against GeneralStateTests
 - echo -e "$(find GeneralStateTests -name '*.json')" | node JSONSchema/validate.js JSONSchema/schema.json
+- echo -e "$(find src/GeneralStateTestsFiller -name '*.json')" | node JSONSchema/validate.js JSONSchema/filler-schema.json
