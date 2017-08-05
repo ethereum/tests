@@ -4,6 +4,7 @@ var fs = require('fs');
 var validate = require('jsonschema').validate;
 var readline = require('readline');
 
+var schemaFile = process.argv[2];
 var schema = '';
 var testCode = '';
 var success = true;
@@ -23,7 +24,7 @@ rl.on('line', function(line) {
 });
 
 rl.on('close', function() {
-    schema = JSON.parse(fs.readFileSync('JSONSchema/schema.json'));
+    schema = JSON.parse(fs.readFileSync(schemaFile));
     
     //sort file names alphabetically so that log output ordering is consistent
     fileNames.sort(function(a,b) {
@@ -40,6 +41,7 @@ rl.on('close', function() {
         try {
             testCode = JSON.parse(fs.readFileSync(fileNames[i]));
         } catch(e) {
+            console.log('error on file:', fileNames[i])
             console.log(e);
             numFailed++;
         }
