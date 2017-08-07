@@ -5,10 +5,12 @@
             "pattern": "^$"
         },
         "HexData": {
+            "description": "Hex data. see https://github.com/ethereum/wiki/wiki/JSON-RPC#hex-value-encoding",
             "pattern": "^0x([0-9a-fA-F][0-9a-fA-F])*$",
             "type": "string"
         },
         "HexQuantity": {
+            "description": "Hex quantity. see https://github.com/ethereum/wiki/wiki/JSON-RPC#hex-value-encoding",
             "pattern": "(^0x0$)|(^0x[1-9a-fA-F][0-9a-fA-F]*$)",
             "type": "string"
         },
@@ -93,7 +95,16 @@
                 "balance": { "$ref": "#/definitions/IntegerOrEmptyOrConfusedHex" },
                 "code": { "type": "string" },
                 "nonce": { "$ref": "#/definitions/IntegerOrEmptyOrConfusedHex" },
-                "storage": { "type": "object" }
+                "storage": {
+                    "type": "object",
+                    "additionalProperties": false,
+                    "patternProperties": {
+                        "^0x[0-9a-f]+": {
+                            "description": "storage key with 0x prefix, just the prefix `0x` is null and thus not permitted, a hex quantity is permitted. for the storage value, only hex data is permitted.",
+                            "$ref": "#/definitions/HexData"
+                        }
+                    }
+                }
             },
             "required": [
                 "balance",
