@@ -3,8 +3,10 @@
 var fs = require('fs');
 var validate = require('jsonschema').validate;
 var readline = require('readline');
+var process = require('process');
 
 var schemaFile = process.argv[2];
+
 var schema = '';
 var testCode = '';
 var success = true;
@@ -19,8 +21,11 @@ var rl = readline.createInterface({
     terminal: false
 });
 
-rl.on('line', function(line) {
-    fileNames.push(line);
+rl.on('line', function(fileName) {
+    if (fileName == 'BlockchainTests/bcForgedTest/bcInvalidRLPTest.json') {
+        return
+    }
+    fileNames.push(fileName);
 });
 
 rl.on('close', function() {
@@ -44,6 +49,7 @@ rl.on('close', function() {
             console.log('error on file:', fileNames[i])
             console.log(e);
             numFailed++;
+            continue;
         }
 
         try {
