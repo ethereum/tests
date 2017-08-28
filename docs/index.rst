@@ -1,15 +1,23 @@
-.. Ethereum Tests documentation master file, created by
-   sphinx-quickstart on Mon Aug 28 19:37:19 2017.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+.. _ethereum_tests:
 
-Welcome to Ethereum Tests's documentation!
-==========================================
+################################################################################
+Ethereum Tests
+################################################################################
+| Common tests for all clients to test against. The `git repo <https://github.com/ethereum/tests>`_ updated regulary with new tests. 
+| This section describes basic test concepts and templates which are created by cpp-client. 
+|
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
-
+   
+   using-testeth.rst
+   blockchain_tests/index.rst
+   state_tests/index.rst
+   rlp_tests/index.rst
+   difficulty_tests/index.rst
+   transaction_tests/index.rst
+   vm_tests/index.rst
 
 
 Indices and tables
