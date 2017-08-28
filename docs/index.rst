@@ -18,6 +18,7 @@ Ethereum Tests
    difficulty_tests/index.rst
    transaction_tests/index.rst
    vm_tests/index.rst
+   contribute.rst
 
 
 Indices and tables
