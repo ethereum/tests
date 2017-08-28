@@ -7,6 +7,10 @@ Ethereum Tests
 | This section describes basic test concepts and templates which are created by cpp-client. 
 |
 
+.. note::
+   Larger parts of the test docs are currently outdated (see :ref:`contribute` on how to
+   help).
+
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
@@ -20,6 +24,7 @@ Ethereum Tests
    vm_tests/index.rst
    contribute.rst
 
+   
 
 Indices and tables
 ==================
