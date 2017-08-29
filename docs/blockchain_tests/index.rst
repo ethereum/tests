@@ -4,77 +4,79 @@
 Blockchain Tests
 ################################################################################
 
-Found in ``/BlockTests``, the blockchain tests aim is to test the basic verification of a blockchain.
+Found in `/BlockChainTests <https://github.com/ethereum/tests/tree/develop/BlockchainTests>`_,
+the blockchain tests aim is to test the basic verification of a blockchain.
 
-``/BlockTests`` - general blockchain tests. All blocks are built on network: **Frontier** 
-``/BlockTests/Homestead`` - homestead blockchain tests. All blocks are built on network: **Homestead** 
-``/BlockTests/TestNetwork`` - transition blockchain tests. All blocks before 5th are built on network: **Frontier**, then each block should correspond to Homestead rules.
+A blockchain test is based around the notion of executing a list of single blocks,
+described by the ``blocks`` portion of the test. The first block is the modified
+genesis block as described by the ``genesisBlockHeader`` portion of the test. 
+A set of pre-existing accounts are detailed in the ``pre`` portion and form the 
+world state of the genesis block. 
 
-It is based around the notion of executing a list of single blocks, described by the ``blocks`` portion of the test. The first block is the modified genesis block as described by the ``genesisBlockHeader`` portion of the test. A set of pre-existing accounts are detailed in the ``pre`` portion and form the world state of the genesis block. 
-
-It is generally expected that the test implementer will read ``genesisBlockHeader`` and ``pre`` and build the corresponding blockchain in the client. Then the new blocks, described by its RLP found in the ``rlp`` object of the ``blocks`` (RLP of a complete block, not the block header only), is read. If the client concludes that the block is valid, it should execute the block and verify the parameters given in ``blockHeader`` (block header of the new block), ``transactions`` (transaction list) and ``uncleHeaders`` (list of uncle headers). If the client concludes that the block is invalid, it should verify that no ``blockHeader``, ``transactions`` or ``uncleHeaders`` object is present in the test. The client is expected to iterate through the list of blocks and ignore invalid blocks.
+It is generally expected that the test implementer will read ``genesisBlockHeader`` 
+and ``pre`` and build the corresponding blockchain in the client. Then the new blocks, 
+described by its RLP found in the ``rlp`` object of the ``blocks`` (RLP of a complete block, 
+not the block header only), is read. If the client concludes that the block is valid, 
+it should execute the block and verify the parameters given in ``blockHeader`` 
+(block header of the new block), ``transactions`` (transaction list) and ``uncleHeaders`` 
+(list of uncle headers). If the client concludes that the block is invalid, it should verify 
+that no ``blockHeader``, ``transactions`` or ``uncleHeaders`` object is present in the test. 
+The client is expected to iterate through the list of blocks and ignore invalid blocks.
 
 Basic structure
 --------------------------------------------------------------------------------
 
 ::
 
-	{
-	   "ValidBlocks": {
-		   "genesisBlockHeader": { ... },
-		   "pre": { ... },
-		   "blocks" : [
-			   {
-				   "chainname" : "A",
-				   "blocknumber" : "1",
-				   "rlp": { ... },
-				   "blockHeader": { ... },
-				   "transactions": { ... },
-				   "uncleHeaders": { ... }
-			   },
-			   {
-				   "chainname" : "A",
-				   "blocknumber" : "2",
-				   "rlp": { ... },
-				   "blockHeader": { ... },
-				   "transactions": { ... },
-				   "uncleHeaders": { ... }
-			   }
-		   ]
-	   },
-	   "SomeInvalidBlocks": {
-		   "genesisBlockHeader": { ... },
-		   "pre": { ... },
-		   "blocks" : [
-			   {
-				   "chainname" : "B",
-				   "blocknumber" : "3",
-				   "chainnetwork" : "Frontier",
-				   "rlp": { ... },
-			   },
-			   {
-				   "blocknumber" : "1",
-				   "rlp": { ... },
-				   "blockHeader": { ... },
-				   "transactions": { ... },
-				   "uncleHeaders": { ... }
-			   },
-			   {
-				   "blocknumber" : "1",
-				   "chainnetwork" : "Homestead",
-				   "rlp": { ... },
-			   },
-			   {
-				   "blocknumber" : "2",
-				   "rlp": { ... },
-				   "blockHeader": { ... },
-				   "transactions": { ... },
-				   "uncleHeaders": { ... }
-			   }
-		   ]
-	   },
-	   ...
-	}
+  {
+     "TESTNAME_Byzantium": {
+       "blocks" : [
+         {
+           "blockHeader": { ... },
+           "rlp": { ... },
+           "transactions": { ... },
+           "uncleHeaders": { ... }
+         },
+         {
+           "blockHeader": { ... },
+           "rlp": { ... },
+           "transactions": { ... },
+           "uncleHeaders": { ... }
+         },
+         { ... }
+       ],
+       "genesisBlockHeader": { ... },
+       "genesisRLP": " ... ",
+       "lastblockhash": " ... ",
+       "network": "Byzantium",
+       "postState": { ... },
+       "pre": { ... }       
+     },
+     "TESTNAME_EIP150": {
+       "blocks" : [
+         {
+           "blockHeader": { ... },
+           "rlp": { ... },
+           "transactions": { ... },
+           "uncleHeaders": { ... }
+         },
+         {
+           "blockHeader": { ... },
+           "rlp": { ... },
+           "transactions": { ... },
+           "uncleHeaders": { ... }
+         },
+         { ... }
+       ],
+       "genesisBlockHeader": { ... },
+       "genesisRLP": " ... ",
+       "lastblockhash": " ... ",
+       "network": "Byzantium",
+       "postState": { ... },
+       "pre": { ... }       
+     },
+     ...
+  }
 
 
 Sections
@@ -83,36 +85,43 @@ Sections
 * The ``genesisBlockHeader`` section
 
 ``coinbase``:
-	The 160-bit address to which all fees collected from the successful mining of this block be
-	transferred, as returned by the **COINBASE** instruction.
+  The 160-bit address to which all fees collected from the successful mining of this block be
+  transferred, as returned by the **COINBASE** instruction.
 ``difficulty``: 
-	A scalar value corresponding to the difficulty level of this block. This can be alculated
-	from the previous block’s difficulty level and the timestamp, as returned by the **DIFFICULTY** instruction.
+  A scalar value corresponding to the difficulty level of this block. This can be 
+  calculated from the previous block’s difficulty level and the timestamp, as returned 
+  by the **DIFFICULTY** instruction.
 ``gasLimit``: 
-	A scalar value equal to the current limit of gas expenditure per block, as returned by the **GASLIMIT** instruction.
+  A scalar value equal to the current limit of gas expenditure per block, as returned 
+  by the **GASLIMIT** instruction.
 ``number``:
-	A scalar value equal to the number of ancestor blocks. The genesis block has a number of zero.
+  A scalar value equal to the number of ancestor blocks. The genesis block has a number of zero.
 ``timestamp``: 
-	A scalar value equal to the reasonable output of Unix’s time() at this block’s inception, as returned by the **TIMESTAMP** instruction.
+  A scalar value equal to the reasonable output of Unix’s time() at this block’s inception,
+  as returned by the **TIMESTAMP** instruction.
 ``parentHash``: 
-	The Keccak 256-bit hash of the parent block’s header, in its entirety
+  The Keccak 256-bit hash of the parent block’s header, in its entirety
 ``bloom``:
-	The Bloom filter composed from indexable information (logger address and log topics)
-	contained in each log entry from the receipt of each transaction in the transactions list.
+  The Bloom filter composed from indexable information (logger address and log topics)
+  contained in each log entry from the receipt of each transaction in the transactions list.
 ``extraData``:
-	An arbitrary byte array containing data relevant to this block. This must be 1024 bytes or fewer.
+  An arbitrary byte array containing data relevant to this block. This must be 1024 bytes or fewer.
 ``gasUsed``:
-	A scalar value equal to the total gas used in transactions in this block.
+  A scalar value equal to the total gas used in transactions in this block.
 ``nonce``:
-	A 256-bit hash which proves that a sufficient amount of computation has been carried out on this block.
+  A 256-bit hash which proves that a sufficient amount of computation has been 
+  carried out on this block.
 ``receiptTrie``: 
-	The Keccak 256-bit hash of the root node of the trie structure populated with the receipts of each transaction in the transactions list portion of the block.
+  The Keccak 256-bit hash of the root node of the trie structure populated with 
+  the receipts of each transaction in the transactions list portion of the block.
 ``stateRoot``: 
-	The Keccak 256-bit hash of the root node of the state trie, after all transactions are executed and finalisations applied.
+  The Keccak 256-bit hash of the root node of the state trie, after all transactions 
+  are executed and finalisations applied.
 ``transactionsTrie``: 
-	The Keccak 256-bit hash of the root node of the trie structure populated with each transaction in the transactions list portion of the block.
+  The Keccak 256-bit hash of the root node of the trie structure populated with 
+  each transaction in the transactions list portion of the block.
 ``uncleHash``: 
-	The Keccak 256-bit hash of the uncles list portion of this block
+  The Keccak 256-bit hash of the uncles list portion of this block
 
 * ``pre`` section: as described in State Tests.
 
