@@ -1,16 +1,31 @@
 .. _state_tests:
 
 ################################################################################
-State Tests
+General State Tests
 ################################################################################
 
-Found in ``/StateTest``, the state tests aim is to test the basic workings of the state in isolation.
+Found in `/GeneralStateTests <https://github.com/ethereum/tests/tree/develop/GeneralStateTests>`_, 
+the state tests aim is to test the basic workings of the state in isolation.
 
-It is based around the notion of executing a single transaction, described by the ``transaction`` portion of the test. The overarching environment in which it is executed is described by the ``env`` portion of the test and includes attributes of the current and previous blocks. A set of pre-existing accounts are detailed in the ``pre`` portion and form the world state prior to execution. Similarly, a set of accounts are detailed in the ``post`` portion to specify the end world state. Since the data of the blockchain is not given, the opcode ``BLOCKHASH`` could not return the hashes of the corresponding blocks. Therefore we define the hash of block number ``n`` to be  ``SHA256("n")``.
+A state test is based around the notion of executing a single transaction, described 
+by the ``transaction`` portion of the test. The overarching environment 
+in which it is executed is described by the ``env`` portion of the test and 
+includes attributes of the current and previous blocks. A set of pre-existing accounts 
+are detailed in the ``pre`` portion and form the world state prior to execution. 
+Similarly, a set of accounts are detailed in the ``post`` portion to specify the 
+end world state. Since the data of the blockchain is not given, the opcode ``BLOCKHASH`` 
+could not return the hashes of the corresponding blocks. Therefore we define the hash of 
+block number ``n`` to be  ``SHA256("n")``.
 
 The log entries (``logs``) as well as any output returned from the code (``output``) is also detailed.
 
-It is generally expected that the test implementer will read ``env``, ``transaction`` and ``pre`` then check their results against ``logs``, ``out``, and ``post``.
+It is generally expected that the test implementer will read ``env``, ``transaction`` 
+and ``pre`` then check their results against ``logs``, ``out``, and ``post``.
+
+.. note::
+   The structure description of state tests is outdated. A more up-to-date description
+   can be found `here <https://github.com/ethereum/EIPs/issues/176>`_ and should be
+   integrated in these docs in the future.
 
 Basic structure
 --------------------------------------------------------------------------------
