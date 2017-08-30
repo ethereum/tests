@@ -8,8 +8,7 @@ Ethereum Tests
 |
 
 .. note::
-   Larger parts of the test docs are currently outdated (see :ref:`contribute` on how to
-   help).
+   See :ref:`contribute` if you want to help improve this documentation.
 
 .. toctree::
    :maxdepth: 2
