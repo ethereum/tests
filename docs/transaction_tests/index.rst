@@ -4,11 +4,21 @@ Transaction Tests
 =================
 
 Describes a complete transaction and its `RLP <https://github.com/ethereum/wiki/wiki/RLP>`_ representation using the .json file.
+
+=================== ==============================================================
+Location            `/TransactionTests <https://github.com/ethereum/tests/tree/develop/TransactionTests>`_
+Supported Hardforks ``Constantinople`` | ``EIP158`` | ``Frontier`` | ``Homestead``
+Status              Actively supported
+=================== ==============================================================
+
+Test Implementation
+-------------------
+
 The client should read the rlp and check whether the transaction is valid, has the correct sender and corresponds to the transaction parameters.
 If it is an invalid transaction, the transaction and the sender object will be missing.
 
-Basic structure
----------------
+Test Structure
+--------------
 ::
 
 	{
@@ -36,7 +46,7 @@ Basic structure
 	}
 
 Sections
---------
+^^^^^^^^
 
 * ``rlp`` - RLP encoded data of this transaction
 * ``transaction`` - transaction described by fields

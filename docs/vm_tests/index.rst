@@ -3,12 +3,20 @@
 VM Tests
 ========
 
-Found in ``/VMTest``, the VM tests aim is to test the basic workings of the VM in
-isolation. This is specifically not meant to cover transaction, creation or call 
+The VM tests aim is to test the basic workings of the VM in
+isolation.
+
+=================== ==============================================================
+Location            `/VMTests <https://github.com/ethereum/tests/tree/develop/VMTests>`_
+Supported Hardforks Currently only one fork support depending on latest test fill
+Status              Actively supported
+=================== ==============================================================
+
+This is specifically not meant to cover transaction, creation or call 
 processing, or management of the state trie. Indeed at least one implementation 
 tests the VM without calling into any Trie code at all.
 
-It is based around the notion of executing a single piece of code as part of a transaction, 
+A VM test is based around the notion of executing a single piece of code as part of a transaction, 
 described by the ``exec`` portion of the test. The overarching environment in which it is 
 executed is described by the ``env`` portion of the test and includes attributes 
 of the current and previous blocks. A set of pre-existing accounts are detailed 
@@ -17,6 +25,15 @@ of accounts are detailed in the ``post`` portion to specify the end world state.
 
 The gas remaining (``gas``), the log entries (``logs``) as well as any output returned 
 from the code (``output``) is also detailed.
+
+
+Test Implementation
+-------------------
+
+It is generally expected that the test implementer will read ``env``, ``exec`` and ``pre`` 
+then check their results against ``gas``, ``logs``, ``out``, ``post`` and ``callcreates``. 
+If an exception is expected, then latter sections are absent in the test. Since the 
+reverting of the state is not part of the VM tests.
 
 Because the data of the blockchain is not given, the opcode BLOCKHASH could not 
 return the hashes of the corresponding blocks. Therefore we define the hash of 
@@ -29,13 +46,8 @@ details each ``CALL`` or ``CREATE`` operation in the order they would have been 
 Furthermore, gas required is simply that of the VM execution: the gas cost for 
 transaction processing is excluded.
 
-It is generally expected that the test implementer will read ``env``, ``exec`` and ``pre`` 
-then check their results against ``gas``, ``logs``, ``out``, ``post`` and ``callcreates``. 
-If an exception is expected, then latter sections are absent in the test. Since the 
-reverting of the state is not part of the VM tests.
-
-Basic structure
----------------
+Test Structure
+--------------
 
 ::
 
@@ -63,10 +75,8 @@ Basic structure
 	   ...
 	}
 
-Sections
---------------------------------------------------------------------------------
-
-The ``env`` section:
+The env Section
+^^^^^^^^^^^^^^^
 
 * ``currentCoinbase``: The current block's coinbase address, to be returned by the ``COINBASE`` instruction.
 * ``currentDifficulty``: The current block's difficulty, to be returned by the ``DIFFICULTY`` instruction.
@@ -75,7 +85,8 @@ The ``env`` section:
 * ``currentTimestamp``: The current block's timestamp.
 * ``previousHash``: The previous block's hash.
 
-The ``exec`` section:
+The exec Section
+^^^^^^^^^^^^^^^^
 
 * ``address``: The address of the account under which the code is executing, to be returned by the ``ADDRESS`` instruction.
 * ``origin``: The address of the execution's origin, to be returned by the ``ORIGIN`` instruction.
@@ -86,12 +97,18 @@ The ``exec`` section:
 * ``gasPrice``: The price of gas for the transaction, as used by the ``GASPRICE`` instruction.
 * ``gas``: The total amount of gas available for the execution, as would be returned by the ``GAS`` instruction were it be executed first.
 
+The pre and post Section
+^^^^^^^^^^^^^^^^^^^^^^^^
+
 The ``pre`` and ``post`` sections each have the same format of a mapping between addresses and accounts. Each account has the format:
 
 * ``balance``: The balance of the account.
 * ``nonce``: The nonce of the account.
 * ``code``: The body code of the account, given as an array of byte values. See $DATA_ARRAY.
 * ``storage``: The account's storage, given as a mapping of keys to values. For key used notion of string as digital or hex number e.g: ``"1200"`` or ``"0x04B0"`` For values used $DATA_ARRAY.
+
+The callcreates Section
+^^^^^^^^^^^^^^^^^^^^^^^
 
 The ``callcreates`` section details each ``CALL`` or ``CREATE`` instruction that has been executed. It is an array of maps with keys:
 
@@ -100,11 +117,18 @@ The ``callcreates`` section details each ``CALL`` or ``CREATE`` instruction that
 * ``gasLimit``: The amount of gas with which the operation was made.
 * ``value``: The value or endowment with which the operation was made.
 
-The ``logs`` sections is a mapping between the blooms and their corresponding logentries. Each logentry has the format:
+The logs Section
+^^^^^^^^^^^^^^^^
+
+The ``logs`` sections is a mapping between the blooms and their corresponding logentries.
+Each logentry has the format:
 
 * ``address``: The address of the logentry.
 * ``data``: The data of the logentry.
 * ``topics``: The topics of the logentry, given as an array of values.  
+
+The gas and output Keys
+^^^^^^^^^^^^^^^^^^^^^^^
 
 Finally, there are two simple keys, ``gas`` and ``output``:
 
