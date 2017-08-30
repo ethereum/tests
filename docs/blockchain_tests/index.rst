@@ -8,6 +8,7 @@ The blockchain tests aim is to test the basic verification of a blockchain.
 =================== ==============================================================
 Location            `/BlockchainTests <https://github.com/ethereum/tests/tree/develop/BlockchainTests>`_
 Supported Hardforks ``Byzantium`` | ``Constantinople`` | ``EIP150`` | ``EIP158`` | ``Frontier`` | ``Homestead``
+Status              Actively supported
 =================== ==============================================================
 
 A blockchain test is based around the notion of executing a list of single blocks,

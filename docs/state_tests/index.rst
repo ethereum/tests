@@ -3,8 +3,13 @@
 General State Tests
 ===================
 
-Found in `/GeneralStateTests <https://github.com/ethereum/tests/tree/develop/GeneralStateTests>`_, 
-the state tests aim is to test the basic workings of the state in isolation.
+The state tests aim is to test the basic workings of the state in isolation.
+
+=================== ==============================================================
+Location            `/GeneralStateTests <https://github.com/ethereum/tests/tree/develop/GeneralStateTests>`_
+Supported Hardforks ``Byzantium`` | ``Constantinople`` | ``EIP150`` | ``EIP158`` | ``Frontier`` | ``Homestead``
+Status              Actively supported
+=================== ==============================================================
 
 A state test is based around the notion of executing a single transaction, described 
 by the ``transaction`` portion of the test. The overarching environment 
@@ -18,44 +23,79 @@ block number ``n`` to be  ``SHA256("n")``.
 
 The log entries (``logs``) as well as any output returned from the code (``output``) is also detailed.
 
+Test Implementation
+-------------------
+
 It is generally expected that the test implementer will read ``env``, ``transaction`` 
 and ``pre`` then check their results against ``logs``, ``out``, and ``post``.
 
 .. note::
-   The structure description of state tests is outdated. A more up-to-date description
-   can be found `here <https://github.com/ethereum/EIPs/issues/176>`_ and should be
-   integrated in these docs in the future.
+   The structure of state tests was reworked lately, see the associated discussion
+   `here <https://github.com/ethereum/EIPs/issues/176>`_.
 
-Basic structure
----------------
+Test Structure
+--------------
 
 ::
 
-	{
-	   "test name 1": {
-		   "env": { ... },
-		   "logs": { ... },
-		   "out": { ... },
-		   "post": { ... },
-		   "pre": { ... },
-		   "transaction": { ... },
-	   },
-	   "test name 2": {
-		   "env": { ... },
-		   "logs": { ... },
-		   "out": { ... },
-		   "post": { ... },
-		   "pre": { ... },
-		   "transaction": { ... },
-	   },
-	   ...
-	}
+  {
+    "testname" : {
+      "env" : {
+        "currentCoinbase" : "address",
+        "currentDifficulty" : "0x020000", //minimum difficulty for mining on blockchain   
+        "currentGasLimit" : "u64",  //not larger then maxGasLimit = 0x7fffffffffffffff
+        "currentNumber" : "0x01",   //Irrelevant to hardfork parameters!
+        "currentTimestamp" : "1000", //for blockchain version
+        "previousHash" : "h256"
+      },
+      "post" : {
+        "EIP150" : [
+          {
+            "hash" : "3e6dacc1575c6a8c76422255eca03529bbf4c0dda75dfc110b22d6dc4152396f",
+            "indexes" : { "data" : 0, "gas" : 0,  "value" : 0 } 
+          },
+          {
+            "hash" : "99a450d8ce5b987a71346d8a0a1203711f770745c7ef326912e46761f14cd764",
+            "indexes" : { "data" : 0, "gas" : 0,  "value" : 1 }
+          },
+          ...        
+        ],
+        "EIP158" : [
+          {
+            "hash" : "3e6dacc1575c6a8c76422255eca03529bbf4c0dda75dfc110b22d6dc4152396f",
+            "indexes" : { "data" : 0,   "gas" : 0,  "value" : 0 }
+          },
+          {
+            "hash" : "99a450d8ce5b987a71346d8a0a1203711f770745c7ef326912e46761f14cd764",
+            "indexes" : { "data" : 0,   "gas" : 0,  "value" : 1  }
+          },
+          ...         
+        ],
+        "Frontier" : [
+          ...
+        ],
+        "Homestead" : [
+          ...
+        ]
+      },
+      "pre" : {
+          //same as for StateTests
+      },
+      "transaction" : {
+        "data" : [ "" ],
+        "gasLimit" : [ "285000",   "100000",  "6000" ],
+        "gasPrice" : "0x01",
+        "nonce" : "0x00",
+        "secretKey" : "45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8",
+        "to" : "095e7baea6a6c7c4c2dfeb977efac326af552d87",
+          "value" : [   "10",   "0" ]
+        }
+    }
+  }
 
 
-Sections
---------------------------------------------------------------------------------
-
-* **The** ``env`` **section:**
+The env Section
+^^^^^^^^^^^^^^^
 
 | ``currentCoinbase``	
 |	The current block's coinbase address, to be returned by the `COINBASE` instruction.
@@ -71,7 +111,8 @@ Sections
 |	The previous block's hash.
 |
 
-* **The** ``transaction`` **section:**
+The transaction Section
+^^^^^^^^^^^^^^^^^^^^^^^
 
 | ``data`` 
 |	The input data passed to the execution, as used by the `CALLDATA`... instructions. Given as an array of byte values. See $DATA_ARRAY.
@@ -91,7 +132,19 @@ Sections
 |	The value of the transaction (or the endowment of the create), to be returned by the `CALLVALUE`` instruction (if executed first, before any `CALL`).
 | 
 
-* **The** ``pre`` **and** ``post`` **sections each have the same format of a mapping between addresses and accounts. Each account has the format:**
+The post Section
+^^^^^^^^^^^^^^^^
+
+``Indexes`` section describes which values from given array to set for transaction
+before it's execution on a pre state. Transaction now has data, value, and gasLimit as arrays.
+post section now has array of implemented forks. For each fork it has another array
+of execution results on that fork rules with post state root hash and transaction parameters.
+
+The pre Section
+^^^^^^^^^^^^^^^
+
+The ``pre`` section have the format of a mapping between addresses and accounts. 
+Each account has the format:
 
 | ``balance``
 |	The balance of the account.
@@ -103,29 +156,4 @@ Sections
 |	The account's storage, given as a mapping of keys to values. For key used notion of string as digital or hex number e.g: ``"1200"`` or ``"0x04B0"`` For values used $DATA_ARRAY.
 |
 
-| The ``logs`` sections is a mapping between the blooms and their corresponding logentries.
-| Each logentry has the format:
-| ``address`` The address of the logentry.
-| ``data``	The data of the logentry.
-| ``topics`` The topics of the logentry, given as an array of values.  
-|
 
-Finally, there is one simple key ``output``
-
-| ``output``
-| The data, given as an array of bytes, returned from the execution (using the ``RETURN`` instruction). See $DATA_ARRAY. In order to avoid big data files, there is one exception. If the output data is prefixed with ``#``, the following number represents the size of the output, and not the output directly.
-|
-
- **$DATA_ARRAY** - type that intended to contain raw byte data   
-  and for convenient of the users is populated with three   
-  types of numbers, all of them should be converted and   
-  concatenated to a byte array for VM execution.   
-  
-  The types are: 
- 
-  1. number - (unsigned 64bit)
-  2. "longnumber" - (any long number)
-  3. "0xhex_num"  - (hex format number)
-
-
-   e.g: ``````[1, 2, 10000, "0xabc345dFF", "199999999999999999999999999999999999999"]``````			 
