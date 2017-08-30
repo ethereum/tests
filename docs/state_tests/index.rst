@@ -1,8 +1,7 @@
 .. _state_tests:
 
-################################################################################
 General State Tests
-################################################################################
+===================
 
 Found in `/GeneralStateTests <https://github.com/ethereum/tests/tree/develop/GeneralStateTests>`_, 
 the state tests aim is to test the basic workings of the state in isolation.
@@ -28,7 +27,7 @@ and ``pre`` then check their results against ``logs``, ``out``, and ``post``.
    integrated in these docs in the future.
 
 Basic structure
---------------------------------------------------------------------------------
+---------------
 
 ::
 

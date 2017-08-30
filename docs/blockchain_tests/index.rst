@@ -1,8 +1,7 @@
 .. _blockchain_tests:
 
-################################################################################
 Blockchain Tests
-################################################################################
+================
 
 Found in `/BlockChainTests <https://github.com/ethereum/tests/tree/develop/BlockchainTests>`_,
 the blockchain tests aim is to test the basic verification of a blockchain.
@@ -80,7 +79,7 @@ Basic structure
 
 
 Sections
---------------------------------------------------------------------------------
+--------
 
 * The ``genesisBlockHeader`` section
 
@@ -138,7 +137,7 @@ Sections
 * ``uncleHeaders`` section is a list of block headers which have the same format as descibed in `genesisBlockHeader`.
 
 Optional BlockHeader Sections (Information fields)
---------------------------------------------------------------------------------
+--------------------------------------------------
 
 ``"blocknumber" = "int"`` is section which defines what is the order of this block. 
 It is used to define a situation when you have 3 blocks already imported but then it comes new version of the block 2 and 3 and thus you might have new best blockchain with blocks 1 2' 3' instead previous. If `blocknumber` is undefined then it is assumed that blocks are imported one by one. When running test, this field could be used for information purpose only.

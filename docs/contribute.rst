@@ -1,6 +1,5 @@
 .. _contribute:
 
-==================
 Contribute to Docs
 ==================
 

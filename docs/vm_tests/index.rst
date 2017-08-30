@@ -1,23 +1,41 @@
 .. _vm_tests:
 
-################################################################################
 VM Tests
-################################################################################
+========
 
-Found in ``/VMTest``, the VM tests aim is to test the basic workings of the VM in isolation. This is specifically not meant to cover transaction, creation or call processing, or management of the state trie. Indeed at least one implementation tests the VM without calling into any Trie code at all.
+Found in ``/VMTest``, the VM tests aim is to test the basic workings of the VM in
+isolation. This is specifically not meant to cover transaction, creation or call 
+processing, or management of the state trie. Indeed at least one implementation 
+tests the VM without calling into any Trie code at all.
 
-It is based around the notion of executing a single piece of code as part of a transaction, described by the ``exec`` portion of the test. The overarching environment in which it is executed is described by the ``env`` portion of the test and includes attributes of the current and previous blocks. A set of pre-existing accounts are detailed in the ``pre`` portion and form the world state prior to execution. Similarly, a set of accounts are detailed in the ``post`` portion to specify the end world state.
+It is based around the notion of executing a single piece of code as part of a transaction, 
+described by the ``exec`` portion of the test. The overarching environment in which it is 
+executed is described by the ``env`` portion of the test and includes attributes 
+of the current and previous blocks. A set of pre-existing accounts are detailed 
+in the ``pre`` portion and form the world state prior to execution. Similarly, a set 
+of accounts are detailed in the ``post`` portion to specify the end world state.
 
-The gas remaining (``gas``), the log entries (``logs``) as well as any output returned from the code (``output``) is also detailed.
+The gas remaining (``gas``), the log entries (``logs``) as well as any output returned 
+from the code (``output``) is also detailed.
 
-Because the data of the blockchain is not given, the opcode BLOCKHASH could not return the hashes of the corresponding blocks. Therefore we define the hash of block number n to be SHA3-256("n").
+Because the data of the blockchain is not given, the opcode BLOCKHASH could not 
+return the hashes of the corresponding blocks. Therefore we define the hash of 
+block number n to be SHA3-256("n").
 
-Since these tests are meant only as a basic test of VM operation, the ``CALL`` and ``CREATE`` instructions are not actually executed. To provide the possibility of testing to guarantee they were actually run at all, a separate portion ``callcreates`` details each ``CALL`` or ``CREATE`` operation in the order they would have been executed. Furthermore, gas required is simply that of the VM execution: the gas cost for transaction processing is excluded.
+Since these tests are meant only as a basic test of VM operation, the ``CALL`` and 
+``CREATE`` instructions are not actually executed. To provide the possibility of 
+testing to guarantee they were actually run at all, a separate portion ``callcreates`` 
+details each ``CALL`` or ``CREATE`` operation in the order they would have been executed. 
+Furthermore, gas required is simply that of the VM execution: the gas cost for 
+transaction processing is excluded.
 
-It is generally expected that the test implementer will read ``env``, ``exec`` and ``pre`` then check their results against ``gas``, ``logs``, ``out``, ``post`` and ``callcreates``. If an exception is expected, then latter sections are absent in the test. Since the reverting of the state is not part of the VM tests.
+It is generally expected that the test implementer will read ``env``, ``exec`` and ``pre`` 
+then check their results against ``gas``, ``logs``, ``out``, ``post`` and ``callcreates``. 
+If an exception is expected, then latter sections are absent in the test. Since the 
+reverting of the state is not part of the VM tests.
 
 Basic structure
---------------------------------------------------------------------------------
+---------------
 
 ::
 
