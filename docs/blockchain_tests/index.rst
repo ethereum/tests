@@ -3,14 +3,27 @@
 Blockchain Tests
 ================
 
-Found in `/BlockChainTests <https://github.com/ethereum/tests/tree/develop/BlockchainTests>`_,
-the blockchain tests aim is to test the basic verification of a blockchain.
+The blockchain tests aim is to test the basic verification of a blockchain.
+
+=================== ==============================================================
+Location            `/BlockchainTests <https://github.com/ethereum/tests/tree/develop/BlockchainTests>`_
+Supported Hardforks ``Byzantium`` | ``Constantinople`` | ``EIP150`` | ``EIP158`` | ``Frontier`` | ``Homestead``
+=================== ==============================================================
 
 A blockchain test is based around the notion of executing a list of single blocks,
 described by the ``blocks`` portion of the test. The first block is the modified
 genesis block as described by the ``genesisBlockHeader`` portion of the test. 
 A set of pre-existing accounts are detailed in the ``pre`` portion and form the 
-world state of the genesis block. 
+world state of the genesis block.
+
+Of special notice is the 
+`/BlockchainTests/GeneralStateTests <https://github.com/ethereum/tests/tree/develop/BlockchainTests/GeneralStateTests>`_
+folder within the blockchain tests folder structure, which contains a copy of the
+:ref:`state_tests` but executes them within the logic of the blockchain tests.
+
+
+Test Implementation
+-------------------
 
 It is generally expected that the test implementer will read ``genesisBlockHeader`` 
 and ``pre`` and build the corresponding blockchain in the client. Then the new blocks, 
@@ -22,8 +35,8 @@ it should execute the block and verify the parameters given in ``blockHeader``
 that no ``blockHeader``, ``transactions`` or ``uncleHeaders`` object is present in the test. 
 The client is expected to iterate through the list of blocks and ignore invalid blocks.
 
-Basic structure
---------------------------------------------------------------------------------
+Test Structure
+--------------
 
 ::
 
@@ -78,10 +91,26 @@ Basic structure
   }
 
 
-Sections
---------
+The Blocks Section
+^^^^^^^^^^^^^^^^^^
 
-* The ``genesisBlockHeader`` section
+The ``blocks`` section is a list of block objects, which have the following format:
+
+* ``rlp`` section contains the complete rlp of the new block as described in the 
+  yellow paper in section 4.3.3.
+
+* ``blockHeader`` section  describes the block header of the new block in the same 
+  format as described in `genesisBlockHeader`.
+
+* ``transactions`` section is a list of transactions which have the same format as 
+  in :ref:`transaction_tests`.
+
+* ``uncleHeaders`` section is a list of block headers which have the same format as 
+  descibed in `genesisBlockHeader`.
+
+
+The genesisBlockHeader Section
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ``coinbase``:
   The 160-bit address to which all fees collected from the successful mining of this block be
@@ -122,22 +151,17 @@ Sections
 ``uncleHash``: 
   The Keccak 256-bit hash of the uncles list portion of this block
 
-* ``pre`` section: as described in State Tests.
 
-* ``postState`` section: as described in State Tests (section - post).
+Pre and postState Sections
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-* ``blocks`` section is a list of block objects, which have the following format:
+* ``pre`` section: as described in :ref:`state_tests`.
 
-* ``rlp`` section contains the complete rlp of the new block as described in the yellow paper in section 4.3.3.
+* ``postState`` section: as described in :ref:`state_tests` (section - post).
 
-* ``blockHeader`` section  describes the block header of the new block in the same format as described in `genesisBlockHeader`.
 
-* ``transactions`` section is a list of transactions which have the same format as in Transaction Tests.
-
-* ``uncleHeaders`` section is a list of block headers which have the same format as descibed in `genesisBlockHeader`.
-
-Optional BlockHeader Sections (Information fields)
---------------------------------------------------
+Optional BlockHeader Information
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ``"blocknumber" = "int"`` is section which defines what is the order of this block. 
 It is used to define a situation when you have 3 blocks already imported but then it comes new version of the block 2 and 3 and thus you might have new best blockchain with blocks 1 2' 3' instead previous. If `blocknumber` is undefined then it is assumed that blocks are imported one by one. When running test, this field could be used for information purpose only.
