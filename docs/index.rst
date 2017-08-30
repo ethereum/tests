@@ -16,12 +16,12 @@ Ethereum Tests
    :caption: Contents:
    
    using-testeth.rst
-   blockchain_tests/index.rst
-   state_tests/index.rst
-   rlp_tests/index.rst
-   difficulty_tests/index.rst
-   transaction_tests/index.rst
-   vm_tests/index.rst
+   test_types/blockchain_tests.rst
+   test_types/state_tests.rst
+   test_types/rlp_tests.rst
+   test_types/difficulty_tests.rst
+   test_types/transaction_tests.rst
+   test_types/vm_tests.rst
    contribute.rst
 
    
