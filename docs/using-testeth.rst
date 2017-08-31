@@ -1,7 +1,7 @@
 
-*****************************************************
 Using Testeth
-*****************************************************
+=============
+
 Ethereum cpp-client testeth tool for creation and execution of ethereum tests.
 
 To run tests you should open folder (see also `Installing and building <http://www.ethdocs.org/en/latest/ethereum-clients/cpp-ethereum/index.html#installing-and-building>`_
@@ -51,7 +51,7 @@ That's it for test execution. To read more about command line options you may ru
 Now let's see what test cases are available.
 
 Test Cases
---------------------------------------------------------------------------------
+----------
 
 Almost each test case has its filler file available at ``/webthree-umbrella/libethereum/test``
 
