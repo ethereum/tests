@@ -8,7 +8,7 @@ isolation.
 
 =================== ==============================================================
 Location            `/VMTests <https://github.com/ethereum/tests/tree/develop/VMTests>`_
-Supported Hardforks Currently only one fork support depending on latest test fill
+Supported Hardforks Currently only Homestead
 Status              Actively supported
 =================== ==============================================================
 
