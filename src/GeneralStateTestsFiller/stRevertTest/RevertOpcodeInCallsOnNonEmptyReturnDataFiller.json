@@ -78,7 +78,6 @@
                 }
             },
 	    {
-		"comment" : "OOG",
                 "indexes" : {
                     "data" : 0,
                     "gas" : 1,
@@ -267,14 +266,16 @@
                 }
             },
 	    "c94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-                "balance" : "1",
-                "code" : "{ [[1]] 12 (REVERT 0 1) [[3]] 13 }",
-                "nonce" : "0",
-                "storage" : {
-                }
-            },
+            "balance" : "1",
+            "//comment" : "Recording it's called at [[1]], and reverting. The store into [[3]] should not be reached.",
+            "code" : "{ [[1]] 12 (REVERT 0 1) [[3]] 13 }",
+            "nonce" : "0",
+            "storage" : {
+            }
+        },
 	    "ffff5374fce5edbc8e2a8697c15331677e6ebf0b" : {
                 "balance" : "1",
+                "// comment" : "This should return 12 as a return value.  This sets the returndata buffer of the caller to be 64-byte long.",
                 "code" : "{ [1] 12 (RETURN 0 64) }",
                 "nonce" : "0",
                 "storage" : {
