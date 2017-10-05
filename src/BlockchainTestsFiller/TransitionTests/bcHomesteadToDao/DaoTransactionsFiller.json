@@ -1,6 +1,8 @@
 {
     "DaoTransactions" : {
-	"comment" : "This test checks DAO hardfork transition at block 5. According to specification given list of accounts L from the prestate (except a94f5374fce5edbc8e2a8697c15331677e6ebf0b (caller)) should transfer it's balance at the begining of the block 5 to contract C = bf4ed7b27f1d666546e30d74d50d173d20bca754. Then all blocks from 5 to 14(included) must have extradata set to 0x64616f2d686172642d666f726b otherwise blocks considered incorrect. Additionally all uncles with numbers from 5 to 14(included) in this blocks should corespond to extradata requirenmets.",
+        "_info" : {
+            "comment" : "This test checks DAO hardfork transition at block 5. According to specification given list of accounts L from the prestate (except a94f5374fce5edbc8e2a8697c15331677e6ebf0b (caller)) should transfer it's balance at the begining of the block 5 to contract C = bf4ed7b27f1d666546e30d74d50d173d20bca754. Then all blocks from 5 to 14(included) must have extradata set to 0x64616f2d686172642d666f726b otherwise blocks considered incorrect. Additionally all uncles with numbers from 5 to 14(included) in this blocks should corespond to extradata requirenmets."
+        },
         "genesisBlockHeader" : {
             "bloom" : "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
             "coinbase" : "0x8888f1f195afa192cfee860698584c030f4c9db1",
@@ -339,9 +341,9 @@
                 "uncleHeaders" : [
                 ]
             },
-	    {
-		"acomment" : "check balance of one of the accounts from L at 7 block",
-		"blocknumber" : "4",
+            {
+                "//comment" : "check balance of one of the accounts from L at 7 block",
+                "blocknumber" : "4",
                 "transactions" : [
                     {
                         "data" : "",
@@ -373,12 +375,12 @@
                 "uncleHeaders" : [
                 ]
             },
-	    {
-		"acomment" : "check balance of one of the accounts from L at block 8",
-		"blocknumber" : "5",
-		"blockHeaderPremine" : {
+            {
+                "//comment" : "check balance of one of the accounts from L at block 8",
+                "blocknumber" : "5",
+                "blockHeaderPremine" : {
                     "extraData" : "0x64616f2d686172642d666f726b",
-		    "updatePoW" : "1"
+                    "updatePoW" : "1"
                 },
                 "transactions" : [
                     {
@@ -394,11 +396,11 @@
                 "uncleHeaders" : [
                 ]
             },
-	    {
-		"blocknumber" : "6",
-		"expectExceptionALL" : "InvalidTransactionsRoot",
+            {
+                "blocknumber" : "6",
+                "expectExceptionALL" : "InvalidTransactionsRoot",
                 "transactions" : [
-                    {
+                     {
                         "data" : "",
                         "gasLimit" : "60000",
                         "gasPrice" : "1",
