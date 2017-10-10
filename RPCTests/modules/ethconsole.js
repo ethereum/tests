@@ -15,7 +15,8 @@ startNode: function startNode (nodeExec, dataDir, genesisPath, listeningPort, fi
     '--ipcpath', dataDir + '/geth.ipc',
     '--ipc',
     '--listen', listeningPort,
-    '--test'
+    '--test',
+    '-a', '0x1122334455667788991011121314151617181920'
   ]
   utils.cLog('starting node')
   utils.cLog(nodeExec + ' ' + options.join(' '))
@@ -82,7 +83,7 @@ runScriptOnNode: function runScriptOnNode(dataDir, jsScript, args, finished)
 		else
 		{
 			var script = new vm.Script(data);
-	-		script.runInThisContext();
+			script.runInThisContext();
 		}
 	});
 },
