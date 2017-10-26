@@ -105,12 +105,20 @@
                         }
                     }
                 }
+            }
+        },
+        "NonExistentPostStateAccount": {
+            "type": "object",
+            "additionalproperties": true,
+            "properties": {
+                "shouldnotexist": {
+                    "type": "boolean"
+                }
             },
             "required": [
-                "balance",
-                "code",
-                "nonce"
+                "shouldnotexist"
             ]
+
         },
         "TxSigR": {
             "oneOf": [
@@ -214,6 +222,69 @@
                 "to",
                 "value"
             ]
+        },
+        "PostStateAccounts": {
+            "additionalProperties": false,
+            "patternProperties": {
+                "^[0-9a-fA-F]{40}": {
+                    "description": "filler prestate addresses without 0x prefix",
+                    "oneOf": [
+                        {"$ref": "#/definitions/PreStateAccount"},
+                        {"$ref": "#/NonExistentPostStateAccount"}
+                    ]
+                },
+                "^0x[0-9a-fA-F]{40}": {
+                    "description": "filler prestate addresses with 0x prefix",
+                    "oneOf": [
+                        {"$ref": "#/definitions/PreStateAccount"},
+                        {"$ref": "#/NonExistentPostStateAccount"}
+                    ]
+                }
+            },
+            "type": "object"
+        },
+        "ExpectCondition": {
+            "type": "object",
+            "properties": {
+               "result": { "$ref": "#/definitions/AccountMap" },
+               "network": { "$ref": "#/definitions/Networks" },
+               "indexes": {
+                 "properties": {
+                   "data": { "$ref": "#/definitions/Indices" },
+                   "gas": { "$ref": "#/definitions/Indices" },
+                   "value": { "$ref": "#/definitions/Indices" }
+                 },
+                 "result": {
+                   "$ref": "#/definitions/PostStateAccounts"
+                 },
+                 "additionalProperties": false
+               }
+            },
+            "additionalProperties": false
+        },
+        "AccountMap": {
+          "additionalProperties": false,
+          "patternProperties": {
+              "^[0-9a-fA-F]{40}": {
+                  "description": "filler prestate addresses without 0x prefix",
+                  "$ref": "#/definitions/PreStateAccount"
+              },
+              "^0x[0-9a-fA-F]{40}": {
+                  "description": "filler prestate addresses with 0x prefix",
+                  "$ref": "#/definitions/PreStateAccount"
+              }
+          },
+          "type": "object"
+        },
+        "Networks": {
+          "type": "array"
+        },
+        "Indices": {
+            "oneOf": [
+                { "type": "array" },
+                { "type": "string" },
+                { "type": "Number" } 
+            ]
         }
     },
     "patternProperties": {
@@ -239,7 +310,10 @@
                     ],
                     "type": "object"
                 },
-                "expect": {},
+                "expect": {
+                    "type": "array",
+                    "items": { "$ref": "#/definitions/ExpectCondition" }
+                },
                 "pre": {
                     "additionalProperties": false,
                     "patternProperties": {
