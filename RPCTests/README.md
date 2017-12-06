@@ -34,6 +34,8 @@ $ node ./main.js ~/src/cpp-ethereum/build/eth/eth
 (node:27647) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 1): Error: Cannot find module 'web3'
 ```
 
+Answer: `npm install web3`
+
 
 Has any other clients been tested with this?
 --------------------------------------------
