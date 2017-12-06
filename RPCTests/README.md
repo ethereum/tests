@@ -37,5 +37,30 @@ $ node ./main.js ~/src/cpp-ethereum/build/eth/eth
 Answer: `npm install web3`
 
 
+Some tests fail
+---------------
+
+```
+$ node ./main.js ~/src/cpp-ethereum/build/eth/eth
+TEST_newAccount OK
+TEST_addPeerOnNode2 OK
+TEST_getPeerCountOnNode1 OK
+TEST_mineBlockOnNode1 FAILED
+TEST_mineBlockOnNode1 FAILED
+TEST_getBlockHashOnNode2 OK
+TEST_mineBlockOnNode2 FAILED
+TEST_mineBlockOnNode2 FAILED
+TEST_getBlockHashOnNode1 OK
+(node:30406) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 1): Error: Callback was already called.
+```
+
+Answer: everybody experiences these failures now.
+
+
+Do these failures indicate bugs in cpp-ethereum or in the test?
+---------------------------------------------------------------
+
+
+
 Has any other clients been tested with this?
 --------------------------------------------
