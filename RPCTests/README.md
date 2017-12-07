@@ -54,7 +54,7 @@ TEST_getBlockHashOnNode1 OK
 (node:30406) UnhandledPromiseRejectionWarning: Unhandled promise rejection (rejection id: 1): Error: Callback was already called.
 ```
 
-Answer: everybody experiences these failures now.
+Answer: everybody experiences these failures now. They are being tracked in [issue 377](https://github.com/ethereum/tests/issues/377).
 
 
 Do these failures indicate bugs in cpp-ethereum or in the test?
