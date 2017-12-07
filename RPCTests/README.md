@@ -60,7 +60,11 @@ Answer: everybody experiences these failures now.
 Do these failures indicate bugs in cpp-ethereum or in the test?
 ---------------------------------------------------------------
 
-
+Different opinions exist
+* https://github.com/ethereum/tests/pull/376#issuecomment-349799774
+* https://github.com/ethereum/tests/pull/376#issuecomment-349933405
 
 Has any other clients been tested with this?
 --------------------------------------------
+
+No.
