@@ -15,10 +15,26 @@
                     "gas" : -1,
                     "value" : -1
                 },
-                "network" : "ALL",
+                "network" : ["Frontier", "Homestead", "EIP150", "EIP158"],
                 "result" : {
                     "1000000000000000000000000000000000000000" : {
                         "storage" : {
+                        }
+                    }
+                }
+            },
+            {
+                "indexes" : {
+                    "data" : -1,
+                    "gas" : -1,
+                    "value" : -1
+                },
+                "network" : ["Byzantium"],
+                "result" : {
+                    "1000000000000000000000000000000000000000" : {
+                        "storage" : {
+                            "1": "32",
+                            "2": "10"
                         }
                     }
                 }
@@ -27,14 +43,14 @@
         "pre" : {
             "1000000000000000000000000000000000000000" : {
                 "balance" : "1000",
-                "code" : "{ [[ 0 ]] (DELEGATECALL 50000 0x945304eb96065b2a98b57a48a06ae28d285a71b5 0 64 0 64 )}",
+                "code" : "{ [[ 0 ]] (DELEGATECALL 50000 0x945304eb96065b2a98b57a48a06ae28d285a71b5 0 64 0 64 ) [[ 1 ]] (RETURNDATASIZE) (RETURNDATACOPY 63 0 32) [[2]](MLOAD 63)}",
                 "nonce" : "0",
                 "storage" : {
                 }
             },
             "945304eb96065b2a98b57a48a06ae28d285a71b5" : {
                 "balance" : "0",
-                "code" : "{ (REVERT 0 0) }",
+                "code" : "{ (MSTORE 32 10) (REVERT 32 32) }",
                 "nonce" : "0",
                 "storage" : {
                 }
