@@ -11,7 +11,18 @@ sstore:
   pre:
     a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
       balance: '100000000000'
-      code: ''
+      code: '
+(module
+  (import "ethereum" "storageStore" (func $sstore (param i32 i32 i32)))
+
+  (memory 1)
+  (export "main" (func $main))
+  (export "memory" (memory 0))
+  (func $main
+    (i64.store (i32.const 0) (i64.const 173553719826446289))
+    (call $sstore (i32.const 64) (i32.const 0) (i32.const 1))
+  )
+)'
       nonce: ''
       storage: {}
   expect:
@@ -20,26 +31,13 @@ sstore:
         0: '173553719826446289'
       }
   transaction:
-    data:
-    - '
-(module
-  (import "ethereum" "storageStore" (func $sstore (param i32 i32 i32)))
-
-  (memory 1)
-  (export "main" (func $main))
-  (export "memory" (memory 0))
-  (func $main
-    ;; should roundtrip store and load a value from storage
-    (i64.store (i32.const 0) (i64.const 173553719826446289))
-    (call $sstore (i32.const 64) (i32.const 0) (i32.const 1))
-  )
-)
-'
+    data: 
+    - ''
     gasLimit:
     - '0x5000001'
     gasPrice: '0x02'
     nonce: '0x00'
     secretKey: 45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8
-    to: ''
+    to: 'a94f5374fce5edbc8e2a8697c15331677e6ebf0b'
     value:
     - '0'
