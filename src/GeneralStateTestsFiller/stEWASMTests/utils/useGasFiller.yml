@@ -1,4 +1,6 @@
-callDataSize:
+# Basic EWASM interface test for SSTORE
+---
+useGas:
   env:
     currentCoinbase: 2adc25665018aa1fe0e6bc666dac8fc2697ff9ba
     currentDifficulty: '0x020000'
@@ -9,25 +11,33 @@ callDataSize:
   pre:
     a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
       balance: '100000000000'
-      code: |
-        (module
-          (import "ethereum" "getCallDataSize" (func $getCallDataSize (result i32)))
-          (import "ethereum" "storageStore" (func $storageStore (param i32 i32)))
-          (memory 1)
-          (export "main" (func $main))
-          (export "memory" (memory 0))
-          (func $main
-            (call $storageStore (i32.const 0) (call $getCallDataSize))))
+      code: '
+(module
+  (import "ethereum" "useGas" (func $useGas (param i64 )))
+
+  (memory 1)
+  (export "main" (func $main))
+  (export "memory" (memory 0))
+  (func $main
+    (i64.store (i32.const 0) (i64.const 173553719826446289))
+    (call $useGas (i64.const 666))
+  )
+)'
       nonce: ''
       storage: {}
   expect:
-    a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
-      storage: {
-        0: '2'
-      }
+    - indexes:
+        data: -1
+        gas: -1
+        value: -1
+      network:
+        - ALL 
+      result: 
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          balance: "0"
   transaction:
     data: 
-    - '0xffff'
+    - ''
     gasLimit:
     - '0x5000001'
     gasPrice: '0x02'
