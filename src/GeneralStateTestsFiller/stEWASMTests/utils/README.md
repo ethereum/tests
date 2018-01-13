@@ -1,17 +1,17 @@
-# USAGE
-Setup CPPEthereum:
+# Prereqs:
+ - Have python3 installed
+ - Have leveldb installed
+
+# Usage
+
+Clone ethereum tests:
 ```
-git clone --recursive https://github.com/jwasinger/cpp-ethereum -b ewasm-tests
-cd cpp-ethereum
-mkdir build
-cd build
-cmake -DHERA=ON ..
-make -j4
+git clone https://github.com/ethereum/tests --recursive -b wasm-tests
+cd tests/src/GeneralStateTestsFiller/stEWASMTests/utils/
 ```
 
 Build wabt
 ```
-git submodule update --init --recursive
 cd wabt
 mkdir build
 cd build
@@ -22,6 +22,7 @@ mv wat2wasm ../..
 
 Setup tests script:
 ```
+cd ../..
 pipenv shell --python $(which python3)
 ```
 
@@ -29,6 +30,16 @@ Install python deps and convert tests
 ```
 pip install pyyaml
 ./run.sh
+```
+
+Setup CPPEthereum:
+```
+git clone --recursive https://github.com/jwasinger/cpp-ethereum -b ewasm-tests
+cd cpp-ethereum
+mkdir build
+cd build
+cmake -DHERA=ON ..
+make -j4
 ```
 
 Fill tests:
