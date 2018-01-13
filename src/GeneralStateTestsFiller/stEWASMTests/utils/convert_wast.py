@@ -31,7 +31,7 @@ def convert_state_test(file_name):
       if state_test[test_case]['pre'][addr]['code'] != ['']:
         state_test[test_case]['pre'][addr]['code'] = '0x'+wat2wasm(state_test[test_case]['pre'][addr]['code'], file_name)
 
-    if state_test[test_case]['transaction']['data'] != ['']:
+    if state_test[test_case]['transaction']['data'] != [''] and state_test[test_case]['transaction']['to'] == '':
       for i in range(0, len(state_test[test_case]['transaction']['data'])):
         state_test[test_case]['transaction']['data'][i] = '0x'+wat2wasm(state_test[test_case]['transaction']['data'][i], file_name)
 
