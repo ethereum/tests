@@ -1,4 +1,4 @@
-import os, glob, sys, subprocess, yaml, pdb, json, binascii
+import glob, sys, subprocess, yaml, json
 
 def wat2wasm(code, file_name):
   with open("tmp.wast", "w+") as f:
@@ -7,8 +7,8 @@ def wat2wasm(code, file_name):
   result = subprocess.run(['./wat2wasm',  'tmp.wast', '-o', 'tmp.wasm'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
   if result.returncode != 0:
-    print(file_name)
-    print(result.stderr)
+    print('Error in ' + file_name + ':')
+    print(result.stderr.decode('UTF-8'))
     exit(1)
 
   with open('tmp.wasm', 'rb') as f:
