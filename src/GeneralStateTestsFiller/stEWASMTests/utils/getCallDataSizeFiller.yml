@@ -13,11 +13,12 @@ getCallDataSize:
         (module
           (import "ethereum" "getCallDataSize" (func $getCallDataSize (result i32)))
           (import "ethereum" "storageStore" (func $storageStore (param i32 i32)))
-          (memory 1)
+          (memory 2)
           (export "main" (func $main))
           (export "memory" (memory 0))
           (func $main
-            (call $storageStore (i32.const 0) (call $getCallDataSize))))
+            (i32.store (i32.const 60) (call $getCallDataSize))
+            (call $storageStore (i32.const 0) (i32.const 32))))
       nonce: ''
       storage: {}
   expect:
@@ -26,15 +27,15 @@ getCallDataSize:
         gas: -1
         value: -1
       network:
-        - ALL 
-      result: 
+        - ALL
+      result:
         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           storage: {
-            0: '2'
+            0: '16'
           }
   transaction:
-    data: 
-    - '0xffff'
+    data:
+    - '0xffffffffffffffffffffffffffffffff'
     gasLimit:
     - '0x5000001'
     gasPrice: '0x02'
