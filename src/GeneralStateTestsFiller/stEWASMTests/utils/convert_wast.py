@@ -4,21 +4,28 @@ def wat2wasm(code, file_name):
   with open("tmp.wast", "w+") as f:
     f.write(code)
 
-  result = subprocess.run(['./wat2wasm',  'tmp.wast', '-o', 'tmp.wasm'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+  result = subprocess.run(['wabt/build/wat2wasm',  'tmp.wast', '-o', 'tmp.wasm'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 
   if result.returncode != 0:
-    print('Error in ' + file_name + ':')
+    print('Error running wat2wasm on ' + file_name + ':')
     print(result.stderr.decode('UTF-8'))
     exit(1)
 
-  with open('tmp.wasm', 'rb') as f:
+  # Add metering
+  result = subprocess.run(['wasm-metering/bin/wasm-metering', 'tmp.wasm',
+                           'tmp.metered.wasm'], stdout=subprocess.PIPE,
+                          stderr=subprocess.PIPE)
+  if result.returncode != 0:
+    print('Error adding metering to ' + file_name + ':')
+    print(result.stderr.decode('UTF-8'))
+    exit(1)
+
+  with open('tmp.metered.wasm', 'rb') as f:
     result = f.read()
 
   return result.hex()
 
 def convert_state_test(file_name):
-  state_test = None
-
   state_test = yaml.load(open(file_name, 'r').read().rstrip())
 
   if not state_test:
