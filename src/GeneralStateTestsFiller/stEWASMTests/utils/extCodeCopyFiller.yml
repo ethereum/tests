@@ -35,13 +35,15 @@ extCodeCopy:
         (module
           (import  "ethereum" "externalCodeCopy"  (func $externalCodeCopy (param i32 i32 i32 i32)))
           (import  "ethereum" "storageStore"  (func $storageStore (param i32 i32)))
+          (import  "ethereum" "getBalance"  (func $getBalance (param i32 i32)))
           (memory 1 )
-          (data (i32.const 0)  "10000000000000000000000000000000efbeadde")
+          (data (i32.const 0)  "\10\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\ef\be\ad\de")
           (export "memory" (memory 0))
           (export "main" (func $main))
 
           (func $main
-            (call $externalCodeCopy (i32.const 0) (i32.const 200) (i32.const 0) (i32.const 10))
+            (call $getBalance  (i32.const 0) (i32.const 100))
+            ;;(call $externalCodeCopy (i32.const 0) (i32.const 200) (i32.const 0) (i32.const 10))
             (call $storageStore (i32.const 100) (i32.const 200))
           )
         )
