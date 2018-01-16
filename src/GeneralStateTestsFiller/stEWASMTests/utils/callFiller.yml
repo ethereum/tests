@@ -1,0 +1,89 @@
+call:
+  env:
+    currentCoinbase: 2adc25665018aa1fe0e6bc666dac8fc2697ff9ba
+    currentDifficulty: '0x020000'
+    currentGasLimit: '89128960'
+    currentNumber: '1'
+    currentTimestamp: '1000'
+    previousHash: 5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6
+  pre:
+    a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: '100000000000'
+      code: ''
+      nonce: '0x4'
+      storage: {}
+    deadbeef00000000000000000000000000000001:
+      balance: '100000000000'
+      nonce: ''
+      storage: {}
+      code: |
+        (module
+          (import  "ethereum" "getCallDataSize" (func  $getCallDataSize (result i32)))
+          (import "ethereum" "storageStore" (func $storageStore (param i32 i32)))
+          (memory 1)
+
+          (export "memory" (memory 0))
+          (export "main" (func $main))
+
+          (func $main
+            (i32.store (i32.const 0) (call $getCallDataSize))
+            (call $storageStore (i32.const 100) (i32.const 0))
+          )
+        )
+    deadbeef00000000000000000000000000000000:
+      balance: '100000000000'
+      nonce: ''
+      storage: {}
+      code: |
+        (module
+          (import "ethereum" "call" (func $call (param i64 i32 i32 i32 i32 i32 i32) (result i32)))
+          (import  "ethereum" "getBalance"  (func $getBalance (param i32 i32)))
+          (import "ethereum" "storageStore" (func $storageStore (param i32 i32)))
+          (import "ethereum" "getAddress" (func $getAddress (param i32)))
+          (import "debug" "printMemHex" (func $printMemHex (param i32 i32)))
+          (memory 1 )
+          (data (i32.const 0)  "\01\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\ef\be\ad\de")
+          (data (i32.const 52) "\42\04\20\42\04\20\42\00")
+          (export "memory" (memory 0))
+          (export "main" (func $main))
+
+          (func $main
+            ;; Memory layout:
+            ;;   0 -  20 bytes: address (4)
+            ;;  20 -  52 bytes: value (0)
+            ;;  52 -  56 bytes: data (0x42004200)
+            ;;  56 -  60 bytes: result
+            (i32.store (i32.const 0) (i32.const 0x4))
+            (call $printMemHex (i32.const 0) (i32.const 60))
+            ;;          gas              addrOffset    valOffset      dataOffset     dataLength    resultOffset   resultLength
+            (call $call (i64.const 2000) (i32.const 0) (i32.const 20) (i32.const 52) (i32.const 4) (i32.const 56) (i32.const 4) )
+            drop
+          )
+        )
+  expect:
+    - indexes:
+        data: -1
+        gas: -1
+        value: -1
+      network:
+        - ALL
+      result:
+        deadbeef00000000000000000000000000000000:
+          storage: {
+            0: "100000000000"
+          }
+        deadbeef00000000000000000000000000000001:
+          storage: {
+            0: "0x0"
+          }
+  transaction:
+    data:
+    - '0x'
+    gasLimit:
+    - '0x6acfc0'
+    gasPrice: '0x02'
+    nonce: '0x04'
+    secretKey: "45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8"
+    to: 'deadbeef00000000000000000000000000000000'
+    value:
+    - '0'
