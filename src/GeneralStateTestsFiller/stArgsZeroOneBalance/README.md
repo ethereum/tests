@@ -10,9 +10,9 @@ Pseudo code description:
 foreach opcodes as opcode
 {
  a = 0
-opcode (a,a, ...)
+ opcode (a,a, ...)
 
  a = 1
-opcode (a,a, ...)
+ opcode (a,a, ...)
 }
 ```
