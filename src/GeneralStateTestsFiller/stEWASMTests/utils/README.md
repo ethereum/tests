@@ -17,7 +17,12 @@ mkdir build
 cd build
 cmake -DBUILD_TESTS=OFF ..
 make -j4
-mv wat2wasm ../..
+```
+
+Install wasm-metering
+```
+cd wasm-metering
+npm install
 ```
 
 Setup tests script:
