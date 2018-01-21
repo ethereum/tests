@@ -1,4 +1,4 @@
-getCallDataSize:
+getBalance:
   env:
     currentCoinbase: 2adc25665018aa1fe0e6bc666dac8fc2697ff9ba
     currentDifficulty: '0x020000'
@@ -16,14 +16,19 @@ getCallDataSize:
       balance: '100000000000'
       code: |
         (module
-          (import "ethereum" "getCallDataSize" (func $getCallDataSize (result i32)))
+          (import  "ethereum" "getBalance"  (func $getBalance (param i32 i32)))
           (import "ethereum" "storageStore" (func $storageStore (param i32 i32)))
-          (memory 2)
-          (export "main" (func $main))
+          (import "ethereum" "getAddress" (func $getAddress (param i32)))
+          (memory 1 )
           (export "memory" (memory 0))
+          (export "main" (func $main))
+
           (func $main
-            (i32.store (i32.const 60) (call $getCallDataSize))
-            (call $storageStore (i32.const 0) (i32.const 32))))
+            (call $getAddress (i32.const 0))
+            (call $getBalance  (i32.const 0) (i32.const 100))
+            (call $storageStore (i32.const 200) (i32.const 100))
+          )
+        )
       nonce: ''
       storage: {}
   expect:
@@ -36,16 +41,16 @@ getCallDataSize:
       result:
         deadbeef00000000000000000000000000000000:
           storage: {
-            0: '0x1000000000000000000000000000000000000000000000000000000000'
+            0: "100000000000"
           }
   transaction:
     data:
-    - '0xffffffffffffffffffffffffffffffff'
+    - '0x'
     gasLimit:
-    - '0x5000001'
+    - '0x6acfc0'
     gasPrice: '0x02'
     nonce: '0x00'
-    secretKey: 45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8
+    secretKey: "45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8"
     to: 'deadbeef00000000000000000000000000000000'
     value:
     - '0'

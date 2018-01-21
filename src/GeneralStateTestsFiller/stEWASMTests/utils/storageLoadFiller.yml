@@ -1,4 +1,4 @@
-getCallDataSize:
+storageLoad:
   env:
     currentCoinbase: 2adc25665018aa1fe0e6bc666dac8fc2697ff9ba
     currentDifficulty: '0x020000'
@@ -16,16 +16,22 @@ getCallDataSize:
       balance: '100000000000'
       code: |
         (module
-          (import "ethereum" "getCallDataSize" (func $getCallDataSize (result i32)))
-          (import "ethereum" "storageStore" (func $storageStore (param i32 i32)))
-          (memory 2)
-          (export "main" (func $main))
+          (import  "ethereum" "storageLoad"  (func $storageLoad (param i32 i32)))
+          (import  "ethereum" "storageStore"  (func $storageStore (param i32 i32)))
+          (memory 1 )
+          (data (i32.const 400)  "\01\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
           (export "memory" (memory 0))
+          (export "main" (func $main))
+
           (func $main
-            (i32.store (i32.const 60) (call $getCallDataSize))
-            (call $storageStore (i32.const 0) (i32.const 32))))
+            (call $storageLoad (i32.const 0) (i32.const 500)) ;; mem[500] = sload(0) = "deadbeef"
+            (call $storageStore (i32.const 400) (i32.const 500)) ;; storage[1]  <- mem[500] = "deadbeef"
+          )
+        )
       nonce: ''
-      storage: {}
+      storage: {
+        0: "0xdeadbeef"
+      }
   expect:
     - indexes:
         data: -1
@@ -34,13 +40,15 @@ getCallDataSize:
       network:
         - ALL
       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          balance: "99999957728"
         deadbeef00000000000000000000000000000000:
           storage: {
-            0: '0x1000000000000000000000000000000000000000000000000000000000'
+            1: "0xdeadbeef"
           }
   transaction:
     data:
-    - '0xffffffffffffffffffffffffffffffff'
+    - '0xffff'
     gasLimit:
     - '0x5000001'
     gasPrice: '0x02'
