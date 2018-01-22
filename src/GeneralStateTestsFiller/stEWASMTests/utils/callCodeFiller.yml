@@ -1,0 +1,113 @@
+callCode:
+  env:
+    currentCoinbase: 2adc25665018aa1fe0e6bc666dac8fc2697ff9ba
+    currentDifficulty: '0x020000'
+    currentGasLimit: '89128960'
+    currentNumber: '1'
+    currentTimestamp: '1000'
+    previousHash: 5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6
+  pre:
+    # tx sender
+    a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: '100000000000'
+      code: ''
+      nonce: ''
+      storage: {}
+    # called contract
+    deadbeef00000000000000000000000000000000:
+      balance: '100000000000'
+      code: |
+        (module
+          (import "ethereum" "storageStore" (func $storageStore (param i32 i32)))
+          (memory 1)
+          (export "memory" (memory 0))
+          (export "main" (func $main))
+          (func $main
+            ;; Path
+            (i32.store (i32.const 0) (i32.const 0))
+
+            ;; Value
+            (i32.store (i32.const 32) (i32.const 0xabcd))
+
+            ;; Write to storage
+            (call $storageStore (i32.const 0) (i32.const 32))
+          )
+        )
+      nonce: ''
+      storage: {}
+    # main contract, tx receiver
+    abcdabcdabcdabcdabcdabcdabcdabcdabcdabcd:
+      balance: '100000000000'
+      code: |
+        (module
+          (import "ethereum" "storageStore" (func $storageStore (param i32 i32)))
+          (import "ethereum" "callCode" (func $callCode (param i64 i32 i32 i32 i32 i32 i32) (result i32)))
+
+          (memory 1)
+          (data (i32.const 0)  "\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\ef\be\ad\de")
+
+          (export "memory" (memory 0))
+          (export "main" (func $main))
+
+          (func $main
+            (i32.store
+              (i32.const 96)
+              (call $callCode
+                ;; gas i64 the gas limit
+                (i64.const 100000)
+                ;; addressOffset i32ptr the memory offset to load the address from (address)
+                (i32.const 0)
+                ;; valueOffset i32ptr the memory offset to load the value from (u128)
+                (i32.const 32)
+                ;; dataOffset i32ptr the memory offset to load data from (bytes)
+                (i32.const 32)
+                ;; dataLength i32 the length of data
+                (i32.const 1)
+                ;; resultOffset i32ptr the memory offset to store the result data at (bytes)
+                (i32.const 64)
+                ;; resultLength i32 the maximal length of result data
+                (i32.const 32)
+              )
+            )
+
+            ;; Make sure the call succeeded (result was 1)
+            ;; Path
+            (i32.store (i32.const 128) (i32.const 1))
+            ;; Write it to storage, checked in post state expect statement
+            (call $storageStore
+              ;; pathOffset
+              (i32.const 128)
+              ;; valueOffset
+              (i32.const 96)
+            )
+          )
+        )
+      nonce: ''
+      storage: {}
+  expect:
+    - indexes:
+        data: -1
+        gas: -1
+        value: -1
+      network:
+        - ALL
+      result:
+        abcdabcdabcdabcdabcdabcdabcdabcdabcdabcd:
+          storage: {
+            # make sure the storageStore in the first contract's code wrote to
+            # the second contract's storage
+            0: '0xabcd',
+            # this is the return value of callCode, make sure it's 1 (success)
+            1: '0x01'
+          }
+  transaction:
+    data: 
+    - ''
+    gasLimit:
+    - '0x5000001'
+    gasPrice: '0x02'
+    nonce: '0x00'
+    secretKey: 45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8
+    to: 'abcdabcdabcdabcdabcdabcdabcdabcdabcdabcd'
+    value:
+    - '0'
