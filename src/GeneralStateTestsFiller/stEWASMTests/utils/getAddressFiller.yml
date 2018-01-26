@@ -24,8 +24,13 @@ getAddress:
           (export "main" (func $main))
           (export "memory" (memory 0))
           (func $main
-            (call $getAddress (i32.const 32))
-            (call $storageStore (i32.const 0) (i32.const 32))))
+            (local $addrOffset i32)
+            (local $keyOffset  i32)
+            (set_local $addrOffset (i32.const 32))
+            (set_local $keyOffset  (i32.const 0))
+            
+            (call $getAddress   (get_local $addrOffset))
+            (call $storageStore (get_local $keyOffset) (get_local $addrOffset))))
       nonce: ''
       storage: {}
   expect:

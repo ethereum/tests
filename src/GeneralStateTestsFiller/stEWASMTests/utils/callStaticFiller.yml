@@ -19,7 +19,6 @@ callStatic:
       code: |
         (module
         (import "ethereum" "callStatic" (func $callStatic (param i64 i32 i32 i32) (result i32)))
-        ;;(import "ethereum" "storageStore" (func $storageStore (param i32 i32)))
         (import "debug"    "printMemHex"  (func $printMemHex (param i32 i32)))
         (memory 1)
         ;; 0-20: Address
@@ -44,16 +43,16 @@ callStatic:
       balance: '100000000000'
       code: |
         (module
-        (import "ethereum" "getAddress" (func $getAddress (param i32)))
-        (import "ethereum" "storageStore" (func $storageStore (param i32 i32)))
-        (import "debug"    "printMemHex" (func $printMemHex (param i32 i32)))
-        (memory 1)
-        (export "main" (func $main))
-        (export "memory" (memory 0))
-        (func $main
-        (call $getAddress (i32.const 32))
-        (call $storageStore (i32.const 98) (i32.const 0))
-        (call $printMemHex (i32.const 32) (i32.const 32))))
+          (import "ethereum" "getAddress" (func $getAddress (param i32)))
+          (import "ethereum" "storageStore" (func $storageStore (param i32 i32)))
+          (import "debug"    "printMemHex" (func $printMemHex (param i32 i32)))
+          (memory 1)
+          (export "main" (func $main))
+          (export "memory" (memory 0))
+          (func $main
+            (call $getAddress (i32.const 32))
+            (call $storageStore (i32.const 98) (i32.const 32))
+            (call $printMemHex (i32.const 32) (i32.const 32))))
       nonce: ''
       storage: {}
   expect:
@@ -66,8 +65,8 @@ callStatic:
       result:
         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           balance: '99999979000' # considering 21000 tx cost
-          code: ''
-          nonce: '1'
+#          code: ''
+#          nonce: '1'
           storage: {}
         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           balance: '100000000000'
