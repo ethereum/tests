@@ -19,7 +19,6 @@ revert:
       code: |
         (module
           (import "ethereum" "revert" (func $revert (param i32 i32)))
-          (import "ethereum" "useGas" (func $useGas (param i64)))
           (import "ethereum" "storageStore" (func $storageStore (param i32 i32)))
           (memory 1)
           (export "memory" (memory 0))
@@ -45,9 +44,6 @@ revert:
             ;; Store some data to return
             (i32.store (i32.const 0) (i32.const 0xabcd))
 
-            ;; Make sure this gas use is subtracted in the final state
-            (call $useGas (i64.const 1000))
-
             ;; Revert and return it
             (call $revert
               ;; dataOffset i32ptr the memory offset of the output data (bytes)
@@ -55,10 +51,6 @@ revert:
               ;; length i32 the length of the output data
               (i32.const 2)
             )
-
-            ;; This should never be called
-            ;; (If it is, we'll run out of gas)
-            (call $useGas (i64.const 1000000))
           )
         )
       nonce: ''
@@ -80,30 +72,29 @@ revert:
           (export "main" (func $main))
 
           (func $main
-              ;; memory layout
-              (local $memAddress i32)
-              (local $memValue i32)
-              (local $memRetdata i32)
-              (local $memResult i32)
-              (local $memStoragekey1 i32)
-              (local $memStoragekey2 i32)
-              (local $memStoragekey3 i32)
-              (local $memRetdatasize i32)
+            ;; memory layout
+            (local $memAddress i32)
+            (local $memValue i32)
+            (local $memRetdata i32)
+            (local $memResult i32)
+            (local $memStoragekey1 i32)
+            (local $memStoragekey2 i32)
+            (local $memStoragekey3 i32)
+            (local $memRetdatasize i32)
 
-              (set_local $memAddress (i32.const 0))
-              (set_local $memValue (i32.const 32))
-              (set_local $memRetdata (i32.const 64))
-              (set_local $memResult (i32.const 96))
-              (set_local $memStoragekey1 (i32.const 128))
-              (set_local $memStoragekey2 (i32.const 160))
-              (set_local $memStoragekey3 (i32.const 192))
-              (set_local $memRetdatasize (i32.const 224))
+            (set_local $memAddress (i32.const 0))
+            (set_local $memValue (i32.const 32))
+            (set_local $memRetdata (i32.const 64))
+            (set_local $memResult (i32.const 96))
+            (set_local $memStoragekey1 (i32.const 128))
+            (set_local $memStoragekey2 (i32.const 160))
+            (set_local $memStoragekey3 (i32.const 192))
+            (set_local $memRetdatasize (i32.const 224))
 
-              ;; storage keys
-              (i32.store (get_local $memStoragekey1) (i32.const 0))
-              (i32.store (get_local $memStoragekey2) (i32.const 1))
-              (i32.store (get_local $memStoragekey3) (i32.const 2))
-
+            ;; storage keys
+            (i32.store (get_local $memStoragekey1) (i32.const 0))
+            (i32.store (get_local $memStoragekey2) (i32.const 1))
+            (i32.store (get_local $memStoragekey3) (i32.const 2))
 
             (i32.store
               ;; store success/failure in mem
@@ -150,7 +141,7 @@ revert:
             ;; Store the result so we can check it in expect
             (call $storageStore (get_local $memStoragekey2) (get_local $memRetdata))
 
-            ;; Store the return value to make sure it was 0 (failure)
+            ;; Store the return value to make sure it was 2 (revert)
             (call $storageStore (get_local $memStoragekey3) (get_local $memResult))
           )
         )
@@ -170,20 +161,17 @@ revert:
             0: '0x02',
             # return data (via $returnDataCopy)
             1: '0xabcd',
-            # result (should be zero for failure)
-            2: '0x00',
+            # result (should be 2 for revert)
+            2: '0x02',
             # should not be set as change should be reverted
             3: ''
           }
-        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
-          # Make sure useGas before revert was charged
-          balance: '99999927000'
   transaction:
     data: 
     - ''
     gasLimit:
     - '0x5000001'
-    gasPrice: '0x02'
+    gasPrice: '0x01'
     nonce: '0x00'
     secretKey: 45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8
     to: 'abcdabcdabcdabcdabcdabcdabcdabcdabcdabcd'
