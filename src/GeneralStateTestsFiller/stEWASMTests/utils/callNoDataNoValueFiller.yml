@@ -37,14 +37,15 @@ callNoDataNoValue:
       code: |
         (module
           (import "ethereum" "call" (func $call (param i64 i32 i32 i32 i32 i32 i32) (result i32)))
+          (import "ethereum" "storageStore" (func $storageStore (param i32 i32)))
           (memory 1 )
           (export "memory" (memory 0))
           (export "main" (func $main))
 
           (func $main
             ;;          gas              addrOffset    valOffset      dataOffset     dataLength    resultOffset   resultLength
-            (call $call (i64.const 200000) (i32.const 0) (i32.const 0) (i32.const 0) (i32.const 0) (i32.const 0) (i32.const 0) )
-            drop
+            (i32.store (i32.const 100) (call $call (i64.const 200000) (i32.const 0) (i32.const 0) (i32.const 0) (i32.const 0) (i32.const 0) (i32.const 0) ))
+            (call $storageStore (i32.const 200) (i32.const 100))
           )
         )
   expect:
@@ -57,6 +58,7 @@ callNoDataNoValue:
       result:
         deadbeef00000000000000000000000000000000:
           storage: {
+            0: "0x1"
           }
         deadbeef00000000000000000000000000000001:
           storage: {
