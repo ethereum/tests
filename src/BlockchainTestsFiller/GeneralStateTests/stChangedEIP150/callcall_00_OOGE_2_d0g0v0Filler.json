@@ -10,7 +10,7 @@
                 },
                 "transactions" : [
                     {
-                        "data" : "",
+                        "data" : "0x",
                         "gasLimit" : "0x024a32",
                         "gasPrice" : "0x01",
                         "nonce" : "0x00",
@@ -23,6 +23,50 @@
                 ],
                 "uncleHeaders" : [
                 ]
+            }
+        ],
+        "expect" : [
+            {
+                "network" : "Homestead",
+                "result" : {
+                    "0x1000000000000000000000000000000000000002" : {
+                        "storage" : {
+                        }
+                    }
+                }
+            },
+            {
+                "network" : "EIP150",
+                "result" : {
+                    "0x1000000000000000000000000000000000000002" : {
+                        "storage" : {
+                            "0x02" : "0x01",
+                            "0x05" : "0x02"
+                        }
+                    }
+                }
+            },
+            {
+                "network" : "Byzantium",
+                "result" : {
+                    "0x1000000000000000000000000000000000000002" : {
+                        "storage" : {
+                            "0x02" : "0x01",
+                            "0x05" : "0x02"
+                        }
+                    }
+                }
+            },
+            {
+                "network" : "Constantinople",
+                "result" : {
+                    "0x1000000000000000000000000000000000000002" : {
+                        "storage" : {
+                            "0x02" : "0x01",
+                            "0x05" : "0x02"
+                        }
+                    }
+                }
             }
         ],
         "genesisBlockHeader" : {
