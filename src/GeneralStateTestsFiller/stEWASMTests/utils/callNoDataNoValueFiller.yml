@@ -39,10 +39,12 @@ callNoDataNoValue:
           (import "ethereum" "call" (func $call (param i64 i32 i32 i32 i32 i32 i32) (result i32)))
           (import "ethereum" "storageStore" (func $storageStore (param i32 i32)))
           (memory 1 )
+          (data (i32.const 300)  "\f1\ff\ff\ff\ff\ff\ff\ff\ff\ff\ff\ff\ff\ff\ff\ff\ff\ff\ff\ff")
           (export "memory" (memory 0))
           (export "main" (func $main))
 
           (func $main
+            (call $storageStore (i32.const 200) (i32.const 300))
             ;;          gas              addrOffset    valOffset      dataOffset     dataLength    resultOffset   resultLength
             (i32.store (i32.const 100) (call $call (i64.const 200000) (i32.const 0) (i32.const 0) (i32.const 0) (i32.const 0) (i32.const 0) (i32.const 0) ))
             (call $storageStore (i32.const 200) (i32.const 100))
