@@ -1,0 +1,79 @@
+callNoDataNoValue:
+  env:
+    currentCoinbase: 2adc25665018aa1fe0e6bc666dac8fc2697ff9ba
+    currentDifficulty: '0x020000'
+    currentGasLimit: '89128960'
+    currentNumber: '1'
+    currentTimestamp: '1000'
+    previousHash: 5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6
+  pre:
+    a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: '100000000000'
+      code: ''
+      nonce: '0x4'
+      storage: {}
+    deadbeef00000000000000000000000000000001:
+      balance: '100000000000'
+      nonce: ''
+      storage: {}
+      code: |
+        (module
+          (import  "ethereum" "getCallDataSize" (func  $getCallDataSize (result i32)))
+          (import "ethereum" "storageStore" (func $storageStore (param i32 i32)))
+          (memory 1)
+          (export "memory" (memory 0))
+          (data (i32.const 0)  "\01\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00")
+          (export "main" (func $main))
+
+          (func $main
+            (i32.store (i32.const 100) (i32.const 0))
+            (call $storageStore (i32.const 100) (i32.const 0))
+          )
+        )
+    deadbeef00000000000000000000000000000000:
+      balance: '100000000000'
+      nonce: ''
+      storage: {}
+      code: |
+        (module
+          (import "ethereum" "call" (func $call (param i64 i32 i32 i32 i32 i32 i32) (result i32)))
+          (import "ethereum" "storageStore" (func $storageStore (param i32 i32)))
+          (memory 1 )
+          (data (i32.const 300)  "\f1\ff\ff\ff\ff\ff\ff\ff\ff\ff\ff\ff\ff\ff\ff\ff\ff\ff\ff\ff")
+          (export "memory" (memory 0))
+          (export "main" (func $main))
+
+          (func $main
+            (call $storageStore (i32.const 200) (i32.const 300))
+            ;;          gas              addrOffset    valOffset      dataOffset     dataLength    resultOffset   resultLength
+            (i32.store (i32.const 100) (call $call (i64.const 200000) (i32.const 0) (i32.const 0) (i32.const 0) (i32.const 0) (i32.const 0) (i32.const 0) ))
+            (call $storageStore (i32.const 200) (i32.const 100))
+          )
+        )
+  expect:
+    - indexes:
+        data: -1
+        gas: -1
+        value: -1
+      network:
+        - ALL
+      result:
+        deadbeef00000000000000000000000000000000:
+          storage: {
+            0: "0x1"
+          }
+        deadbeef00000000000000000000000000000001:
+          storage: {
+            0: "0x01"
+          }
+  transaction:
+    data:
+    - '0x'
+    gasLimit:
+    - '0x6acfc0'
+    gasPrice: '0x02'
+    nonce: '0x04'
+    secretKey: "45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8"
+    to: 'deadbeef00000000000000000000000000000000'
+    value:
+    - '0'
