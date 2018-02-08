@@ -15,7 +15,7 @@
                     "gas" : -1,
                     "value" : -1
                 },
-                "network" : ["Byzantium"],
+                "network" : [">=Byzantium"],
                 "result" : {
                         "7db299e0885c85039f56fa504a13dd8ce8a56aa7" : {
                             "shouldnotexist" : "1"
@@ -34,8 +34,9 @@
             },
 	    "a000000000000000000000000000000000000000" : {
                 "balance" : "10",
-		"code" : "create in init code on depth = 1024. account should not be created",
-                "code" : "{ (JUMPI 61 (EQ (CALLDATALOAD 0) 1023)) (MSTORE 0 (+ (CALLDATALOAD 0) 1)) (STATICCALL (GAS) 0xa000000000000000000000000000000000000000 0 32 0 0) (JUMPI 81 (LT (MLOAD 0) 1050)) (JUMPDEST) (MSTORE 0 0x600060006002f0) (CREATE 3 25 7) (JUMPDEST)}",
+		"//code" : "create in init code on depth = 1024. account should not be created",
+                "//code" : "{ (JUMPI 61 (EQ (CALLDATALOAD 0) 1023)) (MSTORE 0 (+ (CALLDATALOAD 0) 1)) (STATICCALL (GAS) 0xa000000000000000000000000000000000000000 0 32 0 0) (JUMPI 81 (LT (MLOAD 0) 1050)) (JUMPDEST) (MSTORE 0 0x600060006002f0) (CREATE 3 25 7) (JUMPDEST)}",
+		"code" : "0x6103ff60003514603d57600160003501600052600060006020600073a0000000000000000000000000000000000000005afa5061041a600051106051575b66600060006002f0600052600760196003f0505b",
                 "nonce" : "0",
                 "storage" : {
                 }
