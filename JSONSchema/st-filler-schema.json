@@ -88,6 +88,12 @@
                 { "$ref": "#/definitions/ConfusedHexType" }
             ]
         },
+        "PrefixedHexOrInteger": {
+            "anyOf": [
+                { "$ref": "#/definitions/IntegerString" },
+                { "$ref": "#/definitions/HexData" }
+            ]
+        },
         "PreStateAccount": {
             "type": "object",
             "additionalproperties": true,
@@ -100,8 +106,8 @@
                     "additionalProperties": false,
                     "patternProperties": {
                         "^0x[0-9a-f]+": {
-                            "description": "storage key with 0x prefix, just the prefix `0x` is null and thus not permitted, a hex quantity is permitted. for the storage value, only hex data is permitted.",
-                            "$ref": "#/definitions/HexData"
+                            "description": "storage key with 0x prefix, just the prefix `0x` is null and thus not permitted, a hex quantity is permitted. for the storage value, only hex data is permitted in filled test. Both decimal and hex allowed for the fillers.",
+                            "$ref": "#/definitions/PrefixedHexOrInteger"
                         }
                     }
                 }
