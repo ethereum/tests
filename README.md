@@ -3,6 +3,9 @@ tests   [![Build Status](https://travis-ci.org/ethereum/tests.svg?branch=develop
 
 Common tests for all clients to test against. See the documentation http://ethereum-tests.readthedocs.io/
 
+Contents of this repository
+---------------------------
+
 Do not change test files in folders: 
 * StateTests
 * BlockchainTests
@@ -34,7 +37,13 @@ All files should be of the form:
 
 Arrays are allowed, but don't use them for sets of properties - only use them for data that is clearly a continuous contiguous sequence of values.
 
-Links
------
+FAQ
+---
 
-* [cpp-ethereum guide to generate test cases](https://github.com/ethereum/cpp-ethereum/blob/develop/doc/generating_tests.rst)
+### I want to test my client, which version shall I use?
+
+[The develop branch in ethereum/tests](https://github.com/ethereum/tests/tree/develop) is the version to use.
+
+### How can I add a new test case?
+
+[testeth guide to generate test cases](https://github.com/ethereum/testeth/blob/develop/doc/generating_tests.rst)
