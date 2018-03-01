@@ -1,0 +1,179 @@
+revert:
+  env:
+    currentCoinbase: 2adc25665018aa1fe0e6bc666dac8fc2697ff9ba
+    currentDifficulty: '0x020000'
+    currentGasLimit: '89128960'
+    currentNumber: '1'
+    currentTimestamp: '1000'
+    previousHash: 5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6
+  pre:
+    # tx sender
+    a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: '100000000000'
+      code: ''
+      nonce: ''
+      storage: {}
+    # called contract
+    deadbeef00000000000000000000000000000000:
+      balance: '100000000000'
+      code: |
+        (module
+          (import "ethereum" "revert" (func $revert (param i32 i32)))
+          (import "ethereum" "storageStore" (func $storageStore (param i32 i32)))
+          (memory 1)
+          (export "memory" (memory 0))
+          (export "main" (func $main))
+          (func $main
+            (local $memStoragekey4 i32)
+            (local $memStorageVal i32)
+
+            ;; Memory layout
+            (set_local $memStoragekey4 (i32.const 192))
+            (set_local $memStorageVal (i32.const 256))
+
+            ;; storage keys
+            ;; Begin at index 4 since other contract writes to 1-3
+            (i32.store (get_local $memStoragekey4) (i32.const 3))
+
+            ;; Value to store in storage
+            (i32.store (get_local $memStorageVal) (i32.const 0xabcd))
+
+            ;; State update BEFORE revert (should be reverted)
+            (call $storageStore (get_local $memStoragekey4) (get_local $memStorageVal))
+
+            ;; Store some data to return
+            (i32.store (i32.const 0) (i32.const 0xabcd))
+
+            ;; Revert and return it
+            (call $revert
+              ;; dataOffset i32ptr the memory offset of the output data (bytes)
+              (i32.const 0)
+              ;; length i32 the length of the output data
+              (i32.const 2)
+            )
+          )
+        )
+      nonce: ''
+      storage: {}
+    # main contract, tx receiver
+    abcdabcdabcdabcdabcdabcdabcdabcdabcdabcd:
+      balance: '100000000000'
+      code: |
+        (module
+          (import "ethereum" "call" (func $call (param i64 i32 i32 i32 i32 i32 i32) (result i32)))
+          (import "ethereum" "storageStore" (func $storageStore (param i32 i32)))
+          (import "ethereum" "getReturnDataSize" (func $getReturnDataSize (result i32)))
+          (import "ethereum" "returnDataCopy" (func $returnDataCopy (param i32 i32 i32)))
+
+          (memory 1)
+          (data (i32.const 0)  "\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\ef\be\ad\de")
+
+          (export "memory" (memory 0))
+          (export "main" (func $main))
+
+          (func $main
+            ;; memory layout
+            (local $memAddress i32)
+            (local $memValue i32)
+            (local $memRetdata i32)
+            (local $memResult i32)
+            (local $memStoragekey1 i32)
+            (local $memStoragekey2 i32)
+            (local $memStoragekey3 i32)
+            (local $memRetdatasize i32)
+
+            (set_local $memAddress (i32.const 0))
+            (set_local $memValue (i32.const 32))
+            (set_local $memRetdata (i32.const 64))
+            (set_local $memResult (i32.const 96))
+            (set_local $memStoragekey1 (i32.const 128))
+            (set_local $memStoragekey2 (i32.const 160))
+            (set_local $memStoragekey3 (i32.const 192))
+            (set_local $memRetdatasize (i32.const 224))
+
+            ;; storage keys
+            (i32.store (get_local $memStoragekey1) (i32.const 0))
+            (i32.store (get_local $memStoragekey2) (i32.const 1))
+            (i32.store (get_local $memStoragekey3) (i32.const 2))
+
+            (i32.store
+              ;; store success/failure in mem
+              (get_local $memResult)
+              (call $call
+                ;; gas i64 the gas limit
+                (i64.const 100000)
+                ;; addressOffset i32ptr the memory offset to load the address from (address)
+                (get_local $memAddress)
+                ;; valueOffset i32ptr the memory offset to load the value from (u128)
+                (get_local $memValue)
+                ;; dataOffset i32ptr the memory offset to load data from (bytes)
+                (get_local $memValue)
+                ;; dataLength i32 the length of data
+                (i32.const 1)
+                ;; These last two args are unused and will be removed.
+                ;; UNUSED: resultOffset i32ptr the memory offset to store the result data at (bytes)
+                (i32.const 0)
+                ;; UNUSED: resultLength i32 the maximal length of result data
+                (i32.const 0)
+              )
+            )
+
+            ;; Store return data size to check it (it should be 2)
+            (i32.store (get_local $memRetdatasize) (call $getReturnDataSize))
+            (call $storageStore (get_local $memStoragekey1) (get_local $memRetdatasize))
+
+            ;; Trap if it doesn't equal 2, since the following code relies on this invariant
+            (if (i32.ne (call $getReturnDataSize) (i32.const 2))
+              (unreachable)
+            )
+
+            ;; Read return data
+            (call $returnDataCopy
+              ;; resultOffset i32ptr the memory offset to load data into (bytes)
+              (get_local $memRetdata)
+              ;; dataOffset i32 the offset in the return data
+              (i32.const 0)
+              ;; length i32 the length of data to copy
+              ;; (this should line up with the return value of $getReturnDataSize, above)
+              (i32.const 2)
+            )
+
+            ;; Store the result so we can check it in expect
+            (call $storageStore (get_local $memStoragekey2) (get_local $memRetdata))
+
+            ;; Store the return value to make sure it was 2 (revert)
+            (call $storageStore (get_local $memStoragekey3) (get_local $memResult))
+          )
+        )
+      nonce: ''
+      storage: {}
+  expect:
+    - indexes:
+        data: -1
+        gas: -1
+        value: -1
+      network:
+        - ALL
+      result:
+        abcdabcdabcdabcdabcdabcdabcdabcdabcdabcd:
+          storage: {
+            # length of return data
+            0: '0x02',
+            # return data (via $returnDataCopy)
+            1: '0xabcd',
+            # result (should be 2 for revert)
+            2: '0x02',
+            # should not be set as change should be reverted
+            3: ''
+          }
+  transaction:
+    data: 
+    - ''
+    gasLimit:
+    - '0x5000001'
+    gasPrice: '0x01'
+    nonce: '0x00'
+    secretKey: 45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8
+    to: 'abcdabcdabcdabcdabcdabcdabcdabcdabcdabcd'
+    value:
+    - '0'

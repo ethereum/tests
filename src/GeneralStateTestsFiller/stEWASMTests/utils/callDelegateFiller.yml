@@ -1,0 +1,96 @@
+# Basic EWASM interface test for callDelegate
+---
+callDelegate:
+  env:
+    currentCoinbase: 2adc25665018aa1fe0e6bc666dac8fc2697ff9ba
+    currentDifficulty: '0x020000'
+    currentGasLimit: '89128960'
+    currentNumber: '1'
+    currentTimestamp: '1000'
+    previousHash: 5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6
+  pre:
+    a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: '100000000000'
+      code: ''
+      nonce: '0'
+      storage: {}
+    b100000000000000000000000000000000000001:
+      balance: '100000000000'
+      code: |
+        (module
+          (import "ethereum" "callDelegate" (func $callDelegate (param i64 i32 i32 i32) (result i32)))
+          ;;(import "ethereum" "storageStore" (func $storageStore (param i32 i32)))
+          (import "debug"    "printMemHex"  (func $printMemHex  (param i32 i32)))
+          (memory 1)
+          ;; 00:20 -> address
+          ;; 20:22 -> data
+          ;; 22:54 -> resultOffset
+          ;; 54:86 -> vmResult (1 or 0)
+          (data (i32.const 0) "\01\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\c1")
+          (data (i32.const 20) "\12\34")
+          (export "main" (func $main))
+          (export "memory" (memory 0))
+          (func $main
+            (i32.store
+              (i32.const 54)
+              (call $callDelegate
+                (i64.const 200000)  ;; Gas
+                (i32.const 0)       ;; addrOffset
+                (i32.const 20)      ;; dataOffset
+                (i32.const 2)))     ;; dataLength
+            (call $printMemHex (i32.const 54) (i32.const 32)) ;; cresult. 1 or 0
+            ))
+                
+      nonce: ''
+      storage: {}
+    c100000000000000000000000000000000000001:
+      balance: '100000000000'
+      code: |
+        (module
+          (import "ethereum" "getAddress" (func $getAddress (param i32)))
+          (import "ethereum" "storageStore" (func $storageStore (param i32 i32)))
+          (import "ethereum" "return"       (func $return (param i32 i32)))
+          (import "debug"    "printMemHex" (func $printMemHex (param i32 i32)))
+          (memory 1)
+          (data (i32.const 64) "\31\32")
+          (export "main" (func $main))
+          (export "memory" (memory 0))
+          (func $main
+            (call $getAddress (i32.const 32))
+            (call $storageStore (i32.const 0) (i32.const 32)) ;; Modify caller Storage
+            (call $return (i32.const 64) (i32.const 2))       ;; Return data
+            ))
+
+      nonce: ''
+      storage: {}
+  expect:
+    - indexes:
+        data: -1
+        gas: -1
+        value: -1
+      network:
+        - ALL
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          code: ''
+          nonce: '1'
+          storage: {}
+        # The storage of the caller is modified by contract c1...01
+        b100000000000000000000000000000000000001:
+          storage: {
+            0: '0xb100000000000000000000000000000000000001'
+            }
+        c100000000000000000000000000000000000001:
+          storage: {
+            }
+  transaction:
+    data:
+    - ''
+    gasLimit:
+    - '0x500000' 
+    gasPrice: '0x01'
+    nonce: '0x00'
+    secretKey: '45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8'
+    to: 'b100000000000000000000000000000000000001'
+    value:
+    - '0'

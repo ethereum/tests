@@ -1,0 +1,78 @@
+getExternalCodeSize:
+  env:
+    currentCoinbase: 2adc25665018aa1fe0e6bc666dac8fc2697ff9ba
+    currentDifficulty: '0x020000'
+    currentGasLimit: '89128960'
+    currentNumber: '1'
+    currentTimestamp: '1000'
+    previousHash: 5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6
+  pre:
+    # tx sender
+    a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: '100000000000'
+      code: ''
+      nonce: ''
+      storage: {}
+    # called contract
+    deadbeef00000000000000000000000000000000:
+      balance: '100000000000'
+      # The simplest possible code segment, len = 8 bytes
+      code: (module)
+      nonce: ''
+      storage: {}
+    # main contract, tx receiver
+    abcdabcdabcdabcdabcdabcdabcdabcdabcdabcd:
+      balance: '100000000000'
+      code: |
+        (module
+          (import "ethereum" "getExternalCodeSize" (func $getExternalCodeSize (param i32) (result i32)))
+          (import "ethereum" "getAddress" (func $getAddress (param i32)))
+          (import "ethereum" "storageStore" (func $storageStore (param i32 i32)))
+          (memory 1)
+          (data (i32.const 96)  "\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\ef\be\ad\de")
+
+          (export "memory" (memory 0))
+          (export "main" (func $main))
+
+          (func $main
+            ;; for now just use our own address since it's easier
+            (call $getAddress (i32.const 64))
+            (i32.store (i32.const 32) (call $getExternalCodeSize (i32.const 64)))
+            (call $storageStore (i32.const 0) (i32.const 32))
+
+            ;; read length of 'deadbeef' account code, store in memory at pos 128
+            (i32.store (i32.const 128) (call $getExternalCodeSize (i32.const 96)))
+            ;; storage key = 1, store in memory at pos 160
+            (i32.store (i32.const 160) (i32.const 1))
+
+            (call $storageStore (i32.const 160) (i32.const 128))
+          )
+        )
+      nonce: ''
+      storage: {}
+  expect:
+    - indexes:
+        data: -1
+        gas: -1
+        value: -1
+      network:
+        - ALL
+      result:
+        abcdabcdabcdabcdabcdabcdabcdabcdabcdabcd:
+          storage: {
+            # the length of the code specified above in pre for the second address
+            0: '0xdb',
+            # the length of the code for the 'deadbeef' account
+            1: '0x08'
+          }
+  transaction:
+    data: 
+    - ''
+    gasLimit:
+    - '0x5000001'
+    gasPrice: '0x02'
+    nonce: '0x00'
+    secretKey: 45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8
+    to: 'abcdabcdabcdabcdabcdabcdabcdabcdabcdabcd'
+    value:
+    - '0'
