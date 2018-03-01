@@ -20,11 +20,16 @@
                 { "$ref": "#/definitions/HexQuantity" }
             ]
         },
-        "HexDataOrEmpty": {
+        "TxData": {
           "oneOf": [
               { "$ref": "#/definitions/HexData" },
-              { "$ref": "#/definitions/EmptyString" }
+              { "$ref": "#/definitions/EmptyString" },
+              { "$ref": "#/definitions/LLLCode" }
           ]
+        },
+        "LLLCode" : {
+            "type" : "string",
+            "pattern" : "^{.*}$"
         },
         "HexNoPrefix" : {
             "pattern": "^([0-9a-fA-F][0-9a-fA-F])+$",
@@ -165,7 +170,7 @@
             },
             "properties": {
                 "data": {
-                    "items": { "$ref": "#/definitions/HexDataOrEmpty" },
+                    "items": { "$ref": "#/definitions/TxData" },
                     "type": "array"
                 },
                 "gasLimit": {
@@ -199,7 +204,7 @@
             },
             "properties": {
                 "data": {
-                    "items": { "$ref": "#/definitions/HexMaybePrefixOrEmpty" },
+                    "items": { "$ref": "#/definitions/TxData" },
                     "type": "array"
                 },
                 "gasLimit": {
