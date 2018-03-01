@@ -1,0 +1,52 @@
+returnPredefinedData:
+  env:
+    currentCoinbase: 2adc25665018aa1fe0e6bc666dac8fc2697ff9ba
+    currentDifficulty: '0x020000'
+    currentGasLimit: '89128960'
+    currentNumber: '1'
+    currentTimestamp: '1000'
+    previousHash: 5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6
+  pre:
+    # tx sender
+    a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: '100000000000'
+      code: ''
+      nonce: ''
+      storage: {}
+  expect:
+    - indexes:
+        data: -1
+        gas: -1
+        value: -1
+      network:
+        - ALL
+      result:
+        # newly-created contract
+        6295ee1b4f6dd65047762f924ecd367c17eabf8f:
+          code: '0x01'
+  transaction:
+    data: 
+    - |
+        (module
+          (import "ethereum" "return" (func $return (param i32 i32)))
+          (memory 1)
+          (data (i32.const 0)  "\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\00\ef\be\ad\de")
+          (export "main" (func $main))
+          (func $main
+            ;; Return it
+            (call $return 
+              ;; dataOffset i32ptr the memory offset of the output data (bytes)
+              (i32.const 0)
+              ;; length i32 the length of the output data
+              (i32.const 20)
+            )
+          )
+        )
+    gasLimit:
+    - '0x5000001'
+    gasPrice: '0x02'
+    nonce: '0x00'
+    secretKey: 45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8
+    to: ''
+    value:
+    - '0'
