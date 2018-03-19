@@ -8,7 +8,7 @@ branches:
     - master
     - develop
 sudo: false
-install: "npm install jsonschema"
+install: "npm install jsonschema json-duplicate-key-handle"
 script:
 # won't fail, but print problems
 - find . -name "*.json" -not -name "*Filler.json" -exec echo {} \; -exec python -mjson.tool {} /dev/null \; 2>&1 | grep -v -B 1 "^\./" | cat
