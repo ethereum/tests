@@ -4,6 +4,7 @@ var fs = require('fs');
 var validate = require('jsonschema').validate;
 var readline = require('readline');
 var process = require('process');
+var dup = require('json-duplicate-key-handle');
 
 var schemaFile = process.argv[2];
 
@@ -29,8 +30,9 @@ rl.on('line', function(fileName) {
 });
 
 rl.on('close', function() {
-    schema = JSON.parse(fs.readFileSync(schemaFile));
-    
+    var jsonString = fs.readFileSync(schemaFile, "utf8");
+    schema = dup.parse(jsonString);
+
     //sort file names alphabetically so that log output ordering is consistent
     fileNames.sort(function(a,b) {
         if(a<b) {
@@ -44,7 +46,8 @@ rl.on('close', function() {
 
     for (var i = 0; i < fileNames.length; i++) {
         try {
-            testCode = JSON.parse(fs.readFileSync(fileNames[i]));
+            var jsonString = fs.readFileSync(fileNames[i], "utf8");
+            testCode = dup.parse(jsonString);
         } catch(e) {
             console.log('error on file:', fileNames[i])
             console.log(e);
