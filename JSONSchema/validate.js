@@ -4,7 +4,7 @@ var fs = require('fs');
 var validate = require('jsonschema').validate;
 var readline = require('readline');
 var process = require('process');
-var dup = require('json-duplicate-key-handle');
+var dup = require('json-dup-key-validator');
 
 var schemaFile = process.argv[2];
 
