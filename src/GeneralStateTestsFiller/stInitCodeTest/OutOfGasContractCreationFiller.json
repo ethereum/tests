@@ -9,29 +9,56 @@
             "previousHash" : "5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6"
         },
         "expect" : [
-            {
+	    {
                 "indexes" : {
                     "data" : -1,
-                    "gas" : -1,
+                    "gas" : 0,
                     "value" : -1
                 },
                 "network" : ["Frontier"],
                 "result" : {
                     "a94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-                        "balance" : "838000"
+		        "balance" : "838000"
                     }
                 }
             },
 	    {
                 "indexes" : {
                     "data" : -1,
-                    "gas" : -1,
+                    "gas" : 0,
                     "value" : -1
                 },
-                "network" : [">=Homestead"],
+                "network" : [">Frontier"],
                 "result" : {
                     "a94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+			"//comment" : "Transaction should be rejected because creation + dataGas > trGas",
                         "balance" : "1000000"
+                    }
+                }
+            },
+	    {
+                "indexes" : {
+                    "data" : 0,
+                    "gas" : 1,
+                    "value" : -1
+                },
+                "network" : [">=Frontier"],
+                "result" : {
+                    "a94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+			"balance" : "550000"
+                    }
+                }
+            },
+	    {
+                "indexes" : {
+                    "data" : 1,
+                    "gas" : 1,
+                    "value" : -1
+                },
+                "network" : [">Frontier"],
+                "result" : {
+                    "a94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+			"balance" : "699771"
                     }
                 }
             }
@@ -47,10 +74,11 @@
         },
         "transaction" : {
             "data" : [
-                "0x600a80600c6000396000f200600160008035811a8100"
+                "0x600a80600c6000396000f200600160008035811a8100",
+		"0x600160015560026001556003600155600460015560056001556006600155"
             ],
             "gasLimit" : [
-                "54000"
+                "54000", "150000"
             ],
             "gasPrice" : "3",
             "nonce" : "0",
