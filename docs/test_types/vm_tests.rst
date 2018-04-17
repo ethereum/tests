@@ -24,7 +24,7 @@ in the ``pre`` portion and form the world state prior to execution. Similarly, a
 of accounts are detailed in the ``post`` portion to specify the end world state.
 
 The gas remaining (``gas``), the log entries (``logs``) as well as any output returned 
-from the code (``output``) is also detailed.
+from the code (``out``) is also detailed.
 
 
 Test Implementation
@@ -130,10 +130,10 @@ Each logentry has the format:
 The gas and output Keys
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-Finally, there are two simple keys, ``gas`` and ``output``:
+Finally, there are two simple keys, ``gas`` and ``out``:
 
 * ``gas``: The amount of gas remaining after execution.
-* ``output``: The data, given as an array of bytes, returned from the execution (using the ``RETURN`` instruction). See $DATA_ARRAY.
+* ``out``: The data, given as an array of bytes, returned from the execution (using the ``RETURN`` instruction). See $DATA_ARRAY.
 
  **$DATA_ARRAY** - type that intended to contain raw byte data   
   and for convenient of the users is populated with three   
