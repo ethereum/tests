@@ -1,5 +1,8 @@
 {
     "ecmul_0-3_5616_28000_96": {
+	"_info" : {
+	    "comment" : "Puts the point (0, 3) and the factor 21888242871839275222246405745257275088548364400416034343698204186575808495616 into the ECMUL precompile, truncating or expanding the input data to 96 bytes. Gives the execution 28000 bytes"
+	},
         "env": {
             "currentCoinbase": "0x3535353535353535353535353535353535353535",
             "currentDifficulty": "0x020000",
@@ -60,7 +63,7 @@
                 "code": "0x"
             },
             "82a978b3f5962a5b0957d9ee9eef472ee55b42f1": {
-		"balance" : "0",
+		"balance" : "150000",
                 "storage": {},
                 "nonce": "173",
                 "code": "0x"
@@ -148,10 +151,29 @@
             ]
         },
         "expect": [
+	    {
+                "indexes": {
+                    "data": 0,
+                    "gas": [3],
+                    "value": 0
+                },
+                "network": [
+                    ">=Byzantium"
+                ],
+                "result": {
+                    "82a978b3f5962a5b0957d9ee9eef472ee55b42f1": {
+                        "nonce": "173",
+                        "balance": "150000"
+                    },
+		    "3535353535353535353535353535353535353535": {
+			"shouldnotexist": "1"
+		    }
+		}
+	    },
             {
                 "indexes": {
                     "data": 0,
-                    "gas": -1,
+                    "gas": [0,1,2],
                     "value": 0
                 },
                 "network": [
@@ -210,6 +232,7 @@
                     },
                     "82a978b3f5962a5b0957d9ee9eef472ee55b42f1": {
                         "storage": {},
+			"nonce": "174",
                         "code": "0x"
                     },
                     "0000000000000000000000000000000000000006": {
@@ -248,11 +271,6 @@
                         "balance": "1000000000000000000",
                         "code": "0x"
                     },
-                    "3535353535353535353535353535353535353535": {
-                        "storage": {},
-                        "nonce": "0",
-                        "code": "0x"
-                    },
                     "0000000000000000000000000000000000000002": {
                         "storage": {},
                         "nonce": "0",
@@ -279,7 +297,6 @@
                     }
                 }
             }
-        ],
-        "explanation": "Puts the point (0, 3) and the factor 21888242871839275222246405745257275088548364400416034343698204186575808495616 into the ECMUL precompile, truncating or expanding the input data to 96 bytes. Gives the execution 28000 bytes"
+        ]
     }
 }
