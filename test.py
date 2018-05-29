@@ -117,6 +117,9 @@ def main():
     else:
         testList = listTests(filePrefixes=sys.argv[2:])
 
+    if len(testList) == 0:
+        _die("No tests listed!!!")
+
     if test_command == "list":
         testDo = lambda t: print(t)
     elif test_command == "format":
