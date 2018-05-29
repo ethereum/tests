@@ -1,8 +1,13 @@
 #!/usr/bin/env python3
 
-# Eventual goals:
+# For help:
 #
-# - Check validity of tests fillers.
+# - Run with no arguments.
+# - Ask Everett Hildenbrandt (@ehildenb).
+
+# Goals:
+#
+# - Validate test inputs with JSON Schemas.
 # - Filter test fillers based on properties.
 # - Convert between various test filler formats.
 
@@ -11,25 +16,10 @@
 # - Test filling.
 # - Test post-state checking.
 
-# Current goals:
-#
-# - Generate GeneralStateTests from VMTests.
-# - Validate test inputs with JSON Schemas.
-
 # Dependencies:
 #
 # - python-json
 # - python-jsonschema
-
-# Input:
-#
-# - VMTest filler directory/name, without suffix Filler.json
-#   eg. vmArithmeticTest/add0
-
-# Output:
-#
-# - GeneralStateTest filler
-#   eg. stVMTests/vmArithmeticTest/add0Filler.json
 
 import sys
 import os
