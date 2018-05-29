@@ -15,12 +15,6 @@
             "type": "object"
         },
         "NullSenderTransaction": {
-            "additionalProperties": true,
-            "not": {
-                "required": [
-                    "secretKey"
-                ]
-            },
             "properties": {
                 "data": {
                     "items": {
@@ -98,12 +92,6 @@
             "type": "object"
         },
         "Transaction": {
-            "additionalProperties": true,
-            "not": {
-                "required": [
-                    "r, s, v"
-                ]
-            },
             "properties": {
                 "data": {
                     "items": {
@@ -123,11 +111,20 @@
                 "nonce": {
                     "$ref": "#/definitions/IntegerOrEmptyOrConfusedHex"
                 },
+                "r": {
+                    "$ref": "#/definitions/TxSigR"
+                },
+                "s": {
+                    "$ref": "#/definitions/TxSigS"
+                },
                 "secretKey": {
                     "$ref": "#/definitions/HexMaybePrefix"
                 },
                 "to": {
                     "$ref": "#/definitions/AddressMaybePrefixOrEmpty"
+                },
+                "v": {
+                    "$ref": "#/definitions/TxSigV"
                 },
                 "value": {
                     "items": {
@@ -148,7 +145,7 @@
             "type": "object"
         },
         "TxData": {
-            "oneOf": [
+            "anyOf": [
                 {
                     "$ref": "#/definitions/HexData"
                 },
