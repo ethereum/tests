@@ -85,6 +85,8 @@ def validateTestFile(jsonFile):
         validateSchema(jsonFile, "JSONSchema/vm-filler-schema.json")
     elif jsonFile.startswith("./src/GeneralStateTestsFiller/"):
         validateSchema(jsonFile, "JSONSchema/st-filler-schema.json")
+    elif jsonFile.startswith("./src/BlockchainTestsFiller/"):
+        validateSchema(jsonFile, "JSONSchema/bc-filler-schema.json")
     elif jsonFile.startswith("./VMTests/"):
         validateSchema(jsonFile, "JSONSchema/vm-schema.json")
     elif jsonFile.startswith("./GeneralStateTests/"):
