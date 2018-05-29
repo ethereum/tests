@@ -1,5 +1,9 @@
 {
     "definitions": {
+        "BadHexData": {
+            "pattern": "^0x[0-9a-zA-Z]*$",
+            "type": "string"
+        },
         "Block": {
             "additionalProperties": false,
             "properties": {
@@ -40,7 +44,7 @@
                     "type": "string"
                 },
                 "rlp": {
-                    "$ref": "#/definitions/HexData"
+                    "$ref": "#/definitions/BadHexData"
                 },
                 "transactions": {
                     "items": {
@@ -179,7 +183,7 @@
                 "storage": {
                     "additionalProperties": false,
                     "patternProperties": {
-                        "^0x[0-9a-f]+": {
+                        "^0x[0-9a-f]*": {
                             "$ref": "#/definitions/HexData",
                             "description": "storage key with 0x. data is HexData"
                         }
@@ -266,12 +270,6 @@
     },
     "patternProperties": {
         "^.*$": {
-            "postState": {
-                "$ref": "#/definitions/TransactionResults"
-            },
-            "pre": {
-                "$ref": "#/definitions/TransactionResults"
-            },
             "properties": {
                 "blocks": {
                     "items": {
@@ -284,18 +282,33 @@
                 },
                 "genesisRLP": {
                     "$ref": "#/definitions/ConfusedHexType"
+                },
+                "postState": {
+                    "patternProperties": {
+                        "^0x[0-9a-f]*": {
+                            "$ref": "#/definitions/PreStateAccount",
+                            "description": "poststate account address with 0x prefix"
+                        }
+                    }
+                },
+                "pre": {
+                    "patternProperties": {
+                        "^0x[0-9a-f]*": {
+                            "$ref": "#/definitions/PreStateAccount",
+                            "description": "prestate account address with 0x prefix"
+                        }
+                    }
                 }
             },
+            "required": [
+                "postState",
+                "pre",
+                "network",
+                "lastblockhash",
+                "blocks",
+                "genesisBlockHeader"
+            ],
             "type": "object"
-        },
-        "required": [
-            "postState",
-            "pre",
-            "network",
-            "lastblockhash",
-            "blocks",
-            "genesisRLP",
-            "genesisBlockHeader"
-        ]
+        }
     }
 }
