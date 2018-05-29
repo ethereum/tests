@@ -14,6 +14,12 @@
 # Current goals:
 #
 # - Generate GeneralStateTests from VMTests.
+# - Validate test inputs with JSON Schemas.
+
+# Dependencies:
+#
+# - python-json
+# - python-jsonschema
 
 # Input:
 #
@@ -28,6 +34,7 @@
 import sys
 import os
 import json
+import jsonschema
 
 def _report(*msg):
     print("== " + sys.argv[0] + ":", *msg, file=sys.stderr)
@@ -50,11 +57,42 @@ def writeJSONFile(fname, fcontents):
     with open(fname, "w") as f:
         f.write(json.dumps(fcontents, indent=4, sort_keys=True))
 
+def findTests(testDir="."):
+    return [ os.path.join(root, file) for root, _, files in os.walk(testDir)
+                                      for file in files
+                                       if file.endswith(".json")
+           ]
+
+def validateSchema(jsonFile, schemaFile):
+    _report("validating", jsonFile, "with", schemaFile)
+    testSchema = readJSONFile(schemaFile)
+    jsonInput = readJSONFile(jsonFile)
+    jsonschema.validate(jsonInput, testSchema)
+
+def validateTestFile(jsonFile):
+    if jsonFile.startswith("src/GeneralStateTestsFiller/"):
+        validateSchema(jsonFile, "JSONSchema/st-filler-schema.json")
+    elif jsonFile.startswith("GeneralStateTests/"):
+        validateSchema(jsonFile, "JSONSchema/st-schema.json")
+    elif jsonFile.startswith("BlockchainTests/"):
+        validateSchema(jsonFile, "JSONSchema/bc-schema.json")
+    else:
+        _die("Do not know how to validate file:", jsonFile)
+
+def validateAllTests():
+    for jsonFile in ( findTests(testDir="src/GeneralStateTestsFiller/")
+                    + findTests(testDir="GeneralStateTests/")
+                    + findTests(testDir="BlockchainTests/")
+                    ):
+        validateTestFile(jsonFile)
+
 def _usage():
     usage_lines = [ ""
-                  , "    usage: " + sys.argv[0] + " format <TEST_FILE>"
+                  , "    usage: " + sys.argv[0] + " format   <TEST_FILE>"
+                  , "    usage: " + sys.argv[0] + " validate [<TEST_FILE>*]"
                   , "    where:"
                   , "            format:      command to format/sort the JSON file."
+                  , "            validate:    command to check a file against the associated JSON schema (defaults to all files)."
                   , "            <TEST_FILE>: JSON test file/filler to read and write with sorted keys/standard formatting."
                   ]
     _die("\n".join(usage_lines))
@@ -66,6 +104,12 @@ def main():
     if test_command == "format":
         file_name = sys.argv[2]
         writeJSONFile(file_name, readJSONFile(file_name))
+    elif test_command == "validate":
+        if len(sys.argv) > 2:
+            for testFile in sys.argv[2:]:
+                validateTestFile(testFile)
+        else:
+            validateAllTests()
     else:
         _usage()
 
