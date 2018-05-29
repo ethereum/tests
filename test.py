@@ -134,18 +134,38 @@ def checkFilled(jsonFile):
             if fillerHash != hashFile(fillerSource):
                 _logerror("Test must be filled:", jsonFile)
 
+# Test format converters
+
+def convertvm2bchain(jsonFile):
+    _logerror("Unimplemented:", jsonFile)
+
+def convertgs2bchain(jsonFile):
+    _logerror("Unimplemented:", jsonFile)
+
+def convert2bchain(jsonFile):
+    if jsonFile.startswith("./src/VMTestsFiller/"):
+        convertvm2bchain(jsonFile)
+    elif jsonFile.startswith("./src/GeneralStateTestsFiller/"):
+        convertgs2bchain(jsonFile)
+    else:
+        _logerror("Do not know how to convert file to BlockchainTestsFiller:", jsonFile)
+
 # Main
 # ====
 
 def _usage():
     usage_lines = [ ""
                   , "    usage: " + sys.argv[0] + " [list|format|validate]  [<TEST_FILE_PREFIX>*]"
+                  , "    usage: " + sys.argv[0] + " convert2gs [(<VM_FILE_PREFIX>|<GS_FILE_PREFIX>)*]"
                   , "    where:"
                   , "            list:               command to list the matching tests."
                   , "            format:             command to format/sort the JSON file."
                   , "            validate:           command to check a file against the associated JSON schema (defaults to all files)."
+                  , "            convert2gs:         command to convert VM and Blockchain tests to GeneralStateTests."
                   , "            <TEST_FILE_PREFIX>: file path prefix to search for tests with."
                   , "                                eg. './src/VMTestsFiller' './VMTests' for all VMTests and their fillers."
+                  , "            <VM_FILE_PREFIX>:   file path prefix which begins with './src/VMTestsFiller'."
+                  , "            <GS_FILE_PREFIX>:   file path prefix which begins with './src/GeneralStateTestsFiller'."
                   ]
     _die("\n".join(usage_lines))
 
@@ -169,6 +189,8 @@ def main():
         testDo = validateTestFile
     elif test_command == "checkFilled":
         testDo = checkFilled
+    elif test_command == "convert2bchain":
+        testDo = convert2bchain
     else:
         _usage()
 
