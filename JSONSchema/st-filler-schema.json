@@ -1,121 +1,61 @@
 {
     "definitions": {
-        "TxData": {
-          "oneOf": [
-              { "$ref": "#/definitions/HexData" },
-              { "$ref": "#/definitions/EmptyString" },
-              { "$ref": "#/definitions/LLLCode" }
-          ]
-        },
-        "LLLCode" : {
-            "type" : "string",
-            "pattern" : "^{.*}$"
-        },
-        "PreStateAccount": {
-            "type": "object",
-            "additionalproperties": true,
-            "properties": {
-                "balance": { "$ref": "#/definitions/IntegerOrEmptyOrConfusedHex" },
-                "code": { "type": "string" },
-                "nonce": { "$ref": "#/definitions/IntegerOrEmptyOrConfusedHex" },
-                "storage": {
-                    "type": "object",
-                    "additionalProperties": false,
-                    "patternProperties": {
-                        "^0x[0-9a-f]+": {
-                            "description": "storage key with 0x prefix, just the prefix `0x` is null and thus not permitted, a hex quantity is permitted. for the storage value, only hex data is permitted in filled test. Both decimal and hex allowed for the fillers.",
-                            "$ref": "#/definitions/PrefixedHexOrInteger"
-                        }
-                    }
-                }
-            }
-        },
-        "NonExistentPostStateAccount": {
-            "type": "object",
-            "additionalproperties": true,
-            "properties": {
-                "shouldnotexist": {
-                    "type": "boolean"
-                }
-            },
-            "required": [
-                "shouldnotexist"
-            ]
-
-        },
-        "TxSigR": {
-            "oneOf": [
-                { "enum" : [ "0" ] }
-            ]
-        },
-        "TxSigS": {
-            "oneOf": [
-                { "enum" : [ "0" ] }
-            ]
-        },
-        "TxSigV": {
-            "description": "a value of 0 is an invalid chainId, but used in a test case",
-            "oneOf": [
-                { "enum" : [ "0", "1" ] }
-            ]
-        },
-        "Transaction": {
-            "type": "object",
-            "additionalProperties": true,
-            "not": {
-              "required": ["r, s, v"]
-            },
-            "properties": {
-                "data": {
-                    "items": { "$ref": "#/definitions/TxData" },
-                    "type": "array"
+        "AccountMap": {
+            "additionalProperties": false,
+            "patternProperties": {
+                "^0x[0-9a-fA-F]{40}": {
+                    "$ref": "#/definitions/PreStateAccount",
+                    "description": "filler prestate addresses with 0x prefix"
                 },
-                "gasLimit": {
-                    "items": { "$ref": "#/definitions/IntegerOrEmptyOrConfusedHex" },
-                    "type": "array"
-                },
-                "gasPrice": { "$ref": "#/definitions/IntegerOrEmptyOrConfusedHex" },
-                "nonce": { "$ref": "#/definitions/IntegerOrEmptyOrConfusedHex" },
-                "secretKey": { "$ref": "#/definitions/HexMaybePrefix" },
-                "to": { "$ref": "#/definitions/AddressMaybePrefixOrEmpty"},
-                "value": {
-                    "items": { "$ref": "#/definitions/IntegerOrEmptyOrConfusedHex" },
-                    "type": "array"
+                "^[0-9a-fA-F]{40}": {
+                    "$ref": "#/definitions/PreStateAccount",
+                    "description": "filler prestate addresses without 0x prefix"
                 }
             },
-            "required": [
-                "data",
-                "gasLimit",
-                "gasPrice",
-                "nonce",
-                "secretKey",
-                "to",
-                "value"
-            ]
+            "type": "object"
         },
         "NullSenderTransaction": {
-            "type": "object",
             "additionalProperties": true,
             "not": {
-              "required": ["secretKey"]
+                "required": [
+                    "secretKey"
+                ]
             },
             "properties": {
                 "data": {
-                    "items": { "$ref": "#/definitions/TxData" },
+                    "items": {
+                        "$ref": "#/definitions/TxData"
+                    },
                     "type": "array"
                 },
                 "gasLimit": {
-                    "items": { "$ref": "#/definitions/IntegerOrEmptyOrConfusedHex" },
+                    "items": {
+                        "$ref": "#/definitions/IntegerOrEmptyOrConfusedHex"
+                    },
                     "type": "array"
                 },
-                "gasPrice": { "$ref": "#/definitions/IntegerOrEmptyOrConfusedHex" },
-                "nonce": { "$ref": "#/definitions/IntegerOrEmptyOrConfusedHex" },
-                "r": { "$ref": "#/definitions/TxSigR" },
-                "s": { "$ref": "#/definitions/TxSigS" },
-                "to": { "$ref": "#/definitions/AddressMaybePrefixOrEmpty"},
-                "v": { "$ref": "#/definitions/TxSigV" },
+                "gasPrice": {
+                    "$ref": "#/definitions/IntegerOrEmptyOrConfusedHex"
+                },
+                "nonce": {
+                    "$ref": "#/definitions/IntegerOrEmptyOrConfusedHex"
+                },
+                "r": {
+                    "$ref": "#/definitions/TxSigR"
+                },
+                "s": {
+                    "$ref": "#/definitions/TxSigS"
+                },
+                "to": {
+                    "$ref": "#/definitions/AddressMaybePrefixOrEmpty"
+                },
+                "v": {
+                    "$ref": "#/definitions/TxSigV"
+                },
                 "value": {
-                    "items": { "$ref": "#/definitions/IntegerOrEmptyOrConfusedHex" },
+                    "items": {
+                        "$ref": "#/definitions/IntegerOrEmptyOrConfusedHex"
+                    },
                     "type": "array"
                 }
             },
@@ -129,70 +69,124 @@
                 "v",
                 "to",
                 "value"
-            ]
+            ],
+            "type": "object"
         },
-        "PostStateAccounts": {
-            "additionalProperties": false,
-            "patternProperties": {
-                "^[0-9a-fA-F]{40}": {
-                    "description": "filler prestate addresses without 0x prefix",
-                    "oneOf": [
-                        {"$ref": "#/definitions/PreStateAccount"},
-                        {"$ref": "#/NonExistentPostStateAccount"}
-                    ]
+        "PreStateAccount": {
+            "additionalproperties": true,
+            "properties": {
+                "balance": {
+                    "$ref": "#/definitions/IntegerOrEmptyOrConfusedHex"
                 },
-                "^0x[0-9a-fA-F]{40}": {
-                    "description": "filler prestate addresses with 0x prefix",
-                    "oneOf": [
-                        {"$ref": "#/definitions/PreStateAccount"},
-                        {"$ref": "#/NonExistentPostStateAccount"}
-                    ]
+                "code": {
+                    "type": "string"
+                },
+                "nonce": {
+                    "$ref": "#/definitions/IntegerOrEmptyOrConfusedHex"
+                },
+                "storage": {
+                    "additionalProperties": false,
+                    "patternProperties": {
+                        "^0x[0-9a-f]+": {
+                            "$ref": "#/definitions/PrefixedHexOrInteger",
+                            "description": "storage key with 0x prefix, just the prefix `0x` is null and thus not permitted, a hex quantity is permitted. for the storage value, only hex data is permitted in filled test. Both decimal and hex allowed for the fillers."
+                        }
+                    },
+                    "type": "object"
                 }
             },
             "type": "object"
         },
-        "ExpectCondition": {
-            "type": "object",
-            "properties": {
-               "result": { "$ref": "#/definitions/AccountMap" },
-               "network": { "$ref": "#/definitions/Networks" },
-               "indexes": {
-                 "properties": {
-                   "data": { "$ref": "#/definitions/Indices" },
-                   "gas": { "$ref": "#/definitions/Indices" },
-                   "value": { "$ref": "#/definitions/Indices" }
-                 },
-                 "result": {
-                   "$ref": "#/definitions/PostStateAccounts"
-                 },
-                 "additionalProperties": false
-               },
-               "//comment": { "type": "string" }
+        "Transaction": {
+            "additionalProperties": true,
+            "not": {
+                "required": [
+                    "r, s, v"
+                ]
             },
-            "additionalProperties": false
+            "properties": {
+                "data": {
+                    "items": {
+                        "$ref": "#/definitions/TxData"
+                    },
+                    "type": "array"
+                },
+                "gasLimit": {
+                    "items": {
+                        "$ref": "#/definitions/IntegerOrEmptyOrConfusedHex"
+                    },
+                    "type": "array"
+                },
+                "gasPrice": {
+                    "$ref": "#/definitions/IntegerOrEmptyOrConfusedHex"
+                },
+                "nonce": {
+                    "$ref": "#/definitions/IntegerOrEmptyOrConfusedHex"
+                },
+                "secretKey": {
+                    "$ref": "#/definitions/HexMaybePrefix"
+                },
+                "to": {
+                    "$ref": "#/definitions/AddressMaybePrefixOrEmpty"
+                },
+                "value": {
+                    "items": {
+                        "$ref": "#/definitions/IntegerOrEmptyOrConfusedHex"
+                    },
+                    "type": "array"
+                }
+            },
+            "required": [
+                "data",
+                "gasLimit",
+                "gasPrice",
+                "nonce",
+                "secretKey",
+                "to",
+                "value"
+            ],
+            "type": "object"
         },
-        "AccountMap": {
-          "additionalProperties": false,
-          "patternProperties": {
-              "^[0-9a-fA-F]{40}": {
-                  "description": "filler prestate addresses without 0x prefix",
-                  "$ref": "#/definitions/PreStateAccount"
-              },
-              "^0x[0-9a-fA-F]{40}": {
-                  "description": "filler prestate addresses with 0x prefix",
-                  "$ref": "#/definitions/PreStateAccount"
-              }
-          },
-          "type": "object"
+        "TxData": {
+            "oneOf": [
+                {
+                    "$ref": "#/definitions/HexData"
+                },
+                {
+                    "$ref": "#/definitions/EmptyString"
+                },
+                {
+                    "$ref": "#/definitions/LLLCode"
+                }
+            ]
         },
-        "Networks": {
-          "type": "array"
+        "TxSigR": {
+            "oneOf": [
+                {
+                    "enum": [
+                        "0"
+                    ]
+                }
+            ]
         },
-        "Indices": {
-            "anyOf": [
-                { "type": "array" },
-                { "type": "string" },
-                { "type": "number" } 
+        "TxSigS": {
+            "oneOf": [
+                {
+                    "enum": [
+                        "0"
+                    ]
+                }
+            ]
+        },
+        "TxSigV": {
+            "description": "a value of 0 is an invalid chainId, but used in a test case",
+            "oneOf": [
+                {
+                    "enum": [
+                        "0",
+                        "1"
+                    ]
+                }
             ]
         }
     },
@@ -202,12 +196,24 @@
                 "env": {
                     "additionalproperties": false,
                     "properties": {
-                        "currentCoinbase": { "$ref": "#/definitions/HexMaybePrefix" },
-                        "currentDifficulty": { "$ref": "#/definitions/IntegerOrConfusedHex" },
-                        "currentGasLimit": { "$ref": "#/definitions/IntegerOrConfusedHex" },
-                        "currentNumber": { "$ref": "#/definitions/IntegerOrConfusedHex" },
-                        "currentTimestamp":  { "$ref": "#/definitions/IntegerOrNumberOrConfusedHex" },
-                        "previousHash": { "$ref": "#/definitions/HexMaybePrefix" }
+                        "currentCoinbase": {
+                            "$ref": "#/definitions/HexMaybePrefix"
+                        },
+                        "currentDifficulty": {
+                            "$ref": "#/definitions/IntegerOrConfusedHex"
+                        },
+                        "currentGasLimit": {
+                            "$ref": "#/definitions/IntegerOrConfusedHex"
+                        },
+                        "currentNumber": {
+                            "$ref": "#/definitions/IntegerOrConfusedHex"
+                        },
+                        "currentTimestamp": {
+                            "$ref": "#/definitions/IntegerOrNumberOrConfusedHex"
+                        },
+                        "previousHash": {
+                            "$ref": "#/definitions/HexMaybePrefix"
+                        }
                     },
                     "required": [
                         "currentCoinbase",
@@ -220,27 +226,33 @@
                     "type": "object"
                 },
                 "expect": {
-                    "type": "array",
-                    "items": { "$ref": "#/definitions/ExpectCondition" }
+                    "items": {
+                        "$ref": "#/definitions/ExpectCondition"
+                    },
+                    "type": "array"
                 },
                 "pre": {
                     "additionalProperties": false,
                     "patternProperties": {
-                        "^[0-9a-fA-F]{40}": {
-                            "description": "filler prestate addresses without 0x prefix",
-                            "$ref": "#/definitions/PreStateAccount"
-                        },
                         "^0x[0-9a-fA-F]{40}": {
-                            "description": "filler prestate addresses with 0x prefix",
-                            "$ref": "#/definitions/PreStateAccount"
+                            "$ref": "#/definitions/PreStateAccount",
+                            "description": "filler prestate addresses with 0x prefix"
+                        },
+                        "^[0-9a-fA-F]{40}": {
+                            "$ref": "#/definitions/PreStateAccount",
+                            "description": "filler prestate addresses without 0x prefix"
                         }
                     },
                     "type": "object"
                 },
                 "transaction": {
                     "oneOf": [
-                        { "$ref": "#/definitions/Transaction" },
-                        { "$ref": "#/definitions/NullSenderTransaction" }
+                        {
+                            "$ref": "#/definitions/Transaction"
+                        },
+                        {
+                            "$ref": "#/definitions/NullSenderTransaction"
+                        }
                     ]
                 }
             },
