@@ -65,9 +65,15 @@ def findTests(testDir="."):
 
 def validateSchema(jsonFile, schemaFile):
     _report("validating", jsonFile, "with", schemaFile)
+
     testSchema = readJSONFile(schemaFile)
-    jsonInput = readJSONFile(jsonFile)
-    jsonschema.validate(jsonInput, testSchema)
+    defSchema  = readJSONFile("JSONSchema/definitions.json")
+    schema     = { "definitions"        : dict(defSchema["definitions"], **testSchema["definitions"])
+                 , "patternProperties"  : testSchema["patternProperties"]
+                 }
+
+    jsonInput  = readJSONFile(jsonFile)
+    jsonschema.validate(jsonInput, schema)
 
 def validateTestFile(jsonFile):
     if jsonFile.startswith("src/GeneralStateTestsFiller/"):
