@@ -57,15 +57,20 @@ def writeJSONFile(fname, fcontents):
     with open(fname, "w") as f:
         f.write(json.dumps(fcontents, indent=4, sort_keys=True))
 
-def findTests(testDir="."):
-    return [ os.path.join(root, file) for root, _, files in os.walk(testDir)
-                                      for file in files
-                                       if file.endswith(".json")
+def findTests(filePrefix=""):
+    return [ fullTest for fullTest in [ os.path.join(root, file) for root, _, files in os.walk(".")
+                                                                 for file in files
+                                                                  if file.endswith(".json")
+                                      ]
+                       if fullTest.startswith(filePrefix)
+           ]
+
+def listTests(filePrefixes=[""]):
+    return [ test for fPrefix in filePrefixes
+                  for test in findTests(filePrefix=fPrefix)
            ]
 
 def validateSchema(jsonFile, schemaFile):
-    _report("validating", jsonFile, "with", schemaFile)
-
     testSchema = readJSONFile(schemaFile)
     defSchema  = readJSONFile("JSONSchema/definitions.json")
     schema     = { "definitions"        : dict(defSchema["definitions"], **testSchema["definitions"])
@@ -76,30 +81,24 @@ def validateSchema(jsonFile, schemaFile):
     jsonschema.validate(jsonInput, schema)
 
 def validateTestFile(jsonFile):
-    if jsonFile.startswith("src/GeneralStateTestsFiller/"):
+    elif jsonFile.startswith("./src/GeneralStateTestsFiller/"):
         validateSchema(jsonFile, "JSONSchema/st-filler-schema.json")
-    elif jsonFile.startswith("GeneralStateTests/"):
+    elif jsonFile.startswith("./GeneralStateTests/"):
         validateSchema(jsonFile, "JSONSchema/st-schema.json")
-    elif jsonFile.startswith("BlockchainTests/"):
+    elif jsonFile.startswith("./BlockchainTests/"):
         validateSchema(jsonFile, "JSONSchema/bc-schema.json")
     else:
         _die("Do not know how to validate file:", jsonFile)
 
-def validateAllTests():
-    for jsonFile in ( findTests(testDir="src/GeneralStateTestsFiller/")
-                    + findTests(testDir="GeneralStateTests/")
-                    + findTests(testDir="BlockchainTests/")
-                    ):
-        validateTestFile(jsonFile)
-
 def _usage():
     usage_lines = [ ""
-                  , "    usage: " + sys.argv[0] + " format   <TEST_FILE>"
-                  , "    usage: " + sys.argv[0] + " validate [<TEST_FILE>*]"
+                  , "    usage: " + sys.argv[0] + " [list|format|validate]  [<TEST_FILE_PREFIX>*]"
                   , "    where:"
-                  , "            format:      command to format/sort the JSON file."
-                  , "            validate:    command to check a file against the associated JSON schema (defaults to all files)."
-                  , "            <TEST_FILE>: JSON test file/filler to read and write with sorted keys/standard formatting."
+                  , "            list:               command to list the matching tests."
+                  , "            format:             command to format/sort the JSON file."
+                  , "            validate:           command to check a file against the associated JSON schema (defaults to all files)."
+                  , "            <TEST_FILE_PREFIX>: file path prefix to search for tests with."
+                  , "                                eg. './src/VMTestsFiller' './VMTests' for all VMTests and their fillers."
                   ]
     _die("\n".join(usage_lines))
 
@@ -107,17 +106,23 @@ def main():
     if len(sys.argv) < 2:
         _usage()
     test_command = sys.argv[1]
-    if test_command == "format":
-        file_name = sys.argv[2]
-        writeJSONFile(file_name, readJSONFile(file_name))
+    if len(sys.argv) == 2:
+        testList = listTests()
+    else:
+        testList = listTests(filePrefixes=sys.argv[2:])
+
+    if test_command == "list":
+        testDo = lambda t: print(t)
+    elif test_command == "format":
+        testDo = lambda t: writeJSONFile(t, readJSONFile(t))
     elif test_command == "validate":
-        if len(sys.argv) > 2:
-            for testFile in sys.argv[2:]:
-                validateTestFile(testFile)
-        else:
-            validateAllTests()
+        testDo = validateTestFile
     else:
         _usage()
+
+    for test in testList:
+        _report(test_command + ":", test)
+        testDo(test)
 
 if __name__ == "__main__":
     main()
