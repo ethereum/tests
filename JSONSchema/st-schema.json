@@ -1,102 +1,47 @@
 {
     "definitions": {
-        "PreStateAccount": {
-            "type": "object",
-            "additionalproperties": true,
-            "properties": {
-                "balance": { "$ref": "#/definitions/ConfusedHexType" },
-                "code": { "$ref": "#/definitions/HexMaybePrefixOrEmpty" },
-                "nonce": { "$ref": "#/definitions/ConfusedHexType" },
-                "storage": {
-                    "type": "object",
-                    "additionalProperties": false,
-                    "patternProperties": {
-                        "^0x[0-9a-f]+": {
-                            "description": "storage key with 0x. data is HexData",
-                            "$ref": "#/definitions/HexData"
-                        }
-                    }
-                }
-            },
-            "required": [
-                "balance",
-                "code",
-                "nonce"
-            ]
-        },
-        "TxSigR": {
-            "oneOf": [
-                { "enum" : [ "0x00" ] }
-            ]
-        },
-        "TxSigS": {
-            "oneOf": [
-                { "enum" : [ "0x00" ] }
-            ]
-        },
-        "TxSigV": {
-            "description": "a value of 0 is an invalid chainId, but used in a test case",
-            "oneOf": [
-                { "enum" : [ "0x00", "0x01" ] }
-            ]
-        },
-        "Transaction": {
-            "type": "object",
-            "additionalProperties": true,
-            "not": {
-              "required": ["r, s, v"]
-            },
-            "properties": {
-                "data": {
-                    "items": { "$ref": "#/definitions/HexDataOrEmpty" },
-                    "type": "array"
-                },
-                "gasLimit": {
-                    "items": { "$ref": "#/definitions/IntegerOrEmptyOrConfusedHex" },
-                    "type": "array"
-                },
-                "gasPrice": { "$ref": "#/definitions/IntegerOrEmptyOrConfusedHex" },
-                "nonce": { "$ref": "#/definitions/IntegerOrEmptyOrConfusedHex" },
-                "secretKey": { "$ref": "#/definitions/HexMaybePrefix" },
-                "to": { "$ref": "#/definitions/AddressMaybePrefixOrEmpty"},
-                "value": {
-                    "items": { "$ref": "#/definitions/IntegerOrEmptyOrConfusedHex" },
-                    "type": "array"
-                }
-            },
-            "required": [
-                "data",
-                "gasLimit",
-                "gasPrice",
-                "nonce",
-                "secretKey",
-                "to",
-                "value"
-            ]
-        },
         "NullSenderTransaction": {
-            "type": "object",
             "additionalProperties": true,
             "not": {
-              "required": ["secretKey"]
+                "required": [
+                    "secretKey"
+                ]
             },
             "properties": {
                 "data": {
-                    "items": { "$ref": "#/definitions/HexMaybePrefixOrEmpty" },
+                    "items": {
+                        "$ref": "#/definitions/HexMaybePrefixOrEmpty"
+                    },
                     "type": "array"
                 },
                 "gasLimit": {
-                    "items": { "$ref": "#/definitions/IntegerOrEmptyOrConfusedHex" },
+                    "items": {
+                        "$ref": "#/definitions/IntegerOrEmptyOrConfusedHex"
+                    },
                     "type": "array"
                 },
-                "gasPrice": { "$ref": "#/definitions/IntegerOrEmptyOrConfusedHex" },
-                "nonce": { "$ref": "#/definitions/IntegerOrEmptyOrConfusedHex" },
-                "r": { "$ref": "#/definitions/TxSigR" },
-                "s": { "$ref": "#/definitions/TxSigS" },
-                "to": { "$ref": "#/definitions/AddressMaybePrefixOrEmpty"},
-                "v": { "$ref": "#/definitions/TxSigV" },
+                "gasPrice": {
+                    "$ref": "#/definitions/IntegerOrEmptyOrConfusedHex"
+                },
+                "nonce": {
+                    "$ref": "#/definitions/IntegerOrEmptyOrConfusedHex"
+                },
+                "r": {
+                    "$ref": "#/definitions/TxSigR"
+                },
+                "s": {
+                    "$ref": "#/definitions/TxSigS"
+                },
+                "to": {
+                    "$ref": "#/definitions/AddressMaybePrefixOrEmpty"
+                },
+                "v": {
+                    "$ref": "#/definitions/TxSigV"
+                },
                 "value": {
-                    "items": { "$ref": "#/definitions/IntegerOrEmptyOrConfusedHex" },
+                    "items": {
+                        "$ref": "#/definitions/IntegerOrEmptyOrConfusedHex"
+                    },
                     "type": "array"
                 }
             },
@@ -110,6 +55,116 @@
                 "v",
                 "to",
                 "value"
+            ],
+            "type": "object"
+        },
+        "PreStateAccount": {
+            "additionalproperties": true,
+            "properties": {
+                "balance": {
+                    "$ref": "#/definitions/ConfusedHexType"
+                },
+                "code": {
+                    "$ref": "#/definitions/HexMaybePrefixOrEmpty"
+                },
+                "nonce": {
+                    "$ref": "#/definitions/ConfusedHexType"
+                },
+                "storage": {
+                    "additionalProperties": false,
+                    "patternProperties": {
+                        "^0x[0-9a-f]+": {
+                            "$ref": "#/definitions/HexData",
+                            "description": "storage key with 0x. data is HexData"
+                        }
+                    },
+                    "type": "object"
+                }
+            },
+            "required": [
+                "balance",
+                "code",
+                "nonce"
+            ],
+            "type": "object"
+        },
+        "Transaction": {
+            "additionalProperties": true,
+            "not": {
+                "required": [
+                    "r, s, v"
+                ]
+            },
+            "properties": {
+                "data": {
+                    "items": {
+                        "$ref": "#/definitions/HexDataOrEmpty"
+                    },
+                    "type": "array"
+                },
+                "gasLimit": {
+                    "items": {
+                        "$ref": "#/definitions/IntegerOrEmptyOrConfusedHex"
+                    },
+                    "type": "array"
+                },
+                "gasPrice": {
+                    "$ref": "#/definitions/IntegerOrEmptyOrConfusedHex"
+                },
+                "nonce": {
+                    "$ref": "#/definitions/IntegerOrEmptyOrConfusedHex"
+                },
+                "secretKey": {
+                    "$ref": "#/definitions/HexMaybePrefix"
+                },
+                "to": {
+                    "$ref": "#/definitions/AddressMaybePrefixOrEmpty"
+                },
+                "value": {
+                    "items": {
+                        "$ref": "#/definitions/IntegerOrEmptyOrConfusedHex"
+                    },
+                    "type": "array"
+                }
+            },
+            "required": [
+                "data",
+                "gasLimit",
+                "gasPrice",
+                "nonce",
+                "secretKey",
+                "to",
+                "value"
+            ],
+            "type": "object"
+        },
+        "TxSigR": {
+            "oneOf": [
+                {
+                    "enum": [
+                        "0x00"
+                    ]
+                }
+            ]
+        },
+        "TxSigS": {
+            "oneOf": [
+                {
+                    "enum": [
+                        "0x00"
+                    ]
+                }
+            ]
+        },
+        "TxSigV": {
+            "description": "a value of 0 is an invalid chainId, but used in a test case",
+            "oneOf": [
+                {
+                    "enum": [
+                        "0x00",
+                        "0x01"
+                    ]
+                }
             ]
         }
     },
@@ -154,6 +209,12 @@
                 "post": {
                     "additionalProperties": false,
                     "properties": {
+                        "Byzantium": {
+                            "$ref": "#/definitions/TransactionResults"
+                        },
+                        "Constantinople": {
+                            "$ref": "#/definitions/TransactionResults"
+                        },
                         "EIP150": {
                             "$ref": "#/definitions/TransactionResults"
                         },
@@ -165,12 +226,6 @@
                         },
                         "Homestead": {
                             "$ref": "#/definitions/TransactionResults"
-                        },
-                        "Byzantium": {
-                            "$ref": "#/definitions/TransactionResults"
-                        },
-                        "Constantinople": {
-                            "$ref": "#/definitions/TransactionResults"
                         }
                     },
                     "type": "object"
@@ -179,16 +234,20 @@
                     "additionalProperties": false,
                     "patternProperties": {
                         "^0x[0-9a-f]*": {
-                            "description": "prestate account address with 0x prefix",
-                            "$ref": "#/definitions/PreStateAccount"
+                            "$ref": "#/definitions/PreStateAccount",
+                            "description": "prestate account address with 0x prefix"
                         }
                     },
                     "type": "object"
                 },
                 "transaction": {
                     "oneOf": [
-                        { "$ref": "#/definitions/Transaction" },
-                        { "$ref": "#/definitions/NullSenderTransaction" }
+                        {
+                            "$ref": "#/definitions/Transaction"
+                        },
+                        {
+                            "$ref": "#/definitions/NullSenderTransaction"
+                        }
                     ]
                 }
             },
