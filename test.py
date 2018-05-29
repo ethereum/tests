@@ -1,9 +1,15 @@
 #!/usr/bin/env python3
 
-# Eventual goals:
+# For help:
 #
-# - Check validity of tests fillers.
-# - Filter test fillers based on properties.
+# - Run with no arguments.
+# - Ask Everett Hildenbrandt (@ehildenb).
+
+# Goals:
+#
+# - Validate test inputs with JSON Schemas.
+# - Check that tests have been filled.
+# - Filter tests based on properties.
 # - Convert between various test filler formats.
 
 # Non-goals:
@@ -11,30 +17,20 @@
 # - Test filling.
 # - Test post-state checking.
 
-# Current goals:
-#
-# - Generate GeneralStateTests from VMTests.
-# - Validate test inputs with JSON Schemas.
-
 # Dependencies:
 #
 # - python-json
 # - python-jsonschema
 
-# Input:
-#
-# - VMTest filler directory/name, without suffix Filler.json
-#   eg. vmArithmeticTest/add0
-
-# Output:
-#
-# - GeneralStateTest filler
-#   eg. stVMTests/vmArithmeticTest/add0Filler.json
-
 import sys
 import os
 import json
 import jsonschema
+
+# Utilities
+# =========
+
+# Errors/Reporting
 
 exit_status = 0
 error_log   = []
@@ -53,6 +49,8 @@ def _die(*msg, exit_code=1):
     _report("exiting...")
     sys.exit(exit_code)
 
+# Filesystem/parsing
+
 def readJSONFile(fname):
     if not os.path.isfile(fname):
         _die("Not a file:", fname)
@@ -66,6 +64,11 @@ def writeJSONFile(fname, fcontents):
     with open(fname, "w") as f:
         f.write(json.dumps(fcontents, indent=4, sort_keys=True))
 
+# Functionality
+# =============
+
+# Listing tests
+
 def findTests(filePrefix=""):
     return [ fullTest for fullTest in [ os.path.join(root, file) for root, _, files in os.walk(".")
                                                                  for file in files
@@ -78,6 +81,8 @@ def listTests(filePrefixes=[""]):
     return [ test for fPrefix in filePrefixes
                   for test in findTests(filePrefix=fPrefix)
            ]
+
+# Schema Validation
 
 def validateSchema(jsonFile, schemaFile):
     testSchema = readJSONFile(schemaFile)
@@ -109,6 +114,9 @@ def validateTestFile(jsonFile):
         _logerror("Do not know how to validate file:", jsonFile)
         return
     validateSchema(jsonFile, schemaFile)
+
+# Main
+# ====
 
 def _usage():
     usage_lines = [ ""
