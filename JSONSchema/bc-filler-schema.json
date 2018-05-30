@@ -7,8 +7,14 @@
         "Block": {
             "additionalProperties": false,
             "properties": {
+                "//comment": {
+                    "type": "string"
+                },
                 "blockHeader": {
                     "$ref": "#/definitions/BlockHeader"
+                },
+                "blockHeaderPremine": {
+
                 },
                 "blocknumber": {
                     "$ref": "#/definitions/IntegerOrEmptyOrConfusedHex"
@@ -61,52 +67,68 @@
         "BlockHeader": {
             "properties": {
                 "bloom": {
-                    "$ref": "#/definitions/HexData"
+                    "$ref": "#/definitions/IntegerOrConfusedHex"
                 },
                 "coinbase": {
                     "$ref": "#/definitions/AddressMaybePrefixOrEmpty"
                 },
                 "difficulty": {
-                    "$ref": "#/definitions/ConfusedHexType"
+                    "$ref": "#/definitions/IntegerOrConfusedHex"
                 },
                 "extraData": {
                     "$ref": "#/definitions/HexMaybePrefixOrEmpty"
                 },
                 "gasLimit": {
-                    "$ref": "#/definitions/ConfusedHexType"
+                    "$ref": "#/definitions/IntegerOrConfusedHex"
                 },
                 "gasUsed": {
-                    "$ref": "#/definitions/ConfusedHexType"
+                    "$ref": "#/definitions/IntegerOrConfusedHex"
                 },
                 "hash": {
-                    "$ref": "#/definitions/ConfusedHexType"
+                    "$ref": "#/definitions/IntegerOrConfusedHex"
                 },
                 "mixHash": {
-                    "$ref": "#/definitions/ConfusedHexType"
+                    "$ref": "#/definitions/IntegerOrConfusedHex"
                 },
                 "nonce": {
-                    "$ref": "#/definitions/ConfusedHexType"
+                    "$ref": "#/definitions/IntegerOrConfusedHex"
                 },
                 "number": {
-                    "$ref": "#/definitions/ConfusedHexType"
+                    "$ref": "#/definitions/IntegerOrConfusedHex"
                 },
                 "parentHash": {
-                    "$ref": "#/definitions/ConfusedHexType"
+                    "$ref": "#/definitions/IntegerOrConfusedHex"
                 },
                 "receiptTrie": {
-                    "$ref": "#/definitions/ConfusedHexType"
+                    "$ref": "#/definitions/IntegerOrConfusedHex"
                 },
                 "stateRoot": {
-                    "$ref": "#/definitions/ConfusedHexType"
+                    "$ref": "#/definitions/IntegerOrConfusedHex"
                 },
                 "timestamp": {
-                    "$ref": "#/definitions/ConfusedHexType"
+                    "$ref": "#/definitions/IntegerOrConfusedHex"
                 },
                 "transactionsTrie": {
-                    "$ref": "#/definitions/ConfusedHexType"
+                    "$ref": "#/definitions/IntegerOrConfusedHex"
                 },
                 "uncleHash": {
-                    "$ref": "#/definitions/ConfusedHexType"
+                    "$ref": "#/definitions/IntegerOrConfusedHex"
+                }
+            }
+        },
+        "BlockHeaderPremine": {
+            "properties": {
+                "difficulty": {
+                    "$ref": "#/definitions/IntegerOrConfusedHex"
+                },
+                "gasLimit": {
+                    "$ref": "#/definitions/IntegerOrConfusedHex"
+                },
+                "timestamp": {
+                    "$ref": "#/definitions/IntegerOrConfusedHex"
+                },
+                "updatePow": {
+                    "$ref": "#/definitions/IntegerOrConfusedHex"
                 }
             }
         },
@@ -175,7 +197,7 @@
                     "$ref": "#/definitions/ConfusedHexType"
                 },
                 "code": {
-                    "$ref": "#/definitions/HexMaybePrefixOrEmpty"
+                    "$ref": "#/definitions/LLLCode"
                 },
                 "nonce": {
                     "$ref": "#/definitions/ConfusedHexType"
@@ -271,9 +293,6 @@
     "patternProperties": {
         "^.*$": {
             "properties": {
-                "_info": {
-                    "$ref": "#/definitions/Info"
-                },
                 "blocks": {
                     "items": {
                         "$ref": "#/definitions/Block"
@@ -286,7 +305,7 @@
                 "genesisRLP": {
                     "$ref": "#/definitions/ConfusedHexType"
                 },
-                "postState": {
+                "expect": {
                     "patternProperties": {
                         "^0x[0-9a-f]*": {
                             "$ref": "#/definitions/PreStateAccount",
@@ -304,10 +323,7 @@
                 }
             },
             "required": [
-                "postState",
                 "pre",
-                "network",
-                "lastblockhash",
                 "blocks",
                 "genesisBlockHeader"
             ],
