@@ -26,8 +26,17 @@ import os
 import json
 import jsonschema
 
+exit_status = 0
+error_log   = []
+
 def _report(*msg):
     print("== " + sys.argv[0] + ":", *msg, file=sys.stderr)
+
+def _logerror(*msg):
+    global exit_status
+    _report("ERROR:", *msg)
+    error_log.append(" ".join(msg))
+    exit_status = 1
 
 def _die(*msg, exit_code=1):
     _report(*msg)
@@ -68,23 +77,28 @@ def validateSchema(jsonFile, schemaFile):
                  }
 
     jsonInput  = readJSONFile(jsonFile)
-    jsonschema.validate(jsonInput, schema)
+    try:
+        jsonschema.validate(jsonInput, schema)
+    except:
+        _logerror("Validation failed:", "schema", schemaFile, "on", jsonFile)
 
 def validateTestFile(jsonFile):
     if jsonFile.startswith("./src/VMTestsFiller/"):
-        validateSchema(jsonFile, "JSONSchema/vm-filler-schema.json")
+        schemaFile = "JSONSchema/vm-filler-schema.json"
     elif jsonFile.startswith("./src/GeneralStateTestsFiller/"):
-        validateSchema(jsonFile, "JSONSchema/st-filler-schema.json")
+        schemaFile = "JSONSchema/st-filler-schema.json"
     elif jsonFile.startswith("./src/BlockchainTestsFiller/"):
-        validateSchema(jsonFile, "JSONSchema/bc-filler-schema.json")
+        schemaFile = "JSONSchema/bc-filler-schema.json"
     elif jsonFile.startswith("./VMTests/"):
-        validateSchema(jsonFile, "JSONSchema/vm-schema.json")
+        schemaFile = "JSONSchema/vm-schema.json"
     elif jsonFile.startswith("./GeneralStateTests/"):
-        validateSchema(jsonFile, "JSONSchema/st-schema.json")
+        schemaFile = "JSONSchema/st-schema.json"
     elif jsonFile.startswith("./BlockchainTests/"):
-        validateSchema(jsonFile, "JSONSchema/bc-schema.json")
+        schemaFile = "JSONSchema/bc-schema.json"
     else:
-        _die("Do not know how to validate file:", jsonFile)
+        _logerror("Do not know how to validate file:", jsonFile)
+        return
+    validateSchema(jsonFile, schemaFile)
 
 def _usage():
     usage_lines = [ ""
@@ -122,6 +136,9 @@ def main():
     for test in testList:
         _report(test_command + ":", test)
         testDo(test)
+
+    if exit_status != 0:
+        _die("Errors reported!\n[ERROR] " + "\n[ERROR] ".join(error_log))
 
 if __name__ == "__main__":
     main()
