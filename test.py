@@ -21,11 +21,13 @@
 #
 # - python-json
 # - python-jsonschema
+# - python-pysha3
 
 import sys
 import os
 import json
 import jsonschema
+import sha3
 
 # Utilities
 # =========
@@ -115,6 +117,23 @@ def validateTestFile(jsonFile):
         return
     validateSchema(jsonFile, schemaFile)
 
+# Check tests filled
+
+def hashFile(fname):
+    with open(fname ,"rb") as f:
+        k = sha3.keccak_256()
+        k.update(f.read())
+        return k.hexdigest()
+
+def checkFilled(jsonFile):
+    jsonTest = readJSONFile(jsonFile)
+    for test in jsonTest:
+        if "_info" in jsonTest[test]:
+            fillerSource = jsonTest[test]["_info"]["source"]
+            fillerHash   = jsonTest[test]["_info"]["sourceHash"]
+            if fillerHash != hashFile(fillerSource):
+                _logerror("Test must be filled:", jsonFile)
+
 # Main
 # ====
 
@@ -148,6 +167,8 @@ def main():
         testDo = lambda t: writeJSONFile(t, readJSONFile(t))
     elif test_command == "validate":
         testDo = validateTestFile
+    elif test_command == "checkFilled":
+        testDo = checkFilled
     else:
         _usage()
 
