@@ -8,10 +8,10 @@ branches:
 sudo: false
 install: "pip install jsonschema"
 script:
-# won't fail, but print problems
-- find . -name 'node_modules' -prune -o \( -name "*.json" -not -name "*Filler.json" -exec echo {} \; -exec python -mjson.tool {} /dev/null \; 2>&1 \) | grep -v -B 1 "^\./" | cat
-# will fail, if linting fails
-- find . -name 'node_modules' -prune -o \( -name "*.json" -not -name "*Filler.json" -print0 \) | xargs -I file -n1 -0 python -mjson.tool file /dev/null
+
+# check valid JSON/well formatted
+- python3 test.py format
+- git diff --quiet &>/dev/null
 
 # check test schemas
-- python3 test.py validate ./src/VMTestsFiller ./src/GeneralStateTestsFiller ./VMTests ./GeneralStateTests ./BlockchainTests
+- python3 test.py validate ./src/VMTestsFiller ./src/GeneralStateTestsFiller ./src/BlockchainTestsFiller ./VMTests ./GeneralStateTests ./BlockchainTests
