@@ -1,5 +1,8 @@
 {
     "definitions": {
+        "Address": {
+            "$ref": "#/definitions/HexLen40"
+        },
         "AddressMaybePrefixOrEmpty": {
             "oneOf": [
                 {
@@ -58,6 +61,20 @@
                 }
             },
             "type": "object"
+        },
+        "FillerInfo": {
+            "description": "Information block for test fillers.",
+            "properties": {
+                "comment": {
+                    "type": "string"
+                },
+                "version": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "comment"
+            ]
         },
         "HexData": {
             "description": "Hex data. see https://github.com/ethereum/wiki/wiki/JSON-RPC#hex-value-encoding",
