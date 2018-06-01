@@ -58,7 +58,11 @@ def readJSONFile(fname):
         _die("Not a file:", fname)
     with open(fname, "r") as f:
         fcontents = f.read()
-        return json.loads(fcontents)
+        try:
+            fjson = json.loads(fcontents)
+            return fjson
+        except:
+            _logerror("Could not load json:", fname)
 
 def writeJSONFile(fname, fcontents):
     if not os.path.exists(os.path.dirname(fname)):
