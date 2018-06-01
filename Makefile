@@ -13,6 +13,17 @@ fill-bc: $(bc_tests:=.fill)
 fill-vm: $(vm_tests:=.fill)
 fill-all: fill-tx fill-gs fill-bc fill-vm
 
+test-tx: $(tx_tests:=.test)
+test-gs: $(gs_tests:=.test)
+test-bc: $(bc_tests:=.test)
+test-vm: $(vm_tests:=.test)
+test-all: test-tx test-gs test-bc test-vm
+
+# Testing command
+
+%.test:
+	testeth -t $* -- --verbosity 2
+
 # Actual filling command
 
 %.fill:
