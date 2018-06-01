@@ -1,0 +1,134 @@
+{
+    "definitions": {
+        "MiningMethod": {
+            "anyOf": [
+                {
+                    "pattern": "NoProof",
+                    "type": "string"
+                }
+            ]
+        },
+        "PreStateAccount": {
+            "additionalProperties": true,
+            "properties": {
+                "balance": {
+                    "$ref": "#/definitions/IntegerOrConfusedHex"
+                },
+                "code": {
+                    "$ref": "#/definitions/HexDataOrEmpty"
+                },
+                "nonce": {
+                    "$ref": "#/definitions/IntegerOrConfusedHex"
+                },
+                "storage": {
+                    "additionalProperties": false,
+                    "patternProperties": {
+                        "^(0x)?[0-9a-f]+": {
+                            "$ref": "#/definitions/HexData",
+                            "description": "storage key with 0x. data is HexData"
+                        }
+                    },
+                    "type": "object"
+                }
+            },
+            "required": [
+                "balance",
+                "code",
+                "nonce",
+                "storage"
+            ],
+            "type": "object"
+        }
+    },
+    "patternProperties": {
+        "^.*$": {
+            "properties": {
+                "_info": {
+                    "$ref": "#/definitions/FillerInfo"
+                },
+                "accounts": {
+                    "additionalProperties": false,
+                    "patternProperties": {
+                        "^(0x)?[0-9a-f]*": {
+                            "$ref": "#/definitions/PreStateAccount",
+                            "description": "prestate account address with 0x prefix"
+                        }
+                    },
+                    "type": "object"
+                },
+                "genesis": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "author": {
+                            "$ref": "#/definitions/AddressMaybePrefixOrEmpty"
+                        },
+                        "difficulty": {
+                            "$ref": "#/definitions/IntegerOrConfusedHex"
+                        },
+                        "extraData": {
+                            "$ref": "#/definitions/HexData"
+                        },
+                        "gasLimit": {
+                            "$ref": "#/definitions/IntegerOrConfusedHex"
+                        },
+                        "nonce": {
+                            "$ref": "#/definitions/IntegerOrConfusedHex"
+                        },
+                        "timestamp": {
+                            "$ref": "#/definitions/IntegerOrConfusedHex"
+                        }
+                    },
+                    "required": [
+                        "author",
+                        "difficulty",
+                        "extraData",
+                        "gasLimit",
+                        "nonce",
+                        "timestamp"
+                    ]
+                },
+                "params": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "EIP150ForkBlock": {
+                            "$ref": "#/definitions/IntegerOrConfusedHex"
+                        },
+                        "EIP158ForkBlock": {
+                            "$ref": "#/definitions/IntegerOrConfusedHex"
+                        },
+                        "byzantiumForkBlock": {
+                            "$ref": "#/definitions/IntegerOrConfusedHex"
+                        },
+                        "chainID": {
+                            "$ref": "#/definitions/HexData"
+                        },
+                        "constantinopleForkBlock": {
+                            "$ref": "#/definitions/IntegerOrConfusedHex"
+                        },
+                        "homesteadForkBlock": {
+                            "$ref": "#/definitions/IntegerOrConfusedHex"
+                        },
+                        "miningMethod": {
+                            "$ref": "#/definitions/MiningMethod"
+                        }
+                    },
+                    "required": [
+                        "EIP150ForkBlock",
+                        "EIP158ForkBlock",
+                        "byzantiumForkBlock",
+                        "chainID",
+                        "constantinopleForkBlock",
+                        "homesteadForkBlock",
+                        "miningMethod"
+                    ]
+                }
+            },
+            "required": [
+                "_info",
+                "accounts",
+                "genesis",
+                "params"
+            ]
+        }
+    }
+}
