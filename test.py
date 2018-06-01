@@ -105,6 +105,7 @@ def validateSchema(testFile, schemaFile):
                  }
 
     testInput  = readFile(testFile)
+    jsonschema.validate(testInput, schema)
     try:
         jsonschema.validate(testInput, schema)
     except:
@@ -117,6 +118,8 @@ def validateTestFile(testFile):
         schemaFile = "JSONSchema/st-filler-schema.json"
     elif testFile.startswith("./src/BlockchainTestsFiller/"):
         schemaFile = "JSONSchema/bc-filler-schema.json"
+    elif testFile.startswith("./src/GenesisTestsFiller/"):
+        schemaFile = "JSONSchema/genesis-filler-schema.json"
     elif testFile.startswith("./VMTests/"):
         schemaFile = "JSONSchema/vm-schema.json"
     elif testFile.startswith("./GeneralStateTests/"):
