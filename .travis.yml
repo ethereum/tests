@@ -9,12 +9,5 @@ sudo: false
 install: "pip install pyyaml jsonschema pysha3"
 script:
 
-# check valid JSON/well formatted
-- python3 test.py format ;
-  git diff --quiet &>/dev/null ;
-
-# check test schemas
-  python3 test.py validate ./src/VMTestsFiller ./src/GeneralStateTestsFiller ./src/BlockchainTestsFiller ./VMTests ./GeneralStateTests ./BlockchainTests ;
-
-# check test filled
-  python3 test.py checkFilled ./BlockhcainTests ./GeneralStateTests ./TransactionTests ./VMTests
+# sanitation checks against testsets
+- make sani
