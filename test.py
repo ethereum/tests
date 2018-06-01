@@ -138,7 +138,7 @@ def checkFilled(jsonFile):
           or jsonFile.startswith("./TransactionTests/")
           or jsonFile.startswith("./BlockchainTests/")
            ):
-        _report("Not a file that is filled:", jsonFile)
+      # _report("Not a file that is filled:", jsonFile)
         return
     for test in jsonTest:
         if "_info" in jsonTest[test]:
@@ -186,7 +186,8 @@ def main():
         _usage()
 
     for test in testList:
-        _report(test_command + ":", test)
+        # turn on for more info
+        # _report(test_command + ":", test)
         testDo(test)
 
     if exit_status != 0:
