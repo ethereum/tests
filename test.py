@@ -20,12 +20,14 @@
 # Dependencies:
 #
 # - python-json
+# - python-yaml
 # - python-jsonschema
 # - python-pysha3
 
 import sys
 import os
 import json
+import yaml
 import jsonschema
 import sha3
 
@@ -53,18 +55,23 @@ def _die(*msg, exit_code=1):
 
 # Filesystem/parsing
 
-def readJSONFile(fname):
+def readFile(fname):
     if not os.path.isfile(fname):
         _die("Not a file:", fname)
     with open(fname, "r") as f:
         fcontents = f.read()
         try:
-            fjson = json.loads(fcontents)
-            return fjson
+            if fname.endswith(".json"):
+                fparsed = json.loads(fcontents)
+            elif fname.endswith(".yml"):
+                fparsed = yaml.load(fcontents)
+            else:
+                _die("Do not know how to load:", fname)
+            return fparsed
         except:
-            _logerror("Could not load json:", fname)
+            _die("Could not load file:", fname)
 
-def writeJSONFile(fname, fcontents):
+def writeFile(fname, fcontents):
     if not os.path.exists(os.path.dirname(fname)):
         os.makedirs(os.path.dirname(fname))
     with open(fname, "w") as f:
@@ -78,7 +85,7 @@ def writeJSONFile(fname, fcontents):
 def findTests(filePrefix=""):
     return [ fullTest for fullTest in [ os.path.join(root, file) for root, _, files in os.walk(".")
                                                                  for file in files
-                                                                  if file.endswith(".json")
+                                                                  if file.endswith(".json") or file.endswith(".yml")
                                       ]
                        if fullTest.startswith(filePrefix)
            ]
@@ -90,36 +97,36 @@ def listTests(filePrefixes=[""]):
 
 # Schema Validation
 
-def validateSchema(jsonFile, schemaFile):
-    testSchema = readJSONFile(schemaFile)
-    defSchema  = readJSONFile("JSONSchema/definitions.json")
+def validateSchema(testFile, schemaFile):
+    testSchema = readFile(schemaFile)
+    defSchema  = readFile("JSONSchema/definitions.json")
     schema     = { "definitions"        : dict(defSchema["definitions"], **testSchema["definitions"])
                  , "patternProperties"  : testSchema["patternProperties"]
                  }
 
-    jsonInput  = readJSONFile(jsonFile)
+    testInput  = readFile(testFile)
     try:
-        jsonschema.validate(jsonInput, schema)
+        jsonschema.validate(testInput, schema)
     except:
-        _logerror("Validation failed:", "schema", schemaFile, "on", jsonFile)
+        _logerror("Validation failed:", "schema", schemaFile, "on", testFile)
 
-def validateTestFile(jsonFile):
-    if jsonFile.startswith("./src/VMTestsFiller/"):
+def validateTestFile(testFile):
+    if testFile.startswith("./src/VMTestsFiller/"):
         schemaFile = "JSONSchema/vm-filler-schema.json"
-    elif jsonFile.startswith("./src/GeneralStateTestsFiller/"):
+    elif testFile.startswith("./src/GeneralStateTestsFiller/"):
         schemaFile = "JSONSchema/st-filler-schema.json"
-    elif jsonFile.startswith("./src/BlockchainTestsFiller/"):
+    elif testFile.startswith("./src/BlockchainTestsFiller/"):
         schemaFile = "JSONSchema/bc-filler-schema.json"
-    elif jsonFile.startswith("./VMTests/"):
+    elif testFile.startswith("./VMTests/"):
         schemaFile = "JSONSchema/vm-schema.json"
-    elif jsonFile.startswith("./GeneralStateTests/"):
+    elif testFile.startswith("./GeneralStateTests/"):
         schemaFile = "JSONSchema/st-schema.json"
-    elif jsonFile.startswith("./BlockchainTests/"):
+    elif testFile.startswith("./BlockchainTests/"):
         schemaFile = "JSONSchema/bc-schema.json"
     else:
-        _logerror("Do not know how to validate file:", jsonFile)
+        _logerror("Do not know how to validate file:", testFile)
         return
-    validateSchema(jsonFile, schemaFile)
+    validateSchema(testFile, schemaFile)
 
 # Check tests filled
 
@@ -130,7 +137,7 @@ def hashFile(fname):
         return k.hexdigest()
 
 def checkFilled(jsonFile):
-    jsonTest = readJSONFile(jsonFile)
+    jsonTest = readFile(jsonFile)
     if not ( jsonFile.startswith("./src/BlockchainTestsFiller/GeneralStateTests/")
         # or jsonFile.startswith("./src/BlockchainTestsFiller/VMTests/")
           or jsonFile.startswith("./VMTests/")
@@ -155,7 +162,7 @@ def _usage():
                   , "    usage: " + sys.argv[0] + " [list|format|validate]  [<TEST_FILE_PREFIX>*]"
                   , "    where:"
                   , "            list:               command to list the matching tests."
-                  , "            format:             command to format/sort the JSON file."
+                  , "            format:             command to format/sort the JSON/YAML file."
                   , "            validate:           command to check a file against the associated JSON schema (defaults to all files)."
                   , "            <TEST_FILE_PREFIX>: file path prefix to search for tests with."
                   , "                                eg. './src/VMTestsFiller' './VMTests' for all VMTests and their fillers."
@@ -177,7 +184,7 @@ def main():
     if test_command == "list":
         testDo = lambda t: print(t)
     elif test_command == "format":
-        testDo = lambda t: writeJSONFile(t, readJSONFile(t))
+        testDo = lambda t: writeFile(t, readFile(t))
     elif test_command == "validate":
         testDo = validateTestFile
     elif test_command == "checkFilled":
