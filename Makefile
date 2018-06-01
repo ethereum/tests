@@ -42,3 +42,4 @@ fill: $(fill-tests)
 
 %.fill:
 	testeth -t $* -- --filltests --verbosity 2
+	python3 test.py format ./$*
