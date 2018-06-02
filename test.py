@@ -141,23 +141,23 @@ def hashFile(fname):
         k.update(f.read())
         return k.hexdigest()
 
-def checkFilled(jsonFile):
-    jsonTest = readFile(jsonFile)
-    if not ( jsonFile.startswith("./src/BlockchainTestsFiller/GeneralStateTests/")
-        # or jsonFile.startswith("./src/BlockchainTestsFiller/VMTests/")
-          or jsonFile.startswith("./VMTests/")
-          or jsonFile.startswith("./GeneralStateTests/")
-          or jsonFile.startswith("./TransactionTests/")
-          or jsonFile.startswith("./BlockchainTests/")
+def checkFilled(testFile):
+    testData = readFile(testFile)
+    if not ( testFile.startswith("./src/BlockchainTestsFiller/GeneralStateTests/")
+        # or testFile.startswith("./src/BlockchainTestsFiller/VMTests/")
+          or testFile.startswith("./VMTests/")
+          or testFile.startswith("./GeneralStateTests/")
+          or testFile.startswith("./TransactionTests/")
+          or testFile.startswith("./BlockchainTests/")
            ):
-      # _report("Not a file that is filled:", jsonFile)
+      # _report("Not a file that is filled:", testFile)
         return
-    for test in jsonTest:
-        if "_info" in jsonTest[test]:
-            fillerSource = jsonTest[test]["_info"]["source"]
-            fillerHash   = jsonTest[test]["_info"]["sourceHash"]
+    for test in testData:
+        if "_info" in testData[test]:
+            fillerSource = testData[test]["_info"]["source"]
+            fillerHash   = testData[test]["_info"]["sourceHash"]
             if fillerHash != hashFile(fillerSource):
-                _logerror("Test must be filled:", jsonFile)
+                _logerror("Test must be filled:", testFile)
 
 # Main
 # ====
