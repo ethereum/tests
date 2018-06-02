@@ -159,6 +159,66 @@ def checkFilled(testFile):
             if fillerHash != hashFile(fillerSource):
                 _logerror("Test must be filled:", testFile)
 
+# Simple Test Conversions
+
+def vm2gs(testFile):
+    if not testFile.startswith("./src/VMTestsFiller/"):
+        _logerror("Cannot convert to GeneralStateTestsFiller:", testFile)
+        return
+
+    testName   = testFile[len("./src/VMTestsFiller/"):]
+    outputFile = "./src/GeneralStateTestsFiller/stVMTests/" + testName
+
+    sourceHash = hashFile(testFile)
+    scriptHash = hashFile(sys.argv[0])
+
+    vmTests = readFile(testFile)
+    gsTests = {}
+    for t in vmTests:
+        try:
+            vmTest = vmTests[t]
+            vmTestAcct = vmTest["exec"]["address"]
+            gsTest = { "_info"  : { "comment"    : "Generated GeneralStateTestsFiller from VMTestsFiller"
+                                  , "scriptHash" : scriptHash
+                                  , "source"     : testFile
+                                  , "sourceHash" : sourceHash
+                                  }
+                     , "env"    : vmTest["env"]
+                     , "pre"    : { "a94f5374fce5edbc8e2a8697c15331677e6ebf0b" : { "balance" : "429496729600"
+                                                                                 , "code"    : ""
+                                                                                 , "nonce"   : "0"
+                                                                                 , "storage" : { }
+                                                                                 }
+                                  , vmTestAcct : vmTest["pre"][vmTestAcct]
+                                  }
+                     , "transaction" : { "data"      : [""]
+                                       , "gasLimit"  : [ vmTest["env"]["currentGasLimit"] ]
+                                       , "gasPrice"  : "1"
+                                       , "nonce"     : "0"
+                                       , "secretKey" : "45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8"
+                                       , "to"        : vmTestAcct
+                                       , "value"     : [ "10" ]
+                                       }
+                     }
+            if not ("previousHash" in gsTest["env"]):
+                gsTest["env"]["previousHash"] = "5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6"
+            if "expect" in vmTest:
+                gsTest["expect"] = [ { "indexes" : { "data"  : -1
+                                                   , "gas"   : -1
+                                                   , "value" : -1
+                                                   }
+                                     , "network" : [">=Frontier"]
+                                     , "result"  : vmTest["expect"]
+                                     }
+                                   ]
+            gsTests[t] = gsTest
+
+        except Exception as e:
+            _logerror("Failing to build GeneralStateTestsFiller from:", testFile, "\n" + str(e))
+            return
+
+    writeFile(outputFile, gsTests)
+
 # Main
 # ====
 
@@ -197,6 +257,8 @@ def main():
         testDo = validateTestFile
     elif test_command == "checkFilled":
         testDo = checkFilled
+    elif test_command == "vm2gs":
+        testDo = vm2gs
     else:
         _usage()
 
