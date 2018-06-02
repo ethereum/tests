@@ -44,6 +44,8 @@ def _report(*msg):
 
 def _logerror(*msg):
     global exit_status
+    global error_log
+
     _report("ERROR:", *msg)
     error_log.append(" ".join(msg))
     exit_status = 1
@@ -108,8 +110,8 @@ def validateSchema(testFile, schemaFile):
     jsonschema.validate(testInput, schema)
     try:
         jsonschema.validate(testInput, schema)
-    except:
-        _logerror("Validation failed:", "schema", schemaFile, "on", testFile)
+    except Exception as e:
+        _logerror("Validation failed:", "schema", schemaFile, "on", testFile, "\n", str(e))
 
 def validateTestFile(testFile):
     if testFile.startswith("./src/VMTestsFiller/"):
@@ -173,6 +175,9 @@ def _usage():
     _die("\n".join(usage_lines))
 
 def main():
+    global error_log
+    global exit_status
+
     if len(sys.argv) < 2:
         _usage()
     test_command = sys.argv[1]
