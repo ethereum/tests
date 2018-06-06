@@ -18,7 +18,7 @@ all_schemas:=$(wildcard JSONSchema/*.json)
 
 # Testset sanitation
 
-sani: sani-schema sani-vm sani-gs
+sani: sani-schema sani-vm sani-gs sani-tx
 
 sani-schema: $(all_schemas:=.format)
 
@@ -29,6 +29,9 @@ sani-vm: $(vm_tests:=.format) $(vm_fillers:=.format) \
 # TODO: enable $(gs_fillers:=.valid) $(gs_tests:=.format) $(gs_fillers:=.format)
 sani-gs: $(gs_tests:=.valid) \
          $(gs_tests:=.filled)
+
+# TODO: enable $(tx_tests:=.format) $(tx_fillers:=.format) $(tx_tests:=.valid) $(tx_fillers:=.valid)
+sani-tx: $(tx_tests:=.filled)
 
 %.format:
 	python3 test.py format ./$*
