@@ -72,6 +72,7 @@ See the `TODO`s in the `Makefile` to see which checkers are enabled for which te
     -   `gs`: GeneralStateTests and GeneralStateTestsFiller
     -   `bc`: BlockchainTests and BlockchainTestsFiller
     -   `tx`: TransactionTests and TransactionTestsFiller
+    -   `gen`: GenesisTestsFiller
 
 ### Runners/Fillers
 
