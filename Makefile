@@ -49,5 +49,5 @@ fill-tests:=$(all-tests:=.fill)
 fill: $(fill-tests)
 
 %.fill:
-	testeth -t $* -- --filltests --verbosity 2
+	testeth -t $* -- --filltests --verbosity 2 --all
 	python3 test.py format ./$*
