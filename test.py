@@ -75,7 +75,7 @@ def writeFile(fname, fcontents):
     if not os.path.exists(os.path.dirname(fname)):
         os.makedirs(os.path.dirname(fname))
     with open(fname, "w") as f:
-        f.write(json.dumps(fcontents, indent=4, sort_keys=True))
+        f.write(json.dumps(fcontents, indent=4, sort_keys=True) + "\n")
 
 # Functionality
 # =============
