@@ -1,8 +1,9 @@
 ETHEREUM_TEST_PATH=$(CURDIR)
 export ETHEREUM_TEST_PATH
 
+# TODO: stop stripping out stEWASMTests from gs_tests
 tx_tests:=$(wildcard TransactionTests/*)
-gs_tests:=$(wildcard GeneralStateTests/*)
+gs_tests:=$(filter-out %stEWASMTests, $(wildcard GeneralStateTests/*))
 bc_tests:=$(wildcard BlockchainTests/*)
 vm_tests:=$(wildcard VMTests/*)
 all_tests:=$(gs_tests) $(bc_tests) $(vm_tests)
@@ -17,14 +18,32 @@ all_schemas:=$(wildcard JSONSchema/*.json)
 
 # Testset sanitation
 
-sani: $(all_schemas:=.format) $(vm_fillers:=.format) $(vm_tests:=.format)
+sani: sani-schema sani-vm sani-gs sani-tx sani-bc
+
+sani-schema: $(all_schemas:=.format)
+
+sani-vm: $(vm_tests:=.format) $(vm_fillers:=.format) \
+         $(vm_tests:=.valid)  $(vm_fillers:=.valid)  \
+         $(vm_tests:=.filled)
+
+# TODO: enable $(gs_fillers:=.valid) $(gs_tests:=.format) $(gs_fillers:=.format)
+sani-gs: $(gs_tests:=.valid) \
+         $(gs_tests:=.filled)
+
+# TODO: enable $(tx_tests:=.format) $(tx_fillers:=.format) $(tx_tests:=.valid) $(tx_fillers:=.valid)
+sani-tx: $(tx_tests:=.filled)
+
+# TODO: enable $(bc_tests:=.format) $(bc_fillers:=.format) $(bc_tests:=.filled)
+sani-bc: $(bc_tests:=.valid)  $(bc_fillers:=.valid)
 
 %.format:
 	python3 test.py format ./$*
 	git diff --quiet --exit-code &>/dev/null
 
-%.sani:
-	python3 test.py validate    ./$*
+%.valid:
+	python3 test.py validate ./$*
+
+%.filled:
 	python3 test.py checkFilled ./$*
 
 # Test running command
@@ -41,5 +60,5 @@ fill-tests:=$(all-tests:=.fill)
 fill: $(fill-tests)
 
 %.fill:
-	testeth -t $* -- --filltests --verbosity 2
+	testeth -t $* -- --filltests --verbosity 2 --all
 	python3 test.py format ./$*
