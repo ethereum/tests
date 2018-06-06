@@ -1,8 +1,9 @@
 ETHEREUM_TEST_PATH=$(CURDIR)
 export ETHEREUM_TEST_PATH
 
+# TODO: stop stripping out stEWASMTests from gs_tests
 tx_tests:=$(wildcard TransactionTests/*)
-gs_tests:=$(wildcard GeneralStateTests/*)
+gs_tests:=$(filter-out %stEWASMTests, $(wildcard GeneralStateTests/*))
 bc_tests:=$(wildcard BlockchainTests/*)
 vm_tests:=$(wildcard VMTests/*)
 all_tests:=$(gs_tests) $(bc_tests) $(vm_tests)
@@ -17,13 +18,17 @@ all_schemas:=$(wildcard JSONSchema/*.json)
 
 # Testset sanitation
 
-sani: sani-schema sani-vm
+sani: sani-schema sani-vm sani-gs
 
 sani-schema: $(all_schemas:=.format)
 
 sani-vm: $(vm_tests:=.format) $(vm_fillers:=.format) \
          $(vm_tests:=.valid)  $(vm_fillers:=.valid)  \
          $(vm_tests:=.filled)
+
+# TODO: enable $(gs_fillers:=.valid) $(gs_tests:=.format) $(gs_fillers:=.format)
+sani-gs: $(gs_tests:=.valid) \
+         $(gs_tests:=.filled)
 
 %.format:
 	python3 test.py format ./$*
