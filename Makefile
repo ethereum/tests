@@ -17,14 +17,22 @@ all_schemas:=$(wildcard JSONSchema/*.json)
 
 # Testset sanitation
 
-sani: $(all_schemas:=.format) $(vm_fillers:=.format) $(vm_tests:=.format)
+sani: sani-schema sani-vm
+
+sani-schema: $(all_schemas:=.format)
+
+sani-vm: $(vm_tests:=.format) $(vm_fillers:=.format) \
+         $(vm_tests:=.valid)  $(vm_fillers:=.valid)  \
+         $(vm_tests:=.filled)
 
 %.format:
 	python3 test.py format ./$*
 	git diff --quiet --exit-code &>/dev/null
 
-%.sani:
-	python3 test.py validate    ./$*
+%.valid:
+	python3 test.py validate ./$*
+
+%.filled:
 	python3 test.py checkFilled ./$*
 
 # Test running command
