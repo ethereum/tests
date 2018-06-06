@@ -6,19 +6,18 @@ tx_tests:=$(wildcard TransactionTests/*)
 gs_tests:=$(filter-out %stEWASMTests, $(wildcard GeneralStateTests/*))
 bc_tests:=$(wildcard BlockchainTests/*)
 vm_tests:=$(wildcard VMTests/*)
-all_tests:=$(gs_tests) $(bc_tests) $(vm_tests)
 
 tx_fillers:=$(wildcard src/TransactionTestsFiller/*)
 gs_fillers:=$(wildcard src/GeneralStateTestsFiller/*)
 bc_fillers:=$(wildcard src/BlockchainTestsFiller/*)
 vm_fillers:=$(filter-out %.sol %.md, $(wildcard src/VMTestsFiller/*))
-all_fillers:=$(gs_fillers) $(bc_fillers) $(vm_fillers)
+gen_fillers:=$(wildcard src/GenesisTestsFiller/*)
 
 all_schemas:=$(wildcard JSONSchema/*.json)
 
 # Testset sanitation
 
-sani: sani-schema sani-vm sani-gs sani-tx sani-bc
+sani: sani-schema sani-vm sani-gs sani-tx sani-bc sani-gen
 
 sani-schema: $(all_schemas:=.format)
 
@@ -35,6 +34,11 @@ sani-tx: $(tx_tests:=.filled)
 
 # TODO: enable $(bc_tests:=.format) $(bc_fillers:=.format) $(bc_tests:=.filled)
 sani-bc: $(bc_tests:=.valid)  $(bc_fillers:=.valid)
+
+# TODO: enable $(gen_tests:=.format) $(gen_tests:=.valid) $(gen_tests:=.filled)
+sani-gen: $(gen_fillers:=.format) \
+          $(gen_fillers:=.valid)  \
+          $(gen_fillers:=.filled)
 
 %.format:
 	python3 test.py format ./$*
