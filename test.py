@@ -126,6 +126,8 @@ def validateTestFile(testFile):
         schemaFile = "JSONSchema/st-schema.json"
     elif testFile.startswith("./BlockchainTests/"):
         schemaFile = "JSONSchema/bc-schema.json"
+    elif testFile.startswith("./GenesisTests/"):
+        schemaFile = "JSONSchema/genesis-schema.json"
     else:
         _logerror("Do not know how to validate file:", testFile)
         return

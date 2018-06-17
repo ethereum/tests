@@ -1,0 +1,261 @@
+{
+    "definitions": {
+        "ConsensusEngine": {
+            "anyOf": [
+                {
+                    "properties": {
+                        "Ethhash": {
+                            "$ref": "#/definitions/ConsensusEngineEthhash"
+                        }
+                    }
+                },
+                {
+                    "properties": {
+                        "authorityRound": {
+                            "$ref": "#/definitions/ConsensusEnginePoA"
+                        }
+                    }
+                }
+            ]
+        },
+        "ConsensusEngineEthhash": {
+            "properties": {
+                "params": {
+                    "properties": {
+                        "blockReward": {
+                            "$ref": "#/definitions/HexData",
+                            "type": "number"
+                        },
+                        "difficultyBoundDivisor": {
+                            "$ref": "#/definitions/HexData"
+                        },
+                        "durationLimit": {
+                            "$ref": "#/definitions/HexData"
+                        },
+                        "homesteadTransition": {
+                            "$ref": "#/definitions/HexData"
+                        },
+                        "minimumDifficulty": {
+                            "$ref": "#/definitions/HexData"
+                        }
+                    },
+                    "required": [
+                        "blockReward",
+                        "difficultyBoundDivisor",
+                        "durationLimit",
+                        "homesteadTransition",
+                        "minimumDifficulty"
+                    ]
+                }
+            }
+        },
+        "ConsensusEnginePoA": {
+            "properties": {
+                "params": {
+                    "properties": {
+                        "maximumUncleCount": {
+                            "multipleOf": 1,
+                            "type": "number"
+                        },
+                        "stepDuration": {
+                            "$ref": "#/definitions/IntegerString"
+                        },
+                        "validators": {
+                            "properties": {
+                                "contract": "#/definitions/Address"
+                            }
+                        }
+                    },
+                    "required": [
+                        "maximumUncleCount",
+                        "stepDuration",
+                        "validators"
+                    ]
+                }
+            }
+        },
+        "GenesisSeal": {
+            "anyOf": [
+                {
+                    "properties": {
+                        "ethhash": {
+                            "$ref": "#/definitions/GenesisSealEthhash"
+                        }
+                    }
+                },
+                {
+                    "properties": {
+                        "authorityRound": {
+                            "$ref": "#/definitions/GenesisSealPoA"
+                        }
+                    }
+                }
+            ]
+        },
+        "GenesisSealEthhash": {
+            "properties": {
+                "mixHash": {
+                    "$ref": "#/definitions/HexData"
+                },
+                "nonce": {
+                    "$ref": "#/definitions/HexData"
+                }
+            },
+            "required": [
+                "mixHash",
+                "nonce"
+            ]
+        },
+        "GenesisSealPoA": {
+            "properties": {
+                "signature": {
+                    "$ref": "#/definitions/HexData"
+                },
+                "step": {
+                    "$ref": "#/definitions/HexData"
+                }
+            },
+            "required": [
+                "signature",
+                "step"
+            ]
+        },
+        "MiningMethod": {
+            "anyOf": [
+                {
+                    "pattern": "NoProof",
+                    "type": "string"
+                }
+            ]
+        },
+        "PreStateAccount": {
+            "additionalProperties": true,
+            "properties": {
+                "balance": {
+                    "$ref": "#/definitions/HexData"
+                },
+                "code": {
+                    "$ref": "#/definitions/HexDataOrEmpty"
+                },
+                "nonce": {
+                    "$ref": "#/definitions/HexData"
+                },
+                "storage": {
+                    "additionalProperties": false,
+                    "patternProperties": {
+                        "^(0x)?([0-9a-f][0-9a-f])+": {
+                            "$ref": "#/definitions/HexData",
+                            "description": "storage key with 0x. data is HexData"
+                        }
+                    },
+                    "type": "object"
+                }
+            },
+            "required": [
+                "balance"
+            ],
+            "type": "object"
+        }
+    },
+    "patternProperties": {
+        "^.*$": {
+            "properties": {
+                "_info": {
+                    "$ref": "#/definitions/FillerInfo"
+                },
+                "accounts": {
+                    "additionalProperties": false,
+                    "patternProperties": {
+                        "^(0x)?[0-9a-f]*": {
+                            "$ref": "#/definitions/PreStateAccount",
+                            "description": "prestate account address with 0x prefix"
+                        }
+                    },
+                    "type": "object"
+                },
+                "engine": {
+                    "$ref": "#/definitions/ConsensusEngine"
+                },
+                "forks": {
+                    "properties": {
+                        "EIP150ForkBlock": {
+                            "$ref": "#/definitions/HexData"
+                        },
+                        "EIP158ForkBlock": {
+                            "$ref": "#/definitions/HexData"
+                        },
+                        "byzantiumForkBlock": {
+                            "$ref": "#/definitions/HexData"
+                        },
+                        "constantinopleForkBlock": {
+                            "$ref": "#/definitions/HexData"
+                        },
+                        "daoForkBlock": {
+                            "$ref": "#/definitions/HexData"
+                        },
+                        "homesteadForkBlock": {
+                            "$ref": "#/definitions/HexData"
+                        }
+                    },
+                    "type": "object"
+                },
+                "genesis": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "author": {
+                            "$ref": "#/definitions/Address"
+                        },
+                        "difficulty": {
+                            "$ref": "#/definitions/HexData"
+                        },
+                        "extraData": {
+                            "$ref": "#/definitions/HexData"
+                        },
+                        "gasLimit": {
+                            "$ref": "#/definitions/HexData"
+                        },
+                        "nonce": {
+                            "$ref": "#/definitions/HexData"
+                        },
+                        "number": {
+                            "$ref": "#/definitions/HexData"
+                        },
+                        "seal": {
+                            "$ref": "#/definitions/GenesisSeal"
+                        },
+                        "timestamp": {
+                            "$ref": "#/definitions/HexData"
+                        }
+                    },
+                    "required": [
+                        "difficulty",
+                        "gasLimit",
+                        "seal"
+                    ]
+                },
+                "params": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "chainID": {
+                            "$ref": "#/definitions/HexData"
+                        },
+                        "miningMethod": {
+                            "$ref": "#/definitions/MiningMethod"
+                        }
+                    },
+                    "required": [
+                        "chainID",
+                        "miningMethod"
+                    ]
+                }
+            },
+            "required": [
+                "_info",
+                "accounts",
+                "engine",
+                "genesis",
+                "params"
+            ]
+        }
+    }
+}
