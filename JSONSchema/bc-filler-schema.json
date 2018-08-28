@@ -218,6 +218,9 @@
             ],
             "type": "object"
         },
+	"sealEngine": {
+	    "$ref": "#/definitions/SealEngineType"
+	},
         "Transaction": {
             "additionalProperties": true,
             "not": {
@@ -227,7 +230,7 @@
             },
             "properties": {
                 "data": {
-                    "$ref": "#/definitions/HexDataOrEmpty"
+                    "$ref": "#/definitions/TxData"
                 },
                 "gasLimit": {
                     "$ref": "#/definitions/IntegerOrEmptyOrConfusedHex"
@@ -257,6 +260,19 @@
                 "value"
             ],
             "type": "object"
+        },
+        "TxData": {
+            "anyOf": [
+                {
+                    "$ref": "#/definitions/HexData"
+                },
+                {
+                    "$ref": "#/definitions/EmptyString"
+                },
+                {
+                    "$ref": "#/definitions/LLLCode"
+                }
+            ]
         },
         "TxSigR": {
             "oneOf": [
@@ -318,7 +334,10 @@
                             "description": "prestate account address with 0x prefix"
                         }
                     }
-                }
+                },
+		"sealEngine": {
+		    "$ref": "#/definitions/SealEngineType"
+		}
             },
             "required": [
                 "pre",
