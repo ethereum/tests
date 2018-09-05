@@ -46,6 +46,14 @@
                         "balance" : "1",
 			"code" : "0x6010ff"
                     },
+		    "af3ecba2fe09a4f6c19f16a9d119e44e08c2da01" : {
+                        "balance" : "1",
+			"code" : "0x6010ff"
+                    },
+		    "ec2c6832d00680ece8ff9254f81fdab0a5a2ac50" : {
+                        "balance" : "1",
+			"code" : "0x6010ff"
+                    },
 		    "0000000000000000000000000000000000000010" : {
 			"shouldnotexist" : "1"
 		    },
@@ -72,11 +80,27 @@
                 "nonce" : "0",
                 "storage" : {
                 }
+            },
+	    "af3ecba2fe09a4f6c19f16a9d119e44e08c2da01" : {
+                "balance" : "1",
+                "code" : "{ (SELFDESTRUCT 0x10) }",
+                "nonce" : "0",
+                "storage" : {
+                }
+            },
+	    "ec2c6832d00680ece8ff9254f81fdab0a5a2ac50" : {
+                "balance" : "1",
+                "code" : "{ (SELFDESTRUCT 0x10) }",
+                "nonce" : "0",
+                "storage" : {
+                }
             }
         },
         "transaction" : {
             "data" : [
-                "{ (CALL 50000 0xe2b35478fdd26477cc576dd906e6277761246a3c 0 0 0 0 0) (CREATE2 0 0 0 0) (MSTORE 0 0x112233) (REVERT 0 10) }"
+                "{ (CALL 50000 0xe2b35478fdd26477cc576dd906e6277761246a3c 0 0 0 0 0) (CREATE2 0 0 0 0) (MSTORE 0 0x112233) (REVERT 29 3) }",
+		"{ (CALL 50000 0xe2b35478fdd26477cc576dd906e6277761246a3c 0 0 0 0 0) (MSTORE 0 0x6001600155) (CREATE2 0 27 5 0) (MSTORE 0 0x112233) (REVERT 29 3) }",
+		"{ (CALL 50000 0xe2b35478fdd26477cc576dd906e6277761246a3c 0 0 0 0 0) (MSTORE 0 0x6460016001556000526005601bf3) (CREATE2 0 18 14 0) (MSTORE 0 0x112233) (REVERT 29 3) }"
             ],
             "gasLimit" : [
                 "400000"
