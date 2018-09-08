@@ -1,7 +1,7 @@
 {
     "create2checkFieldsInInitcode" : {
 	"_info" : {
-	    "comment" : "Check opcode values in create2 init code. Create2 called with different call types."
+	    "comment" : "Check opcode values in create2 init code. Create2 called with different call types. CREATE2 inside CRETE2 inside CALL, CALLCODE, DELEGATECALL, STATICCALL << test values of  SENDER,address and so on."
 	},
         "env" : {
             "currentCoinbase" : "2adc25665018aa1fe0e6bc666dac8fc2697ff9ba",
@@ -14,7 +14,7 @@
         "expect" : [
             {
                 "indexes" : {
-                    "data" : 0,
+                    "data" : [0,4],
                     "gas" : -1,
                     "value" : -1
                 },
@@ -95,12 +95,66 @@
             },
 	    {
                 "indexes" : {
-                    "data" : 3,
+                    "data" : [3, 7],
                     "gas" : -1,
                     "value" : -1
                 },
                 "network" : [">=Constantinople"],
                 "result" : {
+                    "a94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                        "nonce" : "1"
+                    }
+                }
+            },
+	    {
+                "indexes" : {
+                    "data" : 5,
+                    "gas" : -1,
+                    "value" : -1
+                },
+                "network" : [">=Constantinople"],
+                "result" : {
+                    "dd216ee8d9ec9d48768efa989e3c599b0327f1ba" : {
+                        "balance" : "0",
+			"nonce" : "1",
+			"storage" : {
+			    "0x00" : "0xdd216ee8d9ec9d48768efa989e3c599b0327f1ba",
+			    "0x01" : "0",
+			    "0x02" : "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b",
+			    "0x03" : "0x1bebe06c0893a047ea4ce821f24668d9034e204f",
+			    "0x04" : "0",
+			    "0x05" : "0",
+			    "0x06" : "0x21",
+			    "0x07" : "1"
+			}
+                    },
+                    "a94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                        "nonce" : "1"
+                    }
+                }
+            },
+	    {
+                "indexes" : {
+                    "data" : 6,
+                    "gas" : -1,
+                    "value" : -1
+                },
+                "network" : [">=Constantinople"],
+                "result" : {
+                    "ce2c5c4667c2e59af5767b677a65e31fa14f62ad" : {
+                        "balance" : "0",
+			"nonce" : "1",
+			"storage" : {
+			    "0x00" : "0xce2c5c4667c2e59af5767b677a65e31fa14f62ad",
+			    "0x01" : "0",
+			    "0x02" : "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b",
+			    "0x03" : "0xab166837a8bc12757f73555d296f726df214cd4c",
+			    "0x04" : "0",
+			    "0x05" : "0",
+			    "0x06" : "0x21",
+			    "0x07" : "1"
+			}
+                    },
                     "a94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
                         "nonce" : "1"
                     }
@@ -129,9 +183,23 @@
                 "storage" : {
                 }
             },
+            "1100000000000000000000000000000000000000" : {
+                "balance" : "0x00",
+                "code" : "{ (CREATE2 0 0 (lll (seq (CALL (GAS) 0xf000000000000000000000000000000000000000 0 0 0 0 0)) 0) 0) }",
+                "nonce" : "0",
+                "storage" : {
+                }
+            },
             "2000000000000000000000000000000000000000" : {
                 "balance" : "0x00",
                 "code" : "{ (CALLCODE (GAS) 0xf000000000000000000000000000000000000000 0 0 0 0 0) }",
+                "nonce" : "0",
+                "storage" : {
+                }
+            },
+            "2200000000000000000000000000000000000000" : {
+                "balance" : "0x00",
+                "code" : "{ (CREATE2 0 0 (lll (seq (CALLCODE (GAS) 0xf000000000000000000000000000000000000000 0 0 0 0 0) ) 0) 0) }",
                 "nonce" : "0",
                 "storage" : {
                 }
@@ -143,9 +211,23 @@
                 "storage" : {
                 }
             },
+            "3300000000000000000000000000000000000000" : {
+                "balance" : "0x00",
+                "code" : "{ (CREATE2 0 0 (lll (seq (DELEGATECALL (GAS) 0xf000000000000000000000000000000000000000 0 0 0 0) ) 0) 0) }",
+                "nonce" : "0",
+                "storage" : {
+                }
+            },
             "4000000000000000000000000000000000000000" : {
                 "balance" : "0x00",
                 "code" : "{ (STATICCALL (GAS) 0xf200000000000000000000000000000000000000 0 0 0 256) [[10]] (MLOAD 0) }",
+                "nonce" : "0",
+                "storage" : {
+                }
+            },
+            "4400000000000000000000000000000000000000" : {
+                "balance" : "0x00",
+                "code" : "{ (CREATE2 0 0 (lll (seq (STATICCALL (GAS) 0xf200000000000000000000000000000000000000 0 0 0 256) [[10]] (MLOAD 0) ) 0) 0 ) }",
                 "nonce" : "0",
                 "storage" : {
                 }
@@ -170,7 +252,11 @@
                 "0x0000000000000000000000001000000000000000000000000000000000000000",
                 "0x0000000000000000000000002000000000000000000000000000000000000000",
                 "0x0000000000000000000000003000000000000000000000000000000000000000",
-                "0x0000000000000000000000004000000000000000000000000000000000000000"
+                "0x0000000000000000000000004000000000000000000000000000000000000000",
+		"0x0000000000000000000000001100000000000000000000000000000000000000",
+		"0x0000000000000000000000002200000000000000000000000000000000000000",
+		"0x0000000000000000000000003300000000000000000000000000000000000000",
+		"0x0000000000000000000000004400000000000000000000000000000000000000"
             ],
             "gasLimit" : [
                 "600000"
