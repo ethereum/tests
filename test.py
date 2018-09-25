@@ -133,7 +133,8 @@ def validateTestFile(testFile):
 def hashFile(fname):
     with open(fname ,"rb") as f:
         k = sha3.keccak_256()
-        k.update(f.read())
+        s = json.dumps(json.load(f), separators=(',', ':'))
+        k.update(s.encode('utf-8'))
         return k.hexdigest()
 
 def checkFilled(jsonFile):
@@ -152,7 +153,7 @@ def checkFilled(jsonFile):
             fillerSource = jsonTest[test]["_info"]["source"]
             fillerHash   = jsonTest[test]["_info"]["sourceHash"]
             if fillerHash != hashFile(fillerSource):
-                _logerror("Test must be filled:", jsonFile)
+                _logerror("Filler hash is different:", jsonFile)
 
 # Main
 # ====
