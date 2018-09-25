@@ -12,10 +12,10 @@
             {
                 "indexes" : {
                     "data" : -1,
-                    "gas" : -1,
+                    "gas" : 0,
                     "value" : -1
                 },
-                "network" : [">Frontier"],
+                "network" : ["<=Byzantium"],
                 "result" : {
 		    "1000000000000000000000000000000000000000" : {
 			"balance" : "",
@@ -23,6 +23,36 @@
 		        "nonce" : "0",
 		        "storage" : {
 		        }
+		    }
+                }
+            },
+	    {
+                "indexes" : {
+                    "data" : -1,
+                    "gas" : 1,
+                    "value" : -1
+                },
+                "network" : [">=Constantinople"],
+                "result" : {
+		    "1000000000000000000000000000000000000000" : {
+			"balance" : "",
+		        "code" : "",
+		        "nonce" : "0",
+		        "storage" : {
+		        }
+		    }
+                }
+            },
+	    {
+                "indexes" : {
+                    "data" : -1,
+                    "gas" : 0,
+                    "value" : -1
+                },
+                "network" : [">=Constantinople"],
+                "result" : {
+		    "1000000000000000000000000000000000000000" : {
+			"shouldnotexist" : "1"
 		    }
                 }
             }
@@ -60,14 +90,14 @@
 	    "d94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
                 "balance" : "0",
 		"nonce" : "0",
-        "code" : "{ (SELFDESTRUCT 0x1000000000000000000000000000000000000000) }",
+        	"code" : "{ (SELFDESTRUCT 0x1000000000000000000000000000000000000000) }",
 		"storage": {
 		}
             },
 	    "e94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
                 "balance" : "0",
 		"nonce" : "0",
-        "code" : "{ (SELFDESTRUCT 0x1000000000000000000000000000000000000000) }",
+        	"code" : "{ (SELFDESTRUCT 0x1000000000000000000000000000000000000000) }",
 		"storage": {
 		}
             }
@@ -77,7 +107,7 @@
                 ""
             ],
             "gasLimit" : [
-                "82400"
+                "82400", "60000"
             ],
             "gasPrice" : "1",
             "nonce" : "0",
