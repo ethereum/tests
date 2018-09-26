@@ -133,7 +133,12 @@ def validateTestFile(testFile):
 def hashFile(fname):
     with open(fname ,"rb") as f:
         k = sha3.keccak_256()
-        s = json.dumps(json.load(f), separators=(',', ':'))
+        if fname.endswith(".json"):
+            s = json.dumps(json.load(f), separators=(',', ':'))
+        elif fname.endswith(".yml"):
+            s = json.dumps(yaml.load(f), sort_keys=True, separators=(',', ':'))
+        else:
+            _die("Do not know how to hash:", fname)
         k.update(s.encode('utf-8'))
         return k.hexdigest()
 
