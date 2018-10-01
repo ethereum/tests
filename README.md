@@ -42,7 +42,7 @@ Test Set Sanitation
 
 ### Checkers
 
-Several basic checks against the test-set are performed to enusre that they have been filled and are formatted correctly.
+Several basic checks against the test-set are performed to ensure that they have been filled and are formatted correctly.
 Currently, there are three types of checks that we can perform:
 
 -   `make TEST_PREFIX.format`: check that the JSON is formatted correctly.
