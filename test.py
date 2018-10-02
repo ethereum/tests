@@ -134,7 +134,7 @@ def hashFile(fname):
     with open(fname ,"rb") as f:
         k = sha3.keccak_256()
         if fname.endswith(".json"):
-            s = json.dumps(json.load(f), separators=(',', ':'))
+            s = json.dumps(json.load(f), sort_keys=True, separators=(',', ':'))
         elif fname.endswith(".yml"):
             s = json.dumps(yaml.load(f), sort_keys=True, separators=(',', ':'))
         else:
