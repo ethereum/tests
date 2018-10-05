@@ -50,7 +50,7 @@
             "0x0f572e5295c57f15886f9b263e2f6d2d6c7b5ec6" : {
                 "balance" : "0x00",
                 "// code" : "create should succeed. RETURNDATACOPY should also succeed in Byzantium.",
-                "code" : "{ (create 0 0 (lll {(SSTORE 0 1)} 0)) (RETURNDATACOPY 0 0 0) (SSTORE 0 0) }",
+                "code" : "{ (CREATE 0 0 (lll (seq (SSTORE 0 1) (STOP)) 0)) (RETURNDATACOPY 0 0 0) (SSTORE 0 0) (STOP) }",
                 "nonce" : "0x00",
                 "storage" : {
                     "0x00" : "0x01"

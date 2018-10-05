@@ -1,5 +1,8 @@
 {
     "callcallcodecall_ABCB_RECURSIVE" : {
+	"_info" : {
+	    "comment" : "CALLCODE -> DELEGATECALL -> CALLCODE2 -> DELEGATECALL -> CALLCODE2 -> ..."
+	},
         "env" : {
             "currentCoinbase" : "2adc25665018aa1fe0e6bc666dac8fc2697ff9ba",
             "currentDifficulty" : "0x20000",
@@ -77,7 +80,7 @@
                     "gas" : -1,
                     "value" : -1
                 },
-                "network" : [">=Byzantium"],
+                "network" : ["Byzantium"],
                 "result" : {
                     "1000000000000000000000000000000000000000" : {
                         "storage" : {
@@ -99,6 +102,35 @@
                     },
                     "2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
                         "balance" : "568187"
+                    }
+                }
+            },
+            {
+                "indexes" : {
+                    "data" : -1,
+                    "gas" : -1,
+                    "value" : -1
+                },
+                "network" : [">=Constantinople"],
+                "result" : {
+                    "1000000000000000000000000000000000000000" : {
+                        "storage" : {
+                            "0x00" : "0x01",
+                            "0x01" : "0x01",
+			    "0x02" : "0x01"
+                        }
+                    },
+                    "1000000000000000000000000000000000000001" : {
+                        "storage" : {
+                            "0x01" : "0x00",
+                            "0x02" : "0x00"
+                        }
+                    },
+                    "1000000000000000000000000000000000000002" : {
+                        "storage" : {
+                            "0x01" : "0x00",
+                            "0x02" : "0x00"
+                        }
                     }
                 }
             }

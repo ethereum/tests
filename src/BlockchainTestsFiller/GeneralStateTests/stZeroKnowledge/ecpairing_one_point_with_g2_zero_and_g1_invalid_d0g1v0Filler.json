@@ -1,5 +1,8 @@
 {
     "ecpairing_one_point_with_g2_zero_and_g1_invalid_d0g1v0" : {
+        "_info" : {
+            "comment" : "Use the ecpairing checker with one point, where g1 is not on the curve but g2 is zero.  cpp-ethereum once had a bug in this case; as soon as cpp-ethereum recognized g2 zero, it returned something without checking the validity of g1"
+        },
         "blocks" : [
             {
                 "blockHeaderPremine" : {
@@ -455,6 +458,7 @@
                 "storage" : {
                 }
             }
-        }
+        },
+        "sealEngine" : "NoProof"
     }
 }

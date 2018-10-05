@@ -1,5 +1,8 @@
 {
     "FailedCreateRevertsDeletion_d0g0v0" : {
+        "_info" : {
+            "comment" : "A modification of stRevertTests/RevertInCreateInInit.  That test, for EIP158 only, accidentially tested the case where a contract creation transaction touches an empty account and then fails.  This one tests the same thing not just for EIP158 but any network thereafter."
+        },
         "blocks" : [
             {
                 "blockHeaderPremine" : {
@@ -10,14 +13,14 @@
                 },
                 "transactions" : [
                     {
-                        "data" : "0x3050600c80601260003960006000f050fe006211223360005260206000fd",
+                        "data" : "0x3050600c80601260003960006000f050fefe6211223360005260206000fd",
                         "gasLimit" : "0x0a00000000",
                         "gasPrice" : "0x01",
                         "nonce" : "0x00",
-                        "r" : "0xd2675e5251bbee2d0fc503a310a60f701551337f14d8b491b3bfbd35ba2ec21b",
-                        "s" : "0x4d173f61a440739f37a200cc8268d661951a5c562353766408ae26a5b9280e58",
+                        "r" : "0xf9e6ea1b31d9f8075d834304df05776329cc796037e461a2bd954d217e407c90",
+                        "s" : "0x167ed2727c9f5866513f6a95f9665c5deadaa3b358cfd8a9b84b7f8546b00a99",
                         "to" : "",
-                        "v" : "0x1c",
+                        "v" : "0x1b",
                         "value" : "0x00"
                     }
                 ],
@@ -120,6 +123,7 @@
                 "storage" : {
                 }
             }
-        }
+        },
+        "sealEngine" : "NoProof"
     }
 }

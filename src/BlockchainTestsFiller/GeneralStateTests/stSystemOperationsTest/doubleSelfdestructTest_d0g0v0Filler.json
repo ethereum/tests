@@ -1,5 +1,8 @@
 {
     "doubleSelfdestructTest_d0g0v0" : {
+        "_info" : {
+            "comment" : "The first test case required here https://github.com/ethereum/tests/issues/431#issue-306081539 .\nInvoked Solidity 0.4.21 with solc --bin-runtime --optimize\ncontract DoubleSelfdestructTest {\n  address constant B1 = 0x1;\n  address constant B2 = 0x2;\n  function remoteSelfdestruct() external {\n    selfdestruct(B2);\n  }\n  function() external payable {\n    this.remoteSelfdestruct();\n    selfdestruct(B1);\n  }\n}\n"
+        },
         "blocks" : [
             {
                 "blockHeaderPremine" : {
@@ -105,6 +108,7 @@
                 "storage" : {
                 }
             }
-        }
+        },
+        "sealEngine" : "NoProof"
     }
 }
