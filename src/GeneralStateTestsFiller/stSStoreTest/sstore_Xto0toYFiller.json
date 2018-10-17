@@ -1,0 +1,96 @@
+{
+   "sstore_Xto0toY" : {
+	"_info" : {
+	    "comment" : "change X -> 0 -> Y"
+	},
+        "env" : {
+            "currentCoinbase" : "2adc25665018aa1fe0e6bc666dac8fc2697ff9ba",
+            "currentDifficulty" : "0x020000",
+            "currentGasLimit" : "10000000",
+            "currentNumber" : "1",
+            "currentTimestamp" : "1000",
+            "previousHash" : "5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6"
+        },
+        "expect" : [
+	    {
+                "indexes" : {
+                    "data" : -1,
+                    "gas" : -1,
+                    "value" : -1
+                },
+                "network" : [">=Constantinople"],
+                "result" : {
+		    "637fed3a4de7b0eb32b55bd96fcf7e8971cd3233" : {
+                        "storage" : {
+			    "0x00" : "0x01",
+			    "0x01" : "0x01"
+		        }
+		    },
+		    "3e180b1862f9d158abb5e519a6d8605540c23682" : {
+                        "storage" : {
+			    "0x00" : "0x01",
+			    "0x01" : "0x01"
+		        }
+		    },
+		    "b000000000000000000000000000000000000000" : {
+		        "storage" : {
+			    "0x01" : "0x01"
+		        }
+		    },
+		    "a94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+		        "balance" : "999999772603"
+		    }
+                }
+            }
+        ],
+        "pre" :
+        {
+            "a94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                "balance" : "1000000000000",
+                "code" : "",
+                "nonce" : "0",
+                "storage" : {
+                }
+            },
+	    "3e180b1862f9d158abb5e519a6d8605540c23682" : {
+                "balance" : "5",
+                "code" : "{ (seq [[0]] 0 [[0]] 1 (CALL 100000 0xb000000000000000000000000000000000000000 0 0 0 0 0) (CALLCODE 100000 0xb000000000000000000000000000000000000000 0 0 0 0 0) (DELEGATECALL 100000 0xb000000000000000000000000000000000000000 0 0 0 0) (STATICCALL 100000 0xb000000000000000000000000000000000000000 0 0 0 0) (CREATE2 0 0 (lll (seq (SSTORE 0 1) (SSTORE 1 2) (SSTORE 1 0) (SSTORE 1 1) ) 0) 0) (STOP) ) }",
+                "nonce" : "0",
+                "storage" : {	
+		    "0x00" : "0x02"
+                }
+            },
+	    "b000000000000000000000000000000000000000" : {
+                "balance" : "",
+                "code" : "{ [[1]] 0 [[1]] 1 }",
+                "nonce" : "",
+                "storage" : {
+		    "0x01" : "0x02"
+                }
+            },
+	    "c000000000000000000000000000000000000000" : {
+                "balance" : "",
+                "code" : "{ [[1]] 0 [[1]] 1 }",
+                "nonce" : "",
+                "storage" : {
+		    "0x01" : "0x02"
+                }
+            }
+        },
+        "transaction" : {
+            "data" : [
+		"" 
+            ],
+            "gasLimit" : [
+                "660000"
+            ],
+            "gasPrice" : "1",
+            "nonce" : "0",
+            "secretKey" : "45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8",
+            "to" : "3e180b1862f9d158abb5e519a6d8605540c23682",
+            "value" : [
+                "1"
+            ]
+        }
+    }
+}
