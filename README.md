@@ -40,6 +40,15 @@ Arrays are allowed, but don't use them for sets of properties - only use them fo
 Test Set Sanitation
 -------------------
 
+### Setup
+
+(Requires `virtualenv`)
+```
+#> virtualenv -p python3 .env3
+#> . .env3/bin/activate
+#> python3 -m pip install -r requirements.txt
+```
+
 ### Checkers
 
 Several basic checks against the test-set are performed to ensure that they have been filled and are formatted correctly.
