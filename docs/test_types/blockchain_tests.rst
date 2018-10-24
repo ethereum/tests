@@ -39,6 +39,8 @@ The client is expected to iterate through the list of blocks and ignore invalid 
 Test Structure
 --------------
 
+For a formal structure definition see also the related `JSON Schema <https://github.com/ethereum/tests/blob/develop/JSONSchema/bc-schema.json>`_ in the repo.
+
 ::
 
   {
@@ -63,31 +65,12 @@ Test Structure
        "lastblockhash": " ... ",
        "network": "Byzantium",
        "postState": { ... },
-       "pre": { ... }       
+       "pre": { ... },
+       "sealEngine": [ "NoProof" | "Ethash" ]      
      },
      "TESTNAME_EIP150": {
-       "blocks" : [
-         {
-           "blockHeader": { ... },
-           "rlp": { ... },
-           "transactions": { ... },
-           "uncleHeaders": { ... }
-         },
-         {
-           "blockHeader": { ... },
-           "rlp": { ... },
-           "transactions": { ... },
-           "uncleHeaders": { ... }
-         },
-         { ... }
-       ],
-       "genesisBlockHeader": { ... },
-       "genesisRLP": " ... ",
-       "lastblockhash": " ... ",
-       "network": "Byzantium",
-       "postState": { ... },
-       "pre": { ... }       
-     },
+       ...
+     }
      ...
   }
 
@@ -160,6 +143,17 @@ Pre and postState Sections
 
 * ``postState`` section: as described in :ref:`state_tests` (section - post).
 
+Seal Engine
+^^^^^^^^^^^
+
+The ``sealEngine`` parameter (values: ``NoProof`` | ``Ethash``) defines the seal engine the
+test is generated with. For tests with a value ``NoProof`` you can skip block validation
+which will speed up test execution. Note that this also means that you cannot rely on
+``PoW`` specific block header values (``mixHash``, ``nonce``) for tests labelled this way.
+
+Currently this field is optional and there are still tests with no ``sealEngine`` parameter
+with the default here being the ``NoProof`` setting. So make sure to first check on parameter
+existence in your implementation.
 
 Optional BlockHeader Information
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
