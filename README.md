@@ -13,6 +13,18 @@ The format of BlockchainTests recently changed with the introduction of a new fi
 
 This means that you can skip PoW validation for ``NoProof`` tests but also has the consequence that it is not possible to rely on/check ``PoW`` related block parameters for these tests any more.
 
+Clients using the library
+-------------------------
+
+The following clients make use of the tests from this library. You can use these implementations for inspiration on how to integrate. If your client is missing, please submit a PR (requirement: at least some minimal test documentation)!
+
+- [Mana](https://github.com/mana-ethereum/mana) (Elixir): [Docs](https://github.com/mana-ethereum/mana#testing), Test location: ``ethereum_common_tests``
+- [go-ethereum](https://github.com/ethereum/go-ethereum) (Go): [Docs](https://github.com/ethereum/go-ethereum/wiki/Developers'-Guide), Test location: ``tests/testdata``
+- [Parity Ethereum](https://github.com/paritytech/parity-ethereum) (Rust): [Docs](https://wiki.parity.io/Coding-guide), Test location: ``ethcore/res/ethereum/tests``
+- [ethereumjs-vm](https://github.com/ethereumjs/ethereumjs-vm) (JavaScript): [Docs](https://github.com/ethereumjs/ethereumjs-vm#testing), Test location: ``ethereumjs-testing`` dependency
+- [Trinity](https://github.com/ethereum/py-evm) (Python): [Docs](https://py-evm.readthedocs.io/en/latest/contributing.html#running-the-tests), Test location: `fixtures`
+- [Pantheon](https://github.com/PegaSysEng/pantheon) (Java): [Docs](https://github.com/PegaSysEng/pantheon/blob/master/docs/development/building.md#ethereum-reference-tests), Test Location: ``ethereum/referencetests/src/test/resources``
+
 Contents of this repository
 ---------------------------
 
