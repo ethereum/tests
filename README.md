@@ -25,6 +25,22 @@ The following clients make use of the tests from this library. You can use these
 - [Trinity](https://github.com/ethereum/py-evm) (Python): [Docs](https://py-evm.readthedocs.io/en/latest/contributing.html#running-the-tests), Test location: `fixtures`
 - [Pantheon](https://github.com/PegaSysEng/pantheon) (Java): [Docs](https://github.com/PegaSysEng/pantheon/blob/master/docs/development/building.md#ethereum-reference-tests), Test Location: ``ethereum/referencetests/src/test/resources``
 
+Using the Tests
+---------------
+
+We do [versioned tag releases](https://github.com/ethereum/tests/releases) for tests and you should aim to run your client libraries against the latest repository snapshot tagged. 
+
+Generally the [develop](https://github.com/ethereum/tests/tree/develop) branch in ``ethereum/tests`` is always meant to be stable and you should be able to run your test against.
+
+Contribute to the Test Suite
+----------------------------
+
+See the dedicated [section](https://ethereum-tests.readthedocs.io/en/latest/generating-tests.html) in the docs on how to write new tests.
+
+If you want to follow up with current tasks and what is currently in the works, have a look at the [issues](https://github.com/ethereum/tests/issues) and [PRs](https://github.com/ethereum/tests/pulls) on this repo, there is also a [Google spreadsheet](https://docs.google.com/spreadsheets/u/1/d/1xat7UI8GtB4ZGVdlK5_XQSHJZaMThi4SrlcL8XMZb5Q/htmlview#) with a list of current TODOs regarding test coverage.
+
+Currently the C++ ``Aleth`` client is the reference client for generating tests. Have a look at [issues](https://github.com/ethereum/aleth/issues?q=is%3Aopen+is%3Aissue+label%3Atesteth) and [PRs](https://github.com/ethereum/aleth/pulls?q=is%3Aopen+is%3Apr+label%3Atesteth) tagged with ``testeth`` to get an idea what is currently being worked on regarding the test generation process.
+
 Contents of this repository
 ---------------------------
 
@@ -113,13 +129,3 @@ The tests can also be run/filled with the same `Makefile`.
 -   `make TEST_PREFIX.run`: runs a single testsuite.
 -   `make TEST_PREFIX.fill`: fills and formats a single testsuite.
 
-FAQ
----
-
-### I want to test my client, which version shall I use?
-
-[The develop branch in ethereum/tests](https://github.com/ethereum/tests/tree/develop) is the version to use.
-
-### How can I add a new test case?
-
-[testeth guide to generate test cases](https://github.com/ethereum/testeth/blob/develop/doc/generating_tests.rst)
