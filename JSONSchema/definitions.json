@@ -1,5 +1,44 @@
 {
     "definitions": {
+	"AccountMap": {
+            "additionalProperties": false,
+            "patternProperties": {
+                "^0x[0-9a-fA-F]{40}": {
+                    "$ref": "#/definitions/ExpectAccount",
+                    "description": "filler prestate addresses with 0x prefix"
+                },
+                "^[0-9a-fA-F]{40}": {
+                    "$ref": "#/definitions/ExpectAccount",
+                    "description": "filler prestate addresses without 0x prefix"
+                }
+            },
+            "type": "object"
+        },
+        "ExpectAccount": {
+            "additionalproperties": true,
+            "properties": {
+                "balance": {
+                    "$ref": "#/definitions/IntegerOrEmptyOrConfusedHex"
+                },
+                "code": {
+                    "type": "string"
+                },
+                "nonce": {
+                    "$ref": "#/definitions/IntegerOrEmptyOrConfusedHex"
+                },
+                "storage": {
+                    "additionalProperties": false,
+                    "patternProperties": {
+                        "^0x[0-9a-f]+": {
+                            "$ref": "#/definitions/PrefixedHexOrInteger",
+                            "description": "storage key with 0x prefix, just the prefix `0x` is null and thus not permitted, a hex quantity is permitted. for the storage value, only hex data is permitted in filled test. Both decimal and hex allowed for the fillers."
+                        }
+                    },
+                    "type": "object"
+                }
+            },
+            "type": "object"
+        },
         "AddressMaybePrefixOrEmpty": {
             "oneOf": [
                 {

@@ -108,7 +108,12 @@ def validateSchema(testFile, schemaFile):
     try:
         jsonschema.validate(testInput, schema)
     except:
+        from jsonschema import Draft4Validator
         _logerror("Validation failed:", "schema", schemaFile, "on", testFile)
+        v = Draft4Validator(schema)
+        errors = sorted(v.iter_errors(testInput), key=lambda e: e.path)
+        for error in errors:
+            _logerror(error.message)
 
 def validateTestFile(testFile):
     if testFile.startswith("./src/VMTestsFiller/"):
