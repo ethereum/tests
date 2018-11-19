@@ -1,5 +1,17 @@
 {
     "definitions": {
+	"BlockchainExpectSection": {
+	    "additionalProperties": false,
+            "properties": {
+		    "network": {
+		            "$ref": "#/definitions/Networks"
+		        },
+		    "result": {
+		            "$ref": "#/definitions/AccountMap"
+		        }
+	     },
+	    "type": "array"
+	},
         "BadHexData": {
             "pattern": "^0x[0-9a-zA-Z]*$",
             "type": "string"
@@ -313,13 +325,18 @@
                     },
                     "type": "array"
                 },
+		"network": {
+		    "type": "string"
+		},
                 "expect": {
-                    "patternProperties": {
-                        "^0x[0-9a-f]*": {
-                            "$ref": "#/definitions/PreStateAccount",
-                            "description": "poststate account address with 0x prefix"
+		    "oneOf": [
+                        {
+                            "$ref": "#/definitions/AccountMap"
+                        },
+                        {
+                            "$ref": "#/definitions/BlockchainExpectSection"
                         }
-                    }
+                     ]                 
                 },
                 "genesisBlockHeader": {
                     "$ref": "#/definitions/BlockHeader"
