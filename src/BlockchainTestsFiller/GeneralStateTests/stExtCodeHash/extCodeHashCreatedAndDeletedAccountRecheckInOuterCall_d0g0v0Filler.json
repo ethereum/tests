@@ -1,7 +1,7 @@
 {
-    "extCodeHashCreatedAndDeletedAccount_d0g0v0" : {
+    "extCodeHashCreatedAndDeletedAccountRecheckInOuterCall_d0g0v0" : {
         "_info" : {
-            "comment" : "EXTCODEHASH/EXTCODESIZE of an account created then deleted in same transaction"
+            "comment" : "EXTCODEHASH/EXTCODESIZE of an account created then deleted in a CALL, checking results after the CALL returns"
         },
         "blocks" : [
             {
@@ -17,9 +17,9 @@
                         "gasLimit" : "0x061a80",
                         "gasPrice" : "0x01",
                         "nonce" : "0x00",
-                        "r" : "0xc202f0d1337e2d44fa1bf35877e7278363f8a0870146a587e8f75bbd10df9240",
-                        "s" : "0x5cb792200832e3876d0213563d9dc7705e255718f25455ca28eec91736e98c55",
-                        "to" : "0xdeadbeef00000000000000000000000000000000",
+                        "r" : "0x52adf3b876b2b63352ca31ecde66783574c333c957135265eecba278b27d177b",
+                        "s" : "0x6d3e5c5a0ea5414786ef955b4babc5db60430145f5419853dae17eca4bf34546",
+                        "to" : "0xdeadbeef00000000000000000000000000000001",
                         "v" : "0x1c",
                         "value" : "0x01"
                     }
@@ -38,6 +38,12 @@
                             "0x01" : "0x03",
                             "0x02" : "0x396daaf3a7871f857cc9b5878c6bb66c394a6d109706095617db9f4e4c22edcd",
                             "0x03" : "0x03"
+                        }
+                    },
+                    "0xdeadbeef00000000000000000000000000000001" : {
+                        "storage" : {
+                            "0x00" : "0x396daaf3a7871f857cc9b5878c6bb66c394a6d109706095617db9f4e4c22edcd",
+                            "0x01" : "0x03"
                         }
                     }
                 }
@@ -71,6 +77,13 @@
             "0xdeadbeef00000000000000000000000000000000" : {
                 "balance" : "0x0de0b6b3a7640000",
                 "code" : "0x6010600f80604360803960806000f56000526000513f6000556000513b6001556000600060006000600060005162010000f1506000513f6002556000513b60035500fe600380600c6000396000f3fe6000ff",
+                "nonce" : "0x00",
+                "storage" : {
+                }
+            },
+            "0xdeadbeef00000000000000000000000000000001" : {
+                "balance" : "0x0de0b6b3a7640000",
+                "code" : "0x6000600060006000600073deadbeef0000000000000000000000000000000062020000f150737be7677a20a298ff0676ab31f91a0a923f8d94713f600055737be7677a20a298ff0676ab31f91a0a923f8d94713b60015500",
                 "nonce" : "0x00",
                 "storage" : {
                 }
