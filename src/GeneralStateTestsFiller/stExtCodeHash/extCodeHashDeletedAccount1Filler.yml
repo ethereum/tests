@@ -1,13 +1,13 @@
-# EXTCODEHASH to a deleted account same transaction
+# EXTCODEHASH to a deleted account
 ---
-extCodeHashDeletedAccount:
+extCodeHashDeletedAccount1:
   _info:
     comment: |
-      Get account A (deadbeef00000000000000000000000000000000) code hash
-      Calls Account A's code which causes self destruction of A
-      Get account A codehash
-      It is still getting the same codehash because selfdestruct is performed
-      at the end of transaction during state finalization stage.
+      1) Account A already exists in the state and contains code
+      Call to Account B do the following:
+      - stores Account A hash to 1
+      - Run selfdestruct on A
+      - stores Account A hash to 2.
   env:
     currentCoinbase: 2adc25665018aa1fe0e6bc666dac8fc2697ff9ba
     currentDifficulty: '0x20000'
@@ -16,24 +16,17 @@ extCodeHashDeletedAccount:
     currentTimestamp: "1000"
     previousHash: 5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6
   pre:
-    # get account A codehash, destructs account A, get account A codehash
     095e7baea6a6c7c4c2dfeb977efac326af552d87:
       balance: '1000000000000000000'
-      code: |   
+      code: |
         {
-          (CALL 150000 0xaaaaaaaa00000000000000000000000000000000 0 0 0 0 32)
-          (RETURNDATACOPY 0 0 32)
-          [[0]] (MLOAD 0)
-          
-          (CALL 150000 0xdeadbeef00000000000000000000000000000000 0 0 0 0 32)
-          
-          (CALL 150000 0xaaaaaaaa00000000000000000000000000000000 0 0 0 0 32)
-          (RETURNDATACOPY 0 0 32)
-          [[1]] (MLOAD 0)
+          (CALL 150000 0xbbbbbbbb00000000000000000000000000000000 0 0 0 0 32)
         }
       nonce: '0'
       storage: {}
-    deadbeef00000000000000000000000000000000:
+    # Account A: already exists in the state
+    # contains selfdestruct code
+    aaaaaaaa00000000000000000000000000000000:
       balance: '1000000000000000000'
       code: |
         {
@@ -41,12 +34,21 @@ extCodeHashDeletedAccount:
         }
       nonce: '0'
       storage: {}
-    aaaaaaaa00000000000000000000000000000000:
+    # Account B
+    # Stores Account A hash to [1]
+    # Run selfdestruct on A
+    # Stores Account A hash to [2]
+    bbbbbbbb00000000000000000000000000000000:
       balance: '1000000000000000000'
       code: |
         {
-          (MSTORE 0 (EXTCODEHASH 0xdeadbeef00000000000000000000000000000000))
-          (RETURN 0 32)
+          (MSTORE 0 (EXTCODEHASH 0xaaaaaaaa00000000000000000000000000000000))
+          [[1]] (MLOAD 0)
+          
+          (CALL 150000 0xaaaaaaaa00000000000000000000000000000000 0 0 0 0 32)
+
+          (MSTORE 32 (EXTCODEHASH 0xaaaaaaaa00000000000000000000000000000000))
+          [[2]] (MLOAD 32)
         }
       nonce: '0'
       storage: {}
@@ -66,11 +68,16 @@ extCodeHashDeletedAccount:
         095e7baea6a6c7c4c2dfeb977efac326af552d87:
           balance: '1000000000000000001'
           storage: {
-            0: '0x9dff858fbcae72e5644a465fa893f46deb3e03b9cd5a8b531109cd577f7fb293',
-            1: '0x9dff858fbcae72e5644a465fa893f46deb3e03b9cd5a8b531109cd577f7fb293'
+         
           }
-        deadbeef00000000000000000000000000000000:
+        aaaaaaaa00000000000000000000000000000000:
           shouldnotexist: '1'
+        bbbbbbbb00000000000000000000000000000000:
+          balance: '1000000000000000000'
+          storage: {
+            1: '0x9dff858fbcae72e5644a465fa893f46deb3e03b9cd5a8b531109cd577f7fb293',
+            2: '0x9dff858fbcae72e5644a465fa893f46deb3e03b9cd5a8b531109cd577f7fb293'
+          }
   transaction:
     data:
     - ''
