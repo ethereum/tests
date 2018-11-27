@@ -38,7 +38,7 @@ extCodeHashDeletedAccount4:
           [[0]] (MLOAD 0)
 
           ;; Call Account B:
-          ;; Stores Account A hash to 1            
+          ;; Stores Account A code hash to 1, code size to 2, code to 3
           (MSTORE 32 0x01)
           (CALL 150000 0xbbbbbbbb00000000000000000000000000000000 0 32 32 0 32)
 
@@ -47,8 +47,8 @@ extCodeHashDeletedAccount4:
           (CALL 150000 0xcccccccc00000000000000000000000000000000 0 0  0  0 32)
 
           ;; Call Account B:
-          ;; Stores Account B hash to 2
-          (MSTORE 64 0x02)
+          ;; Stores Account B code hash to 4, code size to 5, code to 6
+          (MSTORE 64 0x04)
           (CALL 150000 0xbbbbbbbb00000000000000000000000000000000 0 64 32 0 32)
           
           (STOP)
@@ -64,7 +64,13 @@ extCodeHashDeletedAccount4:
           
           ;; store Account A code hash
           [[(MLOAD 0)]] (EXTCODEHASH 0xe713449c212d891357cc2966816b1d528cfb59e0)
+          
+          (MSTORE 0 (ADD (MLOAD 0) 1))  ;; increments storage key
+          [[(MLOAD 0)]] (EXTCODESIZE 0xe713449c212d891357cc2966816b1d528cfb59e0)
 
+          (EXTCODECOPY 0xe713449c212d891357cc2966816b1d528cfb59e0 32 0 (SLOAD (MLOAD 0)))
+          (MSTORE 0 (ADD (MLOAD 0) 1))  ;; increments storage key
+          [[(MLOAD 0)]] (MLOAD 32)
         }
       nonce: '0'
       storage: {}
@@ -107,7 +113,11 @@ extCodeHashDeletedAccount4:
           balance: '1000000000000000000'
           storage: {
             1: '0xb05d47e0911e4f67786f4cdc582608ee5f731e845a1e95ddc99759e2b3da81bf',
-            2: '0xb05d47e0911e4f67786f4cdc582608ee5f731e845a1e95ddc99759e2b3da81bf'
+            2: '0x16',
+            3: '0x73bbbbbbbb00000000000000000000000000000000ff00000000000000000000',
+            4: '0xb05d47e0911e4f67786f4cdc582608ee5f731e845a1e95ddc99759e2b3da81bf',
+            5: '0x16',
+            6: '0x73bbbbbbbb00000000000000000000000000000000ff00000000000000000000'
           }
         e713449c212d891357cc2966816b1d528cfb59e0:
           shouldnotexist: '1'

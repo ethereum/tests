@@ -4,9 +4,9 @@ extCodeHashDeletedAccount2:
   _info:
     comment: |
       2) Account A already exists in the state and contains code
-      Call to Account B stores Account A hash to 1
+      Call to Account B stores Account A code hash to 1, code size to 2, code to 3
       Call to Account C runs self destruct on A
-      Call to Account B stores Account A hash to 2
+      Call to Account B stores Account A code hash to 4, code size to 5, code to 6
   env:
     currentCoinbase: 2adc25665018aa1fe0e6bc666dac8fc2697ff9ba
     currentDifficulty: '0x20000'
@@ -24,7 +24,7 @@ extCodeHashDeletedAccount2:
           
           (CALL 150000 0xaaaaaaaa00000000000000000000000000000000 0 0 0  0 32)
           
-          (MSTORE 32 0x02)
+          (MSTORE 32 0x04)
           (CALL 150000 0xbbbbbbbb00000000000000000000000000000000 0 32 32 0 32)
         }
       nonce: '0'
@@ -47,6 +47,15 @@ extCodeHashDeletedAccount2:
         {
           (CALLDATACOPY 0 0 32)
           (SSTORE (MLOAD 0) (EXTCODEHASH 0xaaaaaaaa00000000000000000000000000000000))
+
+          (MSTORE 32 (EXTCODESIZE 0xaaaaaaaa00000000000000000000000000000000))
+          
+          (MSTORE 0 (ADD (MLOAD 0) 1))
+          (SSTORE (MLOAD 0) (MLOAD 32))
+
+          (MSTORE 0 (ADD (MLOAD 0) 1))
+          (EXTCODECOPY 0xaaaaaaaa00000000000000000000000000000000 64 0 (MLOAD 32))
+          (SSTORE (MLOAD 0) (MLOAD 64))
         }
       nonce: '0'
       storage: {}
@@ -72,7 +81,11 @@ extCodeHashDeletedAccount2:
           balance: '1000000000000000000'
           storage: {
             1: '0x9dff858fbcae72e5644a465fa893f46deb3e03b9cd5a8b531109cd577f7fb293',
-            2: '0x9dff858fbcae72e5644a465fa893f46deb3e03b9cd5a8b531109cd577f7fb293'
+            2: '0x17',
+            3: '0x73deadbeef0000000000000000000000000000000031ff000000000000000000',
+            4: '0x9dff858fbcae72e5644a465fa893f46deb3e03b9cd5a8b531109cd577f7fb293',
+            5: '0x17',
+            6: '0x73deadbeef0000000000000000000000000000000031ff000000000000000000'
           }
   transaction:
     data:

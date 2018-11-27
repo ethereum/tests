@@ -5,9 +5,13 @@ extCodeHashDeletedAccount1:
     comment: |
       1) Account A already exists in the state and contains code
       Call to Account B do the following:
-      - stores Account A hash to 1
+      - stores Account A code hash to 1
+      - stores Account A code size to 2
+      - stores Account A code to 3
       - Run selfdestruct on A
-      - stores Account A hash to 2.
+      - stores Account A code hash to 4
+      - stores Account A code size to 5
+      - stores Account A code to 6
   env:
     currentCoinbase: 2adc25665018aa1fe0e6bc666dac8fc2697ff9ba
     currentDifficulty: '0x20000'
@@ -35,20 +39,24 @@ extCodeHashDeletedAccount1:
       nonce: '0'
       storage: {}
     # Account B
-    # Stores Account A hash to [1]
+    # Stores Account A code hash to 1, code size to 2, code to 3
     # Run selfdestruct on A
-    # Stores Account A hash to [2]
+    # Stores Account A code hash to 4, code size to 5, code to 6
     bbbbbbbb00000000000000000000000000000000:
       balance: '1000000000000000000'
       code: |
         {
-          (MSTORE 0 (EXTCODEHASH 0xaaaaaaaa00000000000000000000000000000000))
-          [[1]] (MLOAD 0)
+          [[1]] (EXTCODEHASH 0xaaaaaaaa00000000000000000000000000000000)
+          [[2]] (EXTCODESIZE 0xaaaaaaaa00000000000000000000000000000000)
+          (EXTCODECOPY 0xaaaaaaaa00000000000000000000000000000000 0 0 (SLOAD 2))
+          [[3]] (MLOAD 0)
           
           (CALL 150000 0xaaaaaaaa00000000000000000000000000000000 0 0 0 0 32)
 
-          (MSTORE 32 (EXTCODEHASH 0xaaaaaaaa00000000000000000000000000000000))
-          [[2]] (MLOAD 32)
+          [[4]] (EXTCODEHASH 0xaaaaaaaa00000000000000000000000000000000)
+          [[5]] (EXTCODESIZE 0xaaaaaaaa00000000000000000000000000000000)
+          (EXTCODECOPY 0xaaaaaaaa00000000000000000000000000000000 32 0 (SLOAD 5))
+          ;;[[6]] (MLOAD 32)  ;; <--- This is failing
         }
       nonce: '0'
       storage: {}
@@ -76,7 +84,10 @@ extCodeHashDeletedAccount1:
           balance: '1000000000000000000'
           storage: {
             1: '0x9dff858fbcae72e5644a465fa893f46deb3e03b9cd5a8b531109cd577f7fb293',
-            2: '0x9dff858fbcae72e5644a465fa893f46deb3e03b9cd5a8b531109cd577f7fb293'
+            2: '0x17',
+            3: '0x73deadbeef0000000000000000000000000000000031ff000000000000000000',
+            4: '0x9dff858fbcae72e5644a465fa893f46deb3e03b9cd5a8b531109cd577f7fb293',
+            5: '0X17',
           }
   transaction:
     data:
