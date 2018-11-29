@@ -24,7 +24,7 @@ extCodeHashDeletedAccount1:
       balance: '1000000000000000000'
       code: |
         {
-          (CALL 150000 0xbbbbbbbb00000000000000000000000000000000 0 0 0 0 32)
+          (CALL 160000 0xbbbbbbbb00000000000000000000000000000000 0 0 0 0 32)
         }
       nonce: '0'
       storage: {}
@@ -56,7 +56,7 @@ extCodeHashDeletedAccount1:
           [[4]] (EXTCODEHASH 0xaaaaaaaa00000000000000000000000000000000)
           [[5]] (EXTCODESIZE 0xaaaaaaaa00000000000000000000000000000000)
           (EXTCODECOPY 0xaaaaaaaa00000000000000000000000000000000 32 0 (SLOAD 5))
-          ;;[[6]] (MLOAD 32)  ;; <--- This is failing
+          [[6]] (MLOAD 32)
         }
       nonce: '0'
       storage: {}
@@ -88,6 +88,7 @@ extCodeHashDeletedAccount1:
             3: '0x73deadbeef0000000000000000000000000000000031ff000000000000000000',
             4: '0x9dff858fbcae72e5644a465fa893f46deb3e03b9cd5a8b531109cd577f7fb293',
             5: '0X17',
+            6: '0x73deadbeef0000000000000000000000000000000031ff000000000000000000'
           }
   transaction:
     data:
