@@ -137,15 +137,20 @@ def validateTestFile(testFile):
 
 def hashFile(fname):
     with open(fname ,"rb") as f:
-        k = sha3.keccak_256()
-        if fname.endswith(".json"):
-            s = json.dumps(json.load(f), sort_keys=True, separators=(',', ':'))
-        elif fname.endswith(".yml"):
-            s = json.dumps(yaml.load(f), sort_keys=True, separators=(',', ':'))
-        else:
-            _die("Do not know how to hash:", fname)
-        k.update(s.encode('utf-8'))
-        return k.hexdigest()
+        try:
+            k = sha3.keccak_256()
+            if fname.endswith(".json"):
+                s = json.dumps(json.load(f), sort_keys=True, separators=(',', ':'))
+            elif fname.endswith(".yml"):
+                s = json.dumps(yaml.load(f), sort_keys=True, separators=(',', ':'))
+            else:
+                _die("Do not know how to hash:", fname)
+            k.update(s.encode('utf-8'))
+            return { 'hash': k.hexdigest(), 'raw': s }
+        except Exception as e:
+            _logerror("Error getting hash of the yml/json:", fname)
+            _logerror("Exception: ", str(e))
+            return { 'hash': 'error', 'raw': 'error' }
 
 def checkFilled(jsonFile):
     jsonTest = readFile(jsonFile)
@@ -162,8 +167,9 @@ def checkFilled(jsonFile):
         if "_info" in jsonTest[test]:
             fillerSource = jsonTest[test]["_info"]["source"]
             fillerHash   = jsonTest[test]["_info"]["sourceHash"]
-            if fillerHash != hashFile(fillerSource):
-                _logerror("Filler hash is different:", jsonFile)
+            resultHash = hashFile(fillerSource)
+            if fillerHash != resultHash['hash']:
+                _logerror("Filler hash is different:", jsonFile, " HashSrc: '", resultHash['raw'], "'")
 
 # Main
 # ====
