@@ -6,7 +6,7 @@ No changes yet :)
 
 ### Potentially breaking changes
 
-- #547 requires your integration to understand the network `ByzantiumToConstantinopleAt5`, which is analogous to existing pseudo networks such as `FrontierToHomesteadAt5` and `EIP158ToByzantiumAt5`. It also changed the format of some blockchain tests, [keys of "0x" are now "0x00"](https://github.com/ethereum/tests/pull/547/files#diff-d31f2819c1febd4c8d673a15a8375af5)
+- #547 requires your integration to understand the network `ByzantiumToConstantinopleAt5`, which is analogous to existing pseudo networks such as `FrontierToHomesteadAt5` and `EIP158ToByzantiumAt5`.
 
 - #557 changes the format of the rlp tests, byte strings are now prefixed with "0x"
 
