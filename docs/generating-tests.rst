@@ -33,19 +33,14 @@ Preparing testeth and LLL
 For generating consensus tests, an executable ``testeth`` is necessary.  Moreover, ``testeth`` uses the LLL compiler when it generates consensus tests.
 
 
-Option 1: Using a docker image
-------------------------------
+Option 1: Using the docker image
+--------------------------------
 
-.. note:: Docker images are currently outdated, please go for option 2.
-
-There is one `docker image <https://hub.docker.com/r/holiman/testeth/>`_ provided by holiman_ and another `image <https://hub.docker.com/r/winsvega/testeth/>`_ provided by winsvega_.
-
-.. _holiman: https://github.com/holiman
-.. _winsvega: https://github.com/winsvega
+There is a `docker image <https://hub.docker.com/r/ethereum/testeth/>`_ available containing the `testeth` tool from the `aleth` toolset regularly updated and specifically build for the purpose of test creation.
 
 * `Install Docker`_
-* Pull the ``testeth`` repository with ``docker pull holiman/testeth``
-* ``docker run -v <LOCAL_PATH_TO_ETH_TESTS>:/foobar holiman/testeth -t GeneralStateTests/stCallCodes -- --singletest callcall_00 --singlenet EIP150 -d 0 -g 0 -v 0 --statediff --verbosity 5 --testpath /foobar`` should show something like
+* Pull the ``testeth`` repository with ``docker pull ethereum/testeth:nightly`` (or an alternative available tag)
+* ``docker run -v <LOCAL_PATH_TO_ETH_TESTS>:/foobar ethereum/testeth:nightly -t GeneralStateTests/stCallCodes -- --singletest callcall_00 --singlenet Byzantium -d 0 -g 0 -v 0 --statediff --verbosity 5 --testpath /foobar`` should show something like
 
 .. code::
 
