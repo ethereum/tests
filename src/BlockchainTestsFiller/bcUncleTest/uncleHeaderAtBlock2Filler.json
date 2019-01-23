@@ -56,9 +56,9 @@
                 ]
             },
             {
-		"blockHeader" : {
+        		"blockHeader" : {
                     "stateRoot" : "0x6ff22555fde6fe93e5b412a8691287a5be5708246adfd0c599604849925fcc34",
-		    "updatePoW" : "1"
+        		    "updatePoW" : "1"
                 },
                 "transactions" : [
                     {
@@ -73,7 +73,10 @@
                 ],
                 "uncleHeaders" : [
                     {
-			"populateFromBlock" : "0"
+			            "//comment" : "Construct invalid block by including uncle which is not allowed, uncle has random coinbase so overwrite it with static once",
+                        "coinbase" : "0x10",
+			            "populateFromBlock" : "0",
+                        "overwriteAndRedoPoW" : "coinbase"
                     }
                 ]
             }
