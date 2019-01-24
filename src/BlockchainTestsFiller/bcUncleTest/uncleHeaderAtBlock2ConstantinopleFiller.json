@@ -56,9 +56,10 @@
                 ]
             },
             {
-		"blockHeader" : {
+        		"blockHeader" : {
+                    "//comment" : "trick aleth to accept invalid block",
                     "stateRoot" : "0xb72dc47bc7672257c507ffa10abbcd36181b6cfc2ebf59e8654acb3db45b5159",
-		    "updatePoW" : "1"
+        		    "updatePoW" : "1"
                 },
                 "transactions" : [
                     {
@@ -73,7 +74,10 @@
                 ],
                 "uncleHeaders" : [
                     {
-			"populateFromBlock" : "0"
+            "//comment" : "Construct invalid block by including uncle which is not allowed, uncle has random coinbase so overwrite it with static once",
+            "coinbase" : "0x10",
+			"populateFromBlock" : "0",
+            "overwriteAndRedoPoW" : "coinbase"
                     }
                 ]
             }
