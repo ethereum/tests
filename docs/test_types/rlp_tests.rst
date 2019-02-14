@@ -37,22 +37,22 @@ Test Structure
 	{
 	   "rlpTest": {
 		"in": "dog",
-		"out": "83646f67"
+		"out": "0x83646f67"
 	   },
 
 	   "multilist": {
 		"in": [ "zw", [ 4 ], 1 ],
-		"out": "c6827a77c10401"
+		"out": "0xc6827a77c10401"
 	   },
 
 	   "validRLP": {
 		"in": "VALID",
-		"out": "c7c0c1c0c3c0c1c0"
+		"out": "0xc7c0c1c0c3c0c1c0"
 	   },
 
 	   "invalidRLP": {
 		"in": "INVALID",
-		"out": "bf0f000000000000021111"
+		"out": "0xbf0f000000000000021111"
 	   },
 	   ...
 	}
@@ -62,3 +62,10 @@ Sections
 
 * ``in`` - json object (array, int, string) representation of the rlp byte stream (\*except values ``VALID`` and ``INVALID``)
 * ``out`` - string of rlp bytes stream
+
+When a json string starts with ``0x``, the rest of the string is interpreted as
+hex bytes, and when one starts with ``#``, the rest is interpreted as a decimal
+number.
+
+The ``out`` strings normally start with ``0x`` to be interpreted as hex bytes
+bytes.
