@@ -67,5 +67,4 @@ When a json string starts with ``0x``, the rest of the string is interpreted as
 hex bytes, and when one starts with ``#``, the rest is interpreted as a decimal
 number.
 
-The ``out`` strings normally start with ``0x`` to be interpreted as hex bytes
-bytes.
+The ``out`` strings normally start with ``0x`` to be interpreted as hex bytes.
