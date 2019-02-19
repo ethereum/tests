@@ -65,6 +65,9 @@ Sections
 
 When a json string starts with ``0x``, the rest of the string is interpreted as
 hex bytes, and when one starts with ``#``, the rest is interpreted as a decimal
-number.
+number. For example ``5050`` and ``"#5050"`` both represent the decimal number
+``5050``. Strings with ``#`` prefixes should be used for numbers that would be
+too big to represented as ``int`` values, and would require a "bigint"
+representation.
 
 The ``out`` strings normally start with ``0x`` to be interpreted as hex bytes.
