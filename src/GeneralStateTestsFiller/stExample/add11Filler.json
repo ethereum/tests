@@ -28,7 +28,11 @@
                 "result" : {
                     "//comment" : "Account in expect section would be checked for the fields specified here (balance, code, storage)",
                     "095e7baea6a6c7c4c2dfeb977efac326af552d87" : {
+                        "//comment" : "Better not to check the gas or mining reward affected account's balances.",
+                        "//comment" : "A change in gasPrice will affect the test and this post condition.",
+                        "//comment" : "So unless the test doesn't really requrie it, don't check coinbase/miner address balance or sender balance in post section",
                         "balance" : "1000000000000100000",
+                        "//comment" : "Byte Code example",
                         "code" : "0x6001600101600055",
                         "storage" : {
                             "0x00" : "0x02"
@@ -58,8 +62,11 @@
                 "balance" : "1000000000000000000",
                 "//comment": "If lllc compiler is installed, LLL code will be converted into EVM bytecode when --filltests",
                 "//code" : "put result of add(1,1) into storage cell 0",
-		"//code" : "{ [[ 0 ]] (ADD 1 1) }",
+                "//comment" : "Bytecode example: ",
                 "code" : "0x6001600101600055",
+                "//comment" : "LLL Code example. Use LLL with comments, so your tests would have transparent source logic.",
+                "//comment" : "If the LLL is to bit for .json use .yml test format for better sourcing of the contract",
+                "code" : "{ [[0]] (ADD 1 1) }",
                 "nonce" : "0",
                 "storage" : {
                 }
@@ -76,9 +83,11 @@
         "//comment" : "multiple transaction description that will be applied on a pre state",
         "transaction" : {
             "//comment" : "foreach d in `data` { foreach g in `gasLimit` { foreach v in `value`  {  pre.applyTransaction(d, g, v)  }}}",
+            "//comment" : "each element of the data array is treated same as account's code field. You could use LLL here",
             "data" : [
                 ""
             ],
+            "//comment" : "Be careful when adding gasLimits that are < then intrinsic gas cost. StateTests are not allowed to have invalid transactions",
             "gasLimit" : [
                 "400000"
             ],
