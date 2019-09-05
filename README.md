@@ -1,10 +1,22 @@
-tests   [![Build Status](https://travis-ci.org/ethereum/tests.svg?branch=develop)](https://travis-ci.org/ethereum/tests)
+Ethereum Consensus Tests   [![Build Status](https://travis-ci.org/ethereum/tests.svg?branch=develop)](https://travis-ci.org/ethereum/tests)
 =====
 
-Common tests for all clients to test against.
+Common tests for all clients to test against. Test execution tool: https://github.com/ethereum/retesteth
 
 Test Formats
 ------------
+
+Maintained tests:
+
+```
+/BasicTests
+/BlockchainTests
+/GeneralStateTests
+/TransactionTests
+/RLPTest
+/src
+```
+
 
 See descriptions of the different test formats in the official documentation at  http://ethereum-tests.readthedocs.io/.
 
@@ -36,9 +48,9 @@ Generally the [develop](https://github.com/ethereum/tests/tree/develop) branch i
 Contribute to the Test Suite
 ----------------------------
 
-See the dedicated [section](https://ethereum-tests.readthedocs.io/en/latest/generating-tests.html) in the docs on how to write new tests.
+See the dedicated [section](https://ethereum-tests.readthedocs.io/en/latest/generating-tests.html) in the docs on how to write new tests. Or https://github.com/ethereum/retesteth/wiki/Creating-a-State-Test-with-retesteth
 
-If you want to follow up with current tasks and what is currently in the works, have a look at the [issues](https://github.com/ethereum/tests/issues) and [PRs](https://github.com/ethereum/tests/pulls) on this repo, there is also a [Google spreadsheet](https://docs.google.com/spreadsheets/u/1/d/1xat7UI8GtB4ZGVdlK5_XQSHJZaMThi4SrlcL8XMZb5Q/htmlview#) with a list of current TODOs regarding test coverage.
+If you want to follow up with current tasks and what is currently in the works, have a look at the [issues](https://github.com/ethereum/tests/issues) 
 
 Currently the C++ ``Aleth`` client is the reference client for generating tests. Have a look at [issues](https://github.com/ethereum/aleth/issues?q=is%3Aopen+is%3Aissue+label%3Atesteth) and [PRs](https://github.com/ethereum/aleth/pulls?q=is%3Aopen+is%3Apr+label%3Atesteth) tagged with ``testeth`` to get an idea what is currently being worked on regarding the test generation process.
 
@@ -53,80 +65,5 @@ Do not change test files in folders:
 
 It is being created by the testFillers which could be found at src folder. The filler specification and wiki are in development so please ask on gitter channel for more details.
 
-If you want to modify a test filler or add a new test please contact @winsvega at https://gitter.im/ethereum/aleth
-
-All files should be of the form:
-
-```
-{
-	"test1name":
-	{
-		"test1property1": ...,
-		"test1property2": ...,
-		...
-	},
-	"test2name":
-	{
-		"test2property1": ...,
-		"test2property2": ...,
-		...
-	}
-}
-```
-
-Arrays are allowed, but don't use them for sets of properties - only use them for data that is clearly a continuous contiguous sequence of values.
-
-Test Set Sanitation
--------------------
-
-### Setup
-
-(Requires `virtualenv`)
-```
-#> virtualenv -p python3 .env3
-#> . .env3/bin/activate
-#> python3 -m pip install -r requirements.txt
-```
-
-### Checkers
-
-Several basic checks against the test-set are performed to ensure that they have been filled and are formatted correctly.
-Currently, there are three types of checks that we can perform:
-
--   `make TEST_PREFIX.format`: check that the JSON is formatted correctly.
--   `make TEST_PREFIX.valid`: check that the JSON files are valid against the JSON schemas in `./JSONSchema`.
--   `make TEST_PREFIX.filled`: check that the JSON tests are filled with the correct source hashes against the fillers.
-
-The constant `TEST_PREFIX` is a path prefix to the test-set you're interested in performing the checks on.
-For instance:
-
--   `make ./src/VMTestsFiller/vmArithmeticTest.format` will check that all JSON files in `./src/VMTestsFiller/vmArithmeticTest` are formatted correctly.
--   `make ./src.valid` will check that all the JSON files in `./src` are valid against the JSON schemas in `./JSONSchema`.
--   `make ./BlockchainTests.filled` will check that the source hashes in the JSON tests in `./BlockchainTests` are the same as the hashes of the fillers in `./src/BlockchainTestsFiller`.
-
-These checks are all performed by the file `./test.py`, which can be invoked on individual files as well.
-Run `./test.py` with no arguments for help.
-
-### Sanitizers
-
-The above checkers are packaged together into sanitizers for each test-suite, marking which testsuites are passing which testers.
-See the `TODO`s in the `Makefile` to see which checkers are enabled for which test-suites.
-
--   `make sani`: will run all passing sanitizers on all passing testsuites.
--   `make sani-TESTNAME`: will run just the passing sanitizers for the given testsuite.
-    `TESTNAME` can be one of:
-
-    -   `vm`: VMTests and VMTestsFiller
-    -   `gs`: GeneralStateTests and GeneralStateTestsFiller
-    -   `bc`: BlockchainTests and BlockchainTestsFiller
-    -   `tx`: TransactionTests and TransactionTestsFiller
-
-### Runners/Fillers
-
-The tests can also be run/filled with the same `Makefile`.
-
--   `make run`: will use `testeth` to all the test-suites.
--   `make fill`: will use `testeth` to fill all the test-suites.
--   `make TEST_PREFIX.run`: runs a single testsuite.
--   `make TEST_PREFIX.fill`: fills and formats a single testsuite.
-
+If you want to modify a test filler or add a new test please contact @winsvega at https://gitter.im/ethereum/aleth. 
+Use the following guide: https://github.com/ethereum/retesteth/wiki/Creating-a-State-Test-with-retesteth 
