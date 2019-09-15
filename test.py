@@ -64,7 +64,7 @@ def readFile(fname):
             if fname.endswith(".json"):
                 fparsed = json.loads(fcontents)
             elif fname.endswith(".yml"):
-                fparsed = yaml.load(fcontents)
+                fparsed = yaml.load(fcontents, Loader=yaml.FullLoader)
             else:
                 _die("Do not know how to load:", fname)
             return fparsed
@@ -142,7 +142,7 @@ def hashFile(fname):
             if fname.endswith(".json"):
                 s = json.dumps(json.load(f), sort_keys=True, separators=(',', ':'))
             elif fname.endswith(".yml"):
-                s = json.dumps(yaml.load(f), sort_keys=True, separators=(',', ':'))
+                s = json.dumps(yaml.load(f, Loader=yaml.FullLoader), sort_keys=True, separators=(',', ':'))
             else:
                 _die("Do not know how to hash:", fname)
             k.update(s.encode('utf-8'))
