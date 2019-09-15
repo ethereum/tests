@@ -13,134 +13,134 @@
         },
         "expect" : [
 	    {
-		"//comment" : "CALL to a contract",
-                "indexes" : {
-                    "data" : [0],
-                    "gas" : 0,
-                    "value" : -1
-                },
-                "network" : [">=ConstantinopleFix"],
-                "result" : {
-		    "b000000000000000000000000000000000000000" : {
-		        "storage" : {
-			    "0x01" : "0x01"
-		        }
-		    },
-		    "dea0000000000000000000000000000000000000" : {
-			"//comment" : "indicates that call finished without OOG",
-		        "storage" : {
-			    "0x01" : "0x01"
-		        }
-		    },
-		    "6295ee1b4f6dd65047762f924ecd367c17eabf8f" : {
-			"nonce" : "1",
-			"storage" : {
-		        }
-		    }
-                }
+			"//comment" : "CALL to a contract",
+            "indexes" : {
+                "data" : [0],
+                "gas" : 0,
+                "value" : -1
             },
+            "network" : [">=ConstantinopleFix"],
+            "result" : {
+			    "b000000000000000000000000000000000000000" : {
+			        "storage" : {
+					    "0x01" : "0x01"
+			        }
+			    },
+			    "dea0000000000000000000000000000000000000" : {
+					"//comment" : "indicates that call finished without OOG",
+			        "storage" : {
+					    "0x01" : "0x01"
+			        }
+			    },
+			    "6295ee1b4f6dd65047762f924ecd367c17eabf8f" : {
+					"nonce" : "1",
+					"storage" : {
+			        }
+			    }
+           }
+        },
 	    {
-		"//comment" : "CALLCODE AND DELEGATECALL",
-                "indexes" : {
-                    "data" : [1, 2],
-                    "gas" : 0,
-                    "value" : -1
-                },
-                "network" : [">=ConstantinopleFix"],
-                "result" : {
-		    "b000000000000000000000000000000000000000" : {
-		        "storage" : {
-			    "0x01" : "0x02"
-		        }
-		    },
-		    "dea0000000000000000000000000000000000000" : {
-			"//comment" : "indicates that call finished without OOG",
-		        "storage" : {
-			    "0x01" : "0x01"
-		        }
-		    },
-		    "6295ee1b4f6dd65047762f924ecd367c17eabf8f" : {
-			"nonce" : "1",
-			"storage" : {
-			    "0x01" : "0x01"
-		        }
-		    }
-                }
+			"//comment" : "CALLCODE AND DELEGATECALL",
+            "indexes" : {
+                "data" : [1, 2],
+                "gas" : 0,
+                "value" : -1
             },
-	    {
-		"//comment" : "STATICCALL, fails on storage change",
-                "indexes" : {
-                    "data" : 3,
-                    "gas" : 0,
-                    "value" : -1
-                },
-                "network" : [">=ConstantinopleFix"],
-                "result" : {
-		    "dea0000000000000000000000000000000000000" : {
-			"//comment" : "indicates that call finished without OOG",
-		        "storage" : {
-			    "0x01" : "0x01"
-		        }
-		    }
-                }
-            },
-	    {
-		"//comment" : "inside CREATE2 init code",
-                "indexes" : {
-                    "data" : 4,
-                    "gas" : 0,
-                    "value" : -1
-                },
-                "network" : [">=ConstantinopleFix"],
-                "result" : {
-		    "8efd7905e127e6d05c095caab375a90d3900057a" : {
-                        "storage" : {
-			    "0x00" : "0x01",
-			    "0x01" : "0x01"
-		        }
-		    },
-		    "dea0000000000000000000000000000000000000" : {
-			"//comment" : "indicates that call finished without OOG",
-		        "storage" : {
-			    "0x01" : "0x01"
-		        }
-		    }
-                }
-            },
-	    {
-		"//comment" : "ALL of above but going OOG",
-                "indexes" : {
-                    "data" : -1,
-                    "gas" : 1,
-                    "value" : -1
-                },
-                "network" : [">=ConstantinopleFix"],
-                "result" : {
-		    "dea0000000000000000000000000000000000000" : {
-			"//comment" : "indicates that call finished without OOG",
-		        "storage" : {
-			    "0x01" : "0x00"
-		        }
-		    }
-                }
-            },
-	    {
-		"//comment" : "ALL of above but REVERT at the end",
-                "indexes" : {
-                    "data" : [5,6,7,8,9],
-                    "gas" : 0,
-                    "value" : -1
-                },
-                "network" : [">=ConstantinopleFix"],
-                "result" : {
-		    "dea0000000000000000000000000000000000000" : {
-			"//comment" : "indicates that call finished without OOG",
-		        "storage" : {
-			    "0x01" : "0x00"
-		        }
-		    }
-                }
+            "network" : [">=ConstantinopleFix"],
+            "result" : {
+			    "b000000000000000000000000000000000000000" : {
+			        "storage" : {
+					    "0x01" : "0x02"
+			        }
+			    },
+			    "dea0000000000000000000000000000000000000" : {
+					"//comment" : "indicates that call finished without OOG",
+			        "storage" : {
+					    "0x01" : "0x01"
+			        }
+			    },
+			    "6295ee1b4f6dd65047762f924ecd367c17eabf8f" : {
+					"nonce" : "1",
+					"storage" : {
+					    "0x01" : "0x01"
+			        }
+			    }
             }
+        },
+	    {
+			"//comment" : "STATICCALL, fails on storage change",
+            "indexes" : {
+                "data" : 3,
+                "gas" : 0,
+                "value" : -1
+            },
+            "network" : [">=ConstantinopleFix"],
+            "result" : {
+			    "dea0000000000000000000000000000000000000" : {
+					"//comment" : "indicates that call finished without OOG",
+			        "storage" : {
+					    "0x01" : "0x01"
+			        }
+			    }
+            }
+        },
+	    {
+			"//comment" : "inside CREATE2 init code",
+            "indexes" : {
+                "data" : 4,
+                "gas" : 0,
+                "value" : -1
+            },
+            "network" : [">=ConstantinopleFix"],
+            "result" : {
+			    "0x6ab22377d181d9f2d8b5bffc62ac497abbd7cfc5" : {
+                    "storage" : {
+					    "0x00" : "0x01",
+					    "0x01" : "0x01"
+			        }
+			    },
+			    "dea0000000000000000000000000000000000000" : {
+					"//comment" : "indicates that call finished without OOG",
+			        "storage" : {
+					    "0x01" : "0x01"
+			        }
+			    }
+            }
+        },
+	    {
+			"//comment" : "ALL of above but going OOG",
+            "indexes" : {
+                "data" : -1,
+                "gas" : 1,
+                "value" : -1
+            },
+            "network" : [">=ConstantinopleFix"],
+            "result" : {
+			    "dea0000000000000000000000000000000000000" : {
+					"//comment" : "indicates that call finished without OOG",
+			        "storage" : {
+					    "0x01" : "0x00"
+			        }
+			    }
+            }
+        },
+	    {
+			"//comment" : "ALL of above but REVERT at the end",
+            "indexes" : {
+                "data" : [5,6,7,8,9],
+                "gas" : 0,
+                "value" : -1
+            },
+            "network" : [">=ConstantinopleFix"],
+            "result" : {
+			    "dea0000000000000000000000000000000000000" : {
+					"//comment" : "indicates that call finished without OOG",
+			        "storage" : {
+					    "0x01" : "0x00"
+			        }
+			    }
+            }
+        }
         ],
         "pre" :
         {
