@@ -12,10 +12,10 @@
 	    {
                 "indexes" : {
                     "data" : -1,
-                    "gas" : -1,
+                    "gas" : [0,1],
                     "value" : -1
                 },
-                "network" : [">=ConstantinopleFix"],
+                "network" : [">=Istanbul"],
                 "result" : {
 		            "1000000000000000000000000000000000000000" : {
     			        "balance" : "",
@@ -25,7 +25,20 @@
 		                }
 		            }
                 }
-            }
+        },
+		{
+                "indexes" : {
+                    "data" : -1,
+                    "gas" : [2],
+                    "value" : -1
+                },
+                "network" : [">=Istanbul"],
+                "result" : {
+		            "1000000000000000000000000000000000000000" : {
+    			        "shouldnotexist" : "1"
+		            }
+                }
+        }
         ],
         "pre" :
         {
@@ -63,7 +76,7 @@
                 ""
             ],
             "gasLimit" : [
-                "77400", "55400"
+                "74500", "55400", "77400"
             ],
             "gasPrice" : "1",
             "nonce" : "0",
