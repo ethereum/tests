@@ -1,5 +1,9 @@
 # Pull Requests changes log
 
+- PR [#651](https://github.com/ethereum/tests/pull/651)
+Use additional forks in retesteth configs. 
+Additional forks used in TransitionTests and not automatically used in StateTests/BlockchainTests
+
 - PR [#650](https://github.com/ethereum/tests/pull/650)
 Update default mining reward config for transition nets in retesteth configs.
 To avoid retesteth error when filling the state tests
