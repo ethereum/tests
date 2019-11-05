@@ -23,16 +23,16 @@
                 "network" : [">=Istanbul"],
                 "result" : {
                     "//comment" : "Account in expect section would be checked for the fields specified here (balance, code, storage)",
-                    "095e7baea6a6c7c4c2dfeb977efac326af552d87" : {
-                        "balance" : "1000000000000000000",
+                    "6295ee1b4f6dd65047762f924ecd367c17eabf8f" : {
+                        "balance" : "0",
                         "//comment" : "No code is returned",
                         "code" : "",
                         "storage" : {
-                            "0x00" : "0x00"
+                            "0x00" : "0x01"
                         }
                     },
                     "a94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-                      "balance" : "999999999999946082",
+                      "balance" : "999999999999926870",
                       "code" : "0x",
                       "nonce" : "1",
                       "storage" : {
@@ -43,16 +43,6 @@
         ],
         "//comment" : "Pre condition state for the test",
         "pre" : {
-            "095e7baea6a6c7c4c2dfeb977efac326af552d87" : {
-                "balance" : "1000000000000000000",
-                "//comment": "If lllc compiler is installed, LLL code will be converted into EVM bytecode when --filltests",
-                "//code" : "put result of div(1,0) into storage cell 0",
-                "//comment" : "Bytecode example: ",
-                "code" : "",
-                "nonce" : "0",
-                "storage" : {
-                }
-            },
             "a94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
               "balance" : "1000000000000000000",
               "code" : "0x",
@@ -63,13 +53,12 @@
         },
         "//comment" : "multiple transaction description that will be applied on a pre state",
         "transaction" : {
-            "//comment" : "foreach d in `data` { foreach g in `gasLimit` { foreach v in `value`  {  pre.applyTransaction(d, g, v)  }}}",
-            "//comment" : "each element of the data array is treated same as account's code field. You could use LLL here",
+            "//comment" : "store 1 at the result of {DIV,SDIV,MOD,SMOD}(1,0)",
             "data" : [
-              "0x6001600004600055",
-              "0x6001600005600055",
-              "0x6001600006600055",
-              "0x6001600007600055"
+              "0x6001600160000455",
+              "0x6001600160000555",
+              "0x6001600160000655",
+              "0x6001600160000755"
             ],
             "//comment" : "Be careful when adding gasLimits that are < then intrinsic gas cost. StateTests are not allowed to have invalid transactions",
             "gasLimit" : [
