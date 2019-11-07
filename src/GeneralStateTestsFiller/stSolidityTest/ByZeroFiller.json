@@ -14,15 +14,12 @@
         "expect" : [
             {
                 "indexes" : {
-                    "//comment" : "-1 for transaction with any data from this field. or a particular index, or range [0, 1, 2]",
                     "data" : -1,
                     "gas" : -1,
                     "value" : -1
                 },
-                "//comment" : "hard fork order: Frontier, Homestead, EIP150, EIP155, Byzantium, Constantinople, Istanbul",
                 "network" : [">=Istanbul"],
                 "result" : {
-                    "//comment" : "Account in expect section would be checked for the fields specified here (balance, code, storage)",
                     "6295ee1b4f6dd65047762f924ecd367c17eabf8f" : {
                         "balance" : "0",
                         "//comment" : "No code is returned",
@@ -32,7 +29,7 @@
                         }
                     },
                     "a94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-                      "balance" : "999999999999926870",
+                      "balance" : "999999999999926866",
                       "code" : "0x",
                       "nonce" : "1",
                       "storage" : {
@@ -41,7 +38,6 @@
                 }
             }
         ],
-        "//comment" : "Pre condition state for the test",
         "pre" : {
             "a94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
               "balance" : "1000000000000000000",
@@ -51,16 +47,14 @@
               }
             }
         },
-        "//comment" : "multiple transaction description that will be applied on a pre state",
         "transaction" : {
             "//comment" : "store 1 at the result of {DIV,SDIV,MOD,SMOD}(1,0)",
             "data" : [
-              "0x6001600160000455",
-              "0x6001600160000555",
-              "0x6001600160000655",
-              "0x6001600160000755"
+              "0x600160006001045500",
+              "0x600160006001055500",
+              "0x600160006001065500",
+              "0x600160006001075500"
             ],
-            "//comment" : "Be careful when adding gasLimits that are < then intrinsic gas cost. StateTests are not allowed to have invalid transactions",
             "gasLimit" : [
                 "400000"
             ],
