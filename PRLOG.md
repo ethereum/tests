@@ -1,4 +1,7 @@
 # Pull Requests changes log
+- PR [#647](https://github.com/ethereum/tests/pull/647)
+Add tests checking stack validity of SWAP
+Add tests checking DIV/SDIV/MOD/SDIV by zero
 
 - PR [#651](https://github.com/ethereum/tests/pull/651)
 Use additional forks in retesteth configs. 
