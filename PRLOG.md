@@ -1,4 +1,9 @@
 # Pull Requests changes log
+
+- PR [#654](https://github.com/ethereum/tests/pull/654)
+Add more tests for EXTCODEHASH of nonexistent and post suicide accounts
+https://github.com/ethereum/tests/issues/652
+
 - PR [#647](https://github.com/ethereum/tests/pull/647)
 Add tests checking stack validity of SWAP
 Add tests checking DIV/SDIV/MOD/SDIV by zero
