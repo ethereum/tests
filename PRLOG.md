@@ -1,5 +1,9 @@
 # Pull Requests changes log
 
+- PR [#658](https://github.com/ethereum/tests/pull/658)
+Reduce 50k bytes code in quadratic complexity tests to 20k bytes
+Resolves issue https://github.com/ethereum/tests/issues/657
+
 - PR [#654](https://github.com/ethereum/tests/pull/654)
 Add more tests for EXTCODEHASH of nonexistent and post suicide accounts
 https://github.com/ethereum/tests/issues/652
