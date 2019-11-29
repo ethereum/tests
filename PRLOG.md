@@ -1,5 +1,11 @@
 # Pull Requests changes log
 
+- PR [#666](https://github.com/ethereum/tests/pull/666)
+Remove retesteth configs. Configs are now stored in retesteth repo.
+
+- PR [#665](https://github.com/ethereum/tests/pull/665)
+Added KeyStore test based on MyCrypto file
+
 - PR [#662](https://github.com/ethereum/tests/pull/662)
 Add difficulty test for EIP-2384
 
