@@ -23,7 +23,7 @@
 		    "network" : [">=Istanbul"],
 		    "result" : {
 			    "095e7baea6a6c7c4c2dfeb977efac326af552d87" : {
-				"balance" : "100"
+    				"balance" : "100"
 			    }
 		    }
 	    }
@@ -44,10 +44,12 @@
         },
         "blocks" : [
             {
-		"expectExceptionALL" : "InvalidBlockNonce",
                 "blockHeader" : {
                     "mixHash" : "0xbad81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
-		    "updatePoW" : "1"
+                    "updatePoW" : "1",
+                    "expectException" : {
+                        "Istanbul" : "InvalidBlockMixHash"
+                    }
                 },
                 "transactions" : [
                     {

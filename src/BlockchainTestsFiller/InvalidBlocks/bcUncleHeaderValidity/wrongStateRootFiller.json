@@ -17,8 +17,8 @@
             "transactionsTrie" : "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
             "uncleHash" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347"
         },
-	"sealEngine" : "NoProof",
-	"expect" : [
+        "sealEngine" : "NoProof",
+        "expect" : [
 	    {
 		    "network" : [">=Istanbul"],
 		    "result" : {
@@ -74,7 +74,11 @@
                 ]
             },
             {
-		"expectExceptionALL" : "InvalidStateRoot",
+                "blockHeader" : {
+                    "stateRoot" : "0xc7a9192c52b32314c2b5e60c9c70405fb3e6ffac14ca50c73c695adae2242644",
+                    "uncleHash" : "0x0d2b064b20cb5c5747a44d5910a656b435cb2ae48f47f396a382828fc892184f",
+                    "updatePoW" : "1"
+                },
                 "transactions" : [
                     {
                         "data" : "",
@@ -88,9 +92,9 @@
                 ],
                 "uncleHeaders" : [
                     {
-			"stateRoot" : "0xbad40b30d613c35dad43e3693329e1b1ee6350f989cf46a288025a1cbfdab9cd",
-			"populateFromBlock" : "1",
-			"overwriteAndRedoPoW" : "stateRoot"
+                        "stateRoot" : "0xbad40b30d613c35dad43e3693329e1b1ee6350f989cf46a288025a1cbfdab9cd",
+                        "populateFromBlock" : "1",
+                        "overwriteAndRedoPoW" : "stateRoot"
                     }
                 ]
             }
