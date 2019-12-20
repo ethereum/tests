@@ -1,5 +1,8 @@
 # Pull Requests changes log
 
+- PR[#671](https://github.com/ethereum/tests/pull/671)
+Add test cases for SELFBALANCE inside of CALL, DELEGATECALL, and CALLCODE
+
 - PR [#666](https://github.com/ethereum/tests/pull/666)
 Remove retesteth configs. Configs are now stored in retesteth repo.
 
