@@ -72,13 +72,15 @@
                 "uncleHeaders" : [
                 ]
             },
-	    {
-		"expectExceptionALL" : "TooMuchGasUsed",	
-		"blocknumber" : "3",
-		"blockHeader" : {
-			"stateRoot" : "0x77f96f4c766c10cd0207e2672b1b747c741ed75bc94e7be7abacb71cdca3c8fb",
-			"updatePoW" : "1"
-		},
+            {	
+                "blocknumber" : "3",
+                "blockHeader" : {
+                    "stateRoot" : "0x77f96f4c766c10cd0207e2672b1b747c741ed75bc94e7be7abacb71cdca3c8fb",
+                    "updatePoW" : "1",
+                    "expectException" : {
+                        "Istanbul" : "TooMuchGasUsed"
+                    }
+                },
                 "transactions" : [
                     {
                         "data" : "",
@@ -92,9 +94,9 @@
                 ],
                 "uncleHeaders" : [
                     {
-			"populateFromBlock" : "1",
-			"gasUsed" : "314159000",
-			"overwriteAndRedoPoW" : "gasUsed"
+                        "populateFromBlock" : "1",
+                        "gasUsed" : "314159000",
+                        "overwriteAndRedoPoW" : "gasUsed"
                     }
                 ]
             }

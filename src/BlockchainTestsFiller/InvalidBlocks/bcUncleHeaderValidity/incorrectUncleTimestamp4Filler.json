@@ -1,9 +1,12 @@
 {
-    "gasLimitTooLow" : {
+    "incorrectUncleTimestamp4" : {
+        "_info" : {
+            "comment" : "Uncle has bizzare future timestamp but geth says its ok"
+        },
         "genesisBlockHeader" : {
             "bloom" : "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
             "coinbase" : "0x8888f1f195afa192cfee860698584c030f4c9db1",
-            "difficulty" : "231072",
+            "difficulty" : "131072",
             "extraData" : "0x42",
             "gasLimit" : "3141592",
             "gasUsed" : "0",
@@ -11,7 +14,7 @@
             "parentHash" : "0x0000000000000000000000000000000000000000000000000000000000000000",
             "receiptTrie" : "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
             "stateRoot" : "0xf99eb1626cfa6db435c0836235942d7ccaa935f1ae247d3f1c21e495685f903a",
-            "timestamp" : "0x54c98c81",
+            "timestamp" : "0x01",
             "mixHash" : "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
             "nonce" : "0x0102030405060708",
             "transactionsTrie" : "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
@@ -23,13 +26,10 @@
 		    "network" : [">=Istanbul"],
 		    "result" : {
 			    "095e7baea6a6c7c4c2dfeb977efac326af552d87" : {
-				"balance" : "10"
+                    "balance" : "30"
 			    },
 			    "a94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-				"nonce" : "2"
-			    },
-			    "0000000000000000000000000000000000000000" : {
-				"balance" : "10"
+                    "nonce" : "3"
 			    }
 		    }
 	    }
@@ -66,7 +66,7 @@
                         "gasPrice" : "1",
                         "nonce" : "1",
                         "secretKey" : "45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8",
-                        "to" : "0000000000000000000000000000000000000000",
+                        "to" : "095e7baea6a6c7c4c2dfeb977efac326af552d87",
                         "value" : "10"
                     }
                 ],
@@ -75,9 +75,8 @@
             },
             {
                 "blockHeader" : {
-                    "expectException" : { 
-                        "Istanbul" : "InvalidGasLimit2"
-                    }
+                    "uncleHash" : "0xbd1aca7ed975e1b827350c9e167f19b7b28fb3d55339e51082e4327bc318fb5a",
+                    "stateRoot" : "0xdd6283d3d1cdb05ccb389b62ae449408dddcba54fd27d8fed4e5295875ba46f7",
                 },
                 "transactions" : [
                     {
@@ -92,9 +91,8 @@
                 ],
                 "uncleHeaders" : [
                     {
-                        "gasLimit" : "138524",
                         "populateFromBlock" : "1",
-                        "overwriteAndRedoPoW" : "gasLimit"
+                        "RelTimestampFromPopulateBlock" : "500000000000"
                     }
                 ]
             }
