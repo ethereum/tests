@@ -1,8 +1,8 @@
 {
     "create2collisionwithSelfdestructSameBlock" : {
         "_info" : {
-	    "comment" : "collision with address that has been selfdesturcted by another transaction in the same block"
-	},
+            "comment" : "collision with address that has been selfdesturcted by another transaction in the same block"
+        },
         "genesisBlockHeader" : {
             "bloom" : "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
             "coinbase" : "0x8888f1f195afa192cfee860698584c030f4c9db1",
@@ -20,46 +20,44 @@
             "transactionsTrie" : "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
             "uncleHash" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347"
         },
-	"sealEngine" : "NoProof",
+        "sealEngine" : "NoProof",
         "expect" : [
 	    {
 		    "network" : [">=Istanbul"],
 		    "result" : {
-			"0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-                	     "nonce" : "0x02"
-            	    	},
-			"0x0000000000000000000000000000000000000010" : {
-                	     "balance" : "1"
-            	    	},
-			"0x22a4ec9c035f66874f234c3a5bc7e18073e89057" : {
-                	     "nonce" : "1"
-            	    	},
-            		"0xec0e71ad0a90ffe1909d27dac207f7680abba42d" : {
-                	     "balance" : "10",
-                	     "code" : "",
-                	     "nonce" : "0x02",
-                	     "storage" : {
-                	     }
-            		}
+                "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                    "nonce" : "0x02"
+            	},
+                "0x0000000000000000000000000000000000000010" : {
+                    "balance" : "1"
+                },
+                "0xec0e71ad0a90ffe1909d27dac207f7680abba42d" : {
+                    "balance" : "10",
+                    "code" : "",
+                    "nonce" : "0x02",
+                    "storage" : {
+                    }
+                }
 		    }
 	    }
         ],
         "pre" : {
-	    "a94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+            "a94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
                 "balance" : "1000000000000000000",
                 "code" : "0x",
                 "nonce" : "0",
                 "storage" : {
                 }
             },
-	    "ec0e71ad0a90ffe1909d27dac207f7680abba42d" : {
+            "ec0e71ad0a90ffe1909d27dac207f7680abba42d" : {
                 "balance" : "1",
                 "nonce" : "3",
                 "code" : "{ (SELFDESTRUCT 0x10) }",
-                "storage": {}
+                "storage": {
+                }
             }
         },
-	"sealEngine" : "NoProof",
+        "sealEngine" : "NoProof",
         "blocks" : [
             {
                 "transactions" : [
@@ -72,7 +70,7 @@
                         "to" : "ec0e71ad0a90ffe1909d27dac207f7680abba42d",
                         "value" : "0"
                     },
-		    {
+                    {
                         "data" : "{ (CREATE2 0 0 0 0) }",
                         "gasLimit" : "150000",
                         "gasPrice" : "1",
