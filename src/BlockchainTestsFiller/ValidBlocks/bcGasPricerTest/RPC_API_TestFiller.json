@@ -18,7 +18,7 @@
             "uncleHash" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347"
         },
 	"//" : "Lots of blocks in this tests + uncles. check the difficulty calculation. NoProof timestamps are incorrect because of instant block mining.",
-	"sealEngine" : "Ethash",
+	"sealEngine" : "NoProof",
 	"expect" : [
 	    {
 		    "network" : [">=Istanbul"],
@@ -91,6 +91,9 @@
             },
             {
                 "blocknumber" : "4",
+                "blockHeader" : {
+                    "stateRoot" : "0xef9c93515993623876a53b7ebe6853d36646be84168d9590d90ac9cd5e3751b9"
+                },
                 "transactions" : [
                     {
                         "data" : "getUint8",
@@ -105,14 +108,14 @@
                 ],
                 "uncleHeaders" : [
                     {
-			"coinbase" : "a94f5374fce5edbc8e2a8697c15331677e6ebf0b",
-			"populateFromBlock" : "1",
-			"overwriteAndRedoPoW" : "coinbase"
+                        "coinbase" : "a94f5374fce5edbc8e2a8697c15331677e6ebf0b",
+                        "populateFromBlock" : "1",
+                        "overwriteAndRedoPoW" : "coinbase"
                     },
                     {
-			"coinbase" : "bcde5374fce5edbc8e2a8697c15331677e6ebf0b",
-			"populateFromBlock" : "1",
-			"overwriteAndRedoPoW" : "coinbase"
+                        "coinbase" : "bcde5374fce5edbc8e2a8697c15331677e6ebf0b",
+                        "populateFromBlock" : "1",
+                        "overwriteAndRedoPoW" : "coinbase"
                     }
                 ]
             },
