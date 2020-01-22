@@ -17,19 +17,19 @@
             "transactionsTrie" : "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
             "uncleHash" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347"
         },
-	"sealEngine" : "NoProof",
-	"expect" : [
+        "sealEngine" : "NoProof",
+        "expect" : [
 	    {
 		    "network" : [">=Istanbul"],
 		    "result" : {
 			    "095e7baea6a6c7c4c2dfeb977efac326af552d87" : {
-				"balance" : "10"
+                    "balance" : "20"
 			    },
 			    "a94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-				"nonce" : "2"
+                    "nonce" : "3"
 			    },
 			    "0000000000000000000000000000000000000000" : {
-				"balance" : "10"
+                    "balance" : "10"
 			    }
 		    }
 	    }
@@ -74,7 +74,9 @@
                 ]
             },
             {
-		"expectExceptionALL" : "InvalidTimestamp",
+                "blockHeader" : {
+                    "stateRoot" : "0xc7a9192c52b32314c2b5e60c9c70405fb3e6ffac14ca50c73c695adae2242644"
+                },
                 "transactions" : [
                     {
                         "data" : "",
@@ -88,9 +90,9 @@
                 ],
                 "uncleHeaders" : [
                     {
-			"timestamp" : "1428353694",
-			"populateFromBlock" : "1",
-			"overwriteAndRedoPoW" : "timestamp"
+                        "timestamp" : "1428353694",
+                        "populateFromBlock" : "1",
+                        "overwriteAndRedoPoW" : "timestamp"
                     }
                 ]
             }
