@@ -1,5 +1,8 @@
 {
     "wrongMixHash" : {
+        "_info" : {
+            "comment" : "engine Ethash to enable verification of nonce and mixhash fields"        
+        },
         "genesisBlockHeader" : {
             "bloom" : "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
             "coinbase" : "0x8888f1f195afa192cfee860698584c030f4c9db1",
@@ -17,13 +20,13 @@
             "transactionsTrie" : "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
             "uncleHash" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347"
         },
-	"sealEngine" : "Ethash",
-	"expect" : [
+        "sealEngine" : "Ethash",
+        "expect" : [
 	    {
 		    "network" : [">=Istanbul"],
 		    "result" : {
 			    "095e7baea6a6c7c4c2dfeb977efac326af552d87" : {
-    				"balance" : "100"
+                    "balance" : "100"
 			    }
 		    }
 	    }
@@ -46,7 +49,6 @@
             {
                 "blockHeader" : {
                     "mixHash" : "0xbad81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
-                    "updatePoW" : "1",
                     "expectException" : {
                         "Istanbul" : "InvalidBlockMixHash"
                     }
