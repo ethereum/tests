@@ -1,5 +1,8 @@
 # Pull Requests changes log
 
+- PR [#672](https://github.com/ethereum/tests/pull/672)
+Major blockchain test refactoring, and regeneration on geth + retesteth
+
 - PR [#666](https://github.com/ethereum/tests/pull/666)
 Remove retesteth configs. Configs are now stored in retesteth repo.
 
