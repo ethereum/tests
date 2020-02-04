@@ -1,17 +1,5 @@
 {
     "definitions": {
-	"BlockchainExpectSection": {
-	    "additionalProperties": false,
-            "properties": {
-		    "network": {
-		            "$ref": "#/definitions/Networks"
-		        },
-		    "result": {
-		            "$ref": "#/definitions/AccountMap"
-		        }
-	     },
-	    "type": "array"
-	},
         "BadHexData": {
             "pattern": "^0x[0-9a-zA-Z]*$",
             "type": "string"
@@ -20,6 +8,12 @@
             "additionalProperties": false,
             "properties": {
                 "//comment": {
+                    "type": "string"
+                },
+                "//blocknumber": {
+                    "type": "string"
+                },
+                "donotimportonclient": {
                     "type": "string"
                 },
                 "blockHeader": {
@@ -91,6 +85,9 @@
                 "difficulty": {
                     "$ref": "#/definitions/IntegerOrConfusedHex"
                 },
+                "expectException": {
+                    "type": "object"
+                },
                 "extraData": {
                     "$ref": "#/definitions/HexMaybePrefixOrEmpty"
                 },
@@ -129,6 +126,9 @@
                 },
                 "uncleHash": {
                     "$ref": "#/definitions/IntegerOrConfusedHex"
+                },
+                "updatePow": {
+                    "$ref": "#/definitions/IntegerOrConfusedHex"
                 }
             }
         },
@@ -147,6 +147,18 @@
                     "$ref": "#/definitions/IntegerOrConfusedHex"
                 }
             }
+        },
+        "BlockchainExpectSection": {
+            "additionalProperties": false,
+            "properties": {
+                "network": {
+                    "$ref": "#/definitions/Networks"
+                },
+                "result": {
+                    "$ref": "#/definitions/AccountMap"
+                }
+            },
+            "type": "array"
         },
         "NullSenderTransaction": {
             "additionalProperties": true,
@@ -191,6 +203,9 @@
                         "$ref": "#/definitions/IntegerOrEmptyOrConfusedHex"
                     },
                     "type": "array"
+                },
+                "invalid": {
+                    "type": "string"
                 }
             },
             "required": [
@@ -236,9 +251,6 @@
             ],
             "type": "object"
         },
-	"sealEngine": {
-	    "$ref": "#/definitions/SealEngineType"
-	},
         "Transaction": {
             "additionalProperties": true,
             "not": {
@@ -320,6 +332,9 @@
                     ]
                 }
             ]
+        },
+        "sealEngine": {
+            "$ref": "#/definitions/SealEngineType"
         }
     },
     "patternProperties": {
@@ -331,24 +346,24 @@
                     },
                     "type": "array"
                 },
-		"network": {
-		    "type": "string"
-		},
                 "expect": {
-		    "oneOf": [
+                    "oneOf": [
                         {
                             "$ref": "#/definitions/AccountMap"
                         },
                         {
                             "$ref": "#/definitions/BlockchainExpectSection"
                         }
-                     ]                 
+                    ]
                 },
                 "genesisBlockHeader": {
                     "$ref": "#/definitions/BlockHeader"
                 },
                 "genesisRLP": {
                     "$ref": "#/definitions/ConfusedHexType"
+                },
+                "network": {
+                    "type": "string"
                 },
                 "pre": {
                     "patternProperties": {
@@ -358,9 +373,9 @@
                         }
                     }
                 },
-		"sealEngine": {
-		    "$ref": "#/definitions/SealEngineType"
-		}
+                "sealEngine": {
+                    "$ref": "#/definitions/SealEngineType"
+                }
             },
             "required": [
                 "pre",

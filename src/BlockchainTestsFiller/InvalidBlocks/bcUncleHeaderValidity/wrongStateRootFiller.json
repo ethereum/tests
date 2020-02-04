@@ -1,5 +1,8 @@
 {
     "wrongStateRoot" : {
+        "_info" : {
+            "comment" : "The client does not care about uncle's state root hash as long as it's header POW is valid"
+        },
         "genesisBlockHeader" : {
             "bloom" : "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
             "coinbase" : "0x8888f1f195afa192cfee860698584c030f4c9db1",
@@ -17,19 +20,19 @@
             "transactionsTrie" : "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
             "uncleHash" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347"
         },
-	"sealEngine" : "NoProof",
-	"expect" : [
+        "sealEngine" : "NoProof",
+        "expect" : [
 	    {
 		    "network" : [">=Istanbul"],
 		    "result" : {
 			    "095e7baea6a6c7c4c2dfeb977efac326af552d87" : {
-				"balance" : "10"
+                    "balance" : "20"
 			    },
 			    "a94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-				"nonce" : "2"
+                    "nonce" : "3"
 			    },
 			    "0000000000000000000000000000000000000000" : {
-				"balance" : "10"
+                    "balance" : "10"
 			    }
 		    }
 	    }
@@ -74,7 +77,12 @@
                 ]
             },
             {
-		"expectExceptionALL" : "InvalidStateRoot",
+                "blockHeader" : {
+                    "stateRoot" : "0x00e6de3b12d17754e4a51679b1704b17d7de5aea5fb4ec5cf4569e2bd4ebf0af",
+                    "//expectException" : { 
+                        "Istanbul" : "InvalidStateRoot"
+                    }
+                },
                 "transactions" : [
                     {
                         "data" : "",
@@ -88,9 +96,9 @@
                 ],
                 "uncleHeaders" : [
                     {
-			"stateRoot" : "0xbad40b30d613c35dad43e3693329e1b1ee6350f989cf46a288025a1cbfdab9cd",
-			"populateFromBlock" : "1",
-			"overwriteAndRedoPoW" : "stateRoot"
+                        "stateRoot" : "0xbadeeb30d613c35dad43e3693329e1b1ee6350f989cf46a288025a1cbfdab9ca",
+                        "populateFromBlock" : "1",
+                        "overwriteAndRedoPoW" : "stateRoot"
                     }
                 ]
             }

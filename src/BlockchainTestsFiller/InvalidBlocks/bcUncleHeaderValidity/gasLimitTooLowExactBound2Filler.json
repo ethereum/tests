@@ -1,5 +1,5 @@
 {
-    "wrongMixHash" : {
+    "gasLimitTooLowExactBound2" : {
         "genesisBlockHeader" : {
             "bloom" : "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
             "coinbase" : "0x8888f1f195afa192cfee860698584c030f4c9db1",
@@ -17,8 +17,8 @@
             "transactionsTrie" : "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
             "uncleHash" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347"
         },
-	"sealEngine" : "Ethash",
-	"expect" : [
+        "sealEngine" : "NoProof",
+        "expect" : [
 	    {
 		    "network" : [">=Istanbul"],
 		    "result" : {
@@ -74,7 +74,11 @@
                 ]
             },
             {
-		"expectExceptionALL" : "InvalidBlockNonce",
+                "blockHeader" : {
+                    "expectException" : {
+                        "Istanbul" : "InvalidGasLimit2"
+                    }
+                },
                 "transactions" : [
                     {
                         "data" : "",
@@ -88,9 +92,9 @@
                 ],
                 "uncleHeaders" : [
                     {
-			"mixHash" : "bad7f905d29ed0fca99d65d0adcce698dee97cf72a13c7cd8d7a7826b8eee770",
-			"populateFromBlock" : "1",
-			"overwriteAndRedoPoW" : "mixHash"
+                        "gasLimit" : "141591",
+                        "populateFromBlock" : "1",
+                        "overwriteAndRedoPoW" : "gasLimit"
                     }
                 ]
             }
