@@ -7,7 +7,7 @@ The blockchain tests aim is to test the basic verification of a blockchain.
 
 =================== ==============================================================
 Location            `/BlockchainTests <https://github.com/ethereum/tests/tree/develop/BlockchainTests>`_
-Supported Hardforks ``Byzantium`` | ``Constantinople`` | ``EIP150`` | ``EIP158`` | ``Frontier`` | ``Homestead``
+Supported Hardforks ``Istanbul`` | ``Byzantium`` | ``Constantinople`` | ``EIP150`` | ``EIP158`` | ``Frontier`` | ``Homestead``
 Status              Actively supported
 =================== ==============================================================
 
@@ -81,7 +81,8 @@ The Blocks Section
 The ``blocks`` section is a list of block objects, which have the following format:
 
 * ``rlp`` section contains the complete rlp of the new block as described in the 
-  yellow paper in section 4.3.3.
+  yellow paper in section 4.3.3. If the block is invalid the block section contain 
+  only this and optional `expectException` field.
 
 * ``blockHeader`` section  describes the block header of the new block in the same 
   format as described in `genesisBlockHeader`.
@@ -143,6 +144,8 @@ Pre and postState Sections
 
 * ``postState`` section: as described in :ref:`state_tests` (section - post).
 
+* ``postStateHash`` section: appears instead of ``postState`` when the state size is too large.
+
 Seal Engine
 ^^^^^^^^^^^
 
@@ -164,3 +167,5 @@ It is used to define a situation when you have 3 blocks already imported but the
 ``"chainname" = "string"`` This is used for defining forks in the same test. You could mine blocks to chain "A": 1, 2, 3 then to chain "B": 1, 2, 3, 4 (chainB becomes primary). Then again to chain "A": 4, 5, 6  (chainA becomes primary) and so on. chainname could also be defined in uncle header section. If defined in uncle header it tells on which chain's block uncle header would be populated from. When running test, this field could be used for information purpose only.
 
 ``"chainnetwork" = "string"`` Defines on which network rules this block was mined. (see the difference https://github.com/ethereum/EIPs/blob/master/EIPS/eip-2.mediawiki). When running test, this field could be used for information purpose only.
+
+``"expectException" = "string"`` A type of exception expected to be thrown when importing an invalid block. Optional.
