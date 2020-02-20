@@ -1,5 +1,11 @@
 # Pull Requests changes log
 
+- PR [#673](https://github.com/ethereum/tests/pull/673)
+upgrade and regenerate invalid RLP blockchain tests
+
+- PR [#672](https://github.com/ethereum/tests/pull/672)
+Major blockchain test refactoring, and regeneration on geth + retesteth
+
 - PR[#671](https://github.com/ethereum/tests/pull/671)
 Add test cases for SELFBALANCE inside of CALL, DELEGATECALL, and CALLCODE
 
