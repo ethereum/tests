@@ -1,5 +1,8 @@
 # Pull Requests changes log
 
+- PR [#677](https://github.com/ethereum/tests/pull/677)
+Minor changes to the test filler format around field strictness
+
 - PR [#673](https://github.com/ethereum/tests/pull/673)
 upgrade and regenerate invalid RLP blockchain tests
 
