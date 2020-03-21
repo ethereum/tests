@@ -1,5 +1,8 @@
 # Pull Requests changes log
 
+- PR [#678](https://github.com/ethereum/tests/pull/678)
+Fix test fillers affected by the CompareStates bug
+
 - PR [#677](https://github.com/ethereum/tests/pull/677)
 Minor changes to the test filler format around field strictness
 
