@@ -20,6 +20,157 @@ Here is an example how a follow-up release line could look like:
 
 # Release Notes
 
+## v7.0.0
+
+This is the last `Ethereum` tests release with a pre-`Berlin` HF state,
+so it provides some stable ground to upgrade client test runners against
+to be ready for a `Berlin` hardfork integration.
+
+### Tests Added
+
+#### StateTests / BlockchainTests
+
+##### EIP-2200
+
+Added state tests (also as `BlockchainTests`) to validate the 
+EIP-1706/[EIP-2200](https://eips.ethereum.org/EIPS/eip-2200) out of gas condition, 
+specifically aimed at validating less than or equals to the stipend handling,
+see `GeneralStateTests/stSStoreTest/sstore_gasLeft.json` 
+PR [#649](https://github.com/ethereum/tests/pull/649)
+
+##### DIV/SDIV/MOD/SDIV by Zero
+
+Added state tests (also as `BlockchainTests`) checking DIV/SDIV/MOD/SDIV by zero,
+see `GeneralStateTests/stSolidityTest/ByZero.json`,
+PR [#647](https://github.com/ethereum/tests/pull/647)
+
+##### Stack Validity of SWAP
+
+Added tests checking stack validity of SWAP,
+see `GeneralStateTests/stStackTests/stackOverflowSWAP.json` and `[..]/stacksanitySWAP.json`,
+PR [#647](https://github.com/ethereum/tests/pull/647)
+
+##### EXTCODEHASH Empty Account
+
+Added more EXTCODEHASH state tests (also as `BlockchainTests`) of nonexistent and 
+post suicide accounts, see `GeneralStateTests/stExtCodeHash/callToNonExistent.json`, 
+`[..]/callToSuicideThenExtcodehash.json` and `[..]/createEmptyThenExtcodehash.json`,
+PR [#654](https://github.com/ethereum/tests/pull/654)
+
+##### SELFBALANCE in different Call Types
+
+Added a composite state test (also in `BlockchainTests`) for SELFBALANCE that 
+will do all the exisitng test inside of CALL, DELEGATECALL, and CALLCODE calls,
+see `GeneralStateTests/stSelfBalance/selfBalanceCallTypes.json`,
+PR [#671](https://github.com/ethereum/tests/pull/671)
+
+##### Retesteth Unit Tests
+
+Introduced retesteth unitTests in 
+`BlockchainTests/InvalidBlocks/bcExpectSection/filling_unexpectedAccount.json`,
+PR [#676](https://github.com/ethereum/tests/pull/676)
+
+#### Difficulty Tests
+
+Added difficulty tests for [EIP-2384](https://eips.ethereum.org/EIPS/eip-2384)
+(Muir Glacier Difficulty Bomb Delay),
+PR [#662](https://github.com/ethereum/tests/pull/662)
+
+#### Keystore Tests
+
+Added KeyStore test based on MyCrypto file in order to ensure that the generated 
+file is compatible with MyCrypto and Metamask,
+PR [#665](https://github.com/ethereum/tests/pull/665)
+
+#### RLP Tests
+
+Added RLP invalid tests for insufficient bytes, see `RLPTests/invalidRLPTest.json`,
+PR [#614](https://github.com/ethereum/tests/pull/614)
+
+### Test Format Changes
+
+#### BlockChainTests
+
+##### LegacyTests
+
+`BlockChain` tests up to `ConstantinopleFix` (aka `Petersburg`) now also have been
+moved to the [LegacyTests/] folder, the main test folders on this release only 
+contain the `Istanbul` tests,
+PR [#648](https://github.com/ethereum/tests/pull/648)
+
+##### VMTests -> BlockchainTests
+
+`VMTests` have been converted to `BlockchainTests` and can now be found in
+`BlockchainTests/ValidBlocks/VMTests/`,
+PR [#680](https://github.com/ethereum/tests/pull/680)
+
+##### PostState Correction
+
+On some LegacyTests `postState` has been corrected to `postStateHash`, you can use
+this [repo search](https://github.com/ethereum/tests/search?q=postStateHash&unscoped_q=postStateHash)
+to see which tests are affected. This might need some adoption of your test runner.
+
+##### InvalidBlockChain Tests: Expected Block Exceptions
+
+Major blockchain test refactoring, and regeneration on geth + retesteth, see 
+[files diff](https://github.com/ethereum/tests/pull/672/files)
+for an impression on the format changes (`InvalidBlockchainTests`).
+PR [#672](https://github.com/ethereum/tests/pull/672)
+
+### Retesteth
+
+- Add Transition genesis retesteth configurations to default geth configs,
+  PR [#646](https://github.com/ethereum/tests/pull/646)
+- Updated default mining reward config for transition nets in retesteth configs
+  to avoid retesteth error when filling the state tests,
+  PR [#650](https://github.com/ethereum/tests/pull/650)
+- Use additional forks in retesteth configs. Additional forks used in `TransitionTests` 
+  and not automatically used in StateTests/BlockchainTests,
+  PR [#651](https://github.com/ethereum/tests/pull/651)
+- Enable Istanbul in aleth's retesteth configs,
+  PR [#656](https://github.com/ethereum/tests/pull/656)
+- Fix ripemd160 precompile name in retesteth configs,
+  PR [#659](https://github.com/ethereum/tests/pull/659)
+- Fix ECADD and ECMUL precompiles in Istanbul retesteth config,
+  PR [#660](https://github.com/ethereum/tests/pull/660)
+- Add `ChainID` to Istanbul retesteth config,
+  PR [#661](https://github.com/ethereum/tests/pull/661)
+- Remove retesteth configs, configs are now stored in retesteth repo.
+  PR [#666](https://github.com/ethereum/tests/pull/666)
+
+### Test Fixes
+
+- Reduce 50k bytes code in quadratic complexity tests to 20k bytes
+  Resolves issue https://github.com/ethereum/tests/issues/657,
+  see `GeneralStateTests/stQuadraticComplexityTest/Call[*]KbytesContract[*].json`,
+  PR [#658](https://github.com/ethereum/tests/pull/658) and 
+  PR [#669](https://github.com/ethereum/tests/pull/669)
+- Minor changes to the test filler format around field strictness, affected tests
+  `BlockchainTests/InvalidBlocks/bcExpectSection/filling_wrongStorage2.json`,
+  `GeneralStateTests/stExtCodeHash/*`, `GeneralStateTests/stRandom/` (3),
+  `GeneralStateTests/stReturnDataTest/subcallReturnMoreThenExpected.json`,
+  `GeneralStateTests/stStaticCall/static_call_value_inherit.json`,
+  `GeneralStateTests/stTransactionTest/Opcodes_TransactionInit.json`,
+  PR [#677](https://github.com/ethereum/tests/pull/677)
+- Upgrade and regenerate invalid RLP blockchain tests,
+  PR [#673](https://github.com/ethereum/tests/pull/673)
+- Fix test fillers affected by the CompareStates bug, affected tests
+  `BlockchainTests/ValidBlocks/bcStateTests/randomStatetest377.json`,
+  `GeneralStateTests/stCallCreateCallCodeTest/Call1024PreCalls.json`,
+  `GeneralStateTests/stChangedEIP150/Call1024PreCalls.json`,
+  `GeneralStateTests/stCreate2/create2checkFieldsInInitcode.json`,
+  `GeneralStateTests/stDelegatecallTestHomestead/Call1024PreCalls.json`,
+  `GeneralStateTests/stRandom/randomStatetest349.json`,
+  `GeneralStateTests/stRandom2/randomStatetest578.json`,
+  `GeneralStateTests/stRefundTest/*`,
+  `GeneralStateTests/stStaticCall/*`,
+  PR [#678](https://github.com/ethereum/tests/pull/678)
+- Fixed blockgaslimit in CALLBlake2f_MaxRouds,
+  see `GeneralStateTests/stTimeConsuming/CALLBlake2f_MaxRounds.json`,
+  PR [#679](https://github.com/ethereum/tests/pull/679)
+- Removed `bcExpectSection` in `BlockchainTests` from public tests,
+  PR [#684](https://github.com/ethereum/tests/pull/684)
+
 ## v7.0.0-beta.1
 
 This is the first `Ethereum` tests release with broader `Istanbul` support,

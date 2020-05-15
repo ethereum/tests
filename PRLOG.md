@@ -4,7 +4,6 @@
 Fix field formatting in tests, update state hashes. no consensus change
 
 
-
 # Pre release 7.0.0
 
 - PR [#678](https://github.com/ethereum/tests/pull/678)
