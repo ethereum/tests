@@ -20,6 +20,54 @@ Here is an example how a follow-up release line could look like:
 
 # Release Notes
 
+## v8.0.0-beta.1
+
+First `Ethereum` tests release with partial support for the
+[Berlin](https://eips.ethereum.org/EIPS/eip-2070) hardfork with first tests
+for EVM subroutines support (thanks @matkt 😀).
+
+[Here](https://github.com/ethereum/tests/blob/develop/BlockchainTests/GeneralStateTests/stSubroutine/beginSubAtEndOfCode.json)
+is an example for an added `Berlin` HF test file to the `BlockchainTests` with
+a `*_BERLIN` postfix on the testname and "Berlin" added to the `network` parameter.
+
+The corresponding [state test](https://github.com/ethereum/tests/blob/develop/GeneralStateTests/stSubroutine/beginSubAtEndOfCode.json) file has a `Berlin` entry in the `post` section of the test file.
+
+There is no change in the `LegacyTests` folder structure yet and test files
+there contain tests until `ConstantinopleFix` (aka `Petersburg`).
+
+### Subroutine Tests
+
+Subroutine support for the EVM has been specified in 
+[EIP-2315](https://eips.ethereum.org/EIPS/eip-2315) (Status: `Draft`) and accepted
+for `Berlin` HF inclusion in
+[ACD Call #84](https://github.com/ethereum/pm/blob/master/All%20Core%20Devs%20Meetings/Meeting%2084.md#decisions-made).
+
+PR [#685](https://github.com/ethereum/tests/pull/685) adds first subroutine tests
+to the 
+[BlockchainTests/GeneralStateTests/stSubroutine](https://github.com/ethereum/tests/tree/develop/BlockchainTests/GeneralStateTests/stSubroutine) and
+[GeneralStateTests/stSubroutine](https://github.com/ethereum/tests/tree/develop/GeneralStateTests/stSubroutine) folders.
+These tests have been generated along the `Besu` client
+[subroutine implementation](https://github.com/hyperledger/besu/pull/717) and checked against
+the `geth` implementation.
+
+Added test cases:
+
+**General Flow:**
+- Jump into a subroutine, back out and stop (`simpleSubroutine`)
+- When the subroutine returns, it should hit the ‘virtual stop’ after the bytecode, and not exit with error (`subroutineAtEndOfCode`)
+- Bytecode going into two depths of subroutines (`twoLevelsSubroutines`)
+
+**Edge Cases (Planned Execution):**
+- When `BEGINSUB` is the last instruction in code and this subroutine is jumped-to, the implementations should execute STOP (`beginSubAtEndOfCode`)
+- Should still succeed when return stack grows until its limit of 1023 (`shouldSucceedWhenReturnStackGrowsUntil1023`)
+
+**Edge Cases (Error):**
+- Subroutine with an invalid jump, given location outside of the code-range (`subroutineInvalidJump`)
+- Failing at first opcode due to shallow `return_stack` (`subroutineShallowReturnStack`)
+- Attempted execution of a `BEGINSUB` causes an abort: terminate execution with an OOG (Out Of Gas) exception (`shouldErrorWhenExecuteBeginSub`)
+- Should error when return stack grows above 1023 (`shouldErrorWhenReturnStackGrowsAbove1023`)
+- Subroutines can only be entered via `JUMPSUB` and not `BEGINSUB`, so error on `BEGINSUB` (`shouldErrorWhenSubroutineEnteredViaBeginSub`)
+
 ## v7.0.0
 
 This is the last `Ethereum` tests release with a pre-`Berlin` HF state,
