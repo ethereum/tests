@@ -1,5 +1,9 @@
 # Pull Requests changes log
 
+- PR [#696](https://github.com/ethereum/tests/pull/696)
+Fix test formatting. remove wrongCharAtRlp tests. Fix typos in tests.
+Refill smaller differencies with retesteth refactoring.
+
 - PR [#689](https://github.com/ethereum/tests/pull/689)
 Fix field formatting in tests, update state hashes. no consensus change
 
