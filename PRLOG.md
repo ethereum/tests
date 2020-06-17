@@ -1,5 +1,8 @@
 # Pull Requests changes log
 
+- PR [#699](https://github.com/ethereum/tests/pull/699)
+Fix ambigous blockchain tests. Remove nonce and mixHash blockchain tests.
+
 - PR [#696](https://github.com/ethereum/tests/pull/696)
 Fix test formatting. remove wrongCharAtRlp tests. Fix typos in tests.
 Refill smaller differencies with retesteth refactoring.
