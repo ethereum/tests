@@ -1,5 +1,8 @@
 {
     "TransactionFromCoinbaseHittingBlockGasLimit1" : {
+        "_info" : {
+            "comment" : "Can't use GASLIMIT in post state because clients might change it differently. NOTE: gasLimit is still within allowed range of change."
+        },
         "genesisBlockHeader" : {
             "coinbase" : "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b",
             "difficulty" : "0x020000",
@@ -26,9 +29,7 @@
                         "nonce" : "1"
                     },
                     "0xb94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-                        "storage" : {
-                            "0x00" : "0xeee6"
-                        }
+                        "balance" : "100010"
                     }
                 }
             }
@@ -43,7 +44,7 @@
             },
             "0xb94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
                 "balance" : "100000",
-                "code" : "{ [[0]] (GASLIMIT) }",
+                "code" : "",
                 "nonce" : "0",
                 "storage" : {
                 }
@@ -51,10 +52,13 @@
         },
         "blocks" : [
             {
+                "blockHeader" : {
+                    "gasLimit" : "0xee96"
+                },
                 "transactions" : [
                      {
                         "data" : "",
-                        "gasLimit" : "0xeee6",
+                        "gasLimit" : "0xee96",
                         "gasPrice" : "1",
                         "nonce" : "0",
                         "secretKey" : "45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8",
