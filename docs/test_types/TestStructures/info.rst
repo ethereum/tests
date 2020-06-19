@@ -16,8 +16,8 @@ Info Section
 
 Info section is generated with the test and contains information about test and it's generators.
 
-Fields
-======
+**Fields**
+
 ======================= ===============================================================================
 `comment`                comment from the test source. (can be edited at source)
 `filling-rpc-server`     tool that has been used to generate the test (version)

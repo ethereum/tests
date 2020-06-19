@@ -1,7 +1,7 @@
 .. block:
 
-BlockchainTest::blocks::block
-==================================
+Valid Block Section
+===================
 
 ::
 
@@ -56,8 +56,8 @@ Fields `chainname`, `blocknumber` are irrelevant for the test client.
 * transaction creation `to` is ""
 
 
-BlockchainTest::blocks::block (invalid)
-=======================================
+Invalid Block Section
+=====================
 
 ::
 
@@ -74,6 +74,6 @@ Fields `chainname`, `blocknumber`, `expectException` are irrelevant for the test
 
 `expectException` is index in client's exception string map defined in retesteth client configs.
 
-Fields
-======
+**Fields**
+
 Fields are similar to the standard ethereum block header / transaction

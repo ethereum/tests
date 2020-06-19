@@ -1,7 +1,7 @@
 .. _genesisblockheader:
 
-BlockchainTest::genesisBlockHeader
-==================================
+GenesisBlockHeader Section
+==========================
 
 ::
 
@@ -35,6 +35,6 @@ The content of `genesisRLP` **MUST** be equal to the one in `genesisBlockHeader`
 * 0 values are 0x00 rounded
 * empty extraData 0x
 
-Fields
-======
+**Fields**
+
 Fields are similar to the standard ethereum block header.
