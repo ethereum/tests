@@ -37,9 +37,9 @@ AccountFields are always complete (`balance`, `code`, `nonce`, `storage` must pr
 **Fields**
 
 ======================= ===============================================================================
-`address hash`           is 20 bytes ethereum address 0x prefixed
-`balance`                account balance in evm state
-`code`                   account code in evm state
-`nonce`                  account nonce in evm state
-`storage`                map of storage records <0xHEX> => <0xHEX>
+``address hash``         is 20 bytes ethereum address 0x prefixed
+``balance``              account balance in evm state
+``code``                 account code in evm state
+``nonce``                account nonce in evm state
+``storage``              map of storage records <0xHEX> => <0xHEX>
 ======================= ===============================================================================         

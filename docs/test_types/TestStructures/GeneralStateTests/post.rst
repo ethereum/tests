@@ -30,11 +30,11 @@ See transaction section which define transactions by `data`, `gasLimit`, `value`
 **Fields**
 
 ======================= ===============================================================================
-`Istanbul`               fork name as defined by client config (test standard names)
-`indexes`                define an index of the transaction in txs vector that has been used for this result
-`data`                   index in transaction data vector
-`gas`                    index in transaction gas vector
-`value`                  index in transaction value vector
-`hash`                   hash of the post state after transaction execution
-`logs`                   log hash of the transaction logs
+``Istanbul``             fork name as defined by client config (test standard names)
+``indexes``              define an index of the transaction in txs vector that has been used for this result
+``data``                 index in transaction data vector
+``gas``                  index in transaction gas vector
+``value``                index in transaction value vector
+``hash``                 hash of the post state after transaction execution
+``logs``                 log hash of the transaction logs
 ======================= ===============================================================================

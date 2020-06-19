@@ -21,10 +21,10 @@ Env section describe information required to construct a genesis block, or VM en
 **Fields**
 
 ======================= ===============================================================================
-`currentCoinbase`        author/miner/coinbase address
-`currentDifficulty`      transaction executed in a block with this difficulty
-`currentGasLimit`        transaction executed in a block with this gas limit
-`currentNumber`          transaction executed in a block with this number
-`currentTimestamp`       transaction executed in a block with this timestamp
-`previousHash`           hash of the previous block (deprecated)
+``currentCoinbase``      author/miner/coinbase address
+``currentDifficulty``    transaction executed in a block with this difficulty
+``currentGasLimit``      transaction executed in a block with this gas limit
+``currentNumber``        transaction executed in a block with this number
+``currentTimestamp``     transaction executed in a block with this timestamp
+``previousHash``         hash of the previous block (deprecated)
 ======================= ===============================================================================

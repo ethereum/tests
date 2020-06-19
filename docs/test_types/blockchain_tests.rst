@@ -3,6 +3,18 @@
 Blockchain Test
 ---------------
 
+Location `/BlockchainTests <https://github.com/ethereum/tests/tree/develop/BlockchainTests>`_
+
+**Subfolders**
+
+================= ========================================
+GeneralStateTests Tests generated in blockchain form from GeneralStateTests
+InvalidBlocks     Tests containing blocks that are expected to fail on import
+ValidBlocks       Normal blockchain tests
+TransitionTests   BC tests with exotic network rules switching forks at block#5
+================= ========================================
+
+
 Test Structure
 ==============
 
@@ -44,4 +56,5 @@ Single blockchain test file might contain many tests as there are many test gene
 .. include:: ../test_types/TestStructures/pre.rst
 .. include:: ../test_types/TestStructures/BlockchainTests/genesisblockheader.rst
 .. include:: ../test_types/TestStructures/BlockchainTests/block.rst
+.. include:: ../test_types/TestStructures/transaction.rst
 
