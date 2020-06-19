@@ -36,9 +36,11 @@ Transaction section defines single transaction to be executed in BlockchainTest'
 * empty data is defined as 0x
 * transaction creation `to` defined as ""
 
-**Note**: that fields `r`, `s` are u256 and can be less than 32 bytes!
+.. Note::
+   Fields `r`, `s` are u256 and can be less than 32 bytes!
 
-**Note**: there is a EIP limiting `s` max value. From a certain fork transactions with `s` value > `sMaxValue` are considered to be invalid.
+.. Note::
+   There is an EIP limiting `s` max value (source?). From a certain fork transactions with `s` value > `sMaxValue` are considered to be invalid.
 
 
 **Fields**
