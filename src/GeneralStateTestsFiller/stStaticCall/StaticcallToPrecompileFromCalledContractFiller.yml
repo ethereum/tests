@@ -1,5 +1,5 @@
 ---
-StaticCallToPrecompileFromTransaction:
+StaticcallToPrecompileFromCalledContract:
   env:
     currentCoinbase: '0xcafe000000000000000000000000000000000001'
     currentDifficulty: '0x20000'
@@ -15,6 +15,9 @@ StaticCallToPrecompileFromTransaction:
     network:
     - ">=Istanbul"
     result:
+      b000000000000000000000000000000000000000:
+        storage:
+          '0x00': '0x01'
       a000000000000000000000000000000000000000:
         storage:
           # precompiled contract #1 - Recovery of ECDSA signature
@@ -47,8 +50,18 @@ StaticCallToPrecompileFromTransaction:
           '0x19': '0x01'
           '0x20': '0x01'
   pre:
+    b000000000000000000000000000000000000000:
+      balance: '0'
+      nonce: '0'
+      storage: {}
+      code: |
+        {
+          [[ 0 ]] (CALL (GAS) 0xa000000000000000000000000000000000000000 0 0 0 0 0 )
+        }
     a000000000000000000000000000000000000000:
       balance: '0'
+      nonce: '0'
+      storage: {}
       code: |
         {
           ;; Recovery of ECDSA signature
@@ -56,7 +69,7 @@ StaticCallToPrecompileFromTransaction:
           [ 0x20 ] 28
           [ 0x40 ] 0x73b1693892219d736caba55bdb67216e485557ea6b6af75f37096c9aa6a5a75f
           [ 0x60 ] 0xeeb940b1d03b21e36b0e47e79769f095fe2ab855bd91e3a38756b7d75a9c4549
-          [[ 0x00 ]] (STATICCALL 400000 1 0 128 1000 32)
+          [[ 0x00 ]] (STATICCALL (GAS) 1 0 128 1000 32)
           [[ 0x01 ]] (MOD @1000 (EXP 2 160))
           [[ 0x02 ]] (EQ (ORIGIN) @@1)
           [ 0x00 ] 0x0000000000000000000000000000000000000000000000000000000000000000
@@ -150,8 +163,6 @@ StaticCallToPrecompileFromTransaction:
           [[ 0x19 ]] (STATICCALL (GAS) 8 0 0x0180 1000 32)
           [[ 0x20 ]] @1000
         }
-      nonce: '0'
-      storage: {}
     a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
       balance: '1000000000000000000'
       code: ''
@@ -165,6 +176,6 @@ StaticCallToPrecompileFromTransaction:
     gasPrice: '1'
     nonce: '0'
     secretKey: '0x45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8'
-    to: 'a000000000000000000000000000000000000000'
+    to: 'b000000000000000000000000000000000000000'
     value:
     - '100'
