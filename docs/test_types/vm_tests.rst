@@ -1,16 +1,13 @@
 .. _vm_tests:
 
-VM Tests
-========
+VM Test
+-------
+
+Location `/VMTests <https://github.com/ethereum/tests/tree/develop/VMTests>`_
+
 
 The VM tests aim is to test the basic workings of the VM in
 isolation.
-
-=================== ==============================================================
-Location            `/VMTests <https://github.com/ethereum/tests/tree/develop/VMTests>`_
-Supported Hardforks Currently only Homestead
-Status              Actively supported
-=================== ==============================================================
 
 This is specifically not meant to cover transaction, creation or call 
 processing, or management of the state trie. Indeed at least one implementation 
@@ -28,7 +25,7 @@ from the code (``out``) is also detailed.
 
 
 Test Implementation
--------------------
+===================
 
 It is generally expected that the test implementer will read ``env``, ``exec`` and ``pre`` 
 then check their results against ``gas``, ``logs``, ``out``, ``post`` and ``callcreates``. 
@@ -47,12 +44,13 @@ Furthermore, gas required is simply that of the VM execution: the gas cost for
 transaction processing is excluded.
 
 Test Structure
---------------
+==============
 
 ::
 
 	{
 	   "test name 1": {
+	       "_info" : { ... },
 		   "env": { ... },
 		   "pre": { ... },
 		   "exec": { ... },
@@ -63,6 +61,7 @@ Test Structure
 		   "callcreates": { ... }
 	   },
 	   "test name 2": {
+   	       "_info" : { ... },
 		   "env": { ... },
 		   "pre": { ... },
 		   "exec": { ... },
@@ -75,40 +74,51 @@ Test Structure
 	   ...
 	}
 
-The env Section
-^^^^^^^^^^^^^^^
 
-* ``currentCoinbase``: The current block's coinbase address, to be returned by the ``COINBASE`` instruction.
-* ``currentDifficulty``: The current block's difficulty, to be returned by the ``DIFFICULTY`` instruction.
-* ``currentGasLimit``: The current block's gas limit.
-* ``currentNumber``: The current block's number.
-* ``currentTimestamp``: The current block's timestamp.
-* ``previousHash``: The previous block's hash.
+.. include:: ../test_types/TestStructures/info.rst
+.. include:: ../test_types/TestStructures/GeneralStateTests/env.rst
+.. include:: ../test_types/TestStructures/pre.rst
 
-The exec Section
-^^^^^^^^^^^^^^^^
+Exec Section
+============
 
-* ``address``: The address of the account under which the code is executing, to be returned by the ``ADDRESS`` instruction.
-* ``origin``: The address of the execution's origin, to be returned by the ``ORIGIN`` instruction.
-* ``caller``: The address of the execution's caller, to be returned by the ``CALLER`` instruction.
-* ``value``: The value of the call (or the endowment of the create), to be returned by the ``CALLVALUE`` instruction.
-* ``data``: The input data passed to the execution, as used by the ``CALLDATA``... instructions. Given as an array of byte values. See $DATA_ARRAY.
-* ``code``: The actual code that should be executed on the VM (not the one stored in the state(address)) . See $DATA_ARRAY.
-* ``gasPrice``: The price of gas for the transaction, as used by the ``GASPRICE`` instruction.
-* ``gas``: The total amount of gas available for the execution, as would be returned by the ``GAS`` instruction were it be executed first.
+::
 
-The pre and post Section
-^^^^^^^^^^^^^^^^^^^^^^^^
+    {
+        "exec" : {
+            "address" : "0x0f572e5295c57f15886f9b263e2f6d2d6c7b5ec6",
+            "caller" : "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b",
+            "code" : "0x600260021660005500",
+            "data" : "0x",
+            "gas" : "0x0186a0",
+            "gasPrice" : "0x0c",
+            "origin" : "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b",
+            "value" : "0x0b"
+        },
+    }
 
-The ``pre`` and ``post`` sections each have the same format of a mapping between addresses and accounts. Each account has the format:
 
-* ``balance``: The balance of the account.
-* ``nonce``: The nonce of the account.
-* ``code``: The body code of the account, given as an array of byte values. See $DATA_ARRAY.
-* ``storage``: The account's storage, given as a mapping of keys to values. For key used notion of string as digital or hex number e.g: ``"1200"`` or ``"0x04B0"`` For values used $DATA_ARRAY.
+**Fields**
 
-The callcreates Section
-^^^^^^^^^^^^^^^^^^^^^^^
+============= =============================================================================
+``address``   The address of the account under which the code is executing, to be returned by the ``ADDRESS`` instruction.
+``origin``    The address of the execution's origin, to be returned by the ``ORIGIN`` instruction.
+``caller``    The address of the execution's caller, to be returned by the ``CALLER`` instruction.
+``value``     The value of the call (or the endowment of the create), to be returned by the ``CALLVALUE`` instruction.
+``data``      The input data passed to the execution, as used by the ``CALLDATA``... instructions. Given as an array of byte values. See $DATA_ARRAY.
+``code``      The actual code that should be executed on the VM (not the one stored in the state(address)) . See $DATA_ARRAY.
+``gasPrice``  The price of gas for the transaction, as used by the ``GASPRICE`` instruction.
+``gas``       The total amount of gas available for the execution, as would be returned by the ``GAS`` instruction were it be executed first.
+============= =============================================================================
+
+Post Section
+============
+
+Same as Pre/preState Section
+
+
+Callcreates Section
+===================
 
 The ``callcreates`` section details each ``CALL`` or ``CREATE`` instruction that has been executed. It is an array of maps with keys:
 
@@ -117,8 +127,8 @@ The ``callcreates`` section details each ``CALL`` or ``CREATE`` instruction that
 * ``gasLimit``: The amount of gas with which the operation was made.
 * ``value``: The value or endowment with which the operation was made.
 
-The logs Section
-^^^^^^^^^^^^^^^^
+Logs Section
+============
 
 The ``logs`` sections contains the hex encoded hash of the rlp encoded log entries, reducing the overall size of the test files while still verifying that all of the data is accurate (at the cost of being able to read what the data should be).
 Each logentry has the format:
@@ -128,7 +138,7 @@ keccak(rlp.encode(log_entries))
 (see https://github.com/ethereum/py-evm/blob/7a96fa3a2b00af9bea189444d88a3cce6a6be05f/eth/tools/_utils/hashing.py#L8-L16)
 
 The gas and output Keys
-^^^^^^^^^^^^^^^^^^^^^^^
+=======================
 
 Finally, there are two simple keys, ``gas`` and ``out``:
 

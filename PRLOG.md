@@ -1,8 +1,22 @@
 # Pull Requests changes log
 
+- PR [#706](https://github.com/ethereum/tests/pull/706)
+- PR [#704](https://github.com/ethereum/tests/pull/704)
+Fix small issues in the tests for aleth/testeth run
+
+- PR [#703](https://github.com/ethereum/tests/pull/703)
+Remove empty stEWASM folder from tests
+
+- PR [#702](https://github.com/ethereum/tests/pull/702)
+Split bcForged tests into multiple tests for better execution performance on thread
+
 - PR [#700](https://github.com/ethereum/tests/pull/700)
 Fix test STATICCALL violation in call to precompile.
 Initial problem described in [DAPPTOOLS #360](https://github.com/dapphub/dapptools/pull/360).
+
+- PR [#701](https://github.com/ethereum/tests/pull/701)
+- PR [#699](https://github.com/ethereum/tests/pull/699)
+Fix ambigous blockchain tests. Remove nonce and mixHash blockchain tests.
 
 - PR [#696](https://github.com/ethereum/tests/pull/696)
 Fix test formatting. remove wrongCharAtRlp tests. Fix typos in tests.
