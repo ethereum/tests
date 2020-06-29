@@ -45,13 +45,17 @@ Transaction section defines single transaction to be executed in BlockchainTest'
 
 **Fields**
 
-======================= ===============================================================================
-``data``                 data/input code of the transaction
-``gasLimit``             gasLimit of transaction.
-``gasPrice``             transaction's gas price
-``nonce``                transaction's nonce
-``secretKey``            secretKey criptic value used to sign tx data by v,r,s
-``v, r, s``              Values corresponding to the signature of the transaction and used to determine the sender of the transaction.
-``to``                   transaction's `to` destination address. set to "" if creation.
-``value``                value of the transaction.
-======================= ===============================================================================
+============= ========== ===============================================================================
+``data``      **BYTES**  data/input code of the transaction
+``gasLimit``  **VALUE**  gasLimit of transaction.
+``gasPrice``  **VALUE**  Transaction's gas price
+``nonce``     **VALUE**  Transaction's nonce
+``secretKey`` **HASH32** SecretKey criptic value used to sign tx data by v,r,s
+``v``         **VALUE**  Cryptic value ``1 byte in length``
+``r``         **VALUE**  Values corresponding to the signature of the transaction and used to determine the sender of the transaction.
+``s``         **VALUE**  Values corresponding to the signature of the transaction and used to determine the sender of the transaction.
+``to``        **FH20**   Transaction's `to` destination address. ``set to "" if creation``.
+``value``     **VALUE**  Value of the transaction.
+============= ========== ===============================================================================
+
+.. include:: types.rst
