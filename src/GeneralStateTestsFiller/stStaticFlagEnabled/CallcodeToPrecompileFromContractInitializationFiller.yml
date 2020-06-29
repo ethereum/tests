@@ -1,5 +1,11 @@
 ---
 CallcodeToPrecompileFromContractInitialization:
+  _info:
+    comment: |
+      Contract B creates new contract.
+      New contract initialization code staticcalls contract A.
+      Contract A callcodes precompiled contracts.
+      It should execute successfully for each precompiled contract.
   env:
     currentCoinbase: '0xcafe000000000000000000000000000000000001'
     currentDifficulty: '0x20000'

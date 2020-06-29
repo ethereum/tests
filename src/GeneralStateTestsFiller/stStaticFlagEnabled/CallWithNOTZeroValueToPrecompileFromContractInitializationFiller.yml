@@ -1,5 +1,11 @@
 ---
 CallWithNOTZeroValueToPrecompileFromContractInitialization:
+  _info:
+    comment: |
+      Contract A creates new contract.
+      New contract initialization code staticcalls contract CALL-00X.
+      Contract CALL-00X calls precompiled contracts with non zero value.
+      It should interrupt for each precompiled contract.
   env:
     currentCoinbase: '0xcafe000000000000000000000000000000000001'
     currentDifficulty: '0x20000'

@@ -1,5 +1,11 @@
 ---
 CallWithZeroValueToPrecompileFromCalledContract:
+  _info:
+    comment: |
+      Contract C calls contract B.
+      Contract B staticcalls contract A.
+      Contract A calls precompiled contracts with 0 value.
+      It should execute successfully for each precompiled contract.
   env:
     currentCoinbase: '0xcafe000000000000000000000000000000000001'
     currentDifficulty: '0x20000'
