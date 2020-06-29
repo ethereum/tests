@@ -1,5 +1,9 @@
 # Pull Requests changes log
 
+- PR [#700](https://github.com/ethereum/tests/pull/700)
+Fix test STATICCALL violation in call to precompile.
+Initial problem described in [DAPPTOOLS #360](https://github.com/dapphub/dapptools/pull/360).
+
 - PR [#696](https://github.com/ethereum/tests/pull/696)
 Fix test formatting. remove wrongCharAtRlp tests. Fix typos in tests.
 Refill smaller differencies with retesteth refactoring.
