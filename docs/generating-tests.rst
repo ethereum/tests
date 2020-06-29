@@ -8,79 +8,75 @@ Generating Consensus Tests
 
 Consensus Tests
 ===============
+(aka State Transition Tests)
 
-This article describes writing tests with the C++ Ethereum client `Aleth`_. Consensus tests are test cases for all Ethereum implementations. The test cases are distributed in the "filled" form, which contains, for example, the expected state root hash after transactions. The filled test cases are usually not written by hand, but generated from "test filler" files. ``testeth`` executable in ``Aleth`` can convert test fillers into test cases.
+Consensus tests are test cases for all Ethereum implementations. The test cases are distributed in the "Filled" form, which contains, for example, the expected state root hash after transactions. The filled test cases are usually not written by hand, but generated from "test filler" files. ``retesteth`` executable in combination with test protocol supporting clients (``Geth``, ``Besu``, ``Geth-t8ntool``) can convert test fillers into test cases.
 
 When you add a test case in the consensus test suite, you are supposed to push both the filler and the filled test cases into the `tests repository`_.
 
 .. _`tests repository`: https://github.com/ethereum/tests
 
 
-Checking Out the tests Repository
-=================================
 
-The consensus tests are stored in the tests repository. The command
+Preparing the test tools
+===========================
 
-::
-
-  git clone https://github.com/ethereum/tests.git
-
-should create a local copy of the ``develop`` branch of the tests repository. From here on, ``<LOCAL_PATH_TO_ETH_TESTS>`` points to this local copy.
-
-Preparing testeth and LLL
-=========================
-
-For generating consensus tests, an executable ``testeth`` is necessary.  Moreover, ``testeth`` uses the LLL compiler when it generates consensus tests.
+For generating consensus tests, an executable ``retesteth`` is necessary.  Moreover, ``retesteth`` uses the LLL compiler when it generates consensus tests.
 
 
 Option 1: Using the docker image
 --------------------------------
 
-There is a `docker image <https://hub.docker.com/r/ethereum/testeth/>`_ available containing the `testeth` tool from the `aleth` toolset regularly updated and specifically build for the purpose of test creation.
-
-* `Install Docker`_
-* Pull the ``testeth`` repository with ``docker pull ethereum/testeth:nightly`` (or an alternative available tag)
-* ``docker run -v <LOCAL_PATH_TO_ETH_TESTS>:/foobar ethereum/testeth:nightly -t GeneralStateTests/stCallCodes -- --singletest callcall_00 --singlenet Byzantium -d 0 -g 0 -v 0 --statediff --verbosity 5 --testpath /foobar`` should show something like
-
-.. code::
-
-   Running 1 test case...
-   <snip>
-
-   24%...
-   48%...
-   72%...
-   96%...
-   100%
-
-   *** No errors detected
-
-
-.. note::
-   The ``StateTestsGeneral`` folder naming is no mistake (folder in test repo is ``GeneralStateTests``) but there due to slightly different naming in ``c++ client`` implementation (might be fixed in the future). 
-
-
-.. note::
-   Some problems with running the ``testeth`` command can be fixed by adding the ``--all`` option at the end.
-
-
 .. _`install Docker`: https://www.docker.com/community-edition
+
+.. note::
+   Retesteth docker instruction docs are coming up!
+
+.. note::
+   Some problems with running the ``retesteth`` command can be fixed by adding the ``--all`` option at the end.
 
 
 Option 2: Building locally
 --------------------------
+.. _retesteth: https://github.com/ethereum/retesteth
+.. _solidity: https://github.com/winsvega/solidity
+.. _`Retesteth`: https://github.com/ethereum/retesteth
+.. _`Solidity`: https://github.com/winsvega/solidity
+.. _`Tests`: https://github.com/ethereum/tests
 
-Eventually, you need a tweaked version of ``testeth`` or ``lllc`` when your tests are about very new features not available in the docker image.
+Get the following tools and compile it according to the build instructions:
 
-``testeth`` is distributed in `Aleth`_ and ``lllc`` is distributed in `solidity`_. These executable needs to be installed.
+============== ====================================
+ `Retesteth`_  Test generator
+ `Solidity`_   lll code to evm bytecode translator
+ `Tests`_      Ethereum tests repository
+============== ====================================
 
-.. _aleth: https://github.com/ethereum/aleth
+Once setup, create environment variable (so to skip --testpath command for retesteth)
 
-.. _solidity: https://github.com/ethereum/solidity
+.. code:: bash
+
+    // Given that you cloned repos to ~/Ethereum
+    // Add line replacing the path to the test repository you cloned
+    sudo nano /etc/environment
+    ETHEREUM_TEST_PATH="/home/user/Ethereum/tests"
+
+    // Add lllc to system executables
+    sudo ln -s /home/user/Ethereum/solidity/build/lllc/lllc /bin/lllc
+
+    // Add retesteth to system executables (optional)
+    sudo ln -s /home/user/Ethereum/retesteth/build/retesteth/retesteth /bin/retesteth
+    
+    // Reboot for the changes to take effect
 
 
 Generating a GeneralStateTest Case
 ==================================
+
+.. note::
+    Additional wiki on retesteth commands and test generation:
+    https://github.com/ethereum/retesteth/wiki/Retesteth-commands
+    https://github.com/ethereum/retesteth/wiki/Creating-a-State-Test-with-retesteth
 
 Designing a Test Case
 ---------------------
@@ -92,7 +88,7 @@ For creating a new GeneralStateTest case, you need:
 * a state before the transaction (pre-state)
 * some expectations about the state after the transaction
 
-For an idea, peek into `an existing test filler`_ under ``src/GeneralStateFiller`` in the tests repository.
+For an idea, peek into `an existing test filler`_ under ``src/GeneralStateTestsFiller`` in the tests repository.
 
 .. _`an existing test filler`: https://github.com/ethereum/tests/blob/develop/src/GeneralStateTestsFiller/stExample/add11Filler.json
 
@@ -102,18 +98,18 @@ Usually, when a test is about an instruction, the pre-state contains a contract 
 The code can be written in EVM bytecode or in LLL.
 
 .. note::
-   ``testeth`` cannot understand LLL if the system does not have the LLL compiler installed. The LLL compiler is currently distributed as part of the `Solidity`_ compiler.
+   ``retesteth`` cannot understand LLL if the system does not have the LLL compiler installed. The LLL compiler is currently distributed as part of the `Solidity`_ compiler.
 
 
 Writing or modifying a Test Filler
 ----------------------------------
 
-A test filler file should always correspond to one test case, so a single GeneralStateTest filler file is not supposed to contain multiple tests.  ``testeth`` tool still accepts multiple GeneralStateTest fillers in a single test filler file, but this might change.
+A test filler file should always correspond to one test case, so a single GeneralStateTest filler file is not supposed to contain multiple tests.  ``retesteth`` tool still accepts multiple GeneralStateTest fillers in a single test filler file, but this might change.
 
 In the ``tests`` repository, the test filler files for GeneralStateTests live under ``src/GeneralStateTestsFiller`` directory. The directory has many subdirectories. You need to choose one of the subdirectories or create one.  The name of the filler file needs to end with ``Filler.json``.  For example, we might want to create a new directory ``src/GeneralStateTestsFiller/stExample2`` with a new filler file ``returndatacopy_initialFiller.json``, or edit one of the existing filler files in the directory structure.
 
 .. note::
-   If you create a new directory here, you need to add one line in ``Aleth`` and file that change in a pull request to ``Aleth``.
+   If you create a new directory here, you need to register it in ``retesteth`` codebase and file a PR.
 
 For creating a new test filler, the easiest way to start is to copy an existing filler file. The first thing to change  is the name of the test in the beginning of the file. The name of the test should coincide with the file name except ``Filler.json`` [#]_. For example, in the file we created above, the filler file contains the name of the test ``returndatacopy_initial``.  The overall structure of ``returndatacopy_initialFiller.json`` should be:
 
@@ -131,7 +127,7 @@ For creating a new test filler, the easiest way to start is to copy an existing 
 
 where ``...`` indicates omissions.
 
-.. [#] The file name and the name written in JSON should match because ``testeth`` prints the name written in JSON, but the user needs to find a file.
+.. [#] The file name and the name written in JSON should match because ``retesteth`` prints the name written in JSON, but the user needs to find a file.
 
 
 ``env`` field contains some parameters in a straightforward way (see also advanced section below).
@@ -245,14 +241,14 @@ Moreover, these transactions are tested under different versions of the protocol
 Filling the Test
 ----------------
 
-The test filler file is not for consumption.  The filler file needs to be filled into a test. ``testeth`` has the ability to compute the post-state from the test filler, and produce the test. The advantage of the filled test is that it can catch any post-state difference between clients.
+The test filler file is not for consumption.  The filler file needs to be filled into a test. ``retesteth`` asks the host client to compute the post-state from the test filler, and produce the test. The advantage of the filled test is that it can catch any post-state difference between clients.
 
-First, if you created a new subdirectory for the filler, you need to edit the source of ``Aleth`` so that ``testeth`` recognizes the new subdirectory.  The file to edit is `StateTests.cpp`_, which lists the names of the subdirectories scanned for GeneralStateTest filters.
+First, if you created a new subdirectory for the filler, you need to edit the source of ``Retesteth`` so that ``retesteth`` recognizes the new subdirectory.  The file to edit is `StateTests.cpp`_, which lists the names of the subdirectories scanned for GeneralStateTest filters.
 
 .. _`StateTests.cpp`: https://github.com/ethereum/aleth/blob/master/test/tools/jsontests/StateTests.cpp
 
 
-After building ``testeth``, you are ready to fill the test.
+After building ``retesteth``, you are ready to fill the test.
 
 
 Set the environmental variable ``ETHEREUM_TEST_PATH`` to the directory where ``tests`` repository is checked out, this should be provided as an absolute path:
@@ -268,18 +264,18 @@ Then run:
 
 .. code:: bash
 
-   test/testeth -t GeneralStateTests/stExample2 -- --filltests
+   retesteth -t GeneralStateTests/stExample2 -- --filltests
 
 
-``stExample2`` should be replaced with the name of the subdirectory you are working on.  ``--filltests`` option tells ``testeth`` to fill tests. Final states are by default checked against the ``expect`` fields.
+``stExample2`` should be replaced with the name of the subdirectory you are working on.  ``--filltests`` option tells ``retesteth`` to fill tests. Final states are by default checked against the ``expect`` fields.
 
 .. note::
    If your are working on an existing test directory, you can also use the ``--singletest <TESTNAME> --singlenet <FORKNAME>`` option which allows to select a specific test at specific fork. This prevents all files from the directory being modified (when using ``--filltests``). Furthermore ``-d <DATAINDEX> -g <GASINDEX> -v <VALUEINDEX>`` allow to select specific transaction from general state test.
 
-``testeth`` with ``--filltests`` fills every test filler it finds. The command might modify existing test cases. After running ``testeth`` with ``--filltests`` , try running ``git status`` in the ``tests`` directory. If ``git status`` indicates changes in unexpected files, that is an indication that the behavior of ``Aleth`` changed unexpectedly.
+``retesteth`` with ``--filltests`` fills every test filler it finds. The command might modify existing test cases. After running ``retesteth`` with ``--filltests`` , try running ``git status`` in the ``tests`` directory. If ``git status`` indicates changes in unexpected files, that is an indication that the behavior of ``Aleth`` changed unexpectedly.
 
 .. note::
-   If ``testeth`` is looking for tests in the ``../../test/jsontests`` directory (falling back to a path relative to the ``Aleth`` build directory if ``ETHEREUM_TEST_PATH`` is not set), you have probably not specified the ``--testpath`` option (use an absolute path if you do).
+   If ``retesteth`` is looking for tests in the ``../../test/jsontests`` directory (falling back to a path relative to the ``Retesteth`` build directory if ``ETHEREUM_TEST_PATH`` is not set), you have probably not specified the ``--testpath`` option (use an absolute path if you do).
 
 
 Trying the Filled Test
@@ -288,11 +284,11 @@ Trying the Filled Test
 Trying the Filled Test Locally
 ++++++++++++++++++++++++++++++
 
-For trying the filled test, in ``aleth/build`` directory, run the following (with ``ETHEREUM_TEST_PATH`` set):
+For trying the filled test, in ``retesteth/build`` directory, run the following (with ``ETHEREUM_TEST_PATH`` set):
 
 .. code:: bash
 
-   test/testeth -t GeneralStateTests/stExample2
+   retesteth -t GeneralStateTests/stExample2
 
 
 Trying the Filled Test in Travis CI
@@ -329,14 +325,14 @@ In the tests repository, each GeneralStateTest is eventually translated into a B
 
 .. code::
 
-   test/testeth -t GeneralStateTests/stExample2 -- --filltests --fillchain
+   retesteth -t GeneralStateTests/stExample2 -- --filltests --fillchain
 
 
 followed by
 
 .. code::
 
-   test/testeth -t GeneralStateTests/stExample2 -- --filltests
+   retesteth -t GeneralStateTests/stExample2 -- --filltests
 
 
 The second command is necessary because the first command modifies the GeneralStateTests in an undesired way.
@@ -347,27 +343,15 @@ After these two commands,
 * ``git status`` to check if any GeneralStateTest has changed.  If yes, revert the changes, and follow section _\ ``Trying the Filled Test Locally``.  That will probably reveail an error that you need to debug.
 * ``git add`` to add only the desired BlockchainTests.  Not all modified BlockchainTests are valuable because, when you run ``--fillchain`` twice, the two invocations always produce different BlockchainTests even there are no changes in the source.
 
-Advanced: When testeth Takes Too Much Time
+Advanced: Retesteth selectors
 ==========================================
 
-Sometimes, especially when you are running BlockchainTests, ``testeth`` takes a lot of time.
-
-This happens when the GeneralTest fillers contain wrong parameters.
-The ``"env"`` field should contain:
-
-.. code::
-
-     "currentCoinbase" : <an address>,
-     "currentDifficulty" : "0x020000",
-     "currentGasLimit" : <anything < 2**63-1 but make sure the transaction does not hit>,
-     "currentNumber" : "1",
-     "currentTimestamp" : "1000",
 
 .. note::
    For generating blockchain tests version ``currentNumber`` must be equal to "1" and ``timestamp`` to "1000".
 
 
-``testeth`` has options to run tests selectively:
+``retesteth`` has options to run tests selectively:
 
 
 * ``--singletest callcall_00`` runs only one test of the name ``callcall_00``.
@@ -376,10 +360,5 @@ The ``"env"`` field should contain:
 * ``-g 0`` runs tests only on the first element in the ``gas`` array of GeneralStateTest.
 * ``-v 0`` runs tests only on the first element in the ``value`` array of GeneralStateTest.
 
-``--singletest`` option removes skipped tests from the final test file, when ``testeth`` is filling a BlockchainTest.
-
-Advanced: Generating a BlockchainTest Case
-==========================================
-
-(To be described.)
+``--singletest`` option removes skipped tests from the final test file, when ``retesteth`` is filling a BlockchainTest.
 
