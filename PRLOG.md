@@ -10,11 +10,12 @@ Remove empty stEWASM folder from tests
 - PR [#702](https://github.com/ethereum/tests/pull/702)
 Split bcForged tests into multiple tests for better execution performance on thread
 
+- PR [#701](https://github.com/ethereum/tests/pull/701)
+
 - PR [#700](https://github.com/ethereum/tests/pull/700)
 Fix test STATICCALL violation in call to precompile.
 Initial problem described in [DAPPTOOLS #360](https://github.com/dapphub/dapptools/pull/360).
 
-- PR [#701](https://github.com/ethereum/tests/pull/701)
 - PR [#699](https://github.com/ethereum/tests/pull/699)
 Fix ambigous blockchain tests. Remove nonce and mixHash blockchain tests.
 
