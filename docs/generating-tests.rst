@@ -152,7 +152,7 @@ where ``...`` indicates omissions.
 As specified in the Yellow Paper, an account contains a balance, a code, a nonce and a storage.
 
 .. note::
-   For field descriptions see also the docs on the resulting :ref:`state_tests` test format.
+   For field descriptions see also the docs on the resulting :ref:`gstate_tests` test format.
 
 .. note::
    The ``env`` section might become deprecated in future state test filler formats.

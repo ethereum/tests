@@ -1,4 +1,3 @@
-.. _genesisblockheader:
 
 GenesisBlockHeader Section
 ==========================

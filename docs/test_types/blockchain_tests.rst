@@ -52,9 +52,14 @@ Single blockchain test file might contain many tests as there are many test gene
      ...
   }
 
+.. _info_bctest:
 .. include:: ../test_types/TestStructures/info.rst
+.. _pre_bctest:
 .. include:: ../test_types/TestStructures/pre.rst
+.. _genesisblockheader_bctest:
 .. include:: ../test_types/TestStructures/BlockchainTests/genesisblockheader.rst
+.. _block_bctest:
 .. include:: ../test_types/TestStructures/BlockchainTests/block.rst
+.. _transaction_vrs_bctest:
 .. include:: ../test_types/TestStructures/transaction.rst
 

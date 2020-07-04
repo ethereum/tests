@@ -45,8 +45,10 @@ Test Structure
 ``sender``       **FH20**       The address of the sender, derived from the v,r,s values.
 ================ ============== ======================================================================
 
+.. _types:
 .. include:: types.rst
 
 Next are descriptions of transaction fields that are encoded in `rlp`:
 
+.. _transaction_vrs:
 .. include:: ../test_types/TestStructures/transaction.rst

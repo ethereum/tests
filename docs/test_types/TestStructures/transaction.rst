@@ -1,4 +1,3 @@
-.. _transaction_vrs:
 
 Transaction Section
 ===================

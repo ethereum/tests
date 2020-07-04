@@ -1,4 +1,3 @@
-.. _transaction:
 
 Transaction Section
 ===================

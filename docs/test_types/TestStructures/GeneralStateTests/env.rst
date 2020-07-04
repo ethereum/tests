@@ -1,4 +1,3 @@
-.. _env:
 
 Env Section
 ===========

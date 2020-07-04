@@ -1,4 +1,3 @@
-.. block:
 
 Valid Block Section
 ===================

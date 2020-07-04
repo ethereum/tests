@@ -74,9 +74,11 @@ Test Structure
 	   ...
 	}
 
-
+.. _info_vmtests:
 .. include:: ../test_types/TestStructures/info.rst
+.. _env_vmtests:
 .. include:: ../test_types/TestStructures/GeneralStateTests/env.rst
+.. _pre_vmtests:
 .. include:: ../test_types/TestStructures/pre.rst
 
 Exec Section
