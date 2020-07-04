@@ -74,9 +74,11 @@ Test Structure
 	   ...
 	}
 
-
+.. _info_vmtests:
 .. include:: ../test_types/TestStructures/info.rst
+.. _env_vmtests:
 .. include:: ../test_types/TestStructures/GeneralStateTests/env.rst
+.. _pre_vmtests:
 .. include:: ../test_types/TestStructures/pre.rst
 
 Exec Section
@@ -100,16 +102,18 @@ Exec Section
 
 **Fields**
 
-============= =============================================================================
-``address``   The address of the account under which the code is executing, to be returned by the ``ADDRESS`` instruction.
-``origin``    The address of the execution's origin, to be returned by the ``ORIGIN`` instruction.
-``caller``    The address of the execution's caller, to be returned by the ``CALLER`` instruction.
-``value``     The value of the call (or the endowment of the create), to be returned by the ``CALLVALUE`` instruction.
-``data``      The input data passed to the execution, as used by the ``CALLDATA``... instructions. Given as an array of byte values. See $DATA_ARRAY.
-``code``      The actual code that should be executed on the VM (not the one stored in the state(address)) . See $DATA_ARRAY.
-``gasPrice``  The price of gas for the transaction, as used by the ``GASPRICE`` instruction.
-``gas``       The total amount of gas available for the execution, as would be returned by the ``GAS`` instruction were it be executed first.
-============= =============================================================================
+============= ============== =============================================================================
+``address``   **FH20**       The address of the account under which the code is executing, to be returned by the ``ADDRESS`` instruction.
+``origin``    **FH20**       The address of the execution's origin, to be returned by the ``ORIGIN`` instruction.
+``caller``    **FH20**       The address of the execution's caller, to be returned by the ``CALLER`` instruction.
+``value``     **VALUE**      The value of the call (or the endowment of the create), to be returned by the ``CALLVALUE`` instruction.
+``data``      **BYTES**      The input data passed to the execution, as used by the ``CALLDATA``... instructions. Given as an array of byte values. See $DATA_ARRAY.
+``code``      **BYTES**      The actual code that should be executed on the VM (not the one stored in the state(address)) . See $DATA_ARRAY.
+``gasPrice``  **VALUE**      The price of gas for the transaction, as used by the ``GASPRICE`` instruction.
+``gas``       **VALUE**      The total amount of gas available for the execution, as would be returned by the ``GAS`` instruction were it be executed first.
+============= ============== =============================================================================
+
+.. include:: types.rst
 
 Post Section
 ============

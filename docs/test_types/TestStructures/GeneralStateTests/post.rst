@@ -1,4 +1,3 @@
-.. _post:
 
 Post Section
 ============

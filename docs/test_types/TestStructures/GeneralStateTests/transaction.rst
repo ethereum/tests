@@ -1,4 +1,3 @@
-.. _transaction:
 
 Transaction Section
 ===================
@@ -31,12 +30,12 @@ From this section it is possible to construct many transaction using values from
 
 **Fields**
 
-======================= ===============================================================================
-``data``                 array of data/input of transaction. In Post section indexes::data index indicates index in this array.
-``gasLimit``             array of gasLimit of transaction. In Post section indexes::gas index indicates index in this array
-``gasPrice``             transaction's gas price
-``nonce``                transaction's nonce
-``secretKey``            secretKey criptic value used to sign tx data by v,r,s
-``to``                   transaction's `to` destination address. set to "" if creation.
-``value``                array of value of transaction. In Post section indexes::value index indicates index in this array
-======================= ===============================================================================
+================= ================ ==============================================================
+``data``          array(**BYTES**) Array of data/input of transaction. In Post section indexes::data index indicates index in this array.
+``gasLimit``      array(**VALUE**) Array of gasLimit of transaction. In Post section indexes::gas index indicates index in this array
+``gasPrice``      **VALUE**        Transaction's gas price
+``nonce``         **VALUE**        Transaction's nonce
+``secretKey``     **FH32**         SecretKey criptic value used to sign tx data by v,r,s
+``to``            **FH20**         Transaction's `to` destination address. set to "" if creation.
+``value``         **VALUE**        Array of value of transaction. In Post section indexes::value index indicates index in this array
+================= ================ ==============================================================
