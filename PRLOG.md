@@ -11,6 +11,7 @@ Remove empty stEWASM folder from tests
 Split bcForged tests into multiple tests for better execution performance on thread
 
 - PR [#701](https://github.com/ethereum/tests/pull/701)
+Fix ambiguos legacy test with a fork block
 
 - PR [#700](https://github.com/ethereum/tests/pull/700)
 Fix test STATICCALL violation in call to precompile.
