@@ -1,12 +1,12 @@
 {
     "doubleSelfdestructTest" : {
         "_info" : {
-            "comment" : "The first test case required here https://github.com/ethereum/tests/issues/431#issue-306081539 .\nInvoked Solidity 0.4.21 with solc --bin-runtime --optimize\ncontract DoubleSelfdestructTest {\n  address constant B1 = 0x1;\n  address constant B2 = 0x2;\n  function remoteSelfdestruct() external {\n    selfdestruct(B2);\n  }\n  function() external payable {\n    this.remoteSelfdestruct();\n    selfdestruct(B1);\n  }\n}\n",
-            "filling-rpc-server" : "Geth-1.9.6-unstable-63b18027-20190920",
-            "filling-tool-version" : "retesteth-0.0.1+commit.0ae18aef.Linux.g++",
-            "lllcversion" : "Version: 0.5.12-develop.2019.9.13+commit.2d601a4f.Linux.g++",
+            "comment" : "The first test case required here https://github.com/ethereum/tests/issues/431#issue-306081539 .\nInvoked Solidity 0.4.21 with solc --bin-runtime --optimize\ncontract DoubleSelfdestructTest {\n  address constant B1 = 0x1;\n  address constant B2 = 0x2;\n  function remoteSelfdestruct() external {\n    selfdestruct(B2);\n  }\n  function() external payable {\n    this.remoteSelfdestruct();\n    selfdestruct(B1);\n  }\n}\nBecause gasprice is 0 and mining reward is 0, the mining account is created as empty in the post state. (imitating blockchain rules)\n",
+            "filling-rpc-server" : "evm version 1.9.15-unstable-365a7ec8-20200629",
+            "filling-tool-version" : "retesteth-0.0.6-profiling-berlin+commit.caf8b516.Linux.g++",
+            "lllcversion" : "Version: 0.5.14-develop.2020.6.22+commit.9189ad7a.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/stSystemOperationsTest/doubleSelfdestructTestFiller.yml",
-            "sourceHash" : "07805baa8309d37bf675e5a3c277ae30cac0368aeb84e561e51235d0e0e88a26"
+            "sourceHash" : "ee28b9116fb59144fadf3e175db689e1931277a78490083eef66ffe06f5fcb61"
         },
         "env" : {
             "currentCoinbase" : "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba",
