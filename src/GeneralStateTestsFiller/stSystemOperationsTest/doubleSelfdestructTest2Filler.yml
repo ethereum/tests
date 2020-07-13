@@ -16,6 +16,7 @@ doubleSelfdestructTest2:
       The version of Solidity emits code that always enter OOG for Homestead and Frontier.  So no new accounts
       are created for Homestead and Frontier.  EIP158 changes the behavior of zero-amount transfer so that no new accounts are created.
       This leaves EIP150 as a special case.
+      Because gasprice is 0 and mining reward is 0, the mining account is created as empty in the post state. (imitating blockchain rules)
   env:
     currentCoinbase: 2adc25665018aa1fe0e6bc666dac8fc2697ff9ba
     currentDifficulty: '0x20000'
