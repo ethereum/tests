@@ -19,13 +19,24 @@ Compiling Your First Test
 =========================
 Before we get into how tests are built, lets compile and run a simple one.
 
-#. The source code of the tests is in ``tests/src``. It is complicated to add another tests directory, so we will use
+1. The source code of the tests is in ``tests/src``. It is complicated to add another tests directory, so we will use
    ``GeneralStateTestsFiller/stExample``.
    
 ::
-     cd tests/src/GeneralTestsFiller/stExample
 
-#. h
+  cd tests/src/GeneralTestsFiller/stExample
+  cp ../stShift/*.yml .
+  cd ~
+  
+2. The source code of tests doesn't include all the information required for the test. Instead, you run the test against
+   a known good copy of ``geth`` and fill in those values.
 
-   ``tttt``
-   ::
+::
+
+  sudo ./dretesteth.sh -t GeneralStateTests/stExample -- --testpath ~/tests --datadir /tests/config --filltests --clients geth
+
+3. Run the regular test, with verbose output:
+
+::
+
+  sudo ./dretesteth.sh -t GeneralStateTests/stExample -- --testpath ~/tests --datadir /tests/config --clients geth --verbosity 5
