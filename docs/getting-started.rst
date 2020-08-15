@@ -29,11 +29,13 @@ Before we get into how tests are built, lets compile and run a simple one.
   cd ~
   
 2. The source code of tests doesn't include all the information required for the test. Instead, you run the test against
-   a known good copy of ``geth`` and fill in those values.
+   a known good copy of ``geth`` and fill in those values. After you create the file change the ownership to your normal
+   user
 
 ::
 
   sudo ./dretesteth.sh -t GeneralStateTests/stExample -- --testpath ~/tests --datadir /tests/config --filltests --clients geth
+  sudo chown $USER tests/GeneralStateTests/stExample/*
 
 3. Run the regular test, with verbose output:
 
