@@ -19,10 +19,11 @@ Compiling Your First Test
 =========================
 Before we get into how tests are built, lets compile and run a simple one.
 
-#. f
+#. The source code of the tests is in ``tests/src``. It is complicated to add another tests directory, so we will use
+   ``GeneralStateTestsFiller/stExample``.
    
-   ``te``
-   ::
+::
+     cd tests/src/GeneralTestsFiller/stExample
 
 #. h
 
