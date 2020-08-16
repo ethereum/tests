@@ -98,7 +98,6 @@ The contract also has initial storage. In this case, the initial storage is empt
 
 ::
 
-  # Describe an address
       095e7baea6a6c7c4c2dfeb977efac326af552d87:
         balance: '0x0ba1a9ce0ba1a9ce'
         code: |
@@ -150,6 +149,11 @@ This is the state we expect after running the transaction on the ``pre`` state.
           value: !!int -1
         network:
           - '>=Istanbul'
+
+We expect the contract's storage to have the result, in this case 4.
+
+::          
+          
         result:
           095e7baea6a6c7c4c2dfeb977efac326af552d87:
             storage: {
