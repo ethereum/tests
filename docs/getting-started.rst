@@ -164,11 +164,11 @@ We expect the contract's storage to have the result, in this case 4.
 The Compiled Test (Optional)
 ----------------------------
 
-Transactions that Send Data
-===========================
+Reading Transaction Data
+========================
 
+Multi-transaction Tests
+=======================
 
-Multiple Transaction Tests
-==========================
-
-
+Writing Tests in Solidity
+=========================
