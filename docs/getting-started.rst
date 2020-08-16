@@ -28,9 +28,9 @@ Before we get into how tests are built, lets compile and run a simple one.
   cp ~/tests/docs/getting-started/01* .
   cd ~
   
-2. The source code of tests doesn't include all the information required for the test. Instead, you run the test against
-   a known good copy of ``geth`` and fill in those values. After you create the file change the ownership to your normal
-   user.
+2. The source code of tests doesn't include all the information required for the test. Instead, you run ``dretesteth.sh``,
+   and it runs a client with the Ethereum Virtual Machine (evm) to fill in the values. This creates the a compiled
+   version in ``tests/GeneralStateTests/stExample``.
 
 ::
 
@@ -123,7 +123,8 @@ fields here:
 
 * ``data`` is the data we send
 * ``nonce`` has to be the same value as the user address
-* ``to`` is the contract we are testing. If there is no ``to`` value, the transaction is contract creation.
+* ``to`` is the contract we are testing. If you want to create a contract, keep the 
+  ``to`` definition, but leave it empty.
 
 ::
 
