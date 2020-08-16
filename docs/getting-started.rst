@@ -86,11 +86,11 @@ These are the relevant addresses and their initial states before the test starts
 
 This is a contract address. As such it has code, which can be in one of three formats:
 
-#. Ethereum virtual machine (EVM) binary code 
+#. Ethereum virtual machine (EVM) machine language 
 #. `Lisp Like Language (lll) <http://blog.syrinx.net/the-resurrection-of-lll-part-1/>`_. One
    advantage of lll is that `it lets us use Ethereum Assembler almost directly
    <https://lll-docs.readthedocs.io/en/latest/lll_reference.html#evm-opcodes>`_.
-#. `Solidity <https://blockgeeks.com/guides/solidity/>`_, which is the standard language for Ethereum 
+#. `Solidity <https://cryptozombies.io/>`_, which is the standard language for Ethereum 
    contracts. Solidity is well known, but it is not ideal for VM tests because it adds a lot of its
    own code to compiled contracts.
    
@@ -109,32 +109,41 @@ The contract also has initial storage. In this case, the initial storage is empt
         nonce: '0'
         storage: {}
 
+This is a "user" address. As such, it does not have code.
 
-  # Another address, this one belongs to a user
+::
+
       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
         balance: '0x0ba1a9ce0ba1a9ce'
         code: '0x'
         nonce: '0'
-      
-  # The transaction to check
+
+This is the transaction that will be executed to check the code. There could be multiple transactions,
+but for simplicity we just have one here, and it does not send any data. There are several important
+fields here:
+
+* ``data`` is the data we send
+* ``nonce`` has to be the same value as the user address
+* ``to`` is the contract we are testing. If there is no ``to`` value, the transaction is contract creation.
+
+::
+
     transaction:
       data:
       - ''
       gasLimit:
       - '80000000'
       gasPrice: '1'
-
-  # Must be the same nonce as the user address (a94f...)
       nonce: '0'
-
-  # The contract we are testing. If this field is empty the transaction becomes
-  # contract creation
       to: 095e7baea6a6c7c4c2dfeb977efac326af552d87
       value:
       - '1'
 
-  # The expected result
-    expect:
+This is the state we expect after running the transaction on the ``pre`` state.
+
+::
+
+   expect:
       - indexes:
           data: !!int -1
           gas:  !!int -1
