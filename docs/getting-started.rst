@@ -6,7 +6,7 @@ Getting Started
 `Ori Pomerantz <mailto://qbzzt1@gmail.com>`_
 
 In this tutorial you learn how to write and execute Ethereum tests. It is not intended as a comprehensive reference, 
-`click here to access the reference material <https://ethereum-tests.readthedocs.io/en/latest/>`_
+`click here to access the reference material <https://ethereum-tests.readthedocs.io/en/latest/>`_.
 
 The Environment
 ===============
@@ -30,7 +30,7 @@ Before we get into how tests are built, lets compile and run a simple one.
   
 2. The source code of tests doesn't include all the information required for the test. Instead, you run the test against
    a known good copy of ``geth`` and fill in those values. After you create the file change the ownership to your normal
-   user
+   user.
 
 ::
 
