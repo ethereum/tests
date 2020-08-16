@@ -48,15 +48,15 @@ The Source Code
 Now that we've seen that the test works, let's go through it line by line. This test specification is written in YAML, if you
 are not familiar with this format `Click here <https://www.tutorialspoint.com/yaml/index.htm>`_. 
 
-All the fields are defined under the name of the test. Also, YAML comments start with a hash (``#``) and continue to the end of 
-the line
+All the fields are defined under the name of the test. Note that YAML comments start with a hash (``#``) and continue to the end of 
+the line.
 
 ::
 
   # The name of the test
   add22:
 
-This is the general Ethereum environment (before the transaction)
+This is the general Ethereum environment before the transaction:
 
 ::
 
@@ -77,27 +77,36 @@ copied to the compiled JSON file for the test.
     _info:
       comment: "You can put a comment here"
   
-These are the relevant addresses and their initial states before the test starts.
+These are the relevant addresses and their initial states before the test starts:
   
 ::      
 
     pre:
 
+
+This is a contract address. As such it has code, which can be in one of three formats:
+
+#. Ethereum virtual machine (EVM) binary code 
+#. `Lisp Like Language (lll) <http://blog.syrinx.net/the-resurrection-of-lll-part-1/>`_. One
+   advantage of lll is that `it lets us use Ethereum Assembler almost directly
+   <https://lll-docs.readthedocs.io/en/latest/lll_reference.html#evm-opcodes>`_.
+#. `Solidity <https://blockgeeks.com/guides/solidity/>`_, which is the standard language for Ethereum 
+   contracts. Solidity is well known, but it is not ideal for VM tests because it adds a lot of its
+   own code to compiled contracts.
+   
+The contract also has initial storage. In this case, the initial storage is empty.   
+
+::
+
   # Describe an address
       095e7baea6a6c7c4c2dfeb977efac326af552d87:
-
-  # Balance in Wei
         balance: '0x0ba1a9ce0ba1a9ce'
-
-  # This address is a contract, and this is its code.
         code: |
           {
                   ; Add 2+2
                   [[0]] (ADD 2 2)
           }
         nonce: '0'
-
-  # Content of the address's storage. In this case it is empty
         storage: {}
 
 
