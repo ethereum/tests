@@ -175,8 +175,8 @@ explanations:
   {
     "01_add22" : {
 
-The ``_info`` includes any comments you put in the source code of the test, as well as information about the files used to 
-generate the test (the source code, the evm compiler if any, the client software used to fill in the data, and
+The ``_info`` section includes any comments you put in the source code of the test, as well as information about the files used to 
+generate the test (the test source code, the evm compiler if any, the client software used to fill in the data, and
 the tool that actually compiled the test).
 
 ::
@@ -190,21 +190,37 @@ the tool that actually compiled the test).
             "sourceHash" : "6b5a88627d0b69c7f61fb05f35ac3f14066d2f4bbe248aa08c3091d7534744d8"            
         },
   
-The ``env``, ``pre``, and ``transaction`` contain the same information provided in the source code. 
+The ``env`` and ``transaction`` sections contain the same information provided in the source code. 
   
 ::        
         
         "env" : {
             ...
             },
-        "pre" : {
-            ...
-            },
         "transaction" : {
             ...
             },
 
-The ``post`` is the situation after the test is run. This could be different for 
+The ``pre`` section contains mostly information from the source code, but any code provided source (either
+LLL or Solidity) is compiled.
+
+::
+
+        "pre" : {
+            "0x095e7baea6a6c7c4c2dfeb977efac326af552d87" : {
+                "balance" : "0x0ba1a9ce0ba1a9ce",
+                "code" : "0x600260020160005500",
+                "nonce" : "0x00",
+                "storage" : {
+                }
+            },
+            "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+               ...
+            }
+        },
+
+
+The ``post`` section is the situation after the test is run. This could be different for 
 `different versions of the Ethereum protocol <https://en.wikipedia.org/wiki/Ethereum#Milestones>`_, 
 so there is a value for every version that was checked. In this case, the only one is Istanbul.
 
@@ -232,8 +248,28 @@ store hashes of them.
   }
         
 
-Text goes here
+Failing a Test
+--------------
+To verify that `retesteth` really does run tests, lets fail one. The ``02_fail`` test is almost identical to 
+``01_add22``, except that it expects to see that 2+2=5. Here are the steps to use it.
 
+1. Copy the test to the `stExample` directory 
+   
+::
+
+  cp ~/tests/docs/getting-started/02* ~/tests/src/GeneralTestFiller/stExample
+
+2. Fill the information and run the rest
+
+::
+
+  ./dretesteth.sh -t GeneralStateTests/stExample -- --testpath ~/tests --datadir /tests/config --filltests --clients geth
+
+3. Delete the test so we won't see the failure when we run future tests.
+
+::
+ 
+  sudo rm ~/tests/src/GeneralStateTestsFiller/stExample/02_* ~/tests/GeneralStateTests/stExample/02_*
 
 
 Reading Transaction Data
