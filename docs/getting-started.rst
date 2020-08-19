@@ -161,6 +161,31 @@ We expect the contract's storage to have the result, in this case 4.
                                   "0x00" : "0x04"
                   }        
 
+Failing a Test
+--------------
+To verify that `retesteth` really does run tests, lets fail one. The ``02_fail`` test is almost identical to 
+``01_add22``, except that it expects to see that 2+2=5. Here are the steps to use it.
+
+1. Copy the test to the `stExample` directory 
+   
+::
+
+  cp ~/tests/docs/getting-started/02* ~/tests/src/GeneralTestFiller/stExample
+
+2. Fill the information and run the rest
+
+::
+
+  ./dretesteth.sh -t GeneralStateTests/stExample -- --testpath ~/tests --datadir /tests/config --filltests --clients geth
+
+3. Delete the test so we won't see the failure when we run future tests.
+
+::
+ 
+  sudo rm ~/tests/src/GeneralStateTestsFiller/stExample/02_* ~/tests/GeneralStateTests/stExample/02_*
+
+
+
 
 The Compiled Test (Optional)
 ----------------------------
@@ -247,30 +272,6 @@ store hashes of them.
         }
   }
         
-
-Failing a Test
---------------
-To verify that `retesteth` really does run tests, lets fail one. The ``02_fail`` test is almost identical to 
-``01_add22``, except that it expects to see that 2+2=5. Here are the steps to use it.
-
-1. Copy the test to the `stExample` directory 
-   
-::
-
-  cp ~/tests/docs/getting-started/02* ~/tests/src/GeneralTestFiller/stExample
-
-2. Fill the information and run the rest
-
-::
-
-  ./dretesteth.sh -t GeneralStateTests/stExample -- --testpath ~/tests --datadir /tests/config --filltests --clients geth
-
-3. Delete the test so we won't see the failure when we run future tests.
-
-::
- 
-  sudo rm ~/tests/src/GeneralStateTestsFiller/stExample/02_* ~/tests/GeneralStateTests/stExample/02_*
-
 
 Reading Transaction Data
 ========================
