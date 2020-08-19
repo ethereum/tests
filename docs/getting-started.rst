@@ -34,14 +34,14 @@ Before we get into how tests are built, lets compile and run a simple one.
 
 ::
 
-  sudo ./dretesteth.sh -t GeneralStateTests/stExample -- --testpath ~/tests --datadir /tests/config --filltests --clients geth
+  ./dretesteth.sh -t GeneralStateTests/stExample -- --testpath ~/tests --datadir /tests/config --filltests --clients geth
   sudo chown $USER tests/GeneralStateTests/stExample/*
 
 3. Run the regular test, with verbose output:
 
 ::
 
-  sudo ./dretesteth.sh -t GeneralStateTests/stExample -- --testpath ~/tests --datadir /tests/config --clients geth --verbosity 5
+  ./dretesteth.sh -t GeneralStateTests/stExample -- --testpath ~/tests --datadir /tests/config --clients geth --verbosity 5
 
 The Source Code
 ===============
@@ -54,7 +54,7 @@ the line.
 ::
 
   # The name of the test
-  add22:
+  01_add22:
 
 This is the general Ethereum environment before the transaction:
 
@@ -164,6 +164,77 @@ We expect the contract's storage to have the result, in this case 4.
 
 The Compiled Test (Optional)
 ----------------------------
+In theory you could write any test you want without understanding the compiled test format. I think it is useful
+to know these things, but if you don't care about it you can skip this section.
+
+The compiled version of our ``01_add22.yml`` is at ``tests/GeneralStateTests/stExample/add22.json``. Here it is with 
+explanations:
+
+::
+
+  {
+    "01_add22" : {
+
+The ``_info`` includes any comments you put in the source code of the test, as well as information about the files used to 
+generate the test (the source code, the evm compiler if any, the client software used to fill in the data, and
+the tool that actually compiled the test).
+
+::
+
+        "_info" : {
+            "comment" : "You can put a comment here",
+            "filling-rpc-server" : "Geth-1.9.20-unstable-54add425-20200814",
+            "filling-tool-version" : "retesteth-0.0.8-docker+commit.96775cc7.Linux.g++",
+            "lllcversion" : "Version: 0.5.14-develop.2020.8.15+commit.9189ad7a.Linux.g++",
+            "source" : "src/GeneralStateTestsFiller/stExample/01_add22Filler.yml",
+            "sourceHash" : "6b5a88627d0b69c7f61fb05f35ac3f14066d2f4bbe248aa08c3091d7534744d8"            
+        },
+  
+The ``env``, ``pre``, and ``transaction`` contain the same information provided in the source code. 
+  
+::        
+        
+        "env" : {
+            ...
+            },
+        "pre" : {
+            ...
+            },
+        "transaction" : {
+            ...
+            },
+
+The ``post`` is the situation after the test is run. This could be different for 
+`different versions of the Ethereum protocol <https://en.wikipedia.org/wiki/Ethereum#Milestones>`_, 
+so there is a value for every version that was checked. In this case, the only one is Istanbul.
+
+::        
+
+        "post" : {
+            "Istanbul" : [
+                {
+                    "indexes" : {
+                        "data" : 0,
+                        "gas" : 0,
+                        "value" : 0
+                    },
+                    
+Instead of keeping the entire content of the storage and logs that are expected, it is enough to just
+store hashes of them. 
+                    
+::
+
+                    "hash" : "0x884b8640efb63506c2f8c2d9514335b678815e1ed362107628cf1cd6edd658c2",
+                    "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347"
+                }
+            ]
+        }
+  }
+        
+
+Text goes here
+
+
 
 Reading Transaction Data
 ========================
