@@ -36,7 +36,7 @@ Before we get into how tests are built, lets compile and run a simple one.
 
 ::
 
-  ./dretesteth.sh -t GeneralStateTests/stExample -- --testpath ~/tests --datadir /tests/config --filltests --clients geth
+  ./dretesteth.sh -t GeneralStateTests/stExample -- --testpath ~/tests --datadir /tests/config --filltests
   sudo chown $USER tests/GeneralStateTests/stExample/*
 
 3. Run the regular test, with verbose output:
