@@ -5,7 +5,9 @@ Getting Started
 ###############
 `Ori Pomerantz <mailto://qbzzt1@gmail.com>`_
 
-In this tutorial you learn how to write and execute Ethereum tests. It is not intended as a comprehensive reference, 
+In this tutorial you learn how to write and execute Ethereum state transition tests. These tests can be very simple,
+for example testing a single evm assembler opcode, so this is a good place to get started. This tutorial is not 
+intended as a comprehensive reference, 
 `click here to access the reference material <https://ethereum-tests.readthedocs.io/en/latest/>`_.
 
 The Environment
@@ -25,7 +27,7 @@ Before we get into how tests are built, lets compile and run a simple one.
 ::
 
   cd tests/src/GeneralTestsFiller/stExample
-  cp ~/tests/docs/getting-started/01* .
+  cp ~/tests/docs/state-transition/01* .
   cd ~
   
 2. The source code of tests doesn't include all the information required for the test. Instead, you run ``dretesteth.sh``,
@@ -170,7 +172,7 @@ To verify that `retesteth` really does run tests, lets fail one. The ``02_fail``
    
 ::
 
-  cp ~/tests/docs/getting-started/02* ~/tests/src/GeneralTestFiller/stExample
+  cp ~/tests/docs/state-transition/02* ~/tests/src/GeneralTestFiller/stExample
 
 2. Fill the information and run the rest
 
@@ -273,11 +275,6 @@ store hashes of them.
   }
         
 
-Reading Transaction Data
-========================
-
-Multi-transaction Tests
-=======================
 
 Writing Tests in Solidity
 =========================
