@@ -289,22 +289,3 @@ store hashes of them.
   }
   
   
-  
-  
-        
-
-..
-
-   This is an example of what Solidity code that compiles looks like:
-      code: |
-        pragma solidity ^0.7.0;
-
-        contract test 
-        {
-          function run() external {
-            assembly {
-              sstore(5, 4)
-            }   
-          }
-        }
-
