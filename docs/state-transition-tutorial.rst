@@ -1,4 +1,4 @@
-.. _state_transition_tests:
+.. _state_transition_tutorials:
 
 ###########################################
 Getting Started with State Transition Tests
