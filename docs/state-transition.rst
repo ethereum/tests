@@ -102,6 +102,20 @@ The contract also has initial storage. In this case, the initial storage is empt
 
       095e7baea6a6c7c4c2dfeb977efac326af552d87:
         balance: '0x0ba1a9ce0ba1a9ce'
+
+LLL code can be very low level. In this case, ``(ADD 2 2)`` is translated into three opcodes:
+
+* PUSH 2
+* PUSH 2
+* ADD (which pops the last two values in the stack, adds them, and pushes the sum into the stack).
+
+This expression ``[[0]]`` is short hand for ``(SSTORE 0 <the value at the top of the stack>)``. It
+stores the value (in this case, four) in location 0. Every address in Ethereum has associated storage,
+which is essentially a lookup table. `You can read more about it here 
+<https://applicature.com/blog/blockchain-technology/ethereum-smart-contract-storage>`_.
+
+::        
+        
         code: |
           {
                   ; Add 2+2
