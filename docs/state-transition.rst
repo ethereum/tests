@@ -1,8 +1,8 @@
-.. _getting_started:
+.. _state_transition_tests:
 
-###############
-Getting Started
-###############
+###########################################
+Getting Started with State Transition Tests
+###########################################
 `Ori Pomerantz <mailto://qbzzt1@gmail.com>`_
 
 In this tutorial you learn how to write and execute Ethereum state transition tests. These tests can be very simple,
