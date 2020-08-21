@@ -288,4 +288,10 @@ store hashes of them.
         }
   }
   
-  
+  Conclusion
+  ==========
+  At this point, if you learn `LLL <http://blog.syrinx.net/the-resurrection-of-lll-part-1/>`_ you should 
+  be able to run simple tests that verify the EVM opcodes work as well as more complex algorithms
+  work as expected. It is possible to write more complex tests in Solidity, but right now it is complex to
+  implement them. Once the code is written to make this easier I will update the tutorial with those 
+  instructions.
