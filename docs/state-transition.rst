@@ -192,7 +192,7 @@ To verify that `retesteth` really does run tests, lets fail one. The ``02_fail``
 
 ::
 
-  ./dretesteth.sh -t GeneralStateTests/stExample -- --testpath ~/tests --datadir /tests/config --filltests --clients geth
+  ./dretesteth.sh -t GeneralStateTests/stExample -- --testpath ~/tests --datadir /tests/config --filltests
 
 3. Delete the test so we won't see the failure when we run future tests.
 
