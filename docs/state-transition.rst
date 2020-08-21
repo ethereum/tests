@@ -287,8 +287,24 @@ store hashes of them.
             ]
         }
   }
+  
+  
+  
+  
         
 
+..
 
-Writing Tests in Solidity
-=========================
+   This is an example of what Solidity code that compiles looks like:
+      code: |
+        pragma solidity ^0.7.0;
+
+        contract test 
+        {
+          function run() external {
+            assembly {
+              sstore(5, 4)
+            }   
+          }
+        }
+
