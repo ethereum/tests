@@ -124,7 +124,7 @@ which is essentially a lookup table. `You can read more about it here
         nonce: '0'
         storage: {}
 
-This is a "user" address. As such, it does not have code.
+This is a "user" address. As such, it does not have code. Note that you still have to specify the storage.
 
 ::
 
@@ -132,12 +132,13 @@ This is a "user" address. As such, it does not have code.
         balance: '0x0ba1a9ce0ba1a9ce'
         code: '0x'
         nonce: '0'
+        storage: {}
 
 This is the transaction that will be executed to check the code. There could be multiple transactions,
 but for simplicity we just have one here, and it does not send any data. There are several important
 fields here:
 
-* ``data`` is the data we send
+* ``data`` is the data we send (we need to send something)
 * ``nonce`` has to be the same value as the user address
 * ``to`` is the contract we are testing. If you want to create a contract, keep the 
   ``to`` definition, but leave it empty.
@@ -146,7 +147,7 @@ fields here:
 
     transaction:
       data:
-      - ''
+      - '0x10'
       gasLimit:
       - '80000000'
       gasPrice: '1'
