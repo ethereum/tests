@@ -290,18 +290,17 @@ store hashes of them.
   }
   
   
-  Solidity Tests
-  ==============
-  You can see a solidity test at `tests/src/GeneralStateTestsFiller/stExample/03_solidityFiller.yml 
-  <https://github.com/ethereum/tests/tree/develop/docs/state_transition/03_solidifyFiller.yml>`_
+Solidity Tests
+==============
+You can see a solidity test at `tests/src/GeneralStateTestsFiller/stExample/03_solidityFiller.yml 
+<https://github.com/ethereum/tests/tree/develop/docs/state_transition/03_solidifyFiller.yml>`_
 
   
   
   
-  Conclusion
-  ==========
-  At this point, if you learn `LLL <http://blog.syrinx.net/the-resurrection-of-lll-part-1/>`_ you should 
-  be able to run simple tests that verify the EVM opcodes work as well as more complex algorithms
-  work as expected. It is possible to write more complex tests in Solidity, but right now it is complex to
-  implement them. Once the code is written to make this easier I will update the tutorial with those 
-  instructions.
+Conclusion
+==========
+At this point you should be able to run simple tests that verify the EVM opcodes work as well as more 
+complex algorithms work as expected. You are, however, limited to a single transaction in a single block.
+In a future tutorial you will learn how to write blockchain tests that can involve multiple blocks, each
+of which can have multiple transactions.
