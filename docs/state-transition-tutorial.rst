@@ -289,6 +289,15 @@ store hashes of them.
         }
   }
   
+  
+  Solidity Tests
+  ==============
+  You can see a solidity test at `tests/src/GeneralStateTestsFiller/stExample/03_solidityFiller.yml 
+  <https://github.com/ethereum/tests/tree/develop/docs/state_transition/03_solidifyFiller.yml>`_
+
+  
+  
+  
   Conclusion
   ==========
   At this point, if you learn `LLL <http://blog.syrinx.net/the-resurrection-of-lll-part-1/>`_ you should 
