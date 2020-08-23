@@ -328,7 +328,37 @@ format to embed assembly into Solidity <https://solidity.readthedocs.io/en/v0.7.
         }   // function val2Storage
       }     // contract Test
       
-  
+To specify a contract's code you can use ``:solidity <name of contract>``. Alternatively, you
+can put the solidity code directly in the account's ``code:`` section if it has ``pragma solidity``
+(otherwise it is interpreted as LLL).
+
+::
+
+  pre:
+    cccccccccccccccccccccccccccccccccccccccc:
+      balance: '0x0ba1a9ce0ba1a9ce'
+      code: ':solidity Test'
+      nonce: '0'
+      storage: {}
+      
+    
+In contrast to LLL, Solidity handles function signatures and parameters for you. Therefore, the transaction
+data has to conform to the `Application Binary Interface (ABI) 
+<https://solidity.readthedocs.io/en/v0.7.0/abi-spec.html>`_. You do not have to calculate the data on 
+your own, just start it with ``:abi`` followed by the 
+`function signature <https://medium.com/@piyopiyo/how-to-get-ethereum-encoded-function-signatures-1449e171c840>
+and then the parameters.
+    
+::
+
+  transaction:
+    data:
+    - :abi val2Storage(uint256,uint256) 5 69
+    gasLimit:
+    - '80000000'
+    
+    
+The other sections of the test are exactly the same as they are in an LLL test. 
   
 Conclusion
 ==========
