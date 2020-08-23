@@ -295,7 +295,39 @@ Solidity Tests
 You can see a solidity test at `tests/src/GeneralStateTestsFiller/stExample/03_solidityFiller.yml 
 <https://github.com/ethereum/tests/tree/develop/docs/state_transition/03_solidifyFiller.yml>`_
 
-  
+Here are the sections that are new.
+
+You can have a separate ``solidity:`` section for your code. This is useful because Solidity
+code tends to be longer than LLL code.
+
+::
+
+  solidity: |
+      // SPDX-License-Identifier: GPL-3.0
+      pragma solidity >=0.4.16 <0.8.0;
+      contract Test {
+
+`Solidity keeps state variables in the storage 
+<https://solidity.readthedocs.io/en/v0.7.0/internals/layout_in_storage.html>`_, starting with
+location 0. We can use state variables for the results of operations, and check them in the 
+``expect:`` section
+
+::
+
+        uint256 storageVar = 0xff00ff00ff00ff00;
+        function val2Storage(uint256 addr, uint256 val) public
+        {
+          storageVar = val;
+
+Another possibility is to use the SSTORE opcode directly to write to storage. `This is the 
+format to embed assembly into Solidity <https://solidity.readthedocs.io/en/v0.7.0/assembly.html>`_.
+
+::
+
+          assembly { sstore(addr, val) }
+        }   // function val2Storage
+      }     // contract Test
+      
   
   
 Conclusion
