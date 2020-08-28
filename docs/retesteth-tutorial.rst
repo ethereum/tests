@@ -167,7 +167,6 @@ This documentation may not be up to date
 
 Client Outside the Docker, Keep Configuration Files Intact
 ----------------------------------------------------------
-
 If you want to run your client outside the docker without changing the
 configuration, these are the steps to follow.
 
@@ -231,7 +230,10 @@ connectivity in the configuration files, these are the steps to follow:
 
 2. If you want to specify the IP address and port in the **config**
    file, modify the host in the **socketAddress** to the appropriate
-   remote address. For example, 
+   remote address. This address needs to work with the `JSON over RPC
+   test protocol <https://en.wikipedia.org/wiki/JSON-RPC>`_.
+
+   For example, 
 
 ::
 

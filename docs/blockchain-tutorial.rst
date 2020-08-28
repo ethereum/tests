@@ -37,18 +37,17 @@ Valid Block Tests
 =================
 There is a valid block test in `tests/docs/tutorial_samples/04_simpleTxFiller.yml 
 <https://github.com/ethereum/tests/tree/develop/docs/tutorial_samples/04_simpleTxFiller.yml>`_.
-We copy it to **bcValidTests**.
-
-.. GOON change to bcExample when available.
-
+We copy it to **bcExample**.
 
 ::
 
-   cp ~/tests/docs/tu*/04* ~/tests/src/Blo*/Val*/bcVal*
+   mkdir ~/tests/src/Blo*/Val*/bcExample*
+   cp ~/tests/docs/tu*/04* ~/tests/src/Blo*/Val*/bcExample*
    cd ~
-   ./dretesteth.sh -t BlockchainTests/ValidBlocks/bcValidBlockTest  -- \
+   ./dretesteth.sh -t BlockchainTests/ValidBlocks/bcExample  -- \
        --testpath ~/tests --datadir /tests/config --filltests \
        --singletest 04_simpleTx
+
 
 Test Source Code
 ----------------
@@ -89,7 +88,7 @@ part of **retesteth**, so you can omit it or set it to **NoProof**.
   #  sealEngine: NoProof
 
 Instead of a single transaction, we have a list of blocks. In a YAML list you 
-tell different items apart by the dash **-**. The block list has two items in it.
+tell different items apart by the dash character (**-**). The block list has two items in it.
 
 ::
 
@@ -106,6 +105,14 @@ state transition tests. This block only has one transaction, which transfers
     - data: ''
       gasLimit: '50000'
       gasPrice: '10'
+
+
+This is the **nonce** value for the transaction. The first value is the 
+**nonce** associated with the address in the **pre:** section. 
+Each subsequent transaction from the same address increments the **nonce**.
+
+::
+
       nonce: '0'
       secretKey: 45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8
       to: 0xde570000de570000de570000de570000de570000
@@ -127,8 +134,8 @@ time) <https://www.investopedia.com/terms/u/uncle-block-cryptocurrency.asp>`_.
 
     uncleHeaders: []
 
-This block has two transactions, coming from two different addresses (that is
-the reason they have different secret keys).
+
+This block has two transactions.
 
 ::
 
@@ -136,6 +143,13 @@ the reason they have different secret keys).
     - data: ''
       gasLimit: '50000'
       gasPrice: '20'
+
+
+This is another transaction from the same address, so the **nonce** is one more 
+than it was in the previous one.
+
+::
+
       nonce: '1'
       secretKey: 45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8
       to: 0xde570000de570000de570000de570000de570000
@@ -143,6 +157,15 @@ the reason they have different secret keys).
     - data: ''
       gasLimit: '50000'
       gasPrice: '30'
+
+
+This transaction comes from a different address (addresses are uniquely derived
+from the private key, and this one is different from the one in the previous
+transcation). This transaction's **nonce** value is the initial value for 
+that address, zero.
+
+::
+
       nonce: '0'
       secretKey: 41f6e321b31e72173f8ff2e292359e1862f24fba42fe6f97efaf641980eff298
       to: 0xde570000de570000de570000de570000de570000
@@ -154,26 +177,24 @@ Invalid Block Tests
 
 The invalid block test is in `tests/docs/tutorial_samples/05_invalidBlockFiller.yml 
 <https://github.com/ethereum/tests/tree/develop/docs/tutorial_samples/05_invalidBlock.yml>`_.
-We copy it to bcBlockGasLimitTest  
+We copy it to **bcExample**.
 
-.. GOON change to bcExample when available
 
 ::
  
-   cp ~/tests/docs/tutorial_samples/05* ~/tests/src/Bl*/In*/bcBl*
+   mkdir ~/tests/src/BlockchainTestsFiller/InvalidBlocks/bcExample
+   cp ~/tests/docs/tutorial_samples/05* ~/tests/src/Bl*/In*/bcExample*
    cd ~
-   ./dretesteth.sh -t BlockchainTests/InvalidBlocks/bcBlockGasLimitTest  -- \
+   ./dretesteth.sh -t BlockchainTests/InvalidBlocks/bcExample  -- \
        --testpath ~/tests --datadir /tests/config --filltests \
        --singletest 05_invalidBlock
- 
-The defining characteristic of invalid block tests is that they contain
-invalid blocks. Invalid blocks are those that cause a client to raise
-an exception.
 
-To tell **retesteth** which exception should be raised by a block, we 
-add an **expectException** field to the **blockHeader**. In that field
-we put the different forks the test supports, and the exception we
-expect to be raised in them:
+
+Invalid block tests contain invalid blocks, blocks that
+cause a client to raise an exception. To tell **retesteth** which exception 
+should be raised by a block, we add an **expectException** field to the 
+**blockHeader**. In that field we put the different forks the test 
+supports, and the exception we expect to be raised in them:
 
 ::
 
@@ -183,6 +204,16 @@ expect to be raised in them:
       expectException:
         Istanbul: TooMuchGasUsed
         Berlin: TooMuchGasUsed
+
+
+.. warning::
+
+   The **expectException** field is only used when **\\-\\-filltests** is specified.
+   When it is not, **retesteth** just expects the processing of the block to fail,
+   without ensuring the exception is the correct one. The reason for this feature 
+   is that not all clients tells us the exact exception type when they reject a
+   block as invalid.
+
 
 
 Getting Exception Names
@@ -196,7 +227,7 @@ The output will include an error message similar to this one:
    'Error importing raw rlp block: Invalid gasUsed: header.gasUsed > header.gasLimit' 
    (bcBlockGasLimitTest/05_invalidBlock_Berlin, fork: Berlin, chain: default, block: 2)
 
-Then took in **tests/conf/<name of client>/config and look for the first few words
+Then took in **tests/conf/<name of client>/config** and look for the first few words
 of the error message. For example, in **tests/conf/tn8tool/config** we find
 this line:
 

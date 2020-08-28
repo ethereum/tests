@@ -220,97 +220,6 @@ to see that 2+2=5. Here are the steps to use it.
   rm ~/tests/src/GeneralStateTestsFiller/stExample/02_*
 
 
-The Compiled Test (Optional)
-----------------------------
-In theory you could write any test you want without understanding the compiled 
-test format. I think it is useful to know these things, but if you don't care 
-about it you can skip this section.
-
-The compiled version of our **01_add22.yml** is at 
-**tests/GeneralStateTests/stExample/01_add22.json**. Here it is with 
-explanations:
-
-::
-
-  {
-    "01_add22" : {
-
-The **_info** section includes any comments you put in the source code of the 
-test, as well as information about the files used to generate the test 
-(the test source code, the evm compiler if any, the client software used 
-to fill in the data, and the tool that actually compiled the test).
-
-::
-
-        "_info" : {
-            "comment" : "You can put a comment here",
-            "filling-rpc-server" : "Geth-1.9.20-unstable-54add425-20200814",
-            "filling-tool-version" : "retesteth-0.0.8-docker+commit.96775cc7.Linux.g++",
-            "lllcversion" : "Version: 0.5.14-develop.2020.8.15+commit.9189ad7a.Linux.g++",
-            "source" : "src/GeneralStateTestsFiller/stExample/01_add22Filler.yml",
-            "sourceHash" : "6b5a88627d0b69c7f61fb05f35ac3f14066d2f4bbe248aa08c3091d7534744d8"            
-        },
-  
-The **env** and **transaction** sections contain the same information provided 
-in the source code. 
-  
-::        
-        
-        "env" : {
-            ...
-            },
-        "transaction" : {
-            ...
-            },
-
-The **pre** section contains mostly information from the source code, 
-but any code provided source (either LLL or Solidity) is compiled.
-
-::
-
-        "pre" : {
-            "0x095e7baea6a6c7c4c2dfeb977efac326af552d87" : {
-                "balance" : "0x0ba1a9ce0ba1a9ce",
-                "code" : "0x600260020160005500",
-                "nonce" : "0x00",
-                "storage" : {
-                }
-            },
-            "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-               ...
-            }
-        },
-
-
-The **post** section is the situation after the test is run. This could be different for 
-`different versions of the Ethereum protocol 
-<https://en.wikipedia.org/wiki/Ethereum#Milestones>`_, 
-so there is a value for every version that was checked. In this case, the 
-only one is Istanbul.
-
-::        
-
-        "post" : {
-            "Istanbul" : [
-                {
-                    "indexes" : {
-                        "data" : 0,
-                        "gas" : 0,
-                        "value" : 0
-                    },
-                    
-Instead of keeping the entire content of the storage and logs that are expected, 
-it is enough to just store hashes of them. 
-                    
-::
-
-                    "hash" : "0x884b8640efb63506c2f8c2d9514335b678815e1ed362107628cf1cd6edd658c2",
-                    "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347"
-                }
-            ]
-        }
-  }
-  
   
 Solidity Tests
 ==============
@@ -369,11 +278,15 @@ Alternatively, you can put the solidity code directly in the account's
 In contrast to LLL, Solidity handles function signatures and parameters for you. 
 Therefore, the transaction data has to conform to the 
 `Application Binary Interface (ABI) 
-<https://solidity.readthedocs.io/en/v0.7.0/abi-spec.html>`_. 
-You do not have to calculate the data on your own, just start it with **:abi** 
-followed by the `function signature 
+<https://solidity.readthedocs.io/en/v0.7.0/abi-spec.html>`_. If your parameters
+are all **uint** (of any length) and **bool**, you do not have to calculate the 
+data on your own, just start it with **:abi** followed by the `function signature 
 <https://medium.com/@piyopiyo/how-to-get-ethereum-encoded-function-signatures-1449e171c840>`_
-and then the parameters.
+and then the parameters. 
+If your function has array parameters you need to calculate the data to send 
+manually using the `ABI specifications 
+<https://solidity.readthedocs.io/en/v0.7.0/abi-spec.html>`_.
+
     
 ::
 
@@ -390,6 +303,6 @@ Conclusion
 ==========
 At this point you should be able to run simple tests that verify the EVM opcodes work 
 as well as more complex algorithms work as expected. You are, however, limited to
-a single transaction in a single block. In a next tutorial, *Getting Started with
-Blockchain Tests*, you will learn how to write blockchain tests that can 
-involve multiple blocks, each of which can have multiple transactions.
+a single transaction in a single block. In a next tutorial, *Blockchain Tests*, 
+you will learn how to write blockchain tests that can involve multiple blocks, 
+each of which can have multiple transactions.
