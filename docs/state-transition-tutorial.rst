@@ -287,6 +287,10 @@ If your function has array parameters you need to calculate the data to send
 manually using the `ABI specifications 
 <https://solidity.readthedocs.io/en/v0.7.0/abi-spec.html>`_.
 
+.. note::
+   ABI support is a new feature, and may be buggy. Please report any bugs you
+   encounter in this feature.
+
     
 ::
 
