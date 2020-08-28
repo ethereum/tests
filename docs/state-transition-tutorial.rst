@@ -26,7 +26,7 @@ Before we get into how tests are built, lets compile and run a simple one.
    
 ::
 
-  cd tests/src/GeneralTestsFiller/stExample
+  cd ~/tests/src/GeneralStateTestsFiller/stExample
   cp ~/tests/docs/tutorial_samples/01* .
   cd ~
   
@@ -39,7 +39,8 @@ Before we get into how tests are built, lets compile and run a simple one.
 ::
 
   ./dretesteth.sh -t GeneralStateTests/stExample -- \
-      --testpath ~/tests --datadir /tests/config --filltests
+      --singletest 01_add22 --testpath ~/tests \
+      --datadir /tests/config --filltests
   sudo chown $USER tests/GeneralStateTests/stExample/*
 
 3. Run the test normally, with verbose output:
@@ -47,13 +48,14 @@ Before we get into how tests are built, lets compile and run a simple one.
 ::
 
   ./dretesteth.sh -t GeneralStateTests/stExample -- \
-     --testpath ~/tests --datadir /tests/config --clients geth --verbosity 5
+     --singletest 01_add22 --testpath ~/tests \
+     --datadir /tests/config --clients geth --verbosity 5
 
 The Source Code
 ===============
 Now that we've seen that the test works, let's go through it line by line. 
 This test specification is written in YAML, if you are not familiar 
-with this format `Click here <https://www.tutorialspoint.com/yaml/index.htm>`_. 
+with this format `click here <https://www.tutorialspoint.com/yaml/index.htm>`_. 
 
 All the fields are defined under the name of the test. Note that YAML comments 
 start with a hash (**#**) and continue to the end of the line.
@@ -102,8 +104,6 @@ This is a contract address. As such it has code, which can be in one of three fo
    Ethereum contracts. Solidity is well known, but it is not ideal for VM tests 
    because it adds its own code to compiled contracts.
    
-The contract also has initial storage. In this case, the initial storage is empty.   
-
 ::
 
       095e7baea6a6c7c4c2dfeb977efac326af552d87:
@@ -118,10 +118,7 @@ into three opcodes:
   and pushes the sum into the stack).
 
 This expression **[[0]]** is short hand for **(SSTORE 0 <the value at the top of the 
-stack>)**. It stores the value (in this case, four) in location 0. Every address 
-in Ethereum has associated storage,
-which is essentially a lookup table. `You can read more about it here 
-<https://applicature.com/blog/blockchain-technology/ethereum-smart-contract-storage>`_.
+stack>)**. It stores the value (in this case, four) in location 0. 
 
 ::        
         
@@ -131,6 +128,14 @@ which is essentially a lookup table. `You can read more about it here
                   [[0]] (ADD 2 2)
           }
         nonce: '0'
+
+Every address in Ethereum has associated storage,
+which is essentially a lookup table. `You can read more about it here 
+<https://applicature.com/blog/blockchain-technology/ethereum-smart-contract-storage>`_.
+In this case the storage is initially empty.
+
+::
+
         storage: {}
 
 This is a "user" address. As such, it does not have code. Note that you still 
@@ -183,9 +188,8 @@ We expect the contract's storage to have the result, in this case 4.
           
         result:
           095e7baea6a6c7c4c2dfeb977efac326af552d87:
-            storage: {
-                                  "0x00" : "0x04"
-                  }        
+            storage:
+              0x00: 0x04
 
 Failing a Test
 --------------
@@ -193,27 +197,27 @@ To verify that **retesteth** really does run tests, lets fail one.
 The **02_fail** test is almost identical to **01_add22**, except that it expects 
 to see that 2+2=5. Here are the steps to use it.
 
-1. Copy the test to the `stExample` directory 
+1. Copy the test to the `stExample` directory: 
    
 ::
 
-  cp ~/tests/docs/tutorial_samples/02* ~/tests/src/GeneralTestFiller/stExample
+  cp ~/tests/docs/tutorial_samples/02* ~/tests/src/GeneralStateTestsFiller/stExample
 
-2. Fill the information and run the rest
+2. Fill the information and run the test:
 
 ::
 
   ./dretesteth.sh -t GeneralStateTests/stExample -- \
-     --testpath ~/tests --datadir /tests/config --filltests
+     --singletest 02_fail --testpath ~/tests \
+     --datadir /tests/config --filltests
 
-3. Delete the test so we won't see the failure when we run future tests.
+3. Delete the test so we won't see the failure when we run future tests
+   (you can run all the tests in a directory by omitting the 
+   **--singletest** parameter:
 
 ::
  
-  sudo rm ~/tests/src/GeneralStateTestsFiller/stExample/02_* \
-      ~/tests/GeneralStateTests/stExample/02_*
-
-
+  rm ~/tests/src/GeneralStateTestsFiller/stExample/02_*
 
 
 The Compiled Test (Optional)
@@ -223,7 +227,7 @@ test format. I think it is useful to know these things, but if you don't care
 about it you can skip this section.
 
 The compiled version of our **01_add22.yml** is at 
-**tests/GeneralStateTests/stExample/add22.json**. Here it is with 
+**tests/GeneralStateTests/stExample/01_add22.json**. Here it is with 
 explanations:
 
 ::

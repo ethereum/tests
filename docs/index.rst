@@ -18,7 +18,7 @@ Ethereum Tests
 
    retesteth-tutorial.rst
    state-transition-tutorial.rst
-
+   blockchain-tutorial.rst
 
 
 .. toctree::
