@@ -310,7 +310,7 @@ These are examples of the values that **:abi** can have.
 * **:abi sam(bytes,bool,uint256[]) "dave" 0 [1,2,3]**: Call **sam** with a string ("dave"), a false boolean value, 
   and an array of three 256 bit numbers.
 
-* **:abi f(uint256,uint32[],bytes10,bytes) 0x123 [0x456, 0x789] "1234567890" "Hello, world"** Call **f** with:
+* **:abi f(uint256,uint32[],bytes10,bytes) 0x123 [0x456, 0x789] "1234567890" "Hello, world"**: Call **f** with these parameters
 
   * An unsigned 256 bit integer
   
