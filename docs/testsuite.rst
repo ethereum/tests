@@ -1,9 +1,8 @@
-Ethereum Test Suite
-===================
+Ethereum Tests
+==============
 
 .. toctree::
    :maxdepth: 2
-   :caption: Ethereum Test Suite
 
    test_types/blockchain_tests.rst
    test_types/gstate_tests.rst

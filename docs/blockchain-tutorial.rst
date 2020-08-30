@@ -172,6 +172,8 @@ that address, zero.
       value: '30'
 
 
+.. _invalid-block-tests:
+
 Invalid Block Tests
 ===================
 
