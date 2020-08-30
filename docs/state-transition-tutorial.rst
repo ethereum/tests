@@ -278,14 +278,10 @@ Alternatively, you can put the solidity code directly in the account's
 In contrast to LLL, Solidity handles function signatures and parameters for you. 
 Therefore, the transaction data has to conform to the 
 `Application Binary Interface (ABI) 
-<https://solidity.readthedocs.io/en/v0.7.0/abi-spec.html>`_. If your parameters
-are all **uint** (of any length) and **bool**, you do not have to calculate the 
+<https://solidity.readthedocs.io/en/v0.7.0/abi-spec.html>`_. You do not have to calculate the 
 data on your own, just start it with **:abi** followed by the `function signature 
 <https://medium.com/@piyopiyo/how-to-get-ethereum-encoded-function-signatures-1449e171c840>`_
-and then the parameters. 
-If your function has array parameters you need to calculate the data to send 
-manually using the `ABI specifications 
-<https://solidity.readthedocs.io/en/v0.7.0/abi-spec.html>`_.
+and then the parameters. These parameters can be bool, uint, arrays, and strings.
 
 .. note::
    ABI support is a new feature, and may be buggy. Please report any bugs you
