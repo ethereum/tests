@@ -10,13 +10,33 @@ Ethereum Tests
 .. note::
    See :ref:`contribute` if you want to help improve this documentation.
 
+
+
 .. toctree::
    :maxdepth: 3
-   :caption: Contents:
+   :caption: Tutorial:
+
+   retesteth-tutorial.rst
+   state-transition-tutorial.rst
+   blockchain-tutorial.rst
+   internals-tutorial.rst
+
+
+.. toctree::
+   :maxdepth: 3
+   :caption: Reference:
 
    testsuite.rst
-   generating-tests.rst
    contribute.rst
+
+
+
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Obsolete:
+
+   generating-tests.rst
 
    
 
