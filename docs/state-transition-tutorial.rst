@@ -282,14 +282,10 @@ Alternatively, you can put the solidity code directly in the account's
 In contrast to LLL, Solidity handles function signatures and parameters for you. 
 Therefore, the transaction data has to conform to the 
 `Application Binary Interface (ABI) 
-<https://solidity.readthedocs.io/en/v0.7.0/abi-spec.html>`_. If your parameters
-are all **uint** (of any length) and **bool**, you do not have to calculate the 
+<https://solidity.readthedocs.io/en/v0.7.0/abi-spec.html>`_. You do not have to calculate the 
 data on your own, just start it with **:abi** followed by the `function signature 
 <https://medium.com/@piyopiyo/how-to-get-ethereum-encoded-function-signatures-1449e171c840>`_
-and then the parameters. 
-If your function has array parameters you need to calculate the data to send 
-manually using the `ABI specifications 
-<https://solidity.readthedocs.io/en/v0.7.0/abi-spec.html>`_.
+and then the parameters. These parameters can be bool, uint, single dimension arrays, and strings.
 
 .. note::
    ABI support is a new feature, and may be buggy. Please report any bugs you
@@ -306,6 +302,27 @@ manually using the `ABI specifications
     
     
 The other sections of the test are exactly the same as they are in an LLL test. 
+
+ABI values
+----------
+These are examples of the values that **:abi** can have.
+
+* **:abi baz(uint32,bool) 69 1**: Call **baz** with a 32 bit value (69) and a true boolean value
+
+* **:abi bar(bytes3[2]) ["abc", "def"]**: Call **bar** with a two value array, each value three bytes
+
+* **:abi sam(bytes,bool,uint256[]) "dave" 0 [1,2,3]**: Call **sam** with a string ("dave"), a false boolean value, 
+  and an array of three 256 bit numbers.
+
+* **:abi f(uint256,uint32[],bytes10,bytes) 0x123 [0x456, 0x789] "1234567890" "Hello, world"**: Call **f** with these parameters
+
+  * An unsigned 256 bit integer
+  
+  * An array of 32 bit values (it can be any size)
+  
+  * A string of ten bytes 
+  
+  * A string which could be any size
   
 Conclusion
 ==========
