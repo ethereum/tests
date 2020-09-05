@@ -1,9 +1,9 @@
 .. _blockchain_filler:
 
 =================================
-Blockchain Tests (Filler version)
+Blockchain Tests
 =================================
-Location: `/BlockchainTestsFiller
+Location: `/src/BlockchainTestsFiller
 <https://github.com/ethereum/tests/tree/develop/src/BlockchainTestsFiller>`_
 
 Blockchain tests can include multiple blocks and each of those blocks can include 
@@ -20,21 +20,27 @@ ValidBlocks       Normal blockchain tests
 TransitionTests   Blockchain tests with exotic network rules switching forks at block #5
 ================= ========================================
 
-.. _struct_bctest:
+.. _bc_struct:
 .. include:: ../test_filler/test_structure.rst
 
 
-.. _struct_genesis:
+.. _struct_bc_genesis:
 .. include:: ../test_filler/test_genesis.rst
 
 
-.. _struct_expect:
-.. include:: ../test_filler/test_expect.rst
-
-
-.. _struct_pre:
+.. _struct_bc_pre:
 .. include:: ../test_filler/test_pre.rst
 
 
-.. _struct_blocks:
+.. _struct_bc_blocks:
 .. include:: ../test_filler/test_blocks.rst
+
+
+.. _struct_bc_transaction:
+.. include:: ../test_filler/test_transaction.rst
+
+
+.. _struct_bc_expect:
+.. include:: ../test_filler/test_expect.rst
+
+

@@ -35,23 +35,23 @@ If you go to **tests/src/BlockchainTestsFiller** you will see three different di
 
 Valid Block Tests
 =================
-There is a valid block test in `tests/docs/tutorial_samples/04_simpleTxFiller.yml 
-<https://github.com/ethereum/tests/tree/develop/docs/tutorial_samples/04_simpleTxFiller.yml>`_.
+There is a valid block test in `tests/docs/tutorial_samples/05_simpleTxFiller.yml 
+<https://github.com/ethereum/tests/blob/develop/docs/tutorial_samples/05_simpleTxFiller.yml>`_.
 We copy it to **bcExample**.
 
 ::
 
    mkdir ~/tests/src/Blo*/Val*/bcExample*
-   cp ~/tests/docs/tu*/04* ~/tests/src/Blo*/Val*/bcExample*
+   cp ~/tests/docs/tu*/05_* ~/tests/src/Blo*/Val*/bcExample*
    cd ~
    ./dretesteth.sh -t BlockchainTests/ValidBlocks/bcExample  -- \
        --testpath ~/tests --datadir /tests/config --filltests \
-       --singletest 04_simpleTx
+       --singletest 05_simpleTx
 
 
 Test Source Code
 ----------------
-This section explains **04_simpleTxFiller.yml**. I am only going to document
+This section explains **05_simpleTxFiller.yml**. I am only going to document
 the things in which it is different from state transition tests.
 
 State transition tests take their 
@@ -177,19 +177,19 @@ that address, zero.
 Invalid Block Tests
 ===================
 
-The invalid block test is in `tests/docs/tutorial_samples/05_invalidBlockFiller.yml 
-<https://github.com/ethereum/tests/tree/develop/docs/tutorial_samples/05_invalidBlock.yml>`_.
+The invalid block test is in `tests/docs/tutorial_samples/06_invalidBlockFiller.yml 
+<https://github.com/ethereum/tests/blob/develop/docs/tutorial_samples/06_invalidBlockFiller.yml>`_
 We copy it to **bcExample**.
 
 
 ::
  
    mkdir ~/tests/src/BlockchainTestsFiller/InvalidBlocks/bcExample
-   cp ~/tests/docs/tutorial_samples/05* ~/tests/src/Bl*/In*/bcExample*
+   cp ~/tests/docs/tutorial_samples/06_* ~/tests/src/Bl*/In*/bcExample*
    cd ~
    ./dretesteth.sh -t BlockchainTests/InvalidBlocks/bcExample  -- \
        --testpath ~/tests --datadir /tests/config --filltests \
-       --singletest 05_invalidBlock
+       --singletest 06_invalidBlock
 
 
 Invalid block tests contain invalid blocks, blocks that
@@ -227,7 +227,7 @@ The output will include an error message similar to this one:
 
    Error: Postmine block tweak expected no exception! Client errors with: 
    'Error importing raw rlp block: Invalid gasUsed: header.gasUsed > header.gasLimit' 
-   (bcBlockGasLimitTest/05_invalidBlock_Berlin, fork: Berlin, chain: default, block: 2)
+   (bcBlockGasLimitTest/06_invalidBlock_Berlin, fork: Berlin, chain: default, block: 2)
 
 Then took in **tests/conf/<name of client>/config** and look for the first few words
 of the error message. For example, in **tests/conf/tn8tool/config** we find

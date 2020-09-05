@@ -83,4 +83,4 @@ The fields in each block are optional. Only include those fields you need.
 
 - **transactions**:
 
-  A list of transaction objects. 
+  A list of transaction objects in the block. 

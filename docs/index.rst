@@ -27,6 +27,8 @@ Ethereum Tests
    :caption: Reference:
 
    test_filler/blockchain_filler.rst
+   test_filler/state_filler.rst
+   test_filler/vm_filler.rst
    contribute.rst
 
 

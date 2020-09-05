@@ -60,6 +60,9 @@ with this format `click here <https://www.tutorialspoint.com/yaml/index.htm>`_.
 All the fields are defined under the name of the test. Note that YAML comments 
 start with a hash (**#**) and continue to the end of the line.
 
+If you want to follow along with the full source code
+You can see the complete code, `here 
+<https://github.com/ethereum/tests/blob/develop/docs/tutorial_samples/01_add22Filler.yml>`_
 ::
 
   # The name of the test
@@ -194,7 +197,9 @@ We expect the contract's storage to have the result, in this case 4.
 Failing a Test
 --------------
 To verify that **retesteth** really does run tests, lets fail one. 
-The **02_fail** test is almost identical to **01_add22**, except that it expects 
+The `**02_fail**
+<https://github.com/ethereum/tests/blob/develop/docs/tutorial_samples/02_failFiller.yml>`_ 
+test is almost identical to **01_add22**, except that it expects 
 to see that 2+2=5. Here are the steps to use it.
 
 1. Copy the test to the `stExample` directory: 
@@ -224,8 +229,7 @@ to see that 2+2=5. Here are the steps to use it.
 Solidity Tests
 ==============
 You can see a solidity test at `tests/docs/tutorial_samples/03_solidityFiller.yml 
-<https://github.com/ethereum/tests/tree/develop/docs/tutorial_samples/03_solidifyFiller.yml>`_
-
+<https://github.com/ethereum/tests/blob/develop/docs/tutorial_samples/03_solidityFiller.yml>`_.
 Here are the sections that are new.
 
 You can have a separate **solidity:** section for your code. This is useful 
