@@ -23,10 +23,15 @@ Format
                  <other sections>,
                  "expect": [
                    {
-                      "network": [<forks where this applies>],
+                      "network": ["Istanbul", <other forks, see below>],
                       "result": {
                            "address 1": {
-                               <address fields go here>
+                               "balance": 0xba1a9ce000,
+                               "nonce": 0,
+                               "storage: {
+                                   "0x0":  "0x12345",
+                                  "0x12": "0x121212"
+                               }
                            },
                            "address 2": {
                                <address fields go here>
@@ -46,14 +51,30 @@ Format
               <other sections>
               expect:
               - network:
-                - <fork>
+                - Istanbul
                 - <another fork>
                 result:
                   address 1:
-                     <address fields go here>
+                    balance: 0xba1a9ce000,
+                    nonce: 0,
+                    storage:
+                      0x0:  0x012345
+                      0x12: 0x121212
                   address 2: 
                      <address fields go here>
               - <forks & results>
+
+
+The Network Specification
+-------------------------
+The string that identifies a fork (version) within a **network:** 
+list is one of three option:
+
+- The specific version: **Istanbul**
+- The version or anything later: **>=Frontier**
+- Anything up to (but not including) the version **<Constantinople**
+
+
 
 Address Fields
 --------------
@@ -84,12 +105,15 @@ fields you wish to test.
 
          ::
 
-            storage: {"1": 5, "2": 10}
+            storage: {
+                "1":  "5", 
+                "2": "10"
+            }
 
        -
 
          ::
 
             storage:
-               1: 5
-               2: 10
+               1:  5
+               2: 10	

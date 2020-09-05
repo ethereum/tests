@@ -1,5 +1,5 @@
-Ethereum Tests
-==============
+Test "Executable"
+=================
 
 .. toctree::
    :maxdepth: 2

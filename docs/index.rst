@@ -26,9 +26,8 @@ Ethereum Tests
    :maxdepth: 3
    :caption: Reference:
 
-   test_filler/blockchain_filler.rst
-   test_filler/state_filler.rst
-   test_filler/vm_filler.rst
+   testfiller.rst
+   testsuite.rst
    contribute.rst
 
 
@@ -39,7 +38,6 @@ Ethereum Tests
    :caption: Obsolete:
 
    generating-tests.rst
-   testsuite.rst
 
    
 

@@ -125,7 +125,6 @@ a **blockHeader** and override some of the default values.
 
   - blockHeader:
       gasLimit: '3141592'
-      updatePoW: '1'
 
 A block can also contain references to `uncle blocks (blocks mined at the same
 time) <https://www.investopedia.com/terms/u/uncle-block-cryptocurrency.asp>`_.
@@ -202,7 +201,6 @@ supports, and the exception we expect to be raised in them:
 
   - blockHeader:
       gasLimit: '30'
-      updatePoW: '1'
       expectException:
         Istanbul: TooMuchGasUsed
         Berlin: TooMuchGasUsed

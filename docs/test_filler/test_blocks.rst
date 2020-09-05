@@ -32,7 +32,7 @@ Format
                        { <transaction> }
                      ]
                      blockHeader: { <block header fields> },
-                     uncleHeaders: [<hash>, <hash>]
+                     uncleHeaders: [ <values here> ]
                    }
                  ]
               }
@@ -52,8 +52,7 @@ Format
               - blockHeader:
                   <block header fields>
                 uncleHeaders:
-                - <hash>
-                - <hash>
+                  <values here>
                 transactions:
                 - <transaction>
                 - <transaction>
@@ -76,10 +75,22 @@ The fields in each block are optional. Only include those fields you need.
   section of the Blockchain Tests 
   tutorial <../blockchain-tutorial.html#invalid-block-tests>`_.
 
+- **blocknumber** and **chainname**:
+
+  If you are testing behavior in the presence of multiple competing chains,
+  these fields let you specify the chain and the block's location within
+  it.
+
 - **uncleHeaders**:
 
-  A list of `uncle blocks (blocks mined at the same time) 
+  A list of the `uncle blocks (blocks mined at the same time) 
   <https://www.investopedia.com/terms/u/uncle-block-cryptocurrency.asp>`_.
+  Each item in the list has two fields:
+ 
+  - **chainname**: The name of the chain from which the uncle block comes
+
+  - **populateFromBlock**: The block number within that chain for the block
+    that is an uncle of the block you are specifying.
 
 - **transactions**:
 

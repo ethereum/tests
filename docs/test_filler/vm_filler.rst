@@ -10,6 +10,9 @@ Virtual machine tests check a single instance of EVM execution, with one stack
 and one memory space. They are similar to state transition tests, but even 
 simpler.
 
+.. note::
+   `Click here for the filled documentation of these tests  
+   <../test_types/vm_tests.html>`_
 
 .. _vm_struct:
 .. include:: ../test_filler/test_structure.rst

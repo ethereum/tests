@@ -23,7 +23,12 @@ Format
                  <other sections>,
                  "pre": {
                     "address 1": {
-                       <account fields go here>
+			"balance": 0xba1a9ce000,
+			"nonce": 0,
+			"code": ":raw 0x600160010160005500"
+			"storage: {
+				"0x0":  "0x12345",
+				"0x12": "0x121212"
                     },
                     "address 2": {
                         <account fields go here>
@@ -41,7 +46,12 @@ Format
               <other sections>
               pre:
                 address 1:
-                  <account fields go here>
+		  balance: 0xba1a9ce000,
+		  nonce: 0,
+		  code: :raw 0x600160010160005500
+		  storage:
+		    0x0:  0x012345
+		    0x12: 0x121212
                 address 2:
                   <account fields go here>
 
@@ -72,7 +82,10 @@ Address Fields
 
          ::
 
-            storage: {"1": 5, "2": 10}
+            storage: {
+		"1": 5, 
+		"2": 10
+	    }
 
        -
 
@@ -88,7 +101,9 @@ Address Fields
 
   - If the account is not a contract, this value is **0x**
 
-  - Raw virtual machine code, for example
+  - Raw virtual machine code. This is for cases where it is impossible to
+    provide source code, or the source code is in a language retesteth
+    does not recognize, such as `Vyper <https://vyper.readthedocs.io/en/stable/>`_.
 
     ::
  

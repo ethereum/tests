@@ -9,6 +9,11 @@ Location: `/src/BlockchainTestsFiller
 Blockchain tests can include multiple blocks and each of those blocks can include 
 multiple transactions. These blocks can be either valid or invalid.
 
+.. note::
+   `Click here for the filled documentation of these tests
+   <../test_types/blockchain_tests.html>`_
+
+
 
 
 Subfolders

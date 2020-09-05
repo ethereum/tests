@@ -20,36 +20,36 @@ Compiling Your First Test
 =========================
 Before we get into how tests are built, lets compile and run a simple one.
 
-1. The source code of the tests is in **tests/src**. It is complicated to 
+#. The source code of the tests is in **tests/src**. It is complicated to 
    add another tests directory, so we will use
    **GeneralStateTestsFiller/stExample**.
    
-::
+   ::
 
-  cd ~/tests/src/GeneralStateTestsFiller/stExample
-  cp ~/tests/docs/tutorial_samples/01* .
-  cd ~
+      cd ~/tests/src/GeneralStateTestsFiller/stExample
+      cp ~/tests/docs/tutorial_samples/01* .
+      cd ~
   
-2. The source code of tests doesn't include all the information required 
+#. The source code of tests doesn't include all the information required 
    for the test. Instead, you run **retesteth.sh**,
    and it runs a client with the Ethereum Virtual Machine (evm) to fill in the 
    values. This creates a compiled
    version in **tests/GeneralStateTests/stExample**.
 
-::
+   ::
 
-  ./dretesteth.sh -t GeneralStateTests/stExample -- \
-      --singletest 01_add22 --testpath ~/tests \
-      --datadir /tests/config --filltests
-  sudo chown $USER tests/GeneralStateTests/stExample/*
+      ./dretesteth.sh -t GeneralStateTests/stExample -- \
+          --singletest 01_add22 --testpath ~/tests \
+          --datadir /tests/config --filltests
+      sudo chown $USER tests/GeneralStateTests/stExample/*
 
-3. Run the test normally, with verbose output:
+#. Run the test normally, with verbose output:
 
-::
+   ::
 
-  ./dretesteth.sh -t GeneralStateTests/stExample -- \
-     --singletest 01_add22 --testpath ~/tests \
-     --datadir /tests/config --clients geth --verbosity 5
+      ./dretesteth.sh -t GeneralStateTests/stExample -- \
+         --singletest 01_add22 --testpath ~/tests \
+         --datadir /tests/config --clients geth --verbosity 5
 
 The Source Code
 ===============
@@ -63,6 +63,7 @@ start with a hash (**#**) and continue to the end of the line.
 If you want to follow along with the full source code
 You can see the complete code, `here 
 <https://github.com/ethereum/tests/blob/develop/docs/tutorial_samples/01_add22Filler.yml>`_
+
 ::
 
   # The name of the test
@@ -109,8 +110,8 @@ This is a contract address. As such it has code, which can be in one of three fo
    
 ::
 
-      095e7baea6a6c7c4c2dfeb977efac326af552d87:
-        balance: '0x0ba1a9ce0ba1a9ce'
+   095e7baea6a6c7c4c2dfeb977efac326af552d87:
+     balance: '0x0ba1a9ce0ba1a9ce'
 
 LLL code can be very low level. In this case, **(ADD 2 2)** is translated 
 into three opcodes:
@@ -125,12 +126,12 @@ stack>)**. It stores the value (in this case, four) in location 0.
 
 ::        
         
-        code: |
-          {
-                  ; Add 2+2
-                  [[0]] (ADD 2 2)
-          }
-        nonce: '0'
+     code: |
+       {
+         ; Add 2+2
+         [[0]] (ADD 2 2)
+       }
+       nonce: '0'
 
 Every address in Ethereum has associated storage,
 which is essentially a lookup table. `You can read more about it here 
@@ -153,12 +154,20 @@ have to specify the storage.
         storage: {}
 
 This is the transaction that will be executed to check the code.
-There are several important fields here:
+There are several scalar fields here:
 
-* **data** is the data we send (we need to send something)
+* **gasPrice** is the price of gas in Wei.
 * **nonce** has to be the same value as the user address
 * **to** is the contract we are testing. If you want to create a contract, keep the 
   **to** definition, but leave it empty.
+
+Additionally, these are several fields that are lists of values. The reason to
+have lists instead of a single value is to be able to run multiple similar
+tests from the same file (see the **Multitest Files** section below).
+
+* **data** is the data we send
+* **gasLimit** is the gas limit
+* **value** is the amount of Wei we send with the transaction
 
 ::
 
@@ -174,6 +183,8 @@ There are several important fields here:
       - '1'
 
 This is the state we expect after running the transaction on the **pre** state.
+The **indexes:** subsection is used for multitest files, for now just copy and
+paste it into your tests.
 
 ::
 
@@ -202,27 +213,27 @@ The `**02_fail**
 test is almost identical to **01_add22**, except that it expects 
 to see that 2+2=5. Here are the steps to use it.
 
-1. Copy the test to the `stExample` directory: 
+#. Copy the test to the `stExample` directory: 
    
-::
+   ::
 
-  cp ~/tests/docs/tutorial_samples/02* ~/tests/src/GeneralStateTestsFiller/stExample
+      cp ~/tests/docs/tutorial_samples/02* ~/tests/src/GeneralStateTestsFiller/stExample
 
-2. Fill the information and run the test:
+#. Fill the information and run the test:
 
-::
+   ::
 
-  ./dretesteth.sh -t GeneralStateTests/stExample -- \
-     --singletest 02_fail --testpath ~/tests \
-     --datadir /tests/config --filltests
+      ./dretesteth.sh -t GeneralStateTests/stExample -- \
+         --singletest 02_fail --testpath ~/tests \
+         --datadir /tests/config --filltests
 
-3. Delete the test so we won't see the failure when we run future tests
+#. Delete the test so we won't see the failure when we run future tests
    (you can run all the tests in a directory by omitting the 
    **--singletest** parameter:
 
-::
+   ::
  
-  rm ~/tests/src/GeneralStateTestsFiller/stExample/02_*
+      rm ~/tests/src/GeneralStateTestsFiller/stExample/02_*
 
 
   
@@ -324,6 +335,81 @@ These are examples of the values that **:abi** can have.
   
   * A string which could be any size
   
+
+Multitest Files
+===============
+It is possible to combine multiple similar tests in one file. `Here is an example 
+<https://github.com/ethereum/tests/blob/develop/docs/tutorial_samples/04_multitestFiller.yml>`_.
+
+There are two steps to doing that:
+
+- Modify the **transaction:** section. This section has three subsections that are 
+  lists. You can add multiple values to the **data:**, **gasLimit:**, and 
+  **value:**. 
+
+  For example:
+
+  ::
+
+    transaction:
+       data:
+       - ":abi val2Storage(uint256,uint256) 0x10 0x10"
+       - ":abi val2Storage(uint256,uint256) 0x11 0x11"
+       - ":abi val2Storage(uint256,uint256) 0x11 0x12"
+       gasLimit:
+       - '80000000'
+       gasPrice: '1'
+       nonce: '0'
+       to: cccccccccccccccccccccccccccccccccccccccc
+       secretKey: "45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8"
+       value:
+       - 0
+
+- The **expect:** section is also a list, and can have multiple values. Just put the
+  indexes to the correct **data**, **gas**, and **value** values, and have the correct
+  response in the **result:** section.
+
+  For example:
+
+  :: 
+
+     expect:
+
+  The indexes are integer values. By default YAML values are strings. 
+  The **!!int** overrides this. These are all the first values in their lists,
+  so the data is equivalent to the call **val2Storage(0x10, 0x10)**.
+
+   ::
+
+       - indexes:
+           data: !!int 0
+           gas:  !!int 0
+           value: !!int 0
+         network:
+           - '>=Istanbul'
+         result:
+           cccccccccccccccccccccccccccccccccccccccc:
+             storage:
+               0:    0x10
+               0x10: 0x10
+
+   This is the second item in the **data:** subsection above, 
+   equivalent to **val2Storage(0x11, 0x11)**.
+
+   ::
+
+       - indexes:
+           data: !!int 1
+           gas:  !!int 0
+           value: !!int 0
+         network:
+           - '>=Istanbul'
+         result:
+           cccccccccccccccccccccccccccccccccccccccc:
+             storage:
+               0:    0x11
+               0x11: 0x11
+
 Conclusion
 ==========
 At this point you should be able to run simple tests that verify the EVM opcodes work 

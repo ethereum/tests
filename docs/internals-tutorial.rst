@@ -101,8 +101,9 @@ it is enough to just store hashes of them.
 
 Virtual Machine Trace
 =====================
-You can use the **\\-\\-vmtrace** command line option to get a trace of the virtual machine.
-For example, this is the command to get a trace of **01_add22**:
+If you are using the geth t8ntool, can use the **\\-\\-vmtrace** command line option 
+to get a trace of the virtual machine. For example, this is the command to 
+get a trace of **01_add22**:
 
 ::
 
