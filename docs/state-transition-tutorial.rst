@@ -52,7 +52,7 @@ Before we get into how tests are built, lets compile and run a simple one.
          --datadir /tests/config --clients geth --verbosity 5
 
 The Source Code
-===============
+---------------
 Now that we've seen that the test works, let's go through it line by line. 
 This test specification is written in YAML, if you are not familiar 
 with this format `click here <https://www.tutorialspoint.com/yaml/index.htm>`_. 
@@ -318,14 +318,17 @@ ABI values
 ----------
 These are examples of the values that **:abi** can have.
 
-* **:abi baz(uint32,bool) 69 1**: Call **baz** with a 32 bit value (69) and a true boolean value
+* **:abi baz(uint32,bool) 69 1**: Call **baz** with a 32 bit value (69) 
+  and a true boolean value
 
-* **:abi bar(bytes3[2]) ["abc", "def"]**: Call **bar** with a two value array, each value three bytes
+* **:abi bar(bytes3[2]) ["abc", "def"]**: Call **bar** with a two value array, 
+  each value three bytes
 
-* **:abi sam(bytes,bool,uint256[]) "dave" 0 [1,2,3]**: Call **sam** with a string ("dave"), a false boolean value, 
-  and an array of three 256 bit numbers.
+* **:abi sam(bytes,bool,uint256[]) "dave" 0 [1,2,3]**: Call **sam** with a string 
+  ("dave"), a false boolean value, and an array of three 256 bit numbers.
 
-* **:abi f(uint256,uint32[],bytes10,bytes) 0x123 [0x456, 0x789] "1234567890" "Hello, world"**: Call **f** with these parameters
+* **:abi f(uint256,uint32[],bytes10,bytes) 0x123 [0x456, 0x789] "1234567890" "Hello, world"**: 
+  Call **f** with these parameters
 
   * An unsigned 256 bit integer
   
@@ -334,6 +337,19 @@ These are examples of the values that **:abi** can have.
   * A string of ten bytes 
   
   * A string which could be any size
+
+* **:abi g(uint256[][],string[]) [[1,2],[3],[4,5] ["one","two","three"]**: 
+  Call **g** with two parameters, a two dimensional array of uint256 values and
+  an array of strings.
+
+
+* **:abi h(uint256,uint32[],bytes10,bytes) 291 [1110,1929] "1234567890"** 
+  **"Hello, world!"**: Call **h** with a uint256, an array of uint32 values of
+  unspecified size, ten bytes, and a parameter with an unspecified number of bytes. 
+  
+
+* **:abi ff(uint256,address) 324124 "0xcd2a3d9f938e13cd947ec05abc7fe734df8dd826"**:
+  Call **ff** with a uint256 and an address (Ethererum addresses are twenty bytes).
   
 
 Multitest Files
@@ -379,7 +395,7 @@ There are two steps to doing that:
   The **!!int** overrides this. These are all the first values in their lists,
   so the data is equivalent to the call **val2Storage(0x10, 0x10)**.
 
-   ::
+  ::
 
        - indexes:
            data: !!int 0
@@ -393,10 +409,10 @@ There are two steps to doing that:
                0:    0x10
                0x10: 0x10
 
-   This is the second item in the **data:** subsection above, 
-   equivalent to **val2Storage(0x11, 0x11)**.
+  This is the second item in the **data:** subsection above, 
+  equivalent to **val2Storage(0x11, 0x11)**.
 
-   ::
+  ::
 
        - indexes:
            data: !!int 1

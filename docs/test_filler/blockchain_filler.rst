@@ -1,18 +1,13 @@
 .. _blockchain_filler:
 
 =================================
-Blockchain Tests
+Blockchain Tests Source Code
 =================================
 Location: `/src/BlockchainTestsFiller
 <https://github.com/ethereum/tests/tree/develop/src/BlockchainTestsFiller>`_
 
 Blockchain tests can include multiple blocks and each of those blocks can include 
 multiple transactions. These blocks can be either valid or invalid.
-
-.. note::
-   `Click here for the filled documentation of these tests
-   <../test_types/blockchain_tests.html>`_
-
 
 
 
@@ -24,6 +19,10 @@ InvalidBlocks     Tests containing blocks that are expected to fail on import
 ValidBlocks       Normal blockchain tests
 TransitionTests   Blockchain tests with exotic network rules switching forks at block #5
 ================= ========================================
+
+.. bc_src:
+.. include:: ../test_filler/test_src.rst
+
 
 .. _bc_struct:
 .. include:: ../test_filler/test_structure.rst

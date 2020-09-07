@@ -1,7 +1,8 @@
 .. _blockchain_tests:
 
-Blockchain Test
----------------
+==========================
+Generated Blockchain Tests
+==========================
 
 Location `/BlockchainTests <https://github.com/ethereum/tests/tree/develop/BlockchainTests>`_
 

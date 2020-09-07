@@ -15,7 +15,8 @@ These tests are designed to just check the difficulty formula of a block.
 
    difficulty = DIFFICULTY(currentBlockNumber, currentTimestamp, parentTimestamp, parentDifficulty)
 
-described at `EIP2 <https://github.com/ethereum/EIPs/blob/master/EIPS/eip-2.mediawiki>`_ point 4 with homestead changes.
+described at `EIP2 <https://github.com/ethereum/EIPs/blob/master/EIPS/eip-2.md>`_
+point 4 with homestead changes.
 
 So basically this .json tests are just to check how this function is calculated on different function parameters (parentDifficulty, currentNumber) in its extremum points. 
 

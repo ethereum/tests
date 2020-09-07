@@ -1,7 +1,7 @@
 .. _vm_filler:
 
 =================================
-Virtual Machine Tests
+Virtual Machine Tests Source Code
 =================================
 Location: `src/VMTestsFiller
 <https://github.com/ethereum/tests/tree/develop/src/VMTestsFiller>`_
@@ -11,8 +11,21 @@ and one memory space. They are similar to state transition tests, but even
 simpler.
 
 .. note::
-   `Click here for the filled documentation of these tests  
-   <../test_types/vm_tests.html>`_
+   Even though virtual machine tests are in a separate directory under **src**,
+   **retesteth** treats them as though they were under 
+   **src/BlockchainTestsFiller/ValidBlocks**. For example, this is the command to
+   fill and run the **VMTests/vmLogTest/log4_PC** `(link)
+   <https://github.com/ethereum/tests/blob/develop/src/VMTestsFiller/vmLogTest/log4_PCFiller.json>`_ 
+   test.
+
+   ::
+
+      ./dretesteth.sh -t BlockchainTests/ValidBlocks/VMTests/vmLogTest --    \
+        --singletest log4_PC --testpath ~/tests --datadir /tests/config --filltests
+
+
+.. _vm_src:
+.. include:: ../test_filler/test_src.rst
 
 .. _vm_struct:
 .. include:: ../test_filler/test_structure.rst

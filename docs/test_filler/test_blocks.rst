@@ -31,7 +31,11 @@ Format
                        { <transaction> },
                        { <transaction> }
                      ]
-                     blockHeader: { <block header fields> },
+                     blockHeader: {
+                        "extraData" : "0x42",
+                        "gasLimit" : "0x2fefd8",
+                        "gasUsed" : "0x5208",
+                     },
                      uncleHeaders: [ <values here> ]
                    }
                  ]
@@ -50,7 +54,9 @@ Format
                 - <transaction>
                 - <transaction>
               - blockHeader:
-                  <block header fields>
+                    extraData: 42
+                    gasLimit: 100000
+                    gasUsed: 2000
                 uncleHeaders:
                   <values here>
                 transactions:
@@ -65,8 +71,8 @@ The fields in each block are optional. Only include those fields you need.
 
   This field contains the block header parameters. Parameters that are missing are
   copied from the genesis block.
-  `You can read the definition of Ethereum block header fields here
-  <https://medium.com/@derao512/ethereum-under-the-hood-part-7-blocks-7f223510ba10>`_.
+
+  .. include:: ../test_filler/test_blockheader.rst
 
   One field inside the block header which is not standard in Ethereum is 
   **expectException**. That field, which is only used in invalid block tests,

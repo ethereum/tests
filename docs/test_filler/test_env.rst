@@ -1,4 +1,4 @@
-Env Block
+Env
 ==============
 This section contains the environment, the block just before the one that runs
 the VM or executes the transaction.
@@ -20,8 +20,13 @@ Format
            {
               "name-of-test": {
                  <other sections>,
-                 env: {
-                     fields go here
+                 "env" : {
+                    "currentCoinbase" : "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba",
+                    "currentDifficulty" : "0x020000",
+                    "currentGasLimit" : "0x05f5e100",
+                    "currentNumber" : "0x01",
+                    "currentTimestamp" : "0x03e8",
+                    "previousHash" : "0x5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6"
                  }
               }
            }
@@ -33,7 +38,12 @@ Format
            name-of-test:
               <other sections>
               env:
-                 fields go here     
+                 currentCoinbase: 2adc25665018aa1fe0e6bc666dac8fc2697ff9ba
+                 currentDifficulty: 0x20000
+                 currentGasLimit: 100000000
+                 currentNumber: 1
+                 currentTimestamp: 1000
+                 previousHash: 5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6
 
 
 Fields

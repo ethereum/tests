@@ -281,8 +281,8 @@ this:
 Using the Latest Version
 ========================
 The version of retesteth `published as a docker file 
-<wget http://retesteth.ethdevops.io/dretesteth.tar>`_ is from the **master** 
-branch. If you want the latest features, you need to build an image from the
+<wget http://retesteth.ethdevops.io/dretesteth.tar>`_ may not have the latest
+updates. If you want the latest features, you need to build an image from the
 **develop** branch yourself:
 
 #. Install docker.

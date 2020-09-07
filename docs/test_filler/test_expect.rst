@@ -26,11 +26,11 @@ Format
                       "network": ["Istanbul", <other forks, see below>],
                       "result": {
                            "address 1": {
-                               "balance": 0xba1a9ce000,
-                               "nonce": 0,
+                               "balance": "0xba1a9ce000",
+                               "nonce": "0",
                                "storage: {
-                                   "0x0":  "0x12345",
-                                  "0x12": "0x121212"
+                                   "0x0":     12345,
+                                   "10" : "0x121212"
                                }
                            },
                            "address 2": {
@@ -58,8 +58,8 @@ Format
                     balance: 0xba1a9ce000,
                     nonce: 0,
                     storage:
-                      0x0:  0x012345
-                      0x12: 0x121212
+                      0x0:  12345
+                      10: 0x121212
                   address 2: 
                      <address fields go here>
               - <forks & results>
@@ -76,44 +76,11 @@ list is one of three option:
 
 
 
+
 Address Fields
 --------------
 It is not necessary to include all fields for every address. Only include those
 fields you wish to test.
 
-- **balance**:
+.. include:: ../test_filler/test_addr.rst
 
-  Wei balance at the end of the test
-
-- **nonce**:
-
-  Nonce
-
-- **storage**:
-
-  Values in the storage for this address. If you specify this field, you have
-  to specify **all** the values that the account has in storage.
-
-  .. list-table::
-     :header-rows: 1
-
-     * - JSON
-
-       - YAML
-
-     * -
-
-         ::
-
-            storage: {
-                "1":  "5", 
-                "2": "10"
-            }
-
-       -
-
-         ::
-
-            storage:
-               1:  5
-               2: 10	

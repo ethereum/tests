@@ -25,7 +25,8 @@ Format
                  "expect": {
                     "address in exec section": {
                        "storage": {
-                         "<address in storage>": "<value>"
+                         "0":    "0x00112233",
+                         "0x10": "31415"
                        }
                     }
                  }
@@ -42,4 +43,5 @@ Format
               expect:
                 <address in exec>:
                   storage:
-                     <address in storage>: <value>
+                    0: 0x00112233
+                    0x10: 31415

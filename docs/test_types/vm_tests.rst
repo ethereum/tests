@@ -1,9 +1,12 @@
 .. _vm_tests:
 
-VM Test
--------
 
-Location `/VMTests <https://github.com/ethereum/tests/tree/develop/VMTests>`_
+=================================
+Generated Virtual Machine Tests
+=================================
+
+Location `/BlockChainTests/ValidBlocks/VMTests 
+<https://github.com/ethereum/tests/tree/develop/BlockChainTests/ValidBlocks/VMTests>`_
 
 
 The VM tests aim is to test the basic workings of the VM in
