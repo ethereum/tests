@@ -13,7 +13,7 @@ The Environment
 ===============
 Before you start, make sure you create the retesteth tutorial and create the 
 environment explained there. Also make sure you read and understand the state
-test tutorial.
+transition tests tutorial.
 
 
 Types of Blockchain Tests

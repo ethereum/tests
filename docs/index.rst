@@ -19,6 +19,7 @@ Ethereum Tests
    retesteth-tutorial.rst
    state-transition-tutorial.rst
    blockchain-tutorial.rst
+   eip-tutorial.rst
    internals-tutorial.rst
 
 

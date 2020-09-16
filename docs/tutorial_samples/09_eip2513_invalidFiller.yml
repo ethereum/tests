@@ -1,0 +1,160 @@
+09_eip2513_invalid:
+  genesisBlockHeader:
+    bloom: 0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+    coinbase: 0x8888f1f195afa192cfee860698584c030f4c9db1
+    difficulty: 131072
+    extraData: 0x42
+    gasLimit: 5000000000000
+    gasUsed: 0
+    mixHash: 0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421
+    nonce: 0x0102030405060708
+    number: 0
+    parentHash: 0x0000000000000000000000000000000000000000000000000000000000000000
+    receiptTrie: 0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421
+    stateRoot: 0xf99eb1626cfa6db435c0836235942d7ccaa935f1ae247d3f1c21e495685f903a
+    timestamp: 0x54c98c81
+    transactionsTrie: 0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421
+    uncleHash: 0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347
+
+
+  pre:
+
+    0x1111111111111111111111111111111111111111:
+      balance: 0
+      nonce: 0
+      storage: 
+        0: 1
+      # storage[0] <- 0xFF, and then the test case in
+      # https://eips.ethereum.org/EIPS/eip-2315#failure-1-invalid-jump
+      code: :raw 0x60ff6000556801000000000000000c5e005c60115e5d5c5d
+
+    0x2222222222222222222222222222222222222222:
+      balance: 0
+      nonce: 0
+      storage: 
+        0: 1
+      # storage[0] <- 0xFF, and then the test case in
+      # https://eips.ethereum.org/EIPS/eip-2315#failure-2-shallow-return-stack
+      code: :raw 0x60ff6000555d5858
+
+    0x3333333333333333333333333333333333333333:
+      balance: 0
+      nonce: 0
+      storage: 
+        0: 1
+      # storage[0] <- 0xFF, and then the test case in
+      # https://eips.ethereum.org/EIPS/eip-2315#error-on-walk-into-subroutine
+      code: :raw 0x60ff6000555c5d00
+
+    0x4444444444444444444444444444444444444444:
+      balance: 0
+      nonce: 0
+      storage: 
+        0: 1
+      # storage[0] <- 0xFF, and then the test case in
+      # https://eips.ethereum.org/EIPS/eip-2315#subroutine-at-end-of-code
+
+# =============== ============== ================ ===========
+# Program Counter Operation      Machine Language Comment
+# =============== ============== ================ ===========
+#               0 PUSH1 0xFF     60 FF
+#               2 PUSH1 0        60 00
+#               4 SSTORE         55               storage[0] <- 0xFF
+#               5 PUSH1 post-sub 60 0A
+#               7 JUMP           56
+#               8 BEGINSUB       5C               This is the address sub
+#               9 RETURNSUB      5D
+#              10 JUMPDEST       5B               This is the address post-sub
+#              11 PUSH1 sub      60 08
+#              13 JUMPSUB        5E
+# =============== ============== ================ ===========
+
+      code: :raw 0x60FF600055600A565C5D5B60085E
+
+
+
+    0xa94f5374Fce5edBC8E2a8697C15331677e6EbF0B:
+      balance: 1000000000000000000
+      nonce: 0
+      code: ''
+
+      storage: {}
+
+    0xd02d72E067e77158444ef2020Ff2d325f929B363:
+      balance: 1000000000000000000
+      nonce: 0
+      code: ''
+      storage: {}
+
+      
+
+  blocks:
+
+  # Run the first test
+  - transactions:
+    - data: ''
+      gasLimit: 500000000
+      gasPrice: 1
+      nonce: 0
+      # 0xa94f5374Fce5edBC8E2a8697C15331677e6EbF0B
+      secretKey: 45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8
+      to: 0x1111111111111111111111111111111111111111
+      value: 0
+
+  # Run the second test
+    - data: ''
+      gasLimit: 500000000
+      gasPrice: 1
+      nonce: 0
+      # 0xd02d72E067e77158444ef2020Ff2d325f929B363
+      secretKey: 41f6e321b31e72173f8ff2e292359e1862f24fba42fe6f97efaf641980eff298
+      to: 0x2222222222222222222222222222222222222222
+      value: 0
+
+  # Run the third test
+  - transactions:
+    - data: ''
+      gasLimit: 500000000
+      gasPrice: 1
+      nonce: 1
+      # 0xa94f5374Fce5edBC8E2a8697C15331677e6EbF0B
+      secretKey: 45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8
+      to: 0x3333333333333333333333333333333333333333
+      value: 0
+
+  # Run the fourth test
+    - data: ''
+      gasLimit: 500000000
+      gasPrice: 1
+      nonce: 1
+      # 0xd02d72E067e77158444ef2020Ff2d325f929B363
+      secretKey: 41f6e321b31e72173f8ff2e292359e1862f24fba42fe6f97efaf641980eff298
+      secretKey: 45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8
+      to: 0x4444444444444444444444444444444444444444
+      value: 0
+
+
+  expect:
+  - network:
+    - Berlin
+    result:
+      # We expect this test to revert, so the data in storage won't change
+      0x1111111111111111111111111111111111111111:
+         storage:
+            0: 1
+
+      # We expect this test to revert, so the data in storage won't change
+      0x2222222222222222222222222222222222222222:
+         storage:
+            0: 1
+
+      # We expect this test to revert, so the data in storage won't change
+      0x3333333333333333333333333333333333333333:
+         storage:
+            0: 1
+
+      # We expect this test to be successful, so the data in storage will change
+      0x4444444444444444444444444444444444444444:
+         storage:
+            0: 0xFF
+
