@@ -11,12 +11,15 @@
     previousHash: 5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6
 
   _info:
-    comment: "Testing EIP 2513, https://eips.ethereum.org/EIPS/eip-2315#test-cases"
+    comment: Testing EIP 2513, https://eips.ethereum.org/EIPS/eip-2315#test-cases
 
 
   pre:
 
     # The first valid test in EIP 2513:
+   
+    # Jump to a subroutine, return, and then stop
+
     # 0 PUSH1 0x04 
     # 2 JUMPSUB 
     # 3 STOP 
@@ -81,5 +84,5 @@
       result:
         0x1111111111111111111111111111111111111111:
           storage:
-            0x01: 1
-            0x02: 0  # If other words, no value
+            0x01: 1  # Meaning the contract code ran as expected
+            0x02: 0  # In other words, no value

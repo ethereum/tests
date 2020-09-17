@@ -9,7 +9,7 @@
     previousHash: 5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6
 
   _info:
-    comment: "You can put a comment here"
+    comment: Testing EIP 2513, https://eips.ethereum.org/EIPS/eip-2315#test-cases
 
   pre:
 
@@ -25,6 +25,9 @@
 
 
 # First invalid test case in EIP 2513:
+#
+# Try to jump to a subroutine beyond the end of the code
+#
 #  0 PUSH9 0x01000000000000000c
 # 10 JUMPSUB
 # 11 STOP
@@ -71,4 +74,4 @@
       result:
         0x1111111111111111111111111111111111111111:
           storage:
-            0x01: 0
+            0x01: 0    # Zero means the test contract failed
