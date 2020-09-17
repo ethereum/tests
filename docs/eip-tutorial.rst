@@ -11,11 +11,10 @@ chosen because this EIP is already implemented by several clients,
 so we'll be able to run the tests we write.
 
 
-Environment and Prerequisites
-=============================
-Before you start, make sure you create the retesteth tutorial and create the 
-environment explained there. Also make sure you read and understand the state
-transition test tutorial.
+Environment
+===========
+
+.. include:: retesteth-install.rst
 
 
 Test Cases
@@ -27,6 +26,20 @@ some not. You can see the first test case in
 <https://github.com/ethereum/tests/blob/develop/docs/tutorial_samples/07_eip2315_simple_subFiller.yml>`_.
 The simplest way to run these test cases is to have a separate state transition
 test for each one.
+
+To run this test case, execute these commands:
+
+::
+
+   cd ~
+   cp tests/docs/tutorial_samples/07* tests/src/Gen*/stExample
+   ./dretesteth.sh -t GeneralStateTests/stExample -- \
+        --singletest 07_eip2315_simple_sub --vmtrace --testpath ~/tests \
+        --datadir /tests/config --filltests
+
+
+The Test Source
+---------------
 
 Normally we don't want raw
 machine language code in tests if that can be avoided, so **retesteth** emits a 
@@ -124,6 +137,14 @@ The only difference with invalid test cases is that we store zero (or no
 value) instead of one. You can see one of those test cases in
 `docs/tutorial_samples/08_eip2315_invalid_jumpFiller.yml
 <https://github.com/ethereum/tests/blob/develop/docs/tutorial_samples/08_eip2315_invalid_jumpFiller.yml>`_.
+
+::
+
+   cd ~
+   cp tests/docs/tutorial_samples/08* tests/src/Gen*/stExample
+   ./dretesteth.sh -t GeneralStateTests/stExample -- \
+        --singletest 08_eip2315_invalid_jump --vmtrace --testpath ~/tests \
+        --datadir /tests/config --filltests
 
 
 
