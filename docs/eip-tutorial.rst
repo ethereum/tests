@@ -6,7 +6,7 @@ Testing EIPs
 `Ori Pomerantz <mailto://qbzzt1@gmail.com>`_
 
 In this tutorial you learn how to write tests for a new EIP. We'll use
-`EIP 2513 <https://eips.ethereum.org/EIPS/eip-2315>`_ as an example. It was
+`EIP 2315 <https://eips.ethereum.org/EIPS/eip-2315>`_ as an example. It was
 chosen because this EIP is already implemented by several clients,
 so we'll be able to run the tests we write.
 
@@ -23,8 +23,8 @@ Test Cases
 The EIP includes multiple
 `tests cases <https://eips.ethereum.org/EIPS/eip-2315#test-cases>`_, some valid,
 some not. You can see the first test case in
-`docs/tutorial_samples/07_eip2513_simple_subFiller.yml
-<https://github.com/ethereum/tests/blob/develop/docs/tutorial_samples/07_eip2513_simple_subFiller.yml>`_.
+`docs/tutorial_samples/07_eip2315_simple_subFiller.yml
+<https://github.com/ethereum/tests/blob/develop/docs/tutorial_samples/07_eip2315_simple_subFiller.yml>`_.
 The simplest way to run these test cases is to have a separate state transition
 test for each one.
 
@@ -39,7 +39,7 @@ code is justified. The **:raw** label disables the warning.
 
   pre:
 
-    # The first valid test in EIP 2513:
+    # The first valid test in EIP 2315:
     # 0 PUSH1 0x04 
     # 2 JUMPSUB 
     # 3 STOP 
@@ -122,8 +122,8 @@ Invalid Test Cases
 ------------------
 The only difference with invalid test cases is that we store zero (or no 
 value) instead of one. You can see one of those test cases in
-`docs/tutorial_samples/08_eip2513_invalid_jumpFiller.yml
-<https://github.com/ethereum/tests/blob/develop/docs/tutorial_samples/08_eip2513_invalid_jumpFiller.yml>`_.
+`docs/tutorial_samples/08_eip2315_invalid_jumpFiller.yml
+<https://github.com/ethereum/tests/blob/develop/docs/tutorial_samples/08_eip2315_invalid_jumpFiller.yml>`_.
 
 
 
