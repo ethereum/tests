@@ -40,7 +40,6 @@ To run this test case, execute these commands:
 
 The Test Source
 ---------------
-
 Normally we don't want raw
 machine language code in tests if that can be avoided, so **retesteth** emits a 
 warning. However, in this case we are taking the code directly from the EIP and 
@@ -147,10 +146,64 @@ value) instead of one. You can see one of those test cases in
         --datadir /tests/config --filltests
 
 
+How Does It Work?
+=================
+The explanation here is for this command:
+
+::
+
+   ./dretesteth.sh -t GeneralStateTests/stExample -- \
+        --singletest 08_eip2315_invalid_jump --vmtrace --testpath ~/tests \
+        --datadir /tests/config --filltests
+
+However, any similar command would work the same way.
+
+
+#. The **dretesteth.sh** script runs **retesteth** inside a docker container. 
+
+#. This **retesteth** sees the **-\\-filltests** command line flag, so it knows the test
+   is a source file that needs to be filled with additional information. 
+
+   Based on the command line, the complete file name is 
+   **tests/src/GeneralStateTestsFiller/stExample/08_eip2315_invalid_jumpFiller.<format>**:
+
+   - Source files are under **tests/src**. 
+
+   - The **-t GeneralStateTests/stExample** parameter means that the directory inside
+     it is **GeneralStateTestsFiller/stExample**. 
+   
+   - The **-\\-singletest 08_eip2315_invalid_jump** parameter means that the 
+     file inside that directory is either **08_eip2315_invalid_jumpFiller.json** or
+     **08_eip2315_invalid_jumpFiller.yml**, depending on the format.
+
+#. The **retesteth** in the docker reads this file. `You can see the format of this
+   file here
+   <https://ethereum-tests.readthedocs.io/en/latest/test_filler/state_filler.html>`_.
+
+#. The **retesteth** in the docker container runs a client (**geth**, which is also
+   in the docker) and receives from it additional information.
+
+#. The filled test with the complete information is written to
+   **tests/GeneralStateTests/stExample/08_eip2315_invalid_jump.json**. `Click here 
+   to read about the format of filled tests files
+   <https://ethereum-tests.readthedocs.io/en/latest/test_types/gstate_tests.html>`_.
+   
+#. In the future you can run this test without **-\\-filltests** and it would
+   use **tests/GeneralStateTests/stExample/08_eip2315_invalid_jump.json**. 
+
+   :: 
+   
+       ./dretesteth.sh -t GeneralStateTests/stExample -- \
+           --singletest 08_eip2315_invalid_jump --vmtrace --testpath ~/tests \
+           --datadir /tests/config
+
+
+
+
 
 
 Conclusion
 ==========
-At this point you hopefully know enough to test whether a client implements an EIP
+At this point you should know enough to test whether a client implements an EIP
 correctly or not, at least for EIPs that modify or add opcodes.
 
