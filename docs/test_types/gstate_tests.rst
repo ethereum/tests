@@ -1,7 +1,11 @@
 .. _gstate_tests:
 
-General State Test
-------------------
+
+==================================
+Generated State Transition Tests
+==================================
+
+
 
 Location `/GeneralStateTests <https://github.com/ethereum/tests/tree/develop/GeneralStateTests>`_
 

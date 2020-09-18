@@ -3,6 +3,13 @@
 Transaction Test
 ----------------
 
+.. warning::
+   There is a filler directory for these tests `/src/TransactionTestsFiller 
+   <https://github.com/ethereum/tests/tree/develop/src/TransactionTestsFiller>`_, but it 
+   has not been maintained and is no longer supported. If you need to create a 
+   transaction test, you need to create a `filled version 
+   <https://github.com/ethereum/tests/tree/develop/TransactionTests>`_.
+
 Location `/TransactionTests <https://github.com/ethereum/tests/tree/develop/TransactionTests>`_
 
 Describes a complete transaction and its `RLP <https://github.com/ethereum/wiki/wiki/RLP>`_ representation using the .json file.

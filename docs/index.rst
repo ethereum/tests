@@ -19,14 +19,20 @@ Ethereum Tests
    retesteth-tutorial.rst
    state-transition-tutorial.rst
    blockchain-tutorial.rst
+   eip-tutorial.rst
    internals-tutorial.rst
 
 
 .. toctree::
    :maxdepth: 3
    :caption: Reference:
+  
+   blockchain-ref.rst
+   state-transition-ref.rst
+   vm-ref.rst
 
-   testsuite.rst
+   sample-values.rst
+
    contribute.rst
 
 
