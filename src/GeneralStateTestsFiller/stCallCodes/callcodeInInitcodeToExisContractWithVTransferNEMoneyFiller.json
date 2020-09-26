@@ -1,5 +1,8 @@
 {
     "callcodeInInitcodeToExisContractWithVTransferNEMoney" : {
+        "_info" : {
+            "comment" : "callcode inside create contract init to existing contract. callcode with value transfer but not enough balance"
+        },
         "env" : {
             "currentCoinbase" : "2adc25665018aa1fe0e6bc666dac8fc2697ff9ba",
             "currentDifficulty" : "0x020000",
@@ -18,9 +21,9 @@
                 "network" : [ ">=Istanbul"],
                 "result" : {
                     "13136008b64ff592819b2fa6d43f2835c452020e" : {
-                        "balance" : "0x01",
+                        "balance" : "0x00",
                         "storage" : {
-                            "0x00" : "0x00",
+                            "0x01" : "0x00",
                             "0x02" : "0x00"
                         }
                     }
@@ -30,12 +33,12 @@
         "pre" : {
             "1000000000000000000000000000000000000000" : {
                 "balance" : "10000",
-                "code" : "{ (MSTORE 0 0x6040600060406000600573945304eb96065b2a98b57a48a06ae28d285a71b562) (MSTORE 32 0x0186a0f260005500000000000000000000000000000000000000000000000000) (CREATE 1 0 64) }",
+                "code" : "{(seq (CREATE 0 0 (lll (seq  [[1]] (CALLCODE 500000 0x1000000000000000000000000000000000000001 1 0 0 0 0)) 0)   )           )}",
                 "nonce" : "0",
                 "storage" : {
                 }
             },
-            "945304eb96065b2a98b57a48a06ae28d285a71b5" : {
+            "1000000000000000000000000000000000000001" : {
                 "balance" : "0",
                 "code" : "{ (SSTORE 2 1) }",
                 "nonce" : "0",
@@ -55,7 +58,7 @@
                 ""
             ],
             "gasLimit" : [
-                "453081"
+                "1000000"
             ],
             "gasPrice" : "1",
             "nonce" : "0",
