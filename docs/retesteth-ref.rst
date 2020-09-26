@@ -67,7 +67,8 @@ Option                        Meaning
                               GeneralStateTests
 -v <index>                    Set the transaction value array index when running 
                               GeneralStateTests
--\\-vmtrace                   Trace transaction execution
+-\\-vmtraceraw                Trace transaction execution
+-\\-vmtrace                   Trace transaction execution, simplified version
 -\\-limitblocks               Limit the block exectuion in blockchain tests for 
                               debug
 -\\-limitrpc                  Limit the rpc exectuion in tests for debug
