@@ -25,12 +25,19 @@ Ethereum Tests
 
 .. toctree::
    :maxdepth: 3
-   :caption: Reference:
+   :caption: Retesteth Reference:
+
+   retesteth-ref.rst
+   config-dir.rst
+
+
+.. toctree::
+   :maxdepth: 3
+   :caption: Test Reference:
   
    blockchain-ref.rst
    state-transition-ref.rst
    vm-ref.rst
-
    sample-values.rst
 
    contribute.rst
