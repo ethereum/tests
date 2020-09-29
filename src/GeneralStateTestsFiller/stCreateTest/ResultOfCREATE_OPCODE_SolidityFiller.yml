@@ -1,0 +1,168 @@
+# Test the returned result of the CREATE opcode
+#
+# CREATE a contract (Created)
+# CALL, DELEGATECALL, and STATICCALL the contract, see they work correctly
+# CREATE another copy of the contract, verify the address is different
+
+ResultOfCREATE_OPCODE_Solidity:
+
+  env:
+    currentCoinbase: 2adc25665018aa1fe0e6bc666dac8fc2697ff9ba
+    currentDifficulty: 0x20000
+    currentGasLimit: 100000000
+    currentNumber: 1
+    currentTimestamp: 1000
+    previousHash: 5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6
+
+  _info:
+    comment: "Author: Ori Pomerantz qbzzt1@gmail.com"
+
+
+  solidity: |
+    // SPDX-License-Identifier: GPL-3.0
+    pragma solidity >=0.7.0 <0.8.0;
+
+    contract Created {
+       uint public value;
+
+       constructor(uint _value) {
+           value = _value;
+       }    // constructor
+
+       function getValue() public view returns (uint) {
+           return value;
+       }    // function getValue
+
+
+
+       function delegate() public {
+           assembly {
+              sstore(0x20, 0xbad)
+           }
+       }    // function delegate
+
+
+    }       // contract Created
+
+
+    contract Creator {
+       uint256 storage0 = 0xFF;   // Variable placed in storage[0]
+
+       // Normal create without salt, should return a different address each time
+       function createChildren() public {
+          Created res1;
+          Created res2;
+          address addr;
+          bool retBool;
+          bytes memory retVal;
+          uint result;
+
+          res1 = new Created(0xFF00FF00FF00FF00);
+
+          addr = address(res1);
+   
+          assembly { 
+             sstore(1, returndatasize())
+             sstore(2, extcodesize(addr))
+          }
+
+          // CALL the new contract
+          (retBool, retVal) = addr.call(abi.encodeWithSignature("getValue()"));
+          result = retBool ? abi.decode(retVal, (uint256)) : 0x1234;
+          assembly {
+             sstore(0x10, result)
+             sstore(0x11, returndatasize())
+          }
+
+
+          // DELEGATECALL the new contract
+          (retBool, retVal) = addr.delegatecall(abi.encodeWithSignature("delegate()"));
+
+
+          // STATICCALL the new contract
+          (retBool, retVal) = addr.staticcall(abi.encodeWithSignature("getValue()"));
+          result = retBool ? abi.decode(retVal, (uint256)) : 0x1234;
+          assembly {
+             sstore(0x30, result)
+             sstore(0x31, returndatasize())
+          }
+
+          res2 = new Created(0xFF00FF00FF00FF00);
+
+          if (address(res1) == address(res2)) {storage0 = 0;} else {storage0 = 1;}
+       }     // function createChild() public
+
+    }        // contract Creator
+
+
+
+
+
+  pre:
+
+    cccccccccccccccccccccccccccccccccccccccc:
+      balance: '0x0ba1a9ce0ba1a9ce'
+      code: ':solidity Creator'
+      nonce: 0
+      storage: {}
+
+    a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: '0x0ba1a9ce0ba1a9ce'
+      code: '0x'
+      nonce: '0'
+      storage: {}
+      
+  transaction:
+    data:
+    - :abi createChildren()
+    gasLimit:
+    - 80000000
+    - 302000  # Run out of gas in the first CREATE
+    gasPrice: '1'
+    nonce: '0'
+    to:     cccccccccccccccccccccccccccccccccccccccc
+    value:
+    - 0
+    secretKey: 45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8
+    
+    
+  expect:
+    - indexes:
+        data: !!int 0
+        gas:  !!int 0
+        value: !!int 0
+      network:
+        - '>=Istanbul'
+      result:
+        cccccccccccccccccccccccccccccccccccccccc:
+          storage:
+            0x00: 0x01     # Two different addresses for two different 
+                           # deployments of the contract
+            0x01: 0x00     # No return data for contract creation
+            0x02: 0xce     # Code size of the Created contract
+
+            # Normal CREATE
+
+            # Result after CALL
+            0x10: 0xFF00FF00FF00FF00   # Value from Created contract
+            0x11: 0x20     # Return data for Created.getValue() is 256 bits
+
+            # DELEGATECALL
+            0x20: 0xbad   
+
+            # Result after STATICCALL
+            0x30: 0xFF00FF00FF00FF00   # Value from Created contract
+            0x31: 0x20     # Return data for Created.getValue() is 256 bits
+
+
+
+    - indexes:
+        data: !!int 0
+        gas:  !!int 1    # Out of gas
+        value: !!int 0
+      network:
+        - '>=Istanbul'
+      result:
+        cccccccccccccccccccccccccccccccccccccccc:
+          storage:
+            0: 0   # Nothing, because the transaction reverted as OOG
