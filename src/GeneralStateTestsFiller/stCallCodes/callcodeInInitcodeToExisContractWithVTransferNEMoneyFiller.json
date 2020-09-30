@@ -1,7 +1,7 @@
 {
     "callcodeInInitcodeToExisContractWithVTransferNEMoney" : {
         "_info" : {
-            "comment" : "callcode inside create contract init to existing contract. callcode with value transfer but not enough balance"
+            "comment" : "callcode inside create/create2 contract init to existing contract. callcode with value transfer but not enough balance"
         },
         "env" : {
             "currentCoinbase" : "2adc25665018aa1fe0e6bc666dac8fc2697ff9ba",
@@ -14,7 +14,7 @@
         "expect" : [
             {
                 "indexes" : {
-                    "data" : -1,
+                    "data" : 0,
                     "gas" : -1,
                     "value" : -1
                 },
@@ -22,6 +22,25 @@
                 "result" : {
                     "13136008b64ff592819b2fa6d43f2835c452020e" : {
                         "balance" : "0x00",
+                        "nonce" : "1",
+                        "storage" : {
+                            "0x01" : "0x00",
+                            "0x02" : "0x00"
+                        }
+                    }
+                }
+            },
+            {
+                "indexes" : {
+                    "data" : 1,
+                    "gas" : -1,
+                    "value" : -1
+                },
+                "network" : [ ">=Istanbul"],
+                "result" : {
+                    "0xb0de090b1e01bd09ac6b1d9224229302ed48fd47" : {
+                        "balance" : "0x00",
+                        "nonce" : "1",
                         "storage" : {
                             "0x01" : "0x00",
                             "0x02" : "0x00"
@@ -31,9 +50,23 @@
             }
         ],
         "pre" : {
+            "1100000000000000000000000000000000000000" : {
+                "balance" : "0",
+                "code" : "{ (CALL 300000 (CALLDATALOAD 0) 0 0 0 0 0) }",
+                "nonce" : "0",
+                "storage" : {
+                }
+            },
             "1000000000000000000000000000000000000000" : {
                 "balance" : "10000",
                 "code" : "{(seq (CREATE 0 0 (lll (seq  [[1]] (CALLCODE 500000 0x1000000000000000000000000000000000000001 1 0 0 0 0)) 0)   )           )}",
+                "nonce" : "0",
+                "storage" : {
+                }
+            },
+            "2000000000000000000000000000000000000000" : {
+                "balance" : "10000",
+                "code" : "{(seq (CREATE2 0 0 (lll (seq  [[1]] (CALLCODE 500000 0x1000000000000000000000000000000000000001 1 0 0 0 0)) 0)   0)           )}",
                 "nonce" : "0",
                 "storage" : {
                 }
@@ -55,7 +88,8 @@
         },
         "transaction" : {
             "data" : [
-                ""
+                ":raw 0x0000000000000000000000001000000000000000000000000000000000000000",
+                ":raw 0x0000000000000000000000002000000000000000000000000000000000000000"
             ],
             "gasLimit" : [
                 "1000000"
@@ -63,7 +97,7 @@
             "gasPrice" : "1",
             "nonce" : "0",
             "secretKey" : "45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8",
-            "to" : "1000000000000000000000000000000000000000",
+            "to" : "1100000000000000000000000000000000000000",
             "value" : [
                 ""
             ]
