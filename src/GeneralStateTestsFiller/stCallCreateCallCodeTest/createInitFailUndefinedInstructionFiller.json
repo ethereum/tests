@@ -1,5 +1,8 @@
 {
     "createInitFailUndefinedInstruction" : {
+        "_info" : {
+            "comment" : "create fails because init code has undefined opcode, trying to suicide to it" 
+        },
         "env" : {
             "currentCoinbase" : "2adc25665018aa1fe0e6bc666dac8fc2697ff9ba",
             "currentDifficulty" : "0x20000",
@@ -13,8 +16,10 @@
                 "indexes" : { "data" : -1, "gas" : -1, "value" : -1 },
                 "network" : [ ">=Istanbul" ],
                 "result" : {
-        			"0000000000000000000000000000000000000000" : {
-                	    "balance" : "0x0de0b6b3a76586a0"
+        			"095e7baea6a6c7c4c2dfeb977efac326af552d87" : {
+                	    "storage" : {
+                            "0x02" : "1"
+                        }
             		}
             	}
     	    }
@@ -22,7 +27,21 @@
         "pre" : {
             "095e7baea6a6c7c4c2dfeb977efac326af552d87" : {
                 "balance" : "1000000000000000000",
-                "code" : "{(MSTORE8 0 0xf4 ) (SELFDESTRUCT (CREATE 1 0 1)) }",
+                "code" : "{ [[0]] (CALL 400000 0x1000000000000000000000000000000000000000 0 0 0 0 0) [[1]] (CALL 400000 0x2000000000000000000000000000000000000000 0 0 0 0 0) [[2]] 1 }",
+                "nonce" : "0",
+                "storage" : {
+                }
+            },
+            "1000000000000000000000000000000000000000" : {
+                "balance" : "1000000000000000000",
+                "code" : "{(MSTORE8 0 0xf9 ) (SELFDESTRUCT (CREATE 1 0 1)) }",
+                "nonce" : "0",
+                "storage" : {
+                }
+            },
+            "2000000000000000000000000000000000000000" : {
+                "balance" : "1000000000000000000",
+                "code" : "{(MSTORE8 0 0xf9 ) (SELFDESTRUCT (CREATE2 1 0 1 0)) }",
                 "nonce" : "0",
                 "storage" : {
                 }

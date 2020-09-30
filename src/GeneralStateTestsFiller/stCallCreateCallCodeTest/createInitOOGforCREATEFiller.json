@@ -1,5 +1,8 @@
 {
     "createInitOOGforCREATE" : {
+        "_info" : {
+            "comment" : "Suicide to a dynamic created contract, oog on create" 
+        },
         "env" : {
             "currentCoinbase" : "2adc25665018aa1fe0e6bc666dac8fc2697ff9ba",
             "currentDifficulty" : "0x20000",
@@ -10,12 +13,24 @@
         },
     	"expect" : [
             {
-                "indexes" : { "data" : -1, "gas" : -1, "value" : -1 },
+                "indexes" : { "data" : -1, "gas" : 0, "value" : -1 },
                 "network" : [ ">=Istanbul" ],
                 "result" : {
         			"095e7baea6a6c7c4c2dfeb977efac326af552d87" : {
                 	    "nonce" : "0"
             		}
+            	}
+    	    },
+            {
+                "indexes" : { "data" : -1, "gas" : 1, "value" : -1 },
+                "network" : [ ">=Istanbul" ],
+                "result" : {
+        			"095e7baea6a6c7c4c2dfeb977efac326af552d87" : {
+                	    "shouldnotexist" : "1"
+            		},
+                    "0xd2571607e241ecf590ed94b12d87c94babe36db6" : {
+                        "nonce" : "1"
+                    }
             	}
     	    }
         ],
@@ -40,7 +55,7 @@
                 ""
             ],
             "gasLimit" : [
-                "53020"
+                "53020", "1000000"
             ],
             "gasPrice" : "1",
             "nonce" : "0",
