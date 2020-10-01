@@ -16,12 +16,25 @@ Command Line Options
 
 Set The Suite
 -----------------------
-========================================= ===================================
-Option                                    Meaning
-========================================= ===================================
--t <TestSuite>                            Run all the tests in that suite
--t <TestSuite>/<TestCase>                 Run a specific test case
-========================================= ===================================
+============================================= ===================================
+**Option**                                    **Meaning**
+============================================= ===================================
+-t <TestSuite>                                Run all the tests in that suite
+
+-t <TestSuite>/<Test Case Folder>             Run a specific test case folder
+                                              (for **GeneralStateTests**)
+
+-t <TestSuite>/<Test Type>/<Test Case Folder> Run a specific test case folder
+                                              (for **BlockchainTests**)
+============================================= ===================================
+
+.. note:: 
+
+   In **BlockchainTests** there are three possible values for the test type:
+                                              
+   - **ValidBlocks**  
+   - **InvalidBlocks**
+   - **TransitionTests**
 
 
 Retesteth Options
@@ -35,11 +48,18 @@ Retesteth Options
                                   datadir path (default: ~/.retesteth)                 
  -\\-datadir                      Path to configs (default: ~/.retesteth)            
  -\\-nodes                        List of client tcp ports ("addr:ip, addr:ip")      
-                                  Overrides the config file "socketAddress" section   
  -\\-help -h                      Display list of command arguments                  
  -\\-version -v                   Display build information                          
  -\\-list                         Display available test suites                      
 ================================= ======================================================
+
+
+.. note::
+
+   Setting **-\\-nodes** overrides the **socketAddress** section of the **config** file,
+   `documented here 
+   <https://ethereum-tests.readthedocs.io/en/latest/config-dir.html#socketaddress>`_.
+
 
 Setting the Test Suite and Test
 ----------------------------------
@@ -48,11 +68,15 @@ Option                                    Meaning
 ========================================= ===================================================
 -\\-testpath <PathToTheTestRepo>          Set path to the test repo
 -\\-testfile <TestFile>                   Run tests from a file. Requires -t <TestSuite>
--\\-singletest <TestName>                 Run on a single test. `Testname` is filename 
-                                          without Filler.json
--\\-singletest <TestName>/<Subtest>       `Subtest` is a test name inside the file
+-\\-singletest <TestName>                 Run on a single test. `Testname` is the filename 
+                                          without Filler.<type> (either **json** or **yml**)
+-\\-singletest <TestName>/<Subtest>       `Subtest` is a test name inside the file.
 ========================================= ===================================================
 
+.. note::
+
+   **<Subtest>** is only relevant in **BlockchainTests**. Other test suites
+   do not support files with multiple test names.
 
 
 Debugging
@@ -69,8 +93,8 @@ Option                        Meaning
                               GeneralStateTests
 -\\-vmtraceraw                Trace transaction execution
 -\\-vmtrace                   Trace transaction execution, simplified version
--\\-limitblocks               Limit the block exectuion in blockchain tests for 
-                              debug
+-\\-limitblocks <num>         Limit the block exectuion in blockchain tests for 
+                              debugging to the first <num> blocks
 -\\-limitrpc                  Limit the rpc exectuion in tests for debug
 -\\-verbosity <level>         Set logs verbosity. 0 - silent, 1 - only errors, 
                               2 - informative, >2 - detailed
@@ -234,7 +258,7 @@ will be slightly different.
    ::
  
       ./dretesteth.sh -t GeneralStateTests/stExample -- \
-        --testpath ~/tests --singletest add11.json --filltests
+        --testpath ~/tests --singletest add11 --filltests
 
    Combine this option with **-\\-testfile** to fill and run your
    own tests: 
@@ -277,7 +301,15 @@ will be slightly different.
    ::
 
       ./dretesteth.sh -t GeneralStateTests/stExample -- \
+           --testpath ~/tests --vmtrace
+
+   Proudce a more detailed, but less readable, trace:
+
+   ::
+
+      ./dretesteth.sh -t GeneralStateTests/stExample -- \
            --testpath ~/tests --vmtraceraw
+
 
 #. Run a test and dump the state (accounts balances, storage, etc.) at the end of it:
 
