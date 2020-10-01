@@ -8,6 +8,12 @@
 //
 // testOpcodesGen.js > tests/src/Gene*/stBadOpcode/testOpcodesFiller.yml
 //
+// WARNING::: There is some weird inconsistency between the way retesteth
+//            calculates the source hash and the way test.py does it.
+//            We should figure it out when we have time, but for now
+//            the workaround is to manually replace the sourceHash
+//            in tests/Gene*/stBadOpcode/testOpcode.json
+//
 // When a new fork is added, add it to the forks array. When a fork is no
 // longer relevant, remove it. Make sure that array is always sorted by time.
 //
@@ -24,7 +30,7 @@
 
 
 const opcodeNum =  0x100
-const fromOpcode = 0x00
+const fromOpcode = 0x0
 
 // Maximum gas we're allowed to use
 const gasLimit = '0x7fffffffffffffff'
@@ -97,21 +103,20 @@ testOpcodes:
   pre:
 
     # The "user" account
-    ${userAddr.slice(2)}:
+    '${userAddr}':
       balance: ${gasLimit}
       code: 0x
       nonce: 0
       storage: {}
 
-    0000000000000000000000000000000000000000:
+
+    '0x0000000000000000000000000000000000000000':
       balance: ${addr0Wei}
       nonce: 0
       storage: {}
       code: 0x
+
 `
-
-
-
 
 
 
@@ -630,7 +635,7 @@ const getOpcode = op => {
 // Return the contract that tests the opcode
 const getOpcodeContract = op => `
 
-    ${opcode2Addr(op)}:
+    '${opcode2Addr(op)}':
       ${boilerPlate_Contract}
       code: :raw ${getOpcode(op).test}
   `
@@ -639,7 +644,7 @@ const getOpcodeContract = op => `
 const getTestContract = () => {
   var retVal = `
 
-    ${bigTestContractAddr}:
+    '${bigTestContractAddr}':
       ${boilerPlate_Contract}
       code: |
         {`
@@ -708,12 +713,12 @@ const getExpect = () => {
     network:
     - ${forks[i]}
     result:
-      ${bigTestContractAddr}:
+      '${bigTestContractAddr}':
         storage:`
 
     for (var j=fromOpcode; j<fromOpcode+opcodeNum; j++)
       retVal += `
-          ${j}: ${opcodeRes(i,j)}`
+          '0x${j.toString(16)}': ${opcodeRes(i,j)}`
   }     // for every fork
 
   return retVal
