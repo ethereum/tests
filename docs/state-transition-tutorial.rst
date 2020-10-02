@@ -243,6 +243,17 @@ You can see a solidity test at `tests/docs/tutorial_samples/03_solidityFiller.ym
 <https://github.com/ethereum/tests/blob/develop/docs/tutorial_samples/03_solidityFiller.yml>`_.
 Here are the sections that are new.
 
+.. note::
+
+   The Solidity compiler adds a lot of extra code that handles ABI encoding,
+   ABI decoding, contract constructors, etc. This makes tracing and debugging a lot 
+   harder, which makes Solidity a bad choice for most Ethereum client tests.
+
+   This feature is provided primarily to execute `assembly language inside
+   Solidity code <https://solidity.readthedocs.io/en/v0.7.0/assembly.html>`_.
+   You could write tests directly in Solidity, but it is usually a bad idea.
+
+
 You can have a separate **solidity:** section for your code. This is useful 
 because Solidity code tends to be longer than LLL code.
 
