@@ -8,10 +8,10 @@ ResultOfCREATE_OPCODE_Solidity:
 
   env:
     currentCoinbase: 2adc25665018aa1fe0e6bc666dac8fc2697ff9ba
-    currentDifficulty: 0x20000
-    currentGasLimit: 100000000
+    currentDifficulty: '0x20000'
+    currentGasLimit: '100000000'
     currentNumber: 1
-    currentTimestamp: 1000
+    currentTimestamp: '1000'
     previousHash: 5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6
 
   _info:
@@ -103,7 +103,7 @@ ResultOfCREATE_OPCODE_Solidity:
     cccccccccccccccccccccccccccccccccccccccc:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: ':solidity Creator'
-      nonce: 0
+      nonce: '0'
       storage: {}
 
     a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
@@ -116,13 +116,13 @@ ResultOfCREATE_OPCODE_Solidity:
     data:
     - :abi createChildren()
     gasLimit:
-    - 80000000
-    - 302000  # Run out of gas in the first CREATE
+    - '80000000'
+    - '302000'  # Run out of gas in the first CREATE
     gasPrice: '1'
     nonce: '0'
     to:     cccccccccccccccccccccccccccccccccccccccc
     value:
-    - 0
+    - '0'
     secretKey: 45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8
     
     
@@ -136,23 +136,23 @@ ResultOfCREATE_OPCODE_Solidity:
       result:
         cccccccccccccccccccccccccccccccccccccccc:
           storage:
-            0x00: 0x01     # Two different addresses for two different 
+            '0x00': '0x01'     # Two different addresses for two different 
                            # deployments of the contract
-            0x01: 0x00     # No return data for contract creation
-            0x02: 0xce     # Code size of the Created contract
+            '0x01': '0x00'     # No return data for contract creation
+            '0x02': '0xce'     # Code size of the Created contract
 
             # Normal CREATE
 
             # Result after CALL
-            0x10: 0xFF00FF00FF00FF00   # Value from Created contract
-            0x11: 0x20     # Return data for Created.getValue() is 256 bits
+            '0x10': '0xFF00FF00FF00FF00'   # Value from Created contract
+            '0x11': '0x20'     # Return data for Created.getValue() is 256 bits
 
             # DELEGATECALL
-            0x20: 0xbad   
+            '0x20': '0xbad'   
 
             # Result after STATICCALL
-            0x30: 0xFF00FF00FF00FF00   # Value from Created contract
-            0x31: 0x20     # Return data for Created.getValue() is 256 bits
+            '0x30': '0xFF00FF00FF00FF00'   # Value from Created contract
+            '0x31': '0x20'     # Return data for Created.getValue() is 256 bits
 
 
 
@@ -165,4 +165,4 @@ ResultOfCREATE_OPCODE_Solidity:
       result:
         cccccccccccccccccccccccccccccccccccccccc:
           storage:
-            0: 0   # Nothing, because the transaction reverted as OOG
+            '0': '0'   # Nothing, because the transaction reverted as OOG
