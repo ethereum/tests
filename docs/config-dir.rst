@@ -106,6 +106,13 @@ These directories can contain this information:
 
 - **stop.sh** stop the client.
 
+- In the case of **transition-tool** clients, this directory also contains the 
+  script that runs the client for each test. This script's name is specified in the 
+  **socketAddress** field. 
+
+  In the case of **t8ntool**, at writing the only client that uses the **transition-tool**
+  socket type, this script is **start.sh**. 
+
 - **genesis/<forkname>.json**, this is the genesis config for the client, primarily
   the way to specify for the client what fork it is running. The forkname value is
   matched with the value for the **network:** field in the test file.
