@@ -13,7 +13,12 @@ for debugging.
 
 Compiled Tests
 =================
-The compiled version of our **01_add22.yml** is at 
+By default the compiled version of 
+**tests/src/<test type>Filler/<directory>/<test>Filler** goes in
+**tests/<test type>/<directory><test>.json**. For example, after we copy
+**tests/doc/tutorial_samples/01_add22.yml** to 
+**tests/src/GeneralStateTests/stExample/01_add22.yml** and compile it,
+it is available at 
 **tests/GeneralStateTests/stExample/01_add22.json**. Here it is with 
 explanations:
 
@@ -108,7 +113,49 @@ get a trace of **01_add22**:
 ::
 
     ./dretesteth.sh -t GeneralStateTests/stExample -- --singletest 01_add22 \
-       --testpath ~/tests --datadir /tests/config --filltests --vmtrace | more
+       --testpath ~/tests --datadir /tests/config --filltests --vmtrace
+
+
+
+Normal Virtual Machine Trace
+--------------------------------
+This is the trace produced by the command above:
+
+::
+
+
+   VMTrace: (stExample/01_add22, fork: Berlin, TrInfo: d: 0, g: 0, v: 0)
+   Transaction number: 0, hash: 0x4e6549e2276d1bc256b2a56ead2d9705a51a8bf54e3775fbd2e98c91fb0e4494
+
+   N    OPNAME   GASCOST  TOTALGAS REMAINGAS               ERROR
+   0     PUSH1         3         0  79978984                    
+   1     PUSH1         3         3  79978981                    
+   2       ADD         3         6  79978978                    
+   3     PUSH1         3         9  79978975                    
+   4    SSTORE     20000        12  79978972                    
+         SSTORE [0x0] = 0x4
+   5      STOP         0     20012  79958972                    
+
+   {"stateRoot":"0x54d60243629f67e60925f5a9d6daf5f5ee3d774a728aa10c4ef05b8b20b1e192"}
+
+
+
+
+
+Raw Virtual Machine Trace
+--------------------------
+The virtual machine trace above does not include the value of the 
+program counter (PC), the content of the stack, or the full content of the 
+storage and memory for the account. To get this information
+you need the raw trace:
+
+
+::
+
+    ./dretesteth.sh -t GeneralStateTests/stExample -- --singletest 01_add22 \
+       --testpath ~/tests --datadir /tests/config --filltests --vmtraceraw | more
+
+
 
 
 The program creates this trace:
@@ -228,6 +275,9 @@ used, and how long it took to run the program.
 
   {"pc":8,"op":0,"gas":"0x4c413bc","gasCost":"0x0","memory":"0x","memSize":0,"stack":[],"returnStack":[],"returnData":null,"depth":1,"refund":0,"opName":"STOP","error":""}
   {"output":"","gasUsed":"0x4e2c","time":527368}
+
+
+
 
   
   
