@@ -3,7 +3,7 @@
 
 // Generate a test that looks at all the opcodes and identifies if any
 // of them is not implemented correctly
-//
+
 // Directions:
 //
 // testOpcodesGen.js > tests/src/Gene*/stBadOpcode/testOpcodesFiller.yml
