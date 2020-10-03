@@ -32,7 +32,7 @@ const opcodeNum = fromOpcode == 0 ? 0x100 : 1
 
 
 // Maximum gas we're allowed to use
-const gasLimit = '0x7fffffffffffffff'
+const gasLimit = '0x7ffffffffffffffe'
 
 // The forks supported by the test in order. At writing, there is no need
 // to QA forks prior to Istanbul.
