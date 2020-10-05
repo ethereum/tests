@@ -1,5 +1,5 @@
 {
-    "callcall_00_OOGE_valueTransfer" : {
+    "createInitFail_OOGduringInit2" : {
         "env" : {
             "currentCoinbase" : "2adc25665018aa1fe0e6bc666dac8fc2697ff9ba",
             "currentDifficulty" : "0x020000",
@@ -17,36 +17,17 @@
                 },
                 "network" : [ ">=Istanbul"],
                 "result" : {
-		            "1000000000000000000000000000000000000001" : {
-		                "balance" : "10"
-		            },
-		            "1000000000000000000000000000000000000002" : {
-			        "balance" : "10",
-		                "storage" : {
-				        "0x02" : "0x01"
-		                }
-		            }
+                    "0xd2571607e241ecf590ed94b12d87c94babe36db6" : {
+                        "shouldnotexist" : "1"
+                    }
                 }
             }
         ],
         "pre" : {
-            "1000000000000000000000000000000000000000" : {
+            "095e7baea6a6c7c4c2dfeb977efac326af552d87" : {
                 "balance" : "1000000000000000000",
                 "nonce" : "0",
-                "code" : "{  [[ 0 ]] (CALL 150000 0x1000000000000000000000000000000000000001 20 0 64 0 64 ) }",
-                "storage": {}
-            },
-            "1000000000000000000000000000000000000001" : {
-                "balance" : "0",
-                "code" : "{ [[ 1 ]] (CALL 50000 0x1000000000000000000000000000000000000002 10 0 64 0 64 )  }",
-                "nonce" : "0",
-                "storage" : {
-                }
-            },
-	    "1000000000000000000000000000000000000002" : {
-                "balance" : "0",
-                "nonce" : "0",
-                "code" : "{  (SSTORE 2 1) (MSTORE 2 1)}",
+                "code" : "{ (CREATE 1 0  (lll(seq [[1]] 1 (KECCAK256 0x00 0x2fffff) )0))   }",
                 "storage": {}
             },
             "a94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
@@ -61,14 +42,14 @@
                 ""
             ],
             "gasLimit" : [
-                "172000"
+                "1000000"
             ],
             "gasPrice" : "1",
             "nonce" : "0",
             "secretKey" : "45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8",
-            "to" : "1000000000000000000000000000000000000000",
+            "to" : "095e7baea6a6c7c4c2dfeb977efac326af552d87",
             "value" : [
-                "0"
+                "100000"
             ]
         }
     }
