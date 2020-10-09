@@ -9,20 +9,38 @@
             "previousHash" : "5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6"
         },
         "expect" : [
-	    {
+    	    {
                 "indexes" : {
                     "data" : -1,
                     "gas" : -1,
                     "value" : -1
                 },
-                "network" : [">=Istanbul"],
+                "network" : ["Istanbul"],
                 "result" : {
 		            "1000000000000000000000000000000000000116" : {
 		                "shouldnotexist" : "1"
 		            },
 		            "b94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
 		                "storage" : {
-		                    "0x01" : "0x08bf58"
+		                    "0x01" : "0x1669"
+		                }
+		            } 
+                }
+            },
+    	    {
+                "indexes" : {
+                    "data" : -1,
+                    "gas" : -1,
+                    "value" : -1
+                },
+                "network" : [">=Berlin"],
+                "result" : {
+		            "1000000000000000000000000000000000000116" : {
+		                "shouldnotexist" : "1"
+		            },
+		            "b94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+		                "storage" : {
+		                    "0x01" : "0x27fd"
 		                }
 		            } 
                 }
@@ -37,21 +55,21 @@
                 "storage" : {
                 }
             },
-	    "b94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+    	    "b94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
                 "balance" : "0",
-		"nonce" : "0",
-		"// code" : "check gas spent on suicide to unknown contract on EIP150",
-		"code" : "{ (CALL 60000 0x1000000000000000000000000000000000000116 0 0 0 0 0) [[1]] (GAS) }",
-		"storage": {
-		}
+		        "nonce" : "0",
+		        "// code" : "check gas spent on suicide to unknown contract on EIP150",
+		        "code" : "{ [0] (GAS) (CALL 60000 0x1000000000000000000000000000000000000116 0 0 0 0 0) [[1]] (SUB @0 (GAS)) }",
+		        "storage": {
+		        }
             },
-	    "1000000000000000000000000000000000000116" : {
+    	    "1000000000000000000000000000000000000116" : {
                 "balance" : "0",
-		"nonce" : "0",
-		"// code" : "Suicide to not existing account",
-		"code" : "{ (SELFDESTRUCT 0x2000000000000000000000000000000000000115) }",
-		"storage": {
-		}
+		        "nonce" : "0",
+		        "// code" : "Suicide to not existing account",
+		        "code" : "{ (SELFDESTRUCT 0x2000000000000000000000000000000000000115) }",
+		        "storage": {
+		        }
             }
         },
         "transaction" : {
