@@ -1,4 +1,4 @@
-.. _state_transition_tutorial:
+_.. _state_transition_tutorial:
 
 ###########################################
 State Transition Tests
@@ -383,6 +383,7 @@ There are two steps to doing that:
        - ":abi val2Storage(uint256,uint256) 0x10 0x10"
        - ":abi val2Storage(uint256,uint256) 0x11 0x11"
        - ":abi val2Storage(uint256,uint256) 0x11 0x12"
+       - ":abi val2Storage(uint256,uint256) 0x11 0x11"
        gasLimit:
        - '80000000'
        gasPrice: '1'
@@ -420,13 +421,17 @@ There are two steps to doing that:
                0:    0x10
                0x10: 0x10
 
-  This is the second item in the **data:** subsection above, 
-  equivalent to **val2Storage(0x11, 0x11)**.
+  This is for the second and fourth items in the **data:** subsection above. 
+  When you have multiple values
+  that produce the same test results, you can specify **data**, **gas**, or **value**
+  as a list instead of a single index.
 
   ::
 
        - indexes:
-           data: !!int 1
+           data: 
+           - !!int 1
+           - !!int 3
            gas:  !!int 0
            value: !!int 0
          network:
