@@ -1,0 +1,171 @@
+CreateResults:
+
+  env:
+    currentCoinbase: 2adc25665018aa1fe0e6bc666dac8fc2697ff9ba
+    currentDifficulty: '0x20000'
+    currentGasLimit: 0x100000000
+    currentNumber: "1"
+    currentTimestamp: "1000"
+    previousHash: 5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6
+
+  _info:
+    comment: Ori Pomerantz qbzzt1@gmail.com
+
+
+  pre:
+
+    cccccccccccccccccccccccccccccccccccccccc:
+      balance: '0x0ba1a9ce0ba1a9ce'
+      code:   | 
+        {
+
+          ; Variables are 0x20 bytes (= 256 bits) apart, except for
+          ; code buffers that get 0x100 (256 bytes)
+          (def 'creation          0x100)
+          (def 'callType          0x120)
+          (def 'contractCode      0x200)
+          (def 'constructorCode   0x300)
+          (def 'extCode           0x400)
+          (def 'contractLength    0x520)
+          (def 'constructorLength 0x540)
+          (def 'extLength         0x560)
+          (def 'addr1             0x600)
+          (def 'addr2             0x620)
+          (def 'callRet           0x640)
+
+          ; Other constants
+          (def 'NOP 0)   ; No OPeration
+
+          ; Understand the input.
+          [creation]       (shr $ 0 248)
+          [callType]       (and (shr $ 0 240) 0xFF)
+
+          ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+          ; Create the contract and a constructor to pass to CREATE[2]
+          ;
+
+
+          [constructorLength] (lll
+              (return contractCode
+                     ; write the contract to constructor memory 
+                     (lll 
+                         (mstore 0xFF 0xFF)
+                         contractCode
+                     )
+              )
+              constructorCode
+          )
+
+          ; Write the contract to our own memory (as the 0xcc...cc contract)
+          [contractLength] (lll 
+             (mstore 0xFF 0xFF)
+             contractCode
+           )
+
+
+          ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+          ; Actually create the contract
+          ;
+          (if (= @creation 1)
+            [addr1] (create 0 constructorCode @constructorLength)
+            [addr1] (create2 0 constructorCode @constructorLength 0x5a17)
+          )
+
+          ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+          ; RETURNDATASIZE should be zero
+          ;
+
+          [[0x10]] (returndatasize)
+
+          ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+          ; EXTCODE should match what we returned in the constructor
+          ;
+
+          [extLength] (extcodesize @addr1)
+          (extcodecopy @addr1 extCode 0 @extLength)
+
+          [[0x11]] (- @contractLength @extLength)
+          [[0x12]] (- @contractCode   @extCode)
+
+          ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+          ; CALL the created contract
+
+          (if (= @callType 1)
+             [callRet] (call 0xFFFF @addr1 0 0 0 0 0)
+             NOP
+          )
+
+          (if (= @callType 2)
+             [callRet] (callcode 0xFFFF @addr1 0 0 0 0 0)
+             NOP
+          )
+
+          (if (= @callType 3)
+             [callRet] (delegatecall 0xFFFF @addr1 0 0 0 0)
+             NOP
+          )
+
+          (if (= @callType 4)
+             [callRet] (staticcall 0xFFFF @addr1 0 0 0 0)
+             NOP
+          )
+
+          [[0x13]] (- @callRet 1)
+          [[0x14]] (returndatasize)  
+
+        }   ; end of LLL code
+      nonce: '0'
+      storage: {}
+
+
+    a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: '0x0ba1a9ce0ba1a9ce'
+      code: '0x'
+      nonce: '0'
+      storage: {}
+
+
+  transaction:
+    data:
+    # MSB
+    #
+    # Create type:    01 - CREATE     02 - CREATE2
+    # Call   type:    01 - CALL    02 - CALLCODE    03 - DELEGATECALL  04 - STATICCALL
+    #
+    # LSB  
+    - 0x0101
+    - 0x0102
+    - 0x0103
+    - 0x0104
+    - 0x0201
+    - 0x0202
+    - 0x0203
+    - 0x0204
+    gasLimit:
+    - 0x100000000
+    gasPrice: '1'
+    nonce: '0'
+    to: cccccccccccccccccccccccccccccccccccccccc
+    secretKey: "45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8"
+    value:
+    - 0
+
+  expect:
+    - indexes:
+        data: 
+        - !!int -1
+        gas:  !!int -1
+        value: !!int -1
+      network:
+        - '>=Istanbul'
+      result:
+        cccccccccccccccccccccccccccccccccccccccc:
+          storage: {}
+
+            # Zero if all goes well 
+            # 0x10 - RETURNDATASIZE from the constructor
+            # 0x11 - external code size minus contract code size
+            # 0x12 - difference in first 0x20 bytes between 
+            #        external code and contract code
+            # 0x13 - if the return value from the call isn't zero
+            # 0x14 - RETURNDATASIZE from the call
