@@ -27,8 +27,8 @@ sani-vm: $(vm_tests:=.format) $(vm_fillers:=.format) \
          $(vm_tests:=.filled)
 
 # TODO: enable $(gs_fillers:=.valid) $(gs_tests:=.format) $(gs_fillers:=.format)
-sani-gs: $(gs_tests:=.valid)
-#         $(gs_tests:=.filled)
+sani-gs: $(gs_tests:=.valid) \
+         $(gs_tests:=.filled)
 
 # TODO: enable $(tx_tests:=.format) $(tx_fillers:=.format) $(tx_tests:=.valid) $(tx_fillers:=.valid)
 sani-tx: $(tx_tests:=.filled)
