@@ -998,12 +998,17 @@ const getTestContract = (fromOpcode, opcodeNum) => {
 
     '${bigTestContractAddr}':
       ${boilerPlate_Contract}
-      code: { (mstore 0xBAD0) `
+      code: |
+        {
+              (mstore8 30 0xBA)
+              (mstore8 31 0xD0) `
 
   for(var i=fromOpcode; i<fromOpcode+opcodeNum; i++)
-    retVal += `(sstore ${i} (call 10000000 ${opcode2Addr(i)} 0 0 32 0 0)) `
+    retVal += `
+              (sstore ${i} (call 10000000 ${opcode2Addr(i)} 0 0 32 0 0))`
 
-  retVal += `}`
+  retVal += `
+        }`
 
   return retVal
 }
@@ -1106,3 +1111,4 @@ const getTest = (fromOpcode, opcodeNum) => {
 
 for (var i=0; i<256; i++)
 	getTest(i, 1)
+
