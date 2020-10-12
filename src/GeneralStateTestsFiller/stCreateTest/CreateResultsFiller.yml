@@ -23,6 +23,7 @@ CreateResults:
           ; code buffers that get 0x100 (256 bytes)
           (def 'creation          0x100)
           (def 'callType          0x120)
+          (def 'oog               0x140)
           (def 'contractCode      0x200)
           (def 'constructorCode   0x300)
           (def 'extCode           0x400)
@@ -39,22 +40,38 @@ CreateResults:
           ; Understand the input.
           [creation]       (shr $ 0 248)
           [callType]       (and (shr $ 0 240) 0xFF)
+          [oog]            (and (shr $ 0 232) 0xFF)     ; out of gas
 
           ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
           ; Create the contract and a constructor to pass to CREATE[2]
           ;
 
+          [constructorLength] 
+            (if @oog 
+              (lll {   ; constructor if out of gas
+                 (KECCAK256 0x00 0x2fffff)
+                 (return contractCode
+                    ; write the contract to constructor memory 
+                    (lll
+                       (call 0xFFFF 0x60A7 0 0 0 0 0)
+                       contractCode
+                    ) ; inner lll
+                 )  } ; return contractCode (lll ...)
+                  constructorCode
+              )       ; outer lll, if out of gas
 
-          [constructorLength] (lll
-              (return contractCode
-                     ; write the contract to constructor memory 
-                     (lll
-                         (call 0xFFFF 0x60A7 0 0 0 0 0)
-                         contractCode
-                     )
-              )
-              constructorCode
-          )
+              (lll    ; constructor if not out of gas
+                 (return contractCode
+                    ; write the contract to constructor memory 
+                    (lll
+                       (call 0xFFFF 0x60A7 0 0 0 0 0)
+                       contractCode
+                    ) ; inner lll
+                 )    ; return contractCode (lll ...)
+                  constructorCode
+              )       ; outer lll, if not out of gas
+
+          )  ; if @oog
 
           ; Write the contract to our own memory (as the 0xcc...cc contract)
           [contractLength] (lll 
@@ -148,20 +165,29 @@ CreateResults:
     data:
     # MSB
     #
-    # Create type:    01 - CREATE     02 - CREATE2
+    # Create type:    01 - CREATE  02 - CREATE2
     # Call   type:    01 - CALL    02 - CALLCODE    03 - DELEGATECALL  04 - STATICCALL
+    # Out of gas?:    00 - NO      01 - YES
     #
     # LSB  
-    - 0x0101
-    - 0x0102
-    - 0x0103
-    - 0x0104
-    - 0x0201
-    - 0x0202
-    - 0x0203
-    - 0x0204
+    - :raw 0x010100
+    - :raw 0x010200
+    - :raw 0x010300
+    - :raw 0x010400
+    - :raw 0x020100
+    - :raw 0x020200
+    - :raw 0x020300
+    - :raw 0x020400
+    - :raw 0x010101
+    - :raw 0x010201
+    - :raw 0x010301
+    - :raw 0x010401
+    - :raw 0x020101
+    - :raw 0x020201
+    - :raw 0x020301
+    - :raw 0x020401
     gasLimit:
-    - 0x100000000
+    - 0x900000
     gasPrice: '1'
     nonce: '0'
     to: cccccccccccccccccccccccccccccccccccccccc
@@ -171,7 +197,7 @@ CreateResults:
 
   expect:
      
-    # All but static calls (which cannot change storage)
+    # All but static calls (which cannot change storage), with sufficient gas
     - indexes:
         data:
         - !!int 0
@@ -180,8 +206,8 @@ CreateResults:
         - !!int 4
         - !!int 5
         - !!int 6
-        gas:  !!int -1
-        value: !!int -1
+        gas:  !!int 0
+        value: !!int 0
       network:
         - '>=Istanbul'
       result:
@@ -201,16 +227,16 @@ CreateResults:
         # Verify the created contract has been called
         00000000000000000000000000000000000060A7:
           storage:
-            0: 0x60A7
+            0:    0x60A7 
  
-    # Static calls cannot change the goat's value
+    # Static calls cannot change the goat's value, with sufficient gas
 
     - indexes:
         data: 
         - !!int 3
         - !!int 7
-        gas:  !!int -1
-        value: !!int -1
+        gas:  !!int 0
+        value: !!int 0
       network:
         - '>=Istanbul'
       result:
@@ -226,4 +252,37 @@ CreateResults:
             # 0x13 - if the return value from the call isn't zero
             # 0x14 - RETURNDATASIZE from the call
 
+    
+    # If the constructor runs out of gas the address we get doesn't have 
+    # code
 
+    - indexes:
+        data: 
+        - !!int 8
+        - !!int 9
+        - !!int 10
+        - !!int 11
+        - !!int 12
+        - !!int 13
+        - !!int 14
+        - !!int 15
+        gas:  !!int 0
+        value: !!int 0
+      network:
+        - '>=Istanbul'
+      result:
+
+        cccccccccccccccccccccccccccccccccccccccc:
+          storage:
+            # Zero if all goes well 
+            # 0x10 - RETURNDATASIZE from the constructor
+            # 0x13 - if the return value from the call isn't zero
+            # 0x14 - RETURNDATASIZE from the call
+
+
+            # 0x11 - external code size minus contract code size
+            0x11: 0x12
+
+            # 0x12 - difference in first 0x20 bytes between 
+            #        external code and contract code
+            0x12: 0x600060006000600060006160a761fffff1000000000000000000000000000000
