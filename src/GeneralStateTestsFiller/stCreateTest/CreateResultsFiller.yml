@@ -48,8 +48,8 @@ CreateResults:
           [constructorLength] (lll
               (return contractCode
                      ; write the contract to constructor memory 
-                     (lll 
-                         (mstore 0xFF 0xFF)
+                     (lll
+                         (call 0xFFFF 0x60A7 0 0 0 0 0)
                          contractCode
                      )
               )
@@ -58,7 +58,7 @@ CreateResults:
 
           ; Write the contract to our own memory (as the 0xcc...cc contract)
           [contractLength] (lll 
-             (mstore 0xFF 0xFF)
+             (call 0xFFFF 0x60A7 0 0 0 0 0)
              contractCode
            )
 
@@ -115,7 +115,26 @@ CreateResults:
 
         }   ; end of LLL code
       nonce: '0'
+      storage:
+        0x10: 0x60A7   # Return data size from contract creation (should be 0)
+        0x11: 0x60A7   # Difference between size of code we sent and code that
+                       # is in the contract (should be zero)
+        0x12: 0x60A7   # Difference between first 0x20 bytes of code we sent
+                       # and code in the contract (should be zero)
+        0x13: 0x60A7   # Replaced by <result of call> -1 (so zero if call OK)
+        0x14: 0x60A7   # Size of the returned data from the call (0)
+
+
+
+    00000000000000000000000000000000000060A7:
+      balance: '0x0ba1a9ce0ba1a9ce'
+      code:   | 
+        {
+          [[0]] 0x60A7
+        }   ; end of LLL code
+      nonce: '0'
       storage: {}
+
 
 
     a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
@@ -151,14 +170,22 @@ CreateResults:
     - 0
 
   expect:
+     
+    # All but static calls (which cannot change storage)
     - indexes:
-        data: 
-        - !!int -1
+        data:
+        - !!int 0
+        - !!int 1
+        - !!int 2
+        - !!int 4
+        - !!int 5
+        - !!int 6
         gas:  !!int -1
         value: !!int -1
       network:
         - '>=Istanbul'
       result:
+
         cccccccccccccccccccccccccccccccccccccccc:
           storage: {}
 
@@ -169,3 +196,34 @@ CreateResults:
             #        external code and contract code
             # 0x13 - if the return value from the call isn't zero
             # 0x14 - RETURNDATASIZE from the call
+
+
+        # Verify the created contract has been called
+        00000000000000000000000000000000000060A7:
+          storage:
+            0: 0x60A7
+ 
+    # Static calls cannot change the goat's value
+
+    - indexes:
+        data: 
+        - !!int 3
+        - !!int 7
+        gas:  !!int -1
+        value: !!int -1
+      network:
+        - '>=Istanbul'
+      result:
+
+        cccccccccccccccccccccccccccccccccccccccc:
+          storage: {}
+
+            # Zero if all goes well 
+            # 0x10 - RETURNDATASIZE from the constructor
+            # 0x11 - external code size minus contract code size
+            # 0x12 - difference in first 0x20 bytes between 
+            #        external code and contract code
+            # 0x13 - if the return value from the call isn't zero
+            # 0x14 - RETURNDATASIZE from the call
+
+
