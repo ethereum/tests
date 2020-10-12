@@ -1039,7 +1039,7 @@ const getCalledContract = () =>
 const transaction = `
   blocks:
   - transactions:
-    - data: 0xFF
+    - data: :raw 0xFF
       gasLimit: ${gasLimit}
       gasPrice: ${gasPrice}
       nonce: 0
