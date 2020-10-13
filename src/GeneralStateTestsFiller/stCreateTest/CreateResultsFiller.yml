@@ -23,7 +23,7 @@ CreateResults:
           ; code buffers that get 0x100 (256 bytes)
           (def 'creation          0x100)
           (def 'callType          0x120)
-          (def 'oog               0x140)
+          (def 'constructor       0x140)
           (def 'contractCode      0x200)
           (def 'constructorCode   0x300)
           (def 'extCode           0x400)
@@ -40,14 +40,30 @@ CreateResults:
           ; Understand the input.
           [creation]       (shr $ 0 248)
           [callType]       (and (shr $ 0 240) 0xFF)
-          [oog]            (and (shr $ 0 232) 0xFF)     ; out of gas
+          [constructor]    (and (shr $ 0 232) 0xFF)
 
           ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
           ; Create the contract and a constructor to pass to CREATE[2]
           ;
 
-          [constructorLength] 
-            (if @oog 
+
+          (if (= @constructor 0) 
+            [constructorLength] 
+              (lll {   ; successful constructor
+                 (return contractCode
+                    ; write the contract to constructor memory 
+                    (lll
+                       (call 0xFFFF 0x60A7 0 0 0 0 0)
+                       contractCode
+                    ) ; inner lll
+                 )  } ; return contractCode (lll ...)
+                  constructorCode
+              )       ; outer lll, if successful
+              NOP
+            )
+
+          (if (= @constructor 1) 
+            [constructorLength] 
               (lll {   ; constructor if out of gas
                  (KECCAK256 0x00 0x2fffff)
                  (return contractCode
@@ -59,19 +75,26 @@ CreateResults:
                  )  } ; return contractCode (lll ...)
                   constructorCode
               )       ; outer lll, if out of gas
+              NOP
+            )
 
-              (lll    ; constructor if not out of gas
+
+          (if (= @constructor 2) 
+            [constructorLength] 
+              (lll {   ; constructor if revert
+                 (revert 0 0)
                  (return contractCode
                     ; write the contract to constructor memory 
                     (lll
                        (call 0xFFFF 0x60A7 0 0 0 0 0)
                        contractCode
                     ) ; inner lll
-                 )    ; return contractCode (lll ...)
+                 )  } ; return contractCode (lll ...)
                   constructorCode
-              )       ; outer lll, if not out of gas
+              )       ; outer lll, revert
+              NOP
+            )
 
-          )  ; if @oog
 
           ; Write the contract to our own memory (as the 0xcc...cc contract)
           [contractLength] (lll 
@@ -167,7 +190,7 @@ CreateResults:
     #
     # Create type:    01 - CREATE  02 - CREATE2
     # Call   type:    01 - CALL    02 - CALLCODE    03 - DELEGATECALL  04 - STATICCALL
-    # Out of gas?:    00 - NO      01 - YES
+    # Constructor:    00 - SUCCESS 01 - Out of gas  02 - REVERT
     #
     # LSB  
     - :raw 0x010100
@@ -186,6 +209,14 @@ CreateResults:
     - :raw 0x020201
     - :raw 0x020301
     - :raw 0x020401
+    - :raw 0x010103
+    - :raw 0x010203
+    - :raw 0x010303
+    - :raw 0x010403
+    - :raw 0x020103
+    - :raw 0x020203
+    - :raw 0x020303
+    - :raw 0x020403
     gasLimit:
     - 0x900000
     gasPrice: '1'
@@ -266,6 +297,14 @@ CreateResults:
         - !!int 13
         - !!int 14
         - !!int 15
+        - !!int 16
+        - !!int 17
+        - !!int 18
+        - !!int 19
+        - !!int 20
+        - !!int 21
+        - !!int 22
+        - !!int 23
         gas:  !!int 0
         value: !!int 0
       network:
