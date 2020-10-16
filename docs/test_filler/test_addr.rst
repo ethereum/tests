@@ -2,6 +2,11 @@
 
   Wei balance at the start of the test
 
+- **code**:
+
+  The code of the contract. In the **expect:** section this has to
+  be raw virtual machine code.
+
 - **nonce**:
 
   The `nonce counter <https://en.wikipedia.org/wiki/Cryptographic_nonce>`_ for the address.

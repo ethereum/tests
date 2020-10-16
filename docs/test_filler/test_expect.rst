@@ -31,7 +31,8 @@ Format
                                "storage: {
                                    "0x0":     12345,
                                    "10" : "0x121212"
-                               }
+                               },
+                               "code": "0x00"
                            },
                            "address 2": {
                                <address fields go here>
@@ -60,6 +61,7 @@ Format
                     storage:
                       0x0:  12345
                       10: 0x121212
+                    code: 0x00
                   address 2: 
                      <address fields go here>
               - <forks & results>
