@@ -33,6 +33,7 @@ CreateResults:
           (def 'addr1             0x600)
           (def 'addr2             0x620)
           (def 'callRet           0x640)
+          (def 'retData0          0x160)   ; storage for returned data
 
           ; Other constants
           (def 'NOP 0)   ; No OPeration
@@ -42,6 +43,13 @@ CreateResults:
           [callType]       (and (shr $ 0 240) 0xFF)
           [constructor]    (and (shr $ 0 232) 0xFF)
 
+          ; The contract code          
+          (def 'contractMacro
+                    (lll
+                       (call 0xFFFF 0x60A7 0 0 0 0 0)
+                       contractCode
+                    ) ; inner lll
+          )
           ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
           ; Create the contract and a constructor to pass to CREATE[2]
           ;
@@ -49,16 +57,10 @@ CreateResults:
 
           (if (= @constructor 0) 
             [constructorLength] 
-              (lll {   ; successful constructor
-                 (return contractCode
-                    ; write the contract to constructor memory 
-                    (lll
-                       (call 0xFFFF 0x60A7 0 0 0 0 0)
-                       contractCode
-                    ) ; inner lll
-                 )  } ; return contractCode (lll ...)
+              (lll   ; successful constructor
+                 (return contractCode contractMacro)    
                   constructorCode
-              )       ; outer lll, if successful
+              )
               NOP
             )
 
@@ -66,14 +68,9 @@ CreateResults:
             [constructorLength] 
               (lll {   ; constructor if out of gas
                  (KECCAK256 0x00 0x2fffff)
-                 (return contractCode
-                    ; write the contract to constructor memory 
-                    (lll
-                       (call 0xFFFF 0x60A7 0 0 0 0 0)
-                       contractCode
-                    ) ; inner lll
-                 )  } ; return contractCode (lll ...)
-                  constructorCode
+                 (return contractCode contractMacro)    
+               }
+               constructorCode
               )       ; outer lll, if out of gas
               NOP
             )
@@ -83,24 +80,16 @@ CreateResults:
             [constructorLength] 
               (lll {   ; constructor if revert
                  (revert 0 0)
-                 (return contractCode
-                    ; write the contract to constructor memory 
-                    (lll
-                       (call 0xFFFF 0x60A7 0 0 0 0 0)
-                       contractCode
-                    ) ; inner lll
-                 )  } ; return contractCode (lll ...)
-                  constructorCode
+                 (return contractCode contractMacro)    
+                } 
+                constructorCode
               )       ; outer lll, revert
               NOP
             )
 
 
           ; Write the contract to our own memory (as the 0xcc...cc contract)
-          [contractLength] (lll 
-             (call 0xFFFF 0x60A7 0 0 0 0 0)
-             contractCode
-           )
+          [contractLength] contractMacro
 
 
           ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -111,11 +100,19 @@ CreateResults:
             [addr1] (create2 0 constructorCode @constructorLength 0x5a17)
           )
 
+          ; PC immediately after contract creation
+          [[0x20]] (pc)
+
           ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
           ; RETURNDATASIZE should be zero
           ;
 
           [[0x10]] (returndatasize)
+   
+          (if (returndatasize)
+             (returndatacopy retData0 0 0x20)
+             [[0x11]] @retData0
+          )
 
           ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
           ; EXTCODE should match what we returned in the constructor
@@ -124,8 +121,8 @@ CreateResults:
           [extLength] (extcodesize @addr1)
           (extcodecopy @addr1 extCode 0 @extLength)
 
-          [[0x11]] (- @contractLength @extLength)
-          [[0x12]] (- @contractCode   @extCode)
+          [[0x12]] (- @contractLength @extLength)
+          [[0x13]] (- @contractCode   @extCode)
 
           ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
           ; CALL the created contract
@@ -150,19 +147,23 @@ CreateResults:
              NOP
           )
 
-          [[0x13]] (- @callRet 1)
-          [[0x14]] (returndatasize)  
+          [[0x21]] (pc)
+
+          [[0x14]] (- @callRet 1)
+          [[0x15]] (returndatasize)  
 
         }   ; end of LLL code
       nonce: '0'
       storage:
         0x10: 0x60A7   # Return data size from contract creation (should be 0)
-        0x11: 0x60A7   # Difference between size of code we sent and code that
+        0x12: 0x60A7   # Difference between size of code we sent and code that
                        # is in the contract (should be zero)
-        0x12: 0x60A7   # Difference between first 0x20 bytes of code we sent
+        0x13: 0x60A7   # Difference between first 0x20 bytes of code we sent
                        # and code in the contract (should be zero)
-        0x13: 0x60A7   # Replaced by <result of call> -1 (so zero if call OK)
-        0x14: 0x60A7   # Size of the returned data from the call (0)
+        0x14: 0x60A7   # Replaced by <result of call> -1 (so zero if call OK)
+        0x15: 0x60A7   # Size of the returned data from the call (0)
+        0x20: 0x60A7   # PC after the CREATE[2]
+        0x21: 0x60A7   # PC after the CALL / DELEGATECALL / etc.
 
 
 
@@ -244,15 +245,16 @@ CreateResults:
       result:
 
         cccccccccccccccccccccccccccccccccccccccc:
-          storage: {}
-
+          storage:
             # Zero if all goes well 
             # 0x10 - RETURNDATASIZE from the constructor
-            # 0x11 - external code size minus contract code size
-            # 0x12 - difference in first 0x20 bytes between 
+            # 0x12 - external code size minus contract code size
+            # 0x13 - difference in first 0x20 bytes between 
             #        external code and contract code
-            # 0x13 - if the return value from the call isn't zero
-            # 0x14 - RETURNDATASIZE from the call
+            # 0x14 - if the return value from the call isn't zero
+            # 0x15 - RETURNDATASIZE from the call
+            0x20: 0x00d1    # PC after CREATE[2]
+            0x21: 0x01c6    # PC after CALL/DELEGATECALL/etc
 
 
         # Verify the created contract has been called
@@ -273,15 +275,16 @@ CreateResults:
       result:
 
         cccccccccccccccccccccccccccccccccccccccc:
-          storage: {}
-
+          storage:
             # Zero if all goes well 
             # 0x10 - RETURNDATASIZE from the constructor
-            # 0x11 - external code size minus contract code size
-            # 0x12 - difference in first 0x20 bytes between 
+            # 0x12 - external code size minus contract code size
+            # 0x13 - difference in first 0x20 bytes between 
             #        external code and contract code
-            # 0x13 - if the return value from the call isn't zero
-            # 0x14 - RETURNDATASIZE from the call
+            # 0x14 - if the return value from the call isn't zero
+            # 0x15 - RETURNDATASIZE from the call
+            0x20: 0x00d1    # PC after CREATE[2]
+            0x21: 0x01c6    # PC after CALL/DELEGATECALL/etc
 
     
     # If the constructor runs out of gas the address we get doesn't have 
@@ -319,9 +322,13 @@ CreateResults:
             # 0x14 - RETURNDATASIZE from the call
 
 
-            # 0x11 - external code size minus contract code size
-            0x11: 0x12
+            # 0x12 - external code size minus contract code size
+            0x12: 0x12
 
-            # 0x12 - difference in first 0x20 bytes between 
+            # 0x13 - difference in first 0x20 bytes between 
             #        external code and contract code
-            0x12: 0x600060006000600060006160a761fffff1000000000000000000000000000000
+            0x13: 0x600060006000600060006160a761fffff1000000000000000000000000000000
+
+            0x20: 0x00d1    # PC after CREATE[2]
+            0x21: 0x01c6    # PC after CALL/DELEGATECALL/etc
+
