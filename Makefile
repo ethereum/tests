@@ -8,9 +8,9 @@ bc_tests:=$(wildcard BlockchainTests/*)
 vm_tests:=$(wildcard VMTests/*)
 all_tests:=$(gs_tests) $(bc_tests) $(vm_tests)
 
-tx_fillers:=$(wildcard src/TransactionTestsFiller/*.json)
-gs_fillers:=$(wildcard src/GeneralStateTestsFiller/*.json)
-bc_fillers:=$(wildcard src/BlockchainTestsFiller/*.json)
+tx_fillers:=$(wildcard src/TransactionTestsFiller/*)
+gs_fillers:=$(wildcard src/GeneralStateTestsFiller/*)
+bc_fillers:=$(wildcard src/BlockchainTestsFiller/*)
 vm_fillers:=$(filter-out %.sol %.md, $(wildcard src/VMTestsFiller/*))
 all_fillers:=$(gs_fillers) $(bc_fillers) $(vm_fillers)
 
@@ -27,14 +27,13 @@ sani-vm: $(vm_tests:=.format) $(vm_fillers:=.format) \
          $(vm_tests:=.filled)
 
 # TODO: enable $(gs_fillers:=.valid) $(gs_tests:=.format) $(gs_fillers:=.format)
-sani-gs: $(gs_tests:=.valid) \
-         $(gs_tests:=.filled)
+sani-gs: $(gs_tests:=.valid) # $(gs_tests:=.filled)
 
 # TODO: enable $(tx_tests:=.format) $(tx_fillers:=.format) $(tx_tests:=.valid) $(tx_fillers:=.valid)
 sani-tx: $(tx_tests:=.filled)
 
 # TODO: enable $(bc_tests:=.format) $(bc_fillers:=.format) $(bc_tests:=.filled)
-sani-bc: $(bc_tests:=.valid)  $(bc_fillers:=.valid)
+sani-bc: $(bc_tests:=.valid)  # $(bc_fillers:=.valid)
 
 %.format:
 	python3 test.py format ./$*
