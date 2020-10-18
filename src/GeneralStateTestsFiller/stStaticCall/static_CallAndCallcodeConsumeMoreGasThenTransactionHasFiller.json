@@ -33,7 +33,7 @@
                     }
                 }
             },
-	    {
+	        {
                 "indexes" : {
                     "data" : 1,
                     "gas" : -1,
@@ -44,7 +44,6 @@
 					"c94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
 						"storage" : {
 								"0x00" : "0x12",
-								"0x08" : "0x08ae2f",
 								"0x09" : "0x01",
 								"0x0a" : "0x01"
 							}
@@ -67,51 +66,51 @@
                 "storage" : {
                 }
             },
-	    "1000000000000000000000000000000000000000" : {
+    	    "1000000000000000000000000000000000000000" : {
                 "balance" : "0",
-                "code" : "{  [[ 0 ]] (CALL (GAS) (CALLDATALOAD 0) (CALLVALUE) 0 0 0 0) [[ 1 ]] (GAS) }",
+                "code" : "{  [[ 0 ]] (CALL (GAS) (CALLDATALOAD 0) (CALLVALUE) 0 0 0 0) [[ 1 ]] 1 }",
                 "nonce" : "0",
                 "storage" : {
                 }
             },
-	    "b94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+    	    "b94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
                 "balance" : "0",
-		"nonce" : "0",
-		"//0 code" : "By new EIP150 rules this transaction would be executed even if call consumes more gas then transaction has.",
-		"//1 code" : "Staticcall goes oog and eats 600k gas",
-		"code" : "{ (SSTORE 8 (GAS)) (SSTORE 9 (STATICCALL 600000 0x1000000000000000000000000000000000000103 0 0 0 0)) (SSTORE 10 (CALLCODE 600000 0x1000000000000000000000000000000000000103 0 0 0 0 0)) }",
-		"storage": {
-		}
+		        "nonce" : "0",
+		        "//0 code" : "By new EIP150 rules this transaction would be executed even if call consumes more gas then transaction has.",
+		        "//1 code" : "Staticcall goes oog and eats 600k gas",
+		        "code" : "{  (SSTORE 9 (STATICCALL 600000 0x1000000000000000000000000000000000000103 0 0 0 0)) (SSTORE 10 (CALLCODE 600000 0x1000000000000000000000000000000000000103 0 0 0 0 0)) }",
+		        "storage": {
+		        }
             },
-	    "1000000000000000000000000000000000000103" : {
+	        "1000000000000000000000000000000000000103" : {
                 "balance" : "0",
-		"nonce" : "0",
-		"// code" : "should be 12 in the post state",
-		"code" : "{ (SSTORE 0 0x12) } ",
-		"storage": {
-		}
+		        "nonce" : "0",
+		        "// code" : "should be 12 in the post state",
+		        "code" : "{ (SSTORE 0 0x12) } ",
+		        "storage": {
+		        }
             },
-	    "c94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+	        "c94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
                 "balance" : "0",
-		"nonce" : "0",
-		"//0 code" : "By new EIP150 rules this transaction would be executed even if call consumes more gas then transaction has.",
-		"//1 code" : "Staticcall goes oog and eats 600k gas",
-		"code" : "{ (SSTORE 8 (GAS)) (SSTORE 9 (STATICCALL 600000 0x2000000000000000000000000000000000000103 0 0 0 0)) (SSTORE 10 (CALLCODE 600000 0x1000000000000000000000000000000000000103 0 0 0 0 0)) }",
-		"storage": {
-		}
+		        "nonce" : "0",
+		        "//0 code" : "By new EIP150 rules this transaction would be executed even if call consumes more gas then transaction has.",
+		        "//1 code" : "Staticcall goes oog and eats 600k gas",
+		        "code" : "{  (SSTORE 9 (STATICCALL 600000 0x2000000000000000000000000000000000000103 0 0 0 0)) (SSTORE 10 (CALLCODE 600000 0x1000000000000000000000000000000000000103 0 0 0 0 0)) }",
+		        "storage": {
+		        }
             },
-	    "2000000000000000000000000000000000000103" : {
+	        "2000000000000000000000000000000000000103" : {
                 "balance" : "0",
-		"nonce" : "0",
-		"code" : "{ (MSTORE 0 0x12) } ",
-		"storage": {
-		}
+		        "nonce" : "0",
+		        "code" : "{ (MSTORE 0 0x12) } ",
+		        "storage": {
+		        }
             }
         },
         "transaction" : {
             "data" : [
-                "0x000000000000000000000000b94f5374fce5edbc8e2a8697c15331677e6ebf0b",
-		"0x000000000000000000000000c94f5374fce5edbc8e2a8697c15331677e6ebf0b"
+                ":raw 0x000000000000000000000000b94f5374fce5edbc8e2a8697c15331677e6ebf0b",
+        		":raw 0x000000000000000000000000c94f5374fce5edbc8e2a8697c15331677e6ebf0b"
             ],
             "gasLimit" : [
                 "600000"

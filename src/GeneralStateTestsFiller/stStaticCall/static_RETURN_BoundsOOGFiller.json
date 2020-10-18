@@ -11,7 +11,38 @@
         "expect" : [
             {
                 "indexes" : {
-                    "data" : -1,
+                    "data" : 1,
+                    "gas" : -1,
+                    "value" : -1
+                },
+                "network" : [">=Istanbul"],
+                "result" : {
+                    "1000000000000000000000000000000000000000" : {
+                        "balance" : "1",
+                        "storage" : {
+                            "0x01" : "0x01",
+                            "0x02" : "0x01",
+                            "0x03" : "0x01",
+                            "0x04" : "0x01",
+                            "0x05" : "0x01",
+                            "0x06" : "0x01",
+                            "0x07" : "0x01",
+                            "0x08" : "0x01",
+                            "0x09" : "0x01",
+                            "0x0a" : "0x01",
+                            "0x0b" : "0x01",
+                            "0x0c" : "0x01",
+                            "0x0d" : "0x01",
+                            "0x0e" : "0x01",
+                            "0x0f" : "0x01",
+                            "0x10" : "0x01"
+                        }
+                    }
+                }
+            },
+            {
+                "indexes" : {
+                    "data" : 0,
                     "gas" : -1,
                     "value" : -1
                 },
@@ -28,7 +59,7 @@
         "pre" : {
             "1000000000000000000000000000000000000000" : {
                 "balance" : "0",
-                "code" : "{ [[1]] (STATICCALL 0x7ffffffffffffff 0x1000000000000000000000000000000000000001 0 0 0 0) [[2]] (STATICCALL 0x7ffffffffffffff 0x1000000000000000000000000000000000000002 0 0 0 0) [[3]] (STATICCALL 0x7ffffffffffffff 0x1000000000000000000000000000000000000003 0 0 0 0) [[4]] (STATICCALL 0x7ffffffffffffff 0x1000000000000000000000000000000000000004 0 0 0 0) [[5]] (STATICCALL 0x7ffffffffffffff 0x1000000000000000000000000000000000000005 0 0 0 0) [[6]] (STATICCALL 0x7ffffffffffffff 0x1000000000000000000000000000000000000006 0 0 0 0) [[7]] (STATICCALL 0x7ffffffffffffff 0x1000000000000000000000000000000000000006 0 0 0 0) [[8]] (STATICCALL 0x7ffffffffffffff 0x1000000000000000000000000000000000000006 0 0 0 0) [[9]] (STATICCALL 0x7ffffffffffffff 0x1000000000000000000000000000000000000006 0 0 0 0) [[10]] (STATICCALL 0x7ffffffffffffff 0x1000000000000000000000000000000000000006 0 0 0 0) [[11]] (STATICCALL 0x7ffffffffffffff 0x1000000000000000000000000000000000000006 0 0 0 0) [[12]] (STATICCALL 0x7ffffffffffffff 0x1000000000000000000000000000000000000006 0 0 0 0) [[13]] (STATICCALL 0x7ffffffffffffff 0x1000000000000000000000000000000000000006 0 0 0 0) [[14]] (STATICCALL 0x7ffffffffffffff 0x1000000000000000000000000000000000000006 0 0 0 0) [[15]] (STATICCALL 0x7ffffffffffffff 0x1000000000000000000000000000000000000006 0 0 0 0) [[16]] (STATICCALL 0x7ffffffffffffff 0x1000000000000000000000000000000000000006 0 0 0 0)}",
+                "code" : "{ [[1]] (STATICCALL 0x7ffffffffffffff 0x1000000000000000000000000000000000000001 0 0 0 0) [[2]] (STATICCALL 0x7ffffffffffffff 0x1000000000000000000000000000000000000002 0 0 0 0) [[3]] (STATICCALL 0x7ffffffffffffff 0x1000000000000000000000000000000000000003 0 0 0 0) [[4]] (STATICCALL 0x7ffffffffffffff 0x1000000000000000000000000000000000000004 0 0 0 0) [[5]] (STATICCALL 0x7ffffffffffffff 0x1000000000000000000000000000000000000005 0 0 0 0) [[6]] (STATICCALL 0x7ffffffffffffff 0x1000000000000000000000000000000000000006 0 0 0 0) [[7]] (STATICCALL 0x7ffffffffffffff 0x1000000000000000000000000000000000000006 0 0 0 0) [[8]] (STATICCALL 0x7ffffffffffffff 0x1000000000000000000000000000000000000006 0 0 0 0) [[9]] (STATICCALL 0x7ffffffffffffff 0x1000000000000000000000000000000000000006 0 0 0 0) [[10]] (STATICCALL 0x7ffffffffffffff 0x1000000000000000000000000000000000000006 0 0 0 0) [[11]] (STATICCALL 0x7ffffffffffffff 0x1000000000000000000000000000000000000006 0 0 0 0) [[12]] (STATICCALL 0x7ffffffffffffff 0x1000000000000000000000000000000000000006 0 0 0 0) [[13]] (STATICCALL 0x7ffffffffffffff 0x1000000000000000000000000000000000000006 0 0 0 0) [[14]] (STATICCALL 0x7ffffffffffffff 0x1000000000000000000000000000000000000006 0 0 0 0) [[15]] (STATICCALL 0x7ffffffffffffff 0x1000000000000000000000000000000000000006 0 0 0 0) [[16]] (STATICCALL 0x7ffffffffffffff 0x1000000000000000000000000000000000000006 0 0 0 0) (IF (EQ (CALLDATALOAD 0) 0) (KECCAK256 0x00 0x2fffff) (GAS) ) }",
                 "nonce" : "0",
                 "storage" : {
                 }
@@ -155,10 +186,11 @@
         },
         "transaction" : {
             "data" : [
-                ""
+                ":raw 0x00",
+                ":raw 0x0000000000000000000000000000000000000001"
             ],
             "gasLimit" : [
-                "150000"
+                "15000000"
             ],
             "gasPrice" : "1",
             "nonce" : "0",
