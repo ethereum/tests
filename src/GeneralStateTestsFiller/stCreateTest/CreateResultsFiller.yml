@@ -50,6 +50,13 @@ CreateResults:
                        contractCode
                     ) ; inner lll
           )
+          ; I did not want to rely on knowing the address at which the contract
+          ; will get created, because the algorithm might change in the future
+          ; (for CREATE, anyway - CREATE2 is supposed to give fixed results). 
+          ; So to know that the created contract has been called successfully it
+          ; calls the 0x60a7 account, and that account changes its storage in a
+          ; way that the expect: section can identify.
+          
           ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
           ; Create the contract and a constructor to pass to CREATE[2]
           ;
