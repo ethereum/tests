@@ -18,7 +18,6 @@ CreateResults:
       balance: '0x0ba1a9ce0ba1a9ce'
       code:   | 
         {
-
           ; Variables are 0x20 bytes (= 256 bits) apart, except for
           ; code buffers that get 0x100 (256 bytes)
           (def 'creation          0x100)
@@ -34,15 +33,12 @@ CreateResults:
           (def 'addr2             0x620)
           (def 'callRet           0x640)
           (def 'retData0          0x160)   ; storage for returned data
-
           ; Other constants
           (def 'NOP 0)   ; No OPeration
-
           ; Understand the input.
           [creation]       (shr $ 0 248)
           [callType]       (and (shr $ 0 240) 0xFF)
           [constructor]    (and (shr $ 0 232) 0xFF)
-
           ; The contract code          
           (def 'contractMacro
                     (lll
@@ -50,12 +46,17 @@ CreateResults:
                        contractCode
                     ) ; inner lll
           )
+          ; I did not want to rely on knowing the address at which the contract
+          ; will get created, because the algorithm might change in the future
+          ; (for CREATE, anyway - CREATE2 is supposed to give fixed results). 
+          ; So to know that the created contract has been called successfully it
+          ; calls the 0x60a7 account, and that account changes its storage in a
+          ; way that the expect: section can identify.
+          
           ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
           ; Create the contract and a constructor to pass to CREATE[2]
           ;
-
-
-          (if (= @constructor 0) 
+          (if (or (= @constructor 0) (= @constructor 4))
             [constructorLength] 
               (lll   ; successful constructor
                  (return contractCode contractMacro)    
@@ -63,7 +64,6 @@ CreateResults:
               )
               NOP
             )
-
           (if (= @constructor 1) 
             [constructorLength] 
               (lll {   ; constructor if out of gas
@@ -74,11 +74,9 @@ CreateResults:
               )       ; outer lll, if out of gas
               NOP
             )
-
-
           (if (= @constructor 2) 
             [constructorLength] 
-              (lll {   ; constructor if revert
+              (lll {   ; constructor if revert (no data)
                  (revert 0 0)
                  (return contractCode contractMacro)    
                 } 
@@ -86,12 +84,19 @@ CreateResults:
               )       ; outer lll, revert
               NOP
             )
-
-
+          (if (= @constructor 3) 
+            [constructorLength] 
+              (lll {   ; constructor if revert with data
+                 [0] 0x60A7
+                 (revert 0 0x20) 
+                 (return contractCode contractMacro)    
+                } 
+                constructorCode
+              )       ; outer lll, revert
+              NOP
+            )
           ; Write the contract to our own memory (as the 0xcc...cc contract)
           [contractLength] contractMacro
-
-
           ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
           ; Actually create the contract
           ;
@@ -99,19 +104,21 @@ CreateResults:
             [addr1] (create 0 constructorCode @constructorLength)
             [addr1] (create2 0 constructorCode @constructorLength 0x5a17)
           )
-
           ; PC immediately after contract creation
           [[0x20]] (pc)
-
           ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-          ; RETURNDATASIZE should be zero
+          ; RETURNDATASIZE should be zero, except in revert with data
           ;
-
           [[0x10]] (returndatasize)
    
-          (if (returndatasize)
-             (returndatacopy retData0 0 0x20)
-             [[0x11]] @retData0
+          ; Either there is data or we want to see what happens when we
+          ; read data that isn't there
+          (if (or (returndatasize) (= @constructor 4))
+             {
+                  (returndatacopy retData0 0 0x20)
+                  [[0x11]] @retData0
+             }
+             NOP
           )
 
           ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -190,8 +197,12 @@ CreateResults:
     # MSB
     #
     # Create type:    01 - CREATE  02 - CREATE2
-    # Call   type:    01 - CALL    02 - CALLCODE    03 - DELEGATECALL  04 - STATICCALL
-    # Constructor:    00 - SUCCESS 01 - Out of gas  02 - REVERT
+    # Call   type:    01 - CALL    02 - CALLCODE    
+    #                 03 - DELEGATECALL  04 - STATICCALL
+    # Constructor:    00 - SUCCESS 01 - Out of gas  
+    #                 02 - REVERT   03 - REVERT with Data
+    #                 04 - SUCCESS in the constructor, but then
+    #                      the main contract reverts
     #
     # LSB  
     - :raw 0x010100
@@ -218,6 +229,22 @@ CreateResults:
     - :raw 0x020202
     - :raw 0x020302
     - :raw 0x020402
+    - :raw 0x010103
+    - :raw 0x010203
+    - :raw 0x010303
+    - :raw 0x010403
+    - :raw 0x020103
+    - :raw 0x020203
+    - :raw 0x020303
+    - :raw 0x020403
+    - :raw 0x010104
+    - :raw 0x010204
+    - :raw 0x010304
+    - :raw 0x010404
+    - :raw 0x020104
+    - :raw 0x020204
+    - :raw 0x020304
+    - :raw 0x020404
     gasLimit:
     - 0x900000
     gasPrice: '1'
@@ -253,8 +280,8 @@ CreateResults:
             #        external code and contract code
             # 0x14 - if the return value from the call isn't zero
             # 0x15 - RETURNDATASIZE from the call
-            0x20: 0x00d1    # PC after CREATE[2]
-            0x21: 0x01c6    # PC after CALL/DELEGATECALL/etc
+            0x20: 0x00fb    # PC after CREATE[2]
+            0x21: 0x01fb    # PC after CALL/DELEGATECALL/etc
 
 
         # Verify the created contract has been called
@@ -263,7 +290,6 @@ CreateResults:
             0:    0x60A7 
  
     # Static calls cannot change the goat's value, with sufficient gas
-
     - indexes:
         data: 
         - !!int 3
@@ -283,12 +309,13 @@ CreateResults:
             #        external code and contract code
             # 0x14 - if the return value from the call isn't zero
             # 0x15 - RETURNDATASIZE from the call
-            0x20: 0x00d1    # PC after CREATE[2]
-            0x21: 0x01c6    # PC after CALL/DELEGATECALL/etc
+            0x20: 0x00fb    # PC after CREATE[2]
+            0x21: 0x01fb    # PC after CALL/DELEGATECALL/etc
 
     
-    # If the constructor runs out of gas the address we get doesn't have 
-    # code
+    # If the constructor fails:
+    # 1. Out of gas
+    # 2. Revert (no data)
 
     - indexes:
         data: 
@@ -329,6 +356,83 @@ CreateResults:
             #        external code and contract code
             0x13: 0x600060006000600060006160a761fffff1000000000000000000000000000000
 
-            0x20: 0x00d1    # PC after CREATE[2]
-            0x21: 0x01c6    # PC after CALL/DELEGATECALL/etc
+            0x20: 0x00fb    # PC after CREATE[2]
+            0x21: 0x01fb    # PC after CALL/DELEGATECALL/etc
+
+
+    # If the constructor reverts with data
+    - indexes:
+        data: 
+        - !!int 24
+        - !!int 25
+        - !!int 26
+        - !!int 27
+        - !!int 28
+        - !!int 29
+        - !!int 30
+        - !!int 31
+        gas:  !!int 0
+        value: !!int 0
+      network:
+        - '>=Istanbul'
+      result:
+
+        cccccccccccccccccccccccccccccccccccccccc:
+          storage:
+            # Zero if all goes well 
+            # 0x14 - if the return value from the call isn't zero
+            # 0x15 - RETURNDATASIZE from the call
+
+            # 0x10 - RETURNDATASIZE from the constructor
+            0x10: 0x20 
+
+            # 0x11 - Returned data (from the constructor at revert)
+            0x11: 0x60A7
+
+            # 0x12 - external code size minus contract code size
+            0x12: 0x12
+
+            # 0x13 - difference in first 0x20 bytes between 
+            #        external code and contract code
+            0x13: 0x600060006000600060006160a761fffff1000000000000000000000000000000
+
+            0x20: 0x00fb    # PC after CREATE[2]
+            0x21: 0x01fb    # PC after CALL/DELEGATECALL/etc
+
+
+
+
+
+
+
+    # If we trigger a revert by reading unavailable data
+    - indexes:
+        data: 
+        - !!int 32
+        - !!int 33
+        - !!int 34
+        - !!int 35
+        - !!int 36
+        - !!int 37
+        - !!int 38
+        - !!int 39
+        gas:  !!int 0
+        value: !!int 0
+      network:
+        - '>=Istanbul'
+      result:
+
+        cccccccccccccccccccccccccccccccccccccccc:
+          storage:
+            # 0x11 - Value we attempted to read (and failed)
+            0x11: 0
+
+            # Goats that don't get overwritten because we reverted
+            0x10: 0x60A7
+            0x12: 0x60A7
+            0x13: 0x60A7
+            0x14: 0x60A7
+            0x15: 0x60A7
+            0x20: 0x60A7
+            0x21: 0x60A7
 
