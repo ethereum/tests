@@ -1,12 +1,12 @@
 {
     "createInitFailUndefinedInstruction" : {
         "_info" : {
-            "comment" : "",
-            "filling-rpc-server" : "Geth-1.9.6-unstable-63b18027-20190920",
-            "filling-tool-version" : "retesteth-0.0.1+commit.0ae18aef.Linux.g++",
-            "lllcversion" : "Version: 0.5.12-develop.2019.9.13+commit.2d601a4f.Linux.g++",
+            "comment" : "create fails because init code has undefined opcode, trying to suicide to it",
+            "filling-rpc-server" : "evm version 1.9.23-unstable-0efc69a9-20201022",
+            "filling-tool-version" : "retesteth-0.0.9-berlin+commit.2f30f0ea.Linux.g++",
+            "lllcversion" : "Version: 0.5.14-develop.2020.6.22+commit.9189ad7a.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/stCallCreateCallCodeTest/createInitFailUndefinedInstructionFiller.json",
-            "sourceHash" : "ef500948a44b12c9784f02b0cae1f38c3c42db01a56e4a37911f63fc2a6af204"
+            "sourceHash" : "43e1597d3445951d2f8f59db868188eecd6f582097df123991b67a241fdaf147"
         },
         "env" : {
             "currentCoinbase" : "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba",
@@ -17,6 +17,17 @@
             "previousHash" : "0x5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6"
         },
         "post" : {
+            "Berlin" : [
+                {
+                    "indexes" : {
+                        "data" : 0,
+                        "gas" : 0,
+                        "value" : 0
+                    },
+                    "hash" : "0x373989275faa91981f122d98d1feaa20446484df5d283744f33b17b22d80a4f5",
+                    "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347"
+                }
+            ],
             "Istanbul" : [
                 {
                     "indexes" : {
@@ -24,7 +35,7 @@
                         "gas" : 0,
                         "value" : 0
                     },
-                    "hash" : "0x824c238b75708fb4a25f1b1fd6d157278ced70e717a294790e74b0a006f31949",
+                    "hash" : "0x12008b0e6d1fca3ce51f49cb74456dcbdb946a85adeb8309f689906517f3978a",
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347"
                 }
             ]
@@ -32,7 +43,21 @@
         "pre" : {
             "0x095e7baea6a6c7c4c2dfeb977efac326af552d87" : {
                 "balance" : "0x0de0b6b3a7640000",
-                "code" : "0x60f4600053600160006001f0ff00",
+                "code" : "0x6000600060006000600073100000000000000000000000000000000000000062061a80f16000556000600060006000600073200000000000000000000000000000000000000062061a80f1600155600160025500",
+                "nonce" : "0x00",
+                "storage" : {
+                }
+            },
+            "0x1000000000000000000000000000000000000000" : {
+                "balance" : "0x0de0b6b3a7640000",
+                "code" : "0x60f9600053600160006001f0ff00",
+                "nonce" : "0x00",
+                "storage" : {
+                }
+            },
+            "0x2000000000000000000000000000000000000000" : {
+                "balance" : "0x0de0b6b3a7640000",
+                "code" : "0x60f96000536000600160006001f5ff00",
                 "nonce" : "0x00",
                 "storage" : {
                 }
