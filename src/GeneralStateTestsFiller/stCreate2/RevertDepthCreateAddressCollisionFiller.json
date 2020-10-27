@@ -1,8 +1,8 @@
 {
     "RevertDepthCreateAddressCollision" : {
-	"_info" : {
-	    "comment" : "copy of this test for CREATE2"
-	},
+	    "_info" : {
+	        "comment" : "copy of this test for CREATE2"
+	    },
         "env" : {
             "currentCoinbase" : "2adc25665018aa1fe0e6bc666dac8fc2697ff9ba",
             "currentDifficulty" : "0x020000",
@@ -18,7 +18,7 @@
                     "gas" : 1,
                     "value" : -1
                 },
-                "network" : [">=Istanbul"],
+                "network" : ["Istanbul"],
                 "result" : {
 				    "3e180b1862f9d158abb5e519a6d8605540c23682" : {
                         "nonce" : "54",
@@ -43,7 +43,7 @@
                     "gas" : 1,
                     "value" : -1
                 },
-                "network" : [">=Istanbul"],
+                "network" : ["Istanbul"],
                 "result" : {
                     "3e180b1862f9d158abb5e519a6d8605540c23682" : {
                         "nonce" : "54",
@@ -65,7 +65,7 @@
                     "gas" : 0,
                     "value" : -1
                 },
-                "network" : [">=Istanbul"],
+                "network" : ["Istanbul"],
                 "result" : {
                     "3e180b1862f9d158abb5e519a6d8605540c23682" : {
                         "balance" : "0x05",
@@ -87,7 +87,7 @@
                     "gas" : 0,
                     "value" : -1
                 },
-                "network" : [">=Istanbul"],
+                "network" : ["Istanbul"],
                 "result" : {
                     "3e180b1862f9d158abb5e519a6d8605540c23682" : {
                         "code" : "0x60016000556000600060006000600073b000000000000000000000000000000000000000600035f1600155600c60045500",
@@ -111,14 +111,14 @@
                 "storage" : {
                 }
             },
-	    "3e180b1862f9d158abb5e519a6d8605540c23682" : {
+    	    "3e180b1862f9d158abb5e519a6d8605540c23682" : {
                 "balance" : "5",
                 "code" : "{ [[0]] 1 [[1]] (CALL (CALLDATALOAD 0) 0xb000000000000000000000000000000000000000 0 0 0 0 0) [[4]] 12 }",
                 "nonce" : "54",
                 "storage" : {
                 }
             },
-	    "b000000000000000000000000000000000000000" : {
+    	    "b000000000000000000000000000000000000000" : {
                 "balance" : "",
                 "code" : "{ [[2]] 8 (CREATE2 0 0 0 0) [[3]] 12}",
                 "nonce" : "",
@@ -130,8 +130,8 @@
 	    "//0 data" : "Call with value to address A, then another call X, in the call X CREATE of account A, OOG -> revert call X.",
 	    "//1 data" : "d0g0 - double OOG,  d0g1 - OOG inside subcall, d1g0 - OOG after subcall, d1g1 - no OOG",
             "data" : [
-		"0x000000000000000000000000000000000000000000000000000000000000ea60", 
-		"0x000000000000000000000000000000000000000000000000000000000001ea60" 
+        		":raw 0x000000000000000000000000000000000000000000000000000000000000ea60", 
+        		":raw 0x000000000000000000000000000000000000000000000000000000000001ea60" 
             ],
             "gasLimit" : [
                 "110000", "160000"

@@ -1,12 +1,12 @@
 {
     "RevertRemoteSubCallStorageOOG" : {
         "_info" : {
-            "comment" : "",
-            "filling-rpc-server" : "Geth-1.9.6-unstable-63b18027-20190920",
-            "filling-tool-version" : "retesteth-0.0.1+commit.0ae18aef.Linux.g++",
-            "lllcversion" : "Version: 0.5.12-develop.2019.9.13+commit.2d601a4f.Linux.g++",
-            "source" : "src/GeneralStateTestsFiller/stRevertTest/RevertRemoteSubCallStorageOOGFiller.json",
-            "sourceHash" : "832db8ff3840973394ec8fa2fe93a5b815c2b2102483118a31ae016428aed6ff"
+            "comment" : "contract A calls itself. In the sub-call, storage is modified, the calls returns successfully. After that, storage is modified again and then an exception occurs.  0xc0406226 == sha(run())",
+            "filling-rpc-server" : "evm version 1.9.23-unstable-0efc69a9-20201022",
+            "filling-tool-version" : "retesteth-0.0.9-berlin+commit.2f30f0ea.Linux.g++",
+            "lllcversion" : "Version: 0.5.14-develop.2020.6.22+commit.9189ad7a.Linux.g++",
+            "source" : "src/GeneralStateTestsFiller/stRevertTest/RevertRemoteSubCallStorageOOGFiller.yml",
+            "sourceHash" : "01556eb244c9f41dea88b54c7bc762a458608ef77890dd8da1b7f59d00bc0409"
         },
         "env" : {
             "currentCoinbase" : "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba",
@@ -17,6 +17,26 @@
             "previousHash" : "0x5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6"
         },
         "post" : {
+            "Berlin" : [
+                {
+                    "indexes" : {
+                        "data" : 0,
+                        "gas" : 0,
+                        "value" : 0
+                    },
+                    "hash" : "0x22b18673ddd97c9938cdc401f9ab1ec74aea137787431889dd3c0ebf372e68a7",
+                    "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347"
+                },
+                {
+                    "indexes" : {
+                        "data" : 1,
+                        "gas" : 0,
+                        "value" : 0
+                    },
+                    "hash" : "0x6bbe53d70ec7ecae9810db74520be567b36e52ee578f2b322135cb8694b9ef95",
+                    "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347"
+                }
+            ],
             "Istanbul" : [
                 {
                     "indexes" : {
@@ -24,35 +44,27 @@
                         "gas" : 0,
                         "value" : 0
                     },
-                    "hash" : "0x04068d2d81730e74a66ab864af1073c8b7ade7c47680d10d782638320f776c20",
+                    "hash" : "0xc4c446b43ba5fe5573483a688606e5823d56fcf9c1052eeab0adc3f71656a977",
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347"
                 },
                 {
                     "indexes" : {
-                        "data" : 0,
-                        "gas" : 2,
+                        "data" : 1,
+                        "gas" : 0,
                         "value" : 0
                     },
-                    "hash" : "0x55c8e8054f7f508f34286f7016c8a00d0d829ec3d0778bb3204fed4ae04b4607",
-                    "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347"
-                },
-                {
-                    "indexes" : {
-                        "data" : 0,
-                        "gas" : 1,
-                        "value" : 0
-                    },
-                    "hash" : "0xc07817065915d7a62413cb53505953caf33b9d56bc2e2bb43f1dc653ff351d49",
+                    "hash" : "0x6bbe53d70ec7ecae9810db74520be567b36e52ee578f2b322135cb8694b9ef95",
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347"
                 }
             ]
         },
         "pre" : {
             "0xa000000000000000000000000000000000000000" : {
-                "balance" : "0x01",
-                "code" : "0x60606040526000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff168063b28175c414610049578063c040622614610058575b610000565b346100005761005661007f565b005b346100005761006561008a565b604051808215151515815260200191505060405180910390f35b600c6000819055505b565b6000600060405161016f80610163833901809050604051809103906000f080156100005790508073ffffffffffffffffffffffffffffffffffffffff166373027f6d306040518263ffffffff167c0100000000000000000000000000000000000000000000000000000000028152600401808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001915050600060405180830381600087803b156100005760325a03f11561000057505050600d600181905550600191505b50905600606060405234610000575b610156806100196000396000f30060606040526000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff16806373027f6d1461003e575b610000565b346100005761006f600480803573ffffffffffffffffffffffffffffffffffffffff16906020019091905050610071565b005b8073ffffffffffffffffffffffffffffffffffffffff1660405180807f73746f7228290000000000000000000000000000000000000000000000000000815250600601905060405180910390207c010000000000000000000000000000000000000000000000000000000090046040518163ffffffff167c01000000000000000000000000000000000000000000000000000000000281526004018090506000604051808303816000876161da5a03f192505050505b505600a165627a7a72305820db9c9d1f37fd36768131a0bf9687f465e15b0503452e603be6b6f07b70d72e260029a165627a7a72305820f8ff2f7feef24d01a1cc070e67db9e15ac34810c8e5d1c7f34f3c38148eeae900029",
+                "balance" : "0x0ba1a9ce0ba1a9ce",
+                "code" : "0x608060405234801561001057600080fd5b50600436106100415760003560e01c806354d1405f14610046578063b28175c414610050578063c04062261461005a575b600080fd5b61004e610064565b005b610058610126565b005b61006261012c565b005b6000604051610072906101e2565b604051809103906000f08015801561008e573d6000803e3d6000fd5b5090508073ffffffffffffffffffffffffffffffffffffffff166373027f6d306040518263ffffffff1660e01b8152600401808273ffffffffffffffffffffffffffffffffffffffff168152602001915050600060405180830381600087803b1580156100fa57600080fd5b505af115801561010e573d6000803e3d6000fd5b50505050600360025560038055622fffff6000205050565b60028055565b600060405161013a906101e2565b604051809103906000f080158015610156573d6000803e3d6000fd5b5090508073ffffffffffffffffffffffffffffffffffffffff166373027f6d306040518263ffffffff1660e01b8152600401808273ffffffffffffffffffffffffffffffffffffffff168152602001915050600060405180830381600087803b1580156101c257600080fd5b505af11580156101d6573d6000803e3d6000fd5b50505050600360025550565b610210806101f08339019056fe608060405234801561001057600080fd5b506101f0806100206000396000f3fe608060405234801561001057600080fd5b506004361061002b5760003560e01c806373027f6d14610030575b600080fd5b6100726004803603602081101561004657600080fd5b81019080803573ffffffffffffffffffffffffffffffffffffffff169060200190929190505050610074565b005b600060608273ffffffffffffffffffffffffffffffffffffffff166040516024016040516020818303038152906040527fb28175c4000000000000000000000000000000000000000000000000000000007bffffffffffffffffffffffffffffffffffffffffffffffffffffffff19166020820180517bffffffffffffffffffffffffffffffffffffffffffffffffffffffff83818316178352505050506040518082805190602001908083835b602083106101455780518252602082019150602081019050602083039250610122565b6001836020036101000a0380198251168184511680821785525050505050509050019150506000604051808303816000865af19150503d80600081146101a7576040519150601f19603f3d011682016040523d82523d6000602084013e6101ac565b606091505b50915091508160015550505056fea2646970667358221220b3fdf4d21b334ec674c5ea018b0976d63bedfbab3846a30c822fd06c8051411464736f6c63430007000033a2646970667358221220ca1cbf10b745f036fa750710a9c4e2db9ae1734d83d404257da6a07f579bfeb664736f6c63430007000033",
                 "nonce" : "0x00",
                 "storage" : {
+                    "0x02" : "0xff"
                 }
             },
             "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
@@ -65,12 +77,11 @@
         },
         "transaction" : {
             "data" : [
-                "0xc0406226"
+                "0xc0406226",
+                "0x54d1405f"
             ],
             "gasLimit" : [
-                "0x024220",
-                "0x02c308",
-                "0x023668"
+                "0x155cc0"
             ],
             "gasPrice" : "0x01",
             "nonce" : "0x00",

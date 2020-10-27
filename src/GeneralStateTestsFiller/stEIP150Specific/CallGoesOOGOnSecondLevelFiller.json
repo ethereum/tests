@@ -17,18 +17,23 @@
                 },
                 "network" : [ ">=Istanbul"],
                 "result" : {
-		    "1000000000000000000000000000000000000110" : {
-		        "storage" : {
-		        }
-		    },
-		    "1000000000000000000000000000000000000111" : {
-		        "storage" : {
-		        }
-		    },
-		    "b94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-		        "storage" : {
-		        }
-		    }
+		            "1000000000000000000000000000000000000110" : {
+		                "storage" : {
+                            "12" : "1",
+                            "0x08" : "0x0927be",
+                            "0x0c" : "0x01"
+		                }
+		            },
+		            "1000000000000000000000000000000000000111" : {
+		                "storage" : {
+		                }
+		            },
+		            "b94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+		                "storage" : {
+                            "0x08" : "0x213fb6",
+                            "0x09" : "0x01"
+		                }
+		            }
                 }
             }
         ],
@@ -41,28 +46,28 @@
                 "storage" : {
                 }
             },
-	    "b94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+    	    "b94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
                 "balance" : "0",
-		"nonce" : "0",
-		"// code" : "OOG Call because call goes OOG on second level",
-		"code" : "{ (SSTORE 8 (GAS)) (SSTORE 9 (CALL 600000 0x1000000000000000000000000000000000000110 0 0 0 0 0)) } ",
-		"storage": {
-		}
+		        "nonce" : "0",
+		        "// code" : "OOG Call because call goes OOG on second level",
+		        "code" : "{ (SSTORE 8 (GAS)) (SSTORE 9 (CALL 600000 0x1000000000000000000000000000000000000110 0 0 0 0 0)) } ",
+		        "storage": {
+		        }
             },
-	    "1000000000000000000000000000000000000110" : {
+    	    "1000000000000000000000000000000000000110" : {
                 "balance" : "0",
-		"nonce" : "0",
-		"// code" : "Inner CaLL goes OOG on EIP150",
-		"code" : "{ (SSTORE 8 (GAS)) (SSTORE 9 (CALL 600000 0x1000000000000000000000000000000000000111 0 0 0 0 0)) } ",
-		"storage": {
-		}
+		        "nonce" : "0",
+		        "// code" : "Inner CaLL goes OOG on EIP150",
+		        "code" : "{ (SSTORE 8 (GAS)) (SSTORE 9 (CALL 300000 0x1000000000000000000000000000000000000111 0 0 0 0 0)) [[12]] 1} ",
+		        "storage": {
+		        }
             },
-	    "1000000000000000000000000000000000000111" : {
+    	    "1000000000000000000000000000000000000111" : {
                 "balance" : "0",
-		"nonce" : "0",
-		"code" : "{ (SSTORE 8 (GAS)) (CREATE 0 0 0) (CREATE 0 0 0) (SSTORE 9 (GAS)) (SSTORE 10 (GAS)) }",
-		"storage": {
-		}
+		        "nonce" : "0",
+		        "code" : "{ (SSTORE 8 (GAS)) (KECCAK256 0x00 0x2fffff) (SSTORE 9 (GAS)) (SSTORE 10 (GAS)) }",
+		        "storage": {
+		        }
             }
         },
         "transaction" : {
@@ -70,7 +75,7 @@
                 ""
             ],
             "gasLimit" : [
-                "220000"
+                "2200000"
             ],
             "gasPrice" : "1",
             "nonce" : "0",

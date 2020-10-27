@@ -1,12 +1,12 @@
 {
     "callWithHighValueAndOOGatTxLevel" : {
         "_info" : {
-            "comment" : "",
-            "filling-rpc-server" : "Geth-1.9.6-unstable-63b18027-20190920",
-            "filling-tool-version" : "retesteth-0.0.1+commit.0ae18aef.Linux.g++",
-            "lllcversion" : "Version: 0.5.12-develop.2019.9.13+commit.2d601a4f.Linux.g++",
+            "comment" : "call with value. call takes more gas then tx has, and more value than account has",
+            "filling-rpc-server" : "evm version 1.9.23-unstable-0efc69a9-20201022",
+            "filling-tool-version" : "retesteth-0.0.9-berlin+commit.2f30f0ea.Linux.g++",
+            "lllcversion" : "Version: 0.5.14-develop.2020.6.22+commit.9189ad7a.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/stCallCreateCallCodeTest/callWithHighValueAndOOGatTxLevelFiller.json",
-            "sourceHash" : "52743dcd086bfbd265227148368c30770c8aac007e1bc7a8fd389c1cee57c7dd"
+            "sourceHash" : "08f2d13012ed308046f9d1a4f6f8d6523a6d44074251e9ab0e200f8f1a6a76a7"
         },
         "env" : {
             "currentCoinbase" : "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba",
@@ -17,6 +17,26 @@
             "previousHash" : "0x5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6"
         },
         "post" : {
+            "Berlin" : [
+                {
+                    "indexes" : {
+                        "data" : 0,
+                        "gas" : 0,
+                        "value" : 0
+                    },
+                    "hash" : "0xf25c8e3508ff4a62c4922bab7631ffbe42326b36391a6f288b128babc94a4159",
+                    "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347"
+                },
+                {
+                    "indexes" : {
+                        "data" : 0,
+                        "gas" : 0,
+                        "value" : 1
+                    },
+                    "hash" : "0x543f25f58306fb727602b705c9338743aa0b0b4ecfa7177cdba841eeec810acd",
+                    "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347"
+                }
+            ],
             "Istanbul" : [
                 {
                     "indexes" : {
@@ -24,7 +44,16 @@
                         "gas" : 0,
                         "value" : 0
                     },
-                    "hash" : "0x266e4af4015eba964239c9d08bc816002063a386594420f13d3a1f8d30a11894",
+                    "hash" : "0x43b231d87881dd4317e263145d3e58d60658681dcc6a2bb8d200d00b1f8536e3",
+                    "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347"
+                },
+                {
+                    "indexes" : {
+                        "data" : 0,
+                        "gas" : 0,
+                        "value" : 1
+                    },
+                    "hash" : "0x7fcc794accf3bdaca4d6cae7ecaa5b63934edee83bb6e577c1cb423950f5797e",
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347"
                 }
             ]
@@ -35,6 +64,7 @@
                 "code" : "0x6000600060006000620186a173945304eb96065b2a98b57a48a06ae28d285a71b5622dc6c1f160005500",
                 "nonce" : "0x00",
                 "storage" : {
+                    "0x00" : "0x05"
                 }
             },
             "0x945304eb96065b2a98b57a48a06ae28d285a71b5" : {
@@ -64,7 +94,8 @@
             "secretKey" : "0x45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8",
             "to" : "0x095e7baea6a6c7c4c2dfeb977efac326af552d87",
             "value" : [
-                "0x00"
+                "0x00",
+                "0x01"
             ]
         }
     }

@@ -1,5 +1,8 @@
 {
     "callcode_checkPC" : {
+        "_info" : {
+            "comment" : "check the PC after doing call to a contract"
+        },
         "env" : {
             "currentCoinbase" : "2adc25665018aa1fe0e6bc666dac8fc2697ff9ba",
             "currentDifficulty" : "0x20000",
@@ -25,12 +28,12 @@
             "1000000000000000000000000000000000000000" : {
                 "balance" : "1000000000000000000",
                 "nonce" : "0",
-                "code" : "{ (CALL 1000000 0x1000000000000000000000000000000000000001 0 0 64 0 64 ) [[3]] (PC)}",
+                "code" : "{ (CALL 1000000 0x1000000000000000000000000000000000000001 0 0 64 0 64 ) [[3]] (PC) }",
                 "storage": {}
             },
             "1000000000000000000000000000000000000001" : {
                 "balance" : "10000000000",
-                "code" : "{}",
+                "code" : "{ [[0]] 1 }",
                 "nonce" : "0",
                 "storage" : {
                 }

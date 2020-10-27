@@ -1,5 +1,8 @@
 {
     "callcodeDynamicCode" : {
+        "_info" : {
+            "comment" : "callcode to a contract that is being created in the same transaction"
+        },
         "env" : {
             "currentCoinbase" : "2adc25665018aa1fe0e6bc666dac8fc2697ff9ba",
             "currentDifficulty" : "0x020000",
@@ -10,43 +13,128 @@
         },
         "expect" : [
 	        {
+                "//comment" : "CREATE an account.   callcode to that account",
                 "indexes" : {
-                    "data" : -1,
+                    "data" : 0,
                     "gas" : -1,
                     "value" : -1
                 },
                 "network" : [">=Istanbul"],
                 "result" : {
-                    "568a95f77b047bece6aa68843d2019332c46a585" : {
-                        "balance" : "0x01"
-                    },
-                    "13136008b64ff592819b2fa6d43f2835c452020e" : {
-                        "balance" : "0x00",
+                    "1000000000000000000000000000000000000000" : {
                         "storage" : {
-                            "0x00" : "0x00",
-                            "0x0a" : "0x568a95f77b047bece6aa68843d2019332c46a585",
+                            "0x00" : "0x01",
+                            "0x0a" : "0x13136008b64ff592819b2fa6d43f2835c452020e",
                             "0x0b" : "0x01",
-                            "0x14" : "0x00"
+                            "0x14" : "0x1000000000000000000000000000000000000000",
+                            "0x15" : "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b",
+                            "0x16" : "0x1000000000000000000000000000000000000000"
                         }
                     }
+                }
+            },
+	        {
+                "//comment" : "CREATE2 an account.   callcode to that account",
+                "indexes" : {
+                    "data" : 1,
+                    "gas" : -1,
+                    "value" : -1
+                },
+                "network" : [">=Istanbul"],
+                "result" : {
+                    "2000000000000000000000000000000000000000" : {
+                        "storage" : {
+                            "0x00" : "0x01",
+                            "0x0a" : "0x2d39fad743351d4cf3f4717907d3dda5e0a689a7",
+                            "0x0b" : "0x01",
+                            "0x14" : "0x2000000000000000000000000000000000000000",
+                            "0x15" : "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b",
+                            "0x16" : "0x2000000000000000000000000000000000000000"
+                        }
+                    }
+                }
+            },
+	        {
+                "//comment" : "CREATE an account.   callcode to that account.  DYNAMIC ALL",
+                "indexes" : {
+                    "data" : 2,
+                    "gas" : -1,
+                    "value" : -1
+                },
+                "network" : [">=Istanbul"],
+                "result" : {
+                        "0x4b86c4ed99b87f0f396bc0c76885453c343916ed" : {
+                            "balance" : "0x00",
+                            "code" : "0x",
+                            "nonce" : "0x02",
+                            "storage" : {
+                                "0x00" : "0x01",
+                                "0x0a" : "0xbf1676be6038ab86d66e00824c2e3577858040f6",
+                                "0x0b" : "0x01",
+                                "0x14" : "0x4b86c4ed99b87f0f396bc0c76885453c343916ed",
+                                "0x15" : "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b",
+                                "0x16" : "0x4b86c4ed99b87f0f396bc0c76885453c343916ed"
+                            }
+                        }
+                }
+            },
+	        {
+                "//comment" : "CREATE2 an account.   callcode to that account.  DYNAMIC ALL",
+                "indexes" : {
+                    "data" : 3,
+                    "gas" : -1,
+                    "value" : -1
+                },
+                "network" : [">=Istanbul"],
+                "result" : {
+                        "0xa51c188504a60578914fcae68f7a1f0dcbb856a9" : {
+                            "balance" : "0x00",
+                            "code" : "0x",
+                            "nonce" : "0x02",
+                            "storage" : {
+                                "0x00" : "0x01",
+                                "0x0a" : "0x0f2d6bf688fae45da62ab2dd4f36945bc924cc61",
+                                "0x0b" : "0x01",
+                                "0x14" : "0xa51c188504a60578914fcae68f7a1f0dcbb856a9",
+                                "0x15" : "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b",
+                                "0x16" : "0xa51c188504a60578914fcae68f7a1f0dcbb856a9"
+                            }
+                        }
                 }
             }
         ],
         "pre" : {
-            "1000000000000000000000000000000000000000" : {
-                "balance" : "10000",
-                "//comment1" : "{ (MSTORE 0 0x600160005533601455) (RETURN 23 9) }",
-                "//comment2" : "{ (MSTORE 0 0x6860016000553360145560005260096017f3) [[ 10 ]] (CREATE 1 14 18) [[ 11 ]] (CALLCODE 100000 0xffe4ebd2a68c02d9dcb0a17283d13346beb2d8b6 0 0 64 0 64 ) }",	
-                "//comment3" : "0x716860016000553360145560005260096017f36000526012600e6001f0600a55604060006040600060007313136008b64ff592819b2fa6d43f2835c452020e620186a0f2600b55",
-                "//comment4" : "            0x0102030405060708091011121314151617181920212223242526272829303132             0x0102030405060708091011121314151617181920212223242526272829303132",
-                "code" : "{ (MSTORE 0 0x716860016000553360145560005260096017f36000526012600e6001f0600a55) (MSTORE 32 0x6040600060406000600073ffe4ebd2a68c02d9dcb0a17283d13346beb2d8b662)     (MSTORE 64 0x0186a0f2600b5500000000000000000000000000000000000000000000000000) (CREATE 1 0 96) }",
+            "1100000000000000000000000000000000000000" : {
+                "balance" : "0",
+                "code" : "{ (CALL 800000 (CALLDATALOAD 0) 0 0 0 0 0) }",
                 "nonce" : "0",
                 "storage" : {
                 }
             },
-            "1000000000000000000000000000000000000001" : {
+            "1000000000000000000000000000000000000000" : {
+                "balance" : "10000",
+                "code" : "{(seq [[10]] (CREATE 0 0 (lll(seq  (RETURN 0 (lll(seq [[0]] 1  [[20]] (ADDRESS) [[21]] (ORIGIN) [[22]] (CALLER)   )0) )  )0)   )  [[11]] (CALLCODE 100000 (SLOAD 10) 0 0 64 0 64)                   )}",
+                "nonce" : "0",
+                "storage" : {
+                }
+            },
+            "2000000000000000000000000000000000000000" : {
                 "balance" : "1000",
-                "code" : "{ (MSTORE 0 0x6001600055) (CREATE 1 27 5) }",
+                "code" : "{(seq [[10]] (CREATE2 0 0 (lll(seq  (RETURN 0 (lll(seq [[0]] 1  [[20]] (ADDRESS) [[21]] (ORIGIN) [[22]] (CALLER)  )0) )  )0)  0 )  [[11]] (CALLCODE 100000 (SLOAD 10) 0 0 64 0 64)                   )}",
+                "nonce" : "0",
+                "storage" : {
+                }
+            },
+            "3000000000000000000000000000000000000000" : {
+                "balance" : "10000",
+                "code" : "{(seq (CREATE 0 0 (lll(seq       [[10]] (CREATE 0 0 (lll(seq  (RETURN 0 (lll(seq [[0]] 1  [[20]] (ADDRESS)  [[21]] (ORIGIN) [[22]] (CALLER)  )0) )  )0)   )  [[11]] (CALLCODE 100000 (SLOAD 10) 0 0 64 0 64)            )0))       )}",
+                "nonce" : "0",
+                "storage" : {
+                }
+            },
+            "4000000000000000000000000000000000000000" : {
+                "balance" : "10000",
+                "code" : "{(seq (CREATE 0 0 (lll(seq       [[10]] (CREATE2 0 0 (lll(seq  (RETURN 0 (lll(seq [[0]] 1  [[20]] (ADDRESS)  [[21]] (ORIGIN) [[22]] (CALLER)  )0) )  )0)  0 )  [[11]] (CALLCODE 100000 (SLOAD 10) 0 0 64 0 64)            )0))       )}",
                 "nonce" : "0",
                 "storage" : {
                 }
@@ -61,15 +149,18 @@
         },
         "transaction" : {
             "data" : [
-                ""
+                ":raw 0x0000000000000000000000001000000000000000000000000000000000000000",
+                ":raw 0x0000000000000000000000002000000000000000000000000000000000000000",
+                ":raw 0x0000000000000000000000003000000000000000000000000000000000000000",
+                ":raw 0x0000000000000000000000004000000000000000000000000000000000000000"
             ],
             "gasLimit" : [
-                "453081"
+                "1000000"
             ],
             "gasPrice" : "1",
             "nonce" : "0",
             "secretKey" : "45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8",
-            "to" : "1000000000000000000000000000000000000000",
+            "to" : "1100000000000000000000000000000000000000",
             "value" : [
                 ""
             ]

@@ -1,12 +1,12 @@
 {
     "createInitOOGforCREATE" : {
         "_info" : {
-            "comment" : "",
-            "filling-rpc-server" : "Geth-1.9.6-unstable-63b18027-20190920",
-            "filling-tool-version" : "retesteth-0.0.1+commit.0ae18aef.Linux.g++",
-            "lllcversion" : "Version: 0.5.12-develop.2019.9.13+commit.2d601a4f.Linux.g++",
+            "comment" : "Suicide to a dynamic created contract, oog on create",
+            "filling-rpc-server" : "evm version 1.9.23-unstable-0efc69a9-20201022",
+            "filling-tool-version" : "retesteth-0.0.9-berlin+commit.2f30f0ea.Linux.g++",
+            "lllcversion" : "Version: 0.5.14-develop.2020.6.22+commit.9189ad7a.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/stCallCreateCallCodeTest/createInitOOGforCREATEFiller.json",
-            "sourceHash" : "363e4407e39b2c820b452f282b7480d73bb1fc5b016d8676f3360b3d139efe4e"
+            "sourceHash" : "41b6c9d0ae3db1eb853bf01af2a94a2e1dbad3944a2bb0a2813946ccbd53b043"
         },
         "env" : {
             "currentCoinbase" : "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba",
@@ -17,6 +17,26 @@
             "previousHash" : "0x5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6"
         },
         "post" : {
+            "Berlin" : [
+                {
+                    "indexes" : {
+                        "data" : 0,
+                        "gas" : 0,
+                        "value" : 0
+                    },
+                    "hash" : "0x70fcf39c084432e199a4966ed426bdf4efeee0261b086dc96853fda05b467fd3",
+                    "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347"
+                },
+                {
+                    "indexes" : {
+                        "data" : 0,
+                        "gas" : 1,
+                        "value" : 0
+                    },
+                    "hash" : "0xc071b80432c4c12e89efd9785ce5e7b583e146977a456b226df590743b6ba2f3",
+                    "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347"
+                }
+            ],
             "Istanbul" : [
                 {
                     "indexes" : {
@@ -25,6 +45,15 @@
                         "value" : 0
                     },
                     "hash" : "0x70fcf39c084432e199a4966ed426bdf4efeee0261b086dc96853fda05b467fd3",
+                    "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347"
+                },
+                {
+                    "indexes" : {
+                        "data" : 0,
+                        "gas" : 1,
+                        "value" : 0
+                    },
+                    "hash" : "0xc071b80432c4c12e89efd9785ce5e7b583e146977a456b226df590743b6ba2f3",
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347"
                 }
             ]
@@ -50,7 +79,8 @@
                 "0x"
             ],
             "gasLimit" : [
-                "0xcf1c"
+                "0xcf1c",
+                "0x0f4240"
             ],
             "gasPrice" : "0x01",
             "nonce" : "0x00",

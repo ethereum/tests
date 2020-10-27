@@ -15,20 +15,40 @@
                     "gas" : -1,
                     "value" : -1
                 },
-                "network" : [ ">=Istanbul"],
+                "network" : [ "Istanbul"],
                 "result" : {
-		    "b94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-		        "storage" : {
-		            "0x09" : "0x076e34",
-		            "0x0a" : "0x08d5b6",
-		            "0x0b" : "0xf1ecf98489fa9ed60a664fc4998db699cfa39d40"
-		        }
-		    },
-		    "f1ecf98489fa9ed60a664fc4998db699cfa39d40" : {
-		        "storage" : {
-		            "0xfd" : "0x07ea53"
-		        }
-		    }
+        		    "b94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+		                "storage" : {
+		                    "0x09" : "0x011971",
+		                    "0x0b" : "0xf1ecf98489fa9ed60a664fc4998db699cfa39d40"
+		                }
+		            },
+		            "f1ecf98489fa9ed60a664fc4998db699cfa39d40" : {
+		                "storage" : {
+		                    "0xfd" : "0x08372b"
+		                }
+		            }
+                }
+            },
+            {
+                "indexes" : {
+                    "data" : -1,
+                    "gas" : -1,
+                    "value" : -1
+                },
+                "network" : [ ">=Berlin"],
+                "result" : {
+        		    "b94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+		                "storage" : {
+		                    "0x09" : "0x0129d9",
+		                    "0x0b" : "0xf1ecf98489fa9ed60a664fc4998db699cfa39d40"
+		                }
+		            },
+		            "f1ecf98489fa9ed60a664fc4998db699cfa39d40" : {
+		                "storage" : {
+		                    "0xfd" : "0x08372b"
+		                }
+		            }
                 }
             }
         ],
@@ -41,13 +61,13 @@
                 "storage" : {
                 }
             },
-	    "b94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+    	    "b94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
                 "balance" : "0",
-		"nonce" : "0",
+        		"nonce" : "0",
                 "// code" : "Test gas before Create, inside create and after",
-		"code" : "{ (SSTORE 10 (GAS)) (MSTORE 0 0x5a60fd55) (SSTORE 11 (CREATE 0 28 4)) (SSTORE 9 (GAS)) }",
-		"storage": {
-		}
+		        "code" : "{ [100] (GAS) (MSTORE 0 0x5a60fd55) (SSTORE 11 (CREATE 0 28 4)) (SSTORE 9 (SUB @100 (GAS))) }",
+		        "storage": {
+		        }
             }
         },
         "transaction" : {

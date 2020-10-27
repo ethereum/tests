@@ -1,5 +1,8 @@
 {
     "callcodeOutput1" : {
+        "_info" : {
+            "comment" : "check output memory after callcode"
+        },
         "env" : {
             "currentCoinbase" : "2adc25665018aa1fe0e6bc666dac8fc2697ff9ba",
             "currentDifficulty" : "0x20000",
@@ -8,7 +11,7 @@
             "currentTimestamp" : "1000",
             "previousHash" : "5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6"
         },
-	"expect" : [
+    	"expect" : [
             {
                 "indexes" : { "data" : -1, "gas" : -1, "value" : -1 },
                 "network" : [ ">=Istanbul" ],
@@ -24,7 +27,7 @@
         "pre" : {
             "095e7baea6a6c7c4c2dfeb977efac326af552d87" : {
                 "balance" : "1000000000000000000",
-                "code" : "{ (MSTORE 0 0x5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6) (CALLCODE 50000 0xaaae7baea6a6c7c4c2dfeb977efac326af552d87 0 0 0 0 0) [[ 0 ]] (MLOAD 0) }",
+                "code" : "{ (MSTORE 0 0x5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6) (CALLCODE 150000 0xaaae7baea6a6c7c4c2dfeb977efac326af552d87 0 0 0 0 0) [[ 0 ]] (MLOAD 0) }",
                 "nonce" : "0",
                 "storage" : {
                 }
@@ -38,7 +41,7 @@
             },
             "aaae7baea6a6c7c4c2dfeb977efac326af552d87" : {
                 "balance" : "1000000000000000000",
-                "code" : "0x6001600101600055",
+                "code" : ":raw 0x6001600101600055",
                 "nonce" : "0",
                 "storage" : {
                 }

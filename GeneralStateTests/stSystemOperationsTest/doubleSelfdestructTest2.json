@@ -2,11 +2,11 @@
     "doubleSelfdestructTest2" : {
         "_info" : {
             "comment" : "The second test case requested here https://github.com/ethereum/tests/issues/431#issue-306081539 .\nInvoked Solidity 0.4.21 with solc --bin-runtime --optimize\ncontract DoubleSelfdestructTest2 {\n  address constant B = 0x3;\n  function remoteSelfdestruct() external {\n    selfdestruct(this);\n  }\n  function() external payable {\n    this.remoteSelfdestruct();\n    selfdestruct(B);\n  }\n}\nThe version of Solidity emits code that always enter OOG for Homestead and Frontier.  So no new accounts\nare created for Homestead and Frontier.  EIP158 changes the behavior of zero-amount transfer so that no new accounts are created.\nThis leaves EIP150 as a special case.\nBecause gasprice is 0 and mining reward is 0, the mining account is created as empty in the post state. (imitating blockchain rules)\n",
-            "filling-rpc-server" : "evm version 1.9.15-unstable-365a7ec8-20200629",
-            "filling-tool-version" : "retesteth-0.0.6-profiling-berlin+commit.caf8b516.Linux.g++",
+            "filling-rpc-server" : "evm version 1.9.23-unstable-0efc69a9-20201022",
+            "filling-tool-version" : "retesteth-0.0.9-berlin+commit.2f30f0ea.Linux.g++",
             "lllcversion" : "Version: 0.5.14-develop.2020.6.22+commit.9189ad7a.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/stSystemOperationsTest/doubleSelfdestructTest2Filler.yml",
-            "sourceHash" : "a167b40965fb06c8601b718fd23174e348fe9b292bea0d253cbaa494025a9fa1"
+            "sourceHash" : "9f023f15424370a7c78588db2652d4dbaf235d61e576febffd9559369da8b07c"
         },
         "env" : {
             "currentCoinbase" : "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba",
@@ -17,6 +17,17 @@
             "previousHash" : "0x5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6"
         },
         "post" : {
+            "Berlin" : [
+                {
+                    "indexes" : {
+                        "data" : 0,
+                        "gas" : 0,
+                        "value" : 0
+                    },
+                    "hash" : "0x7b1a6d7d3321262293f37907f0ccf9dceb2eef08298ea8d1a2b1b275892ee714",
+                    "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347"
+                }
+            ],
             "Istanbul" : [
                 {
                     "indexes" : {
