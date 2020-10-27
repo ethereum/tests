@@ -1,6 +1,6 @@
 
 ETHEREUM_TEST_PATH=$(CURDIR)
-export ETHEREUM_TEST_PATH
+export ETHEREUM_TEST_PATH 
 
 # TODO: stop stripping out stEWASMTests from gs_tests
 tx_tests:=$(wildcard TransactionTests/*)
@@ -62,3 +62,4 @@ fill: $(fill-tests)
 %.fill:
 	testeth -t $* -- --filltests --verbosity 2 --all
 	python3 test.py format ./$*
+
