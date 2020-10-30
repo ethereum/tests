@@ -1,4 +1,4 @@
-gasCost:
+gasCostBerlin:
 
   env:
     currentCoinbase: 2adc25665018aa1fe0e6bc666dac8fc2697ff9ba
@@ -43,7 +43,7 @@ gasCost:
           ; for us to send it as part of the constructor code
 
           ; Cost of everything around the opcode
-          (def 'sysCost           0x311)
+          (def 'sysCost           0xb9)
 
 
           ; Understand the input
@@ -154,8 +154,7 @@ gasCost:
 
     # SLOAD and BALANCE had their cost changed since the yellow paper
     # See https://github.com/ethereum/EIPs/blob/master/EIPS/eip-1884.md
-    - :raw 0x3102BC    # BALANCE
-
+    - :raw 0x310A28    # BALANCE   ** CHANGED IN BERLIN **
     - :raw 0x320002    # ORIGIN
 
     # d:25 \/
@@ -167,7 +166,7 @@ gasCost:
 
     # d:30 \/
     - :raw 0x3A0002    # GASPRICE
-    - :raw 0x3B02BC    # EXTCODESIZE
+    - :raw 0x3B0A28    # EXTCODESIZE    ** CHANGED IN BERLIN **
 
     - :raw 0x400014    # BLOCKHASH 
     - :raw 0x410002    # COINBASE
@@ -185,10 +184,10 @@ gasCost:
 
     # SLOAD and BALANCE had their cost changed since the yellow paper
     # See https://github.com/ethereum/EIPs/blob/master/EIPS/eip-1884.md
-    - :raw 0x540320    # SLOAD
+    - :raw 0x540834    # SLOAD           ** CHANGED IN BERLIN **
 
     # d: 40 \/
-    - :raw 0x554E20    # SSTORE (from a zero to a non zero)
+    - :raw 0x555654    # SSTORE (from a zero to a non zero)  ** CHANGED IN BERLIN **
     - :raw 0x580002    # PC
     - :raw 0x590002    # MSIZE
     - :raw 0x5A0002    # GAS
@@ -199,7 +198,7 @@ gasCost:
 
 
     # d: 45 \/
-    - :raw 0xFF1388    # SELFDESTRUCT
+    - :raw 0xFF1DB0    # SELFDESTRUCT   ** CHANGED IN BERLIN **
 
 
 
@@ -338,7 +337,7 @@ gasCost:
         gas:  !!int -1
         value: !!int -1
       network:
-        - 'Istanbul'
+        - '>=Berlin'
       result:
         095e7baea6a6c7c4c2dfeb977efac326af552d87:
           storage:
