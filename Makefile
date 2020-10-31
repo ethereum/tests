@@ -2,9 +2,9 @@
 ETHEREUM_TEST_PATH=$(CURDIR)
 export ETHEREUM_TEST_PATH
 
-# TODO: stop stripping out stEWASMTests from gs_tests
+# travis error on stChangedEIP150 removed folder name for some reason. can't reproduce locally 
 tx_tests:=$(wildcard TransactionTests/*)
-gs_tests:=$(filter-out %stEWASMTests, $(wildcard GeneralStateTests/*))
+gs_tests:=$(filter-out %stEWASMTests %stChangedEIP150, $(wildcard GeneralStateTests/*))
 bc_tests:=$(wildcard BlockchainTests/*)
 vm_tests:=$(wildcard VMTests/*)
 all_tests:=$(gs_tests) $(bc_tests) $(vm_tests)
@@ -18,7 +18,6 @@ all_fillers:=$(gs_fillers) $(bc_fillers) $(vm_fillers)
 all_schemas:=$(wildcard JSONSchema/*.json)
 
 # Testset sanitation
-
 sani: sani-schema sani-vm sani-gs sani-tx sani-bc
 
 sani-schema: $(all_schemas:=.format)
