@@ -131,87 +131,94 @@ eip2929:
   transaction:
     data:
     # No operation
-    - :abi f(uint,uint,uint) 0 0 0
+    - :label nop-nop-nop :abi f(uint,uint,uint) 0 0 0
   
     # SLOAD three times
-    - :abi f(uint,uint,uint) 1 1 1
+    - :label sload-sload-sload :abi f(uint,uint,uint) 1 1 1
 
     # SSTORE three times
-    - :abi f(uint,uint,uint) 2 2 2
+    - :label sstore-sstore-sstore :abi f(uint,uint,uint) 2 2 2
+
+    # addr is used for most opcodes that read address information 
+    # (BALANCE, EXTCODESIZE, and EXTCODEHASH). 
 
     # BALANCE three times
-    - :abi f(uint,uint,uint) 11 11 11
+    - :label addr-addr-addr :abi f(uint,uint,uint) 11 11 11
 
     # EXTCODESIZE three times
-    - :abi f(uint,uint,uint) 12 12 12
+    - :label addr-addr-addr :abi f(uint,uint,uint) 12 12 12
 
     # EXTCODECOPY three times
-    - :abi f(uint,uint,uint) 13 13 13
+    # Not addr, because it takes seven more gas than the addr
+    # (BALANCE, EXTCODESIZE, EXTCODEHASH)
+    - :label copy-copy-copy :abi f(uint,uint,uint) 13 13 13
 
     # EXTCODEHASH three times
-    - :abi f(uint,uint,uint) 14 14 14
+    - :label addr-addr-addr :abi f(uint,uint,uint) 14 14 14
 
+    # call8 is for the expensive CALL opcodes: CALL and CALLCODE
     # CALL three times
-    - :abi f(uint,uint,uint) 21 21 21
+    - :label call8-call8-call8 :abi f(uint,uint,uint) 21 21 21
 
     # CALLCODE three times
-    - :abi f(uint,uint,uint) 22 22 22
+    - :label call8-call8-call8 :abi f(uint,uint,uint) 22 22 22
 
+    # call5 is for the cheap CALL opcodes: DELEGATECALL and STATICCALL
     # DELEGATECALL three times
-    - :abi f(uint,uint,uint) 23 23 23
+    - :label call5-call5-call5 :abi f(uint,uint,uint) 23 23 23
 
     # STATICCALL three times
-    - :abi f(uint,uint,uint) 24 24 24
+    - :label call5-call5-call5 :abi f(uint,uint,uint) 24 24 24
 
     # Look at an address through a different account, three times
-    - :abi f(uint,uint,uint) 31 31 31
+    - :label faraddr-faraddr-faraddr :abi f(uint,uint,uint) 31 31 31
 
     # Look at storage through a different account using:
     # CALLCODE
-    - :abi f(uint,uint,uint) 32 32 32
+    - :label farcall8-farcall8-farcall8 :abi f(uint,uint,uint) 32 32 32
 
     # DELEGATECALL   
-    - :abi f(uint,uint,uint) 33 33 33
+    - :label farcall5-farcall5-farcall5 :abi f(uint,uint,uint) 33 33 33
 
 
 
     ############# Various opcode mixtures
 
     # SSTORE and SLOAD mix (same storage cell)
-    - :abi f(uint,uint,uint) 1 2 1
+    - :label sload-sstore-sload :abi f(uint,uint,uint) 1 2 1
 
     # SLOAD, SSTORE and CALLCODE / DELEGATECALL mixes
-    - :abi f(uint,uint,uint) 1 32 33
-    - :abi f(uint,uint,uint) 1 2 33
-    - :abi f(uint,uint,uint) 32 1 33
-    - :abi f(uint,uint,uint) 33 1 2
+    - :label sload-farcall8-farcall5 :abi f(uint,uint,uint) 1 32 33
+    - :label sload-sstore-farcall5 :abi f(uint,uint,uint) 1 2 33
+    - :label farcall8-sload-farcall5 :abi f(uint,uint,uint) 32 1 33
+    - :label farcall5-sload-sstore :abi f(uint,uint,uint) 33 1 2
 
     # address information mixes
-    - :abi f(uint,uint,uint) 11 12 14
-    - :abi f(uint,uint,uint) 11 14 12
-    - :abi f(uint,uint,uint) 12 11 14
-    - :abi f(uint,uint,uint) 12 14 11
-    - :abi f(uint,uint,uint) 14 12 11
-    - :abi f(uint,uint,uint) 14 11 12
+    - :label addr-addr-addr :abi f(uint,uint,uint) 11 12 14
+    - :label addr-addr-addr :abi f(uint,uint,uint) 11 14 12
+    - :label addr-addr-addr :abi f(uint,uint,uint) 12 11 14
+    - :label addr-addr-addr :abi f(uint,uint,uint) 12 14 11
+    - :label addr-addr-addr :abi f(uint,uint,uint) 14 12 11
+    - :label addr-addr-addr :abi f(uint,uint,uint) 14 11 12
     
     # CALL mixes
-    - :abi f(uint,uint,uint) 21 22 21
-    - :abi f(uint,uint,uint) 22 22 21
-    - :abi f(uint,uint,uint) 23 24 23
-    - :abi f(uint,uint,uint) 23 24 24
+    - :label call8-call8-call8 :abi f(uint,uint,uint) 21 22 21
+    - :label call8-call8-call8 :abi f(uint,uint,uint) 22 22 21
+    - :label call5-call5-call5 :abi f(uint,uint,uint) 23 24 23
+    - :label call5-call5-call5 :abi f(uint,uint,uint) 23 24 24
 
     # address information and call mixes
-    - :abi f(uint,uint,uint) 11 21 22
-    - :abi f(uint,uint,uint) 12 21 22
-    - :abi f(uint,uint,uint) 14 21 22
-    - :abi f(uint,uint,uint) 11 22 21
-    - :abi f(uint,uint,uint) 12 22 21
-    - :abi f(uint,uint,uint) 14 22 21
+    - :label addr-call8-call8 :abi f(uint,uint,uint) 11 21 22
+    - :label addr-call8-call8 :abi f(uint,uint,uint) 12 21 22
+    - :label addr-call8-call8 :abi f(uint,uint,uint) 14 21 22
+    - :label addr-call8-call8 :abi f(uint,uint,uint) 11 22 21
+    - :label addr-call8-call8 :abi f(uint,uint,uint) 12 22 21
+    - :label addr-call8-call8 :abi f(uint,uint,uint) 14 22 21
 
     # Mix local and "remote" reads 
-    - :abi f(uint,uint,uint) 11 12 31
-    - :abi f(uint,uint,uint) 11 31 14
-    - :abi f(uint,uint,uint) 31 14 11
+    - :label addr-addr-faraddr :abi f(uint,uint,uint) 11 12 31
+    - :label addr-faraddr-addr :abi f(uint,uint,uint) 11 31 14
+    - :label faraddr-addr-addr :abi f(uint,uint,uint) 31 14 11
 
 
     gasLimit:
@@ -229,7 +236,7 @@ eip2929:
     # If it doesn't, check measurementCost
     - indexes:
         data:
-        - :abi f(uint,uint,uint) 0 0 0
+        - :label nop-nop-nop
         gas:  !!int -1
         value: !!int -1
       network:
@@ -246,7 +253,7 @@ eip2929:
     # SLOAD three times
     - indexes:
         data:
-        - :abi f(uint,uint,uint) 1 1 1
+        - :label sload-sload-sload
         gas:  !!int -1
         value: !!int -1
       network:
@@ -260,7 +267,7 @@ eip2929:
 
     - indexes:
         data:
-        - :abi f(uint,uint,uint) 1 1 1
+        - :label sload-sload-sload
         gas:  !!int -1
         value: !!int -1
       network:
@@ -277,7 +284,7 @@ eip2929:
     # SSTORE three times
     - indexes:
         data:
-        - :abi f(uint,uint,uint) 2 2 2
+        - :label sstore-sstore-sstore
         gas:  !!int -1
         value: !!int -1
       network:
@@ -291,7 +298,7 @@ eip2929:
 
     - indexes:
         data:
-        - :abi f(uint,uint,uint) 2 2 2
+        - :label sstore-sstore-sstore
         gas:  !!int -1
         value: !!int -1
       network:
@@ -308,7 +315,7 @@ eip2929:
     # SLOAD, SSTORE, SLOAD (same address)
     - indexes:
         data:
-        - :abi f(uint,uint,uint) 1 2 1
+        - :label sload-sstore-sload
         gas:  !!int -1
         value: !!int -1
       network:
@@ -322,7 +329,7 @@ eip2929:
 
     - indexes:
         data:
-        - :abi f(uint,uint,uint) 1 2 1
+        - :label sload-sstore-sload
         gas:  !!int -1
         value: !!int -1
       network:
@@ -338,18 +345,10 @@ eip2929:
     ############################### ADDRESS FUNCTIONS ######################
 
 
-    # BALANCE, EXTCODESIZE, and EXTCODEHASH in various combos
+    # BALANCE, EXTCODESIZE, and EXTCODEHASH in various combos.
     - indexes:
         data:
-        - :abi f(uint,uint,uint) 11 11 11
-        - :abi f(uint,uint,uint) 12 12 12
-        - :abi f(uint,uint,uint) 14 14 14
-        - :abi f(uint,uint,uint) 11 12 14
-        - :abi f(uint,uint,uint) 11 14 12
-        - :abi f(uint,uint,uint) 12 11 14
-        - :abi f(uint,uint,uint) 12 14 11
-        - :abi f(uint,uint,uint) 14 12 11
-        - :abi f(uint,uint,uint) 14 11 12
+        - :label addr-addr-addr
         gas:  !!int -1
         value: !!int -1
       network:
@@ -363,15 +362,7 @@ eip2929:
 
     - indexes:
         data:
-        - :abi f(uint,uint,uint) 11 11 11
-        - :abi f(uint,uint,uint) 12 12 12
-        - :abi f(uint,uint,uint) 14 14 14
-        - :abi f(uint,uint,uint) 11 12 14
-        - :abi f(uint,uint,uint) 11 14 12
-        - :abi f(uint,uint,uint) 12 11 14
-        - :abi f(uint,uint,uint) 12 14 11
-        - :abi f(uint,uint,uint) 14 12 11
-        - :abi f(uint,uint,uint) 14 11 12
+        - :label addr-addr-addr
         gas:  !!int -1
         value: !!int -1
       network:
@@ -388,7 +379,7 @@ eip2929:
     # EXTCODECOPY three times
     - indexes:
         data:
-        - :abi f(uint,uint,uint) 13 13 13
+        - :label copy-copy-copy
         gas:  !!int -1
         value: !!int -1
       network:
@@ -402,7 +393,7 @@ eip2929:
 
     - indexes:
         data:
-        - :abi f(uint,uint,uint) 13 13 13
+        - :label copy-copy-copy
         gas:  !!int -1
         value: !!int -1
       network:
@@ -419,10 +410,7 @@ eip2929:
     # CALL and CALLCODE
     - indexes:
         data:
-        - :abi f(uint,uint,uint) 21 21 21
-        - :abi f(uint,uint,uint) 22 22 22
-        - :abi f(uint,uint,uint) 21 22 21
-        - :abi f(uint,uint,uint) 22 22 21
+        - :label call8-call8-call8
         gas:  !!int -1
         value: !!int -1
       network:
@@ -436,10 +424,7 @@ eip2929:
 
     - indexes:
         data:
-        - :abi f(uint,uint,uint) 21 21 21
-        - :abi f(uint,uint,uint) 22 22 22
-        - :abi f(uint,uint,uint) 21 22 21
-        - :abi f(uint,uint,uint) 22 22 21
+        - :label call8-call8-call8
         gas:  !!int -1
         value: !!int -1
       network:
@@ -456,10 +441,7 @@ eip2929:
     # DELEGATECALL and STATICCALL
     - indexes:
         data:
-        - :abi f(uint,uint,uint) 23 23 23
-        - :abi f(uint,uint,uint) 24 24 24
-        - :abi f(uint,uint,uint) 23 24 23
-        - :abi f(uint,uint,uint) 23 24 24
+        - :label call5-call5-call5
         gas:  !!int -1
         value: !!int -1
       network:
@@ -473,10 +455,7 @@ eip2929:
 
     - indexes:
         data:
-        - :abi f(uint,uint,uint) 23 23 23
-        - :abi f(uint,uint,uint) 24 24 24
-        - :abi f(uint,uint,uint) 23 24 23
-        - :abi f(uint,uint,uint) 23 24 24
+        - :label call5-call5-call5
         gas:  !!int -1
         value: !!int -1
       network:
@@ -492,12 +471,7 @@ eip2929:
     # address information and then call
     - indexes:
         data:
-        - :abi f(uint,uint,uint) 11 21 22
-        - :abi f(uint,uint,uint) 12 21 22
-        - :abi f(uint,uint,uint) 14 21 22
-        - :abi f(uint,uint,uint) 11 22 21
-        - :abi f(uint,uint,uint) 12 22 21
-        - :abi f(uint,uint,uint) 14 22 21
+        - :label addr-call8-call8
         gas:  !!int -1
         value: !!int -1
       network:
@@ -511,12 +485,7 @@ eip2929:
 
     - indexes:
         data:
-        - :abi f(uint,uint,uint) 11 21 22
-        - :abi f(uint,uint,uint) 12 21 22
-        - :abi f(uint,uint,uint) 14 21 22
-        - :abi f(uint,uint,uint) 11 22 21
-        - :abi f(uint,uint,uint) 12 22 21
-        - :abi f(uint,uint,uint) 14 22 21
+        - :label addr-call8-call8
         gas:  !!int -1
         value: !!int -1
       network:
@@ -532,7 +501,7 @@ eip2929:
     # Access an address through a different contract
     - indexes:
         data:
-        - :abi f(uint,uint,uint) 31 31 31
+        - :label faraddr-faraddr-faraddr
         gas:  !!int -1
         value: !!int -1
       network:
@@ -546,7 +515,7 @@ eip2929:
 
     - indexes:
         data:
-        - :abi f(uint,uint,uint) 31 31 31
+        - :label faraddr-faraddr-faraddr
         gas:  !!int -1
         value: !!int -1
       network:
@@ -562,7 +531,7 @@ eip2929:
     # Mix remote and local requests for data
     - indexes:
         data:
-        - :abi f(uint,uint,uint) 11 12 31
+        - :label addr-addr-faraddr
         gas:  !!int -1
         value: !!int -1
       network:
@@ -576,7 +545,7 @@ eip2929:
 
     - indexes:
         data:
-        - :abi f(uint,uint,uint) 11 12 31
+        - :label addr-addr-faraddr
         gas:  !!int -1
         value: !!int -1
       network:
@@ -593,7 +562,7 @@ eip2929:
 
     - indexes:
         data:
-        - :abi f(uint,uint,uint) 11 31 14
+        - :label addr-faraddr-addr
         gas:  !!int -1
         value: !!int -1
       network:
@@ -607,7 +576,7 @@ eip2929:
 
     - indexes:
         data:
-        - :abi f(uint,uint,uint) 11 31 14
+        - :label addr-faraddr-addr
         gas:  !!int -1
         value: !!int -1
       network:
@@ -623,7 +592,7 @@ eip2929:
 
     - indexes:
         data:
-        - :abi f(uint,uint,uint) 31 14 11
+        - :label faraddr-addr-addr
         gas:  !!int -1
         value: !!int -1
       network:
@@ -637,7 +606,7 @@ eip2929:
 
     - indexes:
         data:
-        - :abi f(uint,uint,uint) 31 14 11
+        - :label faraddr-addr-addr
         gas:  !!int -1
         value: !!int -1
       network:
@@ -653,7 +622,7 @@ eip2929:
     # CALLCODE to read storage
     - indexes:
         data:
-        - :abi f(uint,uint,uint) 32 32 32
+        - :label farcall8-farcall8-farcall8
         gas:  !!int -1
         value: !!int -1
       network:
@@ -667,7 +636,7 @@ eip2929:
 
     - indexes:
         data:
-        - :abi f(uint,uint,uint) 32 32 32
+        - :label farcall8-farcall8-farcall8
         gas:  !!int -1
         value: !!int -1
       network:
@@ -684,7 +653,7 @@ eip2929:
     # DELEGATECALL to read storage
     - indexes:
         data:
-        - :abi f(uint,uint,uint) 33 33 33
+        - :label farcall5-farcall5-farcall5
         gas:  !!int -1
         value: !!int -1
       network:
@@ -698,7 +667,7 @@ eip2929:
 
     - indexes:
         data:
-        - :abi f(uint,uint,uint) 33 33 33
+        - :label farcall5-farcall5-farcall5
         gas:  !!int -1
         value: !!int -1
       network:
@@ -717,7 +686,7 @@ eip2929:
     # Mix of local SLOAD/SSTORE and other contract SLOAD
     - indexes:
         data:
-        - :abi f(uint,uint,uint) 1 32 33
+        - :label sload-farcall8-farcall5
         gas:  !!int -1
         value: !!int -1
       network:
@@ -731,7 +700,7 @@ eip2929:
 
     - indexes:
         data:
-        - :abi f(uint,uint,uint) 1 32 33
+        - :label sload-farcall8-farcall5
         gas:  !!int -1
         value: !!int -1
       network:
@@ -750,7 +719,7 @@ eip2929:
 
     - indexes:
         data:
-        - :abi f(uint,uint,uint) 1 2 33
+        - :label sload-sstore-farcall5
         gas:  !!int -1
         value: !!int -1
       network:
@@ -764,7 +733,7 @@ eip2929:
 
     - indexes:
         data:
-        - :abi f(uint,uint,uint) 1 2 33
+        - :label sload-sstore-farcall5
         gas:  !!int -1
         value: !!int -1
       network:
@@ -783,7 +752,7 @@ eip2929:
 
     - indexes:
         data:
-        - :abi f(uint,uint,uint) 32 1 33
+        - :label farcall8-sload-farcall5
         gas:  !!int -1
         value: !!int -1
       network:
@@ -797,7 +766,7 @@ eip2929:
 
     - indexes:
         data:
-        - :abi f(uint,uint,uint) 32 1 33
+        - :label farcall8-sload-farcall5
         gas:  !!int -1
         value: !!int -1
       network:
@@ -816,7 +785,7 @@ eip2929:
 
     - indexes:
         data:
-        - :abi f(uint,uint,uint) 33 1 2
+        - :label farcall5-sload-sstore
         gas:  !!int -1
         value: !!int -1
       network:
@@ -830,7 +799,7 @@ eip2929:
 
     - indexes:
         data:
-        - :abi f(uint,uint,uint) 33 1 2
+        - :label farcall5-sload-sstore
         gas:  !!int -1
         value: !!int -1
       network:
@@ -841,8 +810,4 @@ eip2929:
             0x00: 1508
             0x01: 790
             0x02: 4991
-
-
-
-
 
