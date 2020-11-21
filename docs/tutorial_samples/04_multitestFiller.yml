@@ -44,10 +44,16 @@
 
   transaction:
     data:
-    - ":abi val2Storage(uint256,uint256) 0x10 0x10"
-    - ":abi val2Storage(uint256,uint256) 0x11 0x11"
-    - ":abi val2Storage(uint256,uint256) 0x11 0x12"
-    - ":abi val2Storage(uint256,uint256) 0x11 0x11"
+    - :abi val2Storage(uint256,uint256) 0x10 0x10 # 0
+    - :abi val2Storage(uint256,uint256) 0x11 0x11 # 1
+    - :abi val2Storage(uint256,uint256) 0x11 0x12 # 2
+    - :abi val2Storage(uint256,uint256) 0x11 0x11 # 3
+    - :abi val2Storage(uint256,uint256) 0x11 0x11 # 4
+    - :abi val2Storage(uint256,uint256) 0x11 0x11 # 5
+    - :abi val2Storage(uint256,uint256) 0x11 0x11 # 6
+    - :label ten-ten :abi val2Storage(uint256,uint256) 0x10 0x10
+    - :label ten-ten :abi val2Storage(uint256,uint256) 0x10 0x10
+    - :label ten-ten :abi val2Storage(uint256,uint256) 0x10 0x10
     gasLimit:
     - '80000000'
     gasPrice: '1'
@@ -59,7 +65,9 @@
 
   expect:
     - indexes:
-        data: !!int 0
+        data: 
+        - !!int 0
+        - :label ten-ten
         gas:  !!int 0
         value: !!int 0
       network:
@@ -73,6 +81,7 @@
         data: 
         - !!int 1
         - !!int 3
+        - 4-6
         gas:  !!int 0
         value: !!int 0
       network:

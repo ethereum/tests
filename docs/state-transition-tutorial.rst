@@ -380,10 +380,10 @@ There are two steps to doing that:
 
     transaction:
        data:
-       - ":abi val2Storage(uint256,uint256) 0x10 0x10"
-       - ":abi val2Storage(uint256,uint256) 0x11 0x11"
-       - ":abi val2Storage(uint256,uint256) 0x11 0x12"
-       - ":abi val2Storage(uint256,uint256) 0x11 0x11"
+       - :abi val2Storage(uint256,uint256) 0x10 0x10
+       - :abi val2Storage(uint256,uint256) 0x11 0x11
+       - :abi val2Storage(uint256,uint256) 0x11 0x12
+       - :abi val2Storage(uint256,uint256) 0x11 0x11
        gasLimit:
        - '80000000'
        gasPrice: '1'
@@ -441,6 +441,46 @@ There are two steps to doing that:
              storage:
                0:    0x11
                0x11: 0x11
+
+Multiple Tests, Same Result
+---------------------------
+When you have multiple tests that produce the same results,
+you do not have to list them individually in the **expect:**
+section.
+
+**Range**. You can specify a range, such as **4-6**, inside
+the **expect.data:** list. Remember *not* to specify !!int, the range
+is a string, not an integer.
+
+**Label**. You can preface the value with **:label <word> <value>**:
+
+::
+
+    transaction:
+      data:
+      - :label odd  :abi f(uint) 1
+      - :label even :abi f(uint) 2
+      - :label odd  :abi f(uint) 3
+      - :label even :abi f(uint) 4
+      - :label odd  :abi f(uint) 5
+      - :label even :abi f(uint) 6
+      - :label odd  :abi f(uint) 7
+      - :label even :abi f(uint) 8
+   
+In the **expect.data:** list, you specify **:label <word>** and it applies
+to every value that has that label.
+
+::
+
+    expect:
+      - indexes:
+          data:
+          - :label odd
+          - :label even
+          gas: !!int -1
+          value: !!int -1
+         
+
 
 Conclusion
 ==========
