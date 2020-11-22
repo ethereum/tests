@@ -41,10 +41,10 @@ TransitionTests   Blockchain tests with exotic network rules switching forks at 
 
 
 .. _struct_bc_transaction:
-.. include:: ../test_filler/test_transaction.rst
+.. include:: ../test_filler/test_transaction_blockchain.rst
 
 
 .. _struct_bc_expect:
-.. include:: ../test_filler/test_expect.rst
+.. include:: ../test_filler/test_expect_blockchain.rst
 
 

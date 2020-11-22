@@ -26,10 +26,10 @@ the state of the blockchain from the **pre** state to the **expect** state.
 
 
 .. _state_transaction:
-.. include:: ../test_filler/test_transaction.rst
+.. include:: ../test_filler/test_transaction_state.rst
 
 
 .. _state_expect:
-.. include:: ../test_filler/test_expect.rst
+.. include:: ../test_filler/test_expect_state.rst
 
 
