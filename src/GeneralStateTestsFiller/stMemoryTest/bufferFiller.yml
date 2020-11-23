@@ -1,0 +1,385 @@
+# Check what happens with weird buffer lengths, 0 or negative.
+
+buffer:
+
+  env:
+    currentCoinbase: 2adc25665018aa1fe0e6bc666dac8fc2697ff9ba
+    currentDifficulty: 0x20000
+    currentGasLimit: 100000000
+    currentNumber: 1
+    currentTimestamp: 1000
+    previousHash: 5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6
+
+  _info:
+    comment: Ori Pomerantz qbzzt1@gmail.com
+
+  pre:
+
+    000000000000000000000000000000000000c0de:
+      balance: '0x0ba1a9ce0ba1a9ce'
+      code: |
+        {
+              (return 0 0x120)
+        }
+      nonce: 0
+      storage: {}
+
+    # To check return. If it reverts the goat survives
+    000000000000000000000000000000000f30c0de:
+      balance: '0x0ba1a9ce0ba1a9ce'
+      code: |
+        {
+               ; We get length from the caller
+               (def 'length $0)
+               (def 'offset $0x20)
+
+               [[0]] 0    ; capricide
+               (return offset length) 
+        }
+      nonce: 0
+      storage:
+        0: 0x60A7
+
+
+
+    cccccccccccccccccccccccccccccccccccccccc:
+      balance: '0x0ba1a9ce0ba1a9ce'
+      code: |
+        {
+           (def 'opcode $4)
+           (def 'bufferType $36)
+           (def 'NOP 0)
+
+           ; Variables           
+           (def 'length     0x20)
+           (def 'offset     0x40)
+         
+           ; bufferType 0 is normal, 1 is length zero, 2 is negative length
+           ; bufferType 3 is excessively long, for opcodes with bounds checking
+           ; Add 0 for offset 0x100, 10 for offset 0x0
+           (if (= bufferType 0) {
+                   [length] 10
+                   [offset] 0x100
+             } NOP)
+           (if (= bufferType 1) {
+                   [length] 0 
+                   [offset] 0x100
+             } NOP)
+           (if (= bufferType 2) {
+                   [length] (- 0 10) 
+                   [offset] 0x100
+             } NOP)
+           (if (= bufferType 3) { 
+                   [length] 0x1000 
+                   [offset] 0x100
+             } NOP)
+           (if (= bufferType 10) {
+                   [length] 10
+                   [offset] 0x0
+             } NOP)
+           (if (= bufferType 11) {
+                   [length] 0 
+                   [offset] 0x0
+             } NOP)
+           (if (= bufferType 12) {
+                   [length] (- 0 10) 
+                   [offset] 0x0
+             } NOP)
+           (if (= bufferType 13) { 
+                   [length] 0x1000 
+                   [offset] 0x0
+             } NOP)
+           ; bufferType 20 is offset 2^256-10, length 5
+           ; this causes an out of gas error because the gas cost
+           ; is around 2^251 (memory is priced in 32 byte chunks)
+           (if (= bufferType 20) { 
+                   [length] 5
+                   [offset] (- 0 10)
+             } NOP)
+
+           (if (= opcode 0x20) (sha3 @offset @length) NOP)
+           (if (= opcode 0x37) (calldatacopy @offset 0 @length) NOP)
+           (if (= opcode 0x39) (codecopy @offset 0 @length) NOP)
+           (if (= opcode 0x3C) (extcodecopy 0xc0de @offset 0 @length) NOP)
+           (if (= opcode 0x3E) (returndatacopy @offset 0 @length) NOP)
+           (if (= opcode 0xA0) (log0 @offset @length) NOP)
+           (if (= opcode 0xA1) (log1 @offset @length 1) NOP)
+           (if (= opcode 0xA2) (log2 @offset @length 1 2) NOP)
+           (if (= opcode 0xA3) (log3 @offset @length 1 2 3) NOP)
+           (if (= opcode 0xA4) (log4 @offset @length 1 2 3 4) NOP)
+           (if (= opcode 0xF0) (create 0 @offset @length) NOP)
+           (if (= opcode 0xF1)  (call 0x1000 0xc0de 0 @offset @length 0 0) NOP)
+           (if (= opcode 0x1F1) (call 0x1000 0xc0de 0 0 0 @offset @length) NOP)
+           (if (= opcode 0xF2)  (callcode 0x1000 0xc0de 0 @offset @length 0 0) NOP)
+           (if (= opcode 0x1F2) (callcode 0x1000 0xc0de 0 0 0 @offset @length) NOP)
+           (if (= opcode 0xF4)  (delegatecall 0x100000 0xc0de @offset @length 0 0) NOP)
+           (if (= opcode 0x1F4) (delegatecall 0x100000 0xc0de 0 0 @offset @length) NOP)
+           (if (= opcode 0xF5) (create2 0 @offset @length 0x5A17) NOP)
+           (if (= opcode 0xFA)  (staticcall 0x100000 0xc0de @offset @length 0 0) NOP)
+           (if (= opcode 0x1FA) (staticcall 0x100000 0xc0de 0 0 @offset @length) NOP)
+
+           ; RETURNDATACOPY, after making sure there is return data
+           (if (= opcode 0x13E) {
+               (call 0x1000 0xc0de 0 0 0 0x100 0x100)
+               (returndatacopy @offset 0 @length) 
+           } NOP)
+
+           ; check return, requires special handling
+           (if (= opcode 0xF3)  (call 0x100000 0xf30c0de 0 length 0x40 0 0) NOP)
+
+           ; Kill the goat
+           [[0x100]] 0
+        }
+      nonce: '0'
+      storage:
+        # Sacrificial goat to tell reverts apart from successes
+        0x100: 0x60A7
+
+
+    a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: '0x0ba1a9ce0ba1a9ce'
+      code: '0x'
+      nonce: '0'
+      storage: {}
+      
+  transaction:
+    data:
+    # SHA3       
+    - :label ok   :abi f(uint,uint) 0x20 0   # Valid buffer length
+    - :label ok   :abi f(uint,uint) 0x20 1   # Buffer length zero
+    - :label fail :abi f(uint,uint) 0x20 2   # Negative buffer length
+    - :label ok   :abi f(uint,uint) 0x20 10  # Valid buffer length
+    - :label ok   :abi f(uint,uint) 0x20 11  # Buffer length zero
+    - :label fail :abi f(uint,uint) 0x20 12  # Negative buffer length
+    - :label fail :abi f(uint,uint) 0x20 12  # Trying to use memory close
+                                             # to the theoretical maximum
+
+    # CALLDATACOPY
+    - :label ok   :abi f(uint,uint) 0x37 0   # Valid buffer length
+    - :label ok   :abi f(uint,uint) 0x37 1   # Buffer length zero
+    - :label fail :abi f(uint,uint) 0x37 2   # Negative buffer length
+    - :label ok   :abi f(uint,uint) 0x37 10   # Valid buffer length
+    - :label ok   :abi f(uint,uint) 0x37 11   # Buffer length zero
+    - :label fail :abi f(uint,uint) 0x37 12   # Negative buffer length
+
+    # CODECOPY
+    - :label ok   :abi f(uint,uint) 0x39 0   # Valid buffer length
+    - :label ok   :abi f(uint,uint) 0x39 1   # Buffer length zero
+    - :label fail :abi f(uint,uint) 0x39 2   # Negative buffer length
+    - :label ok   :abi f(uint,uint) 0x39 10   # Valid buffer length
+    - :label ok   :abi f(uint,uint) 0x39 11   # Buffer length zero
+    - :label fail :abi f(uint,uint) 0x39 12   # Negative buffer length
+
+    # EXTCODECOPY
+    - :label ok   :abi f(uint,uint) 0x3c 0   # Valid buffer length
+    - :label ok   :abi f(uint,uint) 0x3c 1   # Buffer length zero
+    - :label fail :abi f(uint,uint) 0x3c 2   # Negative buffer length
+    - :label ok   :abi f(uint,uint) 0x3c 10   # Valid buffer length
+    - :label ok   :abi f(uint,uint) 0x3c 11   # Buffer length zero
+    - :label fail :abi f(uint,uint) 0x3c 12   # Negative buffer length
+
+    # RETURNDATACOPY, fails when there is no return data unless asked for 0 bytes
+    - :label fail :abi f(uint,uint) 0x3e 0   # Valid buffer length
+    - :label ok   :abi f(uint,uint) 0x3e 1   # Buffer length zero
+    - :label fail :abi f(uint,uint) 0x3e 2   # Negative buffer length
+    - :label fail :abi f(uint,uint) 0x3e 10   # Valid buffer length
+    - :label ok   :abi f(uint,uint) 0x3e 11   # Buffer length zero
+    - :label fail :abi f(uint,uint) 0x3e 12   # Negative buffer length
+
+    # RETURNDATACOPY, after making sure there is return data
+    - :label ok   :abi f(uint,uint) 0x13e 0   # Valid buffer length
+    - :label ok   :abi f(uint,uint) 0x13e 1   # Buffer length zero
+    - :label fail :abi f(uint,uint) 0x13e 2   # Negative buffer length
+    - :label ok   :abi f(uint,uint) 0x13e 10   # Valid buffer length
+    - :label ok   :abi f(uint,uint) 0x13e 11   # Buffer length zero
+    - :label fail :abi f(uint,uint) 0x13e 12   # Negative buffer length
+
+    # RETURNDATACOPY has bounds checking
+    - :label fail :abi f(uint,uint) 0x13e 3 # Huge (out of bounds)
+    - :label fail :abi f(uint,uint) 0x13e 13 # Huge (out of bounds)
+
+    # LOG0
+    - :label ok   :abi f(uint,uint) 0xa0 0   # Valid buffer length
+    - :label ok   :abi f(uint,uint) 0xa0 1   # Buffer length zero
+    - :label fail :abi f(uint,uint) 0xa0 2   # Negative buffer length
+    - :label ok   :abi f(uint,uint) 0xa0 10   # Valid buffer length
+    - :label ok   :abi f(uint,uint) 0xa0 11   # Buffer length zero
+    - :label fail :abi f(uint,uint) 0xa0 12   # Negative buffer length
+
+    # LOG1
+    - :label ok   :abi f(uint,uint) 0xa1 0   # Valid buffer length
+    - :label ok   :abi f(uint,uint) 0xa1 1   # Buffer length zero
+    - :label fail :abi f(uint,uint) 0xa1 2   # Negative buffer length
+    - :label ok   :abi f(uint,uint) 0xa1 10   # Valid buffer length
+    - :label ok   :abi f(uint,uint) 0xa1 11   # Buffer length zero
+    - :label fail :abi f(uint,uint) 0xa1 12   # Negative buffer length
+
+    # LOG2
+    - :label ok   :abi f(uint,uint) 0xa2 0   # Valid buffer length
+    - :label ok   :abi f(uint,uint) 0xa2 1   # Buffer length zero
+    - :label fail :abi f(uint,uint) 0xa2 2   # Negative buffer length
+    - :label ok   :abi f(uint,uint) 0xa2 10   # Valid buffer length
+    - :label ok   :abi f(uint,uint) 0xa2 11   # Buffer length zero
+    - :label fail :abi f(uint,uint) 0xa2 12   # Negative buffer length
+
+    # LOG3
+    - :label ok   :abi f(uint,uint) 0xa3 0   # Valid buffer length
+    - :label ok   :abi f(uint,uint) 0xa3 1   # Buffer length zero
+    - :label fail :abi f(uint,uint) 0xa3 2   # Negative buffer length
+    - :label ok   :abi f(uint,uint) 0xa3 10   # Valid buffer length
+    - :label ok   :abi f(uint,uint) 0xa3 11   # Buffer length zero
+    - :label fail :abi f(uint,uint) 0xa3 12   # Negative buffer length
+
+    # LOG4
+    - :label ok   :abi f(uint,uint) 0xa4 0   # Valid buffer length
+    - :label ok   :abi f(uint,uint) 0xa4 1   # Buffer length zero
+    - :label fail :abi f(uint,uint) 0xa4 2   # Negative buffer length
+    - :label ok   :abi f(uint,uint) 0xa4 10   # Valid buffer length
+    - :label ok   :abi f(uint,uint) 0xa4 11   # Buffer length zero
+    - :label fail :abi f(uint,uint) 0xa4 12   # Negative buffer length
+
+    # CREATE
+    - :label ok   :abi f(uint,uint) 0xf0 0   # Valid buffer length
+    - :label ok   :abi f(uint,uint) 0xf0 1   # Buffer length zero
+    - :label fail :abi f(uint,uint) 0xf0 2   # Negative buffer length
+    - :label ok   :abi f(uint,uint) 0xf0 10   # Valid buffer length
+    - :label ok   :abi f(uint,uint) 0xf0 11   # Buffer length zero
+    - :label fail :abi f(uint,uint) 0xf0 12   # Negative buffer length
+
+    # CALL, check the args buffer
+    - :label ok   :abi f(uint,uint) 0xf1 0   # Valid buffer length
+    - :label ok   :abi f(uint,uint) 0xf1 1   # Buffer length zero
+    - :label fail :abi f(uint,uint) 0xf1 2   # Negative buffer length
+    - :label ok   :abi f(uint,uint) 0xf1 10   # Valid buffer length
+    - :label ok   :abi f(uint,uint) 0xf1 11   # Buffer length zero
+    - :label fail :abi f(uint,uint) 0xf1 12   # Negative buffer length
+    # CALL, check the return buffer
+    - :label ok   :abi f(uint,uint) 0x1f1 0   # Valid buffer length
+    - :label ok   :abi f(uint,uint) 0x1f1 1   # Buffer length zero
+    - :label fail :abi f(uint,uint) 0x1f1 2   # Negative buffer length
+    - :label ok   :abi f(uint,uint) 0x1f1 10   # Valid buffer length
+    - :label ok   :abi f(uint,uint) 0x1f1 11   # Buffer length zero
+    - :label fail :abi f(uint,uint) 0x1f1 12   # Negative buffer length
+
+    # CALLCODE, check the args buffer
+    - :label ok   :abi f(uint,uint) 0xf2 0   # Valid buffer length
+    - :label ok   :abi f(uint,uint) 0xf2 1   # Buffer length zero
+    - :label fail :abi f(uint,uint) 0xf2 2   # Negative buffer length
+    - :label ok   :abi f(uint,uint) 0xf2 10   # Valid buffer length
+    - :label ok   :abi f(uint,uint) 0xf2 11   # Buffer length zero
+    - :label fail :abi f(uint,uint) 0xf2 12   # Negative buffer length
+    # CALLCODE, check the return buffer
+    - :label ok   :abi f(uint,uint) 0x1f2 0   # Valid buffer length
+    - :label ok   :abi f(uint,uint) 0x1f2 1   # Buffer length zero
+    - :label fail :abi f(uint,uint) 0x1f2 2   # Negative buffer length
+    - :label ok   :abi f(uint,uint) 0x1f2 10   # Valid buffer length
+    - :label ok   :abi f(uint,uint) 0x1f2 11   # Buffer length zero
+    - :label fail :abi f(uint,uint) 0x1f2 12   # Negative buffer length
+
+    # DELEGATECALL, check the args buffer
+    - :label ok   :abi f(uint,uint) 0xf4 0   # Valid buffer length
+    - :label ok   :abi f(uint,uint) 0xf4 1   # Buffer length zero
+    - :label fail :abi f(uint,uint) 0xf4 2   # Negative buffer length
+    - :label ok   :abi f(uint,uint) 0xf4 10   # Valid buffer length
+    - :label ok   :abi f(uint,uint) 0xf4 11   # Buffer length zero
+    - :label fail :abi f(uint,uint) 0xf4 12   # Negative buffer length
+    # DELEGATECALL, check the return buffer
+    - :label ok   :abi f(uint,uint) 0x1f4 0   # Valid buffer length
+    - :label ok   :abi f(uint,uint) 0x1f4 1   # Buffer length zero
+    - :label fail :abi f(uint,uint) 0x1f4 2   # Negative buffer length
+    - :label ok   :abi f(uint,uint) 0x1f4 10   # Valid buffer length
+    - :label ok   :abi f(uint,uint) 0x1f4 11   # Buffer length zero
+    - :label fail :abi f(uint,uint) 0x1f4 12   # Negative buffer length
+
+    # CREATE2
+    - :label ok   :abi f(uint,uint) 0xf5 0   # Valid buffer length
+    - :label ok   :abi f(uint,uint) 0xf5 1   # Buffer length zero
+    - :label fail :abi f(uint,uint) 0xf5 2   # Negative buffer length
+    - :label ok   :abi f(uint,uint) 0xf5 10   # Valid buffer length
+    - :label ok   :abi f(uint,uint) 0xf5 11   # Buffer length zero
+    - :label fail :abi f(uint,uint) 0xf5 12   # Negative buffer length
+
+    # STATICCALL, check the args buffer
+    - :label ok   :abi f(uint,uint) 0xfa 0   # Valid buffer length
+    - :label ok   :abi f(uint,uint) 0xfa 1   # Buffer length zero
+    - :label fail :abi f(uint,uint) 0xfa 2   # Negative buffer length
+    - :label ok   :abi f(uint,uint) 0xfa 10   # Valid buffer length
+    - :label ok   :abi f(uint,uint) 0xfa 11   # Buffer length zero
+    - :label fail :abi f(uint,uint) 0xfa 12   # Negative buffer length
+    # STATICCALL, check the return buffer
+    - :label ok   :abi f(uint,uint) 0x1fa 0   # Valid buffer length
+    - :label ok   :abi f(uint,uint) 0x1fa 1   # Buffer length zero
+    - :label fail :abi f(uint,uint) 0x1fa 2   # Negative buffer length
+    - :label ok   :abi f(uint,uint) 0x1fa 10   # Valid buffer length
+    - :label ok   :abi f(uint,uint) 0x1fa 11   # Buffer length zero
+    - :label fail :abi f(uint,uint) 0x1fa 12   # Negative buffer length
+  
+    # RETURN, needs special handling
+    - :label ok-f3   :abi f(uint,uint) 0xf3 0   # Valid buffer length
+    - :label ok-f3   :abi f(uint,uint) 0xf3 1   # Buffer length zero
+    - :label fail-f3 :abi f(uint,uint) 0xf3 2   # Negative buffer length
+    - :label ok-f3   :abi f(uint,uint) 0xf3 10   # Valid buffer length
+    - :label ok-f3   :abi f(uint,uint) 0xf3 11   # Buffer length zero
+    - :label fail-f3 :abi f(uint,uint) 0xf3 12   # Negative buffer length
+
+
+    gasLimit:
+    - '80000000'
+    gasPrice: '1'
+    nonce: '0'
+    to: cccccccccccccccccccccccccccccccccccccccc
+    value:
+    - '1'
+    secretKey: "45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8"
+    
+    
+  expect:
+    # No revert, valid value
+    - indexes:
+        data: :label ok
+        gas:  !!int -1
+        value: !!int -1
+      network:
+        - '>=Istanbul'
+      result:
+        cccccccccccccccccccccccccccccccccccccccc:
+          storage:
+            0x100: 0 
+
+
+    # Revert, invalid value. The goat survives
+    - indexes:
+        data: :label fail
+        gas:  !!int -1
+        value: !!int -1
+      network:
+        - '>=Istanbul'
+      result:
+        cccccccccccccccccccccccccccccccccccccccc:
+          storage:
+            0x100: 0x60A7
+
+
+    # RETURN was a return, not a revert
+    - indexes:
+        data: :label ok-f3
+        gas:  !!int -1
+        value: !!int -1
+      network:
+        - '>=Istanbul'
+      result:
+        000000000000000000000000000000000f30c0de:
+          storage:
+            0x0: 0
+
+    # RETURN failed, caused a revert
+    - indexes:
+        data: :label fail-f3
+        gas:  !!int -1
+        value: !!int -1
+      network:
+        - '>=Istanbul'
+      result:
+        000000000000000000000000000000000f30c0de:
+          storage:
+            0x0: 0x60A7
