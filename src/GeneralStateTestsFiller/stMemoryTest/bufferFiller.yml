@@ -66,8 +66,8 @@ buffer:
            (def 'NOP 0)
 
            ; Variables           
-           (def 'length     0x20)
-           (def 'offset     0x40)
+           (def 'length     0x2020)
+           (def 'offset     0x2040)
          
            ; bufferType 0 is normal, 1 is length zero, 2 is negative length
            ; bufferType 3 is excessively long, for opcodes with bounds checking
@@ -104,6 +104,7 @@ buffer:
                    [length] 0x1000 
                    [offset] 0x0
              } NOP)
+
            ; bufferType 20 is offset 2^256-10, length 5
            ; this causes an out of gas error because the gas cost
            ; is around 2^251 (memory is priced in 32 byte chunks)
@@ -166,15 +167,35 @@ buffer:
       
   transaction:
     data:
+    # Param #1: The opcode
+
+    # Param #2: Buffer types:
+
+    ########### Offset 0x100 ###############
+    #   0 - Valid buffer length (0x100)
+    #   1 - Buffer length zero
+    #   2 - Negative buffer length
+    #   3 - Longer buffer (0x1000)
+
+    ###########  Offset 0x0  ###############
+    #  10 - Valid buffer length
+    #  11 - Buffer length zero
+    #  12 - Negative buffer length
+    #  13 - Longer buffer (0x1000)
+
+    ########## Offset ~ 2^256
+    #  20 - Trying to use memory close to theoretical max
+    #  
+
     # SHA3       
-    - :label ok   :abi f(uint,uint) 0x20 0   # Valid buffer length
-    - :label ok   :abi f(uint,uint) 0x20 1   # Buffer length zero
-    - :label fail :abi f(uint,uint) 0x20 2   # Negative buffer length
-    - :label ok   :abi f(uint,uint) 0x20 10  # Valid buffer length
-    - :label ok   :abi f(uint,uint) 0x20 11  # Buffer length zero
-    - :label fail :abi f(uint,uint) 0x20 12  # Negative buffer length
-    - :label fail :abi f(uint,uint) 0x20 12  # Trying to use memory close
-                                             # to the theoretical maximum
+    - :label ok   :abi f(uint,uint) 0x20 0
+    - :label ok   :abi f(uint,uint) 0x20 1
+    - :label fail :abi f(uint,uint) 0x20 2
+    - :label ok   :abi f(uint,uint) 0x20 10
+    - :label ok   :abi f(uint,uint) 0x20 11
+    - :label fail :abi f(uint,uint) 0x20 12
+    - :label ok :abi f(uint,uint) 0x20 13
+    - :label fail :abi f(uint,uint) 0x20 20
 
     # CALLDATACOPY
     - :label ok   :abi f(uint,uint) 0x37 0   # Valid buffer length
@@ -344,12 +365,12 @@ buffer:
     - :label ok-f3   :abi f(uint,uint) 0xf3 11   # Buffer length zero
     - :label fail-f3 :abi f(uint,uint) 0xf3 12   # Negative buffer length
 
-    # Revert
+    # Revert, needs special handling
     - :label ff-valid :abi f(uint,uint) 0xff 0    # Valid buffer length
-    - :label ff-valid :abi f(uint,uint) 0xff 10   # Valid buffer length
     - :label ff-zero  :abi f(uint,uint) 0xff 1    # Zero buffer length
-    - :label ff-zero  :abi f(uint,uint) 0xff 11   # Zero buffer length
     - :label ff-zero  :abi f(uint,uint) 0xff 2    # Invalid buffer length
+    - :label ff-valid :abi f(uint,uint) 0xff 10   # Valid buffer length
+    - :label ff-zero  :abi f(uint,uint) 0xff 11   # Zero buffer length
     - :label ff-zero  :abi f(uint,uint) 0xff 12   # Invalid buffer length
 
 
