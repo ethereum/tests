@@ -1,8 +1,9 @@
-_.. _state_transition_tutorial:
+.. state_transition_tutorial:
 
 ###########################################
 State Transition Tests
 ###########################################
+
 `Ori Pomerantz <mailto://qbzzt1@gmail.com>`_
 
 In this tutorial you learn how to write and execute Ethereum state transition 
