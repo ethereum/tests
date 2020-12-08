@@ -98,6 +98,10 @@ The fields in each block are optional. Only include those fields you need.
   - **populateFromBlock**: The block number within that chain for the block
     that is an uncle of the block you are specifying.
 
+  However, if you write a test with uncles, you need to run it twice, once
+  to get the state hash values to write them in the test filler file, and 
+  again to actually run the test.
+
 - **transactions**:
 
   A list of transaction objects in the block. 

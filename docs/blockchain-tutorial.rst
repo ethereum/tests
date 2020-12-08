@@ -128,6 +128,9 @@ a **blockHeader** and override some of the default values.
 
 A block can also contain references to `uncle blocks (blocks mined at the same
 time) <https://www.investopedia.com/terms/u/uncle-block-cryptocurrency.asp>`_.
+Note that writing tests with uncle headers is complicated, because you need
+to run the test once to get the correct hash value. Only then can you put the
+correct value in the test and run it again so it'll be successful.
 
 ::
 
