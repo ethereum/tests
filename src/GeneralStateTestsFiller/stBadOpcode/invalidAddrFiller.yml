@@ -20,6 +20,7 @@ invalidAddr:
       balance: 0x10000
       code: |
         {
+              [0] 0xDEADBEEF
               (return 0 0x120)
         }
       nonce: 0
@@ -63,11 +64,12 @@ invalidAddr:
            (def 'word 0x20) ; 32 bytes per word
 
            ; Variables           
-           (def 'addr1 0x2000)
-           (def 'res1  0x2020)
-           (def 'addr2 0x2040)
-           (def 'res2  0x2060)
-           (def 'temp  0x2080)
+           (def 'addr1       0x2000)
+           (def 'res1        0x2020)
+           (def 'addr2       0x2040)
+           (def 'res2        0x2060)
+           (def 'resExpected 0x2080)
+           (def 'temp        0x20A0)
 
            ; addrBase 1 is a normal valid address (0x0000c0de)
            ; addrBase 2 is a precompiled address  (0x00000002)
@@ -94,12 +96,14 @@ invalidAddr:
            (if (= opcode 0x31) {
              [res1] (balance @addr1)
              [res2] (balance @addr2)
+             (if (= addrBase 1) [resExpected] 0x10000 [resExpected] 0x0)
            } NOP)
 
            ; EXTCODESIZE
            (if (= opcode 0x3b) {
              [res1] (extcodesize @addr1)
              [res2] (extcodesize @addr2)
+             (if (= addrBase 1) [resExpected] 0x0F [resExpected] 0x0)
            } NOP)
 
 
@@ -107,18 +111,24 @@ invalidAddr:
            (if (= opcode 0x3c) {
              (extcodecopy @addr1 res1 0 word)
              (extcodecopy @addr2 res2 0 word)
+             (if (= addrBase 1) [resExpected] 0x63deadbeef6000526101206000f3000000000000000000000000000000000000
+                                [resExpected] 0x0)
            } NOP)
 
            ; EXTCODHASH
            (if (= opcode 0x3f) {
              [res1] (extcodehash @addr1)
              [res2] (extcodehash @addr2)
+             (if (= addrBase 1) [resExpected] 0x85ab232a015279867a1f5b5da4f9688c6c92e555c122e9147f9d13bc53c03e92
+                                [resExpected] 0x0)           
            } NOP)
 
            ; CALL
            (if (= opcode 0xf1) {
              (call 0x1000 @addr1 0 0x2000 0x20 res1 word)
              (call 0x1000 @addr2 0 0x2000 0x20 res2 word)
+             (if (= addrBase 1) [resExpected] 0xDEADBEEF 
+                                [resExpected] 0x9267d3dbed802941483f1afa2a6bc68de5f653128aca9bf1461c5d0a3ad36ed2)
             } NOP)
 
 
@@ -126,6 +136,8 @@ invalidAddr:
            (if (= opcode 0xf2) {
              (callcode 0x1000 @addr1 0 0x2000 0x20 res1 word)
              (callcode 0x1000 @addr2 0 0x2000 0x20 res2 word)
+             (if (= addrBase 1) [resExpected] 0xDEADBEEF 
+                                [resExpected] 0x9267d3dbed802941483f1afa2a6bc68de5f653128aca9bf1461c5d0a3ad36ed2)
             } NOP)
 
 
@@ -133,6 +145,8 @@ invalidAddr:
            (if (= opcode 0xf4) {
              (delegatecall 0x1000 @addr1 0x2000 0x20 res1 word)
              (delegatecall 0x1000 @addr2 0x2000 0x20 res2 word)
+             (if (= addrBase 1) [resExpected] 0xDEADBEEF 
+                                [resExpected] 0x9267d3dbed802941483f1afa2a6bc68de5f653128aca9bf1461c5d0a3ad36ed2)
             } NOP)
 
 
@@ -140,6 +154,9 @@ invalidAddr:
            (if (= opcode 0xfa) {
              (staticcall 0x1000 @addr1 0x2000 0x20 res1 word)
              (staticcall 0x1000 @addr2 0x2000 0x20 res2 word)
+             (if (= addrBase 1) [resExpected] 0xDEADBEEF 
+                                [resExpected] 0x9267d3dbed802941483f1afa2a6bc68de5f653128aca9bf1461c5d0a3ad36ed2)
+
             } NOP)
 
 
@@ -160,10 +177,13 @@ invalidAddr:
              [res2] (- @res2 @res1)
              [res1] (- @res1 @temp)
 
+             (if (= addrBase 1) [resExpected] 0x1000 [resExpected] 0x1000)
             } NOP)
 
 
+           ; Verify res1, res2, and resExpected all contain the same value
            [[0]] (- @res1 @res2)
+           [[1]] (- @res1 @resExpected)
      
            ; Kill the goat
            [[0x100]] 0
@@ -301,16 +321,12 @@ invalidAddr:
 
 
     # SELFDESTRUCT   (80+)
+    # Address type 2 is meaningless, we need to call a suicidal contract
     - :label ok   :abi f(uint,uint,uint) 0xff 1 0  
-    - :label ok   :abi f(uint,uint,uint) 0xff 2 0  
     - :label ok   :abi f(uint,uint,uint) 0xff 1 1  
-    - :label ok   :abi f(uint,uint,uint) 0xff 2 1  
     - :label ok   :abi f(uint,uint,uint) 0xff 1 2
-    - :label ok   :abi f(uint,uint,uint) 0xff 2 2 
     - :label ok   :abi f(uint,uint,uint) 0xff 1 3 
-    - :label ok   :abi f(uint,uint,uint) 0xff 2 3 
     - :label ok   :abi f(uint,uint,uint) 0xff 1 4 
-    - :label ok   :abi f(uint,uint,uint) 0xff 2 4 
 
 
 
