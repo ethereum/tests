@@ -1,0 +1,322 @@
+vm_arith_smod:
+
+  # This test deals with addition, mostly addition that causes an overflow.
+  # It is based on the fact that arithmetic in the evm is modulu 2^256. 
+
+  env:
+    currentCoinbase: 2adc25665018aa1fe0e6bc666dac8fc2697ff9ba
+    currentDifficulty: 0x20000
+    currentGasLimit: 100000000
+    currentNumber: 1
+    currentTimestamp: 1000
+    previousHash: 5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6
+
+  _info:
+    comment: Ori Pomerantz qbzzt1@gmail.com
+
+  pre:
+
+    0000000000000000000000000000000000000100:
+      balance: '0x0ba1a9ce0ba1a9ce'
+      code: |
+        {  
+            [[0]] (smod (- 0 5) (- 0 3))
+        }
+      nonce: '0'
+      storage: {}
+
+    0000000000000000000000000000000000000101:
+      balance: '0x0ba1a9ce0ba1a9ce'
+      code: |
+        {  
+            [[0]] (smod 5 (- 0 3))
+        }
+      nonce: '0'
+      storage: {}
+
+    0000000000000000000000000000000000000102:
+      balance: '0x0ba1a9ce0ba1a9ce'
+      code: |
+        {  
+           [[0]] (smod (- 0 5) 3)
+        }
+      nonce: '0'
+      storage: {}
+
+    0000000000000000000000000000000000000103:
+      balance: '0x0ba1a9ce0ba1a9ce'
+      code: |
+        {  
+           ; smod -2 -1
+           ; the big number is 2^256-1 
+            [[0]] (smod (- 0 2)
+               0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff)
+        }
+      nonce: '0'
+      storage: {}
+
+    0000000000000000000000000000000000000104:
+      balance: '0x0ba1a9ce0ba1a9ce'
+      code: |
+        {  
+           [[0]] (smod (- 0 2) 0)
+        }
+      nonce: '0'
+      storage: {}
+
+    0000000000000000000000000000000000000105:
+      balance: '0x0ba1a9ce0ba1a9ce'
+      code: |
+        {  
+           ; The big number is 2^255-1, the biggest signed integer available
+           ; To this is (-MAXINT) % MAXINT
+            [[0]] (smod
+                   (- 0
+               0x7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff)
+               0x7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff)
+
+        }
+      nonce: '0'
+      storage: {}
+
+    0000000000000000000000000000000000000106:
+      balance: '0x0ba1a9ce0ba1a9ce'
+      code: |
+        {  
+          ; (0 - (-1)) % MAXINT,
+          ; The first big number is 2^256 - 1
+          ; The second one is       2^255 - 1
+          [[0]] 
+             (smod
+              (- 0
+                 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+              )  
+              0x7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+             )
+        }
+      nonce: '0'
+      storage: {}
+
+    0000000000000000000000000000000000000107:
+      balance: '0x0ba1a9ce0ba1a9ce'
+      code: |
+        {  
+           ; (0 - MAXINT) % -1,
+           ; The first big number is 2^255 - 1
+           ; The second one is       2^256 - 1
+           [[0]] (smod 
+                  (- 0
+                     0x7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                  )
+                  0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                 )
+
+        }
+      nonce: '0'
+      storage: {}
+
+    0000000000000000000000000000000000000108:
+      balance: '0x0ba1a9ce0ba1a9ce'
+      code: |
+        {  
+            ; (-200 % 0) - 13 = -13
+            [[0]]  (- 
+                   (smod 
+                    (- 0 200) 
+                    0
+                   ) 
+                   13
+                  )
+        }
+      nonce: '0'
+      storage: {}
+
+    0000000000000000000000000000000000000109:
+      balance: '0x0ba1a9ce0ba1a9ce'
+      code: |
+        {  ; -MAXINT % -1
+           ; the big number is 2^255-1
+           [[0]] (smod 
+                  (- 0
+                     0x7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                  )
+                  (- 0 1) 
+                 )
+        }
+      nonce: '0'
+      storage: {}
+
+    000000000000000000000000000000000000010a:
+      balance: '0x0ba1a9ce0ba1a9ce'
+      code: |
+        {  
+            ; (-MAXINT % -1) - 1
+            ; the big number is 2^255-1
+            [[0]] (- 
+                   (smod 
+                    (- 0
+                       0x7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+                    )
+                    (- 0 1) 
+                   ) 
+                  1
+                  )
+        }
+      nonce: '0'
+      storage: {}
+
+      
+
+      
+
+    cccccccccccccccccccccccccccccccccccccccc:
+      balance: '0x0ba1a9ce0ba1a9ce'
+      code: |
+        {  
+            (call 0xffffff (+ 0x100 $4) 0 0 0 0 0)
+        }
+      nonce: '0'
+      storage: {}
+
+
+    a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: '0x0ba1a9ce0ba1a9ce'
+      code: '0x'
+      nonce: '0'
+      storage: {}
+      
+# The transaction to check
+  transaction:
+    data:
+    - :label smod_neg5_neg3          :abi f(uint) 0
+    - :label smod_5_neg3             :abi f(uint) 1
+    - :label smod_neg5_3             :abi f(uint) 2
+    - :label smod_neg2_neg1          :abi f(uint) 3
+    - :label smod_neg2_0             :abi f(uint) 4
+    - :label smod_negMAXINT_MAXINT   :abi f(uint) 5
+    - :label smod_1_MAXINT           :abi f(uint) 6
+    - :label smod_negMAXINT_neg1     :abi f(uint) 7
+    - :label smod_neg200_0_minus_13  :abi f(uint) 8
+    # There are two smod_negMAXINT_neg1's because one is the 2^256-1 value
+    # and the other (- 0 1)
+    - :label smod_negMAXINT_neg1     :abi f(uint) 9
+    # Same as above, but followed by a -1
+    - :label smod_negMAXINT_neg1_m1  :abi f(uint) 10
+    gasLimit:
+    - '80000000'
+    gasPrice: '1'
+    nonce: '0'
+    to: cccccccccccccccccccccccccccccccccccccccc
+    value:
+    - '1'
+    secretKey: "45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8"
+    
+    
+  expect:
+    # All the zero results
+    - indexes:
+        data:
+        - :label smod_neg2_neg1
+        - :label smod_neg2_0
+        - :label smod_negMAXINT_MAXINT
+        - :label smod_negMAXINT_neg1
+        gas:  !!int -1
+        value: !!int -1
+      network:
+        - '>=Istanbul'
+      result:
+        0000000000000000000000000000000000000103:
+          storage:
+            0: 0x00
+        0000000000000000000000000000000000000104:
+          storage:
+            0: 0x00
+        0000000000000000000000000000000000000105:
+          storage:
+            0: 0x00
+        0000000000000000000000000000000000000107:
+          storage:
+            0: 0x00
+        0000000000000000000000000000000000000109:
+          storage:
+            0: 0x00
+
+
+    - indexes:
+        data: :label smod_neg5_neg3
+        gas:  !!int -1
+        value: !!int -1
+      network:
+        - '>=Istanbul'
+      result:
+        0000000000000000000000000000000000000100:
+          storage:
+            # -2
+            0: 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe
+
+
+
+    - indexes:
+        data: :label smod_5_neg3
+        gas:  !!int -1
+        value: !!int -1
+      network:
+        - '>=Istanbul'
+      result:
+        0000000000000000000000000000000000000101:
+          storage:
+            0: 0x02
+
+
+
+    - indexes:
+        data: :label smod_neg5_3
+        gas:  !!int -1
+        value: !!int -1
+      network:
+        - '>=Istanbul'
+      result:
+        0000000000000000000000000000000000000102:
+          storage:
+            # -2
+            0: 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe
+
+
+
+    - indexes:
+        data: :label smod_1_MAXINT
+        gas:  !!int -1
+        value: !!int -1
+      network:
+        - '>=Istanbul'
+      result:
+        0000000000000000000000000000000000000106:
+          storage:
+            0: 0x01
+
+
+    - indexes:
+        data: :label smod_neg200_0_minus_13
+        gas:  !!int -1
+        value: !!int -1
+      network:
+        - '>=Istanbul'
+      result:
+        0000000000000000000000000000000000000108:
+          storage:
+            # -13
+            0: 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff3
+
+
+
+    - indexes:
+        data: :label smod_negMAXINT_neg1_m1
+        gas:  !!int -1
+        value: !!int -1
+      network:
+        - '>=Istanbul'
+      result:
+        000000000000000000000000000000000000010a:
+          storage:
+            # -1
+            0: 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
