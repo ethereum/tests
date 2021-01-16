@@ -126,6 +126,22 @@ mul:
       storage: {}
 
 
+    # Do a mul underflow, see that the transaction is reverted
+    0000000000000000000000000000000000000108:
+      balance: '0x0ba1a9ce0ba1a9ce'
+      # [[0]] 1   so the test will fail if there is no revert
+      # 00 PUSH1 01
+      # 02 PUSH1 00
+      # 04 SSTORE
+      #  Do a stack underflow
+      # 05 PUSH1 01
+      # 07 MUL
+      # 08 STOP
+      code: 0x600160005560010200
+      nonce: '0'
+      storage: {}
+
+
 
 
 
@@ -157,6 +173,7 @@ mul:
     - :label mul_2pow255_2pow255         :abi f(uint) 5
     - :label mul_2pow255min1_2pow255min1 :abi f(uint) 6
     - :label big_pow_3                   :abi f(uint) 7
+    - :label stack_underflow             :abi f(uint) 8
     gasLimit:
     - '80000000'
     gasPrice: '1'
@@ -172,6 +189,7 @@ mul:
         data: 
         - :label mul_0_23
         - :label mul_2pow255_2pow255
+        - :label stack_underflow
         gas:  !!int -1
         value: !!int -1
       network:
@@ -181,6 +199,10 @@ mul:
           storage:
              0: 0x00
         0000000000000000000000000000000000000105:
+          storage:
+             0: 0x00
+        # It's 1 unless the transaction is reverted
+        0000000000000000000000000000000000000108:
           storage:
              0: 0x00
 
