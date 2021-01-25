@@ -275,3 +275,24 @@ still `trace-<transaction number>-<value that is a legitimate hash>.jsonl`.
 
 Using Standard Input and Output
 ===============================
+It should also be possible to run a `t8ntool` with the input coming from `stdin`
+and the output going to `stdout`. In this case, the input is all one object and
+the output is all one object.
+
+
+Input
+-----
+The input has three fields:
+
+* `txs`, a list of transactions (which would normally be in **txs.json**)
+* `alloc`, a map of the pretest accounts (which would normally by in **alloc.json**)
+* `env`, a map of the execution environment (which would normally be in **env.json**)
+
+
+Output
+------
+The output has two fields:
+
+* `result`, the poststage (which would normally be in **outAlloc.json**)
+* `body`, the transactions and their results (which would normally be in **out.json**)
+
