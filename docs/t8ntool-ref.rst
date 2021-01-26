@@ -23,13 +23,22 @@ Input Files
 - **-\\-input.txs** *full path to transaction file*
 - **-\\-input.env** *full path to environment file*
 
+.. note::
+
+   If you want to specify any of this information in `stdin`, either 
+   omit the parameter or use the value **stdin**.
 
 Output Files
 ------------
 - **-\\-output.basedir** *directory to write the output files*
 - **-\\-output.result** *file name for test output*
 - **-\\-output.alloc**  *file name for post test allocation file*
+- **-\\-output.body** *file name for a list of rlp transactions* (a binary file)
 
+.. note::
+
+   If you want to receive this information into `stdout`, either omit
+   the parameter or use the value **stdout**.
 
 
 File Structures
@@ -41,7 +50,7 @@ provided are assumed to be zero or empty, as applicable.
 Transaction File
 ----------------
 The transaction file is a list that contains maps, one for each transaction. 
-This is an input to the tool, typically called `txs.json`. 
+This is an input to the tool, which `retesteth` calls `txs.json`. 
 
 Every transaction can include these fields:
 
@@ -130,8 +139,9 @@ The second is an EIP 2930 transaction which needs to be signed.
 
 Environment File
 ----------------
-This file is a map with the execution environment. This is an input to the tool, 
-typically called `env.json`. It has these fields:
+This file is a map with the execution environment. 
+This is an input to the tool, which `retesteth` calls `env.json`.
+It has these fields:
 
 
 * `currentCoinbase`
@@ -169,7 +179,8 @@ Example
 Allocation Files
 ----------------
 These files show the state of various accounts and contracts on the blockchain.
-There are two of them, `alloc.json` which is the input state and `outAlloc.json`
+In `retesteth` there are two of these files:
+`alloc.json` which is the input state and `outAlloc.json`
 which is the output state.
 
 The file is a map of `address` values to account information. The account 
@@ -208,7 +219,7 @@ Example
 
 Result File
 -----------
-This file is typically called `out.json`. It is the post state after 
+In `retesteth` this file is called `out.json`. It is the post state after 
 processing the block. It should include the following fields:
 
 * `stateRoot`
@@ -275,24 +286,26 @@ still `trace-<transaction number>-<value that is a legitimate hash>.jsonl`.
 
 Using Standard Input and Output
 ===============================
-It should also be possible to run a `t8ntool` with the input coming from `stdin`
-and the output going to `stdout`. In this case, the input is all one object and
+It should also be possible to run a `t8ntool` with input coming from `stdin`
+and output going to `stdout`. In this case, the input is all one object and
 the output is all one object.
 
 
 Input
 -----
-The input has three fields:
+When the input is provided using `stdin`, it can have any combination 
+of these three fields (whichever ones aren't provided in file form)
 
-* `txs`, a list of transactions (which would normally be in **txs.json**)
-* `alloc`, a map of the pretest accounts (which would normally by in **alloc.json**)
-* `env`, a map of the execution environment (which would normally be in **env.json**)
+* `txs`, a list of transactions
+* `alloc`, a map of the pretest accounts
+* `env`, a map of the execution environment
 
 
 Output
 ------
-The output has two fields:
+When the output goes to `stdout`, it can have any combination of these fields
+(whichever ones don't have a specified output file):
 
-* `result`, the poststage (which would normally be in **outAlloc.json**)
-* `body`, the transactions and their results (which would normally be in **out.json**)
+* `result`, the poststage
+* `body`, the transactions and their results 
 
