@@ -274,7 +274,39 @@ storageCosts:
         - 0x10
 
 
-
+    # Do a complex access list, see that it is still processed 
+    # correctly
+    # There is just one way to validly declare that a key will
+    # be used
+    - data: :label declaredKeyWrite :abi f(uint) 0
+      accessList:
+      - address: 0x00000000000000000000000000000000000060A7
+        storageKeys:
+        - 0xFFFFFad
+        - 0x00ad
+        - 0x123214342ad
+        - 0xdeadbeef
+      - address: 0x0000000000000000000000000000000000000100
+        storageKeys:
+        - 0xFFFFF
+        - 0x00
+        - 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+        - 0x123214342
+        - 0xdeadbeef
+      - address: 0x0000000000000000000000000010000000000100
+        storageKeys:
+        - 0xFFFFFbc
+        - 0x00bc
+        - 0x123214342bc
+        - 0xdeadbeefbc
+      - address: 0xffffffffffffffffffffffffffffffffffffffff
+        storageKeys:
+        - 0xFFFFFbc
+        - 0x00bc
+        - 0x123214342bc
+        - 0xdeadbeefbc
+        - 0xdeadbeef12345678deadbeef12345678deadbeef12345678deadbeef12345678
+        - 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
 
 
     gasLimit:
