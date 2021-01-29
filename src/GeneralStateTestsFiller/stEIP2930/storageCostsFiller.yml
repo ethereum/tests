@@ -15,7 +15,7 @@ storageCosts:
 
 
   pre:
-    # Declared vs. undeclared write (SSTORE)
+    # Declared vs. undeclared write (SSTORE)    zero -> value
     0000000000000000000000000000000000000100:
       balance: '1000000000000000000'
       code: |
@@ -57,6 +57,89 @@ storageCosts:
        }
       nonce: '0'
       storage: {}
+
+
+
+    # Declared vs. undeclared delete     value -> zero
+    0000000000000000000000000000000000000102:
+      balance: '1000000000000000000'
+      storage:
+        0x00: 0x60A7
+      code: |
+       { 
+        ; Write to @@0, and see how much gas that cost. It should
+        ; cost more when it is not declared storage
+          [0]   (gas)
+         [[0]]  0x00 
+          [0]   (- @0 (gas) 17)
+         [[1]] @0
+
+        ; The 17 is the cost of the extra opcodes:
+        ; PUSH1 0x00, MSTORE
+        ; PUSH1 0x02, PUSH1 0x00, (and then comes the SSTORE we are measuring)
+        ; GAS
+
+        ; If the storage cell is declared the cost in @@1 should be 2903
+        ; If the storage cell is not declared the cost    should be 5003
+        ;
+        ; The refund for freeing memory happens at the end of the transaction,
+        ; so we don't see it
+       }
+      nonce: '0'
+
+
+
+
+    # Declared vs. undeclared update     value -> different value
+    0000000000000000000000000000000000000103:
+      balance: '1000000000000000000'
+      storage:
+        0x00: 0x60A7
+      code: |
+       { 
+        ; Write to @@0, and see how much gas that cost. It should
+        ; cost more when it is not declared storage
+          [0]   (gas)
+         [[0]]  0xBEEF
+          [0]   (- @0 (gas) 17)
+         [[1]] @0
+
+        ; The 17 is the cost of the extra opcodes:
+        ; PUSH1 0x00, MSTORE
+        ; PUSH1 0x02, PUSH1 0x00, (and then comes the SSTORE we are measuring)
+        ; GAS
+
+        ; If the storage cell is declared the cost in @@1 should be  103
+        ; If the storage cell is not declared the cost    should be 2203
+       }
+      nonce: '0'
+
+
+
+
+    # Declared vs. undeclared NOP     value -> same value
+    0000000000000000000000000000000000000104:
+      balance: '1000000000000000000'
+      storage:
+        0x00: 0x60A7
+      code: |
+       { 
+        ; Write to @@0, and see how much gas that cost. It should
+        ; cost more when it is not declared storage
+          [0]   (gas)
+         [[0]]  0x60A7
+          [0]   (- @0 (gas) 17)
+         [[1]] @0
+
+        ; The 17 is the cost of the extra opcodes:
+        ; PUSH1 0x00, MSTORE
+        ; PUSH1 0x02, PUSH1 0x00, (and then comes the SSTORE we are measuring)
+        ; GAS
+
+        ; This costs 103, regadless of whether it is declared or not
+       }
+      nonce: '0'
+
 
 
 
@@ -183,8 +266,7 @@ storageCosts:
 
   transaction:
     data:
-    # There is just one way to validly declare that a key will
-    # be used
+    # There is just one way to validly declare that a key will be used
     - data: :label declaredKeyWrite :abi f(uint) 0
       accessList:
       - address: 0x0000000000000000000000000000000000000100
@@ -193,6 +275,21 @@ storageCosts:
     - data: :label declaredKeyRead :abi f(uint) 1
       accessList:
       - address: 0x0000000000000000000000000000000000000101
+        storageKeys:
+        - 0x00
+    - data: :label declaredKeyDel :abi f(uint) 2
+      accessList:
+      - address: 0x0000000000000000000000000000000000000102
+        storageKeys:
+        - 0x00
+    - data: :label declaredKeyUpdate :abi f(uint) 3
+      accessList:
+      - address: 0x0000000000000000000000000000000000000103
+        storageKeys:
+        - 0x00
+    - data: :label declaredKeyNOP :abi f(uint) 4
+      accessList:
+      - address: 0x0000000000000000000000000000000000000104
         storageKeys:
         - 0x00
 
@@ -210,6 +307,21 @@ storageCosts:
       - address: 0x0000000000000000000000000000000000000101
         storageKeys:
         - 0x10
+    - data: :label undeclaredKeyDel :abi f(uint) 2
+      accessList:
+      - address: 0x0000000000000000000000000000000000000102
+        storageKeys:
+        - 0x10
+    - data: :label undeclaredKeyUpdate :abi f(uint) 3
+      accessList:
+      - address: 0x0000000000000000000000000000000000000103
+        storageKeys:
+        - 0x10
+    - data: :label undeclaredKeyNOP :abi f(uint) 4
+      accessList:
+      - address: 0x0000000000000000000000000000000000000104
+        storageKeys:
+        - 0x10
 
     # Wrong address
     - data: :label undeclaredKeyWrite :abi f(uint) 0
@@ -222,13 +334,31 @@ storageCosts:
       - address: 0xF000000000000000000000000000000000000101
         storageKeys:
         - 0x00
+    - data: :label undeclaredKeyDel :abi f(uint) 2
+      accessList:
+      - address: 0xF000000000000000000000000000000000000101
+        storageKeys:
+        - 0x00
+    - data: :label undeclaredKeyUpdate :abi f(uint) 3
+      accessList:
+      - address: 0xF000000000000000000000000000000000000101
+        storageKeys:
+        - 0x00
+    - data: :label undeclaredKeyNOP :abi f(uint) 4
+      accessList:
+      - address: 0xF000000000000000000000000000000000000101
+        storageKeys:
+        - 0x00
 
     # No access list at all
-    - :label undeclaredKeyWrite :abi f(uint) 0
-    - :label undeclaredKeyRead  :abi f(uint) 1
+    - :label undeclaredKeyWrite  :abi f(uint) 0
+    - :label undeclaredKeyRead   :abi f(uint) 1
+    - :label undeclaredKeyDel    :abi f(uint) 2
+    - :label undeclaredKeyUpdate :abi f(uint) 3
+    - :label undeclaredKeyNOP    :abi f(uint) 4
 
 
-    # If we had already accessed the storage (and paid the 2000 gas penalty
+    # If we had already accessed the storage (and paid the penalty
     # in case it was undeclared), it doesn't matter how we accessed it then
     # or how we access it now. The cost is the same regardless of whether
     # we declared the key in the storage list or not
@@ -326,7 +456,7 @@ storageCosts:
 
   expect:
 
-
+  # Write to a previously unused storage cell, which is declared in the access list
   - indexes:
       data: :label declaredKeyWrite
       gas: !!int -1
@@ -339,8 +469,7 @@ storageCosts:
           0x00: 0x02
           0x01: 0x4e23
 
-
-
+  # Write to a previously unused storage cell, which is not declared in the access list
   - indexes:
       data: :label undeclaredKeyWrite
       gas: !!int -1
@@ -354,6 +483,103 @@ storageCosts:
           0x01: 0x5657
 
 
+
+  # Write to a previously used storage cell, which is declared in the access list
+  - indexes:
+      data: :label declaredKeyUpdate
+      gas: !!int -1
+      value: !!int -1
+    network:
+    - ">=Berlin"
+    result:
+      0000000000000000000000000000000000000103:
+        storage:
+          0x00: 0xBEEF
+          0x01: 0x0b57
+
+  # Write to a previously used storage cell, which is not declared in the access list
+  - indexes:
+      data: :label undeclaredKeyUpdate
+      gas: !!int -1
+      value: !!int -1
+    network:
+    - ">=Berlin"
+    result:
+      0000000000000000000000000000000000000103:
+        storage:
+          0x00: 0xBEEF
+          0x01: 0x138b
+
+
+  # Write to a previously used storage cell, but the same value it currently has
+  # This cell is declared in the access list
+  - indexes:
+      data: :label declaredKeyNOP
+      gas: !!int -1
+      value: !!int -1
+    network:
+    - ">=Berlin"
+    result:
+      0000000000000000000000000000000000000104:
+        storage:
+          0x00: 0x60A7
+          0x01: 0x0067
+
+
+  # Write to a previously used storage cell, but the same value it currently has
+  # This cell is not declared in the access list
+  - indexes:
+      data: :label undeclaredKeyNOP
+      gas: !!int -1
+      value: !!int -1
+    network:
+    - ">=Berlin"
+    result:
+      0000000000000000000000000000000000000104:
+        storage:
+          0x00: 0x60A7
+          0x01: 0x089b
+
+
+  # Write zero to a previously used storage cell, freeing it
+  # This cell is declared in the access list
+  #
+  # Note that we don't see the refund for freeing storage, that happens at the
+  # end of the transaction
+  - indexes:
+      data: :label declaredKeyDel
+      gas: !!int -1
+      value: !!int -1
+    network:
+    - ">=Berlin"
+    result:
+      0000000000000000000000000000000000000102:
+        storage:
+          0x00: 0x00
+          0x01: 0x0b57
+
+
+
+  # Write zero to a previously used storage cell, freeing it
+  # This cell is not declared in the access list
+  #
+  # Note that we don't see the refund for freeing storage, that happens at the
+  # end of the transaction
+  - indexes:
+      data: :label undeclaredKeyDel
+      gas: !!int -1
+      value: !!int -1
+    network:
+    - ">=Berlin"
+    result:
+      0000000000000000000000000000000000000102:
+        storage:
+          0x00: 0x00
+          0x01: 0x138b
+
+
+
+  # Read a storage cell that has been declared in the access list
   - indexes:
       data: :label declaredKeyRead
       gas: !!int -1
@@ -367,7 +593,7 @@ storageCosts:
 
 
 
-
+  # Read a storage cell that has not been declared in the access list
   - indexes:
       data: :label undeclaredKeyRead
       gas: !!int -1
@@ -381,6 +607,9 @@ storageCosts:
 
 
 
+  # Do an SSTORE, and then check the cost of a second SSTORE for the same cell
+  # The cost of the second access is the same whether it was declared in the access
+  # list or not.
   - indexes:
       data:
       - :label declaredKeyWrite_postSSTORE
@@ -398,6 +627,9 @@ storageCosts:
 
 
 
+  # Do an SSTORE, and then check the cost of an SLOAD for the same cell
+  # The cost of the second access is the same whether it was declared in the access
+  # list or not.
   - indexes:
       data:
       - :label declaredKeyRead_postSSTORE
@@ -414,6 +646,9 @@ storageCosts:
 
 
 
+  # Do an SLOAD, and then check the cost of an SSTORE for the same cell
+  # The cost of the second access is the same whether it was declared in the access
+  # list or not.
   - indexes:
       data:
       - :label declaredKeyWrite_postSLOAD
@@ -430,6 +665,9 @@ storageCosts:
 
 
 
+  # Do an SLOAD, and then check the cost of a second SLOAD for the same cell
+  # The cost of the second access is the same whether it was declared in the access
+  # list or not.
   - indexes:
       data:
       - :label declaredKeyRead_postSLOAD

@@ -54,8 +54,22 @@ transactionCosts:
     # Type 0 transaction, no EIP2930 access list
     - :label type0 :raw 0x00
 
-    # One address, one storage key (there has to be at least one to pass
-    # the parser). The address and storage keys don't matter to the cost
+    # Empty access list
+    - data: :label addrs_0_keys_0 :raw 0x00
+      accessList: []
+
+
+    # An access list with one address that has nothing in it
+    - data: :label addrs_1_keys_0 :raw 0x00
+      accessList:
+      - address: 0x0000000000000000000000000000000000000102
+        storageKeys: []
+
+
+
+    # One address, one storage key. The values of addresses and storage keys 
+    # don't matter to the cost of the access list - just how many of them
+    # there are
     - data: :label addrs_1_keys_1 :raw 0x00
       accessList:
       - address: 0x0000000000000000000000000000000000000101
@@ -94,11 +108,25 @@ transactionCosts:
         storageKeys:
         - 0x0001
 
+
+    - data: :label addrs_2_keys_2 :raw 0x00
+      accessList:
+      - address: 0x0000000000000000000000000000000000000101
+        storageKeys:
+        - 0x0000
+        - 0x0001
+      - address: 0x0000000000000000000000000000000000000102
+        storageKeys: []
+
+
+
+
+
     # It is the responsibility of the transaction sender to avoid duplicates
     # The cost of the transaction is not affected by the fact it could have
     # been shorter
 
-    # Duplicate address
+    # Duplicate address, different storage keys
     - data: :label addrs_2_keys_2 :raw 0x00 
       accessList:
       - address: 0x0000000000000000000000000000000000000101
@@ -157,11 +185,11 @@ transactionCosts:
         storageKeys:
         - 0x0000
         - 0x0010
+        - 0x1111
+        - 0x2222
+        - 0x3333
       - address: 0x0000000000000000000000000000000000000106
-        storageKeys:
-        - 0x0000
-        - 0x0010
-        - 0xFFFFFFFFFFFFFFF
+        storageKeys: []
       - address: 0x0000000000000000000000000000000000000107
         storageKeys:
         - 0x0000
@@ -196,7 +224,9 @@ transactionCosts:
 
 
   - indexes:
-      data: :label type0
+      data: 
+      - :label type0
+      - :label addrs_0_keys_0
       gas: !!int -1
       value: !!int -1
     network:
@@ -207,9 +237,26 @@ transactionCosts:
         # Without an access list the cost of the transaction is 121004
         #
         # We add that to the initial balance so we can count down from
-        # a nice round number
+        # a nice round number. It doesn't matter if the transaction is old
+        # style (type 0), or if it simply doesn't have entries in the access
+        # list
 
 
+  # An access list with one address and no keys in it
+  # It costs 2400 per address
+  - indexes:
+      data: :label addrs_1_keys_0
+      gas: !!int -1
+      value: !!int -1
+    network:
+    - ">=Berlin"
+    result:
+      a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+        balance: 99997600
+
+
+  # An access list with one address and one storage key in it
+  # It costs 4300, 2400 for the address and 1900 for the key
   - indexes:
       data: :label addrs_1_keys_1
       gas: !!int -1
@@ -219,9 +266,15 @@ transactionCosts:
     result:
       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
         balance: 99995700
-        # The cost of one address and one key is 4300 gas 
 
 
+
+  # An access list with one address and two storage keys in it
+  # It costs 6200, 2400 for the address and 2*1900 for the keys
+  #
+  # Another test checks what happens when the two keys are the same,
+  # it does not matter - access lists are not checked for duplicates,
+  # so you pay for each entry, needed or not.
   - indexes:
       data: :label addrs_1_keys_2
       gas: !!int -1
@@ -231,10 +284,15 @@ transactionCosts:
     result:
       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
         balance: 99993800
-        # Adding another storage key raises the cost to 6200
        
 
 
+  # An access list with two addresses and two storage keys in it
+  # It costs 8600, 2400*2 for the addresses and 2*1900 for the keys
+  # 
+  # Another test checks what happens when the two addresses are the same,
+  # it does not matter - access lists are not checked for duplicates,
+  # so you pay for each entry, needed or not.
   - indexes:
       data: :label addrs_2_keys_2
       gas: !!int -1
@@ -244,10 +302,11 @@ transactionCosts:
     result:
       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
         balance: 99991400
-        # Adding another addresses gives us a total cost of 8600
        
 
 
+  # A big list of ten addresses and twenty five keys. 
+  # The cost is still 2400 per address and 1900 per key
   - indexes:
       data: :label addrs_10_keys_25
       gas: !!int -1
