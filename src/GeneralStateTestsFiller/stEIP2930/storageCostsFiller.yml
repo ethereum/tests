@@ -142,6 +142,31 @@ storageCosts:
 
 
 
+    # Declared vs. undeclared NOP0            zero -> zero
+    0000000000000000000000000000000000000105:
+      balance: '1000000000000000000'
+      storage:
+        0x00: 0x00
+      code: |
+       { 
+        ; Write to @@0, and see how much gas that cost. It should
+        ; cost more when it is not declared storage
+          [0]   (gas)
+         [[0]]  0x00
+          [0]   (- @0 (gas) 17)
+         [[1]] @0
+
+        ; The 17 is the cost of the extra opcodes:
+        ; PUSH1 0x00, MSTORE
+        ; PUSH1 0x02, PUSH1 0x00, (and then comes the SSTORE we are measuring)
+        ; GAS
+
+        ; This costs 103, regadless of whether it is declared or not
+       }
+      nonce: '0'
+
+
+
 
 
 
@@ -292,6 +317,11 @@ storageCosts:
       - address: 0x0000000000000000000000000000000000000104
         storageKeys:
         - 0x00
+    - data: :label declaredKeyNOP0 :abi f(uint) 5
+      accessList:
+      - address: 0x0000000000000000000000000000000000000105
+        storageKeys:
+        - 0x00
 
 
     
@@ -322,6 +352,11 @@ storageCosts:
       - address: 0x0000000000000000000000000000000000000104
         storageKeys:
         - 0x10
+    - data: :label undeclaredKeyNOP0 :abi f(uint) 5
+      accessList:
+      - address: 0x0000000000000000000000000000000000000105
+        storageKeys:
+        - 0x10
 
     # Wrong address
     - data: :label undeclaredKeyWrite :abi f(uint) 0
@@ -349,6 +384,11 @@ storageCosts:
       - address: 0xF000000000000000000000000000000000000101
         storageKeys:
         - 0x00
+    - data: :label undeclaredKeyNOP0 :abi f(uint) 5
+      accessList:
+      - address: 0xF000000000000000000000000000000000000101
+        storageKeys:
+        - 0x00
 
     # No access list at all
     - :label undeclaredKeyWrite  :abi f(uint) 0
@@ -356,6 +396,7 @@ storageCosts:
     - :label undeclaredKeyDel    :abi f(uint) 2
     - :label undeclaredKeyUpdate :abi f(uint) 3
     - :label undeclaredKeyNOP    :abi f(uint) 4
+    - :label undeclaredKeyNOP0   :abi f(uint) 5
 
 
     # If we had already accessed the storage (and paid the penalty
@@ -539,6 +580,36 @@ storageCosts:
         storage:
           0x00: 0x60A7
           0x01: 0x089b
+
+
+  # Write zero to a previously unused storage cell.
+  # This cell is declared in the access list
+  - indexes:
+      data: :label declaredKeyNOP0
+      gas: !!int -1
+      value: !!int -1
+    network:
+    - ">=Berlin"
+    result:
+      0000000000000000000000000000000000000105:
+        storage:
+          0x01: 0x0067
+
+
+  # Write zero to a previously unused storage cell.
+  # This cell is not declared in the access list
+  - indexes:
+      data: :label undeclaredKeyNOP0
+      gas: !!int -1
+      value: !!int -1
+    network:
+    - ">=Berlin"
+    result:
+      0000000000000000000000000000000000000105:
+        storage:
+          0x01: 0x089b
+
+
 
 
   # Write zero to a previously used storage cell, freeing it
