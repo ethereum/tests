@@ -16,6 +16,10 @@ storageCosts:
 
   pre:
     # Declared vs. undeclared write (SSTORE)    zero -> value
+    # WRITE_DECLARED
+    # WRITE_ADDR_IN_LIST
+    # WRITE_ADDR_NOT_IN_LIST
+    # WRITE_NO_LIST
     0000000000000000000000000000000000000100:
       balance: '1000000000000000000'
       code: |
@@ -41,6 +45,10 @@ storageCosts:
 
 
     # Declared vs. undeclared read (SLOAD)
+    # READ_DECLARED
+    # READ_ADDR_IN_LIST
+    # READ_ADDR_NOT_IN_LIST
+    # READ_NO_LIST
     0000000000000000000000000000000000000101:
       balance: '1000000000000000000'
       code: |
@@ -61,6 +69,10 @@ storageCosts:
 
 
     # Declared vs. undeclared delete     value -> zero
+    # DEL_DECLARED
+    # DEL_ADDR_IN_LIST
+    # DEL_ADDR_NOT_IN_LIST
+    # DEL_NO_LIST
     0000000000000000000000000000000000000102:
       balance: '1000000000000000000'
       storage:
@@ -91,6 +103,10 @@ storageCosts:
 
 
     # Declared vs. undeclared update     value -> different value
+    # UPDATE_DECLARED
+    # UPDATE_ADDR_IN_LIST
+    # UPDATE_ADDR_NOT_IN_LIST
+    # UPDATE_NO_LIST
     0000000000000000000000000000000000000103:
       balance: '1000000000000000000'
       storage:
@@ -118,6 +134,10 @@ storageCosts:
 
 
     # Declared vs. undeclared NOP     value -> same value
+    # NOP_DECLARED
+    # NOP_ADDR_IN_LIST
+    # NOP_ADDR_NOT_IN_LIST
+    # NOP_NO_LIST
     0000000000000000000000000000000000000104:
       balance: '1000000000000000000'
       storage:
@@ -143,6 +163,10 @@ storageCosts:
 
 
     # Declared vs. undeclared NOP0            zero -> zero
+    # NOP0_DECLARED
+    # NOP0_ADDR_IN_LIST
+    # NOP0_ADDR_NOT_IN_LIST
+    # NOP0_NO_LIST
     0000000000000000000000000000000000000105:
       balance: '1000000000000000000'
       storage:
@@ -292,31 +316,42 @@ storageCosts:
   transaction:
     data:
     # There is just one way to validly declare that a key will be used
+    # WRITE_DECLARED
     - data: :label declaredKeyWrite :abi f(uint) 0
       accessList:
       - address: 0x0000000000000000000000000000000000000100
         storageKeys:
         - 0x00
+
+    # READ_DECLARED
     - data: :label declaredKeyRead :abi f(uint) 1
       accessList:
       - address: 0x0000000000000000000000000000000000000101
         storageKeys:
         - 0x00
+        
+    # DEL_DECLARED
     - data: :label declaredKeyDel :abi f(uint) 2
       accessList:
       - address: 0x0000000000000000000000000000000000000102
         storageKeys:
         - 0x00
+        
+    # UPDATE_DECLARED
     - data: :label declaredKeyUpdate :abi f(uint) 3
       accessList:
       - address: 0x0000000000000000000000000000000000000103
         storageKeys:
         - 0x00
+        
+    # NOP_DECLARED 
     - data: :label declaredKeyNOP :abi f(uint) 4
       accessList:
       - address: 0x0000000000000000000000000000000000000104
         storageKeys:
         - 0x00
+     
+    # NOP0_DECLARED 
     - data: :label declaredKeyNOP0 :abi f(uint) 5
       accessList:
       - address: 0x0000000000000000000000000000000000000105
@@ -327,63 +362,86 @@ storageCosts:
     
     # But there are multiple ways to get it wrong:
     # Wrong storageKey
+    # WRITE_ADDR_IN_LIST
     - data: :label undeclaredKeyWrite :abi f(uint) 0
       accessList:
       - address: 0x0000000000000000000000000000000000000100
         storageKeys:
         - 0x10
+        
+    # READ_ADDR_IN_LIST
     - data: :label undeclaredKeyRead :abi f(uint) 1
       accessList:
       - address: 0x0000000000000000000000000000000000000101
         storageKeys:
         - 0x10
+        
+    # DEL_ADDR_IN_LIST
     - data: :label undeclaredKeyDel :abi f(uint) 2
       accessList:
       - address: 0x0000000000000000000000000000000000000102
         storageKeys:
         - 0x10
+        
+    # UPDATE_ADDR_IN_LIST
     - data: :label undeclaredKeyUpdate :abi f(uint) 3
       accessList:
       - address: 0x0000000000000000000000000000000000000103
         storageKeys:
         - 0x10
+        
+    # NOP_ADDR_IN_LIST
     - data: :label undeclaredKeyNOP :abi f(uint) 4
       accessList:
       - address: 0x0000000000000000000000000000000000000104
         storageKeys:
         - 0x10
+        
+    # NOP0_ADDR_IN_LIST
     - data: :label undeclaredKeyNOP0 :abi f(uint) 5
       accessList:
       - address: 0x0000000000000000000000000000000000000105
         storageKeys:
         - 0x10
 
+
     # Wrong address
+    # WRITE_ADDR_NOT_IN_LIST
     - data: :label undeclaredKeyWrite :abi f(uint) 0
       accessList:
       - address: 0xF000000000000000000000000000000000000100
         storageKeys:
         - 0x00
+        
+    # READ_ADDR_NOT_IN_LIST
     - data: :label undeclaredKeyRead :abi f(uint) 1
       accessList:
       - address: 0xF000000000000000000000000000000000000101
         storageKeys:
         - 0x00
+        
+    # DEL_ADDR_NOT_IN_LIST
     - data: :label undeclaredKeyDel :abi f(uint) 2
       accessList:
       - address: 0xF000000000000000000000000000000000000101
         storageKeys:
         - 0x00
+        
+    # UPDATE_ADDR_NOT_IN_LIST
     - data: :label undeclaredKeyUpdate :abi f(uint) 3
       accessList:
       - address: 0xF000000000000000000000000000000000000101
         storageKeys:
         - 0x00
+        
+    # NOP_ADDR_NOT_IN_LIST
     - data: :label undeclaredKeyNOP :abi f(uint) 4
       accessList:
       - address: 0xF000000000000000000000000000000000000101
         storageKeys:
         - 0x00
+        
+    # NOP0_ADDR_NOT_IN_LIST
     - data: :label undeclaredKeyNOP0 :abi f(uint) 5
       accessList:
       - address: 0xF000000000000000000000000000000000000101
@@ -391,11 +449,22 @@ storageCosts:
         - 0x00
 
     # No access list at all
+    # WRITE_NO_LIST
     - :label undeclaredKeyWrite  :abi f(uint) 0
+    
+    # READ_NO_LIST
     - :label undeclaredKeyRead   :abi f(uint) 1
+    
+    # DEL_NO_LIST
     - :label undeclaredKeyDel    :abi f(uint) 2
+    
+    # UPDATE_NO_LIST
     - :label undeclaredKeyUpdate :abi f(uint) 3
+    
+    # NOP_NO_LIST
     - :label undeclaredKeyNOP    :abi f(uint) 4
+
+    # NOP0_NO_LIST
     - :label undeclaredKeyNOP0   :abi f(uint) 5
 
 
@@ -498,6 +567,7 @@ storageCosts:
   expect:
 
   # Write to a previously unused storage cell, which is declared in the access list
+  # WRITE_DECLARED
   - indexes:
       data: :label declaredKeyWrite
       gas: !!int -1
@@ -511,6 +581,9 @@ storageCosts:
           0x01: 0x4e23
 
   # Write to a previously unused storage cell, which is not declared in the access list
+  # WRITE_ADDR_IN_LIST
+  # WRITE_ADDR_NOT_IN_LIST
+  # WRITE_NO_LIST
   - indexes:
       data: :label undeclaredKeyWrite
       gas: !!int -1
@@ -526,6 +599,7 @@ storageCosts:
 
 
   # Write to a previously used storage cell, which is declared in the access list
+  # UPDATE_DECLARED
   - indexes:
       data: :label declaredKeyUpdate
       gas: !!int -1
@@ -539,6 +613,9 @@ storageCosts:
           0x01: 0x0b57
 
   # Write to a previously used storage cell, which is not declared in the access list
+  # UPDATE_ADDR_IN_LIST
+  # UPDATE_ADDR_NOT_IN_LIST
+  # UPDATE_NO_LIST
   - indexes:
       data: :label undeclaredKeyUpdate
       gas: !!int -1
@@ -554,6 +631,8 @@ storageCosts:
 
   # Write to a previously used storage cell, but the same value it currently has
   # This cell is declared in the access list
+  # 
+  # NOP_DECLARED
   - indexes:
       data: :label declaredKeyNOP
       gas: !!int -1
@@ -569,6 +648,9 @@ storageCosts:
 
   # Write to a previously used storage cell, but the same value it currently has
   # This cell is not declared in the access list
+  # NOP_ADDR_IN_LIST
+  # NOP_ADDR_NOT_IN_LIST
+  # NOP_NO_LIST
   - indexes:
       data: :label undeclaredKeyNOP
       gas: !!int -1
@@ -584,6 +666,7 @@ storageCosts:
 
   # Write zero to a previously unused storage cell.
   # This cell is declared in the access list
+  # NOP0_DECLARED
   - indexes:
       data: :label declaredKeyNOP0
       gas: !!int -1
@@ -598,6 +681,9 @@ storageCosts:
 
   # Write zero to a previously unused storage cell.
   # This cell is not declared in the access list
+  # NOP0_ADDR_IN_LIST
+  # NOP0_ADDR_NOT_IN_LIST
+  # NOP0_NO_LIST
   - indexes:
       data: :label undeclaredKeyNOP0
       gas: !!int -1
@@ -617,6 +703,7 @@ storageCosts:
   #
   # Note that we don't see the refund for freeing storage, that happens at the
   # end of the transaction
+  # DEL_DECLARED
   - indexes:
       data: :label declaredKeyDel
       gas: !!int -1
@@ -636,6 +723,9 @@ storageCosts:
   #
   # Note that we don't see the refund for freeing storage, that happens at the
   # end of the transaction
+  # DEL_ADDR_IN_LIST
+  # DEL_ADDR_NOT_IN_LIST
+  # DEL_NO_LIST
   - indexes:
       data: :label undeclaredKeyDel
       gas: !!int -1
@@ -651,6 +741,7 @@ storageCosts:
 
 
   # Read a storage cell that has been declared in the access list
+  # READ_DECLARED
   - indexes:
       data: :label declaredKeyRead
       gas: !!int -1
@@ -665,6 +756,9 @@ storageCosts:
 
 
   # Read a storage cell that has not been declared in the access list
+  # READ_ADDR_IN_LIST
+  # READ_ADDR_NOT_IN_LIST
+  # READ_NO_LIST  
   - indexes:
       data: :label undeclaredKeyRead
       gas: !!int -1
