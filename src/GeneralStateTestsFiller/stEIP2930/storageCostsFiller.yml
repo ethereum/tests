@@ -195,6 +195,8 @@ storageCosts:
 
 
     # Declared vs. undeclared write (SSTORE), after writing to the storage
+    # STORE_THEN_WRITE_DECLARED
+    # STORE_THEN_WRITE_UNDECLARED    
     0000000000000000000000000000000000000110:
       balance: '1000000000000000000'
       code: |
@@ -224,6 +226,8 @@ storageCosts:
 
 
     # Declared vs. undeclared read (SLOAD), after writing to the storage
+    # STORE_THEN_READ_DECLARED
+    # STORE_THEN_READ_UNDECLARED    
     0000000000000000000000000000000000000111:
       balance: '1000000000000000000'
       code: |
@@ -245,6 +249,8 @@ storageCosts:
 
 
     # Declared vs. undeclared write (SSTORE), after reading the storage
+    # LOAD_THEN_WRITE_DECLARED
+    # LOAD_THEN_WRITE_UNDECLARED    
     0000000000000000000000000000000000000120:
       balance: '1000000000000000000'
       code: |
@@ -273,6 +279,8 @@ storageCosts:
 
 
     # Declared vs. undeclared read (SLOAD), after already reading it
+    # LOAD_THEN_READ_DECLARED
+    # LOAD_THEN_READ_UNDECLARED        
     0000000000000000000000000000000000000121:
       balance: '1000000000000000000'
       code: |
@@ -472,41 +480,56 @@ storageCosts:
     # in case it was undeclared), it doesn't matter how we accessed it then
     # or how we access it now. The cost is the same regardless of whether
     # we declared the key in the storage list or not
+    # STORE_THEN_WRITE_DECLARED
     - data: :label declaredKeyWrite_postSSTORE :abi f(uint) 0x10
       accessList:
       - address: 0x0000000000000000000000000000000000000110
         storageKeys:
         - 0x00
+        
+    # STORE_THEN_WRITE_UNDECLARED
     - data: :label undeclaredKeyWrite_postSSTORE :abi f(uint) 0x10
       accessList:
       - address: 0x0000000000000000000000000000000000000110
         storageKeys:
         - 0x10
+        
+    # STORE_THEN_LOAD_DECLARED
     - data: :label declaredKeyRead_postSSTORE :abi f(uint) 0x11
       accessList:
       - address: 0x0000000000000000000000000000000000000111
         storageKeys:
         - 0x00
+        
+    # STORE_THEN_LOAD_UNDECLARED
     - data: :label undeclaredKeyRead_postSSTORE :abi f(uint) 0x11
       accessList:
       - address: 0x0000000000000000000000000000000000000111
         storageKeys:
         - 0x10
+
+    # LOAD_THEN_WRITE_DECLARED
     - data: :label declaredKeyWrite_postSLOAD :abi f(uint) 0x20
       accessList:
       - address: 0x0000000000000000000000000000000000000120
         storageKeys:
         - 0x00
+        
+    # LOAD_THEN_WRITE_UNDECLARED
     - data: :label undeclaredKeyWrite_postSLOAD :abi f(uint) 0x20
       accessList:
       - address: 0x0000000000000000000000000000000000000120
         storageKeys:
         - 0x10
+        
+    # LOAD_THEN_READ_DECLARED        
     - data: :label declaredKeyRead_postSLOAD :abi f(uint) 0x21
       accessList:
       - address: 0x0000000000000000000000000000000000000121
         storageKeys:
         - 0x00
+        
+    # LOAD_THEN_READ_UNDECLARED                
     - data: :label undeclaredKeyRead_postSLOAD :abi f(uint) 0x21
       accessList:
       - address: 0x0000000000000000000000000000000000000121
@@ -518,6 +541,7 @@ storageCosts:
     # correctly
     # There is just one way to validly declare that a key will
     # be used
+    # LARGE
     - data: :label declaredKeyWrite :abi f(uint) 0
       accessList:
       - address: 0x00000000000000000000000000000000000060A7
@@ -568,6 +592,7 @@ storageCosts:
 
   # Write to a previously unused storage cell, which is declared in the access list
   # WRITE_DECLARED
+  # LARGE
   - indexes:
       data: :label declaredKeyWrite
       gas: !!int -1
@@ -775,6 +800,8 @@ storageCosts:
   # Do an SSTORE, and then check the cost of a second SSTORE for the same cell
   # The cost of the second access is the same whether it was declared in the access
   # list or not.
+  # STORE_THEN_WRITE_DECLARED
+  # STORE_THEN_WRITE_UNDECLARED
   - indexes:
       data:
       - :label declaredKeyWrite_postSSTORE
@@ -795,6 +822,8 @@ storageCosts:
   # Do an SSTORE, and then check the cost of an SLOAD for the same cell
   # The cost of the second access is the same whether it was declared in the access
   # list or not.
+  # STORE_THEN_READ_DECLARED
+  # STORE_THEN_READ_UNDECLARED
   - indexes:
       data:
       - :label declaredKeyRead_postSSTORE
@@ -814,6 +843,8 @@ storageCosts:
   # Do an SLOAD, and then check the cost of an SSTORE for the same cell
   # The cost of the second access is the same whether it was declared in the access
   # list or not.
+  # LOAD_THEN_WRITE_DECLARED
+  # LOAD_THEN_WRITE_UNDECLARED
   - indexes:
       data:
       - :label declaredKeyWrite_postSLOAD
@@ -833,6 +864,8 @@ storageCosts:
   # Do an SLOAD, and then check the cost of a second SLOAD for the same cell
   # The cost of the second access is the same whether it was declared in the access
   # list or not.
+  # LOAD_THEN_READ_DECLARED
+  # LOAD_THEN_READ_UNDECLARED
   - indexes:
       data:
       - :label declaredKeyRead_postSLOAD
@@ -845,9 +878,5 @@ storageCosts:
       0000000000000000000000000000000000000121:
         storage:
           0x01: 0x0061
-
-
-
-
 
 
