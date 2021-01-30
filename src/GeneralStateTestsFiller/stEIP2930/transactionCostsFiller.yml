@@ -52,14 +52,17 @@ transactionCosts:
   transaction:
     data:
     # Type 0 transaction, no EIP2930 access list
+    # NO_LIST
     - :label type0 :raw 0x00
 
     # Empty access list
+    # EMPTY_LIST
     - data: :label addrs_0_keys_0 :raw 0x00
       accessList: []
 
 
     # An access list with one address that has nothing in it
+    # ONE_ZERO
     - data: :label addrs_1_keys_0 :raw 0x00
       accessList:
       - address: 0x0000000000000000000000000000000000000102
@@ -70,18 +73,22 @@ transactionCosts:
     # One address, one storage key. The values of addresses and storage keys 
     # don't matter to the cost of the access list - just how many of them
     # there are
+    # ONE_ONE
     - data: :label addrs_1_keys_1 :raw 0x00
       accessList:
       - address: 0x0000000000000000000000000000000000000101
         storageKeys:
         - 0x0000
 
+    # DIFF_ADDR
     - data: :label addrs_1_keys_1 :raw 0x00
       accessList:
       - address: 0xFF00000000000000000000000000000000000101
         storageKeys:
         - 0x0000
 
+
+    # DIFF_KEY
     - data: :label addrs_1_keys_1 :raw 0x00
       accessList:
       - address: 0xFF00000000000000000000000000000000000101
@@ -90,6 +97,7 @@ transactionCosts:
 
 
     # One address, two storage keys
+    # ONE_TWO
     - data: :label addrs_1_keys_2 :raw 0x00
       accessList:
       - address: 0x0000000000000000000000000000000000000101
@@ -99,6 +107,7 @@ transactionCosts:
 
 
     # Two addresses, two storage keys
+    # TWO_TWO
     - data: :label addrs_2_keys_2 :raw 0x00
       accessList:
       - address: 0x0000000000000000000000000000000000000101
@@ -109,7 +118,9 @@ transactionCosts:
         - 0x0001
 
 
-    - data: :label addrs_2_keys_2 :raw 0x00
+
+     # TWO_KEYS_THEN_ZERO
+     - data: :label addrs_2_keys_2 :raw 0x00
       accessList:
       - address: 0x0000000000000000000000000000000000000101
         storageKeys:
@@ -127,6 +138,7 @@ transactionCosts:
     # been shorter
 
     # Duplicate address, different storage keys
+    # DUP_ADDR
     - data: :label addrs_2_keys_2 :raw 0x00 
       accessList:
       - address: 0x0000000000000000000000000000000000000101
@@ -137,6 +149,7 @@ transactionCosts:
         - 0x0001
 
     # Duplicate address and storage key
+    # DUP_ADDR_DUP_KEY
     - data: :label addrs_2_keys_2 :raw 0x00
       accessList:
       - address: 0x0000000000000000000000000000000000000101
@@ -147,6 +160,7 @@ transactionCosts:
         - 0x0000
 
     # Duplicate storage key
+    # DUP_KEY
     - data: :label addrs_1_keys_2 :raw 0x00   
       accessList:
       - address: 0x0000000000000000000000000000000000000101
@@ -156,6 +170,7 @@ transactionCosts:
 
 
     # A large access list
+    # LARGE
     - data: :label addrs_10_keys_25 :raw 0x00   
       accessList:
       - address: 0x0000000000000000000000000000000000000100
@@ -224,6 +239,8 @@ transactionCosts:
 
 
   - indexes:
+      # NO_LIST
+      # EMPTY_LIST
       data: 
       - :label type0
       - :label addrs_0_keys_0
@@ -244,6 +261,7 @@ transactionCosts:
 
   # An access list with one address and no keys in it
   # It costs 2400 per address
+  # ONE_ZERO
   - indexes:
       data: :label addrs_1_keys_0
       gas: !!int -1
@@ -257,6 +275,9 @@ transactionCosts:
 
   # An access list with one address and one storage key in it
   # It costs 4300, 2400 for the address and 1900 for the key
+  # ONE_ONE
+  # DIFF_ADDR
+  # DIFF_KEY
   - indexes:
       data: :label addrs_1_keys_1
       gas: !!int -1
@@ -275,6 +296,8 @@ transactionCosts:
   # Another test checks what happens when the two keys are the same,
   # it does not matter - access lists are not checked for duplicates,
   # so you pay for each entry, needed or not.
+  # ONE_TWO
+  # DUP_KEY
   - indexes:
       data: :label addrs_1_keys_2
       gas: !!int -1
@@ -293,6 +316,9 @@ transactionCosts:
   # Another test checks what happens when the two addresses are the same,
   # it does not matter - access lists are not checked for duplicates,
   # so you pay for each entry, needed or not.
+  # TWO_TWO
+  # DUP_ADDR
+  # DUP_ADDR_DUP_KEY
   - indexes:
       data: :label addrs_2_keys_2
       gas: !!int -1
@@ -307,6 +333,7 @@ transactionCosts:
 
   # A big list of ten addresses and twenty five keys. 
   # The cost is still 2400 per address and 1900 per key
+  # LARGE
   - indexes:
       data: :label addrs_10_keys_25
       gas: !!int -1
