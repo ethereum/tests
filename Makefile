@@ -9,6 +9,7 @@ bc_tests:=$(wildcard BlockchainTests/*)
 vm_tests:=$(wildcard VMTests/*)
 all_tests:=$(gs_tests) $(bc_tests) $(vm_tests)
 
+
 tx_fillers:=$(wildcard src/TransactionTestsFiller/*.json)
 gs_fillers:=$(wildcard src/GeneralStateTestsFiller/*.json)
 bc_fillers:=$(wildcard src/BlockchainTestsFiller/*.json)
