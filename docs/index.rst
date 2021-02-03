@@ -29,6 +29,7 @@ Ethereum Tests
 
    retesteth-ref.rst
    config-dir.rst
+   t8ntool-ref.rst
 
 
 .. toctree::

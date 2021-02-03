@@ -4,7 +4,7 @@ export ETHEREUM_TEST_PATH
 
 # travis error on stChangedEIP150 removed folder name for some reason. can't reproduce locally 
 tx_tests:=$(wildcard TransactionTests/*)
-gs_tests:=$(filter-out %stEWASMTests %stChangedEIP150, $(wildcard GeneralStateTests/*))
+gs_tests:=$(filter-out %stEWASMTests %stChangedEIP150 %stEIP2930 %stEIP2537, $(wildcard GeneralStateTests/*))
 bc_tests:=$(wildcard BlockchainTests/*)
 vm_tests:=$(wildcard VMTests/*)
 all_tests:=$(gs_tests) $(bc_tests) $(vm_tests)
