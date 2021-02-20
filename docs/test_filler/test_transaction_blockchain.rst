@@ -104,4 +104,5 @@ Fields
 
   The nonce value for the transaction. The first transaction for an address
   has the nonce value of the address itself, the second transaction has the
-  nonce plus one, etc.
+  nonce plus one, etc. Alternatively, if you replace all the **nonce** values
+  with **auto**, the tool does this for you.
