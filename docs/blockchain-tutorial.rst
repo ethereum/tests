@@ -111,6 +111,9 @@ This is the **nonce** value for the transaction. The first value is the
 **nonce** associated with the address in the **pre:** section. 
 Each subsequent transaction from the same address increments the **nonce**.
 
+Alternatively, if you use **auto** for every transaction of an account, 
+the retesteth tool will provide the nonce values automatically.
+
 ::
 
       nonce: '0'
