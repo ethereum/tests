@@ -119,7 +119,9 @@ const boilerPlate2 = `
     cccccccccccccccccccccccccccccccccccccccc:
       code: |
         {
+            [[0]] 0x60A7
             (call (gas) $4 0 0 0 0 0)
+            [[1]] 0x60A7
         }
       nonce: '0'
       storage: {}
@@ -193,6 +195,10 @@ const createOpcodeTest = (opcodeName, opcode, params, good) => {
       network:
         - '>=Istanbul'
       result:
+        cccccccccccccccccccccccccccccccccccccccc:
+          storage:
+            0x00: 0x60A7
+            0x01: 0x60A7
         ${addr}:
           storage:
             0x01: ${good ? "0x01" : "0x60A7"}
