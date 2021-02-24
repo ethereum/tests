@@ -6,17 +6,85 @@ Retesteth
 
 `Ori Pomerantz <mailto://qbzzt1@gmail.com>`_
 
-Configure the Tests on Docker
-=============================
-
-
 .. note::
     This document is a tutorial. For reference on the
     **retesteth** options, `look
-    here <https://github.com/ethereum/retesteth/wiki/Retesteth-commands>`__.
+    here <https://ethereum-tests.readthedocs.io/en/latest/retesteth-ref.html>`__.
 
-The easiest way to start running tests on Ethereum node software (a.k.a.
-Ethereum clients) is to run **retesteth** inside a Docker container.
+
+Retesteth through the Web
+=========================
+The easiest way to run the tests is through `the web interface 
+<http://retesteth.ethdevops.io/web/>`_. 
+
+Request Helper
+--------------
+To run an existing `state test 
+<https://ethereum-tests.readthedocs.io/en/latest/state-transition-tutorial.html>`_,
+you can use the **request helper**. You set these parameters:
+
+==================    ================ ============
+Parameter             Meaning          Sample Value
+==================    ================ ============
+GeneralStateTests/    test suite       stExample
+--singletest          name of test     add11
+--clients             client to use    t8ntool (the value for geth)
+--singlenet           fork to use      Berlin
+--vmtrace             trace to produce raw
+--verbosity           log verbosity    none
+==================    ================ ============
+
+When a test file contains `multiple tests 
+<https://ethereum-tests.readthedocs.io/en/latest/state-transition-tutorial.html#multitest-files>`_
+you can restrict which ones you'll run with the **-d**, **-g**, and **-v** 
+parameters.
+
+
+
+Request Single File
+-------------------
+You can run a single test, either state test or `blockchain test 
+<https://ethereum-tests.readthedocs.io/en/latest/blockchain-tutorial.html>`_,
+using the **request single file** option. You specify the test type
+and then upload a test file. Here are the parameters:
+
+
+==================    ================= ============
+Parameter             Meaning           Sample Value
+==================    ================= ============
+-t                    test suite        test type (state or blockchain)
+--testfile            The file to test  you upload this file
+--clients             client to use     t8ntool (the value for geth)
+--vmtrace             trace to produce  raw
+--filltests           test file type    see below
+==================    ================= ============
+
+If --filltests is set to **none**, you need to upload a generated test file.
+You can find those `here (for state tests) 
+<https://github.com/ethereum/tests/tree/develop/GeneralStateTests>`_, and 
+`here (for blockchain tests) 
+<https://github.com/ethereum/tests/tree/develop/BlockchainTests>`_.
+
+If --filltests is set to **filltests** then you can upload a filler test file,
+which you can write yourself. This is documented 
+`in this tutorial (for state tests) 
+<https://ethereum-tests.readthedocs.io/en/latest/state-transition-tutorial.html>`_ 
+and `this one (for blockchain tests) 
+<https://ethereum-tests.readthedocs.io/en/latest/blockchain-tutorial.html>`_.
+
+
+
+Custom Command
+--------------
+The command line parameters for **retesteth** are documented
+`here <https://ethereum-tests.readthedocs.io/en/latest/retesteth-ref.html>`_.
+You can use this option to run whatever parameters you want.
+ 
+
+Retesteth in a Docker Container
+===============================
+If you want to run the tests locally you can 
+run **retesteth** inside a Docker container.
 
 
 .. include:: retesteth-install.rst
@@ -201,7 +269,8 @@ this:
 Using the Latest Version
 ========================
 The version of retesteth `published as a docker file 
-<wget http://retesteth.ethdevops.io/dretesteth.tar>`_ may not have the latest
+<http://retesteth.ethdevops.io/>`_
+may not have the latest
 updates. If you want the latest features, you need to build an image from the
 **develop** branch yourself:
 

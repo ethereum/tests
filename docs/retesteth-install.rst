@@ -11,30 +11,21 @@ Linux running anywhere else with an Internet connection.
 
       sudo apt install -y wget docker docker.io
 
-#. Download the **retesteth** docker image: 
-
-   :: 
-
-      wget http://retesteth.ethdevops.io/dretesteth.tar
-
+#. Download the **retesteth** `docker image <http://retesteth.ethdevops.io/>`_. 
+   It is a tar file.
 
 #. Load the docker image: 
 
    ::
 
-      sudo docker load -i dretesteth.tar
+      sudo docker load -i dretest*.tar
 
 #. Download the **dretesteth.sh** script. 
 
    ::
 
-      wget https://raw.githubusercontent.com/ethereum/retesteth/develop/dretesteth.sh
+      wget https://raw.githubusercontent.com/ethereum/retesteth/master/dretesteth.sh
       chmod +x dretesteth.sh 
-
-
-   .. note:: At present it is
-       necessary to download it from the **develop** branch. Eventually
-       **dretesteth.sh** will be added to **master**.
 
 #. Download the tests:
 

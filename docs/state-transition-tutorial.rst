@@ -14,7 +14,7 @@ intended as a comprehensive reference, look in the table of content on the left.
 The Environment
 ===============
 Before you start, make sure you read and understand the `Retesteth Tutorial
-<retesteth-tutorial.html>`_, and create the environment explained there.
+<retesteth-tutorial.html>`_, and create the docker environment explained there.
 
 
 Compiling Your First Test

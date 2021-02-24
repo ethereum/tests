@@ -46,14 +46,6 @@ Ethereum Tests
 
 
 
-.. toctree::
-   :maxdepth: 1
-   :caption: Obsolete:
-
-   generating-tests.rst
-
-   
-
 Indices and tables
 ==================
 
