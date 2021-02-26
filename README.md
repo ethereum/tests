@@ -66,5 +66,5 @@ Do not change test files in folders:
 
 It is being created by the testFillers which could be found at src folder. The filler specification and wiki are in development so please ask on gitter channel for more details.
 
-If you want to modify a test filler or add a new test please contact @winsvega at https://gitter.im/ethereum/aleth. 
+If you want to modify a test filler or add a new test please contact @wdimitry at telegram
 Use the following guide: https://github.com/ethereum/retesteth/wiki/Creating-a-State-Test-with-retesteth 
