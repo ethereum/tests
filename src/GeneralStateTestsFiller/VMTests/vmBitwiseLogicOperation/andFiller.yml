@@ -60,20 +60,6 @@ and:
 
 
 
-    0000000000000000000000000000000000000104:
-      balance: '0x0ba1a9ce0ba1a9ce'
-      code: |
-        {  
-            ; "and 0xffffff" doesn't do anything
-            [[0]] (and
-                     0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-                     0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
-                  )
-        }
-      nonce: '0'
-      storage: {}
-
-
 
     0000000000000000000000000000000000000104:
       balance: '0x0ba1a9ce0ba1a9ce'
@@ -112,8 +98,7 @@ and:
     - :label and_2_1            :abi f(uint) 1
     - :label and_3_1            :abi f(uint) 2
     - :label and_allones_bignum :abi f(uint) 3
-    - :label and_allones_1110s  :abi f(uint) 4
-    - :label and_allones_eefee  :abi f(uint) 5
+    - :label and_allones_eefee  :abi f(uint) 4
     gasLimit:
     - '80000000'
     gasPrice: '1'
@@ -163,18 +148,6 @@ and:
 
 
 
-    - indexes:
-        data: :label and_allones_1110s
-        gas:  !!int -1
-        value: !!int -1
-      network:
-        - '>=Istanbul'
-      result:
-        0000000000000000000000000000000000000104:
-          storage:
-            0: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
-
-
 
     - indexes:
         data: :label and_allones_eefee
@@ -183,7 +156,7 @@ and:
       network:
         - '>=Istanbul'
       result:
-        0000000000000000000000000000000000000105:
+        0000000000000000000000000000000000000104:
           storage:
             0: 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeefeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
 

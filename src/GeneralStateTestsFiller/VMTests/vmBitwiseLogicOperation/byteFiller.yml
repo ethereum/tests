@@ -139,7 +139,26 @@ byte:
       nonce: '0'
       storage: {}
 
+    
+    # Check all 32 options (0 - 31)
+    0000000000000000000000000000000000000200:
+      balance: '0x0ba1a9ce0ba1a9ce'
+      code: |
+        {
+           (def 'i   0x0100)    ; index
 
+           ;   (byte <n> num) = n
+           (def 'num 0x000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f)
+
+           [i] 0x00
+
+           (while (< @i 0x20) {
+              [[@i]] (byte @i num)
+              [i] (+ @i 1)
+           })  ; while loop
+        }
+      nonce: '0'
+      storage: {}
 
 
 
@@ -149,7 +168,7 @@ byte:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
         {  
-            (call 0xffffff (+ 0x100 $4) 0 0 0 0 0)
+            (call 0xffffff $4 0 0 0 0 0)
         }
       nonce: '0'
       storage: {}
@@ -164,19 +183,22 @@ byte:
   transaction:
     data:
     # The big number is 0x8040201008040201
-    - :label byte_31_big     :abi f(uint) 0
-    - :label byte_30_big     :abi f(uint) 1
-    - :label byte_29_big     :abi f(uint) 2
-    - :label byte_28_big     :abi f(uint) 3
-    - :label byte_27_big     :abi f(uint) 4
-    - :label byte_26_big     :abi f(uint) 5
-    - :label byte_25_big     :abi f(uint) 6
-    - :label byte_24_big     :abi f(uint) 7
-    - :label byte_00_big     :abi f(uint) 8
-    - :label byte_00_big_2nd :abi f(uint) 9
+    - :label byte_31_big     :abi f(uint) 0x0100
+    - :label byte_30_big     :abi f(uint) 0x0101
+    - :label byte_29_big     :abi f(uint) 0x0102
+    - :label byte_28_big     :abi f(uint) 0x0103
+    - :label byte_27_big     :abi f(uint) 0x0104
+    - :label byte_26_big     :abi f(uint) 0x0105
+    - :label byte_25_big     :abi f(uint) 0x0106
+    - :label byte_24_big     :abi f(uint) 0x0107
+    - :label byte_00_big     :abi f(uint) 0x0108
+    - :label byte_00_big_2nd :abi f(uint) 0x0109
 
     # A different test of the opcode, written in assembly
-    - :label byte_asm        :abi f(uint) 0x0a
+    - :label byte_asm        :abi f(uint) 0x010a
+
+    # A test for all possible byte positions
+    - :label byte_all        :abi f(uint) 0x200
     gasLimit:
     - '80000000'
     gasPrice: '1'
@@ -343,4 +365,49 @@ byte:
         000000000000000000000000000000000000010A:
           storage:
             1: 0xAC
+
+
+
+    - indexes:
+        data:
+        - :label byte_all
+        gas:  !!int -1
+        value: !!int -1
+      network:
+        - '>=Istanbul'
+      result:
+        0000000000000000000000000000000000000200:
+          storage:
+            0x00: 0x00
+            0x01: 0x01
+            0x02: 0x02
+            0x03: 0x03
+            0x04: 0x04
+            0x05: 0x05
+            0x06: 0x06
+            0x07: 0x07
+            0x08: 0x08
+            0x09: 0x09
+            0x0a: 0x0a
+            0x0b: 0x0b
+            0x0c: 0x0c
+            0x0d: 0x0d
+            0x0e: 0x0e
+            0x0f: 0x0f
+            0x10: 0x10
+            0x11: 0x11
+            0x12: 0x12
+            0x13: 0x13
+            0x14: 0x14
+            0x15: 0x15
+            0x16: 0x16
+            0x17: 0x17
+            0x18: 0x18
+            0x19: 0x19
+            0x1a: 0x1a
+            0x1b: 0x1b
+            0x1c: 0x1c
+            0x1d: 0x1d
+            0x1e: 0x1e
+            0x1f: 0x1f
 
