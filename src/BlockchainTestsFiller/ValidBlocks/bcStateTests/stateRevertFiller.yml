@@ -1,0 +1,346 @@
+# This test verifies that if we do a state change (LOGn or SSTORE) and then abort 
+# the transaction no state changes happen.
+#
+# We can't observe logs directly from the EVM, so this is somewhat complicated:
+#
+# Block 1 has transactions that generate a state change and then revert
+#         c..0 REVERTs, c..1 runs out of gas, c..2 has an invalid opcode,
+#         c..c. logs, c..d. uses SSTORE, and c..e. calls a contract that state changes
+# Block 2 has a transaction that gets the block hash of the previous block,
+#         the test fails if the block hash isn't what we expect.
+#
+#
+# This test is extremely sensitive. Anything that changes in a block, even 
+# the gas balance due to an opcode repricing will break it. When you get a failure
+# here run the command:
+#
+# <run the test> --verbosity 6 | grep logsBloom | grep -v 0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+#     
+#                                                         0x and then 512 0's
+#
+# The logsBloom includes non zero values if and only if a log entry is emitted. If 
+# you don't see any lines it means that this fork simply generates a different hash. 
+# Replace it in the storage for 0x6E70DA7A0.....0 / 0x01.
+#
+# suggested in https://github.com/ethereum/tests/issues/348
+
+
+stateRevert:
+  genesisBlockHeader:
+    bloom: 0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+    coinbase: 0x8888f1f195afa192cfee860698584c030f4c9db1
+    difficulty: 131072
+    extraData: 0x42
+    gasLimit: 3141592
+    gasUsed: 0
+    mixHash: 0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421
+    nonce: 0x0102030405060708
+    number: 0
+    parentHash: 0x0000000000000000000000000000000000000000000000000000000000000000
+    receiptTrie: 0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421
+    stateRoot: 0xf99eb1626cfa6db435c0836235942d7ccaa935f1ae247d3f1c21e495685f903a
+    timestamp: 0x54c98c81
+    transactionsTrie: 0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421
+    uncleHash: 0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347
+
+
+  pre:
+    0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: '10000000000'
+      nonce: '0'
+      code: ''
+      storage: {}
+    0xd02d72E067e77158444ef2020Ff2d325f929B363:
+      balance: '0xba1a9ce'
+      nonce: '0'
+      code: ''
+      storage: {}
+
+    # The operations we test
+
+    # Log then revert
+    0xccccccccccccccccccccccccccccccccccccccc0:
+      balance: '0xba1a9ce'
+      nonce: '0'
+      code: |
+        {
+           (log0 0 0x20)
+           (log1 0 0x20 0xBEEF)
+           (log2 0 0x20 0x60A7 0xBEEF)
+           (log3 0 0x20 0xDEAD 0x60A7 0xBEEF)
+           (log4 0 0x20 0x600D 0xDEAD 0x60A7 0xBEEF)
+           (revert 0 0x10)
+
+        }
+      storage: {}
+
+    # Logs then out of gas
+    0xccccccccccccccccccccccccccccccccccccccc1:
+      balance: '0xba1a9ce'
+      nonce: '0'
+      code: |
+        {
+           (log0 0 0x20)
+           (log1 0 0x20 0xBEEF)
+           (log2 0 0x20 0x60A7 0xBEEF)
+           (log3 0 0x20 0xDEAD 0x60A7 0xBEEF)
+           (log4 0 0x20 0x600D 0xDEAD 0x60A7 0xBEEF)
+           (sha3 0 (- 0 1))
+        }
+      storage: {}
+
+    # Logs then illegal opcode
+    0xccccccccccccccccccccccccccccccccccccccc2:
+      # Same code as c....c0, but with an illegal opcode (0xBA) instead of revert
+      code: :raw 0x60206000a061beef60206000a161beef6160a760206000a261beef6160a761dead60206000a361beef6160a761dead61600d60206000a460106000BA
+      balance: '0xba1a9ce'
+      nonce: '0'
+      storage: {}
+
+
+    # Stores data then reverts
+    0xccccccccccccccccccccccccccccccccccccccd0:
+      balance: '0xba1a9ce'
+      nonce: '0'
+      code: |
+        {
+            [[0]] 0x60A7
+            (revert 0 0x10)
+        }
+      storage: {}
+
+    # Stores data then out of gas
+    0xccccccccccccccccccccccccccccccccccccccd1:
+      balance: '0xba1a9ce'
+      nonce: '0'
+      code: |
+        { 
+            [[0]] 0x60A7
+            (sha3 0 (- 0 1))
+        }
+      storage: {}
+
+
+    # Stores data then invalid opcode
+    0xccccccccccccccccccccccccccccccccccccccd2:
+      # Same code as c.....0, but with an invalid opcode (0xBA) instead of revert
+      balance: '0xba1a9ce'
+      nonce: '0'
+      code: :raw 0x6160a760005560106000ba
+      storage: {}
+
+
+    # When called, change state and return normally. We'll see if 
+    # when the caller reverts the changes in this account also go away
+    0x00000000000000000000000000000000000060A7:
+      balance: '0xba1a9ce'
+      nonce: '0'
+      code: |
+        { 
+            [[0]] 0x60A7
+            (log0 0 0)
+        }
+      storage: {}
+
+
+
+    # Calls 0x60A7 the state changer then reverts
+    0xcccccccccccccccccccccccccccccccccccccce0:
+      balance: '0xba1a9ce'
+      nonce: '0'
+      code: |
+        {
+            (call (gas) 0x60A7 0 0 0 0 0)
+            (revert 0 0x10)
+        }
+      storage: {}
+
+    # Calls 0x60A7 the state changer then out of gas
+    0xcccccccccccccccccccccccccccccccccccccce1:
+      balance: '0xba1a9ce'
+      nonce: '0'
+      code: |
+        { 
+            (call (gas) 0x60A7 0 0 0 0 0)
+            (sha3 0 (- 0 1))
+        }
+      storage: {}
+
+
+    # Calls 0x60A7 the state changer then invalid opcode
+    0xcccccccccccccccccccccccccccccccccccccce2:
+      # Same code as c.....0, but with an invalid opcode (0xBA) instead of revert
+      code: :raw 0x600060006000600060006160a75af15060106000BA
+      balance: '0xba1a9ce'
+      nonce: '0'
+      storage: {}
+
+
+    # ##############################################################################
+
+
+
+    # Get block data
+    0x6E70DA7A00000000000000000000000000000000:
+      balance: '0xba1a9ce'
+      nonce: '0'
+      code: |
+        {
+           [[0]] (number)
+           [[1]] (blockhash (- (number) 1))
+        }
+      storage: {}
+
+  blocks:
+
+  # Block 1, operations being tested
+  - transactions:
+
+    # Run all five log opcodes and then revert
+    - data: ''
+      gasLimit: 500000
+      gasPrice: '10'
+      nonce: auto
+      secretKey: 45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8
+      to: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC0
+      value: '10'
+
+    # Run all five log opcodes, then run out of gas
+    - data: ''
+      gasLimit: 500000
+      gasPrice: '10'
+      nonce: auto
+      secretKey: 45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8
+      to: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC1
+      value: '10'
+
+
+    # Run all five log opcodes, then run an invalid opcode (0xBA)
+    - data: ''
+      gasLimit: 500000
+      gasPrice: '10'
+      nonce: auto
+      secretKey: 45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8
+      to: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC2
+      value: '10'
+
+
+    # SSTORE and then revert
+    - data: ''
+      gasLimit: 500000
+      gasPrice: '10'
+      nonce: auto
+      secretKey: 45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8
+      to: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCD0
+      value: '10'
+
+    # SSTORE then run out of gas
+    - data: ''
+      gasLimit: 500000
+      gasPrice: '10'
+      nonce: auto
+      secretKey: 45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8
+      to: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCD1
+      value: '10'
+
+
+    # SSTORE then run an invalid opcode (0xBA)
+    - data: ''
+      gasLimit: 500000
+      gasPrice: '10'
+      nonce: auto
+      secretKey: 45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8
+      to: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCD2
+      value: '10'
+
+
+
+    # CALL a state changer and then revert
+    - data: ''
+      gasLimit: 500000
+      gasPrice: '10'
+      nonce: auto
+      secretKey: 45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8
+      to: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCE0
+      value: '10'
+
+    # CALL a state changer then run out of gas
+    - data: ''
+      gasLimit: 500000
+      gasPrice: '10'
+      nonce: auto
+      secretKey: 45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8
+      to: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCE1
+      value: '10'
+
+
+    # CALL a state changer then run an invalid opcode (0xBA)
+    - data: ''
+      gasLimit: 500000
+      gasPrice: '10'
+      nonce: auto
+      secretKey: 45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8
+      to: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCE2
+      value: '10'
+
+  
+
+
+  # Block 2, get the block hash to where we can check it
+  - transactions:
+    - data: ''
+      gasLimit: 500000
+      gasPrice: '20'
+      nonce: auto
+      secretKey: 45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8
+      to: 0x6E70DA7A00000000000000000000000000000000
+      value: '20'
+
+
+
+  expect:
+  - network:
+    - ">=Berlin"
+    result:
+      0x6E70DA7A00000000000000000000000000000000:
+         storage:
+            0: 0x02
+            1: 0x9f7e6fb73ba230caef69baf8e859151a4c2757867b9c3c9d9d50ba11f4f18b88
+
+      # Error if SSTORE worked (so we'll know that's why the hash changed)
+      0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCD0:
+        storage:
+          0: 0x00
+      0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCD1:
+        storage:
+          0: 0x00
+      0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCD2:
+        storage:
+          0: 0x00
+      0x00000000000000000000000000000000000060A7:
+        storage:
+          0: 0x00
+
+
+
+  - network:
+    - Istanbul
+    result:
+      0x6E70DA7A00000000000000000000000000000000:
+         storage:
+            0: 0x02
+            1: 0xe831161c6439492a2f13585139a57f74e64aead29cd7926333e984e3db6b9723
+
+      # Error if SSTORE worked (so we'll know that's why the hash changed)
+      0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCD0:
+        storage:
+          0: 0x00
+      0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCD1:
+        storage:
+          0: 0x00
+      0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCD2:
+        storage:
+          0: 0x00
+      0x00000000000000000000000000000000000060A7:
+        storage:
+          0: 0x00
