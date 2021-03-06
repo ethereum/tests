@@ -24,12 +24,12 @@
 #     0 - REVERT opcode
 #     1 - gas cost overflow (> 2^64)
 #     2 - invalid opcode
-#     3 - stack underflow  (always causes a failed transaction, 
-#          so moved to InvalidBlocks) 
+#     3 - stack underflow 
 #     4 - stack overflow
 #     5 - jump to addr0 (not a JUMPDEST)
-#     
-#  Note: out of gas (not an overflow) causes an invalid block, so it isn't checked here.
+#
+#     6 is supposed to be a normal out of gas (< 2^64), but that causes an
+#     invalid transaction and kills the test     
 #
 # suggested in https://github.com/ethereum/tests/issues/348
 
@@ -40,7 +40,7 @@ logRevert:
     coinbase: 0x8888f1f195afa192cfee860698584c030f4c9db1
     difficulty: 131072
     extraData: 0x42
-    gasLimit: 3141592
+    gasLimit: 31415920
     gasUsed: 0
     mixHash: 0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421
     nonce: 0x0102030405060708
@@ -55,12 +55,12 @@ logRevert:
 
   pre:
     0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b:
-      balance: 60000000
+      balance: 600000000
       nonce: '0'
       code: ''
       storage: {}
     0xd02d72E067e77158444ef2020Ff2d325f929B363:
-      balance: '0xba1a9ce'
+      balance: 600000000
       nonce: '0'
       code: ''
       storage: {}
@@ -149,10 +149,9 @@ logRevert:
 
 
     # Logs then out of gas  (not extreme, cost < 2^64)
-    # Note that if this is called directly from the block the reverted transaction
-    # won't appear in the result and therefore the test won't work. We have to call
-    # it indirectly, while leaving enough gas for the caller to finish.
-    0xdcccccccccccccccccccccccccccccccccccccc6:
+    # Note that this causes an invalid transaction, not a revert,
+    # so we don't actually check it.
+    0xccccccccccccccccccccccccccccccccccccccc6:
       balance: '0xba1a9ce'
       nonce: '0'
       code: |
@@ -162,20 +161,10 @@ logRevert:
            (log2 0 0x20 0x60A7 0xBEEF)
            (log3 0 0x20 0xDEAD 0x60A7 0xBEEF)
            (log4 0 0x20 0x600D 0xDEAD 0x60A7 0xBEEF)
-           (while 1 (sha3 0 0x1000))
+           (sha3 0 0x1000000)
         }
       storage: {}
 
-
-    0xccccccccccccccccccccccccccccccccccccccc6:
-      balance: '0xba1a9ce'
-      nonce: '0'
-      code: |
-        {
-           (call (- (gas) 50000) 0xdcccccccccccccccccccccccccccccccccccccc6
-                0 0 0 0 0)
-        }
-      storage: {}
 
 
 
@@ -208,6 +197,17 @@ logRevert:
       to:   0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC0
       value: '10'
 
+    # Run all five log opcodes, then runs out of gas (but doesn't overflow 2^64)
+    # This transaction fails, which causes the entire test to fail.
+    - data: 0x00
+      gasLimit: 600000
+      gasPrice: 1
+      nonce: auto
+      secretKey: 45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8
+      to:   0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC6
+      value: '10'
+
+
     # Run all five log opcodes, then run out of gas (overflow the 2^64 variable)
     - data: :raw 0x00
       gasLimit: 600000
@@ -217,16 +217,6 @@ logRevert:
       to:   0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC1
       value: '10'
 
-
-    # Run all five log opcodes, then runs out of gas (but doesn't overflow 2^64)
-    # This transaction fails, which causes the entire test to fail.
-    # - data: 0x00
-    #   gasLimit: 600000
-    #   gasPrice: 1
-    #   nonce: auto
-    #   secretKey: 45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8
-    #   to:   0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC6
-    #   value: '10'
 
 
     # Run all five log opcodes, then run an invalid opcode (0xBA)
@@ -293,4 +283,4 @@ logRevert:
       0x6E70DA7A00000000000000000000000000000000:
          storage:
             0: 0x02
-            1: 0x91efc165356e94a080cefdffed47e135eca298b77ab0738eb115c43a3f0c6632
+            1: 0xae067d1825d3eb1e959f0d6bddaf62b3f881a196737062bca93083a2280ae2e6
