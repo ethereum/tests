@@ -1,0 +1,184 @@
+# The extcodehash opcode returns zero when an account is truly empty
+# (no data what so ever), or when an account only has storage entries.
+#
+# When an account has either a balance or a nonce, extcodehash returns
+# the hash of the empty string.
+#
+# This test was requested in issue https://github.com/ethereum/tests/issues/581
+
+extcodehashEmpty:
+  env:
+    currentCoinbase: 2adc25665018aa1fe0e6bc666dac8fc2697ff9ba
+    currentDifficulty: 0x20000
+    currentGasLimit: 100000000
+    currentNumber: 1
+    currentTimestamp: 1000
+    previousHash: 5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6
+
+  _info:
+    comment: Ori Pomerantz  qbzzt1@gmail.com
+
+  pre:
+
+    cccccccccccccccccccccccccccccccccccccccc:
+      balance: '0x0ba1a9ce0ba1a9ce'
+      code: |
+        {
+           (def 'addr $4)
+ 
+           ; Normal result
+           [[0]] (extcodesize addr)
+           [[1]] (extcodehash addr)
+           (extcodecopy addr 0 0 @@0)
+           [[2]] @0
+
+           ; Send a wei to the account and see that you ALWAYS get the
+           ; empty string's hash
+           (call (gas) addr 1 0 0 0 0)
+           [[3]] (extcodehash addr)
+        }
+      nonce: '0'
+      storage: {}
+
+
+    # Really empty, the EXTCODEHASH is zero
+    0000000000000000000000000000000000000100:
+      balance: 0
+      code: 0x
+      nonce: 0
+      storage: {}
+
+
+    # If there is a balance, it's the hash of the empty string
+    0000000000000000000000000000000000000101:
+      balance: 1
+      code: 0x
+      nonce: 0
+      storage: {}
+
+
+
+    # The actual balance doesn't matter
+    0000000000000000000000000000000000001101:
+      balance: 0x100000000000000
+      code: 0x
+      nonce: 0
+      storage: {}
+
+
+    # If there is a nonce, it's also the hash of the empty string
+    0000000000000000000000000000000000000102:
+      balance: 0
+      code: 0x
+      nonce: 1
+      storage: {}
+
+    # The nonce value doesn't matter
+    0000000000000000000000000000000000001102:
+      balance: 0
+      code: 0x
+      nonce: 1000000000000
+      storage: {}
+
+ 
+    # Storage doesn't make it look an account exists
+    0000000000000000000000000000000000000103:
+      balance: 0
+      code: 0x
+      nonce: 0
+      storage:
+        0x0000000: 0x01000000
+        0xFFFFFFF: 0xFFFFFFFF
+
+    0000000000000000000000000000000000000104:
+      balance: 0
+      code: :raw 0x00
+      nonce: 0
+      storage: {}
+
+
+    a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: '0x0ba1a9ce0ba1a9ce'
+      code: 0x
+      nonce: 0
+      storage: {}
+
+      
+  transaction:
+    data:
+    # These give an EXTCODEHASH of zero
+    - :label empty   :abi f(uint) 0x0100
+    - :label storage :abi f(uint) 0x0103
+
+    # These give an EXTCODEHASH of the empty string
+    - :label balance :abi f(uint) 0x0101
+    - :label balance :abi f(uint) 0x1101
+    - :label nonce   :abi f(uint) 0x0102
+    - :label nonce   :abi f(uint) 0x1102
+
+    # There is a difference between not having code, and having 
+    # a single byte of 00 as the code
+    - :label hasCode :abi f(uint) 0x0104
+
+
+    gasLimit:
+    - '80000000'
+    gasPrice: '1'
+    nonce: '0'
+    to: cccccccccccccccccccccccccccccccccccccccc
+    value:
+    - '1'
+    secretKey: "45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8"
+    
+    
+  expect:
+    - indexes:
+        data:
+        - :label empty
+        - :label storage
+        gas:  !!int -1
+        value: !!int -1
+      network:
+        - '>=Istanbul'
+      result:
+        cccccccccccccccccccccccccccccccccccccccc:
+          storage:
+            0x00: 0x00
+            0x01: 0x00
+            0x02: 0x00
+            0x03: 0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470
+
+
+
+    - indexes:
+        data:
+        - :label balance
+        - :label nonce
+        gas:  !!int -1
+        value: !!int -1
+      network:
+        - '>=Istanbul'
+      result:
+        cccccccccccccccccccccccccccccccccccccccc:
+          storage:
+            0x00: 0x00
+            0x01: 0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470
+            0x02: 0x00
+            0x03: 0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470
+
+
+
+    - indexes:
+        data:
+        - :label hasCode
+        gas:  !!int -1
+        value: !!int -1
+      network:
+        - '>=Istanbul'
+      result:
+        cccccccccccccccccccccccccccccccccccccccc:
+          storage:
+            0x00: 0x01
+            0x01: 0xbc36789e7a1e281436464229828f817d6612f7b477d66591ff96a9e064bcc98a
+            0x02: 0x00
+            0x03: 0xbc36789e7a1e281436464229828f817d6612f7b477d66591ff96a9e064bcc98a
