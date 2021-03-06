@@ -597,24 +597,6 @@ var opcodes = {
    },
 
 
-   // JUMPSUB from EIP 2315, valid from Berlin onward
-   0x5C: {
-     test: "0x"        +
-        "6004"          +   //  0 PUSH1 4
-        "5E"            +   //  2 JUMPSUB
-        "00"            +   //  3 STOP
-        "5C"            +   //  4 BEGINSUB
-        "5D"            +   //  5 RETURNSUB
-        "FD",               //  6 REVERT (if we somehow got here)
-     fromFork: "Berlin"
-   },
-
-   // Same test for 5D and 5E
-   0x5D: { test: "0x60045E005C5DFD", fromFork: "Berlin" },
-   0x5E: { test: "0x60045E005C5DFD", fromFork: "Berlin" },
-
-
-
    0xF0: { // CREATE, note that the created contract is automatically
            // called (so it can have a constructor)
            //
