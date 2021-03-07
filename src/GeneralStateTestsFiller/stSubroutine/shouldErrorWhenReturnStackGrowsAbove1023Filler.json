@@ -1,0 +1,61 @@
+{
+  "shouldErrorWhenReturnStackGrowsAbove1023" : {
+    "env" : {
+      "currentCoinbase" : "2adc25665018aa1fe0e6bc666dac8fc2697ff9ba",
+      "currentDifficulty" : "0x020000",
+      "currentGasLimit" : "0x7fffffffffffffff",
+      "currentNumber" : "1",
+      "currentTimestamp" : "1000",
+      "previousHash" : "5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6"
+    },
+    "expect" : [
+      {
+        "indexes" : {
+          "data" : -1,
+          "gas" : -1,
+          "value" : -1
+        },
+        "network" : [">=Berlin"],
+        "result" : {
+          "1000000000000000000000000000000000000000" : {
+            "storage": {
+              "0x00": "00"
+            }
+          }
+        }
+      }
+    ],
+    "pre" : {
+      "1000000000000000000000000000000000000000" : {
+        "balance" : "1000000000000000000",
+        "//code" : "This should failed because return stack grows above 1023",
+        "code" : "(asm 0x0400 0x00 SSTORE 0x09 JUMPSUB BEGINSUB 0x01 0x00 SLOAD SUB DUP1 ISZERO 0x1B JUMPI 0x00 SSTORE 0x09 JUMPSUB JUMPDEST)",
+        "nonce" : "0",
+        "storage": {
+        }
+      },
+      "a94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+        "balance" : "0xfffffffffffffffffffffffffffffffffffffffff",
+        "code" : "",
+        "nonce" : "0",
+        "storage" : {
+        }
+      }
+    },
+    "transaction" : {
+      "data" : [
+        ""
+      ],
+      "gasLimit" : [
+        "0xfffff2"
+      ],
+      "gasPrice" : "1",
+      "nonce" : "0",
+      "secretKey" : "45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8",
+      "to" : "1000000000000000000000000000000000000000",
+      "value" : [
+        "0"
+      ]
+    }
+  }
+}
