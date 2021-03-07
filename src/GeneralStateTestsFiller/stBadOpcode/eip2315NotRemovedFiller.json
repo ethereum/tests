@@ -1,5 +1,5 @@
 {
-  "shouldErrorWhenSubroutineEnteredViaBeginSub" : {
+  "eip2315NotRemoved" : {
     "env" : {
       "currentCoinbase" : "2adc25665018aa1fe0e6bc666dac8fc2697ff9ba",
       "currentDifficulty" : "0x020000",
@@ -18,9 +18,7 @@
         "network" : [">=Berlin"],
         "result" : {
           "1000000000000000000000000000000000000000" : {
-            "storage": {
-              "0x00": "00"
-            }
+             "storage": {}
           }
         }
       }
@@ -28,14 +26,13 @@
     "pre" : {
       "1000000000000000000000000000000000000000" : {
         "balance" : "1000000000000000000",
-        "//code" : "Subroutines can only be entered via JUMPSUB and not BEGINSUB",
-        "code" : "(asm 0x04 JUMPSUB STOP BEGINSUB BEGINSUB RETURNSUB)",
+        "code" : ":raw 0x60045e005c60016000555d",
         "nonce" : "0",
-        "storage": {
+        "storage" : {
         }
       },
       "a94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-        "balance" : "0xfffffffffffffffffffffffffffffffffffffffff",
+        "balance" : "0x7fffffffffffffff",
         "code" : "",
         "nonce" : "0",
         "storage" : {
@@ -47,7 +44,7 @@
         ""
       ],
       "gasLimit" : [
-        "0xfffff2"
+        "400000"
       ],
       "gasPrice" : "1",
       "nonce" : "0",
