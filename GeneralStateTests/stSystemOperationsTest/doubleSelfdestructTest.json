@@ -2,8 +2,8 @@
     "doubleSelfdestructTest" : {
         "_info" : {
             "comment" : "The first test case required here https://github.com/ethereum/tests/issues/431#issue-306081539 .\nInvoked Solidity 0.4.21 with solc --bin-runtime --optimize\ncontract DoubleSelfdestructTest {\n  address constant B1 = 0x1;\n  address constant B2 = 0x2;\n  function remoteSelfdestruct() external {\n    selfdestruct(B2);\n  }\n  function() external payable {\n    this.remoteSelfdestruct();\n    selfdestruct(B1);\n  }\n}\nBecause gasprice is 0 and mining reward is 0, the mining account is created as empty in the post state. (imitating blockchain rules)\n",
-            "filling-rpc-server" : "evm version 1.9.23-unstable-0efc69a9-20201022",
-            "filling-tool-version" : "retesteth-0.0.9-berlin+commit.2f30f0ea.Linux.g++",
+            "filling-rpc-server" : "evm version 1.10.2-unstable-22082f9e-20210309",
+            "filling-tool-version" : "retesteth-0.1.0-accesslist+commit.47c69eb3.Linux.g++",
             "lllcversion" : "Version: 0.5.14-develop.2020.6.22+commit.9189ad7a.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/stSystemOperationsTest/doubleSelfdestructTestFiller.yml",
             "sourceHash" : "8be3069575980687655bb6c6bc41bcaae2a26232f53bfae929c69afdd40e27c9"
@@ -25,6 +25,7 @@
                         "value" : 0
                     },
                     "hash" : "0xf9ee2c807b2eabdd698264d816bfe9a9a8378fa735c5410504aeb9079f894434",
+                    "txbytes" : "0xf8648080843b9aca0094095e7baea6a6c7c4c2dfeb977efac326af552d87830186a0801ca037de084a867928aff0d24ad4fc002b0cef4212d18e1916ca4c49ffd2ca498b10a06e5471d17e48ecf3a958278b05dc88582f43fc9caa28aa1788838bc1cb170ff3",
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347"
                 }
             ],
@@ -36,6 +37,7 @@
                         "value" : 0
                     },
                     "hash" : "0xf9ee2c807b2eabdd698264d816bfe9a9a8378fa735c5410504aeb9079f894434",
+                    "txbytes" : "0xf8648080843b9aca0094095e7baea6a6c7c4c2dfeb977efac326af552d87830186a0801ca037de084a867928aff0d24ad4fc002b0cef4212d18e1916ca4c49ffd2ca498b10a06e5471d17e48ecf3a958278b05dc88582f43fc9caa28aa1788838bc1cb170ff3",
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347"
                 }
             ]
