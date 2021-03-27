@@ -34,11 +34,11 @@ revertRetDataSize:
             (def 'oog 0)
 
             ; We need these values for CREATE(2)
-            (def 'uf        0x200)
-            (def 'jmp       0x300)
-            (def 'jmpi      0x400)
-            (def 'badOpcode 0x500)
-
+            (def 'uf        0x0200)
+            (def 'jmp       0x0300)
+            (def 'jmpi      0x0400)
+            (def 'badOpcode 0x0500)
+            (def 'badCall   0xFF00)
 
             (def 'NOP 0)
 
@@ -51,6 +51,14 @@ revertRetDataSize:
                [codeLength] (lll (sha3 0 (- 0 1)) codeLoc)
                NOP
             )
+
+
+            (if (= failureType badCall) 
+               [codeLength] (call (gas) 0xFF00 0 0 0 0 0)
+               NOP
+            )
+
+
 
             ; lll protects us from the other failures, so we need to use vm code
             (if (= failureType uf) {
@@ -277,8 +285,6 @@ revertRetDataSize:
 
 
 
-
-
     a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: '0x'
@@ -332,6 +338,15 @@ revertRetDataSize:
     - :abi f(uint,uint) 0xFA 0x0500 # STATICCALL
     - :abi f(uint,uint) 0xF0 0x0500 # CREATE
     - :abi f(uint,uint) 0xF5 0x0500 # CREATE2
+
+
+    # Call a non-existent contract
+    - :abi f(uint,uint) 0xF1 0xFF00 # CALL
+    - :abi f(uint,uint) 0xF2 0xFF00 # CALLCODE
+    - :abi f(uint,uint) 0xF4 0xFF00 # DELEGATECALL
+    - :abi f(uint,uint) 0xFA 0xFF00 # STATICCALL
+    - :abi f(uint,uint) 0xF0 0xFF00 # CREATE
+    - :abi f(uint,uint) 0xF5 0xFF00 # CREATE2
 
 
 
