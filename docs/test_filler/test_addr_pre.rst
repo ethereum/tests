@@ -25,10 +25,22 @@
           [[0]] (ADD 2 2)
        }
 
+  - `Yul, which is documented here <https://docs.soliditylang.org/en/v0.8.3/yul.html>`_, 
+    for example:
+
+    ::
+
+       :yul {
+          // Add 2+2 and store the value in storage location 0
+          sstore(0, add(2,2))
+       }
+
+
   - `Solidity, which you can learn here <https://cryptozombies.io/>`_. Solidity
     code can be provided to a test in two ways:
   
-    - The solidity code itself
+    - Put the solidity code itself in the contract definition (same place as 
+      the LLL or Yul code).
 
-    - You can add a **:solidity** section with the contract definition. In 
-      that case, the value is **:solidity <name of contract>**.
+    - Put a **:solidity** section with the contract source code. In 
+      that case, the value in **code:** is **:solidity <name of contract>**.

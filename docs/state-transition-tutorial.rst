@@ -237,6 +237,34 @@ to see that 2+2=5. Here are the steps to use it.
       rm ~/tests/src/GeneralStateTestsFiller/stExample/02_*
 
 
+
+Yul Tests
+=========
+`Yul <https://docs.soliditylang.org/en/v0.8.3/yul.html>`_ is a language that is very
+close to EVM assembler. As such it is a good language for writing tests. You can see 
+a Yul test at `tests/docs/tutorial_samples/09_yulFiller.yml 
+<https://github.com/ethereum/tests/blob/develop/docs/tutorial_samples/09_yulFiller.yml>`_.
+
+This is a sample contract:
+
+::
+
+    cccccccccccccccccccccccccccccccccccccccc:
+      balance: '0x0ba1a9ce0ba1a9ce'
+      code: |
+       :yul {
+         let cellAddr := sub(10,10)
+
+         sstore(cellAddr,add(60,9))
+       }
+      nonce: 1
+      storage: {}
+
+
+It is very similar to an LLL test, except for having the **:yul** keyword before the
+opening curly bracket (**{**).
+
+
   
 Solidity Tests
 ==============
@@ -250,13 +278,13 @@ Here are the sections that are new.
    ABI decoding, contract constructors, etc. This makes tracing and debugging a lot 
    harder, which makes Solidity a bad choice for most Ethereum client tests.
 
-   This feature is provided primarily to execute `assembly language inside
-   Solidity code <https://solidity.readthedocs.io/en/v0.7.0/assembly.html>`_.
-   You could write tests directly in Solidity, but it is usually a bad idea.
+   This feature is available for tests where it is useful, but LLL or Yul is
+   usually a better choice.
+
 
 
 You can have a separate **solidity:** section for your code. This is useful 
-because Solidity code tends to be longer than LLL code.
+because Solidity code tends to be longer than LLL (or Yul) code.
 
 ::
 
@@ -362,6 +390,8 @@ These are examples of the values that **:abi** can have.
 
 * **:abi ff(uint256,address) 324124 "0xcd2a3d9f938e13cd947ec05abc7fe734df8dd826"**:
   Call **ff** with a uint256 and an address (Ethererum addresses are twenty bytes).
+
+
   
 
 Multitest Files
