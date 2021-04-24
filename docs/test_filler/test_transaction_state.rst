@@ -24,7 +24,21 @@ Format
                   <other sections>,
                   "transaction":
                      {
-                        "data": ["0xDA7A", "0xDA7A", ":label hex 0xDA7A", ":abi f(uint) 0xDA7A"],
+                        "data": ["0xDA7A", "0xDA7A", ":label hex 0xDA7A", 
+                             ":abi f(uint) 0xDA7A",
+                             {
+                                  "data": "0xDA7A", 
+                                  "accessList": [ 
+                                     {
+                                        "address": "0x0000000000000000000000000000000000000101",
+                                        "storageKeys": [0x60A7, 0xBEEF]
+                                     },
+                                     {
+                                        "address": "0x0000000000000000000000000000000000000102"
+                                     }
+                                  ]
+                              }
+                        ],
                         "gasLimit": ["0x6a506a50"],
                         "gasPrice: 1,
                         "value": ["1"],
@@ -43,6 +57,13 @@ Format
                - 0xDA7A
                - :label hex 0xDA7A
                - :abi f(uint) 0xDA7A
+               - data: :label acl 0xDA7A
+                 accessList:
+                 - address: 0x0000000000000000000000000000000000000101
+                   storageKeys: 
+                   - 0x60A7
+                   - 0xBEEF
+                 - address: 0x0000000000000000000000000000000000000102
                gasLimit:
                - '0xga50ga50'
                gasPrice: "1"
@@ -65,6 +86,12 @@ Fields
   **:label <value>**. 
   This value is specified as a list to enable
   `files with multiple tests <../state-transition-tutorial.html#multitest-files>`_
+
+  The data can also have an `EIP2930 
+  <https://eips.ethereum.org/EIPS/eip-2930>`_ access list. In that case the data
+  field itself is a structure with two fields: **data** (the data) and **accessList**.
+  The **accessList** is a list of structures, each of which has to have an **address**
+  and may have a list of **storageKeys**.
 
 - **gasLimit**:
   
