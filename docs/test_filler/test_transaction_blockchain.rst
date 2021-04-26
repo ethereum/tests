@@ -35,6 +35,24 @@ Format
                            secretKey: "5ec13e7 ... 5ec13e7"
                            nonce: '0x909ce'
                          },
+                         {
+                           data: "0xDA7A",
+                           accessList: [
+                             {  
+                                "address": "0xcccccccccccccccccccccccccccccccccccccccd",
+                                "storageKeys": ["0x1000", "0x60A7"]
+                             },
+                             {  
+                                "address": "0xccccccccccccccccccccccccccccccccccccccce"
+                             }
+                           ], 
+                           gasLimit: "0x6a506a50",
+                           gasPrice: 1,
+                           value: 1,
+                           to: "add13ess01233210add13ess01233210",
+                           secretKey: "5ec13e7 ... 5ec13e7"
+                           nonce: '0x909ce'
+                         },
                          <other transactions>
                        ]
                        <other block fields>
@@ -57,6 +75,18 @@ Format
                  to: "add13ess01233210add13ess01233210"
                  secretKey: "5ec13e7 ... 5ec13e7"
                  nonce: '0x909ce'
+               - data: 0xDA7A
+                 accessList: 
+                 - address: 0xcccccccccccccccccccccccccccccccccccccccd
+                   storageKeys:
+                   - 0x1000
+                 - address: 0xcccccccccccccccccccccccccccccccccccccccc
+                 gasLimit: '0x6a506a50'
+                 gasPrice: "1"
+                 value: 1
+                 to: "add13ess01233210add13ess01233210"
+                 secretKey: "5ec13e7 ... 5ec13e7"
+                 nonce: '0x909ce'
                - <another transaction>
                <other block fields>
              - <another block>
@@ -70,6 +100,13 @@ Fields
   `ABI call <https://solidity.readthedocs.io/en/v0.7.1/abi-spec.html>`_
   with this format:
   **:abi <function signature> <function parameters separated by spaces>**.
+
+
+- **accessList**:
+
+  An optional `EIP2930 <https://eips.ethereum.org/EIPS/eip-2930>`_ access list. 
+  The **accessList** is a list of structures, each of which has to have an **address**
+  and may have a list of **storageKeys**.
 
 
 - **gasLimit**:
