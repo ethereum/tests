@@ -81,6 +81,7 @@ oog:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
        :yul {
+          mstore(0, 0x0102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F20)
           return(0,0x20)
        }    
       nonce: 1
@@ -305,7 +306,13 @@ oog:
 
     # RETURNDATACOPY
     - :label success :abi f(uint,uint) 0x3E 0xFFFF
-    - :label failure :abi f(uint,uint) 0x3E 3000
+    - :label success :abi f(uint,uint) 0x3E 3074
+
+    # Two failures because @chfast has two memory related
+    # gas costs in his RETURNDATACOPY code, and we want to check both:
+    - :label failure :abi f(uint,uint) 0x3E 2000   # Memory extension cost
+    - :label failure :abi f(uint,uint) 0x3E 3073   # Memory copying cost (I think)
+
 
     # MLOAD
     - :label success :abi f(uint,uint) 0x51 0xFFFF
