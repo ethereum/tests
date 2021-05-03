@@ -1,0 +1,760 @@
+# Checks that behaviour of already deployed code, having invalid opcodes as the first byte.
+# Execution is expected to end with an exception.
+undefinedOpcodeFirstByte:
+  env:
+    currentCoinbase: 2adc25665018aa1fe0e6bc666dac8fc2697ff9ba
+    currentDifficulty: '0x020000'
+    currentGasLimit: '89128960'
+    currentNumber: '1'
+    currentTimestamp: '1000'
+    previousHash: 5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6
+
+  pre:
+    a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: 1000000
+      code: ''
+      nonce: 0
+      storage: {}
+    b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: 0
+      code: |
+        :yul
+        { 
+          let r := call(10000, shr(96, calldataload(0)), 0, 0, 0, 0, 0) 
+          if iszero(r) { sstore(0, 1) }
+        }
+      nonce: 0
+      storage: {}
+    0c00000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0x0c'
+      nonce: 0
+      storage: {}
+    0d00000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0x0d'
+      nonce: 0
+      storage: {}
+    0e00000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0x0e'
+      nonce: 0
+      storage: {}
+    0f00000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0x0f'
+      nonce: 0
+      storage: {}
+
+    1e00000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0x1e'
+      nonce: 0
+      storage: {}
+    1f00000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0x1f'
+      nonce: 0
+      storage: {}
+
+    2100000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0x21'
+      nonce: 0
+      storage: {}
+    2200000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0x22'
+      nonce: 0
+      storage: {}
+    2300000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0x23'
+      nonce: 0
+      storage: {}
+    2400000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0x24'
+      nonce: 0
+      storage: {}
+    2500000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0x25'
+      nonce: 0
+      storage: {}
+    2600000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0x26'
+      nonce: 0
+      storage: {}
+    2700000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0x27'
+      nonce: 0
+      storage: {}
+    2800000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0x28'
+      nonce: 0
+      storage: {}
+    2900000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0x29'
+      nonce: 0
+      storage: {}
+    2a00000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0x2a'
+      nonce: 0
+      storage: {}
+    2b00000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0x2b'
+      nonce: 0
+      storage: {}
+    2c00000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0x2c'
+      nonce: 0
+      storage: {}
+    2d00000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0x2d'
+      nonce: 0
+      storage: {}
+    2e00000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0x2e'
+      nonce: 0
+      storage: {}
+    2f00000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0x2f'
+      nonce: 0
+      storage: {}
+
+    4800000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0x48'
+      nonce: 0
+      storage: {}
+    4900000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0x49'
+      nonce: 0
+      storage: {}
+    4a00000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0x4a'
+      nonce: 0
+      storage: {}
+    4b00000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0x4b'
+      nonce: 0
+      storage: {}
+    4c00000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0x4c'
+      nonce: 0
+      storage: {}
+    4d00000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0x4d'
+      nonce: 0
+      storage: {}
+    4e00000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0x4e'
+      nonce: 0
+      storage: {}
+    4f00000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0x4f'
+      nonce: 0
+      storage: {}
+
+    5c00000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0x5c'
+      nonce: 0
+      storage: {}
+    5d00000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0x5d'
+      nonce: 0
+      storage: {}
+    5e00000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0x5e'
+      nonce: 0
+      storage: {}
+    5f00000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0x5f'
+      nonce: 0
+      storage: {}
+
+    a500000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xa5'
+      nonce: 0
+      storage: {}
+    a600000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xa6'
+      nonce: 0
+      storage: {}
+    a700000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xa7'
+      nonce: 0
+      storage: {}
+    a800000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xa8'
+      nonce: 0
+      storage: {}
+    a900000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xa9'
+      nonce: 0
+      storage: {}
+    aa00000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xaa'
+      nonce: 0
+      storage: {}
+    ab00000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xab'
+      nonce: 0
+      storage: {}
+    ac00000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xac'
+      nonce: 0
+      storage: {}
+    ad00000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xad'
+      nonce: 0
+      storage: {}
+    ae00000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xae'
+      nonce: 0
+      storage: {}
+    af00000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xaf'
+      nonce: 0
+      storage: {}
+
+    b000000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xb0'
+      nonce: 0
+      storage: {}
+    b100000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xb1'
+      nonce: 0
+      storage: {}
+    b200000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xb2'
+      nonce: 0
+      storage: {}
+    b300000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xb3'
+      nonce: 0
+      storage: {}
+    b400000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xb4'
+      nonce: 0
+      storage: {}
+    b500000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xb5'
+      nonce: 0
+      storage: {}
+    b600000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xb6'
+      nonce: 0
+      storage: {}
+    b700000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xb7'
+      nonce: 0
+      storage: {}
+    b800000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xb8'
+      nonce: 0
+      storage: {}
+    b900000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xb9'
+      nonce: 0
+      storage: {}
+    ba00000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xba'
+      nonce: 0
+      storage: {}
+    bb00000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xbb'
+      nonce: 0
+      storage: {}
+    bc00000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xbc'
+      nonce: 0
+      storage: {}
+    bd00000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xbd'
+      nonce: 0
+      storage: {}
+    be00000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xbe'
+      nonce: 0
+      storage: {}
+    bf00000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xbf'
+      nonce: 0
+      storage: {}
+
+    c000000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xc0'
+      nonce: 0
+      storage: {}
+    c100000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xc1'
+      nonce: 0
+      storage: {}
+    c200000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xc2'
+      nonce: 0
+      storage: {}
+    c300000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xc3'
+      nonce: 0
+      storage: {}
+    c400000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xc4'
+      nonce: 0
+      storage: {}
+    c500000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xc5'
+      nonce: 0
+      storage: {}
+    c600000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xc6'
+      nonce: 0
+      storage: {}
+    c700000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xc7'
+      nonce: 0
+      storage: {}
+    c800000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xc8'
+      nonce: 0
+      storage: {}
+    c900000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xc9'
+      nonce: 0
+      storage: {}
+    ca00000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xca'
+      nonce: 0
+      storage: {}
+    cb00000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xcb'
+      nonce: 0
+      storage: {}
+    cc00000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xcc'
+      nonce: 0
+      storage: {}
+    cd00000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xcd'
+      nonce: 0
+      storage: {}
+    ce00000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xce'
+      nonce: 0
+      storage: {}
+    cf00000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xcf'
+      nonce: 0
+      storage: {}
+
+    d000000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xd0'
+      nonce: 0
+      storage: {}
+    d100000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xd1'
+      nonce: 0
+      storage: {}
+    d200000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xd2'
+      nonce: 0
+      storage: {}
+    d300000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xd3'
+      nonce: 0
+      storage: {}
+    d400000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xd4'
+      nonce: 0
+      storage: {}
+    d500000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xd5'
+      nonce: 0
+      storage: {}
+    d600000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xd6'
+      nonce: 0
+      storage: {}
+    d700000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xd7'
+      nonce: 0
+      storage: {}
+    d800000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xd8'
+      nonce: 0
+      storage: {}
+    d900000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xd9'
+      nonce: 0
+      storage: {}
+    da00000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xda'
+      nonce: 0
+      storage: {}
+    db00000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xdb'
+      nonce: 0
+      storage: {}
+    dc00000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xdc'
+      nonce: 0
+      storage: {}
+    dd00000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xdd'
+      nonce: 0
+      storage: {}
+    de00000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xde'
+      nonce: 0
+      storage: {}
+    df00000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xdf'
+      nonce: 0
+      storage: {}
+
+    e000000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xe0'
+      nonce: 0
+      storage: {}
+    e100000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xe1'
+      nonce: 0
+      storage: {}
+    e200000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xe2'
+      nonce: 0
+      storage: {}
+    e300000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xe3'
+      nonce: 0
+      storage: {}
+    e400000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xe4'
+      nonce: 0
+      storage: {}
+    e500000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xe5'
+      nonce: 0
+      storage: {}
+    e600000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xe6'
+      nonce: 0
+      storage: {}
+    e700000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xe7'
+      nonce: 0
+      storage: {}
+    e800000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xe8'
+      nonce: 0
+      storage: {}
+    e900000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xe9'
+      nonce: 0
+      storage: {}
+    ea00000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xea'
+      nonce: 0
+      storage: {}
+    eb00000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xeb'
+      nonce: 0
+      storage: {}
+    ec00000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xec'
+      nonce: 0
+      storage: {}
+    ed00000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xed'
+      nonce: 0
+      storage: {}
+    ee00000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xee'
+      nonce: 0
+      storage: {}
+    ef00000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xef'
+      nonce: 0
+      storage: {}
+
+    f600000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xf6'
+      nonce: 0
+      storage: {}
+    f700000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xf7'
+      nonce: 0
+      storage: {}
+    f800000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xf8'
+      nonce: 0
+      storage: {}
+    f900000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xf9'
+      nonce: 0
+      storage: {}
+    fb00000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xfb'
+      nonce: 0
+      storage: {}
+    fc00000000000000000000000000000000000000:
+      balance: 0
+      code: ':raw 0xfc'
+      nonce: 0
+      storage: {}
+
+
+
+  transaction:
+    data: 
+      - ':raw 0x0c'
+      - ':raw 0x0d'
+      - ':raw 0x0e'
+      - ':raw 0x0f'
+
+      - ':raw 0x1e'
+      - ':raw 0x1f'
+
+      - ':raw 0x21'
+      - ':raw 0x22'
+      - ':raw 0x23'
+      - ':raw 0x24'
+      - ':raw 0x25'
+      - ':raw 0x26'
+      - ':raw 0x27'
+      - ':raw 0x28'
+      - ':raw 0x29'
+      - ':raw 0x2a'
+      - ':raw 0x2b'
+      - ':raw 0x2c'
+      - ':raw 0x2d'
+      - ':raw 0x2e'
+      - ':raw 0x2f'
+
+      - ':raw 0x48'
+      - ':raw 0x49'
+      - ':raw 0x4a'
+      - ':raw 0x4b'
+      - ':raw 0x4c'
+      - ':raw 0x4d'
+      - ':raw 0x4e'
+      - ':raw 0x4f'
+
+      - ':raw 0x5c'
+      - ':raw 0x5d'
+      - ':raw 0x5e'
+      - ':raw 0x5f'
+
+      - ':raw 0xa5'
+      - ':raw 0xa6'
+      - ':raw 0xa7'
+      - ':raw 0xa8'
+      - ':raw 0xa9'
+      - ':raw 0xaa'
+      - ':raw 0xab'
+      - ':raw 0xac'
+      - ':raw 0xad'
+      - ':raw 0xae'
+      - ':raw 0xaf'
+
+      - ':raw 0xb0'
+      - ':raw 0xb1'
+      - ':raw 0xb2'
+      - ':raw 0xb3'
+      - ':raw 0xb4'
+      - ':raw 0xb5'
+      - ':raw 0xb6'
+      - ':raw 0xb7'
+      - ':raw 0xb8'
+      - ':raw 0xb9'
+      - ':raw 0xba'
+      - ':raw 0xbb'
+      - ':raw 0xbc'
+      - ':raw 0xbd'
+      - ':raw 0xbe'
+      - ':raw 0xbf'
+
+      - ':raw 0xc0'
+      - ':raw 0xc1'
+      - ':raw 0xc2'
+      - ':raw 0xc3'
+      - ':raw 0xc4'
+      - ':raw 0xc5'
+      - ':raw 0xc6'
+      - ':raw 0xc7'
+      - ':raw 0xc8'
+      - ':raw 0xc9'
+      - ':raw 0xca'
+      - ':raw 0xcb'
+      - ':raw 0xcc'
+      - ':raw 0xcd'
+      - ':raw 0xce'
+      - ':raw 0xcf'
+
+      - ':raw 0xd0'
+      - ':raw 0xd1'
+      - ':raw 0xd2'
+      - ':raw 0xd3'
+      - ':raw 0xd4'
+      - ':raw 0xd5'
+      - ':raw 0xd6'
+      - ':raw 0xd7'
+      - ':raw 0xd8'
+      - ':raw 0xd9'
+      - ':raw 0xda'
+      - ':raw 0xdb'
+      - ':raw 0xdc'
+      - ':raw 0xdd'
+      - ':raw 0xde'
+      - ':raw 0xdf'
+
+      - ':raw 0xe0'
+      - ':raw 0xe1'
+      - ':raw 0xe2'
+      - ':raw 0xe3'
+      - ':raw 0xe4'
+      - ':raw 0xe5'
+      - ':raw 0xe6'
+      - ':raw 0xe7'
+      - ':raw 0xe8'
+      - ':raw 0xe9'
+      - ':raw 0xea'
+      - ':raw 0xeb'
+      - ':raw 0xec'
+      - ':raw 0xed'
+      - ':raw 0xee'
+      - ':raw 0xef'
+
+      - ':raw 0xf6'
+      - ':raw 0xf7'
+      - ':raw 0xf8'
+      - ':raw 0xf9'
+      - ':raw 0xfb'
+      - ':raw 0xfc'
+
+
+    gasLimit:
+      - 700000
+    gasPrice: 1
+    nonce: 0
+    secretKey: 45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8
+    to: 'b94f5374fce5edbc8e2a8697c15331677e6ebf0b'
+    value:
+    - 0
+
+  expect:
+    - indexes:
+       data: !!int -1
+       gas: !!int -1
+       value: !!int -1
+      network:
+        - '>=Berlin'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '1'
