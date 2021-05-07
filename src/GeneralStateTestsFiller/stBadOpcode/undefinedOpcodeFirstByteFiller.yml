@@ -11,7 +11,7 @@ undefinedOpcodeFirstByte:
 
   pre:
     a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
-      balance: 1000000
+      balance: 100000000
       code: ''
       nonce: 0
       storage: {}
@@ -20,8 +20,14 @@ undefinedOpcodeFirstByte:
       code: |
         :yul
         { 
-          let r := call(10000, shr(96, calldataload(0)), 0, 0, 0, 0, 0) 
-          if iszero(r) { sstore(0, 1) }
+          for { let opcode := 0 } lt(opcode, 256) { opcode := add(opcode, 1) } 
+          { 
+            let addr := shl(152, opcode)
+            if extcodesize(addr)
+            {
+              if call(10000, addr, 0, 0, 0, 0, 0) { sstore(opcode, 1) }
+            }
+          }
         }
       nonce: 0
       storage: {}
@@ -610,134 +616,9 @@ undefinedOpcodeFirstByte:
 
   transaction:
     data: 
-      - ':raw 0x0c'
-      - ':raw 0x0d'
-      - ':raw 0x0e'
-      - ':raw 0x0f'
-
-      - ':raw 0x1e'
-      - ':raw 0x1f'
-
-      - ':raw 0x21'
-      - ':raw 0x22'
-      - ':raw 0x23'
-      - ':raw 0x24'
-      - ':raw 0x25'
-      - ':raw 0x26'
-      - ':raw 0x27'
-      - ':raw 0x28'
-      - ':raw 0x29'
-      - ':raw 0x2a'
-      - ':raw 0x2b'
-      - ':raw 0x2c'
-      - ':raw 0x2d'
-      - ':raw 0x2e'
-      - ':raw 0x2f'
-
-      - ':raw 0x48'
-      - ':raw 0x49'
-      - ':raw 0x4a'
-      - ':raw 0x4b'
-      - ':raw 0x4c'
-      - ':raw 0x4d'
-      - ':raw 0x4e'
-      - ':raw 0x4f'
-
-      - ':raw 0x5c'
-      - ':raw 0x5d'
-      - ':raw 0x5e'
-      - ':raw 0x5f'
-
-      - ':raw 0xa5'
-      - ':raw 0xa6'
-      - ':raw 0xa7'
-      - ':raw 0xa8'
-      - ':raw 0xa9'
-      - ':raw 0xaa'
-      - ':raw 0xab'
-      - ':raw 0xac'
-      - ':raw 0xad'
-      - ':raw 0xae'
-      - ':raw 0xaf'
-
-      - ':raw 0xb0'
-      - ':raw 0xb1'
-      - ':raw 0xb2'
-      - ':raw 0xb3'
-      - ':raw 0xb4'
-      - ':raw 0xb5'
-      - ':raw 0xb6'
-      - ':raw 0xb7'
-      - ':raw 0xb8'
-      - ':raw 0xb9'
-      - ':raw 0xba'
-      - ':raw 0xbb'
-      - ':raw 0xbc'
-      - ':raw 0xbd'
-      - ':raw 0xbe'
-      - ':raw 0xbf'
-
-      - ':raw 0xc0'
-      - ':raw 0xc1'
-      - ':raw 0xc2'
-      - ':raw 0xc3'
-      - ':raw 0xc4'
-      - ':raw 0xc5'
-      - ':raw 0xc6'
-      - ':raw 0xc7'
-      - ':raw 0xc8'
-      - ':raw 0xc9'
-      - ':raw 0xca'
-      - ':raw 0xcb'
-      - ':raw 0xcc'
-      - ':raw 0xcd'
-      - ':raw 0xce'
-      - ':raw 0xcf'
-
-      - ':raw 0xd0'
-      - ':raw 0xd1'
-      - ':raw 0xd2'
-      - ':raw 0xd3'
-      - ':raw 0xd4'
-      - ':raw 0xd5'
-      - ':raw 0xd6'
-      - ':raw 0xd7'
-      - ':raw 0xd8'
-      - ':raw 0xd9'
-      - ':raw 0xda'
-      - ':raw 0xdb'
-      - ':raw 0xdc'
-      - ':raw 0xdd'
-      - ':raw 0xde'
-      - ':raw 0xdf'
-
-      - ':raw 0xe0'
-      - ':raw 0xe1'
-      - ':raw 0xe2'
-      - ':raw 0xe3'
-      - ':raw 0xe4'
-      - ':raw 0xe5'
-      - ':raw 0xe6'
-      - ':raw 0xe7'
-      - ':raw 0xe8'
-      - ':raw 0xe9'
-      - ':raw 0xea'
-      - ':raw 0xeb'
-      - ':raw 0xec'
-      - ':raw 0xed'
-      - ':raw 0xee'
-      - ':raw 0xef'
-
-      - ':raw 0xf6'
-      - ':raw 0xf7'
-      - ':raw 0xf8'
-      - ':raw 0xf9'
-      - ':raw 0xfb'
-      - ':raw 0xfc'
-
-
+      - ''
     gasLimit:
-      - 700000
+      - 70000000
     gasPrice: 1
     nonce: 0
     secretKey: 45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8
@@ -756,5 +637,4 @@ undefinedOpcodeFirstByte:
        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           nonce: 1
        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
-          storage:
-            '0': '1'
+          storage: {}
