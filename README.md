@@ -53,7 +53,14 @@ See the dedicated [section](https://ethereum-tests.readthedocs.io/en/latest/gene
 
 If you want to follow up with current tasks and what is currently in the works, have a look at the [issues](https://github.com/ethereum/tests/issues) 
 
-Currently the C++ ``Aleth`` client is the reference client for generating tests. Have a look at [issues](https://github.com/ethereum/aleth/issues?q=is%3Aopen+is%3Aissue+label%3Atesteth) and [PRs](https://github.com/ethereum/aleth/pulls?q=is%3Aopen+is%3Apr+label%3Atesteth) tagged with ``testeth`` to get an idea what is currently being worked on regarding the test generation process.
+Currently the geth evm ``t8ntool`` client is the reference client for generating tests. Besu client also has support for generating the tests using rpc test protocol. See at https://github.com/ethereum/retesteth/wiki
+
+Testing stats
+---------------------------
+
+Testing results are available at http://retesteth.ethdevops.io/
+There is a web tool for vmtracing the tests using supported clients and retesteth: http://retesteth.ethdevops.io/web/
+All blockchain tests are being run by hive tool: https://hivetests.ethdevops.io/
 
 Contents of this repository
 ---------------------------
