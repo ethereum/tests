@@ -58,9 +58,9 @@ Currently the geth evm ``t8ntool`` client is the reference client for generating
 Testing stats
 ---------------------------
 
-Testing results are available at http://retesteth.ethdevops.io/
-There is a web tool for vmtracing the tests using supported clients and retesteth: http://retesteth.ethdevops.io/web/
-All blockchain tests are being run by hive tool: https://hivetests.ethdevops.io/
+Testing results are available at http://retesteth.ethdevops.io/  
+There is a web tool for vmtracing the tests using supported clients and retesteth: http://retesteth.ethdevops.io/web/  
+All blockchain tests are being run by hive tool: https://hivetests.ethdevops.io/  
 
 Contents of this repository
 ---------------------------
