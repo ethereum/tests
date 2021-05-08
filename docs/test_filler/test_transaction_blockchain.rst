@@ -143,3 +143,8 @@ Fields
   has the nonce value of the address itself, the second transaction has the
   nonce plus one, etc. Alternatively, if you replace all the **nonce** values
   with **auto**, the tool does this for you.
+
+
+- **invalid**:
+
+  If the transaction is invalid, meaning clients should reject it, set this value to "1"
