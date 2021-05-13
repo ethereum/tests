@@ -81,6 +81,11 @@ The fields in each block are optional. Only include those fields you need.
   section of the Blockchain Tests 
   tutorial <../blockchain-tutorial.html#invalid-block-tests>`_.
 
+  Note that starting with London **gasLimit** cannot be changed by more than 1/1024
+  from the previous value because of `EIP 1559 <https://github.com/ethereum/EIPs/blob/master/EIPS/eip-1559.md>`_.
+  You can specify **baseFee**, but the block is only valid if it is the same value
+  that was calculated from the previous block.
+
 - **blocknumber** and **chainname**:
 
   If you are testing behavior in the presence of multiple competing chains,
