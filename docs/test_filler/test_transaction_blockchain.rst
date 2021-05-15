@@ -48,8 +48,8 @@ Format
                              }
                            ], 
                            gasLimit: "0x6a506a50",
-                           feeCap: 1000,
-                           tip: 10,
+                           maxFeePerGas: 1000,
+                           maxPriorityFeePerGas: 10,
                            value: 1,
                            to: "add13ess01233210add13ess01233210",
                            secretKey: "5ec13e7 ... 5ec13e7"
@@ -72,8 +72,8 @@ Format
              - transactions:
                - data: 0xDA7A
                  gasLimit: '0x6a506a50'
-                 feeCap: 1000
-                 tip: 10
+                 maxFeePerGas: 1000
+                 maxPriorityFeePerGas: 10
                  value: 1
                  to: "add13ess01233210add13ess01233210"
                  secretKey: "5ec13e7 ... 5ec13e7"
@@ -122,14 +122,14 @@ Fields
 
   Gas price in Wei, prior to London (changed by `EIP 1559 <https://github.com/ethereum/EIPs/blob/master/EIPS/eip-1559.md>`_).
 
-- **feeCap**:
+- **maxFeePerGas**:
 
-  Maximum acceptable gas price in Wei. Avaiable in London and later.
+  Maximum acceptable gas price in Wei. Available in London and later.
 
-- **tip**:
+- **maxPriorityFeePerGas**:
 
   Tip to give the miner (per gas, in Wei). The real tip is either this value or 
-  **feeCap-baseFee** (the lower of the two). Available in London and later.
+  **maxFeePerGas-baseFee** (the lower of the two). Available in London and later.
 
 - **value**:
 
