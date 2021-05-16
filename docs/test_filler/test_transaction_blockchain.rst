@@ -43,11 +43,13 @@ Format
                                 "storageKeys": ["0x1000", "0x60A7"]
                              },
                              {  
-                                "address": "0xccccccccccccccccccccccccccccccccccccccce"
+                                "address": "0xccccccccccccccccccccccccccccccccccccccce",
+                                "storageKeys": []
                              }
                            ], 
                            gasLimit: "0x6a506a50",
-                           gasPrice: 1,
+                           maxFeePerGas: "1000",
+                           maxPriorityFeePerGas: "10",
                            value: 1,
                            to: "add13ess01233210add13ess01233210",
                            secretKey: "5ec13e7 ... 5ec13e7"
@@ -70,7 +72,8 @@ Format
              - transactions:
                - data: 0xDA7A
                  gasLimit: '0x6a506a50'
-                 gasPrice: "1"
+                 maxFeePerGas: 1000
+                 maxPriorityFeePerGas: 10
                  value: 1
                  to: "add13ess01233210add13ess01233210"
                  secretKey: "5ec13e7 ... 5ec13e7"
@@ -81,6 +84,7 @@ Format
                    storageKeys:
                    - 0x1000
                  - address: 0xcccccccccccccccccccccccccccccccccccccccc
+                   storageKeys: []
                  gasLimit: '0x6a506a50'
                  gasPrice: "1"
                  value: 1
@@ -106,7 +110,7 @@ Fields
 
   An optional `EIP2930 <https://eips.ethereum.org/EIPS/eip-2930>`_ access list. 
   The **accessList** is a list of structures, each of which has to have an **address**
-  and may have a list of **storageKeys**.
+  and a list of **storageKeys** (which may be empty).
 
 
 - **gasLimit**:
@@ -116,8 +120,16 @@ Fields
 
 - **gasPrice**:
 
-  Gas price in Wei
+  Gas price in Wei, prior to London (changed by `EIP 1559 <https://github.com/ethereum/EIPs/blob/master/EIPS/eip-1559.md>`_).
 
+- **maxFeePerGas**:
+
+  Maximum acceptable gas price in Wei. Avaiable in London and later.
+
+- **maxPriorityFeePerGas**:
+
+  Tip to give the miner (per gas, in Wei). The real tip is either this value or 
+  **maxFeePerGas-baseFee** (the lower of the two). Available in London and later.
 
 - **value**:
 
@@ -143,3 +155,8 @@ Fields
   has the nonce value of the address itself, the second transaction has the
   nonce plus one, etc. Alternatively, if you replace all the **nonce** values
   with **auto**, the tool does this for you.
+
+
+- **invalid**:
+
+  If the transaction is invalid, meaning clients should reject it, set this value to "1"
