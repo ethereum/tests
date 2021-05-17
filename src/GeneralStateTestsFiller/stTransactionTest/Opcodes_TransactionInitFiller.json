@@ -174,6 +174,46 @@
                         "shouldnotexist": "1"
                     } 
                 }   
+            },
+            {   
+                "indexes" : { 
+                    "data" : [":label side_effects"], 
+                    "gas" : -1, 
+                    "value" : -1
+                },  
+                "network" : [">=Berlin"],
+                "result" : { 
+                    "a94f5374fce5edbc8e2a8697c15331677e6ebf0b" : { 
+                        "nonce" : "1" 
+                    },  
+                    "b94f5374fce5edbc8e2a8697c15331677e6ebf0b" : { 
+                        "storage": {
+                            "1": "0"
+                        }
+                    },  
+                    "6295ee1b4f6dd65047762f924ecd367c17eabf8f": { 
+                        "nonce": "1"
+                    } 
+                }
+            },
+            {   
+                "indexes" : { 
+                    "data" : [":label side_effects_invalid_opcode"], 
+                    "gas" : -1, 
+                    "value" : -1
+                },  
+                "network" : [">=Berlin"],
+                "result" : { 
+                    "a94f5374fce5edbc8e2a8697c15331677e6ebf0b" : { 
+                        "nonce" : "1" 
+                    },  
+                    "b94f5374fce5edbc8e2a8697c15331677e6ebf0b" : { 
+                        "storage": {}
+                    },  
+                    "6295ee1b4f6dd65047762f924ecd367c17eabf8f": { 
+                        "shouldnotexist": "1"
+                    } 
+                }
             }
         ],
         "pre" : {
@@ -184,6 +224,12 @@
                 "storage": {
                   "0x00": "0x00"
                 }
+            },
+            "b94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                "balance" : "0",
+                "code": ":yul { sstore(0, 1) }",
+                "nonce": "0",
+                "storage": {}
             },
 			"0f572e5295c57f15886f9b263e2f6d2d6c7b5ec6" : {
                 "balance" : "1000000000000000000",
@@ -323,7 +369,9 @@
                 ":raw 0x6000600060006000730f572e5295c57f15886f9b263e2f6d2d6c7b5ec6612710fa5060006000f3", 
                 ":raw 0x60006000fd60006000f3", 
                 ":raw 0x32ff",
-                ":label invalid_first_byte_ef :raw 0xef"
+                ":label invalid_first_byte_ef :raw 0xef",
+                ":label side_effects :yul { pop(call(50000, 0xb94f5374fce5edbc8e2a8697c15331677e6ebf0b, 0, 0, 0, 0, 0)) }"
+                ":label side_effects_invalid_opcode :yul { pop(call(50000, 0xb94f5374fce5edbc8e2a8697c15331677e6ebf0b, 0, 0, 0, 0, 0)) invalid() }"
             ],
             "gasLimit" : [
                 "400000"
