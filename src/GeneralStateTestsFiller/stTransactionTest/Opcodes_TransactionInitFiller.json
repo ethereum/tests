@@ -215,7 +215,48 @@
                         "shouldnotexist": "1"
                     } 
                 }
-            }
+            },
+            {   
+                "indexes" : { 
+                    "data" : [":label side_effects_return_ef"], 
+                    "gas" : -1, 
+                    "value" : -1
+                },  
+                "network" : ["Berlin"],
+                "result" : { 
+                    "a94f5374fce5edbc8e2a8697c15331677e6ebf0b" : { 
+                        "nonce" : "1" 
+                    },  
+                    "b94f5374fce5edbc8e2a8697c15331677e6ebf0b" : { 
+                        "storage": {
+                          "0x00": "0x01"
+                        }
+                    },  
+                    "6295ee1b4f6dd65047762f924ecd367c17eabf8f": { 
+                        "code": "0xef",
+                        "nonce": "1"
+                    } 
+                }   
+            },
+            {   
+                "indexes" : { 
+                    "data" : [":label side_effects_return_ef"], 
+                    "gas" : -1, 
+                    "value" : -1
+                },  
+                "network" : [">=London"],
+                "result" : { 
+                    "a94f5374fce5edbc8e2a8697c15331677e6ebf0b" : { 
+                        "nonce" : "1" 
+                    },  
+                    "b94f5374fce5edbc8e2a8697c15331677e6ebf0b" : { 
+                        "storage": {}
+                    },  
+                    "6295ee1b4f6dd65047762f924ecd367c17eabf8f": { 
+                        "shouldnotexist": "1"
+                    } 
+                }   
+            }            
         ],
         "pre" : {
             "a94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
@@ -371,8 +412,9 @@
                 ":raw 0x60006000fd60006000f3", 
                 ":raw 0x32ff",
                 ":label invalid_first_byte_ef :raw 0xef",
-                ":label side_effects :yul { pop(call(50000, 0xb94f5374fce5edbc8e2a8697c15331677e6ebf0b, 0, 0, 0, 0, 0)) }"
-                ":label side_effects_invalid_opcode :yul { pop(call(50000, 0xb94f5374fce5edbc8e2a8697c15331677e6ebf0b, 0, 0, 0, 0, 0)) invalid() }"
+                ":label side_effects :yul { pop(call(50000, 0xb94f5374fce5edbc8e2a8697c15331677e6ebf0b, 0, 0, 0, 0, 0)) }",
+                ":label side_effects_invalid_opcode :yul { pop(call(50000, 0xb94f5374fce5edbc8e2a8697c15331677e6ebf0b, 0, 0, 0, 0, 0)) invalid() }",
+                ":label side_effects_return_ef :yul { pop(call(50000, 0xb94f5374fce5edbc8e2a8697c15331677e6ebf0b, 0, 0, 0, 0, 0)) mstore8(0, 0xef) return(0, 1) }"
             ],
             "gasLimit" : [
                 "400000"
