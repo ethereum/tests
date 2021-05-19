@@ -24,6 +24,9 @@
 // Maximum gas we're allowed to use
 const gasLimit = 'F00000000000'
 
+// "User"'s gas balance
+const userBalance = 'F000000000000000'
+
 // The forks supported by the test in order. At writing, there is no need
 // to QA forks prior to Istanbul.
 const forks = ["Berlin", "London"]
@@ -53,7 +56,7 @@ const newContractWei = 0x3F
 // For some reason this fails with insufficient funds when it is not zero
 const transactWei = 0
 
-const gasPrice = 1
+const gasPrice = 20
 
 const difficulty = 0x20000  // Max eight bytes
 
@@ -109,7 +112,7 @@ const boilerPlate_Head = `
     timestamp: 0x54c98c81
     transactionsTrie: 0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421
     uncleHash: 0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347
-    baseFee: 0x01
+    baseFee: 10
 
 
   _info:
@@ -119,7 +122,7 @@ const boilerPlate_Head = `
 
     # The "user" account
     '${userAddr}':
-      balance: ${gasLimit}
+      balance: ${userBalance}
       code: 0x
       nonce: 0
       storage: {}
@@ -376,10 +379,8 @@ var opcodes = {
    0x38: { test: aOPb_to_ml(2, 6, 0x38, 0x0E) },         // CODESIZE
    0x3A: { test: aOPb_to_ml(2, 6, 0x3A, gasPrice) },     // GASPRICE
    0x43: { test: aOPb_to_ml(2, 6, 0x43, 1) },            // NUMBER
-                                     // ^ always 1 in state transition tests
    0x46: { test: aOPb_to_ml(2, 6, 0x46, 1) },            // CHAINID
-                                     // ^ always 1 in state transition tests
-   0x48: { test: aOPb_to_ml(2, 6, 0x48, 1),             // BASEFEE
+   0x48: { test: aOPb_to_ml(2, 6, 0x48, 9),              // BASEFEE
            fromFork: 'London' },
    0x50: { test: aOPb_to_ml(2, 6, 0x50, 6) },            // POP
    0x58: { test: aOPb_to_ml(2, 6, 0x58, 4) },            // PC
@@ -1025,8 +1026,9 @@ const transaction = `
   blocks:
   - transactions:
     - data: :raw 0xFF
-      gasLimit: ${gasLimit}
       gasPrice: ${gasPrice}
+      nonce: auto
+      gasLimit: ${gasLimit}
       nonce: 0
       to: ${bigTestContractAddr}
       value: ${transactWei}
