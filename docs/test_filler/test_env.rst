@@ -26,7 +26,8 @@ Format
                     "currentGasLimit" : "0x05f5e100",
                     "currentNumber" : "0x01",
                     "currentTimestamp" : "0x03e8",
-                    "previousHash" : "0x5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6"
+                    "previousHash" : "0x5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6",,
+                    "currentBaseFee" : "1000"
                  }
               }
            }
@@ -44,6 +45,7 @@ Format
                  currentNumber: 1
                  currentTimestamp: 1000
                  previousHash: 5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6
+                 currentBaseFee: 1000
 
 
 Fields
@@ -63,4 +65,6 @@ currentGasLimit     limit of gas usage per block
 currentNumber       number of ancestory blocks
 currentTimestamp    `Unix time <https://en.wikipedia.org/wiki/Unix_time>`_
 previousHash        hash of previous block
+currentBaseFee      London and afterwards, the 
+                    `block base fee <https://github.com/ethereum/EIPs/blob/master/EIPS/eip-1559.md>`_
 =================== ========================
