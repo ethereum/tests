@@ -40,11 +40,12 @@ Format
                               }
                         ],
                         "gasLimit": ["0x6a506a50"],
-                        "gasPrice: 1,
                         "value": ["1"],
                         "to": "add13ess01233210add13ess01233210",
                         "secretKey": "5ec13e7 ... 5ec13e7"
                         "nonce": '0x909ce'
+                        "maxPriorityFeePerGas": "10",
+                        "maxFeePerGas": "2000",
            }
 
      - ::
@@ -66,12 +67,13 @@ Format
                  - address: 0x0000000000000000000000000000000000000102
                gasLimit:
                - '0xga50ga50'
-               gasPrice: "1"
                value: 
                - "1"
                to: "add13ess01233210add13ess01233210"
                secretKey: "5ec13e7 ... 5ec13e7"
                nonce: '0x909ce'
+               maxPriorityFeePerGas: 10
+               maxFeePerGas: 2000
 
 
 Fields
@@ -102,7 +104,8 @@ Fields
 
 - **gasPrice**:
 
-  Gas price in Wei
+  Gas price in Wei, only in Berlin and earlier 
+  (replaced by maxFeePerGas in London)
 
 
 - **value**:
@@ -130,3 +133,17 @@ Fields
   The nonce value for the transaction. The first transaction for an address
   has the nonce value of the address itself, the second transaction has the
   nonce plus one, etc.
+
+- **maxPriorityFeePerGas**:
+  
+  The maximum priority fee per gas (a.k.a. tip) the transaction is willing to pay to
+  be included in the block (London and later, `added by 
+  eip 1559 <https://github.com/ethereum/EIPs/blob/master/EIPS/eip-1559.md>`_).
+
+- **maxFeePerGas**:
+  
+  The maximum total fee per gas the transaction is willing to pay to
+  be included in the block (London and later, `added by 
+  eip 1559 <https://github.com/ethereum/EIPs/blob/master/EIPS/eip-1559.md>`_).
+
+
