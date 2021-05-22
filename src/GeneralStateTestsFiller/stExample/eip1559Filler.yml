@@ -17,25 +17,13 @@ eip1559:
     cccccccccccccccccccccccccccccccccccccccc:
       balance: '1000000000000000000'
       code: |
-          :yul {
-             sstore(0,gasprice())
-             // basefee() is not supported yet by Yul, so we'll call a 
-             // machine language contract for it
-             pop(call(gas(), 0xBA5E0FEE, 0, 0, 0, 0, 0))
+          {
+             (sstore 0 (gasprice))
+             (sstore 1 (basefee))
           }
       nonce: 1
       storage: {}
 
-
-    00000000000000000000000000000000BA5E0FEE:
-      balance: '1000000000000000000'
-      #  BASEFEE    0x48
-      #  PUSH1 0    0x6000
-      #  SSTORE     0x55
-      #  STOP       0x00
-      code: :raw 0x4860005500
-      nonce: 1
-      storage: {}
 
     a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
       balance: '1000000000000000000'
@@ -48,7 +36,7 @@ eip1559:
     data:
         - data: :raw 0x00
           accessList:
-          - address: 0x095e7baea6a6c7c4c2dfeb977efac326af552d87
+          - address: 0xcccccccccccccccccccccccccccccccccccccccc
             storageKeys:
             - 0x00
             - 0x01
@@ -77,8 +65,4 @@ eip1559:
         cccccccccccccccccccccccccccccccccccccccc:
           storage:
             0x00: 1010    # GASPRICE
-
-        00000000000000000000000000000000BA5E0FEE:
-          storage:
-            0x00: 1000    # BASEFEE
-
+            0x01: 1000    # BASEFEE
