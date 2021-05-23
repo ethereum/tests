@@ -1,63 +1,15 @@
-#! /usr/bin/node
 
-
-// Tests created using this tool:
-//
-// stEIP1559/gasprice
-
-
-// This is the Yul code we are attempting to test in multiple circumstances.
-// it should store the result in mload(0)
-code = `
-// mstore(0, gasprice())
-invalid()
-`
-
-// This is the expected result
-result = "0x60a7" // "1010"
-
-
-// The code is executed, and the result checked, in these contexts:
-//  0. 0x0000  Normal execution
-//  1. 0x00F1  CALL a contract with the code
-//  2. 0x00F2  CALLCODE a contract ...
-//  3. 0x00F4  DELEGATECALL a contract ...
-//  4. 0x00FA  STATICCALL a contract ...
-//  5. 0xF1F1  CALL a contract that CALLs a contract ...
-//  6. 0xF2F1  CALLCODE a contract that CALLs ...
-//  7. 0xF4F1  DELEGATECALL ... CALL
-//  8. 0xFAF1  STATICCALL ... CALL
-//  9. 0xF1F2  CALL a contract that CALLCODEs a contract ...
-// 10. 0xF2F2  CALLCODE a contract that CALLCODEs ...
-// 11. 0xF4F2  DELEGATECALL ... CALLCODE
-// 12. 0xFAF2  STATICCALL ... CALLCODE
-// 13. 0xF1F4  CALL a contract that DELEGATECALLs a contract ...
-// 14. 0xF2F4  CALLCODE a contract that DELEGATECALLs ...
-// 15. 0xF4F4  DELEGATECALL ... DELEGATECALL
-// 16. 0xFAF4  STATICCALL ... DELEGATECALL
-// 17. 0xF1FA  CALL a contract that STATICCALLs a contract ...
-// 18. 0xF2FA  CALLCODE a contract that STATICCALLs ...
-// 19. 0xF4FA  DELEGATECALL ... STATICCALL
-// 20. 0xFAFA  STATICCALL ... STATICCALL
-// 21. 0x00FD  Run the code, call a contract that reverts, then run again
-// 22. 0x00FE  Run the code, call a contract that goes out of gas, then run again
-// 23. 0x00FF  Run the code, call a contract that self-destructs, then run again
-// 24. 0x00F0  CREATE a contract, run the code in the constructor
-// 25. 0x00F5  CREATE2 a contract, run the code in the constructor
-// 26. 0xF0F1  CREATE a contract with the code and then CALL it
-// 27. 0xF5F1  CREATE2 a contract with the code and then CALL it
-
-indentedCode = code.replace(/\n/g, "\n            ")
-
-console.log(`
 # Created by stTemplate/templateGen.js
 #
 # With the template code
-# ${indentedCode.replace(/\n/g, '\n#')}
+# 
+#            // mstore(0, gasprice())
+#            invalid()
+#            
 #
-# And expected result ${result}
+# And expected result 0x60a7
 #
-template:
+manyContexts:
   _info:
     comment: Ori Pomerantz   qbzzt1@gmail.com
 
@@ -79,7 +31,10 @@ template:
       balance: 0
       code: |
         :yul {
-           ${indentedCode}
+           
+            // mstore(0, gasprice())
+            invalid()
+            
 
            // Here the result is is mload(0). Return it.
            // If we use this as a contructor the result will be
@@ -129,7 +84,10 @@ template:
 
              switch action
              case 0 {  // run the code snippet as normal code
-                ${indentedCode}
+                
+            // mstore(0, gasprice())
+            invalid()
+            
              }
 
              // One level of call stack
@@ -196,31 +154,49 @@ template:
                 res := staticcall(gas(), 0xca1100fa, 0, 0, 0, 0x20)
              }
              case 0xFD {   // Rerun the code after a REVERT
-                ${indentedCode}
+                
+            // mstore(0, gasprice())
+            invalid()
+            
                 sstore(0, mload(0))
 
                 pop(call(gas(), 0x60BACC, 0, 0, 0, 0, 0))
-                ${indentedCode}
+                
+            // mstore(0, gasprice())
+            invalid()
+            
 
                 // The two results should be equal
                 if iszero(eq(sload(0), mload(0))) {mstore(0, 0xBADBADBAD)}
              }
              case 0xFE {   // Rerun the code after an out of gas
-                ${indentedCode}
+                
+            // mstore(0, gasprice())
+            invalid()
+            
                 sstore(0, mload(0))
 
                 pop(call(25000, 0x60006, 0, 0, 0, 0, 0))
-                ${indentedCode}
+                
+            // mstore(0, gasprice())
+            invalid()
+            
 
                 // The two results should be equal
                 if iszero(eq(sload(0), mload(0))) {mstore(0, 0xBADBADBAD)}
              }
              case 0xFF {   // Rerun the code after a SELFDESTRUCT
-                ${indentedCode}
+                
+            // mstore(0, gasprice())
+            invalid()
+            
                 sstore(0, mload(0))
 
                 pop(call(gas(), 0xDEADDEAD, 0, 0, 0, 0, 0))
-                ${indentedCode}
+                
+            // mstore(0, gasprice())
+            invalid()
+            
 
                 // The two results should be equal
                 if iszero(eq(sload(0), mload(0))) {mstore(0, 0xBADBADBAD)}
@@ -296,7 +272,10 @@ template:
       balance: '1000000000000000000'
       code: |
           :yul {
-            ${indentedCode}
+            
+            // mstore(0, gasprice())
+            invalid()
+            
             return(0, 0x20)     // return the result as our return value
           }
       nonce: 1
@@ -541,5 +520,5 @@ template:
         cccccccccccccccccccccccccccccccccccccccc:
           storage:
             # The result we expect
-            0x00: ${result}
-`)
+            0x00: 0x60a7
+
