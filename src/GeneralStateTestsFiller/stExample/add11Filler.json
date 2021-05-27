@@ -31,7 +31,7 @@
                         "//comment" : "Better not to check the gas or mining reward affected account's balances.",
                         "//comment" : "A change in gasPrice will affect the test and this post condition.",
                         "//comment" : "So unless the test doesn't really requrie it, don't check coinbase/miner address balance or sender balance in post section",
-                        "balance" : "1000000000000100000",
+                        "//balance" : "1000000000000100000",
                         "//comment" : "Byte Code example",
                         "code" : "0x600160010160005500",
                         "storage" : {
@@ -40,10 +40,11 @@
                     },
                     "//comment" : "could be incomplete type. only balance field would be checked.",
                     "2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
-                        "balance" : "43112"
+                        "//balance" : "43112",
+                        "nonce" : "1"
                     },
                     "a94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-                        "balance" : "999999999999856888",
+                        "//balance" : "999999999999856888",
                         "code" : "0x",
                         "nonce" : "1",
                         "storage" : {
@@ -58,6 +59,13 @@
         ],
         "//comment" : "Pre condition state for the test",
         "pre" : {
+            "2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                "balance" : "0",
+                "code" : "0x",
+                "nonce" : "1",
+                "storage" : {
+                }
+            },
             "095e7baea6a6c7c4c2dfeb977efac326af552d87" : {
                 "balance" : "1000000000000000000",
                 "//comment": "If lllc compiler is installed, LLL code will be converted into EVM bytecode when --filltests",
@@ -91,7 +99,7 @@
             "gasLimit" : [
                 "400000"
             ],
-            "gasPrice" : "1",
+            "gasPrice" : "10",
             "//comment" : "nonce must be same as account nonce a94f5374fce5edbc8e2a8697c15331677e6ebf0b",
             "nonce" : "0",
             "//comment" : "secretKey is a privKey of a94f5374fce5edbc8e2a8697c15331677e6ebf0b",

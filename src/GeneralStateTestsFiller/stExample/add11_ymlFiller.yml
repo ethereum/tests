@@ -37,7 +37,7 @@ add11_yml:
            # Better not to check the gas or mining reward affected account's balances.
            # A change in gasPrice will affect the test and this post condition.
            # So unless the test doesn't really requrie it, don't check coinbase/miner address balance or sender balance in post section
-          balance: 1000000000000100000
+           # balance 1000000000000100000
 
            # Byte Code example
           code: '0x600160010160005500'
@@ -46,12 +46,14 @@ add11_yml:
 
          # could be incomplete type. only balance field would be checked.",
         2adc25665018aa1fe0e6bc666dac8fc2697ff9ba:
-          balance: 43112
+           # balance 43112
+          nonce: '1'
 
         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
-          balance: 999999999999856888
+           # Avoid checking balance field as it actually affected by many EIPs that can break the test
+           # balance 999999999999856888
           code: '0x'
-          nonce: 1
+          nonce: '1'
           storage: {}
 
          # check that this address is not generated to the post state
@@ -60,6 +62,12 @@ add11_yml:
 
   # Pre condition state for the test
   pre:
+     # Even if this account is not involved in transaction, it will be miner-rawrd touched upon generation of a state test
+    2adc25665018aa1fe0e6bc666dac8fc2697ff9ba:
+      balance: '0'
+      nonce: '1'
+      code: ''
+      storage: {}
 
     095e7baea6a6c7c4c2dfeb977efac326af552d87:
       balance: '1000000000000000000'
@@ -94,7 +102,7 @@ add11_yml:
     # Be careful when adding gasLimits that are < then intrinsic gas cost. StateTests are not allowed to have invalid transactions
     gasLimit:
     - '400000'
-    gasPrice: '1'
+    gasPrice: '10'
     # Nonce must be same as account nonce a94f5374fce5edbc8e2a8697c15331677e6ebf0b
     nonce: '0'
     # if `to` field is empty, the transaction becomes contract creation. code from data will be executed as a deployment code
