@@ -10,7 +10,6 @@ code = fs.readFileSync(process.argv[2], 'utf8')
 
 // This is the expected result
 const result = process.argv[3]
-// result = "1000000000000000000"
 
 
 // The code is executed, and the result checked, in these contexts:
@@ -42,16 +41,16 @@ const result = process.argv[3]
 // 25. 0x00F5  CREATE2 a contract, run the code in the constructor
 // 26. 0xF0F1  CREATE a contract with the code and then CALL it
 // 27. 0xF5F1  CREATE2 a contract with the code and then CALL it
-
+// 28. 0x60BACCFA57 Call recurse to the limit
 indentedCode = code.replace(/\n/g, "\n            ")
 
 console.log(`
 # Created by stTemplate/templateGen.js
 #
-# With the template code
+# With the template code:
 # ${indentedCode.replace(/\n/g, '\n#')}
 #
-# And expected result ${result}
+# Expected result: ${result}
 #
 template:
   _info:
@@ -62,9 +61,9 @@ template:
     currentDifficulty: 0x20000
     currentNumber: 1
     currentTimestamp: 1000
-    currentGasLimit: 0x1000000
+    currentGasLimit: 0x10000000000000
     previousHash: 5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6
-    currentBaseFee: 1000
+    currentBaseFee: 10
 
   pre:
 
@@ -266,6 +265,12 @@ template:
 
              }
 
+              // Recurse (= run backwards)
+              case 0x60BACCFA57 {
+                 mstore(0, 1023)
+                 res := call(gas(), 0x60BACCFA57, 0, 0, 0x20, 0, 0x20)
+              }
+
 
              default {    // Fail, we should never get here
                mstore(0, 0xBAD0BAD0BAD0)
@@ -406,12 +411,37 @@ template:
 
 
 
+    # Recursively call until reaching the stack depth, then run the template
+    00000000000000000000000000000060BACCFA57:
+      balance: 1000000000000000000
+      code: |
+        :yul {
+           let depth := calldataload(0)
 
+           if eq(depth,0) {
+               ${indentedCode}
+               return(0, 0x20)
+           }
+
+           // Dig deeper
+           mstore(0, sub(depth,1))
+
+           // Call yourself with depth-1
+           if iszero(call(gas(), 0x60BACCFA57, 0, 0, 0x20, 0, 0x20)) {
+              // Propagate failure if we failed
+              revert(0, 0x20)
+           }
+
+           // Propagate success
+           return (0, 0x20)
+        }
+      nonce: 1
+      storage: {}
 
 
 
     a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
-      balance: '1000000000000000000'
+      balance: 1000000000000000000000
       code: '0x'
       nonce: 1
       storage: {}
@@ -514,14 +544,20 @@ template:
       accessList: []
 
 
+    # Recurse almost until the limit
+    - data: :abi f(uint) 0x60BACCFA57
+      accessList: []
+
+
+
     gasLimit:
-    - 4000000
+    - 0x10000000000000
     nonce: 1
     to: cccccccccccccccccccccccccccccccccccccccc
     value:
     - 0
     secretKey: "45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8"
-    maxPriorityFeePerGas: 10
+    maxPriorityFeePerGas: 0
     maxFeePerGas: 2000
 
 
