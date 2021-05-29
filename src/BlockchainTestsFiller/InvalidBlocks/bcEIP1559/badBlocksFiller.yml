@@ -72,16 +72,19 @@ badBlocks:
 
   - blockHeader:
       baseFee: 0x36c
+    blocknumber: 1
     expectException:
       '>=London': 1559BlockImportImpossible_BaseFeeWrong
     transactions: []
   - blockHeader:
       baseFee: 0x36a
+    blocknumber: 1
     expectException:
       '>=London': 1559BlockImportImpossible_BaseFeeWrong
     transactions: []
   - blockHeader:
       baseFee: 0x36b
+    blocknumber: 1
     transactions: []
 
 
@@ -94,11 +97,13 @@ badBlocks:
 
   - blockHeader:
       gasLimit:  1072693247
+    blocknumber: 2
     expectException:
       '>=London': 1559BlockImportImpossible_TargetGasLow
     transactions: []
   - blockHeader:
       gasLimit: 1072693248    # 1024*1024*1023 (1023/1024 of the previous gasLimit)
+    blocknumber: 2
     transactions: []
 
 
@@ -111,6 +116,7 @@ badBlocks:
 
   - blockHeader:
       gasLimit: 1073740802
+    blocknumber: 3
     expectException:
       '>=London': 1559BlockImportImpossible_TargetGasHigh
     transactions: []
@@ -118,6 +124,7 @@ badBlocks:
       # 1024*1023*1025 (1025/1024 of the previous limit) plus one. The one is accepted
       # because of the effects of integer division 
       gasLimit: 1073740801  
+    blocknumber: 3
     transactions: []
 
 

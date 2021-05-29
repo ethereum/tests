@@ -19,20 +19,34 @@
         },
         "sealEngine" : "NoProof",
         "expect" : [
-	    {
-		    "network" : [">=Istanbul"],
-		    "result" : {
-			    "0x095e7baea6a6c7c4c2dfeb977efac326af552d87" : {
-    				"balance" : "10"
-			    },
-			    "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-    				"nonce" : "2"
-			    },
-			    "0000000000000000000000000000000000000000" : {
-    				"balance" : "10"
-			    }
-		    }
-	    }
+	        {
+		        "network" : ["Istanbul", "Berlin"],
+		        "result" : {
+			        "0x095e7baea6a6c7c4c2dfeb977efac326af552d87" : {
+        				"balance" : "10"
+			        },
+			        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+        				"nonce" : "2"
+			        },
+			        "0000000000000000000000000000000000000000" : {
+        				"balance" : "10"
+			        }
+		        }
+	        },
+	        {
+		        "network" : [">=London"],
+		        "result" : {
+			        "0x095e7baea6a6c7c4c2dfeb977efac326af552d87" : {
+        				"balance" : "20"
+			        },
+			        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+        				"nonce" : "3"
+			        },
+			        "0000000000000000000000000000000000000000" : {
+        				"balance" : "10"
+			        }
+		        }
+	        }
         ],
         "pre" : {
             "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
@@ -51,7 +65,7 @@
                     {
                         "data" : "",
                         "gasLimit" : "314159",
-                        "gasPrice" : "1",
+                        "gasPrice" : "1000",
                         "nonce" : "0",
                         "secretKey" : "45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8",
                         "to" : "0x095e7baea6a6c7c4c2dfeb977efac326af552d87",
@@ -66,7 +80,7 @@
                     {
                         "data" : "",
                         "gasLimit" : "314159",
-                        "gasPrice" : "1",
+                        "gasPrice" : "1000",
                         "nonce" : "1",
                         "secretKey" : "45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8",
                         "to" : "0000000000000000000000000000000000000000",
@@ -78,13 +92,17 @@
             },
             {
                 "expectException" : {
-                    ">=Istanbul" : "InvalidGasLimit2"
+                    "Istanbul" : "InvalidGasLimit2",
+                    "Berlin" : "InvalidGasLimit2"
+                },
+                "blockHeader" : {
+                    "stateRoot" : "0x97f6417d2209a00290a009ee15e307a3e77fac623c7d301580c661c0ec2f1f5a"
                 },
                 "transactions" : [
                     {
                         "data" : "",
                         "gasLimit" : "314159",
-                        "gasPrice" : "1",
+                        "gasPrice" : "1000",
                         "nonce" : "2",
                         "secretKey" : "45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8",
                         "to" : "0x095e7baea6a6c7c4c2dfeb977efac326af552d87",
