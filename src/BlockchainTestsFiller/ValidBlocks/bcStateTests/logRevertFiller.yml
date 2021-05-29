@@ -55,7 +55,7 @@ logRevert:
 
   pre:
     0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b:
-      balance: 600000000
+      balance: 600000000000
       nonce: '0'
       code: ''
       storage: {}
@@ -191,7 +191,7 @@ logRevert:
     # Run all five log opcodes and then revert
     - data: :raw 0x00
       gasLimit: 600000
-      gasPrice: 1
+      gasPrice: 1000
       nonce: auto
       secretKey: 45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8
       to:   0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC0
@@ -201,7 +201,7 @@ logRevert:
     # This transaction fails, which causes the entire test to fail.
     - data: 0x00
       gasLimit: 600000
-      gasPrice: 1
+      gasPrice: 1000
       nonce: auto
       secretKey: 45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8
       to:   0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC6
@@ -211,7 +211,7 @@ logRevert:
     # Run all five log opcodes, then run out of gas (overflow the 2^64 variable)
     - data: :raw 0x00
       gasLimit: 600000
-      gasPrice: 1
+      gasPrice: 1000
       nonce: auto
       secretKey: 45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8
       to:   0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC1
@@ -222,7 +222,7 @@ logRevert:
     # Run all five log opcodes, then run an invalid opcode (0xBA)
     - data: :raw 0x00
       gasLimit: 600000
-      gasPrice: 1
+      gasPrice: 1000
       nonce: auto
       secretKey: 45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8
       to:   0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC2
@@ -233,7 +233,7 @@ logRevert:
     # Run all five log opcodes, then stack underflow
     - data: :raw 0x00
       gasLimit: 600000
-      gasPrice: 1
+      gasPrice: 1000
       nonce: auto
       secretKey: 45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8
       to:   0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC3
@@ -243,7 +243,7 @@ logRevert:
     # Run all five log opcodes, then stack overflow
     - data: :raw 0x00
       gasLimit: 600000
-      gasPrice: 1
+      gasPrice: 1000
       nonce: auto
       secretKey: 45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8
       to:   0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC4
@@ -253,7 +253,7 @@ logRevert:
     # Run all five log opcodes, then jump to a non-jumpdest
     - data: :raw 0x00
       gasLimit: 600000
-      gasPrice: 1
+      gasPrice: 1000
       nonce: auto
       secretKey: 45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8
       to:   0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC5
@@ -278,9 +278,17 @@ logRevert:
 
   expect:
   - network:
-    - ">=Istanbul"
+    - "Istanbul"
+    - "Berlin"
     result:
       0x6E70DA7A00000000000000000000000000000000:
          storage:
             0: 0x02
-            1: 0xae067d1825d3eb1e959f0d6bddaf62b3f881a196737062bca93083a2280ae2e6
+            1: 0xb658eba33a64f87c60b140dbc3c4061c8d0b32f4d9c68fed4ce5719a7ee1d19e
+  - network:
+    - ">=London"
+    result:
+      0x6E70DA7A00000000000000000000000000000000:
+         storage:
+            0: 0x02
+            1: 0x6a21efff25ba77b749e55a3a767d9ad8e6816cc66e63496799a4a8992122f94b

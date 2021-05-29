@@ -60,7 +60,21 @@
 	        {
                 "blocknumber" : "4",
                 "blockHeader" : {
-                    "gasLimit" : "0xbebc20",
+                    "gasLimit" : "6283184",
+                    "baseFee" : "0x3b9aca00"
+                },
+                "expectException" : {
+                    "BerlinToLondonAt5" : "1559BlockImportImpossible_HeaderIsLegacy"
+                },
+                "transactions" : [
+                ],
+                "uncleHeaders" : [
+                ]
+            },
+	        {
+                "blocknumber" : "4",
+                "blockHeader" : {
+                    "number" : "4",
                     "baseFee" : "0x3b9aca00"
                 },
                 "expectException" : {
@@ -101,11 +115,24 @@
 	        {
                 "blocknumber" : "5",
                 "blockHeader" : {
-                    "gasLimit" : "600000",
+                    "gasLimit" : "6283184",
                     "remove" : [ "baseFee" ]
                 },
                 "expectException" : {
                     "BerlinToLondonAt5" : "LegacyBlockImportImpossible"
+                },
+                "transactions" : [
+                ],
+                "uncleHeaders" : [
+                ]
+            },
+	        {
+                "blocknumber" : "5",
+                "blockHeader" : {
+                    "gasLimit" : "6283185"
+                },
+                "expectException" : {
+                    "BerlinToLondonAt5" : "1559BlockImportImpossible_InitialGasLimitInvalid"
                 },
                 "transactions" : [
                 ],

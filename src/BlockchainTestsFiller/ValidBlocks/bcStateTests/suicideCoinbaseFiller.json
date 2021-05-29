@@ -20,16 +20,31 @@
 	"sealEngine" : "NoProof",
 	"expect" : [
 	   {
-		    "network" : [">=Istanbul"],
+		    "network" : ["Istanbul", "Berlin"],
 		    "result" : {
 			    "0000000000000000000000000000000000000000" : {
     				"balance" : "2002"
 			    },
 			    "8888f1f195afa192cfee860698584c030f4c9db1" : {
-    				"balance" : "2000000000000420000"
+    				"balance" : "2000000000042000000"
 			    },
 			    "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-				    "balance" : "9999448248",
+				    "balance" : "9999999944923998",
+				    "nonce" : "3"
+			    }
+		   }
+	   },
+	   {
+		    "network" : [">=London"],
+		    "result" : {
+			    "0000000000000000000000000000000000000000" : {
+    				"balance" : "2002"
+			    },
+			    "8888f1f195afa192cfee860698584c030f4c9db1" : {
+    				"balance" : "2000000000041412000"
+			    },
+			    "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+				    "balance" : "9999999931848998",
 				    "nonce" : "3"
 			    }
 		   }
@@ -37,7 +52,7 @@
         ],
         "pre" : {
             "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-                "balance" : "10000000000",
+                "balance" : "10000000000000000",
                 "nonce" : "0",
                 "code" : "",
                 "storage": {}
@@ -53,39 +68,33 @@
         "blocks" : [
             {
                 "transactions" : [
-		 {
-			"data" : ":raw 0x0c55699c",
-			"gasLimit" : "0x07a120",
-			"gasPrice" : "0x0a",
-			"nonce" : "0x00",
-			"r" : "0x91fc4c402ced19b984e953546d3fc786c46a79c9f0c7918b8f3343dc529ef0e5",
-			"s" : "0x546d89230c90ca8bf7988a826430d4771ab3a67cc0f3cb8019d67ab10ec10524",
-			"to" : "8888f1f195afa192cfee860698584c030f4c9db1",
-			"v" : "0x1b",
-			"value" : "0x03e9"
-		 },
-		 {
-			"data" : "0x",
-			"gasLimit" : "0xc350",
-			"gasPrice" : "0x0a",
-			"nonce" : "0x01",
-			"r" : "0xb03ab16ed211bf447ac030216ab088f18367ee51303545d2957990e9d3a28f10",
-			"s" : "0x7f18dd055139f7ac5558997b80ccae799ab6fbad2326799db509a9d4e5a52d72",
-			"to" : "0000000000000000000000000000000000000000",
-			"v" : "0x1b",
-			"value" : "0x03e8"
-		 },
-		 {
-			"data" : "0x",
-			"gasLimit" : "0xc350",
-			"gasPrice" : "0x0a",
-			"nonce" : "0x02",
-			"r" : "0x0925abd1221d388622138f4bae46803313f297001e96fec22dc4268fca5b5a82",
-			"s" : "0x55cd8142bcec39f80b359aa089f6a70568d23a67048026703981fad9339ef5d4",
-			"to" : "0000000000000000000000000000000000000000",
-			"v" : "0x1b",
-			"value" : "0x03ea"
-		 }
+		             {
+			            "data" : ":raw 0x0c55699c",
+			            "gasLimit" : "0x07a120",
+			            "gasPrice" : "1000",
+			            "nonce" : "0x00",
+			            "to" : "8888f1f195afa192cfee860698584c030f4c9db1",
+                        "secretKey" : "45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8",
+			            "value" : "0x03e9"
+		             },
+		             {
+			            "data" : "0x",
+			            "gasLimit" : "0xc350",
+			            "gasPrice" : "1000",
+			            "nonce" : "0x01",
+			            "to" : "0000000000000000000000000000000000000000",
+                        "secretKey" : "45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8",
+			            "value" : "0x03e8"
+		             },
+		             {
+			            "data" : "0x",
+			            "gasLimit" : "0xc350",
+			            "gasPrice" : "1000",
+			            "nonce" : "0x02",
+			            "to" : "0000000000000000000000000000000000000000",
+                        "secretKey" : "45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8",
+			            "value" : "0x03ea"
+		             }
                 ],
                 "uncleHeaders" : [
                 ]
