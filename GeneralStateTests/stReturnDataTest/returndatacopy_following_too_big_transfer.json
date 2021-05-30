@@ -2,19 +2,19 @@
     "returndatacopy_following_too_big_transfer" : {
         "_info" : {
             "comment" : "This test tries RETURNDATACOPY with a non-zero size after a CALL that fails because of insufficient balance.",
-            "filling-rpc-server" : "evm version 1.10.2-unstable-22082f9e-20210309",
-            "filling-tool-version" : "retesteth-0.1.0-accesslist+commit.47c69eb3.Linux.g++",
-            "lllcversion" : "Version: 0.5.14-develop.2020.6.22+commit.9189ad7a.Linux.g++",
+            "filling-rpc-server" : "evm version 1.10.4-unstable-966ee3ae-20210528",
+            "filling-tool-version" : "retesteth-0.1.1-eip1559+commit.658fc3a8.Linux.g++",
+            "lllcversion" : "Version: 0.5.14-develop.2021.5.18+commit.14c9d5de.mod.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/stReturnDataTest/returndatacopy_following_too_big_transferFiller.json",
-            "sourceHash" : "e3f37c2d477c2ce254b201e10a75ac1badef7dcc6ca7f397f0cf0d9209b90ff7"
+            "sourceHash" : "55fcb0d6b18ca40ef7ee33c3ae74b475954452d2aa9798923fbb9d77de1862ad"
         },
         "env" : {
             "currentCoinbase" : "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba",
             "currentDifficulty" : "0x020000",
-            "currentGasLimit" : "0x1a00000000",
             "currentNumber" : "0x01",
             "currentTimestamp" : "0x03e8",
-            "previousHash" : "0x5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6"
+            "previousHash" : "0x5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6",
+            "currentGasLimit" : "0x1a00000000"
         },
         "post" : {
             "Berlin" : [
@@ -24,8 +24,8 @@
                         "gas" : 0,
                         "value" : 0
                     },
-                    "hash" : "0x9d5f4614943ac6a3360cc2370a4b66b860fa0bdf4cf8f5e43ba0845891ad9a03",
-                    "txbytes" : "0xf8628001850a00000000940f572e5295c57f15886f9b263e2f6d2d6c7b5ec680801ba03b6c2d4d0d9d0abf4d624a6f2930e213789e9c00f679a9afa996fb4bd27cb507a024a40d7f4cf44278ac739ecf9eeba61554646709142d968ed1c555be138a3ea2",
+                    "hash" : "0x925d83ba9860f3270f838bfc74314c32a0bba08250be7aa427fb706513523513",
+                    "txbytes" : "0xf862800a850a00000000940f572e5295c57f15886f9b263e2f6d2d6c7b5ec680801ba0be56d61b678ad2c41b294c70b5213913b9a6f17753ba7aadc171c9a2474f66a8a04814800401028ca339e8af9f4a6253bddd3f9df8f1dc6da275d19862e9f28642",
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347"
                 }
             ],
@@ -36,8 +36,20 @@
                         "gas" : 0,
                         "value" : 0
                     },
-                    "hash" : "0x9d5f4614943ac6a3360cc2370a4b66b860fa0bdf4cf8f5e43ba0845891ad9a03",
-                    "txbytes" : "0xf8628001850a00000000940f572e5295c57f15886f9b263e2f6d2d6c7b5ec680801ba03b6c2d4d0d9d0abf4d624a6f2930e213789e9c00f679a9afa996fb4bd27cb507a024a40d7f4cf44278ac739ecf9eeba61554646709142d968ed1c555be138a3ea2",
+                    "hash" : "0x925d83ba9860f3270f838bfc74314c32a0bba08250be7aa427fb706513523513",
+                    "txbytes" : "0xf862800a850a00000000940f572e5295c57f15886f9b263e2f6d2d6c7b5ec680801ba0be56d61b678ad2c41b294c70b5213913b9a6f17753ba7aadc171c9a2474f66a8a04814800401028ca339e8af9f4a6253bddd3f9df8f1dc6da275d19862e9f28642",
+                    "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347"
+                }
+            ],
+            "London" : [
+                {
+                    "indexes" : {
+                        "data" : 0,
+                        "gas" : 0,
+                        "value" : 0
+                    },
+                    "hash" : "0x0ee04e32fdd1c5b32b9bd09404edc26393004bc062472c5108bf0816ce17f3ad",
+                    "txbytes" : "0xf862800a850a00000000940f572e5295c57f15886f9b263e2f6d2d6c7b5ec680801ba0be56d61b678ad2c41b294c70b5213913b9a6f17753ba7aadc171c9a2474f66a8a04814800401028ca339e8af9f4a6253bddd3f9df8f1dc6da275d19862e9f28642",
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347"
                 }
             ]
@@ -70,10 +82,10 @@
             "data" : [
                 "0x"
             ],
+            "gasPrice" : "0x0a",
             "gasLimit" : [
                 "0x0a00000000"
             ],
-            "gasPrice" : "0x01",
             "nonce" : "0x00",
             "secretKey" : "0x45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8",
             "to" : "0x0f572e5295c57f15886f9b263e2f6d2d6c7b5ec6",
