@@ -202,7 +202,8 @@ initialVal:
 
 
   # Block 6   
-  - transactions:
+  - blocknumber: 6
+    transactions:
     # This call to cc..cc shows us that subsequent London blocks have a different
     # baseFee (the gasLimit stays the same unless changed) and that the tip is
     # calculated correctly for type 0 transactions
@@ -347,23 +348,20 @@ initialVal:
       value: 0x0
 
   # Block 7, except it's a pre EIP1559 block so it fails
-#  - blockHeader:
-#      remove:
-#      - baseFee
-#      gasLimit: 0x20000000000
-#    expectException:
-#      BerlinToLondonAt5: LegacyBlockImportImpossible
-#  - transactions:
-    # This call to cc..cc shows us that subsequent London blocks have a different
-    # baseFee (the gasLimit stays the same unless changed) and that the tip is
-    # calculated correctly for type 0 transactions
-#    - data: :abi f(uint) 0x6000
-#      gasLimit: 1000000
-#      gasPrice: 1000000000
-#      nonce: auto
-#      secretKey: 41f6e321b31e72173f8ff2e292359e1862f24fba42fe6f97efaf641980eff298
-#      to: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
-#      value: 0x0
+  - blockHeader:
+      remove:
+      - baseFee
+      gasLimit: 0x20000000000
+    blocknumber: 7
+    expectException:
+      BerlinToLondonAt5: LegacyBlockImportImpossible2
+  - transactions: []
+
+  # The real block 7
+  - blockHeader:
+      gasLimit: 0x20000000001
+    blocknumber: 7
+  - transactions: []
 
 
 
