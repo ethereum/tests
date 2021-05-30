@@ -93,7 +93,12 @@ badBlocks:
   # assert block.gas_limit > parent_gas_limit - parent_gas_limit // 1024, 'invalid block: 
   #     gas limit decreased too much'
   - blockHeader:
-      gasLimit: 1072693247
+      gasLimit: 2072693247
+    expectException:
+      '>=London': InvalidGasLimit2
+    transactions: []
+  - blockHeader:
+      gasLimit: 1072693247 # block.gas_limit = parent_gas_limit - parent_gas_limit // 1024
     expectException:
       '>=London': InvalidGasLimit2
     transactions: []
@@ -111,7 +116,12 @@ badBlocks:
   #       'invalid block: gas limit increased too much'
 
   - blockHeader:
-      gasLimit: 1073740801
+      gasLimit: 2073740801
+    expectException:
+      '>=London': InvalidGasLimit2
+    transactions: []
+  - blockHeader:
+      gasLimit: 1073740801  # block.gas_limit = parent_gas_limit + parent_gas_limit // 1024
     expectException:
       '>=London': InvalidGasLimit2
     transactions: []
