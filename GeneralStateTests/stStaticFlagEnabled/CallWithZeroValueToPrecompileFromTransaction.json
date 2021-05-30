@@ -2,19 +2,19 @@
     "CallWithZeroValueToPrecompileFromTransaction" : {
         "_info" : {
             "comment" : "Contract B staticcalls contract A.\nContract A calls precompiled contracts with 0 value.\nIt should execute successfully for each precompiled contract.\n",
-            "filling-rpc-server" : "evm version 1.10.2-unstable-22082f9e-20210309",
-            "filling-tool-version" : "retesteth-0.1.0-accesslist+commit.47c69eb3.Linux.g++",
-            "lllcversion" : "Version: 0.5.14-develop.2020.6.22+commit.9189ad7a.Linux.g++",
+            "filling-rpc-server" : "evm version 1.10.4-unstable-966ee3ae-20210528",
+            "filling-tool-version" : "retesteth-0.1.1-eip1559+commit.658fc3a8.Linux.g++",
+            "lllcversion" : "Version: 0.5.14-develop.2021.5.18+commit.14c9d5de.mod.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/stStaticFlagEnabled/CallWithZeroValueToPrecompileFromTransactionFiller.yml",
-            "sourceHash" : "d700d50216bd903a77e3dc01205f2af86c68f9d0c82d0487d2540f50b9aff364"
+            "sourceHash" : "8cccbf85d0435d68c4fab4fd9ba5f46362246a8862caf0237768f58f7c6b8252"
         },
         "env" : {
             "currentCoinbase" : "0xcafe000000000000000000000000000000000001",
             "currentDifficulty" : "0x020000",
-            "currentGasLimit" : "0x989680",
             "currentNumber" : "0x01",
             "currentTimestamp" : "0x03e8",
-            "previousHash" : "0x5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6"
+            "previousHash" : "0x5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6",
+            "currentGasLimit" : "0x989680"
         },
         "post" : {
             "Berlin" : [
@@ -24,8 +24,8 @@
                         "gas" : 0,
                         "value" : 0
                     },
-                    "hash" : "0xbd10f7fa107fcd8dc6f51ac30c1ba304b1fd2c50da1eac4357a35c111155a407",
-                    "txbytes" : "0xf8608001833d090094b00000000000000000000000000000000000000064801ba0fd42484593aea6058441f00037e893417e93eb45f63005d8b89cafb9d54d8e99a039f881fc0b4349bcc078d735bf52a43f6cee8d8faedba5199ecab390d89ab379",
+                    "hash" : "0x45b28ba7afdd0272e84ddc35672073a5724a85f9aec3350617224a38df4f81cd",
+                    "txbytes" : "0xf860800a833d090094b00000000000000000000000000000000000000064801ca0daa1d625d85c5e18f28b6aaccd3c6a15730961cf24aae07bbd8d64215437a22ca01e92ec5d0bf1c10c7504cbadc37fb725fe8875e414b0e214b88ce77ea45af23a",
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347"
                 }
             ],
@@ -36,8 +36,20 @@
                         "gas" : 0,
                         "value" : 0
                     },
-                    "hash" : "0x449e5b2d316e96bfeddad2e11f88bd9285c3cb782af983e82430cad206fd2bf7",
-                    "txbytes" : "0xf8608001833d090094b00000000000000000000000000000000000000064801ba0fd42484593aea6058441f00037e893417e93eb45f63005d8b89cafb9d54d8e99a039f881fc0b4349bcc078d735bf52a43f6cee8d8faedba5199ecab390d89ab379",
+                    "hash" : "0x985660fa547025454685a5f5bcdfbbdc0371b616a1800d1b160d58840a1f8b77",
+                    "txbytes" : "0xf860800a833d090094b00000000000000000000000000000000000000064801ca0daa1d625d85c5e18f28b6aaccd3c6a15730961cf24aae07bbd8d64215437a22ca01e92ec5d0bf1c10c7504cbadc37fb725fe8875e414b0e214b88ce77ea45af23a",
+                    "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347"
+                }
+            ],
+            "London" : [
+                {
+                    "indexes" : {
+                        "data" : 0,
+                        "gas" : 0,
+                        "value" : 0
+                    },
+                    "hash" : "0xf9ae87d12fb4deb35ca400796f4cd63f3bcecef749a723f677c33fcb16cf6261",
+                    "txbytes" : "0xf860800a833d090094b00000000000000000000000000000000000000064801ca0daa1d625d85c5e18f28b6aaccd3c6a15730961cf24aae07bbd8d64215437a22ca01e92ec5d0bf1c10c7504cbadc37fb725fe8875e414b0e214b88ce77ea45af23a",
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347"
                 }
             ]
@@ -71,10 +83,10 @@
             "data" : [
                 "0x"
             ],
+            "gasPrice" : "0x0a",
             "gasLimit" : [
                 "0x3d0900"
             ],
-            "gasPrice" : "0x01",
             "nonce" : "0x00",
             "secretKey" : "0x45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8",
             "to" : "0xb000000000000000000000000000000000000000",
