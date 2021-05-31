@@ -23,13 +23,13 @@ baseFee:
 
   pre:
     0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b:
-      balance: 0x10000000000000000
+      balance: 0x1000000000000000000
       code: ''
       nonce: '0x00'
       storage: {}
 
     0xd02d72E067e77158444ef2020Ff2d325f929B363:
-      balance: 0x10000000000000000
+      balance: 0x1000000000000000000
       nonce: 1
       code: ''
       storage: {}
@@ -93,11 +93,11 @@ baseFee:
   blocks:
   # Block 1
   - transactions:
-    - data: ''
+    - data: :raw 0x01
       accessList: []
       gasLimit: 1000000000000	
       maxPriorityFeePerGas: 1
-      maxFeePerGas: 1000
+      maxFeePerGas:      1000
       nonce: auto
       secretKey: 41f6e321b31e72173f8ff2e292359e1862f24fba42fe6f97efaf641980eff298
       to: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
@@ -106,29 +106,29 @@ baseFee:
 
   # Block 2
   - transactions:
-    - data: ''
+    - data: :raw 0x0201
       accessList: []
       gasLimit: 1000000000000	
       maxPriorityFeePerGas: 10
-      maxFeePerGas: 1000
+      maxFeePerGas:       1000
       nonce: auto
       secretKey: 41f6e321b31e72173f8ff2e292359e1862f24fba42fe6f97efaf641980eff298
       to: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
       value: 0x0
-    - data: ''
+    - data: :raw 0x0202
       accessList: []
       gasLimit: 1000000000000	
       maxPriorityFeePerGas: 100
-      maxFeePerGas: 1000
+      maxFeePerGas:        1000
       nonce: auto
       secretKey: 41f6e321b31e72173f8ff2e292359e1862f24fba42fe6f97efaf641980eff298
       to: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCD
       value: 0x0
-    - data: ''
+    - data: :raw 0x0203
       accessList: []
       gasLimit: 1000000000000	
       maxPriorityFeePerGas: 100
-      maxFeePerGas: 1000
+      maxFeePerGas:        1000
       nonce: auto
       secretKey: 41f6e321b31e72173f8ff2e292359e1862f24fba42fe6f97efaf641980eff298
       to: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCE
@@ -137,63 +137,89 @@ baseFee:
 
   # Block 3
   - transactions:
-    - data: ''
+    - data: :raw 0x0301
       accessList: []
       gasLimit: 1000000000000	
       maxPriorityFeePerGas: 1000
-      maxFeePerGas: 1000
+      maxFeePerGas:         1000
       nonce: auto
       secretKey: 41f6e321b31e72173f8ff2e292359e1862f24fba42fe6f97efaf641980eff298
       to: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
       value: 0x0
-    - data: ''
+
+    - data: :raw 0x0302
+      invalid: 1     # Because maxPriority > maxFee
       accessList: []
       gasLimit: 1000000000000	
       maxPriorityFeePerGas: 100000
-      maxFeePerGas: 1000
+      maxFeePerGas:           1000
       nonce: auto
       secretKey: 41f6e321b31e72173f8ff2e292359e1862f24fba42fe6f97efaf641980eff298
       to: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCD
       value: 0x0
-    - data: ''
+
+    - data: :raw 0x0303
       accessList: []
       gasLimit: 1000000000000	
       maxPriorityFeePerGas: 100
-      maxFeePerGas: 1000
-      nonce: auto
+      maxFeePerGas:        1000
+      nonce: 6
       secretKey: 41f6e321b31e72173f8ff2e292359e1862f24fba42fe6f97efaf641980eff298
       to: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCE
+      value: 0x0
+
+    - data: :raw 0x0304
+      accessList: []
+      gasLimit: 1000000000000	
+      maxPriorityFeePerGas: 100000
+      maxFeePerGas:         100000
+      nonce: auto
+      secretKey: 41f6e321b31e72173f8ff2e292359e1862f24fba42fe6f97efaf641980eff298
+      to: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCD
       value: 0x0
 
 
   # Block 4
   - transactions:
-    - data: ''
+    - data: :raw 0x0401
       accessList: []
       gasLimit: 1000000000000	
       maxPriorityFeePerGas: 1000
-      maxFeePerGas: 1000
+      maxFeePerGas:         1000
       nonce: auto
       secretKey: 41f6e321b31e72173f8ff2e292359e1862f24fba42fe6f97efaf641980eff298
       to: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
       value: 0x0
-    - data: ''
+
+    - data: :raw 0x0402
+      invalid: 1    # maxPriority > maxFee
       accessList: []
       gasLimit: 1000000000000	
       maxPriorityFeePerGas: 100000
-      maxFeePerGas: 1000
+      maxFeePerGas:           1000
       nonce: auto
       secretKey: 41f6e321b31e72173f8ff2e292359e1862f24fba42fe6f97efaf641980eff298
       to: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCD
       value: 0x0
-    - data: ''
+
+    - data: :raw 0x0403
       accessList: []
       gasLimit: 1000000000000	
       maxPriorityFeePerGas: 100
-      maxFeePerGas: 1000
-      nonce: auto
+      maxFeePerGas:        1000
+      nonce: 9
       secretKey: 41f6e321b31e72173f8ff2e292359e1862f24fba42fe6f97efaf641980eff298
       to: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCE
+      value: 0x0
+
+    - data: :raw 0x0404
+      accessList: []
+      gasLimit: 1000000000000	
+      maxPriorityFeePerGas: 100000
+      maxFeePerGas:         100000
+      nonce: auto
+      secretKey: 41f6e321b31e72173f8ff2e292359e1862f24fba42fe6f97efaf641980eff298
+      to: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCD
       value: 0x0
 
 
@@ -206,18 +232,21 @@ baseFee:
       0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC: 
           storage:
               
-            # BASEFEE and the tip in various blocks
-            0x0001: 0x036b # BASEFEE
-            0x1001: 0x0001 # tip
+            # BASEFEE and the tip in block 1
+            0x0001:      875 # BASEFEE
+            0x1001:        1 # tip
 
-            0x0002: 0x02fe 
-            0x1002: 0x000a
+            # Block 2
+            0x0002:      766 # BASEFEE
+            0x1002:       10 # tip
 
-            0x0003: 0x029f 
-            0x1003: 0x0149 
+            # Block 3
+            0x0003:      671
+            0x1003:      329
 
-            0x0004: 0x024c 
-            0x1004: 0x019c
+            # Block 4
+            0x0004:      588
+            0x1004:      412
 
             # SELFBALANCE, always the same
             0x2001: 0x010000000000
@@ -230,15 +259,17 @@ baseFee:
       0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCD: 
           storage:
               
-            # BASEFEE and the tip in various blocks
-            0x0002: 0x02fe 
-            0x1002: 0x0064
+            # Block 2
+            0x0002:      766   # BASEFEE
+            0x1002:      100   # tip
 
-            0x0003: 0x029f 
-            0x1003: 0x0149 
+            # Block 3
+            0x0003:      671
+            0x1003:    99329
 
-            0x0004: 0x024c 
-            0x1004: 0x019c
+            # Block 4
+            0x0004:      588
+            0x1004:    99412
 
             # SELFBALANCE, always the same
             0x2002: 0x020000000000
@@ -249,16 +280,15 @@ baseFee:
       # This contract sends out some of its balance
       0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCE: 
           storage:
-              
-            # BASEFEE and the tip in various blocks
-            0x0002: 0x02fe 
-            0x1002: 0x0064
+            # Block 2              
+            0x0002:      766   # BASEFEE
+            0x1002:      100   # tip
 
-            0x0003: 0x029f 
-            0x1003: 0x0064 
+            0x0003:      671
+            0x1003:      100
 
-            0x0004: 0x024c 
-            0x1004: 0x0064
+            0x0004:      588
+            0x1004:      100
 
             # SELFBALANCE
             0x2002: 0x01fffffff000
@@ -268,16 +298,17 @@ baseFee:
       # And this contract receives it
       0x000000000000000000000000000000000000C0DE:
           storage:
-              
-            # BASEFEE and the tip in various blocks
-            0x0002: 0x02fe 
-            0x1002: 0x0064
+            # Block 2              
+            0x0002:      766
+            0x1002:      100
 
-            0x0003: 0x029f 
-            0x1003: 0x0064 
+            # Block 3
+            0x0003:      671
+            0x1003:      100
 
-            0x0004: 0x024c 
-            0x1004: 0x0064
+            # Block 4
+            0x0004:      588 
+            0x1004:      100
 
             # SELFBALANCE
             0x2002: 0x1000
