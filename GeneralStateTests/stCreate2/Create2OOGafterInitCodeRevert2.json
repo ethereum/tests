@@ -2,19 +2,19 @@
     "Create2OOGafterInitCodeRevert2" : {
         "_info" : {
             "comment" : "Calls a contract that runs CREATE2 which deploy a code. then after deployment and exiting from CREATE a REVERT is called. check the REVERT data in this case equal to RETURN value of CREATE2. CREATE2 fails due to the deployment cost.",
-            "filling-rpc-server" : "evm version 1.10.2-unstable-22082f9e-20210309",
-            "filling-tool-version" : "retesteth-0.1.0-accesslist+commit.47c69eb3.Linux.g++",
-            "lllcversion" : "Version: 0.5.14-develop.2020.6.22+commit.9189ad7a.Linux.g++",
+            "filling-rpc-server" : "evm version 1.10.4-unstable-966ee3ae-20210528",
+            "filling-tool-version" : "retesteth-0.1.1-eip1559+commit.658fc3a8.Linux.g++",
+            "lllcversion" : "Version: 0.5.14-develop.2021.5.18+commit.14c9d5de.mod.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/stCreate2/Create2OOGafterInitCodeRevert2Filler.json",
-            "sourceHash" : "534837deeebe6fb9b50434517e93de3573fb3836f641a216f40224199beaae7b"
+            "sourceHash" : "83d0700183f8672e52b35ee0adee5b8ff0f59ffd1d70f76d5a3628d777e616fb"
         },
         "env" : {
             "currentCoinbase" : "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba",
             "currentDifficulty" : "0x020000",
-            "currentGasLimit" : "0x989680",
             "currentNumber" : "0x01",
             "currentTimestamp" : "0x03e8",
-            "previousHash" : "0x5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6"
+            "previousHash" : "0x5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6",
+            "currentGasLimit" : "0x989680"
         },
         "post" : {
             "Berlin" : [
@@ -24,8 +24,8 @@
                         "gas" : 0,
                         "value" : 0
                     },
-                    "hash" : "0xddc3cca1f15a9f54f0b9cb8121229bf89b47ae52d210b69ea5e0d41a7334a149",
-                    "txbytes" : "0xf8608001830124f894c94f5374fce5edbc8e2a8697c15331677e6ebf0b80801ca0b524b286a1aaf2902aeec847abc1351ee6c3c1fa27d5405086807bdc855c85b0a0264d638cdeb8512a3cc8fc1261d3f292ebb19c727a08a6630ba6f570915dae33",
+                    "hash" : "0x513e37a64b839a4805ae1c22f8f3a47f73965aa44f70ce90c3e8b6f459a29ed9",
+                    "txbytes" : "0xf860800a830124f894c94f5374fce5edbc8e2a8697c15331677e6ebf0b80801ca04ee610959d952713c71c18dcc4cb0a30bf4ffe5a94bf307b54c56aedbd6ba85da03759dc3d37a0f6c536c851b280ffbc48b50dee61b20f749a6ebe66d67ba7eccc",
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347"
                 }
             ],
@@ -36,8 +36,20 @@
                         "gas" : 0,
                         "value" : 0
                     },
-                    "hash" : "0x141fb0ddadaa3ff3b174b35248ab239b541185e1438ee98f400544a91ad6839e",
-                    "txbytes" : "0xf8608001830124f894c94f5374fce5edbc8e2a8697c15331677e6ebf0b80801ca0b524b286a1aaf2902aeec847abc1351ee6c3c1fa27d5405086807bdc855c85b0a0264d638cdeb8512a3cc8fc1261d3f292ebb19c727a08a6630ba6f570915dae33",
+                    "hash" : "0x04ccb4de56342bce936a32b30491dc02a74c1f4aada1d727c9ed6aa348e2ae2e",
+                    "txbytes" : "0xf860800a830124f894c94f5374fce5edbc8e2a8697c15331677e6ebf0b80801ca04ee610959d952713c71c18dcc4cb0a30bf4ffe5a94bf307b54c56aedbd6ba85da03759dc3d37a0f6c536c851b280ffbc48b50dee61b20f749a6ebe66d67ba7eccc",
+                    "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347"
+                }
+            ],
+            "London" : [
+                {
+                    "indexes" : {
+                        "data" : 0,
+                        "gas" : 0,
+                        "value" : 0
+                    },
+                    "hash" : "0x1df241855f034544e484e363bc13f8b2d3c49e361768ac034619008096bc993e",
+                    "txbytes" : "0xf860800a830124f894c94f5374fce5edbc8e2a8697c15331677e6ebf0b80801ca04ee610959d952713c71c18dcc4cb0a30bf4ffe5a94bf307b54c56aedbd6ba85da03759dc3d37a0f6c536c851b280ffbc48b50dee61b20f749a6ebe66d67ba7eccc",
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347"
                 }
             ]
@@ -70,10 +82,10 @@
             "data" : [
                 "0x"
             ],
+            "gasPrice" : "0x0a",
             "gasLimit" : [
                 "0x0124f8"
             ],
-            "gasPrice" : "0x01",
             "nonce" : "0x00",
             "secretKey" : "0x45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8",
             "to" : "0xc94f5374fce5edbc8e2a8697c15331677e6ebf0b",

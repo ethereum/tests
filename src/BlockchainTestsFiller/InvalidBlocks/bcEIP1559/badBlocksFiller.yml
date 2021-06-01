@@ -1,8 +1,8 @@
 # Check for block headers that don't obey EIP 1559
 #
 # 1. Incorrect baseFee after a block
-# 2. gasTarget decreased by more than 1/1024
-# 3. gasTarget increased by more than 1/1024
+# 2. gasLimit decreased by more than 1/1024
+# 3. gasLimit increased by more than 1/1024
 
 
 badBlocks:
@@ -72,16 +72,19 @@ badBlocks:
 
   - blockHeader:
       baseFee: 0x36c
+    blocknumber: 1
     expectException:
       '>=London': 1559BlockImportImpossible_BaseFeeWrong
     transactions: []
   - blockHeader:
       baseFee: 0x36a
+    blocknumber: 1
     expectException:
       '>=London': 1559BlockImportImpossible_BaseFeeWrong
     transactions: []
   - blockHeader:
       baseFee: 0x36b
+    blocknumber: 1
     transactions: []
 
 
@@ -90,15 +93,23 @@ badBlocks:
   #
   # From the EIP:
   #
-  # assert block.gas_target >= parent_gas_target - parent_gas_target // 1024, 'invalid block: gas target decreased too much'
-
+  # assert block.gas_limit > parent_gas_limit - parent_gas_limit // 1024, 'invalid block: 
+  #     gas limit decreased too much'
   - blockHeader:
-      gasLimit:  1072693247
+      gasLimit: 2072693247
+    blocknumber: 2
     expectException:
-      '>=London': 1559BlockImportImpossible_TargetGasLow
+      '>=London': InvalidGasLimit2
+    transactions: []
+  - blockHeader:
+      gasLimit: 1072693247 # block.gas_limit = parent_gas_limit - parent_gas_limit // 1024
+    blocknumber: 2
+    expectException:
+      '>=London': InvalidGasLimit2
     transactions: []
   - blockHeader:
       gasLimit: 1072693248    # 1024*1024*1023 (1023/1024 of the previous gasLimit)
+    blocknumber: 2
     transactions: []
 
 
@@ -107,17 +118,26 @@ badBlocks:
   #
   # From the EIP:
   #
-  # assert block.gas_target <= parent_gas_target + parent_gas_target // 1024, 'invalid block: gas target increased too much'
+  # assert block.gas_limit < parent_gas_limit + parent_gas_limit // 1024, 
+  #       'invalid block: gas limit increased too much'
 
   - blockHeader:
-      gasLimit: 1073740802
+      gasLimit: 2073740801
+    blocknumber: 3	
     expectException:
-      '>=London': 1559BlockImportImpossible_TargetGasHigh
+      '>=London': InvalidGasLimit2
+    transactions: []
+  - blockHeader:
+      gasLimit: 1073740801  # block.gas_limit = parent_gas_limit + parent_gas_limit // 1024
+    blocknumber: 3
+    expectException:
+      '>=London': InvalidGasLimit2
     transactions: []
   - blockHeader:
       # 1024*1023*1025 (1025/1024 of the previous limit) plus one. The one is accepted
       # because of the effects of integer division 
-      gasLimit: 1073740801  
+      gasLimit: 1073740800  
+    blocknumber: 3
     transactions: []
 
 

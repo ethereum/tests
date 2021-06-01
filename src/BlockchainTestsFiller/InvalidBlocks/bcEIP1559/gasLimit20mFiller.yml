@@ -44,36 +44,43 @@ gasLimit20m:
   # It's OK for the block to have the same gasLimit as the previous one
   - blockHeader:
       gasLimit: 20000000
+    blocknumber: 1
     transactions: []
 
   # The gasLimit can go down, but only to 1023/1024 of the current limit
   - blockHeader:
-      gasLimit: 19980469
+      gasLimit: 19980468
+    blocknumber: 2
     expectException:
-      '>=London': 1559BlockImportImpossible_TargetGasLow
+      '>=London': InvalidGasLimit2
     transactions: []
   - blockHeader:
-      gasLimit: 19980470
+      gasLimit: 19980469
+    blocknumber: 2
     transactions: []
 
 
   # Go back to the 20m limit
   - blockHeader:
       gasLimit: 19990000
+    blocknumber: 3
     transactions: []
   - blockHeader:
       gasLimit: 20000000
+    blocknumber: 4
     transactions: []
 
 
   # The gasLimit can go up, but only to 1025/1024 of the current limit
   - blockHeader:
       gasLimit: 20019532
+    blocknumber: 5
     expectException:
-      '>=London': 1559BlockImportImpossible_TargetGasHigh
+      '>=London': InvalidGasLimit2
     transactions: []
   - blockHeader:
       gasLimit: 20019531
+    blocknumber: 5
     transactions: []
 
 

@@ -2,19 +2,19 @@
     "extCodeHashDeletedAccount" : {
         "_info" : {
             "comment" : "Get account A (aaaaaaaa00000000000000000000000000000000) code hash, code size, and code\nCalls Account A's code which causes self destruction of A\nGet account A codehash, code size and code\nIt is still getting the same values because selfdestruct is performed\nat the end of transaction during state finalization stage.\n",
-            "filling-rpc-server" : "evm version 1.10.2-unstable-22082f9e-20210309",
-            "filling-tool-version" : "retesteth-0.1.0-accesslist+commit.47c69eb3.Linux.g++",
-            "lllcversion" : "Version: 0.5.14-develop.2020.6.22+commit.9189ad7a.Linux.g++",
+            "filling-rpc-server" : "evm version 1.10.4-unstable-966ee3ae-20210528",
+            "filling-tool-version" : "retesteth-0.1.1-eip1559+commit.658fc3a8.Linux.g++",
+            "lllcversion" : "Version: 0.5.14-develop.2021.5.18+commit.14c9d5de.mod.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/stExtCodeHash/extCodeHashDeletedAccountFiller.yml",
-            "sourceHash" : "359f1fb0ef32fd2fd034d1bcfc48a60ca2840778f6e29dc184d29054a0e88399"
+            "sourceHash" : "71084a99789fd02f5a627d1659e4c5c46829d6df10f441d91ca30de6dbd1a2fe"
         },
         "env" : {
             "currentCoinbase" : "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba",
             "currentDifficulty" : "0x020000",
-            "currentGasLimit" : "0x0f4240",
             "currentNumber" : "0x01",
             "currentTimestamp" : "0x03e8",
-            "previousHash" : "0x5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6"
+            "previousHash" : "0x5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6",
+            "currentGasLimit" : "0x0f4240"
         },
         "post" : {
             "Berlin" : [
@@ -24,8 +24,8 @@
                         "gas" : 0,
                         "value" : 0
                     },
-                    "hash" : "0x97593c3b6bffaf510dc89a3af9c1c5dfcf30e07260b4a33dae46be6e2dedc5bd",
-                    "txbytes" : "0xf860800183061a8094095e7baea6a6c7c4c2dfeb977efac326af552d8701801ca0ae29a79903b187c6d075320f9834a330b5134244c7fb0476eba58cd87b175fd6a027a8f85308f5f08f4e2f6b2e23d9dcfd740108f8f96517e50c9e1dc86288a673",
+                    "hash" : "0xc2a76da01d796a5ad6e2088cb25ec57c623cae254fa853db479c47926cd1b6aa",
+                    "txbytes" : "0xf860800a83061a8094095e7baea6a6c7c4c2dfeb977efac326af552d8701801ca09d46b87169053cc40670aef750b032c895cde3e35c2c7f5a37c059272e0914c7a04d4a94b67b2776cc3e0fca2ed9503c10fd92ec79f1b2dcbb85df9634c7de3119",
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347"
                 }
             ],
@@ -36,8 +36,20 @@
                         "gas" : 0,
                         "value" : 0
                     },
-                    "hash" : "0x440261e5560a98bae72223b2bb974c85b38147309654246678c423c57e830e56",
-                    "txbytes" : "0xf860800183061a8094095e7baea6a6c7c4c2dfeb977efac326af552d8701801ca0ae29a79903b187c6d075320f9834a330b5134244c7fb0476eba58cd87b175fd6a027a8f85308f5f08f4e2f6b2e23d9dcfd740108f8f96517e50c9e1dc86288a673",
+                    "hash" : "0xeb711198763967b76ff459309647dc4abbe38e91a9927faeec637880f1b95a54",
+                    "txbytes" : "0xf860800a83061a8094095e7baea6a6c7c4c2dfeb977efac326af552d8701801ca09d46b87169053cc40670aef750b032c895cde3e35c2c7f5a37c059272e0914c7a04d4a94b67b2776cc3e0fca2ed9503c10fd92ec79f1b2dcbb85df9634c7de3119",
+                    "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347"
+                }
+            ],
+            "London" : [
+                {
+                    "indexes" : {
+                        "data" : 0,
+                        "gas" : 0,
+                        "value" : 0
+                    },
+                    "hash" : "0xfc64b9e59aa8aaeedfb9e13576e6d5918eeeaaaf6ba071d3a056d5eaa1e8732c",
+                    "txbytes" : "0xf860800a83061a8094095e7baea6a6c7c4c2dfeb977efac326af552d8701801ca09d46b87169053cc40670aef750b032c895cde3e35c2c7f5a37c059272e0914c7a04d4a94b67b2776cc3e0fca2ed9503c10fd92ec79f1b2dcbb85df9634c7de3119",
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347"
                 }
             ]
@@ -90,10 +102,10 @@
             "data" : [
                 "0x"
             ],
+            "gasPrice" : "0x0a",
             "gasLimit" : [
                 "0x061a80"
             ],
-            "gasPrice" : "0x01",
             "nonce" : "0x00",
             "secretKey" : "0x45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8",
             "to" : "0x095e7baea6a6c7c4c2dfeb977efac326af552d87",
