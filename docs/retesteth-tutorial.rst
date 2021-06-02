@@ -27,11 +27,11 @@ you can use the **request helper**. You set these parameters:
 Parameter             Meaning          Sample Value
 ==================    ================ ============
 GeneralStateTests/    test suite       stExample
---singletest          name of test     add11
---clients             client to use    t8ntool (the value for geth)
---singlenet           fork to use      Berlin
---vmtrace             trace to produce raw
---verbosity           log verbosity    none
+-\\-singletest        name of test     add11
+-\\-clients           client to use    t8ntool (the value for geth)
+-\\-singlenet         fork to use      Berlin
+-\\-vmtrace           trace to produce raw
+-\\-verbosity         log verbosity    none
 ==================    ================ ============
 
 When a test file contains `multiple tests 
@@ -53,19 +53,19 @@ and then upload a test file. Here are the parameters:
 Parameter             Meaning           Sample Value
 ==================    ================= ============
 -t                    test suite        test type (state or blockchain)
---testfile            The file to test  you upload this file
---clients             client to use     t8ntool (the value for geth)
---vmtrace             trace to produce  raw
---filltests           test file type    see below
+-\\-testfile          The file to test  you upload this file
+-\\-clients           client to use     t8ntool (the value for geth)
+-\\-vmtrace           trace to produce  raw
+-\\-filltests         test file type    see below
 ==================    ================= ============
 
-If --filltests is set to **none**, you need to upload a generated test file.
+If -\\-filltests is set to **none**, you need to upload a generated test file.
 You can find those `here (for state tests) 
 <https://github.com/ethereum/tests/tree/develop/GeneralStateTests>`_, and 
 `here (for blockchain tests) 
 <https://github.com/ethereum/tests/tree/develop/BlockchainTests>`_.
 
-If --filltests is set to **filltests** then you can upload a filler test file,
+If -\\-filltests is set to **filltests** then you can upload a filler test file,
 which you can write yourself. This is documented 
 `in this tutorial (for state tests) 
 <https://ethereum-tests.readthedocs.io/en/latest/state-transition-tutorial.html>`_ 
@@ -97,13 +97,13 @@ is similar to a virtual machine, except that it doesn't run a separate
 instance of the operating system inside itself so it takes far less
 resources. One of the features of docker is that it can mount a
 directory of the host computer inside its own file system. The
-**--testpath** parameter to **dretesteth.sh** tells it what directory to
+**-\\-testpath** parameter to **dretesteth.sh** tells it what directory to
 mount, in this case **~/tests** which you just cloned from github. It
 mounts it as **/tests** inside the container.
 
 By default the **retesteth** configuration files are in
 **~/.retesteth**. However, that directory is not accessible to us
-outside the docker. Instead, we use **--datadir /tests/config** to tell
+outside the docker. Instead, we use **-\\-datadir /tests/config** to tell
 it to use (or create) the configuration in what appears to us to be
 **~/tests/config**, which is easily accessible.
 
@@ -170,16 +170,25 @@ configuration, these are the steps to follow.
 
       geth --http --http.addr 0.0.0.0 retesteth
 
+   To run **besu** use:
+
+   ::
+
+      
+      docker run -p 8545:8545 -p 13001:30303 \
+           hyperledger/besu:latest retesteth --rpc-http-port 8545 \
+           --host-allowlist '*'
+
 #. Run the test the same way you would for a client that runs inside
-   docker, but with the addition of the **--nodes** parameter. Also,
-   make sure the **--clients** parameter is set to the client you're
+   docker, but with the addition of the **-\\-nodes** parameter. Also,
+   make sure the **-\\-clients** parameter is set to the client you're
    testing.
 
    :: 
 
       ./dretesteth.sh -t BlockchainTests/ValidBlocks/VMTests -- \
          --testpath ~/tests --datadir /tests/config --clients geth \
-         --nodes \<ip\>:\<port, 8545 by default\>
+         --nodes \<ip\>:\<port, usually defaults to 8545\>
 
 Client Inside the Docker, Modify Configuration Files
 ----------------------------------------------------
@@ -194,7 +203,7 @@ If you want to run your client inside the docker, follow these steps:
    instead. For example, you might edit **~/tests/config/geth/start.sh**
    to replace **geth** with **/tests/geth** in line ten if you put your
    version of **geth** in **~/tests**.
-#. Run the tests, adding the **--clients \<name of client\>** parameter to
+#. Run the tests, adding the **-\\-clients \<name of client\>** parameter to
    ensure you're using the correct configuration. For example, run this
    command to run the virtual machine tests on **geth**: 
 
