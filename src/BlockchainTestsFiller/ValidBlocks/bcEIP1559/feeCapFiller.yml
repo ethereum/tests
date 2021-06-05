@@ -194,33 +194,36 @@ feeCap:
 
     # Type 0 transaction with insufficiently high gasPrice
     - data: ''
-      invalid: 1
+      expectException:
+        ">=London": TR_FeeCapLessThanBlocks
       gasLimit: 50000	
       gasPrice: 874
-      nonce: auto
+      nonce: 0x0e
       secretKey: 41f6e321b31e72173f8ff2e292359e1862f24fba42fe6f97efaf641980eff298
       to: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
       value: 0x0
    
     # Type 1 transaction with insufficiently high gasPrice
     - data: ''
-      invalid: 1
+      expectException:
+        ">=London": TR_FeeCapLessThanBlocks
       accessList: []
       gasLimit: 50000	
       gasPrice: 874
-      nonce: auto
+      nonce: 0x0e
       secretKey: 41f6e321b31e72173f8ff2e292359e1862f24fba42fe6f97efaf641980eff298
       to: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
       value: 0x0
 
     # Type 2 transaction with insufficiently high max
     - data: ''
-      invalid: 1
+      expectException:
+        ">=London": TR_FeeCapLessThanBlocks
       accessList: []
       gasLimit: 50000	
       maxFeePerGas: 874
       maxPriorityFeePerGas: 874
-      nonce: auto
+      nonce: 0x0e
       secretKey: 41f6e321b31e72173f8ff2e292359e1862f24fba42fe6f97efaf641980eff298
       to: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
       value: 0x0
