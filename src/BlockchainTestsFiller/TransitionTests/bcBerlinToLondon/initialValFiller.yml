@@ -140,7 +140,8 @@ initialVal:
     # This call to cc..cd should is a type 2, it should fail
     - data: :abi f(uint) 0x4030
       accessList: []
-      invalid: 1
+      expectException:
+        BerlinToLondonAt5: TR_TypeNotSupported
       gasLimit: 500000
       maxFeePerGas:  10000000000
       maxPriorityFeePerGas: 1000
@@ -270,7 +271,8 @@ initialVal:
     # Invalid transactions mess up the nonce calculation, so I prefer to do them
     # with otherwise unused accounts  
     - data: :abi f(uint) 0x6060
-      invalid: 1
+      expectException:
+        BerlinToLondonAt5: TR_FeeCapLessThanBlocks
       gasLimit: 1000000
       gasPrice: 875000043
       nonce: auto
@@ -304,7 +306,8 @@ initialVal:
     # Invalid transactions mess up the nonce calculation, so I prefer to do them
     # with otherwise unused accounts  
     - data: :abi f(uint) 0x6090
-      invalid: 1
+      expectException:
+        BerlinToLondonAt5: TR_FeeCapLessThanBlocks
       gasLimit: 1000000
       gasPrice: 875000043
       nonce: auto
@@ -339,7 +342,8 @@ initialVal:
     # Invalid transactions mess up the nonce calculation, so I prefer to do them
     # with otherwise unused accounts  
     - data: :abi f(uint) 0x60C0
-      invalid: 1
+      expectException:
+        BerlinToLondonAt5: TR_FeeCapLessThanBlocks
       gasLimit: 1000000
       gasPrice: 875000043
       nonce: auto
@@ -473,3 +477,4 @@ initialVal:
           0x60B1:     875000044  # baseFee
           0x60B2:             0  # Tip
           0x60B3: 0x020000000000 # Block gas limit
+
