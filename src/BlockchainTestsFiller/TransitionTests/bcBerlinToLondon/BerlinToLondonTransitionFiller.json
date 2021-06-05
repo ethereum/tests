@@ -64,7 +64,7 @@
                     "baseFee" : "0x3b9aca00"
                 },
                 "expectException" : {
-                    "BerlinToLondonAt5" : "1559BlockImportImpossible_HeaderIsLegacy"
+                    "BerlinToLondonAt5" : "InvalidGasLimit2"
                 },
                 "transactions" : [
                 ],
@@ -89,7 +89,9 @@
                 "blocknumber" : "4",
                 "transactions" : [
                     {
-                        "invalid" : "1",
+                        "expectException" : {
+                            "BerlinToLondonAt5" : "TR_TypeNotSupported"
+                        },
                         "data" : "{ [[1]] 12 (RETURN 0 (lll { [[0]] 15  } 0)) }",
                         "accessList" : [
                              {
@@ -159,6 +161,16 @@
                 },
                 "expectException" : {
                     "BerlinToLondonAt5" : "InvalidGasLimit2"
+                },
+                "transactions" : [
+                ],
+                "uncleHeaders" : [
+                ]
+            },
+            {
+                "blocknumber" : "5",
+                "blockHeader" : {
+                    "extraData" : "0x11"
                 },
                 "transactions" : [
                 ],
