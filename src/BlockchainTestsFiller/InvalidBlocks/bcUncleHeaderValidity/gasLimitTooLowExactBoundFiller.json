@@ -20,27 +20,13 @@
         "sealEngine" : "NoProof",
         "expect" : [
 	        {
-		        "network" : ["Istanbul", "Berlin"],
+		        "network" : [">=Istanbul"],
 		        "result" : {
 			        "0x095e7baea6a6c7c4c2dfeb977efac326af552d87" : {
         				"balance" : "10"
 			        },
 			        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
         				"nonce" : "2"
-			        },
-			        "0000000000000000000000000000000000000000" : {
-        				"balance" : "10"
-			        }
-		        }
-	        },
-	        {
-		        "network" : [">=London"],
-		        "result" : {
-			        "0x095e7baea6a6c7c4c2dfeb977efac326af552d87" : {
-        				"balance" : "20"
-			        },
-			        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-        				"nonce" : "3"
 			        },
 			        "0000000000000000000000000000000000000000" : {
         				"balance" : "10"
@@ -92,8 +78,7 @@
             },
             {
                 "expectException" : {
-                    "Istanbul" : "InvalidGasLimit2",
-                    "Berlin" : "InvalidGasLimit2"
+                    ">=Istanbul" : "InvalidGasLimit2"
                 },
                 "blockHeader" : {
                     "stateRoot" : "0x97f6417d2209a00290a009ee15e307a3e77fac623c7d301580c661c0ec2f1f5a"
