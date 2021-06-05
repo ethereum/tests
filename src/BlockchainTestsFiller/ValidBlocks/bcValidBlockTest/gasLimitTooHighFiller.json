@@ -23,14 +23,14 @@
 		    "network" : [">=Istanbul"],
 		    "result" : {
 			    "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-                    "balance" : "10000000000"
+                    "balance" : "10000000000000"
 			    }
 		    }
 	    }
         ],
         "pre" : {
             "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-                "balance" : "10000000000",
+                "balance" : "10000000000000",
                 "nonce" : "0",
                 "code" : "",
                 "storage": {}
@@ -40,7 +40,9 @@
             {
                 "transactions" : [
                     {
-                        "invalid" : "1",
+                        "expectException" : {
+                            ">=Istanbul" : "TR_GasLimitReached"
+                        },
                         "data" : "",
                         "gasLimit" : "10000001",
                         "gasPrice" : "1000",
