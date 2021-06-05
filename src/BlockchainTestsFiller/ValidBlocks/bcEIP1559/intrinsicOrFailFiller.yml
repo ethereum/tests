@@ -602,7 +602,8 @@ intrinsicOrFail:
 
     # Empty access list and no call data
     - data: ''
-      invalid: 1
+      expectException:
+        ">=London": TR_IntrinsicGas
       accessList: []
       gasLimit: 20999	
       maxPriorityFeePerGas: 0x00
@@ -627,7 +628,8 @@ intrinsicOrFail:
 
     # Empty access list and one call data byte (stored in #1)
     - data: :raw 0x11
-      invalid: 1
+      expectException:
+        ">=London": TR_IntrinsicGas
       accessList: []
       gasLimit: 21015
       maxPriorityFeePerGas: 0x00
@@ -652,7 +654,8 @@ intrinsicOrFail:
 
     # Empty access list and two call data bytes, (stored in #2)
     - data: :raw 0x1122
-      invalid: 1
+      expectException:
+        ">=London": TR_IntrinsicGas
       accessList: []
       gasLimit: 21031
       maxPriorityFeePerGas: 0x00
@@ -678,7 +681,8 @@ intrinsicOrFail:
 
     # Empty access list and two call data bytes, one of them zero (stored in #3)
     - data: :raw 0x0011
-      invalid: 1
+      expectException:
+        ">=London": TR_IntrinsicGas
       accessList: []
       gasLimit: 21019
       maxPriorityFeePerGas: 0x00
@@ -702,7 +706,8 @@ intrinsicOrFail:
       value: 0x0
 
     - data: :raw 0x0000
-      invalid: 1
+      expectException:
+        ">=London": TR_IntrinsicGas
       accessList: []
       gasLimit: 21007	
       maxPriorityFeePerGas: 0x00
@@ -725,7 +730,8 @@ intrinsicOrFail:
       value: 0x0
 
     - data: :raw 0x01020304050607080910111213141516171819202122232425262728293031
-      invalid: 1
+      expectException:
+        ">=London": TR_IntrinsicGas
       accessList: []
       gasLimit: 21495	
       maxPriorityFeePerGas: 0x00
@@ -749,7 +755,8 @@ intrinsicOrFail:
 
     - data: :raw 0x0102030405060708091011121314151617181920212223242526272829303132
       accessList: []
-      invalid: 1
+      expectException:
+        ">=London": TR_IntrinsicGas
       gasLimit: 21511	
       maxPriorityFeePerGas: 0x00
       maxFeePerGas: 100000
@@ -771,7 +778,8 @@ intrinsicOrFail:
       value: 0x0
 
     - data: :raw 0x010203040506070809101112131415161718192021222324252627282930313233
-      invalid: 1
+      expectException:
+        ">=London": TR_IntrinsicGas
       accessList: []
       gasLimit: 21527	
       maxPriorityFeePerGas: 0x00
@@ -796,7 +804,8 @@ intrinsicOrFail:
 
     - data: :raw 0x000000000000000000000000000000000000000000000000000000000000000000
 #                  010203040506070809101112131415161718192021222324252627282930313233
-      invalid: 1
+      expectException:
+        ">=London": TR_IntrinsicGas
       accessList: []
       gasLimit: 21131	
       maxPriorityFeePerGas: 0x00
@@ -820,7 +829,8 @@ intrinsicOrFail:
       value: 0x0
 
     - data: :raw 0x000000000000000000000000000000000000000000000000000000000000000000010203040506070809101112131415161718192021222324252627282930313233
-      invalid: 1
+      expectException:
+        ">=London": TR_IntrinsicGas
       accessList: []
       gasLimit: 21659	
       maxPriorityFeePerGas: 0x00
@@ -846,7 +856,8 @@ intrinsicOrFail:
       value: 0x0
 
     - data: ''
-      invalid: 1
+      expectException:
+        ">=London": TR_IntrinsicGas
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys: []
@@ -873,7 +884,8 @@ intrinsicOrFail:
       value: 0x0
 
     - data: :raw 0x11
-      invalid: 1
+      expectException:
+        ">=London": TR_IntrinsicGas
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys: []
@@ -902,7 +914,8 @@ intrinsicOrFail:
 
 
     - data: :raw 0x1122
-      invalid: 1
+      expectException:
+        ">=London": TR_IntrinsicGas
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys: []
@@ -932,7 +945,8 @@ intrinsicOrFail:
       value: 0x0
 
     - data: :raw 0x0011
-      invalid: 1
+      expectException:
+        ">=London": TR_IntrinsicGas
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys: []
@@ -959,7 +973,8 @@ intrinsicOrFail:
       value: 0x0
 
     - data: :raw 0x0000
-      invalid: 1
+      expectException:
+        ">=London": TR_IntrinsicGas
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys: []
@@ -988,7 +1003,8 @@ intrinsicOrFail:
       value: 0x0
 
     - data: :raw 0x01020304050607080910111213141516171819202122232425262728293031
-      invalid: 1
+      expectException:
+        ">=London": TR_IntrinsicGas
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys: []
@@ -1015,7 +1031,8 @@ intrinsicOrFail:
       value: 0x0
 
     - data: :raw 0x0102030405060708091011121314151617181920212223242526272829303132
-      invalid: 1
+      expectException:
+        ">=London": TR_IntrinsicGas
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys: []
@@ -1042,7 +1059,8 @@ intrinsicOrFail:
       value: 0x0
 
     - data: :raw 0x010203040506070809101112131415161718192021222324252627282930313233
-      invalid: 1
+      expectException:
+        ">=London": TR_IntrinsicGas
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys: []
@@ -1072,7 +1090,8 @@ intrinsicOrFail:
 
     - data: :raw 0x000000000000000000000000000000000000000000000000000000000000000000
 #                  010203040506070809101112131415161718192021222324252627282930313233
-      invalid: 1
+      expectException:
+        ">=London": TR_IntrinsicGas
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys: []
@@ -1101,7 +1120,8 @@ intrinsicOrFail:
       value: 0x0
 
     - data: :raw 0x000000000000000000000000000000000000000000000000000000000000000000010203040506070809101112131415161718192021222324252627282930313233
-      invalid: 1
+      expectException:
+        ">=London": TR_IntrinsicGas
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys: []
@@ -1129,7 +1149,8 @@ intrinsicOrFail:
       value: 0x0
 
     - data: ''
-      invalid: 1
+      expectException:
+        ">=London": TR_IntrinsicGas
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys:
@@ -1160,7 +1181,8 @@ intrinsicOrFail:
       value: 0x0
 
     - data: :raw 0x11
-      invalid: 1
+      expectException:
+        ">=London": TR_IntrinsicGas
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys:
@@ -1190,7 +1212,8 @@ intrinsicOrFail:
       value: 0x0
 
     - data: :raw 0x1122
-      invalid: 1
+      expectException:
+        ">=London": TR_IntrinsicGas
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys:
@@ -1220,7 +1243,8 @@ intrinsicOrFail:
       value: 0x0
 
     - data: :raw 0x0011
-      invalid: 1
+      expectException:
+        ">=London": TR_IntrinsicGas
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys:
@@ -1251,7 +1275,8 @@ intrinsicOrFail:
       value: 0x0
 
     - data: :raw 0x0000
-      invalid: 1
+      expectException:
+        ">=London": TR_IntrinsicGas
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys:
@@ -1282,7 +1307,8 @@ intrinsicOrFail:
       value: 0x0
 
     - data: :raw 0x01020304050607080910111213141516171819202122232425262728293031
-      invalid: 1
+      expectException:
+        ">=London": TR_IntrinsicGas
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys:
@@ -1312,7 +1338,8 @@ intrinsicOrFail:
       value: 0x0
 
     - data: :raw 0x0102030405060708091011121314151617181920212223242526272829303132
-      invalid: 1
+      expectException:
+        ">=London": TR_IntrinsicGas
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys:
@@ -1341,7 +1368,8 @@ intrinsicOrFail:
       value: 0x0
 
     - data: :raw 0x010203040506070809101112131415161718192021222324252627282930313233
-      invalid: 1
+      expectException:
+        ">=London": TR_IntrinsicGas
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys:
@@ -1372,7 +1400,8 @@ intrinsicOrFail:
 
     - data: :raw 0x000000000000000000000000000000000000000000000000000000000000000000
 #                  010203040506070809101112131415161718192021222324252627282930313233
-      invalid: 1
+      expectException:
+        ">=London": TR_IntrinsicGas
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys:
@@ -1401,7 +1430,8 @@ intrinsicOrFail:
       value: 0x0
 
     - data: :raw 0x000000000000000000000000000000000000000000000000000000000000000000010203040506070809101112131415161718192021222324252627282930313233
-      invalid: 1
+      expectException:
+        ">=London": TR_IntrinsicGas
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys:
@@ -1432,7 +1462,8 @@ intrinsicOrFail:
       value: 0x0
 
     - data: ''
-      invalid: 1
+      expectException:
+        ">=London": TR_IntrinsicGas
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys:
@@ -1463,7 +1494,8 @@ intrinsicOrFail:
       value: 0x0
 
     - data: :raw 0x11
-      invalid: 1
+      expectException:
+        ">=London": TR_IntrinsicGas
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys:
@@ -1494,7 +1526,8 @@ intrinsicOrFail:
       value: 0x0
 
     - data: :raw 0x1122
-      invalid: 1
+      expectException:
+        ">=London": TR_IntrinsicGas
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys:
@@ -1527,7 +1560,8 @@ intrinsicOrFail:
 
 
     - data: :raw 0x0011
-      invalid: 1
+      expectException:
+        ">=London": TR_IntrinsicGas
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys:
@@ -1558,7 +1592,8 @@ intrinsicOrFail:
       value: 0x0
 
     - data: :raw 0x0000
-      invalid: 1
+      expectException:
+        ">=London": TR_IntrinsicGas
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys:
@@ -1589,7 +1624,8 @@ intrinsicOrFail:
       value: 0x0
 
     - data: :raw 0x01020304050607080910111213141516171819202122232425262728293031
-      invalid: 1
+      expectException:
+        ">=London": TR_IntrinsicGas
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys:
@@ -1620,7 +1656,8 @@ intrinsicOrFail:
       value: 0x0
 
     - data: :raw 0x0102030405060708091011121314151617181920212223242526272829303132
-      invalid: 1
+      expectException:
+        ">=London": TR_IntrinsicGas
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys:
@@ -1651,7 +1688,8 @@ intrinsicOrFail:
       value: 0x0
 
     - data: :raw 0x010203040506070809101112131415161718192021222324252627282930313233
-      invalid: 1
+      expectException:
+        ">=London": TR_IntrinsicGas
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys:
@@ -1682,7 +1720,8 @@ intrinsicOrFail:
       value: 0x0
 
     - data: :raw 0x000000000000000000000000000000000000000000000000000000000000000000
-      invalid: 1
+      expectException:
+        ">=London": TR_IntrinsicGas
 #                  010203040506070809101112131415161718192021222324252627282930313233
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
@@ -1716,7 +1755,8 @@ intrinsicOrFail:
       value: 0x0
 
     - data: :raw 0x000000000000000000000000000000000000000000000000000000000000000000010203040506070809101112131415161718192021222324252627282930313233
-      invalid: 1
+      expectException:
+        ">=London": TR_IntrinsicGas
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys:
@@ -1751,7 +1791,8 @@ intrinsicOrFail:
       value: 0x0
 
     - data: ''
-      invalid: 1
+      expectException:
+        ">=London": TR_IntrinsicGas
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys:
@@ -1786,7 +1827,8 @@ intrinsicOrFail:
       value: 0x0
 
     - data: :raw 0x11
-      invalid: 1
+      expectException:
+        ">=London": TR_IntrinsicGas
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys:
@@ -1820,7 +1862,8 @@ intrinsicOrFail:
       value: 0x0
 
     - data: :raw 0x1122
-      invalid: 1
+      expectException:
+        ">=London": TR_IntrinsicGas
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys:
@@ -1856,7 +1899,8 @@ intrinsicOrFail:
       value: 0x0
 
     - data: :raw 0x0011
-      invalid: 1
+      expectException:
+        ">=London": TR_IntrinsicGas
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys:
@@ -1891,7 +1935,8 @@ intrinsicOrFail:
       value: 0x0
 
     - data: :raw 0x0000
-      invalid: 1
+      expectException:
+        ">=London": TR_IntrinsicGas
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys:
@@ -1926,7 +1971,8 @@ intrinsicOrFail:
       value: 0x0
 
     - data: :raw 0x01020304050607080910111213141516171819202122232425262728293031
-      invalid: 1
+      expectException:
+        ">=London": TR_IntrinsicGas
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys:
@@ -1961,7 +2007,8 @@ intrinsicOrFail:
       value: 0x0
 
     - data: :raw 0x0102030405060708091011121314151617181920212223242526272829303132
-      invalid: 1
+      expectException:
+        ">=London": TR_IntrinsicGas
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys:
@@ -1998,7 +2045,8 @@ intrinsicOrFail:
       value: 0x0
 
     - data: :raw 0x010203040506070809101112131415161718192021222324252627282930313233
-      invalid: 1
+      expectException:
+        ">=London": TR_IntrinsicGas
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys:
@@ -2036,7 +2084,8 @@ intrinsicOrFail:
 
     - data: :raw 0x000000000000000000000000000000000000000000000000000000000000000000
 #                  010203040506070809101112131415161718192021222324252627282930313233
-      invalid: 1
+      expectException:
+        ">=London": TR_IntrinsicGas
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys:
@@ -2074,7 +2123,8 @@ intrinsicOrFail:
       value: 0x0
 
     - data: :raw 0x000000000000000000000000000000000000000000000000000000000000000000010203040506070809101112131415161718192021222324252627282930313233
-      invalid: 1
+      expectException:
+        ">=London": TR_IntrinsicGas
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys:
@@ -2173,7 +2223,8 @@ intrinsicOrFail:
       value: 0x0
 
     - data: ''
-      invalid: 1
+      expectException:
+        ">=London": TR_IntrinsicGas
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys:
@@ -2399,7 +2450,8 @@ intrinsicOrFail:
         - 0x60A7
         - 0xBEEF
       gasLimit: 129615
-      invalid: 1
+      expectException:
+        ">=London": TR_IntrinsicGas
       maxPriorityFeePerGas: 0x00
       maxFeePerGas: 100000
       nonce: auto
@@ -2554,11 +2606,12 @@ intrinsicOrFail:
         - 0x0BAD
         - 0x60A7
         - 0xBEEF
-      invalid: 1
+      expectException:
+        ">=London": TR_IntrinsicGas
       gasLimit: 129631	
       maxPriorityFeePerGas: 0x00
       maxFeePerGas: 100000
-      nonce: auto
+      nonce: 2
       secretKey: d6e5e788dba82de1e3fe79186f227a5a8fa88276c4b48a243eb3e99efb951927
       to: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC0
       value: 0x0
@@ -2632,7 +2685,8 @@ intrinsicOrFail:
         - 0x60A7
         - 0xBEEF
       gasLimit: 129631
-      invalid: 1
+      expectException:
+        ">=London": TR_IntrinsicGas
       maxPriorityFeePerGas: 0x00
       maxFeePerGas: 100000
       nonce: auto
@@ -2788,7 +2842,8 @@ intrinsicOrFail:
         - 0x60A7
         - 0xBEEF
       gasLimit: 129619
-      invalid: 1
+      expectException:
+        ">=London": TR_IntrinsicGas
       maxPriorityFeePerGas: 0x00
       maxFeePerGas: 100000
       nonce: auto
@@ -2945,7 +3000,8 @@ intrinsicOrFail:
         - 0x60A7
         - 0xBEEF
       gasLimit: 129607
-      invalid: 1
+      expectException:
+        ">=London": TR_IntrinsicGas
       maxPriorityFeePerGas: 0x00
       maxFeePerGas: 100000
       nonce: auto
@@ -3103,7 +3159,8 @@ intrinsicOrFail:
         - 0x60A7
         - 0xBEEF
       gasLimit: 130095
-      invalid: 1
+      expectException:
+        ">=London": TR_IntrinsicGas
       maxPriorityFeePerGas: 0x00
       maxFeePerGas: 100000
       nonce: auto
@@ -3258,7 +3315,8 @@ intrinsicOrFail:
         - 0x60A7
         - 0xBEEF
       gasLimit: 130111
-      invalid: 1
+      expectException:
+        ">=London": TR_IntrinsicGas
       maxPriorityFeePerGas: 0x00
       maxFeePerGas: 100000
       nonce: auto
@@ -3415,7 +3473,8 @@ intrinsicOrFail:
         - 0x60A7
         - 0xBEEF
       gasLimit: 130127
-      invalid: 1
+      expectException:
+        ">=London": TR_IntrinsicGas
       maxPriorityFeePerGas: 0x00
       maxFeePerGas: 100000
       nonce: auto
@@ -3573,7 +3632,8 @@ intrinsicOrFail:
         - 0x60A7
         - 0xBEEF
       gasLimit: 129731
-      invalid: 1
+      expectException:
+        ">=London": TR_IntrinsicGas
       maxPriorityFeePerGas: 0x00
       maxFeePerGas: 100000
       nonce: auto
@@ -3729,7 +3789,8 @@ intrinsicOrFail:
         - 0x60A7
         - 0xBEEF
       gasLimit: 130259
-      invalid: 1
+      expectException:
+        ">=London": TR_IntrinsicGas
       maxPriorityFeePerGas: 0x00
       maxFeePerGas: 100000
       nonce: auto
