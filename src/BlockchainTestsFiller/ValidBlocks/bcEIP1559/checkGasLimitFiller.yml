@@ -80,7 +80,8 @@ checkGasLimit:
       to: 0x1111111111111111111111111111111111111111
       value: 0x0
     - data: ''
-      invalid: 1
+      expectException:
+        ">=London": TR_GasLimitReached
       accessList: []
       gasLimit: 1000000  # 1m gas
       maxPriorityFeePerGas: 0x00
@@ -154,7 +155,8 @@ checkGasLimit:
       gasLimit: 4000000  # 4m gas
     transactions:
     - data: ''
-      invalid: 1
+      expectException:
+        ">=London": TR_GasLimitReached
       accessList: []
       gasLimit: 4000001
       maxPriorityFeePerGas: 0x00
