@@ -20,7 +20,7 @@
             },
             "0x1000000000000000000000000000000000000001": {
                 "balance" : "0x00",
-                "code": "{ (seq (SSTORE 2 (CALL 100000 0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b 0 0 0 0 32)) (SSTORE 0 (RETURNDATASIZE))) (SSTORE 1 (MLOAD 0))}",
+                "code": "{ (seq (SSTORE 2 (CALL 100000 0x1000000000000000000000000000000000000002 0 0 0 0 32)) (SSTORE 0 (RETURNDATASIZE))) (SSTORE 1 (MLOAD 0))}",
                 "nonce" : "0x00",
                 "storage" : {
                     "0x00" : "0xffffffff",
@@ -28,9 +28,16 @@
                     "0x02" : "0xffffffff"
                 }
             },
+            "0x1000000000000000000000000000000000000002" : {
+                "balance" : "0x6400000000",
+                "code" : "{ (seq (CALL 100000 0xbb00000000000000000000000000000000000000 0 0 0 0 0) (while 1 (SSTORE 0 1)) )}",
+                "nonce" : "0x00",
+                "storage" : {
+                }
+            },
             "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
                 "balance" : "0x100000000000",
-                "code" : "{ (seq (CALL 100000 0xbb00000000000000000000000000000000000000 0 0 0 0 0) (while 1 (SSTORE 0 1)) )}",
+                "code" : "",
                 "nonce" : "0x00",
                 "storage" : {
                 }
