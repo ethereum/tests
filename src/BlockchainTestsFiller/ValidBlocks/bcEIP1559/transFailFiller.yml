@@ -157,7 +157,8 @@ transFail:
 
     # Transaction type 2, maxPriorityFeePerGas > maxFeePerGas (by one)
     - data: :abi f(uint) 0x0105
-      invalid: 1
+      expectException:
+        ">=London": TR_TipGtFeeCap
       accessList: []
       gasLimit: 50000   
       maxPriorityFeePerGas: 1001
@@ -170,12 +171,13 @@ transFail:
 
     # Transaction type 2, maxPriorityFeePerGas > maxFeePerGas
     - data: :abi f(uint) 0x0106
-      invalid: 1
+      expectException:
+        ">=London": TR_TipGtFeeCap
       accessList: []
       gasLimit: 50000   
       maxPriorityFeePerGas: 10000
       maxFeePerGas:          1000
-      nonce: auto
+      nonce: 0x05
       secretKey: 41f6e321b31e72173f8ff2e292359e1862f24fba42fe6f97efaf641980eff298
       to: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
       value: 0x0
@@ -231,7 +233,8 @@ transFail:
 
     # Transaction type 2, maxPriorityFeePerGas > maxFeePerGas (by one)
     - data: :abi f(uint) 0x0205
-      invalid: 1
+      expectException:
+        ">=London": TR_TipGtFeeCap
       accessList: []
       gasLimit: 50000   
       maxPriorityFeePerGas: 1001
@@ -244,12 +247,13 @@ transFail:
 
     # Transaction type 2, maxPriorityFeePerGas > maxFeePerGas
     - data: :abi f(uint) 0x0206
-      invalid: 1
+      expectException:
+        ">=London": TR_TipGtFeeCap
       accessList: []
       gasLimit: 50000   
       maxPriorityFeePerGas: 10000
       maxFeePerGas:          1000
-      nonce: auto
+      nonce: 0x05
       secretKey: 0x30aef158fab404b766b50db4618b2231ba4e39148a563dc69d80927cd620cfe5 
       to: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
       value: 0x0
@@ -271,7 +275,8 @@ transFail:
 
     # Transaction type 2, maxFeePerGas * gasLimit > account balance
     - data: :abi f(uint) 0x0302
-      invalid: 1
+      expectException:
+        ">=London": TR_NoFunds
       accessList: []
       gasLimit: 1000000000
       maxPriorityFeePerGas:   0
@@ -296,7 +301,8 @@ transFail:
     # (it's the same amount as the previous transaction, but we already
     # spent some of it)
     - data: :abi f(uint) 0x0304
-      invalid: 1
+      expectException:
+        ">=London": TR_NoFunds
       accessList: []
       gasLimit: 100000000
       maxPriorityFeePerGas:   0
@@ -310,7 +316,8 @@ transFail:
     # Transaction type 2, maxFeePerGas * gasLimit > account balance,
     # but only by 1 wei
     - data: :abi f(uint) 0x0305
-      invalid: 1
+      expectException:
+        ">=London": TR_NoFunds
       accessList: []
       gasLimit: 100000000
       maxPriorityFeePerGas:   0
@@ -334,7 +341,8 @@ transFail:
     # Transaction type 1, gasPrice * gasLimit > account balance
     # because we spent some
     - data: :abi f(uint) 0x0307
-      invalid: 1
+      expectException:
+        ">=London": TR_NoFunds
       accessList: []
       gasLimit: 100000000
       gasPrice:      1000
@@ -356,7 +364,8 @@ transFail:
     # Transaction type 0, gasPrice * gasLimit > account balance
     # because we spent some
     - data: :abi f(uint) 0x0309
-      invalid: 1
+      expectException:
+        ">=London": TR_NoFunds
       gasLimit: 100000000
       gasPrice:      1000
       nonce: auto

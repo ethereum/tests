@@ -148,7 +148,8 @@ baseFee:
       value: 0x0
 
     - data: :raw 0x0302
-      invalid: 1     # Because maxPriority > maxFee
+      expectException:
+        ">=London": TR_TipGtFeeCap
       accessList: []
       gasLimit: 1000000000000	
       maxPriorityFeePerGas: 100000
@@ -192,7 +193,8 @@ baseFee:
       value: 0x0
 
     - data: :raw 0x0402
-      invalid: 1    # maxPriority > maxFee
+      expectException:
+        ">=London": TR_TipGtFeeCap
       accessList: []
       gasLimit: 1000000000000	
       maxPriorityFeePerGas: 100000
