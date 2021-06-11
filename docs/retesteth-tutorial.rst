@@ -289,10 +289,14 @@ updates. If you want the latest features, you need to build an image from the
 
       sudo apt install -y wget docker docker.io
 
-#. Download the **dretesteth.sh** script and the **Dockerfile**.
+#. Download the **dretesteth.sh** script and the **Dockerfile**. Make sure to do this
+   in an otherwise empty directory, because the docker builder copies everything in or
+   below the directory where **Dockerfile** is located.
 
    ::
 
+      mkdir ~/retestethBuild
+      cd ~/retestethBuild
       wget https://raw.githubusercontent.com/ethereum/retesteth/develop/dretesteth.sh
       chmod +x dretesteth.sh 
       wget https://raw.githubusercontent.com/ethereum/retesteth/develop/Dockerfile
