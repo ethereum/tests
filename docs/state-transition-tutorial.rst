@@ -230,13 +230,40 @@ to see that 2+2=5. Here are the steps to use it.
 
 #. Delete the test so we won't see the failure when we run future tests
    (you can run all the tests in a directory by omitting the 
-   **--singletest** parameter:
+   **-\\-singletest** parameter:
 
    ::
  
       rm ~/tests/src/GeneralStateTestsFiller/stExample/02_*
 
 
+
+Tests that are Supposed to Fail
+-------------------------------
+When a test transaction is supposed to fail, you add an **expectException:**
+section to the **result**. You can see a complete example in `10_expectExceptionFiller
+<https://github.com/ethereum/tests/blob/develop/docs/tutorial_samples/10_expectExceptionFiller.yml>`_
+
+::
+
+    expect:
+    - indexes:
+        data: !!int -1
+        gas:  !!int -1
+        value: !!int -1
+      network:
+        - '>=London'
+      expectException:
+        '>=London': TR_FeeCapLessThanBlocks
+      result: {}  # No point checking the result when no transaction happened
+
+
+You can see the complete list of supported exceptions either in the config file for the
+client, or in `the retesteth source code 
+<https://github.com/ethereum/retesteth/blob/develop/retesteth/configs/clientconfigs/t8ntool.cpp#L158-L166>`_.
+
+Note that running out of gas is not an exception. Technically speaking a transaction that
+runs out of gas is successful, it is just reverted.
 
 Yul Tests
 =========
