@@ -156,7 +156,7 @@ initialVal:
       # Post EIP-1559 the block gasLimit is doubled, so the new 
       # gasTarget will be the old gasLimit
       gasLimit: 0x20000000000
-      baseFee: 1000000000
+      baseFeePerGas: 1000000000
 
     transactions:
     # Type 0 transaction, tip calculated correctly
@@ -354,7 +354,7 @@ initialVal:
   # Block 7, except it's a pre EIP1559 block so it fails
   - blockHeader:
       remove:
-      - baseFee
+      - baseFeePerGas
       gasLimit: 0x20000000000
     blocknumber: 7
     expectException:
