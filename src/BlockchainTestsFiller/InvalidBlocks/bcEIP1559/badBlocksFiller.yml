@@ -22,7 +22,7 @@ badBlocks:
     transactionsTrie: '0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421'
     uncleHash: '0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347'
     gasLimit: 1073741824  # 1024^3
-    baseFee: 1000
+    baseFeePerGas: 1000
   sealEngine: NoProof
 
 
@@ -71,19 +71,19 @@ badBlocks:
   # assert expected_base_fee_per_gas == block.base_fee_per_gas, 'invalid block: base fee not correct'
 
   - blockHeader:
-      baseFee: 0x36c
+      baseFeePerGas: 0x36c
     blocknumber: 1
     expectException:
       '>=London': 1559BlockImportImpossible_BaseFeeWrong
     transactions: []
   - blockHeader:
-      baseFee: 0x36a
+      baseFeePerGas: 0x36a
     blocknumber: 1
     expectException:
       '>=London': 1559BlockImportImpossible_BaseFeeWrong
     transactions: []
   - blockHeader:
-      baseFee: 0x36b
+      baseFeePerGas: 0x36b
     blocknumber: 1
     transactions: []
 
