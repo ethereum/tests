@@ -160,3 +160,7 @@ Fields
 - **invalid**:
 
   If the transaction is invalid, meaning clients should reject it, set this value to "1"
+
+- **expectException**:
+
+  .. include:: ../test_filler/test_expect_exception.rst

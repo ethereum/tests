@@ -11,6 +11,7 @@
 //
 // When a new fork is added, add it to the forks array. When a fork is no
 // longer relevant, remove it. Make sure that array is always sorted by time.
+// When you remove a fork, make sure to remove any fromFork fields that specify it.
 //
 // When a new opcode is added, add it to the opcodes array like this:
 // <opcode>: {
@@ -112,7 +113,7 @@ const boilerPlate_Head = `
     timestamp: 0x54c98c81
     transactionsTrie: 0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421
     uncleHash: 0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347
-    baseFee: 10
+    baseFeePerGas: 10
 
 
   _info:

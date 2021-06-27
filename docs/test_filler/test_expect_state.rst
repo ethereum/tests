@@ -141,3 +141,8 @@ fields you wish to test.
 
 .. include:: ../test_filler/test_addr.rst
 
+
+Expect Exception
+----------------
+
+.. include:: ../test_filler/test_expect_exception.rst

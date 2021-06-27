@@ -63,16 +63,10 @@ Linux running anywhere else with an Internet connection.
        The **/tests** directory is referenced inside the docker container. It is
        the same as the **~/tests** directory outside it.
 
-#. To avoid having to run with **sudo** all the time, add
-   `SUID <https://en.wikipedia.org/wiki/Setuid>`__ permissions to the
-   **docker** executable. 
+#. To avoid having to run with **sudo** all the time, add yourself to
+   the **docker** group.
 
-   .. warning::
-       This opens potential security risks.
-       Don't do it on a VM used by multiple people unless you know what you're doing. 
+   ::
 
-   :: 
-   
-       sudo chmod +s /usr/bin/docker-lin\* `which docker`
-
+        sudo usermod -a -G docker `whoami`
 
