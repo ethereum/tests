@@ -14,7 +14,5 @@ check various aspects of their client.
    test_types/rlp_tests.rst
    test_types/transaction_tests.rst
    test_sample/trie_tests.rst
-   test_sample/vm_tests.rst
-
    test_sample/misc_tests.rst
 
