@@ -31,6 +31,7 @@ Ethereum Tests
    retesteth-ref.rst
    config-dir.rst
    t8ntool-ref.rst
+   rpc-ref.rst
 
 
 .. toctree::
@@ -39,6 +40,7 @@ Ethereum Tests
   
    blockchain-ref.rst
    state-transition-ref.rst
+   vm-ref.rst
    sample-values.rst
 
    contribute.rst
