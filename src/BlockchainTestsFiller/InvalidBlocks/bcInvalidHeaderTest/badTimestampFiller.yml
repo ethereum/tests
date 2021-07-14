@@ -1,0 +1,91 @@
+# This test looks for a few possible problem states with timestamps:
+#
+# 1. A block with the same timestamp as the parent is invalid
+# 2. A block with a timestamp prior to its parent is invalid
+
+badTimestamp:
+  genesisBlockHeader:
+    timestamp: 0 # The beginning of the epoch
+    bloom: '0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000'
+    coinbase: '0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba'
+    difficulty: '131072'
+    extraData: '0x42'
+    gasUsed: '0'
+    mixHash: '0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421'
+    nonce: '0x0102030405060708'
+    number: '0'
+    parentHash: '0x0000000000000000000000000000000000000000000000000000000000000000'
+    receiptTrie: '0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421'
+    stateRoot: '0xf99eb1626cfa6db435c0836235942d7ccaa935f1ae247d3f1c21e495685f903a'
+    transactionsTrie: '0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421'
+    uncleHash: '0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347'
+    gasLimit: 1073741824  # 1024^3
+    baseFeePerGas: 1000
+  sealEngine: NoProof
+
+
+  pre:
+    0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: 0x10000000000
+      code: ''
+      nonce: 1
+      storage: {}
+
+    0xd02d72E067e77158444ef2020Ff2d325f929B363:
+      balance: 0x1000000000000
+      nonce: 1
+      code: ''
+      storage: {}
+
+
+  blocks:
+
+  # Unix timestamps are in microseconds, so this is one second after the previous block
+  # which should be accepted
+  - blockHeader:
+      timestamp: 1000000
+    transactions: []
+
+  - blockHeader:
+      timestamp: 2000000
+    transactions: []
+
+  - blockHeader:
+      timestamp: 3000000
+    transactions: []
+
+  # However, a new block that is at the same time as a previous block should not
+  # be accepted
+  - blockHeader:
+      timestamp: 3000000
+    transactions: []
+    expectException:
+      '>=London': InvalidTimestampOlderParent
+
+
+
+  # Neither should one in the past
+  - blockHeader:
+      timestamp: 1000000
+    blocknumber: 4
+    transactions: []
+    expectException:
+      '>=London': InvalidTimestampOlderParent
+
+
+  # This block is legitimate
+  - blockHeader:
+      timestamp: 4000000
+    blocknumber: 4
+    transactions: []
+
+
+
+  expect:
+  - network:
+    - ">=London"
+    # No real result, this test is based on exceptions
+    # No transactions, so no need to check the nonces either
+    result: {}
+
+
