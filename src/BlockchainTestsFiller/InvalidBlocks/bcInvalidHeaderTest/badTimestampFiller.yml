@@ -2,6 +2,13 @@
 #
 # 1. A block with the same timestamp as the parent is invalid
 # 2. A block with a timestamp prior to its parent is invalid
+# 3. A block with a timestamp one microsecond after its parent is valid
+#
+# All three conditions come from inequality (49) of the yellow paper
+# (https://ethereum.github.io/yellowpaper/paper.pdf, p. 7)
+#
+# Note that as this test includes blocks that create exceptions, it cannot be
+# --filltests on besu currently.
 
 badTimestamp:
   genesisBlockHeader:
@@ -19,7 +26,7 @@ badTimestamp:
     stateRoot: '0xf99eb1626cfa6db435c0836235942d7ccaa935f1ae247d3f1c21e495685f903a'
     transactionsTrie: '0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421'
     uncleHash: '0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347'
-    gasLimit: 1073741824  # 1024^3
+    gasLimit: 1073741824
     baseFeePerGas: 1000
   sealEngine: NoProof
 
@@ -40,44 +47,71 @@ badTimestamp:
 
   blocks:
 
-  # Unix timestamps are in microseconds, so this is one second after the previous block
-  # which should be accepted
+  # One microsecond after the previous block
+  - blockHeader:
+      timestamp: 1
+      # Specified manually because there is a bug in how retesteth calculates
+      # difficulty when the time difference < 9 microseconds
+      difficulty: 131136
+    blocknumber: 1
+    transactions: []
+
+  # One microsecond after the previous block
+  - blockHeader:
+      timestamp: 2
+      difficulty: 131200
+    blocknumber: 2
+    transactions: []
+
+  # A second from the beginning
+  # One microsecond after the previous block
   - blockHeader:
       timestamp: 1000000
+    blocknumber: 3
     transactions: []
 
+  # Same time as the previous block
   - blockHeader:
-      timestamp: 2000000
-    transactions: []
-
-  - blockHeader:
-      timestamp: 3000000
-    transactions: []
-
-  # However, a new block that is at the same time as a previous block should not
-  # be accepted
-  - blockHeader:
-      timestamp: 3000000
-    transactions: []
-    expectException:
-      '>=London': InvalidTimestampOlderParent
-
-
-
-  # Neither should one in the past
-  - blockHeader:
-      timestamp: 1000000
+      timestamp: 1000000	
     blocknumber: 4
     transactions: []
     expectException:
       '>=London': InvalidTimestampOlderParent
 
 
-  # This block is legitimate
+  # Another legitimate block
   - blockHeader:
-      timestamp: 4000000
+      timestamp: 2000000	
     blocknumber: 4
     transactions: []
+
+
+  # Time travel into the past
+  - blockHeader:
+      timestamp: 1500000	
+    blocknumber: 5
+    transactions: []
+    expectException:
+      '>=London': InvalidTimestampOlderParent
+
+  # Time stands still?
+  - blockHeader:
+      timestamp: 2000000	
+    blocknumber: 5
+    transactions: []
+    expectException:
+      '>=London': InvalidTimestampOlderParent
+
+
+  # Finally a legitimate block
+  - blockHeader:
+      timestamp: 2000001
+      difficulty: 131136
+    blocknumber: 5
+    transactions: []
+
+
+
 
 
 
