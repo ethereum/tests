@@ -6,9 +6,6 @@
 
 // Directions:
 //
-// testOpcodesGen.js > \
-//       tests/src/BlockchainTestsFiller/ValidBlocks/bcStateTests/testOpcodesFiller.yml
-//
 // When a new fork is added, add it to the forks array. When a fork is no
 // longer relevant, remove it. Make sure that array is always sorted by time.
 // When you remove a fork, make sure to remove any fromFork fields that specify it.
@@ -20,6 +17,9 @@
 // },
 //
 
+
+const firstOp = parseInt(process.argv[2])
+const lastOp  = parseInt(process.argv[3])
 
 
 // Maximum gas we're allowed to use
@@ -944,6 +944,7 @@ const undefinedOP = op => {
   }  // return structure
 }    // undefinedOP
 
+
 // Get the full information for an opcode
 const getOpcode = op => {
   // The information to test a bad opcode. It should revert. If it doesn't,
@@ -1082,7 +1083,7 @@ const getExpect = (fromOpcode, opcodeNum) => {
 
 const getTest = (fromOpcode, opcodeNum) => {
 
-  console.log(`Test_Opcode_${byte2Hex(fromOpcode)}:`)
+  console.log(`testOpcode_${byte2Hex(fromOpcode)}:`)
 
   console.log(boilerPlate_Head)
 
@@ -1097,6 +1098,6 @@ const getTest = (fromOpcode, opcodeNum) => {
 }
 
 
-for (var i=0; i<256; i++)
+for (var i=firstOp; i<=lastOp; i++)
 	getTest(i, 1)
 
