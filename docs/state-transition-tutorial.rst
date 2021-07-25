@@ -77,8 +77,13 @@ This is the general Ethereum environment before the transaction:
   env:
       currentCoinbase: 2adc25665018aa1fe0e6bc666dac8fc2697ff9ba
       currentDifficulty: '0x20000'
-      currentGasLimit: "100000000"
-      currentNumber: "1"
+      currentGasLimit: 10_000_000
+
+You can put underscores (`_`) in numbers to make them more readable.
+
+::
+
+      currentNumber: 1
       currentTimestamp: "1000"
       previousHash: 5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6
 
@@ -98,7 +103,7 @@ These are the relevant addresses and their initial states before the test starts
     pre:
 
 
-This is a contract address. As such it has code, which can be in one of three formats:
+This is a contract address. As such it has code, which can be in one of three languages:
 
 #. Ethereum virtual machine (EVM) machine language 
 #. `Lisp Like Language (lll) <http://blog.syrinx.net/the-resurrection-of-lll-part-1/>`_. 
@@ -107,7 +112,12 @@ This is a contract address. As such it has code, which can be in one of three fo
    <https://lll-docs.readthedocs.io/en/latest/lll_reference.html#evm-opcodes>`_.
 #. `Solidity <https://cryptozombies.io/>`_, which is the standard language for 
    Ethereum contracts. Solidity is well known, but it is not ideal for VM tests 
-   because it adds its own code to compiled contracts.
+   because it adds its own code to compiled contracts. `Click here for a test
+   written in Solidity 
+   <https://github.com/ethereum/tests/blob/develop/docs/tutorial_samples/03_solidityFiller.yml>`_.
+#. `The Yul language <https://docs.soliditylang.org/en/v0.8.6/yul.html>`_, which is 
+   a low level language for the EVM. `Click here for a test written in Yul 
+   <https://github.com/ethereum/tests/blob/develop/docs/tutorial_samples/09_yulFiller.yml>`_.
    
 ::
 
@@ -157,7 +167,10 @@ have to specify the storage.
 This is the transaction that will be executed to check the code.
 There are several scalar fields here:
 
-* **gasPrice** is the price of gas in Wei.
+* **gasPrice** is the price of gas in Wei. Note that starting with `the London fork
+  <https://blog.ethereum.org/2021/07/15/london-mainnet-announcement/>`_ the block base
+  fee is ten by default, and a lower gasPrice will get rejected.
+  
 * **nonce** has to be the same value as the user address
 * **to** is the contract we are testing. If you want to create a contract, keep the 
   **to** definition, but leave it empty.
@@ -177,7 +190,7 @@ tests from the same file (see the **Multitest Files** section below).
       - '0x10'
       gasLimit:
       - '80000000'
-      gasPrice: '1'
+      gasPrice: 1000
       nonce: '0'
       to: 095e7baea6a6c7c4c2dfeb977efac326af552d87
       value:
@@ -267,7 +280,7 @@ runs out of gas is successful, it is just reverted.
 
 Yul Tests
 =========
-`Yul <https://docs.soliditylang.org/en/v0.8.3/yul.html>`_ is a language that is very
+`Yul <https://docs.soliditylang.org/en/v0.8.6/yul.html>`_ is a language that is very
 close to EVM assembler. As such it is a good language for writing tests. You can see 
 a Yul test at `tests/docs/tutorial_samples/09_yulFiller.yml 
 <https://github.com/ethereum/tests/blob/develop/docs/tutorial_samples/09_yulFiller.yml>`_.
@@ -317,7 +330,12 @@ because Solidity code tends to be longer than LLL (or Yul) code.
 
   solidity: |
       // SPDX-License-Identifier: GPL-3.0
-      pragma solidity >=0.4.16 <0.8.0;
+
+The **retesteth** docker only includes one version of the Solidity compiler, so
+it is best not to have a **pragma solidity** line.
+
+::
+
       contract Test {
 
 `Solidity keeps state variables in the storage 

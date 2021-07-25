@@ -104,7 +104,7 @@ state transition tests. This block only has one transaction, which transfers
   - transactions:
     - data: ''
       gasLimit: '50000'
-      gasPrice: '10'
+      gasPrice: 20
 
 
 This is the **nonce** value for the transaction. The first value is the 
@@ -201,15 +201,16 @@ Invalid block tests contain invalid blocks, blocks that
 cause a client to raise an exception. To tell **retesteth** which exception 
 should be raised by a block, we add an **expectException** field to the 
 **blockHeader**. In that field we put the different forks the test 
-supports, and the exception we expect to be raised in them:
+supports, and the exception we expect to be raised in them. It is a good
+idea to have a field that includes future forks.
 
 ::
 
   - blockHeader:
       gasLimit: '30'
-      expectException:
-        Istanbul: TooMuchGasUsed
-        Berlin: TooMuchGasUsed
+    expectException:
+      Berlin: TooMuchGasUsed
+      '>=London': TooMuchGasUsed
 
 
 .. warning::
