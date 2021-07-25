@@ -55,8 +55,8 @@ Format
                 - <transaction>
               - blockHeader:
                     extraData: 42
-                    gasLimit: 100000
-                    gasUsed: 2000
+                    gasLimit: 100_000
+                    gasUsed: 2_000
                 uncleHeaders:
                   <values here>
                 transactions:

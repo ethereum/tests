@@ -40,7 +40,6 @@ Ethereum Tests
   
    blockchain-ref.rst
    state-transition-ref.rst
-   vm-ref.rst
    sample-values.rst
 
    contribute.rst
