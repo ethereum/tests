@@ -5,7 +5,7 @@ Post Section
 ::
 
         "post" : {
-            "Istanbul" : [
+            "London" : [
                 {
                     "indexes" : {
                         "data" : 0,
@@ -13,7 +13,8 @@ Post Section
                         "value" : 0
                     },
                     "hash" : "0xe4c855f0d0e96d48d73778772ee570c45acb7c57f87092e08fed6b2205d390f4",
-                    "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347"
+                    "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "expectException" : "TR_IntrinsicGas"
                 }
             ]
         },
@@ -29,11 +30,12 @@ See transaction section which define transactions by `data`, `gasLimit`, `value`
 **Fields**
 
 ======================= ===============================================================================
-``Istanbul``             fork name as defined by client config (test standard names)
+``London``               fork name as defined by client config (test standard names)
 ``indexes``              define an index of the transaction in txs vector that has been used for this result
 ``data``                 index in transaction data vector
 ``gas``                  index in transaction gas vector
 ``value``                index in transaction value vector
 ``hash``                 hash of the post state after transaction execution
 ``logs``                 log hash of the transaction logs
+``expectException``      for a transaction that is supposed to fail, the exception
 ======================= ===============================================================================
