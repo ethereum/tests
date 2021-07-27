@@ -2,13 +2,17 @@
 #
 # 1. A block with the same timestamp as the parent is invalid
 # 2. A block with a timestamp prior to its parent is invalid
-# 3. A block with a timestamp one microsecond after its parent is valid
+# 3. A block with a timestamp one second after its parent is valid
 #
 # All three conditions come from inequality (49) of the yellow paper
 # (https://ethereum.github.io/yellowpaper/paper.pdf, p. 7)
 #
 # Note that as this test includes blocks that create exceptions, it cannot be
 # --filltests on besu currently.
+#
+# The timestamp is in seconds. p. 5 of the yellow paper 
+# (https://ethereum.github.io/yellowpaper/paper.pdf) specifies it is the output
+# of Unix's time(). According to https://linux.die.net/man/2/time that is seconds.
 
 badTimestamp:
   genesisBlockHeader:
@@ -47,32 +51,31 @@ badTimestamp:
 
   blocks:
 
-  # One microsecond after the previous block
+  # One second after the previous block
   - blockHeader:
       timestamp: 1
       # Specified manually because there is a bug in how retesteth calculates
-      # difficulty when the time difference < 9 microseconds
+      # difficulty when the time difference < 9 seconds
       difficulty: 131136
     blocknumber: 1
     transactions: []
 
-  # One microsecond after the previous block
+  # One second after the previous block
   - blockHeader:
       timestamp: 2
       difficulty: 131200
     blocknumber: 2
     transactions: []
 
-  # A second from the beginning
-  # One microsecond after the previous block
+  # A minute after the beginning
   - blockHeader:
-      timestamp: 1000000
+      timestamp: 60
     blocknumber: 3
     transactions: []
 
   # Same time as the previous block
   - blockHeader:
-      timestamp: 1000000	
+      timestamp: 60
     blocknumber: 4
     transactions: []
     expectException:
@@ -81,14 +84,14 @@ badTimestamp:
 
   # Another legitimate block
   - blockHeader:
-      timestamp: 2000000	
+      timestamp: 3600
     blocknumber: 4
     transactions: []
 
 
   # Time travel into the past
   - blockHeader:
-      timestamp: 1500000	
+      timestamp: 3599
     blocknumber: 5
     transactions: []
     expectException:
@@ -96,7 +99,7 @@ badTimestamp:
 
   # Time stands still?
   - blockHeader:
-      timestamp: 2000000	
+      timestamp: 3600	
     blocknumber: 5
     transactions: []
     expectException:
@@ -105,9 +108,30 @@ badTimestamp:
 
   # Finally a legitimate block
   - blockHeader:
-      timestamp: 2000001
-      difficulty: 131136
+      timestamp: 7200
+      difficulty: 131072
     blocknumber: 5
+    transactions: []
+
+
+  # A day without blocks (24 hours from previous block)
+  - blockHeader:
+      timestamp: 93600
+    blocknumber: 6
+    transactions: []
+
+
+  # A month without blocks (30 days from previous block)
+  - blockHeader:
+      timestamp: 2685600
+    blocknumber: 7
+    transactions: []
+
+
+  # A year without blocks (366 days from previous block)
+  - blockHeader:
+      timestamp: 34308000
+    blocknumber: 8
     transactions: []
 
 
