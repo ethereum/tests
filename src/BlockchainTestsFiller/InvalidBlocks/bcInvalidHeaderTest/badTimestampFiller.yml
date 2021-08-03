@@ -16,7 +16,7 @@
 
 badTimestamp:
   genesisBlockHeader:
-    timestamp: 0 # The beginning of the epoch
+    timestamp: 1620000000   # May 3rd, 2021
     bloom: '0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000'
     coinbase: '0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba'
     difficulty: '131072'
@@ -53,7 +53,7 @@ badTimestamp:
 
   # One second after the previous block
   - blockHeader:
-      timestamp: 1
+      timestamp: 1620000001
       # Specified manually because there is a bug in how retesteth calculates
       # difficulty when the time difference < 9 seconds
       difficulty: 131136
@@ -62,20 +62,20 @@ badTimestamp:
 
   # One second after the previous block
   - blockHeader:
-      timestamp: 2
+      timestamp: 1620000002
       difficulty: 131200
     blocknumber: 2
     transactions: []
 
   # A minute after the beginning
   - blockHeader:
-      timestamp: 60
+      timestamp: 1620000060
     blocknumber: 3
     transactions: []
 
   # Same time as the previous block
   - blockHeader:
-      timestamp: 60
+      timestamp: 1620000060
     blocknumber: 4
     transactions: []
     expectException:
@@ -84,14 +84,14 @@ badTimestamp:
 
   # Another legitimate block
   - blockHeader:
-      timestamp: 3600
+      timestamp: 1620003600
     blocknumber: 4
     transactions: []
 
 
   # Time travel into the past
   - blockHeader:
-      timestamp: 3599
+      timestamp: 1620003599
     blocknumber: 5
     transactions: []
     expectException:
@@ -99,7 +99,7 @@ badTimestamp:
 
   # Time stands still?
   - blockHeader:
-      timestamp: 3600	
+      timestamp: 1620003600	
     blocknumber: 5
     transactions: []
     expectException:
@@ -108,7 +108,7 @@ badTimestamp:
 
   # Finally a legitimate block
   - blockHeader:
-      timestamp: 7200
+      timestamp: 1620007200
       difficulty: 131072
     blocknumber: 5
     transactions: []
@@ -116,23 +116,25 @@ badTimestamp:
 
   # A day without blocks (24 hours from previous block)
   - blockHeader:
-      timestamp: 93600
+      timestamp: 1620093600
     blocknumber: 6
     transactions: []
 
 
   # A month without blocks (30 days from previous block)
   - blockHeader:
-      timestamp: 2685600
+      timestamp: 1622685600
     blocknumber: 7
     transactions: []
 
 
   # A year without blocks (366 days from previous block)
-  - blockHeader:
-      timestamp: 34308000
-    blocknumber: 8
-    transactions: []
+  # Removed because it will be a problem in Besu, which doesn't like blocks too far
+  # out into the future
+#  - blockHeader:
+#      timestamp: 1654308000
+#    blocknumber: 8
+#    transactions: []
 
 
 
