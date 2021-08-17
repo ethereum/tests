@@ -208,7 +208,7 @@ paste it into your tests.
           gas:  !!int -1
           value: !!int -1
         network:
-          - '>=Istanbul'
+          - '>=London'
 
 We expect the contract's storage to have the result, in this case 4.
 
