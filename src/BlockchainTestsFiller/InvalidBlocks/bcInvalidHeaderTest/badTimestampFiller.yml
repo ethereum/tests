@@ -54,8 +54,11 @@ badTimestamp:
   # One second after the previous block
   - blockHeader:
       timestamp: 1620000001
-      # Specified manually because there is a bug in how retesteth calculates
-      # difficulty when the time difference < 9 seconds
+      # When the time difference < 9 seconds the difficulty is supposed to
+      # increase. However, because retesteth gets the block from geth and then
+      # changes the timestamp, the difficulty is not updated.
+      #
+      # Therefore if timediff < 9, we need to specify the difficulty manually
       difficulty: 131136
     blocknumber: 1
     transactions: []
