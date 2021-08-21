@@ -23,7 +23,7 @@ loopExp:
         function testExp(uint exponent, uint256 seed, uint n) external returns (uint) {
             uint e = seed;
             for (uint i = 0; i < n; i += 1) {
-                e = e ** exponent;
+                unchecked { e = e ** exponent; }
             }
             result = e;
             return e;
@@ -32,6 +32,7 @@ loopExp:
         function testExpUnroll16(uint exponent, uint256 seed, uint n) external returns (uint) {
             uint e = seed;
             for (uint i = 0; i < n; i += 16) {
+              unchecked {
                 e = e ** exponent;
                 e = e ** exponent;
                 e = e ** exponent;
@@ -48,6 +49,7 @@ loopExp:
                 e = e ** exponent;
                 e = e ** exponent;
                 e = e ** exponent;
+              }
             }
             result = e;
             return e;
@@ -91,24 +93,26 @@ loopExp:
     # testExpUnroll16    the loop is unrolled so it only runs c/16 times
     # testNop            like the naive implementation but with an empty loop
     # testNopUnroll16    line the unroll implementation but with an empty loop
-    - :label nop_3_3_160          :abi testNop(uint256,uint256,uint256) 3 3 160
-    - :label nop_3_3_160  :abi testNopUnroll16(uint256,uint256,uint256) 3 3 160
-    - :label exp_3_3_160          :abi testExp(uint256,uint256,uint256) 3 3 160
-    - :label exp_3_3_160  :abi testExpUnroll16(uint256,uint256,uint256) 3 3 160
+    - :label nop_3_3_160          :abi testNop(uint256,uint256,uint256) 3 3 160  #  0
+    - :label nop_3_3_160  :abi testNopUnroll16(uint256,uint256,uint256) 3 3 160  #  1
+    - :label exp_3_3_160          :abi testExp(uint256,uint256,uint256) 3 3 160  #  2
+    - :label exp_3_3_160  :abi testExpUnroll16(uint256,uint256,uint256) 3 3 160  #  3
 
-    - :label nop_2_2_32           :abi testNop(uint256,uint256,uint256) 2 2 32
-    - :label nop_2_2_32   :abi testNopUnroll16(uint256,uint256,uint256) 2 2 32
-    - :label exp_2_2_32           :abi testExp(uint256,uint256,uint256) 2 2 32
-    - :label exp_2_2_32   :abi testExpUnroll16(uint256,uint256,uint256) 2 2 32
+    - :label nop_2_2_32           :abi testNop(uint256,uint256,uint256) 2 2 32   #  4
+    - :label nop_2_2_32   :abi testNopUnroll16(uint256,uint256,uint256) 2 2 32   #  5
+    - :label exp_2_2_32           :abi testExp(uint256,uint256,uint256) 2 2 32   #  6
+    - :label exp_2_2_32   :abi testExpUnroll16(uint256,uint256,uint256) 2 2 32   #  7
 
     # The old exponentiation tests
-    - :label exp_1b_1M    :abi testExp(uint256,uint256,uint256) 0xff 0x5851f42d4c957f2d 1000000
-    - :label exp_2b_100k  :abi testExp(uint256,uint256,uint256) 0xffff 0x5851f42d4c957f2d 100000
-    - :label exp_4b_100k  :abi testExp(uint256,uint256,uint256) 0xffffffff 0x5851f42d4c957f2d 100000
-    - :label exp_8b_100k  :abi testExp(uint256,uint256,uint256) 0xffffffffffffffff 0x5851f42d4c957f2d 100000
-    - :label exp_16b_100k :abi testExp(uint256,uint256,uint256) 0xffffffffffffffffffffffffffffffff 0x5851f42d4c957f2d 100000
-    - :label exp_32b_100k :abi testExp(uint256,uint256,uint256) 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff 0x5851f42d4c957f2d 100000
-    - :label nop_0_15_1M  :abi testNop(uint256,uint256,uint256) 0 15 1000000
+    - :label exp_1b_1M      :abi testExp(uint256,uint256,uint256) 0xff 0x5851f42d4c957f2d 1000000   #  8
+    - :label exp_2b_100k    :abi testExp(uint256,uint256,uint256) 0xffff 0x5851f42d4c957f2d 100000  #  9
+    - :label exp_4b_100k    :abi testExp(uint256,uint256,uint256) 0xffffffff 0x5851f42d4c957f2d 100000 # 10
+    - :label exp_8b_100k    :abi testExp(uint256,uint256,uint256) 0xffffffffffffffff 0x5851f42d4c957f2d 100000 # 11
+    - :label exp_16b_100k   :abi testExp(uint256,uint256,uint256) 0xffffffffffffffffffffffffffffffff 0x5851f42d4c957f2d 100000 # 12
+    - :label exp_32b_100k   :abi testExp(uint256,uint256,uint256) 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff 0x5851f42d4c957f2d 100000 #13
+   
+    # Used to be nop_0_15_1M, but with Solidity 0.8 it stopped working
+    - :label nop_0_15_300k  :abi testNop(uint256,uint256,uint256) 0 15 300000 # 14
 
     gasLimit:
     - '80000000'
@@ -182,7 +186,7 @@ loopExp:
 
     - indexes:
         data:
-        - :label nop_0_15_1M
+        - :label nop_0_15_300k
         gas:  !!int -1
         value: !!int -1
       network:
