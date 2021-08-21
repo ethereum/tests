@@ -14,15 +14,15 @@ SelfDestruct:
 
   solidity: |
       // SPDX-License-Identifier: GPL-3.0
-      pragma solidity ^0.7;
+      pragma solidity >=0.7.0 <0.9.0;
 
 
       // Try to selfdestruct twice, see only the first one (going to B2)
       // gets the account's balance
       contract DoubleSelfdestructTest {
 
-        address payable constant B1 = payable(0x1);
-        address payable constant B2 = payable(0x2);
+        address payable constant B1 = payable(0x0000000000000000000000000000000000000001);
+        address payable constant B2 = payable(0x0000000000000000000000000000000000000002);
 
         function remoteSelfdestruct() external {
           selfdestruct(B2);
@@ -38,7 +38,7 @@ SelfDestruct:
       // Try to selfdestruct and give yourself the balance
       contract DoubleSelfdestructTest2 {
 
-        address payable constant B = payable(0x3);
+        address payable constant B = payable(0x0000000000000000000000000000000000000003);
 
         function remoteSelfdestruct() external {
           selfdestruct(payable(address(this)));
