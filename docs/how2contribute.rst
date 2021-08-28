@@ -47,8 +47,20 @@ send multiple values. If you use **uint**, the first value will be available at
 Files
 ############
 The source/filler test file is written in either YML or JSON and located
-under the **src** directory. In addition to this file, your pull request
-needs to include the generated/filled version(s) of the test file.
+under the **src** directory. This is the type of file explained 
+`in the tutorials <state-transition-tutorial.html#the-source-code>`_.
+
+
+In addition to the source file, your pull request needs to include the 
+`generated/filled version(s) <internals-tutorial.html#compiled-tests>`_ 
+of the test file. This version includes additional information, such as 
+`merkle tree roots <https://en.wikipedia.org/wiki/Merkle_tree>`_ of the
+current state, the compiled bytecode, etc.
+
+.. note:: The directions below assume you are running **retesteth** through docker.
+   `See here if you are not familiar with using **retesteth** that way.
+   <retesteth-tutorial.html#retesteth-in-a-docker-container>`_
+
 
 
 State Tests
@@ -71,6 +83,8 @@ Every state test is supposed to have two filled versions:
    ::
 
       ./dretesteth.sh -t $suite -- --testpath $dir --singletest $test --fillchain
+
+
 
 
 
