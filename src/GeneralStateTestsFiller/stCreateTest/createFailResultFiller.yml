@@ -156,13 +156,20 @@ createFailResult:
       storage: {}
 
 
-    # The existing account CREATE2 collides with
+    # The existing account CREATE2 collides with (600D)
     bb0237ab04970e3cf3e813c02064662adc89336b:
       balance: 0x600D
       code: :raw 0x600100
       nonce: 1
       storage: {}
 
+
+    # The existing account CREATE2 collides with (BAD) 
+    13c950f8740ffaea1869a88d70b029e8b0c9a8da:
+      balance: 0x600D
+      code: :raw 0x600100
+      nonce: 1
+      storage: {}
 
 
     # Also CREATE, but fails due to collision
@@ -441,8 +448,7 @@ createFailResult:
         0000000000000000000000000000000000c0deff:
           storage:
             0x00: 0    # No newly created contract
-            0x01: 0x20 # There is returned data 
-            0x02: 0x0bad0bad0bad  # Which just says how bad things are
+            0x01: 0    # There is no returned data 
 
             # Verify the DA7A call was OK
             0x10:    1   # Return value of DA7A call
