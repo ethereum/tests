@@ -13,7 +13,7 @@ loopMul:
 
 
   solidity: |
-    pragma solidity ^0.7;
+    pragma solidity ^0.8.5;
     // SPDX-License-Identifier: GPL-3.0
 
 
@@ -42,7 +42,7 @@ loopMul:
         function testMul(uint x, uint y, uint n) external returns (uint) {
             uint r = x;
             for (uint i = 0; i < n; i += 1) {
-                r *= y;
+                unchecked { r *= y; }
             }
             result = r;
             return r;
@@ -51,7 +51,7 @@ loopMul:
         function testAdd(uint x, uint y, uint n) external returns (uint) {
             uint r = x;
             for (uint i = 0; i < n; i += 1) {
-                r += y;
+                unchecked { r += y; }
             }
             result = r;
             return r;

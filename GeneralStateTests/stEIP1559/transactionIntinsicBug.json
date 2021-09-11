@@ -2,36 +2,37 @@
     "transactionIntinsicBug" : {
         "_info" : {
             "comment" : "Bug discovered on ropsten https://github.com/ethereum/go-ethereum/pull/23244/files",
-            "filling-rpc-server" : "evm version 1.10.7-unstable-a1f16bc7-20210722",
-            "filling-tool-version" : "retesteth-0.1.2-london-spdataobj+commit.59f93d81.Linux.g++",
-            "lllcversion" : "Version: 0.5.14-develop.2021.6.15+commit.401d5358.Linux.g++",
-            "source" : "src/GeneralStateTestsFiller/stEIP1559/transactionIntinsicBugFiller.yml",
-            "sourceHash" : "44b17d6520c02a7d3d282d12d1f3fedb22137934b7f7034549b212aa2aaef0a2",
+            "filling-rpc-server" : "evm version 1.10.9-unstable-5d64c754-20210831",
+            "filling-tool-version" : "retesteth-0.2.0-memory+commit.7c392173.Linux.g++",
+            "generatedTestHash" : "9838ddb6d256eb86ccb7632fe322a5d967db900af241ad78ab5e327cf865c371",
             "labels" : {
                 "0" : ":label declaredKeyWrite"
-            }
+            },
+            "lllcversion" : "Version: 0.5.14-develop.2021.6.15+commit.401d5358.Linux.g++",
+            "source" : "src/GeneralStateTestsFiller/stEIP1559/transactionIntinsicBugFiller.yml",
+            "sourceHash" : "980e34ffb005fddb88825c8224d94a93fe65077bc811335f21729da8f1cd5be1"
         },
         "env" : {
+            "currentBaseFee" : "0x14",
             "currentCoinbase" : "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba",
             "currentDifficulty" : "0x020000",
+            "currentGasLimit" : "0xff112233445566",
             "currentNumber" : "0x01",
             "currentTimestamp" : "0x03e8",
-            "previousHash" : "0x5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6",
-            "currentGasLimit" : "0xff112233445566",
-            "currentBaseFee" : "0x14"
+            "previousHash" : "0x5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6"
         },
         "post" : {
             "London" : [
                 {
+                    "expectException" : "TR_NoFunds",
+                    "hash" : "0xe437f23dde868903471ed39c52d5ddf14e0415c9db185d4f20f5c9de0f5209e8",
                     "indexes" : {
                         "data" : 0,
                         "gas" : 0,
                         "value" : 0
                     },
-                    "hash" : "0xe437f23dde868903471ed39c52d5ddf14e0415c9db185d4f20f5c9de0f5209e8",
-                    "txbytes" : "0x02f8680101148203e882c35094cccccccccccccccccccccccccccccccccccccccc8402dc6c1400c001a07da1c307f31860a499caecb8ceea3c733f450b85ae26abb83fa0077a26d1384aa06276eee443d11a244396549532f6179aa11c9a1b917a632324f69b1d079eba09",
-                    "expectException" : "TR_NoFunds",
-                    "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347"
+                    "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "txbytes" : "0x02f8680101148203e882c35094cccccccccccccccccccccccccccccccccccccccc8402dc6c1400c001a07da1c307f31860a499caecb8ceea3c733f450b85ae26abb83fa0077a26d1384aa06276eee443d11a244396549532f6179aa11c9a1b917a632324f69b1d079eba09"
                 }
             ]
         },
@@ -52,18 +53,18 @@
             }
         },
         "transaction" : {
-            "data" : [
-                "0x00"
-            ],
             "accessLists" : [
                 [
                 ]
             ],
-            "maxFeePerGas" : "0x03e8",
-            "maxPriorityFeePerGas" : "0x14",
+            "data" : [
+                "0x00"
+            ],
             "gasLimit" : [
                 "0xc350"
             ],
+            "maxFeePerGas" : "0x03e8",
+            "maxPriorityFeePerGas" : "0x14",
             "nonce" : "0x01",
             "secretKey" : "0x45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8",
             "to" : "0xcccccccccccccccccccccccccccccccccccccccc",
