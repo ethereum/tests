@@ -330,11 +330,10 @@ random:
   env:
     currentCoinbase: 2adc25665018aa1fe0e6bc666dac8fc2697ff9ba
     currentDifficulty: 0x20000
+    currentGasLimit: 0xFF112233445566
     currentNumber: 1
     currentTimestamp: 1000
-    currentGasLimit: 0x10000000000000
     previousHash: 5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6
-    currentBaseFee: 10
 
   pre:
 
@@ -356,8 +355,7 @@ random:
 
   transaction:
     data:
-    - data: 0x
-      accessList: []
+    - 0x
     gasLimit:
     - 0x10000000000000
     nonce: 1
@@ -365,8 +363,7 @@ random:
     value:
     - 0
     secretKey: "45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8"
-    maxPriorityFeePerGas: 0
-    maxFeePerGas: 2000
+    gasPrice: 100
 
 
   expect:
