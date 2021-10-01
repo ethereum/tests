@@ -15,6 +15,7 @@ cd ~
 ./dretesteth.sh -t $suite -- --testpath $dir --singletest $test \
                 --filltests --datadir /tests/config
 
+
 # Run the same random test on Besu
 ./dretesteth.sh -t $suite -- --testpath $dir --singletest $test \
                 --clients besu --datadir /tests/config
