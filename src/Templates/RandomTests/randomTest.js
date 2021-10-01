@@ -1,14 +1,6 @@
 #! /usr/bin/node
 
 
-// This table contains code fragments and the size of their
-// input and output. These fragments may be more than a single
-// opcode long because some opcodes, such as JUMP[I], don't
-// do well without a special environment.
-//
-// Where xx appears in a fragment it means "just put a randon
-// value here".
-
 // Chop stacktop to be no more than two bytes. This lets us ensure
 // opcodes that need a low parameter value get it.
 //
@@ -32,9 +24,28 @@ const chop1Byte = "60FF16"
 const chop2Val2Bytes = "61FFFF169061FFFF16"
 
 
+// Push a random 2 byte value
+const pushRand2 = "61xxxx"
+
+// Push a random big (32 byte) value
+let pushRandBig = "7F"
+
+for(var i=0; i<32; i++)
+  pushRandBig += "xx"
+
+
+// This table contains code fragments and the size of their
+// input and output. These fragments may be more than a single
+// opcode long because some opcodes, such as JUMP[I], don't
+// do well without a special environment.
+//
+// Where xx appears in a fragment it means "just put a randon
+// value here".
+//
+// The initial table only contains the unusual cases. Everything else is
+// added by calls later
 
 let frags = [
-
     {
         // POP
         frag: "50",
@@ -128,6 +139,55 @@ let frags = [
               "40",  // BLOCKHASH    <Number of recent block>
         in: 1,
         out: 1
+    },
+
+    // CALL opcodes. Managing the stack is too much pain, so we just
+    // push random values ourselves
+    {   // CALL
+        frag: pushRand2 +   // retLen
+              pushRand2 +   // ret mem addr
+              pushRand2 +   // argLen
+              pushRand2 +   // arg mem addr
+              pushRand2 +   // val
+              pushRandBig + // addr
+              "5A" +        // GAS (everything we have)
+              "F1",         // CALL
+        in: 0,   // since we create our own
+        out: 1   // return value
+    },
+    {   // CALLCODE
+        frag: pushRand2 +   // retLen
+              pushRand2 +   // ret mem addr
+              pushRand2 +   // argLen
+              pushRand2 +   // arg mem addr
+              pushRand2 +   // val
+              pushRandBig + // addr
+              "5A" +        // GAS (everything we have)
+              "F2",         // CALLCODE
+        in: 0,   // since we create our own
+        out: 1   // return value
+    },
+    {   // DELEGATECALL
+        frag: pushRand2 +   // retLen
+              pushRand2 +   // ret mem addr
+              pushRand2 +   // argLen
+              pushRand2 +   // arg mem addr
+              pushRandBig + // addr
+              "5A" +        // GAS (everything we have)
+              "F4",         // DELEGATECALL
+        in: 0,   // since we create our own
+        out: 1   // return value
+    },
+    {   // STATICCALL
+        frag: pushRand2 +   // retLen
+              pushRand2 +   // ret mem addr
+              pushRand2 +   // argLen
+              pushRand2 +   // arg mem addr
+              pushRandBig + // addr
+              "5A" +        // GAS (everything we have)
+              "FA",         // STATICCALL
+        in: 0,   // since we create our own
+        out: 1   // return value
     },
 
     // JUMPs. Need to always jump to a JUMPDEST
@@ -278,26 +338,24 @@ for (var i=0; i<=0x0F; i++)
     out: 2+i  // doesn't consume the input
   })
 
-/*
-// LOGn
+
+// LOGn, the top two parameters are memory (addr and length)
 for (var i=0; i<=4; i++)
   frags.push({
-    frag: int2str(0xA0+i),
+    frag: chop2Val2Bytes + int2str(0xA0+i),
     in: 2+i,
     out: 0
   })
-*/
-
-// Skipping terminal opcodes:
-// 0xF3 RETURN
-// 0xFD REVERT
-// 0xFF SELFDESTRUCT
 
 
-// STILL THINKING ABOUT
-//
-// Calls:
-// F1, F2, F4, F5
+// Terminal opcodes. By the time we get to them the stack is
+// empty
+const terminalFrags = [
+  "00",                         // STOP
+  pushRand2 + pushRand2 + "F3", // RETURN
+  pushRand2 + pushRand2 + "FD"  // REVERT
+]  // terminal frags
+
 
 
 // Get a random element
@@ -327,14 +385,17 @@ const getProg = length => {
         stackDepth = stackDepth - frag.in + frag.out
     }
 
-    // Fill the random values
-    while(prog.match("x"))
-      prog = prog.replace("x", getRandom("0123456789ABCDEF"))
-
     // Write the stack to storage, so we'll be able to identify if two
     // clients differ
     for(i=0; i<stackDepth; i++)
       prog += `60${int2str(i)}55`
+
+    // Terminal fragment
+    prog += getRandom(terminalFrags)
+
+    // Fill the random values
+    while(prog.match("x"))
+      prog = prog.replace("x", getRandom("0123456789ABCDEF"))
 
     return prog
 }

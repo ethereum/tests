@@ -1,7 +1,5 @@
 #! /usr/bin/bash
 
-# Directions at runTests.sh
-
 suite=GeneralStateTests/stExample
 test=random
 dir=`pwd`/../../..
@@ -15,6 +13,7 @@ cd ~
 ./dretesteth.sh -t $suite -- --testpath $dir --singletest $test \
                 --filltests --datadir /tests/config
 
+sleep 5   # Prevent race problems
 
 # Run the same random test on Besu
 ./dretesteth.sh -t $suite -- --testpath $dir --singletest $test \
