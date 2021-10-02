@@ -22,3 +22,6 @@
 1. Run `./runTests.sh`. It is an endless loop that generates and runs
    tests. Failed tests are saved as
    `/tmp/fail<unique value>Filler.yml`.
+
+1. If you want to run the tests as blockchain tests, 
+   run `blockTests.sh` instead.
