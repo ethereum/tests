@@ -1,13 +1,13 @@
 {
-    "nonEmptyAccount_initCall" : {
+    "initNonEmptyAccount_delegateCall" : {
         "_info" : {
-            "comment" : "Account with non-empty code attempts to send tx to run call from init code",
+            "comment" : "Init into a non-empty account, delegatecall from init code",
             "filling-rpc-server" : "evm version 1.10.10-unstable-2a4874c2-20211007",
             "filling-tool-version" : "retesteth-0.2.0-memory+commit.bd962894.Linux.g++",
-            "generatedTestHash" : "cd457cb3d6212e09d161a561f7af5934de472622f4dd265fdd606698f11baf43",
+            "generatedTestHash" : "b0eda82310db6359875f0734191bad8ad77ba9d6fbddc52b9ca2bf34020b98e1",
             "lllcversion" : "Version: 0.5.14-develop.2021.10.5+commit.401d5358.Linux.g++",
-            "source" : "src/GeneralStateTestsFiller/stEIP3607/nonEmptyAccount_initCallFiller.yml",
-            "sourceHash" : "6f713377788f7671449441a6f5b910e439a376f7ff0dded34e7da0ea7ddcf2be"
+            "source" : "src/GeneralStateTestsFiller/stEIP3607/initNonEmptyAccount_delegateCallFiller.yml",
+            "sourceHash" : "cda34fa8583c8a2009388212f295d059f3e0fef9e2ab8de95f9ebbbb7d811d95"
         },
         "env" : {
             "currentBaseFee" : "0x0a",
@@ -21,28 +21,26 @@
         "post" : {
             "Berlin" : [
                 {
-                    "expectException" : "SenderNotEOA",
-                    "hash" : "0xa074e896502f1a67fcb2b16db6d7d988763200dbf174d85d18581a7aed5dc4fc",
+                    "hash" : "0xda07a065d80b4fdfb2b3f2650e01722c94332309cc44eeb7360297c1f5935a7e",
                     "indexes" : {
                         "data" : 0,
                         "gas" : 0,
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
-                    "txbytes" : "0xf872800a83061a8080830186a0a3600060006000600061271073d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d05af1501ba040d3d6858f1c34305bd11065b186ae2260091c085d24d8a0d6d3d734a44f4bc3a01b681d0fcc6f7b71cb05ffa53c2ec2b31330b978a7616e82b0a86e4e7ec2a1be"
+                    "txbytes" : "0xf871800a83061a808080a56001600055600060006000600073d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d05af4501ba0ddb79ed547c3bcf7e2c9d3bf8f52dc8d2ca778ff4e79073b03eb37ea6a2aafe2a06c169a6d7c4a607f1beef7a8ab8569fe2e5e67ed2a5d83e6770bfe4e9c8cf550"
                 }
             ],
             "London" : [
                 {
-                    "expectException" : "SenderNotEOA",
-                    "hash" : "0xa074e896502f1a67fcb2b16db6d7d988763200dbf174d85d18581a7aed5dc4fc",
+                    "hash" : "0x7f9d49ba64e9273a70751855d6ca4287078d511a4cd147477ef20cd7ccc9bd23",
                     "indexes" : {
                         "data" : 0,
                         "gas" : 0,
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
-                    "txbytes" : "0xf872800a83061a8080830186a0a3600060006000600061271073d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d05af1501ba040d3d6858f1c34305bd11065b186ae2260091c085d24d8a0d6d3d734a44f4bc3a01b681d0fcc6f7b71cb05ffa53c2ec2b31330b978a7616e82b0a86e4e7ec2a1be"
+                    "txbytes" : "0xf871800a83061a808080a56001600055600060006000600073d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d05af4501ba0ddb79ed547c3bcf7e2c9d3bf8f52dc8d2ca778ff4e79073b03eb37ea6a2aafe2a06c169a6d7c4a607f1beef7a8ab8569fe2e5e67ed2a5d83e6770bfe4e9c8cf550"
                 }
             ]
         },
@@ -55,15 +53,15 @@
                 }
             },
             "0x6295ee1b4f6dd65047762f924ecd367c17eabf8f" : {
-                "balance" : "0x00",
-                "code" : "0x",
+                "balance" : "0x0de0b6b3a7640000",
+                "code" : "0xdeadbeef",
                 "nonce" : "0x00",
                 "storage" : {
                 }
             },
             "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
                 "balance" : "0x0de0b6b3a7640000",
-                "code" : "0xdeadbeef",
+                "code" : "0x",
                 "nonce" : "0x00",
                 "storage" : {
                 }
@@ -78,7 +76,7 @@
         },
         "transaction" : {
             "data" : [
-                "0x600060006000600061271073d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d05af150"
+                "0x6001600055600060006000600073d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d05af450"
             ],
             "gasLimit" : [
                 "0x061a80"
@@ -88,7 +86,7 @@
             "secretKey" : "0x45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8",
             "to" : "",
             "value" : [
-                "0x0186a0"
+                "0x00"
             ]
         }
     }

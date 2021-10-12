@@ -1,8 +1,8 @@
-# Init into a non-empty account, call from init code
+# Init into a non-empty account, attempt to create contract from init code
 
-initNonEmptyAccount_call:
+initNonEmptyAccount_create:
   _info:
-    comment: Init into a non-empty account, call from init code
+    comment: Init into a non-empty account, attempt to create contract from init code
 
   env:
     # A blockinfo section (obsolete). Do not change. (only coinbase and gasLimit could be changed)
@@ -36,11 +36,11 @@ initNonEmptyAccount_call:
       code: ':raw 0xdeadbeef'
       storage: {}
 
-    # Address we will be calling to
-    d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0:
+    # Address we will attempt to create from init code
+    a42676447b7cedfa5fde894d1d3df24aab362701:
       balance: '0'
       nonce: '0'
-      code: ':raw 0x00'
+      code: ''
       storage: {}
 
   # Transaction originating from empty code account, init address collides with existing code
@@ -48,7 +48,7 @@ initNonEmptyAccount_call:
     data:
     - ':yul {
          sstore(0, 1)
-         pop(call(gas(), 0xd0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0, 10000, 0, 0, 0, 0))
+         pop(create(10000, 0, 32))
        }'
     gasLimit:
     - '400000'
@@ -76,5 +76,5 @@ initNonEmptyAccount_call:
           balance: '1000000000000000000'
           storage: {}
         
-        d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0:
+        a42676447b7cedfa5fde894d1d3df24aab362701:
           balance: '0'
