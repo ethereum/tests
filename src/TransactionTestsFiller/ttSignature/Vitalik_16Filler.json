@@ -1,15 +1,14 @@
 {
-    "Vitalik_16" : {
-	"expect" : [
-            {
-                "network" : [">=Frontier"],
-                "result" : "invalid",
-		"sender" : "3c24d7329e92f84f08556ceb6df1cdb0104ca49f"
-            }
-        ],
+    "Vitalik_16" :
+    {
+	    "expectException" : 
+        {
+            "<=EIP150" : "InvalidVRS",
+            ">=EIP158" : "InvalidChainID"
+        },
         "transaction" :
         {
-            "data" : "0x6d6f6f7365",
+            "data" : ":raw 0x6d6f6f7365",
             "gasLimit" : "0x0493e0",
             "gasPrice" : "",
             "nonce" : "0x13",
