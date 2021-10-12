@@ -1,17 +1,16 @@
 {
-    "TransactionWithNonceOverflow" : {
-	"expect" : [
-            {
-                "network" : [">=Frontier"],
-                "result" : "invalid"
-            }
-        ],
+    "TransactionWithNonceOverflow" :
+    {
+	    "expectException" : 
+        {
+            ">=Frontier": "NonceTooLong"
+        },
         "transaction" :
         {
             "data" : "",
             "gasLimit" : "21000",
             "gasPrice" : "1",
-            "nonce" : "115792089237316195423570985008687907853269984665640564039457584007913129639936",
+            "nonce" : "0x:bigint 0x010000000000000000000000000000000000000000000000000000000000000000",
             "to" : "095e7baea6a6c7c4c2dfeb977efac326af552d87",
             "value" : "11",
             "v" : "27",
