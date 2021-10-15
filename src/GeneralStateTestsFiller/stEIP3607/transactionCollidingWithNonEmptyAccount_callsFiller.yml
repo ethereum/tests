@@ -1,6 +1,6 @@
 # Account with non-empty code attempts to send tx to call a contract
 
-nonEmptyAccount_calls:
+transactionCollidingWithNonEmptyAccount_calls:
   _info:
     comment: Account with non-empty code attempts to send tx to call a contract
 
@@ -26,14 +26,14 @@ nonEmptyAccount_calls:
     a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
       balance: '1000000000000000000'
       nonce: '0'
-      code: ':raw 0xdeadbeef'
+      code: ':raw 0x6000600155'
       storage: {}
 
     # Account receiving the funds from the account with code
     095e7baea6a6c7c4c2dfeb977efac326af552d87:
       balance: '0'
       nonce: '0'
-      code: ':raw 0xdeadbeef'
+      code: ':raw 0x6000600155'
       storage: {}
 
   # Transaction originating from account with code
@@ -58,10 +58,10 @@ nonEmptyAccount_calls:
         value: !!int -1
 
       network:
-        - '>=London'
+        - '>=Frontier'
       
       # Transaction should be rejected since it is being sent by a EOA with code in it.
       expectException:
-        '>=London': 'SenderNotEOA'
+        '>=Frontier': 'SenderNotEOA'
       
       result: {}  # No point checking the result when no transaction happened
