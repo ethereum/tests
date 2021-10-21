@@ -4,14 +4,14 @@
 # oneTest.sh <test type>
 suite=GeneralStateTests/stExample
 test=random
-dir=`pwd`/../../..
+dir=$2
 outputDir=/tmp
 testType=$1
 
 echo Test type $testType
 
 # Create a random test
-./randomTest.js > ../../GeneralStateTestsFiller/stExample/randomFiller.yml
+./randomTest.js > $dir/src/GeneralStateTestsFiller/stExample/${test}Filler.yml
 
 cd ~
 
