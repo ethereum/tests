@@ -1,6 +1,5 @@
 #! /usr/bin/node
 
-
 // Chop stacktop to be no more than two bytes. This lets us ensure
 // opcodes that need a low parameter value get it.
 //
@@ -33,6 +32,11 @@ let pushRandBig = "7F"
 for(var i=0; i<32; i++)
   pushRandBig += "xx"
 
+// This string accumulates a description of what the code fragment does,
+// to facilitate understanding WHY it failed
+
+let progDesc = ""
+
 
 // This table contains code fragments and the size of their
 // input and output. These fragments may be more than a single
@@ -50,19 +54,22 @@ let frags = [
         // POP
         frag: "50",
         in: 1,
-        out: 0
+        out: 0,
+        desc: "# POP"
     },
     {
         // SSTORE
         frag: "55",
         in: 2,
-        out: 0
+        out: 0,
+        desc: "# SSTORE"
     },
     {
         // JUMPDEST
         frag: "5B",
         in: 0,
-        out: 0
+        out: 0,
+        desc: "# JUMPDEST"
     },
     {   // BLOCKHASH              Stacktop
         frag: chop1Byte +  //    <1 byte val>
@@ -70,7 +77,14 @@ let frags = [
               "03" + // SUB      <current block # - 1 byte val>
               "40",  // BLOCKHASH    <Number of recent block>
         in: 1,
-        out: 1
+        out: 1,
+        desc: `#     BLOCKHASH:
+# PUSH1 0xFF
+# AND
+# NUMBER
+# SUB
+# BLOCKHASH
+#`
     },
 
 
@@ -79,22 +93,41 @@ let frags = [
     {   // MLOAD
         frag: chop2Bytes + "51",
         in: 1,
-        out: 1
+        out: 1,
+        desc: `#             MLOAD
+# PUSH2 0xFFFF
+# AND
+# MLOAD`
     },
     {   // MSTORE, can have any value but address needs to be reasonable
         frag: chop2Bytes + "52",
         in: 2,
-        out: 0
+        out: 0,
+        desc: `#             MLOAD
+# PUSH2 0xFFFF
+# AND
+# MSTORE`
     },
     {   // MSTORE8, same as MSTORE
         frag: chop2Bytes + "53",
         in: 2,
-        out: 0
+        out: 0,
+        desc: `#             MSTORE8
+# PUSH2 0xFFFF
+# AND
+# MLOAD`
     },
     {   // SHA3
         frag: chop2Val2Bytes + "20",
         in: 2,
-        out: 1
+        out: 1,
+        desc: `#        SHA3
+# PUSH2 FFFF
+# AND
+# SWAP1
+# PUSH2 FFFF
+# AND
+# SHA3`
     },
     {   // CALLDATACOPY        Stacktop \/
         frag: chop2Val2Bytes + // <2 byte value>, <2 byte value>, <big value>
@@ -102,7 +135,16 @@ let frags = [
            "90" +   // SWAP1      <2 byte value>, <big value>, <2 byte value>
            "37",    // CALLDATACOPY, <mem addr>, <calldata addr>, <length>
         in: 3,
-        out: 0
+        out: 0,
+        desc: `#     CALLDATACOPY
+# PUSH2 FFFF
+# AND
+# SWAP1
+# PUSH2 FFFF
+# AND
+# SWAP2
+# SWAP1
+# CALLDATACOPY`
     },  // CODECOPY, same logic as CALLDATACOPY
     {
         frag: chop2Val2Bytes + "919039",

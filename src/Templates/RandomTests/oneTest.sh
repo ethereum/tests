@@ -4,11 +4,21 @@
 # oneTest.sh <test type>
 suite=GeneralStateTests/stExample
 test=random
+
+testType=$1
 testPath=$2
 errPath=$3
-testType=$1
+nodocker=$4
 
 echo Test type $testType
+
+if [ $nodocker ]
+then
+   cmd="retesteth -t $suite -- "
+else
+   cmd="./dretesteth.sh -t $suite -- --datadir /tests/config "
+fi
+
 
 # Create a random test
 ./randomTest.js > $testPath/src/GeneralStateTestsFiller/stExample/${test}Filler.yml
@@ -18,11 +28,11 @@ cd ~
 # Run the random test on Geth
 if [ "$testType" == "block" ]
 then
-    ./dretesteth.sh -t $suite -- --testpath $testPath --singletest $test \
-                --all --fillchain --filltests --datadir /tests/config
+    $cmd --testpath $testPath --singletest $test \
+         --all --fillchain --filltests
 else
-    ./dretesteth.sh -t $suite -- --testpath $testPath --singletest $test \
-                --all --filltests --datadir /tests/config
+    $cmd --testpath $testPath --singletest $test \
+         --all --filltests
 fi
 
 gethRetVal=$?
@@ -40,11 +50,12 @@ sleep 5   # Prevent race problems
 # Run the random test on Geth
 if [ "$testType" == "block" ]
 then
-    ./dretesteth.sh -t BC$suite -- --testpath $testPath --singletest $test \
-                --all --clients besu --datadir /tests/config
+    cmd=`echo $cmd | sed 's/-t /-t BC/'`
+    $cmd --testpath $testPath --singletest $test \
+         --all --clients besu
 else
-     ./dretesteth.sh -t $suite -- --testpath $testPath --singletest $test \
-                --all --clients besu --datadir /tests/config
+     $cmd --testpath $testPath --singletest $test \
+          --all --clients besu
 fi
 
 
