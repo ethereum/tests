@@ -78,7 +78,8 @@ let frags = [
               "40",  // BLOCKHASH    <Number of recent block>
         in: 1,
         out: 1,
-        desc: `#     BLOCKHASH:
+        desc: `#
+#     BLOCKHASH:
 # PUSH1 0xFF
 # AND
 # NUMBER
@@ -94,40 +95,48 @@ let frags = [
         frag: chop2Bytes + "51",
         in: 1,
         out: 1,
-        desc: `#             MLOAD
+        desc: `#
+#             MLOAD
 # PUSH2 0xFFFF
 # AND
-# MLOAD`
+# MLOAD
+#`
     },
     {   // MSTORE, can have any value but address needs to be reasonable
         frag: chop2Bytes + "52",
         in: 2,
         out: 0,
-        desc: `#             MLOAD
+        desc: `#
+#             MSTORE
 # PUSH2 0xFFFF
 # AND
-# MSTORE`
+# MSTORE
+#`
     },
     {   // MSTORE8, same as MSTORE
         frag: chop2Bytes + "53",
         in: 2,
         out: 0,
-        desc: `#             MSTORE8
+        desc: `#
+#             MSTORE8
 # PUSH2 0xFFFF
 # AND
-# MLOAD`
+# MLOAD
+#`
     },
     {   // SHA3
         frag: chop2Val2Bytes + "20",
         in: 2,
         out: 1,
-        desc: `#        SHA3
+        desc: `#
+#        SHA3
 # PUSH2 FFFF
 # AND
 # SWAP1
 # PUSH2 FFFF
 # AND
-# SHA3`
+# SHA3
+#`
     },
     {   // CALLDATACOPY        Stacktop \/
         frag: chop2Val2Bytes + // <2 byte value>, <2 byte value>, <big value>
@@ -136,7 +145,8 @@ let frags = [
            "37",    // CALLDATACOPY, <mem addr>, <calldata addr>, <length>
         in: 3,
         out: 0,
-        desc: `#     CALLDATACOPY
+        desc: `#
+#     CALLDATACOPY
 # PUSH2 FFFF
 # AND
 # SWAP1
@@ -144,19 +154,42 @@ let frags = [
 # AND
 # SWAP2
 # SWAP1
-# CALLDATACOPY`
+# CALLDATACOPY
+#`
     },  // CODECOPY, same logic as CALLDATACOPY
     {
         frag: chop2Val2Bytes + "919039",
         in: 3,
-        out: 0
+        out: 0,
+        desc: `#
+#     CODECOPY
+# PUSH2 FFFF
+# AND
+# SWAP1
+# PUSH2 FFFF
+# AND
+# SWAP2
+# SWAP1
+# CODECOPY
+#`
     },
     {   // EXTCODECOPY             Stacktop \/
         frag: chop2Val2Bytes + //  <2 byte val>, <2 byte val>, <big val>,   <big val>
            "92" + // SWAP3         <big val>,    <2 byte val>, <big val>,   <2 byte val>
            "3C",  // EXTCODECOPY   <contract>    <mem addr>    <code addr>  <length>
         in: 4,
-        out: 0
+        out: 0,
+        desc: `#
+#     EXTCODECOPY
+# PUSH2 FFFF
+# AND
+# SWAP1
+# PUSH2 FFFF
+# AND
+# SWAP2
+# SWAP1
+# EXTCODECOPY
+#`
     },
     {   // CREATE               Stacktop \/
         frag: chop2Val2Bytes +  // <2 byte val>  <2 byte val>   <big val>
@@ -164,7 +197,21 @@ let frags = [
            chop2Bytes +         // <2 byte val>  <2 byte val>   <2 byte val>
            "F0",     // CREATE      val (wei)      <mem addr>    <length>
         in: 3,
-        out: 1
+        out: 1,
+        desc: `#
+#     CREATE
+# PUSH2 FFFF
+# AND
+# SWAP1
+# PUSH2 FFFF
+# AND
+# SWAP2
+# SWAP1
+# SWAP2
+# PUSH2 FFFF
+# AND
+# CREATE
+#`
     },
     {   // CREATE2              Stacktop \/
         frag: chop2Val2Bytes +  // <2 byte val>  <2 byte val>   <big val>    <big val>
@@ -172,7 +219,21 @@ let frags = [
            chop2Bytes +         // <2 byte val>  <2 byte val>   <2 byte val> <big val>
            "F5",     // CREATE2     val (wei)      <mem addr>    <length>      <salt>
         in: 4,
-        out: 1
+        out: 1,
+        desc: `#
+#     CREATE2
+# PUSH2 FFFF
+# AND
+# SWAP1
+# PUSH2 FFFF
+# AND
+# SWAP2
+# SWAP1
+# SWAP2
+# PUSH2 FFFF
+# AND
+# CREATE2
+#`
     },
     {   // BLOCKHASH              Stacktop
         frag: chop1Byte +  //    <1 byte val>
@@ -180,7 +241,15 @@ let frags = [
               "03" + // SUB      <current block # - 1 byte val>
               "40",  // BLOCKHASH    <Number of recent block>
         in: 1,
-        out: 1
+        out: 1,
+        desc: `#
+#     BLOCKHASH
+# PUSH1 FF
+# AND
+# NUMBER
+# SUB
+# BLOCKHASH
+#`
     },
 
     // CALL opcodes. Managing the stack is too much pain, so we just
@@ -195,7 +264,18 @@ let frags = [
               "5A" +        // GAS (everything we have)
               "F1",         // CALL
         in: 0,   // since we create our own
-        out: 1   // return value
+        out: 1,  // return value
+        desc: `#
+#     CALL
+# PUSH2 <random value>
+# PUSH2 <random value>
+# PUSH2 <random value>
+# PUSH2 <random value>
+# PUSH2 <random value>
+# PUSH32 <random value>
+# GAS
+# CALL
+#`
     },
     {   // CALLCODE
         frag: pushRand2 +   // retLen
@@ -207,7 +287,18 @@ let frags = [
               "5A" +        // GAS (everything we have)
               "F2",         // CALLCODE
         in: 0,   // since we create our own
-        out: 1   // return value
+        out: 1,  // return value
+        desc: `#
+#     CALLCODE
+# PUSH2 <random value>
+# PUSH2 <random value>
+# PUSH2 <random value>
+# PUSH2 <random value>
+# PUSH2 <random value>
+# PUSH32 <random value>
+# GAS
+# CALLCODE
+#`
     },
     {   // DELEGATECALL
         frag: pushRand2 +   // retLen
@@ -218,7 +309,17 @@ let frags = [
               "5A" +        // GAS (everything we have)
               "F4",         // DELEGATECALL
         in: 0,   // since we create our own
-        out: 1   // return value
+        out: 1,  // return value
+        desc: `#
+#     DELEGATECALL
+# PUSH2 <random value>
+# PUSH2 <random value>
+# PUSH2 <random value>
+# PUSH2 <random value>
+# PUSH32 <random value>
+# GAS
+# DELEGATECALL
+#`
     },
     {   // STATICCALL
         frag: pushRand2 +   // retLen
@@ -229,7 +330,17 @@ let frags = [
               "5A" +        // GAS (everything we have)
               "FA",         // STATICCALL
         in: 0,   // since we create our own
-        out: 1   // return value
+        out: 1,  // return value
+        desc: `#
+#     STATICCALL
+# PUSH2 <random value>
+# PUSH2 <random value>
+# PUSH2 <random value>
+# PUSH2 <random value>
+# PUSH32 <random value>
+# GAS
+# STATICCALL
+#`
     },
 
     // JUMPs. Need to always jump to a JUMPDEST
@@ -241,7 +352,16 @@ let frags = [
               "xx"   +    // 05 nonsense
               "5B",       // 06 JUMPDEST
         in: 0,
-        out: 0
+        out: 0,
+        desc: `#
+#         JUMP
+# PC
+# PUSH1 06
+# ADD
+# JUMP
+# <random byte we don't use>
+# JUMPDEST
+#`
     },
     {   // JUMPI                           Stacktop
         frag: "6001" +    //    PUSH1  1   1 <input val>
@@ -256,7 +376,19 @@ let frags = [
               "50"   +    // 07 POP
               "5B",       // 08 JUMPDEST
         in: 1,
-        out: 0
+        out: 0,
+        desc: `#
+#         JUMPI
+# PUSH1 01
+# AND
+# PC
+# PUSH1 08
+# ADD
+# JUMPI
+# PUSH1 <random>
+# POP
+# JUMPDEST
+#`
     }
 ]
 
@@ -264,21 +396,77 @@ let frags = [
 const int2str = val => val.toString(16).padStart(2, "0")
 
 
+// Opcode table, for the opcodes that aren't exceptions
+const opcodes = {
+  "01": "ADD",
+  "02": "MUL",
+  "03": "SUB",
+  "04": "DIV",
+  "05": "SDIV",
+  "06": "MOD",
+  "07": "SMOD",
+  "08": "ADDMOD",
+  "09": "MULMOD",
+  "0a": "EXP",
+  "0b": "SIGNEXTEND",
+  "10": "LT",
+  "11": "GT",
+  "12": "SLT",
+  "13": "SGT",
+  "14": "EQ",
+  "15": "ISZERO",
+  "16": "AND",
+  "17": "OR",
+  "18": "XOR",
+  "19": "NOT",
+  "1a": "BYTE",
+  "1b": "SHL",
+  "1c": "SHR",
+  "1d": "SAR",
+  "30": "ADDRESS",
+  "31": "BALANCE",
+  "32": "ORIGIN",
+  "33": "CALLER",
+  "34": "CALLVALUE",
+  "35": "CALLDATALOAD",
+  "36": "CALLDATASIZE",
+  "38": "CODESIZE",
+  "3a": "GASPRICE",
+  "3b": "EXTCODESIZE",
+  "3d": "RETURNDATASIZE",
+  "3f": "EXTCODEHASH",
+  "41": "COINBASE",
+  "42": "TIMESTAMP",
+  "43": "NUMBER",
+  "44": "DIFFICULTY",
+  "45": "GASLIMIT",
+  "46": "CHAINID",
+  "47": "SELFBALANCE",
+  "48": "BASEFEE",
+  "54": "SLOAD",
+  "58": "PC",
+  "59": "MSIZE",
+  "5a": "GAS"
+}
+
+
 // A one value to one value opcode, such as NOT etc.
 const one2one = opc => {
     frags.push({
         frag: int2str(opc),
         in: 1,
-        out: 1
+        out: 1,
+        desc: `# ${opcodes[int2str(opc)]}`
     })
   }
 
 // A two value to one value opcode, such as ADD, MUL, etc.
 const two2one = opc => {
   frags.push({
-      frag: int2str(opc),
-      in: 2,
-      out: 1
+        frag: int2str(opc),
+        in: 2,
+        out: 1,
+        desc: `# ${opcodes[int2str(opc)]}`
   })
 }
 
@@ -287,7 +475,8 @@ const three2one = opc => {
     frags.push({
         frag: int2str(opc),
         in: 3,
-        out: 1
+        out: 1,
+        desc: `# ${opcodes[int2str(opc)]}`
     })
   }
 
@@ -297,7 +486,8 @@ const readState = opc => {
     frags.push({
         frag: int2str(opc),
         in: 0,
-        out: 1
+        out: 1,
+        desc: `# ${opcodes[int2str(opc)]}`
     })
   }
 
@@ -359,7 +549,8 @@ for (var i=0; i<=0x1F; i++)
   frags.push({
     frag: int2str(0x60+i) + "xx".repeat(i+1),
     in: 0,
-    out: 1
+    out: 1,
+    desc: `# PUSH${i+1} <random value>`
   })
 
 
@@ -368,7 +559,8 @@ for (var i=0; i<=0x0F; i++)
   frags.push({
     frag: int2str(0x80+i),
     in: 1+i,
-    out: 2+i  // doesn't consume the input, adds one output
+    out: 2+i,  // doesn't consume the input, adds one output
+    desc: `# DUP${i+1}`
   })
 
 
@@ -377,7 +569,8 @@ for (var i=0; i<=0x0F; i++)
   frags.push({
     frag: int2str(0x90+i),
     in: 2+i,
-    out: 2+i  // doesn't consume the input
+    out: 2+i, // doesn't consume the input
+    desc: `# SWAP${i+1}`
   })
 
 
@@ -386,7 +579,8 @@ for (var i=0; i<=4; i++)
   frags.push({
     frag: chop2Val2Bytes + int2str(0xA0+i),
     in: 2+i,
-    out: 0
+    out: 0,
+    desc: `# LOG${i}`
   })
 
 
@@ -419,11 +613,13 @@ const selectFrag = stackDepth => {
 const getProg = length => {
     var stackDepth = 0
     var prog = ""
+    var desc = ""
 
     // Get the program
     for(var i=0; i<length; i++) {
         const frag = selectFrag(stackDepth)
         prog += frag.frag
+        desc += "\n" + frag.desc
         stackDepth = stackDepth - frag.in + frag.out
     }
 
@@ -439,10 +635,10 @@ const getProg = length => {
     while(prog.match("x"))
       prog = prog.replace("x", getRandom("0123456789ABCDEF"))
 
-    return prog
+    return [prog, desc]
 }
 
-
+const progAndDesc = getProg(100)
 const fillerYML = `
 # Created by tests/src/Templates/Random/randomTest.js
 
@@ -463,9 +659,12 @@ random:
     # Perform the random action
     cccccccccccccccccccccccccccccccccccccccc:
       balance: 1000000000000000000
-      code: :raw 0x${getProg(100)}
+      code: :raw 0x${progAndDesc[0]}
       nonce: 1
       storage: {}
+
+    # Explain the random action
+${progAndDesc[1]}
 
 
 
