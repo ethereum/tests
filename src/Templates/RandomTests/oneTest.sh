@@ -1,7 +1,10 @@
 #! /usr/bin/bash
 
 # Usage:
-# oneTest.sh <test type>
+# oneTest.sh <test type> <test path> <path for error files> <if value, don't use docker>
+#
+# This script is supposed to be executed by runTests.sh, not run directly by a user
+
 suite=GeneralStateTests/stExample
 test=random
 
