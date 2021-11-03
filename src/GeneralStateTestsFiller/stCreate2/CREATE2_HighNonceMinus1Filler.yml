@@ -1,5 +1,5 @@
-# The test calls CREATE from an account with max allowed nonce.
-CREATE_HighNonce:
+# The test calls CREATE2 from an account with max allowed nonce - 1, nonce gets maximum value as a result.
+CREATE2_HighNonceMinus1:
   env:
     currentCoinbase: 2adc25665018aa1fe0e6bc666dac8fc2697ff9ba
     currentDifficulty: '0x020000'
@@ -22,10 +22,10 @@ CREATE_HighNonce:
         {
           // initcode: { return(0, 1) }
           mstore(0, 0x60016000f3000000000000000000000000000000000000000000000000000000)
-          sstore(0, create(0, 0, 5))
+          sstore(0, create2(0, 0, 5, 0))
           sstore(1, 1)
         }
-      nonce: '0xffffffffffffffff'
+      nonce: '0xfffffffffffffffe'
       storage: {}
 
   transaction:
@@ -46,14 +46,15 @@ CREATE_HighNonce:
        gas: !!int -1
        value: !!int -1
       network:
-        - '>=Frontier'
+        - '>=Constantinople'
       result:
        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           nonce: 1
        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           nonce: '0xffffffffffffffff'
           storage:
-            '0': 0
+            '0': '77dd5d2a2b742ca01ee2cfff306445e3741ef744'
             '1': 1
-       04e9a8460199e670ffb592f93a2f74bdcb44b0bd:
-          'shouldnotexist': '1'
+       77dd5d2a2b742ca01ee2cfff306445e3741ef744:
+          code: '0x00'
+
