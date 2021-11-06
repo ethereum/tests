@@ -50,7 +50,7 @@ Generally the [develop](https://github.com/ethereum/tests/tree/develop) branch i
 Contribute to the Test Suite
 ----------------------------
 
-See the dedicated [section](https://ethereum-tests.readthedocs.io/en/latest/how2contribute.html) in the docs on how to write new tests. Or https://github.com/ethereum/retesteth/wiki/Creating-a-State-Test-with-retesteth
+See the dedicated [section](https://ethereum-tests.readthedocs.io/en/latest/how2contribute.html) in the docs on how to write new tests. Or [read a shorter description here](https://github.com/ethereum/retesteth/wiki/Creating-a-State-Test-with-retesteth).
 
 If you want to follow up with current tasks and what is currently in the works, have a look at the [issues](https://github.com/ethereum/tests/issues) 
 
