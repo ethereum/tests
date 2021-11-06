@@ -1,14 +1,14 @@
 {
-    "V_overflow32bitSigned" : {
-	"expect" : [
-            {
-                "network" : [">=Frontier"],
-                "result" : "invalid"
-            }
-        ],
+    "V_overflow32bitSigned" :
+    {
+	    "expectException" : 
+        {
+            "<=EIP150" : "InvalidVRS",
+            ">=EIP158" : "InvalidChainID"
+        },
         "transaction" :
         {
-            "data" : "0x5544",
+            "data" : ":raw 0x5544",
             "gasLimit" : "21000",
             "gasPrice" : "1",
             "nonce" : "3",

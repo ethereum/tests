@@ -1,0 +1,75 @@
+{
+    "transactionCollidingWithNonEmptyAccount_send" : {
+        "_info" : {
+            "comment" : "Account with non-empty code attempts to send tx to another account with empty code",
+            "filling-rpc-server" : "evm version 1.10.10-unstable-b66f8415",
+            "filling-tool-version" : "retesteth-0.2.0-memory+commit.bd962894.Linux.g++",
+            "generatedTestHash" : "8769b36c8c7d3dfadbe44d65d4107f03d25ab52e8cf15a9b45c442b01a5930c8",
+            "lllcversion" : "Version: 0.5.14-develop.2021.10.5+commit.401d5358.Linux.g++",
+            "source" : "src/GeneralStateTestsFiller/stEIP3607/transactionCollidingWithNonEmptyAccount_sendFiller.yml",
+            "sourceHash" : "519c6c3041b211a9ef57db8a6e289b466b3c0bc70939fda545c56de4161ac06f"
+        },
+        "env" : {
+            "currentBaseFee" : "0x0a",
+            "currentCoinbase" : "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba",
+            "currentDifficulty" : "0x020000",
+            "currentGasLimit" : "0xff112233445566",
+            "currentNumber" : "0x01",
+            "currentTimestamp" : "0x03e8",
+            "previousHash" : "0x5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6"
+        },
+        "post" : {
+            "London" : [
+                {
+                    "expectException" : "SenderNotEOA",
+                    "hash" : "0x1e3e9912d5bdbe6cd6feea1a121ae56f83e5169476b415884bd9f0412f3927ff",
+                    "indexes" : {
+                        "data" : 0,
+                        "gas" : 0,
+                        "value" : 0
+                    },
+                    "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "txbytes" : "0xf863800a83061a8094095e7baea6a6c7c4c2dfeb977efac326af552d87830186a0801ba0ffb600e63115a7362e7811894a91d8ba4330e526f22121c994c4692035dfdfd5a06198379fcac8de3dbfac48b165df4bf88e2088f294b61efb9a65fe2281c76e16"
+                }
+            ]
+        },
+        "pre" : {
+            "0x095e7baea6a6c7c4c2dfeb977efac326af552d87" : {
+                "balance" : "0x00",
+                "code" : "0x",
+                "nonce" : "0x00",
+                "storage" : {
+                }
+            },
+            "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                "balance" : "0x00",
+                "code" : "0x",
+                "nonce" : "0x01",
+                "storage" : {
+                }
+            },
+            "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                "balance" : "0x0de0b6b3a7640000",
+                "code" : "0x6000600155",
+                "nonce" : "0x00",
+                "storage" : {
+                }
+            }
+        },
+        "transaction" : {
+            "data" : [
+                "0x"
+            ],
+            "gasLimit" : [
+                "0x061a80"
+            ],
+            "gasPrice" : "0x0a",
+            "nonce" : "0x00",
+            "secretKey" : "0x45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8",
+            "to" : "0x095e7baea6a6c7c4c2dfeb977efac326af552d87",
+            "value" : [
+                "0x0186a0"
+            ]
+        }
+    }
+}
