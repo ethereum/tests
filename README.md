@@ -38,6 +38,7 @@ The following clients make use of the tests from this library. You can use these
 - [Hyperledger Besu](https://github.com/hyperledger/besu) (Java): [Docs](https://wiki.hyperledger.org/display/BESU/Testing), Test Location: ``ethereum/referencetests/src/test/resources``
 - [Nethermind](https://github.com/NethermindEth/nethermind) (C#) [Docs](https://nethermind.readthedocs.io), Test Location: ``src/tests``
 - [Nimbus-eth1](https://github.com/status-im/nimbus-eth1) (Nim) [Docs](https://github.com/status-im/nimbus-eth1/wiki/Understanding-and-debugging-Nimbus-EVM-JSON-tests), Test location: ``tests/fixtures``
+- [Mantis](https://github.com/input-output-hk/mantis) (Scala) [Docs](https://docs.mantisclient.io/), Test Location: ``https://github.com/input-output-hk/mantis/tree/develop/ets``
 
 Using the Tests
 ---------------
@@ -49,7 +50,7 @@ Generally the [develop](https://github.com/ethereum/tests/tree/develop) branch i
 Contribute to the Test Suite
 ----------------------------
 
-See the dedicated [section](https://ethereum-tests.readthedocs.io/en/latest/generating-tests.html) in the docs on how to write new tests. Or https://github.com/ethereum/retesteth/wiki/Creating-a-State-Test-with-retesteth
+See the dedicated [section](https://ethereum-tests.readthedocs.io/en/latest/how2contribute.html) in the docs on how to write new tests. Or https://github.com/ethereum/retesteth/wiki/Creating-a-State-Test-with-retesteth
 
 If you want to follow up with current tasks and what is currently in the works, have a look at the [issues](https://github.com/ethereum/tests/issues) 
 
