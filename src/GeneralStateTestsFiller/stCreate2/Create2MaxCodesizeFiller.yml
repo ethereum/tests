@@ -1,0 +1,117 @@
+# Use CREATE2 opcode to create a contract with a codesize equal and greater to the maximum allowed (0x6000)
+Create2MaxCodesize:
+
+  env:
+    currentCoinbase: 2adc25665018aa1fe0e6bc666dac8fc2697ff9ba
+    currentDifficulty: '0x20000'
+    currentGasLimit: 60000000
+    currentNumber: "1"
+    currentTimestamp: "1000"
+    previousHash: 5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6
+
+  pre:
+
+    00000000000000000000000000000000deadbeef:
+      balance: 1
+      code: |
+        :yul
+        {
+          // initcode: { push2(0x0000), dup1, push2(0x12), push1(0x00), codecopy, push1(0x00) return }
+          mstore(0, 0x610000806100126000396000f3)
+          // overwrite initcode with the actual codesize from txn data
+          calldatacopy(20, 0, 2)
+          // create (Actual code starts at 32 - initcode.size)
+          pop(create2(1, 19, 13, 1))
+        }
+      nonce: '1'
+      storage: {}
+
+    # User account
+    a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: 1000000000000
+      code: ''
+      nonce: '0'
+      storage: {}
+
+
+  transaction:
+    # Codesize for the contract created
+    data:
+    - :raw 0x5ed5
+    - :raw 0x6000
+    - :raw 0x6001
+    - :raw 0x600d
+    gasLimit:
+    - 15000000
+
+    gasPrice: '10'
+    nonce: '0'
+    to: 00000000000000000000000000000000deadbeef
+    secretKey: "45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8"
+    value:
+    - 0
+
+  expect:
+    - indexes:
+        data: !!int 0
+        gas:  !!int 0
+        value: !!int 0
+      network:
+        - '>=Istanbul'
+      result:
+
+        # The address of the created contract
+        9855fbab24ef2e3c02cf8f4c46d0fe817aa3d6af:
+          balance: 1
+
+        00000000000000000000000000000000deadbeef:
+          nonce: 2
+          balance: 0
+    
+    - indexes:
+        data: !!int 1
+        gas:  !!int 0
+        value: !!int 0
+      network:
+        - '>=Istanbul'
+      result:
+
+        # The address of the created contract
+        93e52c0b6f6ff4e4b3046850152162a443ce484f:
+          balance: 1
+
+        00000000000000000000000000000000deadbeef:
+          nonce: 2
+          balance: 0
+
+    - indexes:
+        data: !!int 2
+        gas:  !!int 0
+        value: !!int 0
+      network:
+        - '>=Istanbul'
+      result:
+
+        # Codesize exceeded maximum allowed size, therefore no contract should exist
+        67b827acb0ed005abea5aae29a3f840a2cc2d497:
+          shouldnotexist: 1
+
+        00000000000000000000000000000000deadbeef:
+          nonce: 2
+          balance: 1
+          
+    - indexes:
+        data: !!int 3
+        gas:  !!int 0
+        value: !!int 0
+      network:
+        - '>=Istanbul'
+      result:
+
+        # Codesize exceeded maximum allowed size, therefore no contract should exist
+        0c92d594bbad6f6d082b64afbf5143b62e5e4bc8:
+          shouldnotexist: 1
+
+        00000000000000000000000000000000deadbeef:
+          nonce: 2
+          balance: 1
