@@ -1,0 +1,79 @@
+# Use CREATE opcode to create a contract with a codesize equal to the maximum allowed (0x6000) then destroy the contract
+CreateMaxCodesizeSuicide:
+
+  env:
+    currentCoinbase: 2adc25665018aa1fe0e6bc666dac8fc2697ff9ba
+    currentDifficulty: '0x20000'
+    currentGasLimit: 60000000
+    currentNumber: "1"
+    currentTimestamp: "1000"
+    previousHash: 5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6
+
+  pre:
+    00000000000000000000000000000000000000d0:
+      balance: 0
+      code: ''
+      nonce: '0'
+      storage: {}
+
+    00000000000000000000000000000000deadbeef:
+      balance: 2
+      code: |
+        :yul
+        {
+          // initcode: { push2(0x6000), dup1, push1(0x0c), push1(0x00), codecopy, push1(0x00), return,
+          //             /* Code copied to the resulting contract */   push1(0xd0), selfdestruct }
+          mstore(0, 0x61600080600c6000396000f360d0ff)
+          // create (Actual code starts at 32 - initcode.size)
+          let calladdr := create(1, 17, 15)
+          sstore(1, 1)
+          pop(call(1000000, calladdr, 1, 0, 0, 0, 0))
+        }
+      nonce: '1'
+      storage: {}
+
+    # User account
+    a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: 1000000000000
+      code: ''
+      nonce: '0'
+      storage: {}
+
+
+  transaction:
+    # Codesize for the contract created
+    data: 
+    - ''
+    gasLimit:
+    - 15000000
+
+    gasPrice: '10'
+    nonce: '0'
+    to: 00000000000000000000000000000000deadbeef
+    secretKey: "45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8"
+    value:
+    - 0
+
+  expect:
+    - indexes:
+        data: !!int 0
+        gas:  !!int 0
+        value: !!int 0
+      network:
+        - '>=Istanbul'
+      result:
+
+        # The address of the created contract
+        a97d2be8afcfcff4b5726fe707ccc6785ac4d51c:
+          shouldnotexist: 1
+
+        00000000000000000000000000000000deadbeef:
+          nonce: 2
+          balance: 0
+          storage: {
+            '1': '1'
+          }
+
+        00000000000000000000000000000000000000d0:
+          nonce: 0
+          balance: 2
