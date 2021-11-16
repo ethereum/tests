@@ -18,7 +18,7 @@ Create2MaxCodesize:
         {
           // initcode: { push2(0x0000), dup1, push2(0x12), push1(0x00), codecopy, push1(0x00) return }
           mstore(0, 0x610000806100126000396000f3)
-          // overwrite initcode with the actual codesize from txn data
+          // overwrite 0000 in initcode with the actual codesize from txn data
           calldatacopy(20, 0, 2)
           // create (Actual code starts at 32 - initcode.size)
           pop(create2(1, 19, 13, 1))
