@@ -35,7 +35,7 @@ Although its a simple transaction execution on stateA to stateB, due to the gene
   }
 
 .. _info_gstate:
-.. include:: ../test_types/TestStructures/info.rst
+.. include:: ../test_types/TestStructures/GeneralStateTests/info.rst
 .. _env_gstate:
 .. include:: ../test_types/TestStructures/GeneralStateTests/env.rst
 .. _post_gstate:
