@@ -39,10 +39,11 @@ else
 fi
 
 gethRetVal=$?
+errFname=$testType-`dbus-uuidgen`
 
 if [ $gethRetVal -gt 0 ]; then
-  mv $testPath/src/GeneralStateTestsFiller/stExample/randomFiller.yml \
-        $errPath/fail-on-geth-$testType-`date +%F:%H:%M:%S:%N`Filler.yml
+  cat $testPath/src/GeneralStateTestsFiller/stExample/randomFiller.yml | \
+        sed "s/random:/$errFname:/" > $errPath/${errFname}Filler.yml
   exit 1
 fi
 
@@ -66,7 +67,7 @@ fi
 besuRetVal=$?
 
 if [ $besuRetVal -gt 0 ]; then
-  mv $testPath/src/GeneralStateTestsFiller/stExample/randomFiller.yml \
-        $errPath/fail-on-besu-$testType-`date +%F:%H:%M:%S:%N`Filler.yml
+  cat $testPath/src/GeneralStateTestsFiller/stExample/randomFiller.yml | \
+        sed "s/random:/$errFname:/" > $errPath/${errFname}Filler.yml
 fi
 
