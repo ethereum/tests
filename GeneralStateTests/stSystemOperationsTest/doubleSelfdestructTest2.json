@@ -2,10 +2,11 @@
     "doubleSelfdestructTest2" : {
         "_info" : {
             "comment" : "The second test case requested here https://github.com/ethereum/tests/issues/431#issue-306081539 .\nInvoked Solidity 0.4.21 with solc --bin-runtime --optimize\ncontract DoubleSelfdestructTest2 {\n  address constant B = 0x3;\n  function remoteSelfdestruct() external {\n    selfdestruct(this);\n  }\n  function() external payable {\n    this.remoteSelfdestruct();\n    selfdestruct(B);\n  }\n}\nThe version of Solidity emits code that always enter OOG for Homestead and Frontier.  So no new accounts\nare created for Homestead and Frontier.  EIP158 changes the behavior of zero-amount transfer so that no new accounts are created.\nThis leaves EIP150 as a special case.\nBecause gasprice is 0 and mining reward is 0, the mining account is created as empty in the post state. (imitating blockchain rules)\n",
-            "filling-rpc-server" : "evm version 1.10.9-unstable-5d64c754-20210831",
-            "filling-tool-version" : "retesteth-0.2.0-memory+commit.7c392173.Linux.g++",
-            "generatedTestHash" : "8007dd11aa43015ac6f358bc24bd67fb8140a008f011da084be436122676a4ec",
-            "lllcversion" : "Version: 0.5.14-develop.2021.6.15+commit.401d5358.Linux.g++",
+            "filling-rpc-server" : "evm version 1.10.16-unstable-0f893109-20220105",
+            "filling-tool-version" : "retesteth-0.2.2-testinfo+commit.01c6aac2.Linux.g++",
+            "generatedTestHash" : "2fc173550fc0043ad61d7dffa0e80402abd09f048f12699c5e978d17ccb8c3a4",
+            "lllcversion" : "Version: 0.5.14-develop.2021.11.27+commit.401d5358.Linux.g++",
+            "solidity" : "Version: 0.8.5+commit.a4f2e591.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/stSystemOperationsTest/doubleSelfdestructTest2Filler.yml",
             "sourceHash" : "33ae53c705ded21f3751a1266782336e3c9a68c9593f370eec8ab1550a48890a"
         },
@@ -82,6 +83,7 @@
             "gasPrice" : "0x0a",
             "nonce" : "0x00",
             "secretKey" : "0x45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8",
+            "sender" : "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b",
             "to" : "0x095e7baea6a6c7c4c2dfeb977efac326af552d87",
             "value" : [
                 "0x0186a0"
