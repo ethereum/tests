@@ -1,0 +1,169 @@
+# Verifies RANDOM (Previously DIFFICULTY) opcode post-merge state in different EVM contexts.
+randomOpcode:
+  env:
+    currentCoinbase: 2adc25665018aa1fe0e6bc666dac8fc2697ff9ba
+    currentDifficulty: '0x00'
+    currentRandom: '0x0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef'
+    currentGasLimit: '89128960'
+    currentBaseFee: '10'
+    currentNumber: '1'
+    currentTimestamp: '1000'
+    previousHash: 5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6
+
+  pre:
+    a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: 1000000000
+      code: ''
+      nonce: 0
+      storage: {}
+    aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa:
+      balance: 0
+      code: |
+        :yul
+        {
+          if eq(difficulty(), 0x0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef) {
+            return(0, 0)
+          }
+          revert(0, 0)
+        }
+      nonce: '0x01'
+      storage: {}
+    bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb:
+      balance: 0
+      code: |
+        :yul
+        {
+          // Store all opcodes coming from the block header to verify nothing else is affected.
+          sstore(0, coinbase())
+          sstore(1, timestamp())
+          sstore(2, number())
+          sstore(3, difficulty())
+          sstore(4, gaslimit())
+        }
+      nonce: '0x01'
+      storage: {}
+    cccccccccccccccccccccccccccccccccccccccc:
+      balance: 0
+      code: |
+        :yul
+        {
+          // Store all opcodes coming from the block header to verify nothing else is affected.
+          sstore(0, coinbase())
+          sstore(1, timestamp())
+          sstore(2, number())
+          sstore(3, difficulty())
+          sstore(4, gaslimit())
+
+          // Get the random opcode during initcode execution of CREATE opcode
+          let addr := 0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+          let isize := extcodesize(addr)
+          extcodecopy(addr, 0, 0, isize)
+          pop(create(0, 0, isize))
+
+          // Get the random opcode during initcode execution of CREATE2 opcode
+          pop(create2(0, 0, isize, difficulty()))
+
+          // Random Opcode in Call
+          addr := 0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+          pop(call(gas(), addr, 0, 0, 0, 0, 0))
+
+          // Random Opcode in DelegateCall (Delegate-called from subcall)
+          addr := 0xdddddddddddddddddddddddddddddddddddddddd
+          pop(call(gas(), addr, 0, 0, 0, 0, 0))
+
+          // Random Opcode in CallCode (Code-called from subcall)
+          addr := 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+          pop(call(gas(), addr, 0, 0, 0, 0, 0))
+
+          // Static call contract that reverts if difficulty is unexpected value
+          addr := 0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+          sstore(5, staticcall(gas(), addr, 0, 0, 0, 0))
+        }
+      nonce: '0x01'
+      storage: {}
+    
+    dddddddddddddddddddddddddddddddddddddddd:
+      balance: 0
+      code: |
+        :yul
+        {
+          let addr := 0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+          pop(delegatecall(gas(), addr, 0, 0, 0, 0))
+        }
+      nonce: '0x01'
+      storage: {}
+
+    eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:
+      balance: 0
+      code: |
+        :yul
+        {
+          let addr := 0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+          pop(callcode(gas(), addr, 0, 0, 0, 0, 0))
+        }
+      nonce: '0x01'
+      storage: {}
+
+  transaction:
+    data: 
+      - ''
+    gasLimit:
+      - 70000000
+    gasPrice: 10
+    nonce: 0
+    secretKey: 45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8
+    to: 'cccccccccccccccccccccccccccccccccccccccc'
+    value:
+    - 0
+
+  expect:
+    - indexes:
+       data: !!int -1
+       gas: !!int -1
+       value: !!int -1
+      network:
+        - '>=London'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       cccccccccccccccccccccccccccccccccccccccc:
+          nonce: '0x03'
+          storage:
+            '0': '0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba'
+            '1': '0x3e8'
+            '2': '0x01'
+            '3': '0x0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef'
+            '4': '0x5500000'
+            '5': '0x01'
+       553e6c30af61e7a3576f31311ea8a620f80d047e:
+          nonce: '0x01'
+          storage:
+            '0': '0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba'
+            '1': '0x3e8'
+            '2': '0x01'
+            '3': '0x0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef'
+            '4': '0x5500000'
+       1c2ebaf67c01ee868a6ed9b37e7f89934ba559e1:
+          nonce: '0x01'
+          storage:
+            '0': '0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba'
+            '1': '0x3e8'
+            '2': '0x01'
+            '3': '0x0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef'
+            '4': '0x5500000'
+       dddddddddddddddddddddddddddddddddddddddd:
+          nonce: '0x01'
+          storage:
+            '0': '0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba'
+            '1': '0x3e8'
+            '2': '0x01'
+            '3': '0x0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef'
+            '4': '0x5500000'
+       eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee:
+          nonce: '0x01'
+          storage:
+            '0': '0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba'
+            '1': '0x3e8'
+            '2': '0x01'
+            '3': '0x0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef'
+            '4': '0x5500000'
