@@ -2,6 +2,11 @@ tooLongReturnDataCopy:
   _info:
     comment: Ori Pomerantz   qbzzt1@gmail.com
 
+# When a contract ends (RETURN or REVERT), it returns a buffer. That buffer
+# is available either directly (written to memory specified in the CALL opcode)
+# or through RETURNDATACOPY. However, if you attempt in RETURNDATACOPY to read
+# beyond the buffer size the contract reverts. This test verifies this behavior.
+
   env:
     currentCoinbase: 2adc25665018aa1fe0e6bc666dac8fc2697ff9ba
     currentDifficulty: 0x20000
@@ -64,9 +69,13 @@ tooLongReturnDataCopy:
              let contract       := calldataload(0x64)
              mstore(0, lengthReturned)
 
+             // The length of the buffer to be returned is part of the calldata
+             // for this contract. However, it is necessary to send it to the 
+             // contract we're calling (either 0xC0DE or 0x0BAD) so it will know
+             // what size of buffer to return to us
              let retVal := call(gas(), contract, 0, 
                 0, 0x20,    // input buffer with lengthReturned
-                0, 0x00)    // output buffer
+                0, 0x100)    // output buffer
 
              // Copy the return data (which fails if
              // offsetCopied+lengthCopied > lengthReturned)
@@ -99,105 +108,114 @@ tooLongReturnDataCopy:
 
   transaction:
     data:
+# Parameters:
+# 1. The length of the returned buffer
+# 2. The offset for the RETURNDATACOPY opcode
+# 3. The length for the RETURNDATACOPY opcode
+# 4. The contract call. 
+#    0xC0DE - contract that returns a buffer
+#    0x0BAD - contract that reverts with a buffer
+#    In both cases, the returned buffer is the length specified in the first parameter
+
     # Receive an empty buffer, copy zero bytes from offset zero.
-    - data: :label success :abi f(uint,uint,uint,uint) 0x00 0x00 0x00 0xC0DE
-      accessList: []
+    - :label success :abi f(uint,uint,uint,uint) 0x00 0x00 0x00 0xC0DE
+      
 
     # Receive an empty buffer, copy the first byte from it
-    - data: :label fail    :abi f(uint,uint,uint,uint) 0x00 0x00 0x01 0xC0DE
-      accessList: []
+    - :label fail    :abi f(uint,uint,uint,uint) 0x00 0x00 0x01 0xC0DE
+      
 
     # Receive sixteen bytes, copy the first eight
-    - data: :label success :abi f(uint,uint,uint,uint) 0x10 0x00 0x08 0xC0DE
-      accessList: []
+    - :label success :abi f(uint,uint,uint,uint) 0x10 0x00 0x08 0xC0DE
+      
 
     # Receive sixteen bytes, copy the first sixteen
-    - data: :label success :abi f(uint,uint,uint,uint) 0x10 0x00 0x10 0xC0DE
-      accessList: []
+    - :label success :abi f(uint,uint,uint,uint) 0x10 0x00 0x10 0xC0DE
+      
 
     # Receive sixteen bytes, copy the first seventeen
-    - data: :label fail    :abi f(uint,uint,uint,uint) 0x10 0x00 0x11 0xC0DE
-      accessList: []
+    - :label fail    :abi f(uint,uint,uint,uint) 0x10 0x00 0x11 0xC0DE
+      
 
     # Receive sixteen bytes, copy fifteen (except for the first one)
-    - data: :label success :abi f(uint,uint,uint,uint) 0x10 0x01 0x0f 0xC0DE
-      accessList: []
+    - :label success :abi f(uint,uint,uint,uint) 0x10 0x01 0x0f 0xC0DE
+      
 
     # Receive sixteen bytes, copy sixteen (except for the first one)
-    - data: :label fail    :abi f(uint,uint,uint,uint) 0x10 0x01 0x10 0xC0DE
-      accessList: []
+    - :label fail    :abi f(uint,uint,uint,uint) 0x10 0x01 0x10 0xC0DE
+      
 
     # Receive sixteen bytes, copy numbers 8-15
-    - data: :label success :abi f(uint,uint,uint,uint) 0x10 0x08 0x08 0xC0DE
-      accessList: []
+    - :label success :abi f(uint,uint,uint,uint) 0x10 0x08 0x08 0xC0DE
+      
 
     # Receive sixteen bytes, copy numbers 9-16
-    - data: :label fail    :abi f(uint,uint,uint,uint) 0x10 0x09 0x08 0xC0DE
-      accessList: []
+    - :label fail    :abi f(uint,uint,uint,uint) 0x10 0x09 0x08 0xC0DE
+      
 
     # Receive sixteen bytes, copy numbers 16-23
-    - data: :label fail    :abi f(uint,uint,uint,uint) 0x10 0x10 0x08 0xC0DE
-      accessList: []
+    - :label fail    :abi f(uint,uint,uint,uint) 0x10 0x10 0x08 0xC0DE
+      
 
     # Receive sixteen bytes, copy numbers 16-31
-    - data: :label fail    :abi f(uint,uint,uint,uint) 0x10 0x10 0x10 0xC0DE
-      accessList: []
+    - :label fail    :abi f(uint,uint,uint,uint) 0x10 0x10 0x10 0xC0DE
+      
 
     # Receive sixteen bytes, copy numbers 32-47
-    - data: :label fail    :abi f(uint,uint,uint,uint) 0x10 0x20 0x10 0xC0DE
-      accessList: []
+    - :label fail    :abi f(uint,uint,uint,uint) 0x10 0x20 0x10 0xC0DE
+      
 
 
 
     # Show that REVERT behaves the same way as RETURN
 
     # Receive an empty buffer, copy zero bytes from offset zero.
-    - data: :label success :abi f(uint,uint,uint,uint) 0x00 0x00 0x00 0x0BAD
-      accessList: []
+    - :label success :abi f(uint,uint,uint,uint) 0x00 0x00 0x00 0x0BAD
+      
 
     # Receive an empty buffer, copy the first byte from it
-    - data: :label fail    :abi f(uint,uint,uint,uint) 0x00 0x00 0x01 0x0BAD
-      accessList: []
+    - :label fail    :abi f(uint,uint,uint,uint) 0x00 0x00 0x01 0x0BAD
+      
 
     # Receive sixteen bytes, copy the first eight
-    - data: :label success :abi f(uint,uint,uint,uint) 0x10 0x00 0x08 0x0BAD
-      accessList: []
+    - :label success :abi f(uint,uint,uint,uint) 0x10 0x00 0x08 0x0BAD
+      
 
     # Receive sixteen bytes, copy the first sixteen
-    - data: :label success :abi f(uint,uint,uint,uint) 0x10 0x00 0x10 0x0BAD
-      accessList: []
+    - :label success :abi f(uint,uint,uint,uint) 0x10 0x00 0x10 0x0BAD
+      
 
     # Receive sixteen bytes, copy the first seventeen
-    - data: :label fail    :abi f(uint,uint,uint,uint) 0x10 0x00 0x11 0x0BAD
-      accessList: []
+    - :label fail    :abi f(uint,uint,uint,uint) 0x10 0x00 0x11 0x0BAD
+      
 
     # Receive sixteen bytes, copy fifteen (except for the first one)
-    - data: :label success :abi f(uint,uint,uint,uint) 0x10 0x01 0x0f 0x0BAD
-      accessList: []
+    - :label success :abi f(uint,uint,uint,uint) 0x10 0x01 0x0f 0x0BAD
+      
 
     # Receive sixteen bytes, copy sixteen (except for the first one)
-    - data: :label fail    :abi f(uint,uint,uint,uint) 0x10 0x01 0x10 0x0BAD
-      accessList: []
+    - :label fail    :abi f(uint,uint,uint,uint) 0x10 0x01 0x10 0x0BAD
+      
 
     # Receive sixteen bytes, copy numbers 8-15
-    - data: :label success :abi f(uint,uint,uint,uint) 0x10 0x08 0x08 0x0BAD
-      accessList: []
+    - :label success :abi f(uint,uint,uint,uint) 0x10 0x08 0x08 0x0BAD
+      
 
     # Receive sixteen bytes, copy numbers 9-16
-    - data: :label fail    :abi f(uint,uint,uint,uint) 0x10 0x09 0x08 0x0BAD
-      accessList: []
+    - :label fail    :abi f(uint,uint,uint,uint) 0x10 0x09 0x08 0x0BAD
+      
 
     # Receive sixteen bytes, copy numbers 16-23
-    - data: :label fail    :abi f(uint,uint,uint,uint) 0x10 0x10 0x08 0x0BAD
-      accessList: []
+    - :label fail    :abi f(uint,uint,uint,uint) 0x10 0x10 0x08 0x0BAD
+      
 
     # Receive sixteen bytes, copy numbers 16-31
-    - data: :label fail    :abi f(uint,uint,uint,uint) 0x10 0x10 0x10 0x0BAD
-      accessList: []
+    - :label fail    :abi f(uint,uint,uint,uint) 0x10 0x10 0x10 0x0BAD
+      
 
     # Receive sixteen bytes, copy numbers 32-47
-    - data: :label fail    :abi f(uint,uint,uint,uint) 0x10 0x20 0x10 0x0BAD
-      accessList: []
+    - :label fail    :abi f(uint,uint,uint,uint) 0x10 0x20 0x10 0x0BAD
+      
 
 
 
@@ -208,8 +226,7 @@ tooLongReturnDataCopy:
     value:
     - 0
     secretKey: "45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8"
-    maxPriorityFeePerGas: 0
-    maxFeePerGas: 2000
+    gasPrice: 100
 
 
   expect:
