@@ -182,6 +182,28 @@ signextend:
       storage: {}
 
 
+    # SIGNEXTEND 31, positive value
+    000000000000000000000000000000000000010D:
+      balance: '0x0ba1a9ce0ba1a9ce'
+      code: |
+        {  
+           [[0]] (signextend 31 1)
+        }
+      nonce: '0'
+      storage: {}
+
+
+    # SIGNEXTEND 31, negative value
+    000000000000000000000000000000000000010E:
+      balance: '0x0ba1a9ce0ba1a9ce'
+      code: |
+        {  
+           [[0]] (signextend 31 (sub 0 1))
+        }
+      nonce: '0'
+      storage: {}
+
+
 
       
       
@@ -220,6 +242,9 @@ signextend:
     - :label overflow_bytenum    :abi f(uint) 0x0A
     - :label overflow_bytenum2   :abi f(uint) 0x0B
     - :label bit_is_set          :abi f(uint) 0x0C
+    - :label byte31_pos          :abi f(uint) 0x0D
+    - :label byte31_neg          :abi f(uint) 0x0E
+ 
     gasLimit:
     - '80000000'
     gasPrice: '10'
@@ -409,6 +434,36 @@ signextend:
           storage:
             # Extend 0xf4, which is negative - so the result is negative
             0: 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff4
+
+
+    - indexes:
+        data:
+        - :label byte31_pos
+        gas:  !!int -1
+        value: !!int -1
+      network:
+        - '>=Istanbul'
+      result:
+        # signextend(31, <whatever>) doesn't do anything, because there is 
+        # nowhere to extend to
+        000000000000000000000000000000000000010d:
+          storage:
+            0: 0x01
+
+
+    - indexes:
+        data:
+        - :label byte31_neg
+        gas:  !!int -1
+        value: !!int -1
+      network:
+        - '>=Istanbul'
+      result:
+        # signextend(31, <whatever>) doesn't do anything, because there is 
+        # nowhere to extend to
+        000000000000000000000000000000000000010e:
+          storage:
+            0: 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
 
 
 
