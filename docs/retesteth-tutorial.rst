@@ -301,8 +301,8 @@ updates. If you want the latest features, you need to build an image from the
       chmod +x dretesteth.sh 
       wget https://raw.githubusercontent.com/ethereum/retesteth/develop/Dockerfile
 
-#. Modify the **RUN git clone** line in the **Dockerfile** to change the **-b**
-   parameter from **master** to **develop**.
+#. Modify the **RUN git clone** line in the **Dockerfile** for repo "retesteth" to change branch **-b** from **master** 
+   to **develop**. Do not modify repo branches for "winsvega/solidity" [LLLC opcode support] and "go-ethereum".
 
 #. Build the docker image yourself:
 
