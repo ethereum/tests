@@ -2,8 +2,8 @@
     "doubleSelfdestructTest_d0g0v0_Berlin" : {
         "_info" : {
             "comment" : "The first test case required here https://github.com/ethereum/tests/issues/431#issue-306081539 .\nInvoked Solidity 0.4.21 with solc --bin-runtime --optimize\ncontract DoubleSelfdestructTest {\n  address constant B1 = 0x1;\n  address constant B2 = 0x2;\n  function remoteSelfdestruct() external {\n    selfdestruct(B2);\n  }\n  function() external payable {\n    this.remoteSelfdestruct();\n    selfdestruct(B1);\n  }\n}\nBecause gasprice is 0 and mining reward is 0, the mining account is created as empty in the post state. (imitating blockchain rules)\n",
-            "filling-rpc-server" : "evm version 1.10.16-unstable-0f893109-20220105",
-            "filling-tool-version" : "retesteth-0.2.2-testinfo+commit.01c6aac2.Linux.g++",
+            "filling-rpc-server" : "evm version 1.10.18-unstable-53304ff6-20220503",
+            "filling-tool-version" : "retesteth-0.2.2-testinfo+commit.05e0b8ca.Linux.g++",
             "generatedTestHash" : "e4675a1c7ef6baa7f7ef0f639bbf26b5d7aa0646917742357ff8c7b381f1b168",
             "lllcversion" : "Version: 0.5.14-develop.2021.11.27+commit.401d5358.Linux.g++",
             "solidity" : "Version: 0.8.5+commit.a4f2e591.Linux.g++",
@@ -114,8 +114,8 @@
     "doubleSelfdestructTest_d0g0v0_Istanbul" : {
         "_info" : {
             "comment" : "The first test case required here https://github.com/ethereum/tests/issues/431#issue-306081539 .\nInvoked Solidity 0.4.21 with solc --bin-runtime --optimize\ncontract DoubleSelfdestructTest {\n  address constant B1 = 0x1;\n  address constant B2 = 0x2;\n  function remoteSelfdestruct() external {\n    selfdestruct(B2);\n  }\n  function() external payable {\n    this.remoteSelfdestruct();\n    selfdestruct(B1);\n  }\n}\nBecause gasprice is 0 and mining reward is 0, the mining account is created as empty in the post state. (imitating blockchain rules)\n",
-            "filling-rpc-server" : "evm version 1.10.16-unstable-0f893109-20220105",
-            "filling-tool-version" : "retesteth-0.2.2-testinfo+commit.01c6aac2.Linux.g++",
+            "filling-rpc-server" : "evm version 1.10.18-unstable-53304ff6-20220503",
+            "filling-tool-version" : "retesteth-0.2.2-testinfo+commit.05e0b8ca.Linux.g++",
             "generatedTestHash" : "63e6cfc8247d00e8bd802bd9be653fb4ec9d2f4147cd128fbd7004971f7d5d89",
             "lllcversion" : "Version: 0.5.14-develop.2021.11.27+commit.401d5358.Linux.g++",
             "solidity" : "Version: 0.8.5+commit.a4f2e591.Linux.g++",
@@ -226,8 +226,8 @@
     "doubleSelfdestructTest_d0g0v0_London" : {
         "_info" : {
             "comment" : "The first test case required here https://github.com/ethereum/tests/issues/431#issue-306081539 .\nInvoked Solidity 0.4.21 with solc --bin-runtime --optimize\ncontract DoubleSelfdestructTest {\n  address constant B1 = 0x1;\n  address constant B2 = 0x2;\n  function remoteSelfdestruct() external {\n    selfdestruct(B2);\n  }\n  function() external payable {\n    this.remoteSelfdestruct();\n    selfdestruct(B1);\n  }\n}\nBecause gasprice is 0 and mining reward is 0, the mining account is created as empty in the post state. (imitating blockchain rules)\n",
-            "filling-rpc-server" : "evm version 1.10.16-unstable-0f893109-20220105",
-            "filling-tool-version" : "retesteth-0.2.2-testinfo+commit.01c6aac2.Linux.g++",
+            "filling-rpc-server" : "evm version 1.10.18-unstable-53304ff6-20220503",
+            "filling-tool-version" : "retesteth-0.2.2-testinfo+commit.05e0b8ca.Linux.g++",
             "generatedTestHash" : "1f8233356e707cf382af8f25967c922a6b5e60d2d54c61d90927b43b2b1cb08b",
             "lllcversion" : "Version: 0.5.14-develop.2021.11.27+commit.401d5358.Linux.g++",
             "solidity" : "Version: 0.8.5+commit.a4f2e591.Linux.g++",
@@ -306,6 +306,113 @@
             },
             "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
                 "balance" : "0x1bc16d674ec80000",
+                "code" : "0x",
+                "nonce" : "0x00",
+                "storage" : {
+                }
+            },
+            "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                "balance" : "0x0de0b6b3a759daa8",
+                "code" : "0x",
+                "nonce" : "0x01",
+                "storage" : {
+                }
+            }
+        },
+        "pre" : {
+            "0x095e7baea6a6c7c4c2dfeb977efac326af552d87" : {
+                "balance" : "0x0de0b6b3a7640000",
+                "code" : "0x606060405260043610603e5763ffffffff7c01000000000000000000000000000000000000000000000000000000006000350416632c3f2bf3811460b4575b3073ffffffffffffffffffffffffffffffffffffffff16632c3f2bf36040518163ffffffff167c0100000000000000000000000000000000000000000000000000000000028152600401600060405180830381600087803b151560a057600080fd5b5af1151560ac57600080fd5b506001915050ff5b341560be57600080fd5b60c460c6565b005b6002ff00a165627a7a7230582050afafcb56c38a6100bd690c100a940b5fd73919053a82fbe14e6cf89dce4c430029",
+                "nonce" : "0x00",
+                "storage" : {
+                }
+            },
+            "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                "balance" : "0x0de0b6b3a7640000",
+                "code" : "0x",
+                "nonce" : "0x00",
+                "storage" : {
+                }
+            }
+        },
+        "sealEngine" : "NoProof"
+    },
+    "doubleSelfdestructTest_d0g0v0_Merge" : {
+        "_info" : {
+            "comment" : "The first test case required here https://github.com/ethereum/tests/issues/431#issue-306081539 .\nInvoked Solidity 0.4.21 with solc --bin-runtime --optimize\ncontract DoubleSelfdestructTest {\n  address constant B1 = 0x1;\n  address constant B2 = 0x2;\n  function remoteSelfdestruct() external {\n    selfdestruct(B2);\n  }\n  function() external payable {\n    this.remoteSelfdestruct();\n    selfdestruct(B1);\n  }\n}\nBecause gasprice is 0 and mining reward is 0, the mining account is created as empty in the post state. (imitating blockchain rules)\n",
+            "filling-rpc-server" : "evm version 1.10.18-unstable-53304ff6-20220503",
+            "filling-tool-version" : "retesteth-0.2.2-testinfo+commit.05e0b8ca.Linux.g++",
+            "generatedTestHash" : "1bedde350256ee6dbc053f36bd5ae3323cc3a217b1e5f3e6e1b6b882b17a94ea",
+            "lllcversion" : "Version: 0.5.14-develop.2021.11.27+commit.401d5358.Linux.g++",
+            "solidity" : "Version: 0.8.5+commit.a4f2e591.Linux.g++",
+            "source" : "src/GeneralStateTestsFiller/stSystemOperationsTest/doubleSelfdestructTestFiller.yml",
+            "sourceHash" : "f8fa3bc7e678cc66041794677fef7e911fa8e5f8143f844f91142b24e7f6a0c0"
+        },
+        "blocks" : [
+            {
+                "blockHeader" : {
+                    "baseFeePerGas" : "0x0a",
+                    "bloom" : "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+                    "coinbase" : "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba",
+                    "difficulty" : "0x00",
+                    "extraData" : "0x00",
+                    "gasLimit" : "0x02540be400",
+                    "gasUsed" : "0xdcac",
+                    "hash" : "0x7a4404e54d1cb45892e0d85c24d60c18fc44e5a3b07feec0f4631da9ce0dfcf4",
+                    "mixHash" : "0x0000000000000000000000000000000000000000000000000000000000020000",
+                    "nonce" : "0x0000000000000000",
+                    "number" : "0x01",
+                    "parentHash" : "0x195add0626730e786eb0acec3736ffee5b2fa979abb62277fbfafd8894533efa",
+                    "receiptTrie" : "0x849fb8d87321a2d0a1c687e928e43a745424f31dec82e2d98617ca69b9f5d74a",
+                    "stateRoot" : "0xab33c6ad132e6b9f7c001a502569563a65294a813a2af798f11019e98f8f661c",
+                    "timestamp" : "0x03e8",
+                    "transactionsTrie" : "0x9b8c613858ce476b80aa5f4d2908e22edada9f78371df33a6f37d22fa20e4eed",
+                    "uncleHash" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347"
+                },
+                "rlp" : "0xf90263f901f7a0195add0626730e786eb0acec3736ffee5b2fa979abb62277fbfafd8894533efaa01dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347942adc25665018aa1fe0e6bc666dac8fc2697ff9baa0ab33c6ad132e6b9f7c001a502569563a65294a813a2af798f11019e98f8f661ca09b8c613858ce476b80aa5f4d2908e22edada9f78371df33a6f37d22fa20e4eeda0849fb8d87321a2d0a1c687e928e43a745424f31dec82e2d98617ca69b9f5d74ab901000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000080018502540be40082dcac8203e800a000000000000000000000000000000000000000000000000000000000000200008800000000000000000af866f864800a843b9aca0094095e7baea6a6c7c4c2dfeb977efac326af552d87830186a0801ca074457fed2b2c7eb1656a7764820d6abc640a61a9cc1cdba895fb722db4180d98a0538ec00d6d68933a7031f2803f032ddf4f150249b92ac351239ba76e12d90c9dc0",
+                "transactions" : [
+                    {
+                        "data" : "0x",
+                        "gasLimit" : "0x3b9aca00",
+                        "gasPrice" : "0x0a",
+                        "nonce" : "0x00",
+                        "r" : "0x74457fed2b2c7eb1656a7764820d6abc640a61a9cc1cdba895fb722db4180d98",
+                        "s" : "0x538ec00d6d68933a7031f2803f032ddf4f150249b92ac351239ba76e12d90c9d",
+                        "sender" : "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b",
+                        "to" : "0x095e7baea6a6c7c4c2dfeb977efac326af552d87",
+                        "v" : "0x1c",
+                        "value" : "0x0186a0"
+                    }
+                ],
+                "uncleHeaders" : [
+                ]
+            }
+        ],
+        "genesisBlockHeader" : {
+            "baseFeePerGas" : "0x0b",
+            "bloom" : "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+            "coinbase" : "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba",
+            "difficulty" : "0x00",
+            "extraData" : "0x00",
+            "gasLimit" : "0x02540be400",
+            "gasUsed" : "0x00",
+            "hash" : "0x195add0626730e786eb0acec3736ffee5b2fa979abb62277fbfafd8894533efa",
+            "mixHash" : "0x0000000000000000000000000000000000000000000000000000000000020000",
+            "nonce" : "0x0000000000000000",
+            "number" : "0x00",
+            "parentHash" : "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "receiptTrie" : "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
+            "stateRoot" : "0x5269999e143540cd61e08a34f8eac69ea342f094869610e6e9f1733f8f1f25f6",
+            "timestamp" : "0x00",
+            "transactionsTrie" : "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
+            "uncleHash" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347"
+        },
+        "genesisRLP" : "0xf901f8f901f3a00000000000000000000000000000000000000000000000000000000000000000a01dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347942adc25665018aa1fe0e6bc666dac8fc2697ff9baa05269999e143540cd61e08a34f8eac69ea342f094869610e6e9f1733f8f1f25f6a056e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421a056e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421b901000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000080808502540be400808000a000000000000000000000000000000000000000000000000000000000000200008800000000000000000bc0c0",
+        "lastblockhash" : "0x7a4404e54d1cb45892e0d85c24d60c18fc44e5a3b07feec0f4631da9ce0dfcf4",
+        "network" : "Merge",
+        "postState" : {
+            "0x0000000000000000000000000000000000000002" : {
+                "balance" : "0x0de0b6b3a76586a0",
                 "code" : "0x",
                 "nonce" : "0x00",
                 "storage" : {
