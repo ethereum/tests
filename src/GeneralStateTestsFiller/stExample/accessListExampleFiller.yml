@@ -23,13 +23,26 @@ accessListExample:
           storage:
             0x00: 2
 
+    - indexes:
+        data: !!int -1
+        gas:  !!int -1
+        value: !!int -1
+
+      network:
+        - '<Berlin'
+      result: {}
+      expectException:     
+        '<Berlin': TR_TypeNotSupported
+
+
+
   pre:
     095e7baea6a6c7c4c2dfeb977efac326af552d87:
       balance: '1000000000000000000'
       code: |
           {
              ; Can also add lll style comments here
-             [[0]] (ADD 1 1) 
+             [[0]] (ADD 1 1)
           }
       nonce: '0'
       storage: {}

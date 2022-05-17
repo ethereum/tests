@@ -1,4 +1,4 @@
-08_eip2513_invalid_jump:
+08_eip2315_invalid_jump:
 
   env:
     currentCoinbase: 2adc25665018aa1fe0e6bc666dac8fc2697ff9ba
@@ -9,22 +9,22 @@
     previousHash: 5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6
 
   _info:
-    comment: Testing EIP 2513, https://eips.ethereum.org/EIPS/eip-2315#test-cases
+    comment: Testing EIP 2315, https://eips.ethereum.org/EIPS/eip-2315#test-cases
 
   pre:
 
     0x1111111111111111111111111111111111111111:
       balance: '0x0'
-      code: | 
+      code: |
         {
-          [[1]] (call allgas 0x2222222222222222222222222222222222222222 0 0 0 0 0) 
+          [[1]] (call allgas 0x2222222222222222222222222222222222222222 0 0 0 0 0)
         }
       nonce: '0'
       storage: {}
 
 
 
-# First invalid test case in EIP 2513:
+# First invalid test case in EIP 2315:
 #
 # Try to jump to a subroutine beyond the end of the code
 #
@@ -55,7 +55,7 @@
     - '0xFF'
     gasLimit:
     - '80000000'
-    gasPrice: '1'
+    gasPrice: '10'
     nonce: '0'
     to: 0x1111111111111111111111111111111111111111
     value:
