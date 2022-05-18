@@ -92,12 +92,19 @@ push0:
         5f"
       nonce: '0'
       storage: {}
-
+    0000000000000000000000000000000000000400:
+      balance: 0
+      # push1(02) push0 sstore push1(00) push1(01) sstore
+      code: ':raw 0x60025f556000600155'
+      nonce: '0'
+      storage: {0: 0x0a, 1: 0x0a}
+ 
   transaction:
     data:
       - ':label single_push0 :raw 0x0000000000000000000000000000000000000100'
       - ':label 1024_push0   :raw 0x0000000000000000000000000000000000000200'
       - ':label 1025_push0   :raw 0x0000000000000000000000000000000000000300'
+      - ':label push0_upd_st :raw 0x0000000000000000000000000000000000000400'
     gasLimit:
       - 700000
     gasPrice: 10
@@ -183,3 +190,33 @@ push0:
         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           storage:
             0x01: 0x01
+    - indexes:
+        data: ':label push0_upd_st'
+        gas:  !!int -1
+        value: !!int -1
+      network:
+        - 'London'
+      result:
+        0000000000000000000000000000000000000400:
+          storage:
+            0x00: 0x0a
+            0x01: 0x0a
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            0x01: 0x01
+    - indexes:
+        data: ':label push0_upd_st'
+        gas:  !!int -1
+        value: !!int -1
+      network:
+        - 'London+3855'
+      result:
+        0000000000000000000000000000000000000400:
+          storage:
+            0x00: 0x02
+            0x01: 0x00
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            0x00: 0x01
+            0x01: 0x01
+
