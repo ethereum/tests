@@ -1,0 +1,107 @@
+# EIP-3855: PUSH0 instruction - test for gas price
+push0Gas2:
+  env:
+    currentCoinbase: 2adc25665018aa1fe0e6bc666dac8fc2697ff9ba
+    currentDifficulty: '0x020000'
+    currentGasLimit: '89128960'
+    currentBaseFee: '10'
+    currentNumber: '1'
+    currentTimestamp: '1000'
+    previousHash: 5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6
+
+  pre:
+    a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: 10000000
+      code: ''
+      nonce: '0'
+      storage: {}
+
+    b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: 0
+      code: ':yul { sstore(0, call(100000, shr(96, calldataload(0)), 0, 0, 0, 0, 0)) sstore(1, 1) }'
+      nonce: 0
+      storage: {}
+
+    0000000000000000000000000000000000000100:
+      balance: 0
+      # gas push0 sstore gas push1(0x1) sstore
+      code: ':raw 0x5a5f555a600155'
+      nonce: '0'
+      storage: {}
+
+    0000000000000000000000000000000000000200:
+      balance: 0
+      # gas push1(0) sstore gas push1(0x1) sstore
+      code: ':raw 0x5a6000555a600155'
+      nonce: '0'
+      storage: {}
+
+  transaction:
+    data:
+      - ':label use_push0 :raw 0x0000000000000000000000000000000000000100'
+      - ':label use_push1_00 :raw 0x0000000000000000000000000000000000000200'
+    gasLimit:
+      - 300000
+    gasPrice: 10
+    nonce: 0
+    secretKey: 45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8
+    to: 'b94f5374fce5edbc8e2a8697c15331677e6ebf0b'
+    value:
+    - 0
+        
+  expect:
+    - indexes:
+        data: ':label use_push0'
+        gas:  !!int -1
+        value: !!int -1
+      network:
+        - 'London'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          balance: 8519690
+        0000000000000000000000000000000000000100:
+          balance: 0
+          storage: {}
+    - indexes:
+        data: ':label use_push0'
+        gas:  !!int -1
+        value: !!int -1
+      network:
+        - 'London+3855'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          balance: 8878600
+        0000000000000000000000000000000000000100:
+          balance: 0
+          storage:         # Gas used:  99998 - 77894 = 22104 (PUSH0 = 2, SSTORE = 22100, GAS = 2)
+            0x00: 0x01869e # Initial gas: 99998
+            0x01: 0x013046 # 77894
+    - indexes:
+        data: ':label use_push1_00'
+        gas:  !!int -1
+        value: !!int -1
+      network:
+        - 'London'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          balance: 8878590
+        0000000000000000000000000000000000000200:
+          balance: 0
+          storage:         # Gas used: 99998 - 77893 = 22105 (PUSH1 00 = 3 gas, SSTORE = 22100, GAS = 2)
+            0x00: 0x01869e # Initial gas: 99998 (2 gas used by GAS)
+            0x01: 0x013045 # 77893
+
+    - indexes:
+        data: ':label use_push1_00'
+        gas:  !!int -1
+        value: !!int -1
+      network:
+        - 'London+3855'
+      result:
+        0000000000000000000000000000000000000200:
+          balance: 0
+          storage:         # Gas used 99998 - 77893 = 22105 (PUSH1 00 = 3 gas, SSTORE = 22100, GAS = 2)
+            0x00: 0x01869e # Initial gas: 99998 (2 gas used by GAS)
+            0x01: 0x013045 # 77893
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          balance: 8878590 
