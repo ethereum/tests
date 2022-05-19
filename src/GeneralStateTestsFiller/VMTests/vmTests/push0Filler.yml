@@ -98,13 +98,20 @@ push0:
       code: ':raw 0x60025f556000600155'
       nonce: '0'
       storage: {0: 0x0a, 1: 0x0a}
- 
+
+    0000000000000000000000000000000000000500:
+      balance: 0
+      code: ':yul { sstore(0, staticcall(100000, 0x0000000000000000000000000000000000000400, 0, 0, 0, 0)) sstore(1, 1) }'
+      nonce: 0
+      storage: {}
+
   transaction:
     data:
       - ':label single_push0 :raw 0x0000000000000000000000000000000000000100'
       - ':label 1024_push0   :raw 0x0000000000000000000000000000000000000200'
       - ':label 1025_push0   :raw 0x0000000000000000000000000000000000000300'
-      - ':label push0_upd_st :raw 0x0000000000000000000000000000000000000400'
+      - ':label push0_upd_storage :raw 0x0000000000000000000000000000000000000400'
+      - ':label push0_upd_storage_sc :raw 0x0000000000000000000000000000000000000500'
     gasLimit:
       - 700000
     gasPrice: 10
@@ -191,7 +198,7 @@ push0:
           storage:
             0x01: 0x01
     - indexes:
-        data: ':label push0_upd_st'
+        data: ':label push0_upd_storage'
         gas:  !!int -1
         value: !!int -1
       network:
@@ -205,7 +212,7 @@ push0:
           storage:
             0x01: 0x01
     - indexes:
-        data: ':label push0_upd_st'
+        data: ':label push0_upd_storage'
         gas:  !!int -1
         value: !!int -1
       network:
@@ -218,5 +225,43 @@ push0:
         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           storage:
             0x00: 0x01
+            0x01: 0x01
+    - indexes:
+        data: ':label push0_upd_storage_sc'
+        gas:  !!int -1
+        value: !!int -1
+      network:
+        - 'London'
+      result:
+        0000000000000000000000000000000000000400:
+          storage:
+            0x00: 0x0a # storage not updated
+            0x01: 0x0a # storage not updated 
+        0000000000000000000000000000000000000500:
+          storage:
+            0x00: 0x00 # 0x00..0400 failed (attempting sstore)
+            0x01: 0x00
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            0x00: 0x00
+            0x01: 0x01
+    - indexes:
+        data: ':label push0_upd_storage_sc'
+        gas:  !!int -1
+        value: !!int -1
+      network:
+        - 'London+3855'
+      result:
+        0000000000000000000000000000000000000400:
+          storage:
+            0x00: 0x0a  # storage not updated
+            0x01: 0x0a  # storage not updated
+        0000000000000000000000000000000000000500:
+          storage:
+            0x00: 0x00 # 0x00..0400 failed (attempting sstore)
+            0x01: 0x00
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            0x00: 0x00
             0x01: 0x01
 
