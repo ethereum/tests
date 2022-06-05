@@ -27,10 +27,12 @@ Test Parameters
 
 Input Files
 -----------
-- **-\\-input.alloc** *full path to pretest allocation file with the state*
-  Note that in the case of transaction tests this file does not appear
-- **-\\-input.txs** *full path to transaction file*
 - **-\\-input.env** *full path to environment file*
+- **-\\-input.alloc** *full path to pretest allocation file with the state*
+- **-\\-input.txs** *full path to transaction file*
+
+State transition and blockchain tests have all three input file parameters.
+Transaction tests, which only test transaction parsing, only have the **-\\-input.txs** parameter.
 
 .. note::
 
@@ -42,7 +44,8 @@ Output Files
 - **-\\-output.basedir** *directory to write the output files*
 - **-\\-output.result** *file name for test output*
 - **-\\-output.alloc**  *file name for post test allocation file*
-- **-\\-output.body** *file name for a list of rlp transactions* (a binary file)
+
+
 
 .. note::
 
@@ -52,7 +55,7 @@ Output Files
 
 File Structures
 ===============
-Most of the transition tool files are in JSON format. Any values that are not
+Most of the t8ntool files are in JSON format. Any values that are not
 provided are assumed to be zero or empty, as applicable.
 
 
@@ -60,7 +63,7 @@ Transaction File
 ----------------
 This file is a single line `"0x<rlp encoded transaction><rlp encoded transaction>..."`.
 If there are no transactions, the line is `"0xc0"`.
-This is an input to the tool, which `retesteth` calls `txs.rlp`. 
+This is an input to the tool, which `retesteth` calls `txs.rlp` for state transition and blockchain tests and `tx.rlp` for transaction tests.
 
 
 Environment File
@@ -232,6 +235,6 @@ Output
 When the output goes to `stdout`, it can have any combination of these fields
 (whichever ones don't have a specified output file):
 
-* `result`, the poststage
+* `result`, the post state (the blockchain state after processing)
 * `body`, the transactions and their results 
 
