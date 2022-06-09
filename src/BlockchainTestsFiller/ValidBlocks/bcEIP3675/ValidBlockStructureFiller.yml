@@ -1,0 +1,102 @@
+# Send two EIP1559 Txs with
+
+ValidBlockStructure:
+  genesisBlockHeader:
+    bloom: '0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000'
+    coinbase: '0xBA5E000000000000000000000000000000000000'
+    difficulty: '0'
+    extraData: '0X00'
+    gasUsed: '0'
+    mixHash: '0x0000000000000000000000000000000000000000000000000000000000000000'
+    nonce: '0x0000000000000000'
+    number: '0'
+    parentHash: '0x0000000000000000000000000000000000000000000000000000000000000000'
+    receiptTrie: '0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421'
+    stateRoot: '0xf99eb1626cfa6db435c0836235942d7ccaa935f1ae247d3f1c21e495685f903a'
+    timestamp: '0x03b6'
+    transactionsTrie: '0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421'
+    uncleHash: '0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347'
+    gasLimit: 1073741824
+    baseFeePerGas: 1000
+  sealEngine: NoProof
+
+  pre:
+
+    0xd02d72E067e77158444ef2020Ff2d325f929B363:
+      balance: 0x10000000000000000
+      nonce: 1
+      code: ''
+      storage: {}
+
+    0xcccccccccccccccccccccccccccccccccccccccc:
+      balance: 0x10000000000
+      nonce: 1
+      code: |
+         :yul {
+            // Inside block n we can see the balance at the end of block n-1,
+            // because the end of block processing hasn't happened yet
+            let miner := 0xBA5E000000000000000000000000000000000000
+            let blockReward := 2000000000000000000  // Block reward, 2 ETH (in wei)
+            let lastBalance := 0xFFFF   // Storage for last balance
+            let minerBalance := balance(miner)
+
+            if eq(number(), 1) { blockReward := 0 }
+
+
+            sstore(sub(number(),1),   // The miner gets paid after the block,
+                                      // so in block n we see the result of block n-1
+               sub(sub(minerBalance, sload(lastBalance)), blockReward)
+            )
+
+            // Update the balance. If we got any data, zero it so we won't have
+            // to keep track for the expect: section
+            if eq(calldatasize(), 0) { sstore(lastBalance, minerBalance) }
+            if gt(calldatasize(), 0) { sstore(lastBalance, 0) }
+         }
+      storage: {}
+
+  blocks:
+
+  - blocknumber: 1
+    transactions:
+    - data: ''
+      accessList: []
+      gasLimit: 50000
+      maxPriorityFeePerGas: 100
+      maxFeePerGas: 1000
+      nonce: auto
+      secretKey: 41f6e321b31e72173f8ff2e292359e1862f24fba42fe6f97efaf641980eff298
+      to: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+      value: 0x01
+  - blocknumber: 2
+    transactions:
+    - data: ''
+      accessList: []
+      gasLimit: 50000
+      maxPriorityFeePerGas: 100
+      maxFeePerGas: 1000
+      nonce: auto
+      secretKey: 41f6e321b31e72173f8ff2e292359e1862f24fba42fe6f97efaf641980eff298
+      to: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+      value: 0x02
+  - blocknumber: 3
+    transactions:
+    - data: ''
+      accessList: []
+      gasLimit: 50000
+      maxPriorityFeePerGas: 100
+      maxFeePerGas: 1000
+      nonce: auto
+      secretKey: 41f6e321b31e72173f8ff2e292359e1862f24fba42fe6f97efaf641980eff298
+      to: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+      value: 0x03
+
+  expect:
+  - network:
+    - "Merge"
+    result:
+      0xcccccccccccccccccccccccccccccccccccccccc:
+        storage:
+          0x00: 0
+          0x01: 0
+          0x02: 0

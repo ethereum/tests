@@ -1,0 +1,83 @@
+# Test if invalid block structure parameters throw errors.
+
+InvalidBlockStructure:
+  genesisBlockHeader:
+    bloom: '0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000'
+    coinbase: '0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba'
+    difficulty: '0'
+    extraData: '0X00'
+    gasUsed: '0'
+    mixHash: '0x0000000000000000000000000000000000000000000000000000000000000000'
+    nonce: '0x0000000000000000'
+    number: '0'
+    parentHash: '0x0000000000000000000000000000000000000000000000000000000000000000'
+    receiptTrie: '0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421'
+    stateRoot: '0xf99eb1626cfa6db435c0836235942d7ccaa935f1ae247d3f1c21e495685f903a'
+    timestamp: '0x03b6'
+    transactionsTrie: '0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421'
+    uncleHash: '0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347'
+    gasLimit: 1073741824
+    baseFeePerGas: 1000
+  sealEngine: NoProof
+
+  pre:
+    0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: 0x10000000000
+      code: ''
+      nonce: 1
+      storage: {}
+
+  blocks:
+
+  - blocknumber: 1
+    transactions: []
+
+  - blocknumber: 2
+    blockHeader:
+      difficulty: "0"
+    transactions: []
+
+  - blocknumber: 3
+    blockHeader:
+      difficulty: "1"
+    expectException:
+      '>=Frontier': InvalidDifficultyRLP
+    transactions: []
+
+  - blocknumber: 3
+    blockHeader:
+      difficulty: "131072"
+    expectException:
+      '>=Frontier': 1559verifyParent
+    transactions: []
+
+  - blocknumber: 3
+    blockHeader:
+      uncleHash: "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49346"
+    expectException:
+      '>=Frontier': InvalidDifficultyRLP
+    transactions: []
+    uncleHeaders: []
+
+  - blocknumber: 3
+    blockHeader:
+      uncleHash: "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49348"
+    expectException:
+      '>=Frontier': InvalidDifficultyRLP
+    transactions: []
+    uncleHeaders: []
+
+  - blocknumber: 3
+    blockHeader:
+      difficulty: "0"
+      # stateRoot: 0x73c5e0631444838bfc2d8368cc4c11a15596de9b586606ebdfe8ba03c45f1039
+    transactions: []
+    # uncleHeaders:
+    #   - populateFromBlock: 1
+    #     difficulty: "0"
+    #     coinbase: 0xBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+
+  expect:
+  - network:
+    - "Merge"
+    result: {}
