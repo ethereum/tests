@@ -1,5 +1,5 @@
 {
-    "SuicidesMixingCoinbase" : {
+    "SuicidesMixingCoinbase2" : {
         "genesisBlockHeader" : {
             "coinbase" : "0xb94f5374fce5edbc8e2a8697c15331677e6ebf0b",
             "difficulty" : "0x20000",
@@ -20,31 +20,6 @@
 	    "sealEngine" : "NoProof",
         "expect" : [
 	        {
-                "network" : ["Istanbul", "Berlin", "London"],
-                "result" : {
-    	            "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-                    	"nonce" : "2"
-            	    },
-            	    "c94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-                    	"shouldnotexist" : "1"
-            	    },
-            	    "c24f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-                    	"balance" : "1010"
-            	    },
-		            "0xb94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-			            "nonce" : "0",
-			            "code" : "0x73c94f5374fce5edbc8e2a8697c15331677e6ebf0bff00",
-			            "storage" : {}
-		            },
-		            "b24f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-                        "balance" : "2000000000000000000",
-			            "nonce" : "0",
-			            "code" : "",
-			            "storage" : {}
-		            }
-                }
-            },
-	        {
                 "network" : [">=Merge"],
                 "result" : {
     	            "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
@@ -61,6 +36,7 @@
 			            "code" : "0x73c94f5374fce5edbc8e2a8697c15331677e6ebf0bff00",
 			            "storage" : {}
 		            },
+                    "//comment" : "no reward with suicide even if priority fee is set?",
 		            "b24f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
                         "shouldnotexist" : "1"
 		            }
@@ -108,28 +84,18 @@
             },
             {
                 "blockHeader" : {
-                    "Istanbul" : {
-                        "coinbase" : "0xb24f5374fce5edbc8e2a8697c15331677e6ebf0b",
-                        "stateRoot" : "0xac9493741ce4ef1867a901bc5d121b6fa7ef1258f7cd509ccd14129904483c23"
-                    },
-                    "Berlin" : {
-                        "coinbase" : "0xb24f5374fce5edbc8e2a8697c15331677e6ebf0b",
-                        "stateRoot" : "0x6438b33033d165c601bf8af48f26efdc1152ba14ef4b5f1fba245ddad3c6cd4d"
-                    },
-                    "London" : {
-                        "coinbase" : "0xb24f5374fce5edbc8e2a8697c15331677e6ebf0b",
-                        "stateRoot" : "0x53a5f1f4ae11e46b728bdc5d1fed6fbb674f824551bb5027e230b7d236f18c47"
-                    },
                     ">=Merge" : {
                         "coinbase" : "0xb24f5374fce5edbc8e2a8697c15331677e6ebf0b",
-                        "stateRoot" : "0x3a9ca16d23fdd664e7a93c018090724252bd14378a011b3cd9557ed0362ab0e5"
+                        "stateRoot" : "0x602b01d9587fd41105414b9cb65d20918836a971e664fd8184b1cc99fce6b618"
                     }
                 },
                 "transactions" : [
                      {
                         "data" : "",
+                        "accessList" : [],
                         "gasLimit" : "60000",
-                        "gasPrice" : "1000",
+                        "maxFeePerGas" : "1000",
+                        "maxPriorityFeePerGas" : "1",
                         "nonce" : "1",
                         "secretKey" : "45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8",
                         "to" : "b24f5374fce5edbc8e2a8697c15331677e6ebf0b",
