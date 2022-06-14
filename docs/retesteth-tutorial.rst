@@ -114,6 +114,7 @@ can run tests against. However, unless you are specifically developing
 tests what you want is to test your client. There are several ways to do
 this:
 
+-  Replace the **geth** inside the docker.
 -  Keep the client on the outside and keep the configuration files
    intact
 -  Put your client, and any prerequisites, inside the docker and change
@@ -152,6 +153,15 @@ configured client. Typically this directory has these files:
 `Click here for additional documentation. Warning: 
 This documentation may not be up to date
 <https://github.com/ethereum/retesteth/wiki/Add-client-configuration-to-Retesteth>`__
+
+
+Replace geth Inside the Docker
+------------------------------
+If you want to test a modified version of **geth**, you can just build it inside the docker container.
+To do so, `recreate the docker container <#using-the-latest-version>`__.
+Before you run **sudo ./dretesteth.sh build** edit `the line that specifies the geth repository <https://github.com/ethereum/retesteth/blob/master/Dockerfile#L41>`__.
+Use whatever repository you use to store your modified version of **geth**.
+
 
 Client Outside the Docker, Keep Configuration Files Intact
 ----------------------------------------------------------
@@ -301,8 +311,8 @@ updates. If you want the latest features, you need to build an image from the
       chmod +x dretesteth.sh 
       wget https://raw.githubusercontent.com/ethereum/retesteth/develop/Dockerfile
 
-#. Modify the **RUN git clone** line in the **Dockerfile** to change the **-b**
-   parameter from **master** to **develop**.
+#. Modify the **RUN git clone** line in the **Dockerfile** for repo "retesteth" to change branch **-b** from **master** 
+   to **develop**. Do not modify repo branches for "winsvega/solidity" [LLLC opcode support] and "go-ethereum".
 
 #. Build the docker image yourself:
 
