@@ -92,8 +92,10 @@ push0:
         5f"
       nonce: '0'
       storage: {}
+
     0000000000000000000000000000000000000400:
       balance: 0
+      # Update already existing storage value
       # push1(02) push0 sstore push1(00) push1(01) sstore
       code: ':raw 0x60025f556000600155'
       nonce: '0'
@@ -101,7 +103,14 @@ push0:
 
     0000000000000000000000000000000000000500:
       balance: 0
-      code: ':yul { sstore(0, staticcall(100000, 0x0000000000000000000000000000000000000400, 0, 0, 0, 0)) sstore(1, 1) }'
+      code: ':yul { sstore(0, staticcall(100000, 0x0000000000000000000000000000000000000600, 0, 0, 0, 0)) sstore(1, 1) returndatacopy(0x1f, 0x0, 0x1) sstore(0x2, mload(0x00)) }'
+      nonce: 0
+      storage: {}
+
+    0000000000000000000000000000000000000600:
+      balance: 0
+      # push1(0xff) push0 mstore8 push1(0x01) push1(0x00) return
+      code: ':raw 0x60ff5f5360016000f3'
       nonce: 0
       storage: {}
 
@@ -252,16 +261,15 @@ push0:
       network:
         - 'London+3855'
       result:
-        0000000000000000000000000000000000000400:
-          storage:
-            0x00: 0x0a  # storage not updated
-            0x01: 0x0a  # storage not updated
         0000000000000000000000000000000000000500:
           storage:
-            0x00: 0x00 # 0x00..0400 failed (attempting sstore)
-            0x01: 0x00
+            0x00: 0x01
+            0x01: 0x01
+            0x02: 0xff # Returned by the contract called statically
+        0000000000000000000000000000000000000600:
+          storage: {}
         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           storage:
-            0x00: 0x00
+            0x00: 0x01
             0x01: 0x01
 
