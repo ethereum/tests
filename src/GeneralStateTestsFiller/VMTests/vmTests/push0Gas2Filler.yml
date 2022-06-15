@@ -1,4 +1,4 @@
-# EIP-3855: PUSH0 instruction - test for gas price
+# EIP-3855: PUSH0 instruction - test for gas cost
 push0Gas2:
   env:
     currentCoinbase: 2adc25665018aa1fe0e6bc666dac8fc2697ff9ba
@@ -24,15 +24,19 @@ push0Gas2:
 
     0000000000000000000000000000000000000100:
       balance: 0
-      # gas push0 sstore gas push1(0x1) sstore
-      code: ':raw 0x5a5f555a600155'
+      # Calculates the difference between initial gas and gas after using
+      # PUSH0, stores the result in storage key 0x00
+      # gas push0 gas swap1 swap2 sub swap1 sstore
+      code: ':raw 0x5a5f5a9091039055'
       nonce: '0'
       storage: {}
 
     0000000000000000000000000000000000000200:
       balance: 0
-      # gas push1(0) sstore gas push1(0x1) sstore
-      code: ':raw 0x5a6000555a600155'
+      # Calculates the difference between initial gas and gas after using
+      # PUSH1(0), stores the result in storage key 0x00
+      # gas push1(0) gas swap1 swap2 sub swap1 sstore
+      code: ':raw 0x5a60005a9091039055'
       nonce: '0'
       storage: {}
 
@@ -70,12 +74,11 @@ push0Gas2:
         - 'London+3855'
       result:
         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
-          balance: 8878600
+          balance: 9099510
         0000000000000000000000000000000000000100:
           balance: 0
-          storage:         # Gas used:  99998 - 77894 = 22104 (PUSH0 = 2, SSTORE = 22100, GAS = 2)
-            0x00: 0x01869e # Initial gas: 99998
-            0x01: 0x013046 # 77894
+          storage:  # GAS PUSH0
+            0x00: 4 #  2 + 2
     - indexes:
         data: ':label use_push1_00'
         gas:  !!int -1
@@ -84,12 +87,11 @@ push0Gas2:
         - 'London'
       result:
         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
-          balance: 8878590
+          balance: 9099500
         0000000000000000000000000000000000000200:
           balance: 0
-          storage:         # Gas used: 99998 - 77893 = 22105 (PUSH1 00 = 3 gas, SSTORE = 22100, GAS = 2)
-            0x00: 0x01869e # Initial gas: 99998 (2 gas used by GAS)
-            0x01: 0x013045 # 77893
+          storage:  # GAS   PUSH1(0)
+            0x00: 5 # 2   +   3
 
     - indexes:
         data: ':label use_push1_00'
@@ -100,8 +102,7 @@ push0Gas2:
       result:
         0000000000000000000000000000000000000200:
           balance: 0
-          storage:         # Gas used 99998 - 77893 = 22105 (PUSH1 00 = 3 gas, SSTORE = 22100, GAS = 2)
-            0x00: 0x01869e # Initial gas: 99998 (2 gas used by GAS)
-            0x01: 0x013045 # 77893
+          storage:  # GAS   PUSH1(0)
+            0x00: 5 # 2   +   3
         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
-          balance: 8878590 
+          balance: 9099500
