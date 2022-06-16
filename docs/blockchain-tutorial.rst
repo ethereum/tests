@@ -251,7 +251,7 @@ Then, typically starting at block 5, it is the following fork.
 You can see the list of `transition networks here <https://github.com/ethereum/retesteth/blob/develop/retesteth/configs/clientconfigs/t8ntool.cpp#L24-L33>`_ or in **.../tests/config/t8ntool/config**.
 
 In the case of the ArrowGlacier to Merge transition it happens at a specific difficulty, 0x0C0000.
-At the default block difficulty (0x020000) this happens on block 6.
+At the block difficulty most tests use, 0x020000, this happens on block 6.
 
 
 
