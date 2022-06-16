@@ -11,6 +11,14 @@ Command Line Parameters
 The command line parameters are used to specify the parameters, input files, and
 output files.
 
+In the **t8ntool** client provided with the system, which uses **geth**, the commands being called are:
+
+- **evm t8n** For state transition and blockchain tests.
+- **evm t9n** For transaction tests.
+
+However, you can change that by editing the **tests/config/t8ntool/start.sh** file.
+
+
 Test Parameters
 ---------------
 - **-\\-state.fork** *fork name*
@@ -19,9 +27,12 @@ Test Parameters
 
 Input Files
 -----------
-- **-\\-input.alloc** *full path to pretest allocation file*
-- **-\\-input.txs** *full path to transaction file*
 - **-\\-input.env** *full path to environment file*
+- **-\\-input.alloc** *full path to pretest allocation file with the state*
+- **-\\-input.txs** *full path to transaction file*
+
+State transition and blockchain tests have all three input file parameters.
+Transaction tests, which only test transaction parsing, only have the **-\\-input.txs** parameter.
 
 .. note::
 
@@ -33,7 +44,8 @@ Output Files
 - **-\\-output.basedir** *directory to write the output files*
 - **-\\-output.result** *file name for test output*
 - **-\\-output.alloc**  *file name for post test allocation file*
-- **-\\-output.body** *file name for a list of rlp transactions* (a binary file)
+
+
 
 .. note::
 
@@ -43,98 +55,15 @@ Output Files
 
 File Structures
 ===============
-All of the transition tool files are in JSON format. Any values that are not
+Most of the t8ntool files are in JSON format. Any values that are not
 provided are assumed to be zero or empty, as applicable.
 
 
 Transaction File
 ----------------
-The transaction file is a list that contains maps, one for each transaction. 
-This is an input to the tool, which `retesteth` calls `txs.json`. 
-
-Every transaction can include these fields:
-
-* `gas`
-* `gasPrice`
-* `input`, the transaction data
-* `nonce`
-* `value`, the value in WEI sent by the transaction
-* `to`, the destination. If it is not specified the transaction creates a contract
-
-In addition, there are a few special fields that may or may not appear, as explained
-below.
-
-Transaction Signatures
-^^^^^^^^^^^^^^^^^^^^^^
-Transactions can be previously signed by the caller that runs the tool. In that case
-the transaction includes the `v`, `r`, and `s` values of the signature.
-
-Alternatively, the transaction can include `secretKey`, in which the tool is responsible
-for the signature.
-
-
-EIP 2930
-^^^^^^^^
-`This EIP <https://eips.ethereum.org/EIPS/eip-2930>`_ defines a new transaction type
-which includes a list of addresses and storage locations. If a transaction uses
-EIP 2930 it would have two additional fields:
-
-* `type` equal to one. If the transaction is normal it either has a value of zero 
-  or does not appear at all. 
-* `accessList`, an EIP 2930 access list.
-
-
-Example 
-^^^^^^^ 
-The first transaction in this list is a normal transaction, already signed. 
-The second is an EIP 2930 transaction which needs to be signed.
-
-::
-
-   [
-      {
-         "gas": "0x5208",
-         "gasPrice": "0x2",
-         "hash": "0x0557bacce3375c98d806609b8d5043072f0b6a8bae45ae5a67a00d3a1a18d673",
-         "input": "0x",
-         "nonce": "0x0",
-         "r": "0x9500e8ba27d3c33ca7764e107410f44cbd8c19794bde214d694683a7aa998cdb",
-         "s": "0x7235ae07e4bd6e0206d102b1f8979d6adab280466b6a82d2208ee08951f1f600",
-         "to": "0x8a8eafb1cf62bfbeb1741769dae1a9dd47996192",
-         "v": "0x1b",
-         "value": "0x1"
-      },
-      {
-         "gas": "0x4ef00",
-         "gasPrice": "0x1",
-         "chainId": "0x1",
-         "input": "0x",
-         "nonce": "0x0",
-         "to": "0x000000000000000000000000000000000000aaaa",
-         "value": "0x1",
-         "type" : "0x1",
-         "accessList": [
-            {
-               "address": "0x0000000000000000000000000000000000000aaaa",
-               "storageKeys": [
-                  "0x0000000000000000000000000000000000000000000000000000000000000000",
-                  "0x0000000000000000000000000000000000000000000000000000000000000012"
-               ]
-            },
-            {
-               "address": "0x0000000000000000000000000000000000000aaab",
-               "storageKeys": [
-                  "0x00000000000000000000000000000000000000000000000000000000000060A7",
-                  "0x0000000000000000000000000000000000000000000000000000000000000012"
-               ]
-            }
-         ]
-         "v": "0x0",
-         "r": "0x0",
-         "s": "0x0",
-         "secretKey": "0x45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8"
-      }
-   ]
+This file is a single line `"0x<rlp encoded transaction><rlp encoded transaction>..."`.
+If there are no transactions, the line is `"0xc0"`.
+This is an input to the tool, which `retesteth` calls `txs.rlp` for state transition and blockchain tests and `tx.rlp` for transaction tests.
 
 
 Environment File
@@ -306,6 +235,6 @@ Output
 When the output goes to `stdout`, it can have any combination of these fields
 (whichever ones don't have a specified output file):
 
-* `result`, the poststage
+* `result`, the post state (the blockchain state after processing)
 * `body`, the transactions and their results 
 
