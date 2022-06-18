@@ -1,7 +1,7 @@
 # Check the effects of maxPriorityFeePerGass on the miner's (coinbase) balance
+# London is treated as a separate case because it has a block reward
 
-
-tips:
+tipsLondon:
   genesisBlockHeader:
     bloom: '0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000'
     coinbase:  0xBA5E000000000000000000000000000000000000
@@ -35,13 +35,7 @@ tips:
       code: ''
       storage: {}
 
-    0xBA5E000000000000000000000000000000000000:
-      balance: 0
-      nonce: 1
-      code: ''
-      storage: {}
-
-    # Store the change in coinbase balance
+    # Store the change in coinbase balance (minus the block reward, 2 ETH)
     0xcccccccccccccccccccccccccccccccccccccccc:
       balance: 0x10000000000
       nonce: 1
@@ -50,7 +44,7 @@ tips:
             // Inside block n we can see the balance at the end of block n-1,
             // because the end of block processing hasn't happened yet            
             let miner := 0xBA5E000000000000000000000000000000000000
-            let blockReward := 0  // No block reward after the merge
+            let blockReward := 2000000000000000000  // Block reward, 2 ETH (in wei)
             let lastBalance := 0xFFFF   // Storage for last balance
             let minerBalance := balance(miner)
           
@@ -581,7 +575,7 @@ tips:
 
   expect:
   - network:
-    - ">=Merge"
+    - London
     result:
       # Change in miner balance, minus the block reward
       0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC:
