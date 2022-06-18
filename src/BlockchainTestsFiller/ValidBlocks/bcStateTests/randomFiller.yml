@@ -38,11 +38,12 @@ random:
       balance: F000000000000000
       code: |
        :yul {
-           sstore(0, difficulty())
+           sstore(number(), difficulty())
        }        
       nonce: 1
       storage:
-        0: 0x60A7
+        1: 0x60A7
+        2: 0x60A7
 
 
 
@@ -50,7 +51,7 @@ random:
   blocks:
   - blockHeader:
       mixHash: 0x0102030405060708091011121314151617181920212223242526272829303132
-      stateRoot: 0xf9860eeb547c472864dbb216ba3cf0d7f3a397be4971da913f86ad93e5d30588
+      stateRoot: 0xe5e15740d466bf964c7fdf04e2d35dc8ff8d8c53af4a7098fcf0dc5e1802537f
     transactions:
     - data: 0x
       gasPrice: 20
@@ -59,6 +60,19 @@ random:
       to: 0xcccccccccccccccccccccccccccccccccccccccc
       secretKey: "45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8"
       value: 0
+  - blockHeader:
+      mixHash: 0x0000000405060708091011121314151617181920212223242526272829303132
+      stateRoot: 0x5732838e812728eb5605222bd7ec897ccc6b6ee55382b55d3590135b58c6edc3
+    transactions:
+    - data: 0x
+      gasPrice: 20
+      nonce: auto
+      gasLimit: F00000000000
+      to: 0xcccccccccccccccccccccccccccccccccccccccc
+      secretKey: "45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8"
+      value: 0
+  - blockHeader:
+      mixHash: 0x0102030405060708091011121314151617181920212223242526272829303132
 
 
 
@@ -70,5 +84,6 @@ random:
     result:
       0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC:
         storage:
-          0: 0x0102030405060708091011121314151617181920212223242526272829303132
+          1: 0x0102030405060708091011121314151617181920212223242526272829303132
+          2: 0x0405060708091011121314151617181920212223242526272829303132
 
