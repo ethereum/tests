@@ -19,17 +19,28 @@
         },
         "sealEngine" : "NoProof",
         "expect" : [
-	    {
-		    "network" : [">=Istanbul"],
-		    "result" : {
-			    "0x095e7baea6a6c7c4c2dfeb977efac326af552d87" : {
-                    "balance" : "30"
-			    },
-			    "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-                    "nonce" : "3"
-			    }
-		    }
-	    }
+	        {
+		        "network" : ["Istanbul", "Berlin", "London"],
+		        "result" : {
+			        "0x095e7baea6a6c7c4c2dfeb977efac326af552d87" : {
+    				    "balance" : "30"
+			        },
+			        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+    				    "nonce" : "3"
+			        }
+		       }
+	        },
+	        {
+		        "network" : [">=Merge"],
+		        "result" : {
+			        "0x095e7baea6a6c7c4c2dfeb977efac326af552d87" : {
+    				    "balance" : "20"
+			        },
+			        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+    				    "nonce" : "2"
+			        }
+		       }
+	        }
         ],
         "pre" : {
             "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
@@ -85,6 +96,10 @@
     		            "stateRoot" : "0x23665713b708bba09e47439a4c8e9d874072a70ded99cdd3a90cdf2d1617f14c"
                     }
 	            },
+                "expectException" : {
+                    "//comment" : "Block with uncles treated as eip1559 block (not PoS format)",
+                    ">=Merge" : "3675PreMerge1559BlockRejected"
+                },
                 "transactions" : [
                     {
                         "data" : "",

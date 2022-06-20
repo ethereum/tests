@@ -19,20 +19,34 @@
         },
         "sealEngine" : "NoProof",
         "expect" : [
-	    {
-		    "network" : [">=Istanbul"],
-		    "result" : {
-			    "0x095e7baea6a6c7c4c2dfeb977efac326af552d87" : {
-                    "balance" : "40"
-			    },
-			    "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-                    "nonce" : "4"
-			    },
-			    "bcde5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-                    "balance" : "1500000000000000000"
-			    }
-		    }
-	    }
+	        {
+		        "network" : ["Istanbul", "Berlin", "London"],
+		        "result" : {
+			        "0x095e7baea6a6c7c4c2dfeb977efac326af552d87" : {
+                        "balance" : "40"
+			        },
+			        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                        "nonce" : "4"
+			        },
+			        "bcde5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                        "balance" : "1500000000000000000"
+			        }
+		        }
+	        },
+	        {
+		        "network" : [">=Merge"],
+		        "result" : {
+			        "0x095e7baea6a6c7c4c2dfeb977efac326af552d87" : {
+                        "balance" : "30"
+			        },
+			        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                        "nonce" : "3"
+			        },
+			        "bcde5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                        "shouldnotexist" : "1"
+			        }
+		        }
+	        }
         ],
         "pre" : {
             "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
@@ -99,6 +113,10 @@
                     "London" : {
                         "stateRoot" : "0xaadec2be1d2e1351c18d6eadf63298c48e2c86ae22b011cfeab45760693403b3"
                     }
+                },
+                "expectException" : {
+                    "//comment" : "Block with uncles treated as eip1559 block (not PoS format)",
+                    ">=Merge" : "3675PreMerge1559BlockRejected"
                 },
                 "transactions" : [
                     {
