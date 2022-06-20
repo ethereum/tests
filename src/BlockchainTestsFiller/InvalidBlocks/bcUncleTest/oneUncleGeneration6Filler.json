@@ -1,5 +1,5 @@
 {
-    "oneUncle" : {
+    "oneUncleGeneration6" : {
         "genesisBlockHeader" : {
             "bloom" : "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
             "coinbase" : "0x8888f1f195afa192cfee860698584c030f4c9db1",
@@ -17,16 +17,19 @@
             "transactionsTrie" : "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
             "uncleHash" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347"
         },
-        "sealEngine" : "NoProof",
-        "expect" : [
+	"sealEngine" : "NoProof",
+	"expect" : [
 	        {
-		        "network" : ["Istanbul", "Berlin", "London"],
+		        "network" : [">=Merge"],
 		        "result" : {
 			        "0x095e7baea6a6c7c4c2dfeb977efac326af552d87" : {
-                        "balance" : "30"
+        				"balance" : "70"
 			        },
 			        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-                        "nonce" : "3"
+	        			"nonce" : "7"
+			        },
+			        "bcde5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+	        			"shouldnotexist" : "1"
 			        }
 		        }
 	        }
@@ -71,17 +74,6 @@
                 ]
             },
             {
-                "blockHeader" : {
-                    "Istanbul" : {
-                        "stateRoot" : "0x81b1df384897709e96a4b6319fda4e8f7682a1c9d753b1fb772ed4fb19f1e443"
-                    },
-                    "Berlin" : {
-                        "stateRoot" : "0x81b1df384897709e96a4b6319fda4e8f7682a1c9d753b1fb772ed4fb19f1e443"
-                    },
-                    "London" : {
-                        "stateRoot" : "0x63e216fe8a321a278975cd9bb2947d78c5559cb4fd5844255d9f4ad35b352c37"
-                    }
-                },
                 "transactions" : [
                     {
                         "data" : "",
@@ -94,8 +86,88 @@
                     }
                 ],
                 "uncleHeaders" : [
+                ]
+            },
+            {
+                "transactions" : [
                     {
-                        "populateFromBlock" : "1"
+                        "data" : "",
+                        "gasLimit" : "314159",
+                        "gasPrice" : "1000",
+                        "nonce" : "3",
+                        "secretKey" : "45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8",
+                        "to" : "0x095e7baea6a6c7c4c2dfeb977efac326af552d87",
+                        "value" : "10"
+                    }
+                ],
+                "uncleHeaders" : [
+                ]
+            },
+            {
+                "transactions" : [
+                    {
+                        "data" : "",
+                        "gasLimit" : "314159",
+                        "gasPrice" : "1000",
+                        "nonce" : "4",
+                        "secretKey" : "45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8",
+                        "to" : "0x095e7baea6a6c7c4c2dfeb977efac326af552d87",
+                        "value" : "10"
+                    }
+                ],
+                "uncleHeaders" : [
+                ]
+            },
+            {
+                "transactions" : [
+                    {
+                        "data" : "",
+                        "gasLimit" : "314159",
+                        "gasPrice" : "1000",
+                        "nonce" : "5",
+                        "secretKey" : "45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8",
+                        "to" : "0x095e7baea6a6c7c4c2dfeb977efac326af552d87",
+                        "value" : "10"
+                    }
+                ],
+                "uncleHeaders" : [
+                ]
+            },
+            {
+                "transactions" : [
+                    {
+                        "data" : "",
+                        "gasLimit" : "314159",
+                        "gasPrice" : "1000",
+                        "nonce" : "6",
+                        "secretKey" : "45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8",
+                        "to" : "0x095e7baea6a6c7c4c2dfeb977efac326af552d87",
+                        "value" : "10"
+                    }
+                ],
+                "uncleHeaders" : [
+                ]
+            },
+            {
+                "expectException" : {
+                    "//comment" : "Block with uncles treated as eip1559 block (not PoS format)",
+                    ">=Merge" : "3675PreMerge1559BlockRejected"
+                },
+                "transactions" : [
+                    {
+                        "data" : "",
+                        "gasLimit" : "314159",
+                        "gasPrice" : "1000",
+                        "nonce" : "7",
+                        "secretKey" : "45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8",
+                        "to" : "0x095e7baea6a6c7c4c2dfeb977efac326af552d87",
+                        "value" : "10"
+                    }
+                ],
+                "uncleHeaders" : [
+                    {
+                        "populateFromBlock" : "1",
+                        "coinbase" : "bcde5374fce5edbc8e2a8697c15331677e6ebf0b"
                     }
                 ]
             }
