@@ -19,23 +19,37 @@
         },
 	"sealEngine" : "NoProof",
 	"expect" : [
-	    {
-		    "network" : [">=Istanbul"],
-		    "result" : {
-			    "0x095e7baea6a6c7c4c2dfeb977efac326af552d87" : {
-    				"balance" : "30"
-			    },
-			    "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-	    			"nonce" : "3"
-			    },
-			    "bcde5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-	    			"balance" : "1750000000000000000"
-			    },
-			    "ccde5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-	    			"balance" : "1750000000000000000"
-			    }
-		    }
-	    }
+	        {
+		        "network" : ["Istanbul", "Berlin", "London"],
+		        "result" : {
+			        "0x095e7baea6a6c7c4c2dfeb977efac326af552d87" : {
+        				"balance" : "30"
+			        },
+			        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+	        			"nonce" : "3"
+			        },
+			        "bcde5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+	        			"balance" : "1750000000000000000"
+			        },
+			        "ccde5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+	        			"balance" : "1750000000000000000"
+			        }
+		        }
+	        },
+	        {
+		        "network" : [">=Merge"],
+		        "result" : {
+                    "1000000000000000000000000000000000000001" : {
+                        "shouldnotexist" : "1"
+			        },
+			        "0x095e7baea6a6c7c4c2dfeb977efac326af552d87" : {
+                        "balance" : "20"
+			        },
+			        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                        "nonce" : "2"
+			        }
+		        }
+	        }
         ],
         "pre" : {
             "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
@@ -87,6 +101,10 @@
                     "London" : {
                         "stateRoot" : "0x32f5c46293bb6295016aec69a1c59871c8d124337e52f50a723d6f1b0da03236"
                     }
+                },
+                "expectException" : {
+                    "//comment" : "Block with uncles treated as eip1559 block (not PoS format)",
+                    ">=Merge" : "3675PreMerge1559BlockRejected"
                 },
                 "transactions" : [
                     {
