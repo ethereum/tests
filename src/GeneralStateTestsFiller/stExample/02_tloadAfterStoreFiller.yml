@@ -20,7 +20,14 @@
     000000000000000000000000000000000000000A:
       balance: 1000000000000000000
       nonce: 0
-      code: :raw 0x60586000b46000b3600155
+      code: |
+        :yul {
+          // tstore
+          verbatim_2i_0o(hex"b4", 0, 88)
+          // tload
+          let val := verbatim_1i_1o(hex"b3", 0)
+          sstore(1, val)
+        }
       storage: {}
     a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
       balance: 1000000000000000000000

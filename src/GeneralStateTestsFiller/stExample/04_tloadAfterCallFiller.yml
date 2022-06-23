@@ -2,8 +2,8 @@
 # Contracts have separate transient storage.
 # Loading a slot in a separate contract after storing returns 0: TSTORE(x, y), CALL(z, ...), TLOAD(x) returns 0
 #
-# Expect addressA to load correct value. Expect addressA call to succeed.
-# Expect addressB to load 0.
+# Expect storage slot 0 of address a to be 0. Expect storage slot 1 of address a to be 1 (successful call).
+# Expect storage slot 0 of address a to be 0.
 
 04_tloadAfterCall:
   _info:
@@ -22,12 +22,23 @@
     000000000000000000000000000000000000000A:
       balance: 1000000000000000000
       nonce: 0
-      code: :raw 0x600a6000b4600060006020600060007f000000000000000000000000000000000000000000000000000000000000000b61fffff16001556000b3600055
+      code: |
+        :yul {
+          verbatim_2i_0o(hex"b4", 0, 10)
+          let success := call(0xffff, 0x000000000000000000000000000000000000000B, 0, 0, 32, 0, 0)
+          let val := verbatim_1i_1o(hex"b3", 0)
+          sstore(0, val)
+          sstore(1, success)
+        }
       storage: {}
     000000000000000000000000000000000000000B:
       balance: 1000000000000000000
       nonce: 0
-      code: :raw 0x6000b3600055
+      code: |
+        :yul {
+          let val := verbatim_1i_1o(hex"b3", 0)
+          sstore(0, val)
+        }
       storage: {}
     a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
       balance: 1000000000000000000000

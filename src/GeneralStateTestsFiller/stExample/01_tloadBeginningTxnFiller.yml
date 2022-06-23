@@ -2,7 +2,6 @@
 # Loading an arbitrary value is 0 at beginning of transaction: TLOAD(x) is 0
 #
 # Expect storage slot 1 to have value 0.
-# Bytecode generated with etk.
 
 01_tloadBeginningTxn:
   _info:
@@ -20,7 +19,11 @@
     000000000000000000000000000000000000000A:
       balance: 1000000000000000000
       nonce: 0
-      code: :raw 0x6000b3600155
+      code: |
+        :yul {
+          let val := verbatim_1i_1o(hex"b3", 0)
+          sstore(1, val)
+        }
       storage: {}
 
     a94f5374fce5edbc8e2a8697c15331677e6ebf0b:

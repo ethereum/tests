@@ -1,14 +1,14 @@
 {
-    "02_tloadAfterStore" : {
+    "04_tloadAfterCall" : {
         "_info" : {
-            "comment" : "load after storing returns correct value",
+            "comment" : "Loading a slot after a call to another contract is 0.",
             "filling-rpc-server" : "evm version 1.10.17-unstable-4db7599c-20220620",
             "filling-tool-version" : "retesteth-0.2.2-testinfo+commit.21f6071c.Linux.g++",
-            "generatedTestHash" : "f9d52c77e7cfdba8d40afa2579d591016b07ccce837750e24ba9b637122945c8",
+            "generatedTestHash" : "286a13c0e135cc7650793a82bac2965bdd2af944c6940bbcdc184b50b7325903",
             "lllcversion" : "Version: 0.5.14-develop.2022.6.8+commit.401d5358.Linux.g++",
             "solidity" : "Version: 0.8.5+commit.a4f2e591.Linux.g++",
-            "source" : "src/GeneralStateTestsFiller/stExample/02_tloadAfterStoreFiller.yml",
-            "sourceHash" : "0eb77be219bc07e1be5d552ad724237a20dc7ea1fb3ac764f25fed015d61d660"
+            "source" : "src/GeneralStateTestsFiller/stExample/04_tloadAfterCallFiller.yml",
+            "sourceHash" : "41f1288832a90866db73b3c1a90fb5f4783e3a296612e3d71f7df89576178f34"
         },
         "env" : {
             "currentBaseFee" : "0x0a",
@@ -23,21 +23,28 @@
         "post" : {
             "London" : [
                 {
-                    "hash" : "0xe2b2388de256ec2cc82b7c93909c1e99bd4f637e5c02dc31c4fb524e6eb030fc",
+                    "hash" : "0xde1d365bb125f5af4368671808f82faba1f30d152a6e51d7d513a0cd8f3defeb",
                     "indexes" : {
                         "data" : 0,
                         "gas" : 0,
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
-                    "txbytes" : "0x02f869018080820fa0871000000000000094000000000000000000000000000000000000000a8080c001a0265982b28582156178323a10f893819c0198e299d3563732d1ab953071309fa1a00e5e9711949eb422c3d73b15f1a7cdbb1ae105002f6b6b792607803576577e91"
+                    "txbytes" : "0x02f8650180808207d083061a8094000000000000000000000000000000000000000a8080c080a0dcca8dea0417d776a28e5cfbd257941015eef912b4f2ca5dac03d7293f57fa9aa0140ab4cd143ff0b5bcb85f0a862b73139668b5c59c703b1e0cdfae0c95146e09"
                 }
             ]
         },
         "pre" : {
             "0x000000000000000000000000000000000000000a" : {
                 "balance" : "0x0de0b6b3a7640000",
-                "code" : "0x60586000b46000b38060015550",
+                "code" : "0x600a6000b460006000602060006000600b61fffff16000b380600055816001555050",
+                "nonce" : "0x00",
+                "storage" : {
+                }
+            },
+            "0x000000000000000000000000000000000000000b" : {
+                "balance" : "0x0de0b6b3a7640000",
+                "code" : "0x6000b38060005550",
                 "nonce" : "0x00",
                 "storage" : {
                 }
@@ -59,9 +66,9 @@
                 "0x"
             ],
             "gasLimit" : [
-                "0x10000000000000"
+                "0x061a80"
             ],
-            "maxFeePerGas" : "0x0fa0",
+            "maxFeePerGas" : "0x07d0",
             "maxPriorityFeePerGas" : "0x00",
             "nonce" : "0x00",
             "secretKey" : "0x45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8",
