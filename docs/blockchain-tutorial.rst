@@ -190,7 +190,7 @@ The **DIFFICULTY** opcode is no longer relevant either, so it is replaced by an 
 value (0x44) called **PREVRANDAO**.
 You can read more about this topic in `EIP-4399 <https://eips.ethereum.org/EIPS/eip-4399>`_.
 
-In block tests you simulate this value by specifying a **mixHash** as part of **blockHeader**.
+In block tests we can simulate this value by specifying a **mixHash** as part of **blockHeader**.
 However, the interaction of **mixHash** and **stateRoot** makes this process a bit complicated.
 
 First, you write the test normally, using the block header field **mixHash** for the random value 
@@ -223,7 +223,7 @@ If you use the random value also in another block, you repeat the process, once 
 Why is this procedure necessary?
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Retesteth was written back during the proof of work (PoW) days, when **mixHash** was a function of the 
-**nonce**, which itself was produced from the completed block (including the updated **stateRoot**).
+**nonce**, which itself was produced from the completed block (including the post-block **stateRoot**).
 The way that it fills the block header is to first get the block processed by the client, read the 
 resulting **stateRoot** (as well as some other fields).
 Then it reverts out of the block and sends it again, this time with the **blockHeader** fields and the 

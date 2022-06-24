@@ -5,11 +5,12 @@ bloom                         `bloom filter <https://en.wikipedia.org/wiki/Bloom
                               speed searches
 coinbase                      beneficiary of mining fee
 extraData                     data added to the block, ignored by **retesteth**
-difficulty                    difficulty of previous block
+difficulty                    difficulty of previous block (zero in PoS forks)
 gasLimit                      limit of gas usage per block
 gasUsed                       gas used by this block
-mixHash and nonce             used by the `proof of work algorithm 
+mixHash and nonce             in PoW, used by the `proof of work algorithm 
                               <https://en.wikipedia.org/wiki/Ethash>`_, ignored by **retesteth**
+mixHash                       in PoS, the "random" value for the block (coming from the beacon chain)
 number                        number of ancestor blocks
 parentHash                    hash of previous block
 receiptTrie                   The root of the `receipt trie 
