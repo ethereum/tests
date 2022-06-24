@@ -1,13 +1,13 @@
-# 08
-# Revert undoes the transient storage write from the failed call: TSTORE(x, y), CALL(self, ...), TSTORE(x, z), REVERT, TLOAD(x) returns y
+# 04
+# Contracts have separate transient storage.
+# Loading a slot in a separate contract after storing returns 0: TSTORE(x, y), CALL(z, ...), TLOAD(x) returns 0
 #
-# Expect slot 0 to have 10 from the first tstore & tload.
-# Expect slot 1 to have 10 after the return from the call.
-# Expect slot 2 to have 0 (for unsuccessful call).
+# Expect storage slot 0 of address a to be 0. Expect storage slot 1 of address a to be 1 (successful call).
+# Expect storage slot 0 of address a to be 0.
 
-08_revertUndoesTransientStore:
+09_revertUndoesAll:
   _info:
-    comment: Revert undoes the transient storage writes from a call.
+    comment: Loading a slot after a call to another contract is 0.
 
   env:
     currentCoinbase: 2adc25665018aa1fe0e6bc666dac8fc2697ff9ba
@@ -22,52 +22,33 @@
     000000000000000000000000000000000000000A:
       balance: 1000000000000000000
       nonce: 0
-      code: |
+      code:  |
         :yul {
           switch selector()
 
-          // doStoreAndRevert() {
-          case 0xe2da2eb0 {
-            doStoreAndRevert()
-          }
-
-          // doLoad()
-          case 0x43ac1c39 {
-            doLoad()
-          }
-
-          // doReenter()
-          case 0x3f371692 {
+          case 0x3f371692 { // doReenter()
             doReenter()
           }
 
-          default {
-            sstore(2, 1)
+          case 0x578290e5 { // storeTwiceAndRevert()
+            storeTwiceAndRevert()
           }
 
-          function doStoreAndRevert() {
-            verbatim_2i_0o(hex"b4", 0, 11)
-            revert(0, 0)
-          }
+          default {}
 
-          function doLoad() {
-            let v := verbatim_1i_1o(hex"b3", 0)
-            sstore(1, v)
+          function storeTwiceAndRevert() {
+            verbatim_2i_0o(hex"b4", 0, 5)
+            verbatim_2i_0o(hex"b4", 0, 6)
+            revert(0,0)
           }
 
           function doReenter() {
-            // tstore
-            verbatim_2i_0o(hex"b4", 0, 10)
-
-            // tload
-            let v := verbatim_1i_1o(hex"b3", 0)
-            sstore(0, v)
-
-            mstore(0, hex"e2da2eb0")
+            verbatim_2i_0o(hex"b4", 0, 4)
+            mstore(0, hex"578290e5")
             let success := call(0xffff, 0x000000000000000000000000000000000000000A, 0, 0, 32, 0, 0)
-            sstore(2, success)
-
-            doLoad()
+            let v := verbatim_1i_1o(hex"b3", 0)
+            sstore(0, success)
+            sstore(1, v)
           }
 
           function selector() -> s {
@@ -75,6 +56,7 @@
             s := div(value, 0x100000000000000000000000000000000000000000000000000000000)
           }
         }
+
       storage: {}
     a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
       balance: 1000000000000000000000
@@ -107,9 +89,5 @@
       result:
         000000000000000000000000000000000000000A:
           storage:
-            # expect 10 at slot 0
-            # expect 10 at slot 1
-            # expect 0 (unsuccessful call) at slot 0
-            0x00: 10
-            0x01: 10
-            0x02: 0
+            0x00: 0
+            0x01: 4

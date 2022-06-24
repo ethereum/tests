@@ -1,14 +1,13 @@
 {
-    "08_revertUndoesTransientStore" : {
+    "13_tloadStaticCall" : {
         "_info" : {
-            "comment" : "Revert undoes the transient storage writes from a call.",
-            "filling-rpc-server" : "evm version 1.10.17-unstable-4db7599c-20220620",
-            "filling-tool-version" : "retesteth-0.2.2-testinfo+commit.21f6071c.Linux.g++",
-            "generatedTestHash" : "0168d8aee678c8036264d678217ec4bea4ed1257273105700c1fc9219a1fa069",
-            "lllcversion" : "Version: 0.5.14-develop.2022.6.8+commit.401d5358.Linux.g++",
-            "solidity" : "Version: 0.8.5+commit.a4f2e591.Linux.g++",
-            "source" : "src/GeneralStateTestsFiller/stExample/08_revertUndoesTransientStoreFiller.yml",
-            "sourceHash" : "00d7d817ce9b95474cf10acf91be3086ccc4fc2bb189fed40c47e26c08247a77"
+            "comment" : "Loading a slot after a call to another contract is 0.",
+            "filling-rpc-server" : "evm version 1.10.17-unstable-4045ed9e-20220620",
+            "filling-tool-version" : "retesteth-0.2.1-difficulty+commit.1ee81863.Linux.g++",
+            "generatedTestHash" : "b9a4259a1d134a2c2dc212e80c08d9f22ce97288f0a7c6b0d7b5e6bc7570a6a9",
+            "lllcversion" : "Version: 0.5.14-develop.2022.6.23+commit.401d5358.Linux.g++",
+            "source" : "src/GeneralStateTestsFiller/stExample/13_tloadStaticCallFiller.yml",
+            "sourceHash" : "a0070a46218fd4eaa423adb69ebefe76777e41a0a72d5c2c870869f52f0fa575"
         },
         "env" : {
             "currentBaseFee" : "0x0a",
@@ -16,14 +15,13 @@
             "currentDifficulty" : "0x020000",
             "currentGasLimit" : "0x10000000000000",
             "currentNumber" : "0x01",
-            "currentRandom" : "0x0000000000000000000000000000000000000000000000000000000000020000",
             "currentTimestamp" : "0x03e8",
             "previousHash" : "0x5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6"
         },
         "post" : {
             "London" : [
                 {
-                    "hash" : "0x6ed625f68028b57986a8370ffc8390fcddbc25e8a75e5804025a227509597cc7",
+                    "hash" : "0x6a85260186ecef8e1a304c356c4042427d58fc171bec33881a199acaa5a0a5b3",
                     "indexes" : {
                         "data" : 0,
                         "gas" : 0,
@@ -37,7 +35,14 @@
         "pre" : {
             "0x000000000000000000000000000000000000000a" : {
                 "balance" : "0x0de0b6b3a7640000",
-                "code" : "0x600560b3565b63e2da2eb08114602c576343ac1c398114603657633f371692811460405760016002556047565b6032604c565b6047565b603c6059565b6047565b60466064565b5b5060df565b600b6000b460006000fd5b565b6000b380600155505b565b600a6000b46000b3806000557fe2da2eb00000000000000000000000000000000000000000000000000000000060005260006000602060006000600a61fffff18060025560ae6059565b50505b565b60006000357c010000000000000000000000000000000000000000000000000000000081049150505b90565b",
+                "code" : "0x6005607e565b633f3716928114601d5763743fedaf8114602757602e565b6023603b565b602e565b602d6033565b5b5060aa565b60026000b45b565b60016000b47f743fedaf000000000000000000000000000000000000000000000000000000006000526000600060206000600a61fffffa6000b38060005550505b565b60006000357c010000000000000000000000000000000000000000000000000000000081049150505b90565b",
+                "nonce" : "0x00",
+                "storage" : {
+                }
+            },
+            "0x000000000000000000000000000000000000000b" : {
+                "balance" : "0x0de0b6b3a7640000",
+                "code" : "0x6000b38060015550",
                 "nonce" : "0x00",
                 "storage" : {
                 }
@@ -65,7 +70,6 @@
             "maxPriorityFeePerGas" : "0x00",
             "nonce" : "0x00",
             "secretKey" : "0x45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8",
-            "sender" : "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b",
             "to" : "0x000000000000000000000000000000000000000a",
             "value" : [
                 "0x00"
