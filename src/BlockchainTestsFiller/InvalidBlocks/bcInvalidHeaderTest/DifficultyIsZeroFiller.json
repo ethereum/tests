@@ -19,14 +19,22 @@
         },
     	"sealEngine" : "NoProof",
     	"expect" : [
-	    {
-		    "network" : [">=Istanbul"],
-		    "result" : {
-			    "0x095e7baea6a6c7c4c2dfeb977efac326af552d87" : {
-    				"balance" : "100"
-			    }
-		    }
-	    }
+	        {
+		        "network" : ["Istanbul", "Berlin", "London"],
+		        "result" : {
+			        "0x095e7baea6a6c7c4c2dfeb977efac326af552d87" : {
+        				"balance" : "100"
+			        }
+		        }
+	        },
+	        {
+		        "network" : [">=Merge"],
+		        "result" : {
+			        "0x095e7baea6a6c7c4c2dfeb977efac326af552d87" : {
+        				"balance" : "5100"
+			        }
+		        }
+	        }
         ],
         "pre" : {
             "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
@@ -48,7 +56,9 @@
                     "difficulty" : "0"
                 },
                 "expectException" : {
-                    ">=Istanbul" : "InvalidDifficulty"
+                    "Istanbul" : "InvalidDifficulty",
+                    "Berlin" : "InvalidDifficulty",
+                    "London" : "3675PoSBlockRejected"
                 },
                 "transactions" : [
                     {
