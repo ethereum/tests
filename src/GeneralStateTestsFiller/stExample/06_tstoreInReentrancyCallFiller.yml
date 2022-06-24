@@ -1,11 +1,11 @@
-# 05
-# Reentrant calls access the same transient storage: TSTORE(x, y), CALL(self, ...), TLOAD(x) returns y.
+# 06
+# Reentrant calls can manipulate the same transient storage: TSTORE(x, y), CALL(self, ...), TSTORE(x, z), TLOAD(x) returns z
 #
 # Expect slot 0 to have 80 from the first tstore & tload.
-# Expect slot 1 to have 80 from the re-entered call.
+# Expect slot 1 to have 90 from the re-entered call.
 # Expect slot 2 to have 1 (for successful call).
 
-05_tloadReentrancy:
+06_tstoreInReentrancyCall:
   _info:
     comment: Reentrant calls access the same transient storage.
 
@@ -25,6 +25,11 @@
       code: |
         :yul {
           switch selector()
+
+          // doStoreAndLoad() {
+          case 0x0accf739 {
+            doStoreAndLoad()
+          }
           
           // doLoad()
           case 0x43ac1c39 {
@@ -40,6 +45,11 @@
             sstore(2, 0)
           }
 
+          function doStoreAndLoad() {
+            verbatim_2i_0o(hex"b4", 0, 90)
+            doLoad()
+          }
+
           function doLoad() {
             let v := verbatim_1i_1o(hex"b3", 0)
             sstore(1, v)
@@ -49,12 +59,12 @@
             // tstore
             verbatim_2i_0o(hex"b4", 0, 80)
 
-            mstore(0, hex"43ac1c39")
-            let success := call(0xffff, 0x000000000000000000000000000000000000000A, 0, 0, 32, 0, 0)
-
             // tload
             let v := verbatim_1i_1o(hex"b3", 0)
             sstore(0, v)
+
+            mstore(0, hex"0accf739")
+            let success := call(0xffff, 0x000000000000000000000000000000000000000A, 0, 0, 32, 0, 0)
             sstore(2, success)
           } 
 
@@ -96,7 +106,8 @@
         000000000000000000000000000000000000000A:
           storage:
             # expect 80 at slot 0
+            # expect 90 at slot 1
             # expect 1 (successful call) at slot 1
             0x00: 80
-            0x01: 80
+            0x01: 90
             0x02: 1

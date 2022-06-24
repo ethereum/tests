@@ -1,5 +1,5 @@
-# 06
-# Reentrant calls can manipulate the same transient storage: TSTORE(x, y), CALL(self, ...), TSTORE(x, z), TLOAD(x) returns z
+# 07
+# Successfully returned calls do not revert transient storage writes: TSTORE(x, y), CALL(self, ...), TSTORE(x, z), RETURN, TLOAD(x) returns z
 #
 # Expect slot 0 to have 55 from the first tstore & tload.
 # Expect slot 1 to have 78 after the return from the call.

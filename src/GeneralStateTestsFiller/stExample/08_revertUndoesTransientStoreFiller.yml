@@ -1,13 +1,13 @@
-# 06
-# Reentrant calls can manipulate the same transient storage: TSTORE(x, y), CALL(self, ...), TSTORE(x, z), TLOAD(x) returns z
+# 08
+# Revert undoes the transient storage write from the failed call: TSTORE(x, y), CALL(self, ...), TSTORE(x, z), REVERT, TLOAD(x) returns y
 #
-# Expect slot 0 to have 80 from the first tstore & tload.
-# Expect slot 1 to have 90 from the re-entered call.
-# Expect slot 2 to have 1 (for successful call).
+# Expect slot 0 to have 10 from the first tstore & tload.
+# Expect slot 1 to have 10 after the return from the call.
+# Expect slot 2 to have 0 (for unsuccessful call).
 
-06_tloadBeforeReentrancyStore:
+08_revertUndoesTransientStore:
   _info:
-    comment: Reentrant calls access the same transient storage.
+    comment: Revert undoes the transient storage writes from a call.
 
   env:
     currentCoinbase: 2adc25665018aa1fe0e6bc666dac8fc2697ff9ba
@@ -26,9 +26,9 @@
         :yul {
           switch selector()
 
-          // doStoreAndLoad() {
-          case 0x0accf739 {
-            doStoreAndLoad()
+          // doStoreAndRevert() {
+          case 0xe2da2eb0 {
+            doStoreAndRevert()
           }
           
           // doLoad()
@@ -42,12 +42,12 @@
           }
 
           default {
-            sstore(2, 0)
+            sstore(2, 1)
           }
 
-          function doStoreAndLoad() {
-            verbatim_2i_0o(hex"b4", 0, 90)
-            doLoad()
+          function doStoreAndRevert() {
+            verbatim_2i_0o(hex"b4", 0, 11)
+            revert(0, 0)
           }
 
           function doLoad() {
@@ -57,15 +57,17 @@
 
           function doReenter() {
             // tstore
-            verbatim_2i_0o(hex"b4", 0, 80)
+            verbatim_2i_0o(hex"b4", 0, 10)
 
             // tload
             let v := verbatim_1i_1o(hex"b3", 0)
             sstore(0, v)
-            
-            mstore(0, hex"0accf739")
+
+            mstore(0, hex"e2da2eb0")
             let success := call(0xffff, 0x000000000000000000000000000000000000000A, 0, 0, 32, 0, 0)
             sstore(2, success)
+
+            doLoad()
           } 
 
           function selector() -> s {
@@ -105,9 +107,9 @@
       result:
         000000000000000000000000000000000000000A:
           storage:
-            # expect 80 at slot 0
-            # expect 90 at slot 1
-            # expect 1 (successful call) at slot 1
-            0x00: 80
-            0x01: 90
-            0x02: 1
+            # expect 10 at slot 0
+            # expect 10 at slot 1
+            # expect 0 (unsuccessful call) at slot 0
+            0x00: 10
+            0x01: 10
+            0x02: 0
