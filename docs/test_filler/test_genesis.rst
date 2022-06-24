@@ -68,3 +68,16 @@ Format
 Fields
 ------
 .. include:: ../test_filler/test_blockheader.rst
+
+
+
+Interaction with The Merge
+--------------------------
+The transition from proof of work (PoW) to proof of stake (PoS) changes the meaning of some
+genesis fields.
+
+* **difficulty** is set to zero for proof of stake genesis blocks. 
+  If you try to run a PoS test on an older fork that uses PoW, the default difficulty is `0x020000`.
+* **mixHash** is used for the random value that in production comes from the beacon chain.
+  If this value is specified in the genesis block, it is the default random "value" for all blocks where
+  it isn't specified
