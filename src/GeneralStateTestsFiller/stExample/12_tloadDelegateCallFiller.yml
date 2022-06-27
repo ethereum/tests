@@ -5,9 +5,9 @@
 # Expect storage slot 0 of address a to be 0. Expect storage slot 1 of address a to be 1 (successful call).
 # Expect storage slot 0 of address a to be 0.
 
-13_tloadStaticCallFiller0:
+12_tloadDelegateCall:
   _info:
-    comment: Loading a slot after a call to another contract is 0.
+    comment: delegatecall reads transient storage in the context of the current address
 
   env:
     currentCoinbase: 2adc25665018aa1fe0e6bc666dac8fc2697ff9ba
@@ -24,9 +24,18 @@
       nonce: 0
       code:  |
         :yul {
-          verbatim_2i_0o(hex"b4", 0, 1)
+          verbatim_2i_0o(hex"b4", 0, 2)
           let success := delegatecall(0xffff, 0x000000000000000000000000000000000000000B, 0, 32, 0, 0)
           sstore(0, success)
+        }
+      storage: {}
+    000000000000000000000000000000000000000B:
+      balance: 1000000000000000000
+      nonce: 0
+      code:  |
+        :yul {
+          let v := verbatim_1i_1o(hex"b3", 0)
+          sstore(1, v)
         }
       storage: {}
     a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
@@ -61,4 +70,4 @@
         000000000000000000000000000000000000000A:
           storage:
             0x00: 1
-            0x01: 1
+            0x01: 2

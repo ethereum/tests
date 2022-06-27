@@ -7,7 +7,7 @@
 
 13_tloadStaticCall:
   _info:
-    comment: Loading a slot after a call to another contract is 0.
+    comment: Transient storage cannot be manipulated in a static context, tstore reverts.
 
   env:
     currentCoinbase: 2adc25665018aa1fe0e6bc666dac8fc2697ff9ba
@@ -30,37 +30,29 @@
             doReenter()
           }
 
-          case 0x743fedaf { // tstore2()
-            tstore2()
+          case 0x611e535a { // tstore3()
+            tstore3()
           }
 
           default {}
 
-          function tstore2() {
-            verbatim_2i_0o(hex"b4", 0, 2)
+          function tstore3() {
+            verbatim_2i_0o(hex"b4", 0, 3)
           }
 
           function doReenter() {
-            verbatim_2i_0o(hex"b4", 0, 1)
-            mstore(0, hex"743fedaf")
+            verbatim_2i_0o(hex"b4", 0, 2)
+            mstore(0, hex"611e535a")
             let success := staticcall(0xffff, 0x000000000000000000000000000000000000000A, 0, 32, 0, 0)
             let v := verbatim_1i_1o(hex"b3", 0)
-            sstore(0, v)
+            sstore(0, success)
+            sstore(1, v)
           }
 
           function selector() -> s {
             let value := calldataload(0)
             s := div(value, 0x100000000000000000000000000000000000000000000000000000000)
           }
-        }
-      storage: {}
-    000000000000000000000000000000000000000B:
-      balance: 1000000000000000000
-      nonce: 0
-      code: |
-        :yul {
-          let v := verbatim_1i_1o(hex"b3", 0)
-          sstore(1, v)
         }
       storage: {}
     a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
@@ -94,4 +86,5 @@
       result:
         000000000000000000000000000000000000000A:
           storage:
-            0x00: 1
+            0x00: 0
+            0x01: 2

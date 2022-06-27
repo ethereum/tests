@@ -1,13 +1,13 @@
 {
     "13_tloadStaticCall" : {
         "_info" : {
-            "comment" : "Loading a slot after a call to another contract is 0.",
+            "comment" : "Transient storage cannot be manipulated in a static context, tstore reverts.",
             "filling-rpc-server" : "evm version 1.10.17-unstable-4045ed9e-20220620",
             "filling-tool-version" : "retesteth-0.2.1-difficulty+commit.1ee81863.Linux.g++",
-            "generatedTestHash" : "b9a4259a1d134a2c2dc212e80c08d9f22ce97288f0a7c6b0d7b5e6bc7570a6a9",
+            "generatedTestHash" : "1e62acf31694b2d56e19e2a52a4d75ecb1ca7501fd3487af01bfd10d7da9098d",
             "lllcversion" : "Version: 0.5.14-develop.2022.6.23+commit.401d5358.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/stExample/13_tloadStaticCallFiller.yml",
-            "sourceHash" : "a0070a46218fd4eaa423adb69ebefe76777e41a0a72d5c2c870869f52f0fa575"
+            "sourceHash" : "6063a3086223a4e98992d57ca5844f6527e9da5f2c6ee350179d29a058efe1d5"
         },
         "env" : {
             "currentBaseFee" : "0x0a",
@@ -21,7 +21,7 @@
         "post" : {
             "London" : [
                 {
-                    "hash" : "0x6a85260186ecef8e1a304c356c4042427d58fc171bec33881a199acaa5a0a5b3",
+                    "hash" : "0x0051faf69c2d0aaddc35eec4c167d06a3cd257b347a00453b8f93832ff4c426c",
                     "indexes" : {
                         "data" : 0,
                         "gas" : 0,
@@ -35,14 +35,7 @@
         "pre" : {
             "0x000000000000000000000000000000000000000a" : {
                 "balance" : "0x0de0b6b3a7640000",
-                "code" : "0x6005607e565b633f3716928114601d5763743fedaf8114602757602e565b6023603b565b602e565b602d6033565b5b5060aa565b60026000b45b565b60016000b47f743fedaf000000000000000000000000000000000000000000000000000000006000526000600060206000600a61fffffa6000b38060005550505b565b60006000357c010000000000000000000000000000000000000000000000000000000081049150505b90565b",
-                "nonce" : "0x00",
-                "storage" : {
-                }
-            },
-            "0x000000000000000000000000000000000000000b" : {
-                "balance" : "0x0de0b6b3a7640000",
-                "code" : "0x6000b38060015550",
+                "code" : "0x60056082565b633f3716928114601d5763611e535a8114602757602e565b6023603b565b602e565b602d6033565b5b5060ae565b60036000b45b565b60026000b47f611e535a000000000000000000000000000000000000000000000000000000006000526000600060206000600a61fffffa6000b3816000558060015550505b565b60006000357c010000000000000000000000000000000000000000000000000000000081049150505b90565b",
                 "nonce" : "0x00",
                 "storage" : {
                 }
