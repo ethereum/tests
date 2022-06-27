@@ -24,21 +24,21 @@
       nonce: 0
       code:  |
         :yul {
-          let extraOpcodes := 14
+          let extraOpcodesGas := 16
 
           // calculate warm sload gas
           let s := sload(5)
           mstore(0, gas())
-          let s2 := sload(5)
+          pop(sload(5))
           mstore(0x20, gas())
-          sstore(0, sub(sub(mload(0), mload(0x20)), extraOpcodes))
+          sstore(0, sub(sub(mload(0), mload(0x20)), extraOpcodesGas))
 
           // calculate tload gas
           verbatim_2i_0o(hex"b4", 0, 2)
-          mstore(0, gas())
-          let t := verbatim_1i_1o(hex"b3", 0)
-          mstore(0x20, gas())
-          sstore(1, sub(sub(mload(0), mload(0x20)), extraOpcodes))
+          mstore(0x40, gas())
+          pop(verbatim_1i_1o(hex"b3", 0))
+          mstore(0x60, gas())
+          sstore(1, sub(sub(mload(0x40), mload(0x60)), extraOpcodesGas))
         }
       storage:
           0x05: 5
