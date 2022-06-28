@@ -1,0 +1,81 @@
+# 16
+# TLOAD(x) should cost 100 gas, same as SLOAD(x)
+#
+# Expect storage slot 0 of address a to be 100, representing the gas of sload.
+# Expect storage slot 1 of address a to be 100, representing the gas of tload.
+# Expect storage slot 2 of address a to be 1, representing sload and tload have equal gas.
+
+16_tloadGas:
+  _info:
+    comment: tload costs 100 gas same as a warm sload
+
+  env:
+    currentCoinbase: 2adc25665018aa1fe0e6bc666dac8fc2697ff9ba
+    currentDifficulty: 0x20000
+    currentNumber: 1
+    currentTimestamp: 1000
+    currentGasLimit: 0x10000000000000
+    previousHash: 5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6
+    currentBaseFee: 10
+
+  pre:
+    000000000000000000000000000000000000000A:
+      balance: 1000000000000000000
+      nonce: 0
+      code:  |
+        :yul {
+          let extraOpcodesGas := 5
+
+          // calculate warm sload gas
+          let s := sload(5)
+          let g1 := gas()
+          let s2 := sload(5)
+          let g2 := gas()
+          sstore(0, sub(sub(g1, g2), extraOpcodesGas))
+
+          // calculate tload gas
+          verbatim_2i_0o(hex"b4", 0, 2)
+          let g3 := gas()
+          let t := verbatim_1i_1o(hex"b3", 0)
+          let g4 := gas()
+          sstore(1, sub(sub(g3, g4), extraOpcodesGas))
+
+          sstore(2, eq(sub(g1, g2), sub(g3, g4)))
+        }
+      storage:
+          0x05: 5
+    a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: 1000000000000000000000
+      code: "0x"
+      nonce: 0
+      storage: {}
+
+  transaction:
+    data:
+      - data: 0x
+        accessList: []
+    gasLimit:
+      - "400000"
+    nonce: 0
+    to: 000000000000000000000000000000000000000A
+    value:
+      - 0
+    secretKey: "45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8"
+    maxPriorityFeePerGas: 0
+    maxFeePerGas: 2000
+
+  expect:
+    - indexes:
+        data: !!int -1
+        gas: !!int -1
+        value: !!int -1
+
+      network:
+        - ">=London"
+      result:
+        000000000000000000000000000000000000000A:
+          storage:
+            0x00: 100
+            0x01: 100
+            0x02: 1
+            0x05: 5

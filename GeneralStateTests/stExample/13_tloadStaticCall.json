@@ -1,14 +1,13 @@
 {
-    "05_tloadReentrancy" : {
+    "13_tloadStaticCall" : {
         "_info" : {
-            "comment" : "Reentrant calls access the same transient storage.",
-            "filling-rpc-server" : "evm version 1.10.17-unstable-471bb33d-20220627",
-            "filling-tool-version" : "retesteth-0.2.2-testinfo+commit.21f6071c.Linux.g++",
-            "generatedTestHash" : "5bc094538cc79510a0649bef8928e00341c9ab287c1a5a5938411b2b15fe2139",
-            "lllcversion" : "Version: 0.5.14-develop.2022.6.8+commit.401d5358.Linux.g++",
-            "solidity" : "Version: 0.8.5+commit.a4f2e591.Linux.g++",
-            "source" : "src/GeneralStateTestsFiller/stExample/05_tloadReentrancyFiller.yml",
-            "sourceHash" : "4c6fe15e78cf72032e8c67ae2117df443126885408d974cfcb7eb382be98a158"
+            "comment" : "Transient storage cannot be manipulated in a static context, tstore reverts.",
+            "filling-rpc-server" : "evm version 1.10.17-unstable-4045ed9e-20220620",
+            "filling-tool-version" : "retesteth-0.2.1-difficulty+commit.1ee81863.Linux.g++",
+            "generatedTestHash" : "1e62acf31694b2d56e19e2a52a4d75ecb1ca7501fd3487af01bfd10d7da9098d",
+            "lllcversion" : "Version: 0.5.14-develop.2022.6.23+commit.401d5358.Linux.g++",
+            "source" : "src/GeneralStateTestsFiller/stExample/13_tloadStaticCallFiller.yml",
+            "sourceHash" : "6063a3086223a4e98992d57ca5844f6527e9da5f2c6ee350179d29a058efe1d5"
         },
         "env" : {
             "currentBaseFee" : "0x0a",
@@ -16,14 +15,13 @@
             "currentDifficulty" : "0x020000",
             "currentGasLimit" : "0x10000000000000",
             "currentNumber" : "0x01",
-            "currentRandom" : "0x0000000000000000000000000000000000000000000000000000000000020000",
             "currentTimestamp" : "0x03e8",
             "previousHash" : "0x5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6"
         },
         "post" : {
             "London" : [
                 {
-                    "hash" : "0x65227e3e413d922337fbe1f7a4afedafa2cc5ed07c7666f76ec972cd7e11176d",
+                    "hash" : "0x0051faf69c2d0aaddc35eec4c167d06a3cd257b347a00453b8f93832ff4c426c",
                     "indexes" : {
                         "data" : 0,
                         "gas" : 0,
@@ -37,7 +35,7 @@
         "pre" : {
             "0x000000000000000000000000000000000000000a" : {
                 "balance" : "0x0de0b6b3a7640000",
-                "code" : "0x6005608c565b6343ac1c398114602257633f3716928114602c5760006002556033565b60286038565b6033565b60326043565b5b5060b8565b6000b380600155505b565b60506000b47f43ac1c390000000000000000000000000000000000000000000000000000000060005260006000602060006000600a61fffff16000b3806000558160025550505b565b60006000357c010000000000000000000000000000000000000000000000000000000081049150505b90565b",
+                "code" : "0x60056082565b633f3716928114601d5763611e535a8114602757602e565b6023603b565b602e565b602d6033565b5b5060ae565b60036000b45b565b60026000b47f611e535a000000000000000000000000000000000000000000000000000000006000526000600060206000600a61fffffa6000b3816000558060015550505b565b60006000357c010000000000000000000000000000000000000000000000000000000081049150505b90565b",
                 "nonce" : "0x00",
                 "storage" : {
                 }
@@ -65,7 +63,6 @@
             "maxPriorityFeePerGas" : "0x00",
             "nonce" : "0x00",
             "secretKey" : "0x45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8",
-            "sender" : "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b",
             "to" : "0x000000000000000000000000000000000000000a",
             "value" : [
                 "0x00"

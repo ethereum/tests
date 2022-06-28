@@ -1,14 +1,13 @@
 {
-    "05_tloadReentrancy" : {
+    "11_tstoreDelegateCall" : {
         "_info" : {
-            "comment" : "Reentrant calls access the same transient storage.",
-            "filling-rpc-server" : "evm version 1.10.17-unstable-471bb33d-20220627",
-            "filling-tool-version" : "retesteth-0.2.2-testinfo+commit.21f6071c.Linux.g++",
-            "generatedTestHash" : "5bc094538cc79510a0649bef8928e00341c9ab287c1a5a5938411b2b15fe2139",
-            "lllcversion" : "Version: 0.5.14-develop.2022.6.8+commit.401d5358.Linux.g++",
-            "solidity" : "Version: 0.8.5+commit.a4f2e591.Linux.g++",
-            "source" : "src/GeneralStateTestsFiller/stExample/05_tloadReentrancyFiller.yml",
-            "sourceHash" : "4c6fe15e78cf72032e8c67ae2117df443126885408d974cfcb7eb382be98a158"
+            "comment" : "Loading a slot after a call to another contract is 0.",
+            "filling-rpc-server" : "evm version 1.10.17-unstable-4045ed9e-20220620",
+            "filling-tool-version" : "retesteth-0.2.1-difficulty+commit.1ee81863.Linux.g++",
+            "generatedTestHash" : "f36e31fa82a7f40015db8a915ac77c454f9097978ef17a99c0c9dac19f049583",
+            "lllcversion" : "Version: 0.5.14-develop.2022.6.23+commit.401d5358.Linux.g++",
+            "source" : "src/GeneralStateTestsFiller/stExample/11_tstoreDelegateCallFiller.yml",
+            "sourceHash" : "7fd3e946794f30c9a09d79bff8f8e6dd2a7934ddb7053d40dad21a8d22dea4e5"
         },
         "env" : {
             "currentBaseFee" : "0x0a",
@@ -16,28 +15,34 @@
             "currentDifficulty" : "0x020000",
             "currentGasLimit" : "0x10000000000000",
             "currentNumber" : "0x01",
-            "currentRandom" : "0x0000000000000000000000000000000000000000000000000000000000020000",
             "currentTimestamp" : "0x03e8",
             "previousHash" : "0x5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6"
         },
         "post" : {
             "London" : [
                 {
-                    "hash" : "0x65227e3e413d922337fbe1f7a4afedafa2cc5ed07c7666f76ec972cd7e11176d",
+                    "hash" : "0xd3efb38ef9041d469dc81cc63bf34e867bd3da99184492442c33f33baafcbf9e",
                     "indexes" : {
                         "data" : 0,
                         "gas" : 0,
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
-                    "txbytes" : "0x02f8690180808207d083061a8094000000000000000000000000000000000000000a80843f371692c001a06ebc5c6488b5ce5519b983b0cb032243aa188d6c4f89b60f77d7079a27836f78a03be30189ce38be83c659e76c01243364c85ad8df091d3a5b8a98ec2738c20de0"
+                    "txbytes" : "0x02f8650180808207d083061a8094000000000000000000000000000000000000000a8080c080a0dcca8dea0417d776a28e5cfbd257941015eef912b4f2ca5dac03d7293f57fa9aa0140ab4cd143ff0b5bcb85f0a862b73139668b5c59c703b1e0cdfae0c95146e09"
                 }
             ]
         },
         "pre" : {
             "0x000000000000000000000000000000000000000a" : {
                 "balance" : "0x0de0b6b3a7640000",
-                "code" : "0x6005608c565b6343ac1c398114602257633f3716928114602c5760006002556033565b60286038565b6033565b60326043565b5b5060b8565b6000b380600155505b565b60506000b47f43ac1c390000000000000000000000000000000000000000000000000000000060005260006000602060006000600a61fffff16000b3806000558160025550505b565b60006000357c010000000000000000000000000000000000000000000000000000000081049150505b90565b",
+                "code" : "0x60016000b46000600060206000600b61fffff46000b381600055806001555050",
+                "nonce" : "0x00",
+                "storage" : {
+                }
+            },
+            "0x000000000000000000000000000000000000000b" : {
+                "balance" : "0x0de0b6b3a7640000",
+                "code" : "0x60026000b4",
                 "nonce" : "0x00",
                 "storage" : {
                 }
@@ -56,7 +61,7 @@
                 ]
             ],
             "data" : [
-                "0x3f371692"
+                "0x"
             ],
             "gasLimit" : [
                 "0x061a80"
@@ -65,7 +70,6 @@
             "maxPriorityFeePerGas" : "0x00",
             "nonce" : "0x00",
             "secretKey" : "0x45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8",
-            "sender" : "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b",
             "to" : "0x000000000000000000000000000000000000000a",
             "value" : [
                 "0x00"
