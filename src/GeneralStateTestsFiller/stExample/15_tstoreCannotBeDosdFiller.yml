@@ -2,6 +2,7 @@
 # Transient storage cannot be DOS’d: CALL(self, ...), TSTORE(x, y), TSTORE(x + 1, y), TSTORE(x + 2, y), ... ,TSTORE(x + n, y), REVERT, TLOAD(x) returns 0 and runs in under 15 seconds
 #
 # Expect slot 0 to have 0 (from revert).
+# Expect slot 1 to have 0.
 
 15_tstoreCannotBeDosd:
   _info:
@@ -24,7 +25,7 @@
         :yul {
           switch selector()
 
-          case 0x883264e8 { // doCall(uint), do the call to nstores
+          case 0x883264e8 { // doCall(uint)
             let n:= div(calldataload(32), 0x100000000000000000000000000000000000000000000000000000000)
             doCall(n)
           }
@@ -68,7 +69,7 @@
 
   transaction:
     data:
-      - data: :abi doCall(uint) 0x100
+      - data: :abi doCall(uint) 0x200
         accessList: []
     gasLimit:
       - "400000"

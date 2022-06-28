@@ -22,12 +22,8 @@
       nonce: 0
       code: |
         :yul {
-          // tstore
           verbatim_2i_0o(hex"b4", 0, 88)
-
-          // tload
           let val := verbatim_1i_1o(hex"b3", 0)
-          
           sstore(1, val)
         }
       storage: {}
@@ -62,5 +58,4 @@
       result:
         000000000000000000000000000000000000000A:
           storage:
-            # The result we expect
             0x01: 88

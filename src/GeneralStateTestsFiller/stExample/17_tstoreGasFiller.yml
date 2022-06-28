@@ -1,11 +1,14 @@
-# 01
-# Loading an arbitrary value is 0 at beginning of transaction: TLOAD(x) is 0
+# 17
+# Tstore arbitrary value in arbitrary slot costs 100 gas : TSTORE(x, y) costs 100 gas.
 #
-# Expect storage slot 1 to have value 0.
+# Expect storage slot 0 to be 100 (warm dirty ssload gas cost).
+# Expect storage slot 1 to be 100 (tload gas cost).
+# Expect storage slot 2 to be 1. Tload gas and sstore gas should be equal.
+# Expect storage slot 5 to be 2 from the last sstore.
 
-01_tloadBeginningTxn:
+17_tstoreGas:
   _info:
-    comment: load arbitrary value is 0 at beginning of transaction
+    comment: Tstore arbitrary value in arbitrary slot costs 100 gas.
 
   env:
     currentCoinbase: 2adc25665018aa1fe0e6bc666dac8fc2697ff9ba
@@ -15,17 +18,32 @@
     currentGasLimit: 0x10000000000000
     previousHash: 5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6
     currentBaseFee: 10
+
   pre:
     000000000000000000000000000000000000000A:
       balance: 1000000000000000000
       nonce: 0
       code: |
         :yul {
-          let val := verbatim_1i_1o(hex"b3", 0)
-          sstore(1, val)
-        }
-      storage: {}
+          let extraOpcodes := 8
 
+          // calculate warm dirty sstore gas
+          sstore(5, 1)
+          let g1 := gas()
+          sstore(5, 2)
+          let g2 := gas()
+          sstore(0, sub(sub(g1, g2), extraOpcodes))
+          
+          // calculate tstore gas
+          let g3 := gas()
+          verbatim_2i_0o(hex"b4", 0, 3)
+          let g4 := gas()
+          sstore(1, sub(sub(g3, g4), extraOpcodes))
+
+          sstore(2, eq(sub(g3, g4),sub(g1, g2)))
+        }
+      storage:
+        0x05: 5
     a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
       balance: 1000000000000000000000
       code: "0x"
@@ -37,7 +55,7 @@
       - data: 0x
         accessList: []
     gasLimit:
-      - 0x10000000000000
+      - "400000"
     nonce: 0
     to: 000000000000000000000000000000000000000A
     value:
@@ -57,4 +75,7 @@
       result:
         000000000000000000000000000000000000000A:
           storage:
-            0x01: 0
+            0x00: 100
+            0x01: 100
+            0x02: 0x01
+            0x05: 0x02

@@ -2,8 +2,9 @@
 # Contracts have separate transient storage.
 # Loading a slot in a separate contract after storing returns 0: TSTORE(x, y), CALL(z, ...), TLOAD(x) returns 0
 #
-# Expect storage slot 0 of address a to be 0. Expect storage slot 1 of address a to be 1 (successful call).
 # Expect storage slot 0 of address a to be 0.
+# Expect storage slot 1 of address a to be 1 (successful call).
+# Expect storage slot 0 of address b to be 0.
 
 04_tloadAfterCall:
   _info:
@@ -71,11 +72,9 @@
       result:
         000000000000000000000000000000000000000A:
           storage:
-            # expect 10 at slot 0
             # expect 1 (successful call) at slot 1
             0x00: 10
             0x01: 1
         000000000000000000000000000000000000000B:
           storage:
-            # expect 0
             0x00: 0

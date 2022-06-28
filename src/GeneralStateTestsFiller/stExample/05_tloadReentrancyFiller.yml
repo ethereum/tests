@@ -26,13 +26,11 @@
         :yul {
           switch selector()
           
-          // doLoad()
-          case 0x43ac1c39 {
+          case 0x43ac1c39 { // doLoad()
             doLoad()
           }
 
-          // doReenter()
-          case 0x3f371692 {
+          case 0x3f371692 { // doReenter()
             doReenter()
           }
 
@@ -46,13 +44,11 @@
           }
 
           function doReenter() {
-            // tstore
             verbatim_2i_0o(hex"b4", 0, 80)
 
-            mstore(0, hex"43ac1c39")
+            mstore(0, hex"43ac1c39") // doLoad()
             let success := call(0xffff, 0x000000000000000000000000000000000000000A, 0, 0, 32, 0, 0)
 
-            // tload
             let v := verbatim_1i_1o(hex"b3", 0)
             sstore(0, v)
             sstore(2, success)
@@ -95,7 +91,6 @@
       result:
         000000000000000000000000000000000000000A:
           storage:
-            # expect 80 at slot 0
             # expect 1 (successful call) at slot 1
             0x00: 80
             0x01: 80
