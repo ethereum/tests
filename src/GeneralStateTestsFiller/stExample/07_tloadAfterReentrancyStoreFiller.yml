@@ -3,11 +3,11 @@
 #
 # Expect slot 0 to have 55 from the first tstore & tload.
 # Expect slot 1 to have 78 after the return from the call.
-# Expect slot 2 to have 1 (for successful call).
+# Expect slot 2 to have 1. Call was successful.
 
 07_tloadAfterReentrancyStore:
   _info:
-    comment: Reentrant calls access the same transient storage.
+    comment: Successfully returned calls do not revert transient storage writes.
 
   env:
     currentCoinbase: 2adc25665018aa1fe0e6bc666dac8fc2697ff9ba
@@ -26,18 +26,11 @@
         :yul {
           switch selector()
 
-          // doStore() {
-          case 0x62fdb9be {
+          case 0x62fdb9be { // doStore()
             doStore()
           }
-          
-          // doLoad()
-          case 0x43ac1c39 {
-            doLoad()
-          }
 
-          // doReenter()
-          case 0x3f371692 {
+          case 0x3f371692 { // doReenter()
             doReenter()
           }
 
@@ -49,24 +42,16 @@
             verbatim_2i_0o(hex"b4", 0, 78)
           }
 
-          function doLoad() {
-            let v := verbatim_1i_1o(hex"b3", 0)
-            sstore(1, v)
-          }
-
           function doReenter() {
-            // tstore
             verbatim_2i_0o(hex"b4", 0, 55)
-
-            // tload
             let v := verbatim_1i_1o(hex"b3", 0)
             sstore(0, v)
 
-            mstore(0, hex"62fdb9be")
+            mstore(0, hex"62fdb9be") // doStore()
             let success := call(0xffff, 0x000000000000000000000000000000000000000A, 0, 0, 32, 0, 0)
             sstore(2, success)
 
-            doLoad()
+            sstore(1, verbatim_1i_1o(hex"b3", 0))
           } 
 
           function selector() -> s {

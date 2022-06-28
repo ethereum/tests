@@ -3,7 +3,7 @@
 #
 # Expect slot 0 to have 10 from the first tstore & tload.
 # Expect slot 1 to have 10 after the return from the call.
-# Expect slot 2 to have 0 (for unsuccessful call).
+# Expect slot 2 to have 0. Call was unsuccessful.
 
 08_revertUndoesTransientStore:
   _info:
@@ -26,18 +26,11 @@
         :yul {
           switch selector()
 
-          // doStoreAndRevert() {
-          case 0xe2da2eb0 {
+          case 0xe2da2eb0 { // doStoreAndRevert()
             doStoreAndRevert()
           }
 
-          // doLoad()
-          case 0x43ac1c39 {
-            doLoad()
-          }
-
-          // doReenter()
-          case 0x3f371692 {
+          case 0x3f371692 { // doReenter()
             doReenter()
           }
 
@@ -50,24 +43,16 @@
             revert(0, 0)
           }
 
-          function doLoad() {
-            let v := verbatim_1i_1o(hex"b3", 0)
-            sstore(1, v)
-          }
-
           function doReenter() {
-            // tstore
             verbatim_2i_0o(hex"b4", 0, 10)
-
-            // tload
             let v := verbatim_1i_1o(hex"b3", 0)
             sstore(0, v)
 
-            mstore(0, hex"e2da2eb0")
-            let success := call(0xffff, 0x000000000000000000000000000000000000000A, 0, 0, 32, 0, 0)
-            sstore(2, success)
+            mstore(0, hex"e2da2eb0") // doStoreAndRevert()
+            let fail := call(0xffff, 0x000000000000000000000000000000000000000A, 0, 0, 32, 0, 0)
+            sstore(2, fail)
 
-            doLoad()
+            sstore(1, verbatim_1i_1o(hex"b3", 0))
           }
 
           function selector() -> s {

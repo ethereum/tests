@@ -1,9 +1,10 @@
 # 10
-# Revert undoes transient storage writes from inner calls that successfully returned: TSTORE(x, y), CALL(self, ...), CALL(self, ...), TSTORE(x, y + 1), RETURN, REVERT, TLOAD(x) returns y
+# Revert undoes transient storage writes from inner calls that successfully returned.
+# TSTORE(x, y), CALL(self, ...), CALL(self, ...), TSTORE(x, y + 1), RETURN, REVERT, TLOAD(x) returns y
 #
 # Expect slot 0 to have 5 from the first tstore & tload.
-# Expect slot 1 to have 0 (for unsuccessful call).
-# Expect slot 2 to have 5 (original value).
+# Expect slot 1 to have 0. Call was unsuccessful.
+# Expect slot 2 to have 5. Should load the value stored before the unsuccessful call.
 
 10_revertUndoesStoreAfterReturn:
   _info:
@@ -58,7 +59,6 @@
           
           function doCallThenRevert() {
             let s := doReenter(hex"4ccca553") // calls doSuccessfulStore()
-            sstore(3, verbatim_1i_1o(hex"b3", 0))
             revert(0, 0)
           }
 

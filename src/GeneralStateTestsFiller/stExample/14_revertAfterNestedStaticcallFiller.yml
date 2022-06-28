@@ -49,7 +49,7 @@
             let v := verbatim_1i_1o(hex"b3", 0)
             sstore(0, v)
 
-            mstore(0, hex"f8dfc2d0")
+            mstore(0, hex"f8dfc2d0") // doCallToStore()
             let success := staticcall(0xffff, 0x000000000000000000000000000000000000000A, 0, 32, 0, 0)
             sstore(2, success) // should be 0 (revert)
 
@@ -59,7 +59,7 @@
 
           
           function doCallToStore() {
-            mstore(0, hex"62fdb9be")
+            mstore(0, hex"62fdb9be") // doStore()
             let f := call(0xffff, 0x000000000000000000000000000000000000000A, 0, 0, 32, 0, 0)
             sstore(1, f) // should revert
           }

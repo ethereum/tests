@@ -1,8 +1,8 @@
 # 15
 # Transient storage cannot be DOS’d: CALL(self, ...), TSTORE(x, y), TSTORE(x + 1, y), TSTORE(x + 2, y), ... ,TSTORE(x + n, y), REVERT, TLOAD(x) returns 0 and runs in under 15 seconds
 #
-# Expect slot 0 to have 0 (from revert).
-# Expect slot 1 to have 0.
+# Expect slot 0 to have 0. Call fails.
+# Expect slot 1 to have 0. Loading returns 0.
 
 15_tstoreCannotBeDosd:
   _info:
@@ -40,7 +40,7 @@
           }
           
           function doCall(n) {
-            mstore(0, hex"f7d6c0eb")
+            mstore(0, hex"f7d6c0eb") // doNStores(n)
             mstore(32, n)
             let t := call(0xffff, 0x000000000000000000000000000000000000000A, 0, 0, 64, 0, 0)
             sstore(0, t) // should revert

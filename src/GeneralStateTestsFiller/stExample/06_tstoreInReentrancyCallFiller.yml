@@ -3,7 +3,7 @@
 #
 # Expect slot 0 to have 80 from the first tstore & tload.
 # Expect slot 1 to have 90 from the re-entered call.
-# Expect slot 2 to have 1 (for successful call).
+# Expect slot 2 to have 1. Call was successful.
 
 06_tstoreInReentrancyCall:
   _info:
@@ -26,18 +26,15 @@
         :yul {
           switch selector()
 
-          // doStoreAndLoad() {
-          case 0x0accf739 {
+          case 0x0accf739 { // doStoreAndLoad()
             doStoreAndLoad()
           }
           
-          // doLoad()
-          case 0x43ac1c39 {
+          case 0x43ac1c39 { // doLoad()
             doLoad()
           }
 
-          // doReenter()
-          case 0x3f371692 {
+          case 0x3f371692 { // doReenter()
             doReenter()
           }
 
@@ -56,14 +53,11 @@
           }
 
           function doReenter() {
-            // tstore
             verbatim_2i_0o(hex"b4", 0, 80)
-
-            // tload
             let v := verbatim_1i_1o(hex"b3", 0)
             sstore(0, v)
 
-            mstore(0, hex"0accf739")
+            mstore(0, hex"0accf739") // doStoreAndLoad()
             let success := call(0xffff, 0x000000000000000000000000000000000000000A, 0, 0, 32, 0, 0)
             sstore(2, success)
           } 
