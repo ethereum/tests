@@ -2,10 +2,10 @@
     "transactionCollidingWithNonEmptyAccount_init" : {
         "_info" : {
             "comment" : "Account with non-empty code attempts to send tx to create a contract",
-            "filling-rpc-server" : "evm version 1.10.16-unstable-0f893109-20220105",
-            "filling-tool-version" : "retesteth-0.2.2-testinfo+commit.01c6aac2.Linux.g++",
-            "generatedTestHash" : "4c53bd861842eb5aa3d178f423dd37a9fb53b1f1bd15353ec584fc9c8339b297",
-            "lllcversion" : "Version: 0.5.14-develop.2021.11.27+commit.401d5358.Linux.g++",
+            "filling-rpc-server" : "evm version 1.10.21-unstable-692bfd1b-20220630",
+            "filling-tool-version" : "retesteth-0.2.2-testinfo+commit.1e11e5ce.Linux.g++",
+            "generatedTestHash" : "38f58a7196e6de49708c365d97641b0388f4e63f78532063a7c15d6c45746958",
+            "lllcversion" : "Version: 0.5.14-develop.2022.6.6+commit.245805fe.Linux.g++",
             "solidity" : "Version: 0.8.5+commit.a4f2e591.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/stEIP3607/transactionCollidingWithNonEmptyAccount_initFiller.yml",
             "sourceHash" : "504ed4dad45a35dee016abe8ac646e8850ded61c0d9655f830898a1838e774de"
@@ -16,6 +16,7 @@
             "currentDifficulty" : "0x020000",
             "currentGasLimit" : "0xff112233445566",
             "currentNumber" : "0x01",
+            "currentRandom" : "0x0000000000000000000000000000000000000000000000000000000000020000",
             "currentTimestamp" : "0x03e8",
             "previousHash" : "0x5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6"
         },
@@ -435,6 +436,52 @@
                 }
             ],
             "London" : [
+                {
+                    "expectException" : "SenderNotEOA",
+                    "hash" : "0xe4cbd6db8a1703c767c4eb649b108ca6e68039006bf277fdb7398933a6515cad",
+                    "indexes" : {
+                        "data" : 0,
+                        "gas" : 0,
+                        "value" : 0
+                    },
+                    "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "txbytes" : "0xf84f800a83061a8080830186a0001ca0940546fa422a9310b30cc6b14ecb25996f6f7c56b25b4c4d3ad0f60b56ea7df0a02686b496576a0632b2b9238d6aacb7fa317864b06bb3199b613050c1d8abb42b"
+                },
+                {
+                    "expectException" : "SenderNotEOA",
+                    "hash" : "0xe4cbd6db8a1703c767c4eb649b108ca6e68039006bf277fdb7398933a6515cad",
+                    "indexes" : {
+                        "data" : 1,
+                        "gas" : 0,
+                        "value" : 0
+                    },
+                    "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "txbytes" : "0xf854800a83061a8080830186a08560206000f31ca0b3090d3211444a7b1530ae2b72bfd606fc5902d2d04bb2390448361b3d198d94a05c69af38472b9a5c913eb413379078dbb3beed941467229da6d47bf5c82d67c0"
+                },
+                {
+                    "expectException" : "SenderNotEOA",
+                    "hash" : "0xe4cbd6db8a1703c767c4eb649b108ca6e68039006bf277fdb7398933a6515cad",
+                    "indexes" : {
+                        "data" : 2,
+                        "gas" : 0,
+                        "value" : 0
+                    },
+                    "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "txbytes" : "0xf872800a83061a8080830186a0a3600060006000600061271073d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d05af1501ba040d3d6858f1c34305bd11065b186ae2260091c085d24d8a0d6d3d734a44f4bc3a01b681d0fcc6f7b71cb05ffa53c2ec2b31330b978a7616e82b0a86e4e7ec2a1be"
+                },
+                {
+                    "expectException" : "SenderNotEOA",
+                    "hash" : "0xe4cbd6db8a1703c767c4eb649b108ca6e68039006bf277fdb7398933a6515cad",
+                    "indexes" : {
+                        "data" : 3,
+                        "gas" : 0,
+                        "value" : 0
+                    },
+                    "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "txbytes" : "0xf86f800a83061a8080830186a0a0600060006000600073d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d05af4501ca0595cb60a95da661b631af32003c1a51c7f29bd4f4510d4cd0bb2f64b920d4403a07989325b95d47863402bd30e719afd93e70bfc0fbf048672a8a1c6756599338f"
+                }
+            ],
+            "Merge" : [
                 {
                     "expectException" : "SenderNotEOA",
                     "hash" : "0xe4cbd6db8a1703c767c4eb649b108ca6e68039006bf277fdb7398933a6515cad",
