@@ -176,6 +176,60 @@ that address, zero.
       value: '30'
 
 
+
+.. _test-random-val:
+
+Tests using the blockchain random value
+---------------------------------------
+Once Ethereum moves to proof of stake (PoS), there will no longer be any need for the block header 
+fields **difficulty** and **mixHash**.
+When the block header comes from a consensus client, the **mixHash** is a mostly random value that is 
+produced by the beacon chain (the validators can each affect a bit on it, so it's not exactly random).
+The **DIFFICULTY** opcode is no longer relevant either, so it is replaced by an opcode with the same 
+value (0x44) called **PREVRANDAO**.
+You can read more about this topic in `EIP-4399 <https://eips.ethereum.org/EIPS/eip-4399>`_.
+
+In block tests we can simulate this value by specifying a **mixHash** as part of **blockHeader**.
+However, the interaction of **mixHash** and **stateRoot** makes this process a bit complicated.
+
+First, you write the test normally, using the block header field **mixHash** for the random value 
+that in real execution would come from the consensus layer.
+Note that **mixHash** has to be a 32 byte value.
+Even if most of the bytes are zeros, you have to specify them.
+
+When you run the test, it fails on the first block where the state is a function of the random value:
+
+::
+
+   gasLimit 0xf00000000000 vs 0xf00000000000
+   gasUsed 0x6594 vs 0x6594
+   hash 0x606435568815021b4a86eea337411f13fe54d8c0bb9c892a536b08d3fe627ee1 vs 0xeef45608da53d5ceea6349cf06b3568615e38d718ffc2fc9e77870f06f29c08b
+   mixHash 0x0102030405060708091011121314151617181920212223242526272829303132 vs 0x0102030405060708091011121314151617181920212223242526272829303132
+   nonce 0x0000000000000000 vs 0x0000000000000000
+   number 0x01 vs 0x01
+   parentHash 0x2f9715fb0249fa1b10dc55b3d7fc04a4e83a82e7046d56c2df38d08d6535a514 vs 0x2f9715fb0249fa1b10dc55b3d7fc04a4e83a82e7046d56c2df38d08d6535a514
+   receiptTrie 0x71043553dd2c4fbc22100a69d47ba3a790f7e428796792c552362b81e6cf5331 vs 0x71043553dd2c4fbc22100a69d47ba3a790f7e428796792c552362b81e6cf5331
+   stateRoot 0x9f21e7c91ed3c1eb1aa5b3ab1a497af91af75da2a56f7c5742fe27634057cf24 vs 0xbfba6ab1bf48ac123ad0fbed27a9a56560f6fcb8e5177e019c8d3eef545b8b6e
+   timestamp 0x54c99069 vs 0x54c99069
+
+Copy the yellow **stateRoot** value into the block header. 
+If you use the random value also in another block, you repeat the process, once per block.
+
+`You can see an example of this type of test here 
+<https://github.com/ethereum/tests/blob/develop/src/BlockchainTestsFiller/ValidBlocks/bcStateTests/randomFiller.yml>`_.
+
+
+Why is this procedure necessary?
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Retesteth was written back during the proof of work (PoW) days, when **mixHash** was a function of the 
+**nonce**, which itself was produced from the completed block (including the post-block **stateRoot**).
+The way that it fills the block header is to first get the block processed by the client, read the 
+resulting **stateRoot** (as well as some other fields).
+Then it reverts out of the block and sends it again, this time with the **blockHeader** fields and the 
+calculated fields from the client.
+
+This algorithm fails when the state, and therefore **stateRoot**, is affected by block header fields.
+
 .. _invalid-block-tests:
 
 Invalid Block Tests

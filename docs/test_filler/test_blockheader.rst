@@ -5,8 +5,9 @@ bloom                         `bloom filter <https://en.wikipedia.org/wiki/Bloom
                               speed searches
 coinbase                      beneficiary of mining fee
 extraData                     data added to the block, ignored by **retesteth**
+
 difficulty (pre-merge)        difficulty of previous block
-difficulty (post-merge)       not used anymore, identifies a block as pre-merge
+difficulty (post-merge)       not used anymore (value zero), identifies a block as pre-merge
 gasLimit                      limit of gas usage per block
 gasUsed                       gas used by this block
 mixHash and nonce (pre-merge) used by the `proof of work algorithm 
