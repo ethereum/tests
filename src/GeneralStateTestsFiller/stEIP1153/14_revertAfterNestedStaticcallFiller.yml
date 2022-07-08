@@ -64,13 +64,13 @@
           
           function doCallToStore() {
             mstore(0, hex"62fdb9be") // doStore()
-            let f := call(0xffff, 0x000000000000000000000000000000000000000A, 0, 0, 32, 0, 0)
+            let f := call(0xffff, 0x000000000000000000000000000000000000000A, 0, 0, 32, 0, 0) // call with zero-value
             mstore(0, f)
             return(0, 32)
           }
 
           function doStore() {
-            verbatim_2i_0o(hex"b4", 0, 11)
+            verbatim_2i_0o(hex"b4", 0, 11) // will revert
           }
 
           function selector() -> s {
