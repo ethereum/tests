@@ -1,0 +1,96 @@
+CreateAddressWarmAfterCodeTooBig:
+  _info:
+    comment: |
+      Invokes failing CREATE (deploy code is too big) and checks
+      if the create address is considered warm in the follow up call as required by EIP-2929.
+  env:
+    currentCoinbase: 2adc25665018aa1fe0e6bc666dac8fc2697ff9ba
+    currentDifficulty: 1
+    currentGasLimit: 30000000
+    currentNumber: 2
+    currentTimestamp: 999
+    previousHash: 5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6
+
+  pre:
+    # Tx sender
+    a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      nonce: 0
+      balance: 100000001
+      storage: {}
+      code: ''
+
+    00000000000000000000000000000000000c0deC:
+      nonce: 0
+      balance: 0
+      storage: {}
+      code: |
+        :yul
+          object "C" {
+            code {
+              let initcode_size := datasize("initcode")
+              datacopy(0, dataoffset("initcode"), initcode_size)
+              sstore(0, create(0, 0, initcode_size))
+              // Call the create address.
+              sstore(1, call(0, 0xd4e7ae083132925a4927c1f5816238ba17b82a65, callvalue(), 0, 0, 0, 0))
+              stop()
+            }
+            object "initcode" {
+              code {
+                return(0, 0x6001)
+              }
+            }
+          }
+  
+
+  transaction:
+    data:
+      - ''
+    gasLimit:
+      - 10000000
+    gasPrice: 10
+    nonce: 0
+    to: "00000000000000000000000000000000000c0deC"
+    secretKey: "45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8"
+    value:
+      - 0
+      - 1
+
+  expect:
+    - indexes:
+        data: !!int -1
+        gas: !!int -1
+        value:
+          - !!int 0
+      network:
+        - ">=London"
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        00000000000000000000000000000000000c0deC:
+          nonce: 1    # Create failed, but nonce is bumped.
+          balance: 0
+          storage:
+            0: 0    # Create failed
+            1: 1    # Call to create address successful
+        d4e7ae083132925a4927c1f5816238ba17b82a65: # Create address
+          shouldnotexist: true
+
+    - indexes:
+        data: !!int -1
+        gas: !!int -1
+        value:
+          - !!int 1
+      network:
+        - ">=London"
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        00000000000000000000000000000000000c0deC:
+          nonce: 1    # Create failed, but nonce is bumped.
+          storage:
+            0: 0    # Create failed
+            1: 1    # Call to create address successful
+        d4e7ae083132925a4927c1f5816238ba17b82a65: # Create address
+          nonce: 0
+          balance: 1   # Funded with the call after failed create.
+          code: ""
