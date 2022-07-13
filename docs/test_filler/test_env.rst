@@ -60,9 +60,10 @@ transaction tests.
 Name in Env Section Meaning
 =================== ========================
 currentCoinbase     beneficiary of mining fee
-currentDifficulty   difficulty of previous block
+currentDifficulty   difficulty of previous block (pre Merge)
+currentRandom       random value that is supposed to come from the beacon chain (post Merge)
 currentGasLimit     limit of gas usage per block
-currentNumber       number of ancestory blocks
+currentNumber       number of ancestor blocks
 currentTimestamp    `Unix time <https://en.wikipedia.org/wiki/Unix_time>`_
 previousHash        hash of previous block
 currentBaseFee      London and afterwards, the 
