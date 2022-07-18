@@ -5,16 +5,88 @@ Testing EIPs
 ###########################################
 `Ori Pomerantz <mailto://qbzzt1@gmail.com>`_
 
-In this tutorial you learn how to write tests for a new EIP. We'll use
-`EIP 2315 <https://eips.ethereum.org/EIPS/eip-2315>`_ as an example. It was
-chosen because this EIP is already implemented by several clients,
-so we'll be able to run the tests we write.
+In this tutorial you learn how to write tests for a new EIP 
+(after the EIP itself has been implemented on a branch of geth).
 
 
 Environment
 ===========
+The easiest way to do this is to run **restetheth** `in a docker container you build <retesteth-tutorial.html#using-the-latest-version>`_.
+To be able to isolate problems, it is best if the docker container includes both the branch geth and the standard one.
 
-.. include:: retesteth-install.rst
+#. Get the **Dockerfile** and the script:
+
+   ::
+
+      mkdir ~/retestethBuild
+      cd ~/retestethBuild
+      wget https://raw.githubusercontent.com/ethereum/retesteth/develop/dretesteth.sh
+      chmod +x dretesteth.sh
+      wget https://raw.githubusercontent.com/ethereum/retesteth/develop/Dockerfile
+
+#. Edit **Dockerfile**:
+
+   * In the last line of the string of commands that builds **geth**, remove the ** && rm -rf /usr/local/go**.
+     We are going to need **geth** again in a moment.
+
+      ::
+
+         RUN cd /geth && apt-get install wget \
+           && wget https://dl.google.com/go/go1.18.linux-amd64.tar.gz \
+           && tar -xvf go1.18.linux-amd64.tar.gz \
+           && mv go /usr/local && ln -s /usr/local/go/bin/go /bin/go \
+           && make all && cp /geth/build/bin/evm /bin/evm \
+           && cp /geth/build/bin/geth /bin/geth \
+           && rm -rf /geth  
+
+   * Duplicate the **geth** commands, except for these changes:
+    
+      * Clone a repository that includes the modified geth (it may be a branch of the main geth repository, or a different repository alltogether).
+      * Change the directory as needed by the repository.
+      * Remove the code that installs the Go programming language.
+      * Change the binaries to go to /usr/local/bin.
+
+      |
+
+      For example, here is `Optimism's version of geth <https://github.com/ethereum-optimism/optimism/tree/develop/l2geth>`_.
+      These are the commands to install and compile it:
+
+      ::
+
+          RUN git clone --depth 1 -b develop https://github.com/ethereum-optimism/optimism.git /geth
+          RUN cd /geth/l2geth && apt-get install wget \
+              && make all && cp /geth/l2geth/build/bin/evm /usr/local/bin/evm \
+              && cp /geth/l2geth/build/bin/geth /usr/local/bin/geth \
+              && rm -rf /geth && rm -rf /usr/local/go
+
+#. Issue **./dretesteth.sh build**.
+
+#. Run at least one test to initialize the **tests/config** directory.
+
+#. To make life easier, change the ownership of those files:
+
+   ::
+
+      sudo find tests/config -exec chown `whoami` {} \;
+
+
+#. Copy the **t8ntool* configuration to **t8ntool-eip**:
+
+   ::
+   
+      cd tests/config
+      cp -R t8ntool/ t8ntool-eip
+
+#. Edit **t8ntool-eip/start.sh** to use the modified **evm** binary:
+
+   ::
+
+      if [ $stateProvided -eq 1 ]; then
+          /bin/evm-eip t8n ${1} ${2} ${3} ${4} ${5} ${6} ${7} ${8} ${9} ${10} ${11} ${12} ${13} ${14} ${15} ${16$
+      else
+          /bin/evm-eip t9n ${1} ${2} ${3} ${4} ${5} ${6} ${7} ${8} ${9} ${10} ${11} ${12} ${13} ${14} ${15} ${16$
+      fi
+
 
 
 Test Cases
