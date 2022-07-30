@@ -51,6 +51,8 @@ Retesteth Options
  -\\-help -h                      Display list of command arguments                  
  -\\-version -v                   Display build information                          
  -\\-list                         Display available test suites                      
+ -\\-testfolder                   Use to create a new test folder inside the suite.
+                                  Not compatible with using a test case folder
 ================================= ======================================================
 
 
