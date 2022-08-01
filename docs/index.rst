@@ -23,6 +23,7 @@ Ethereum Tests
    ommer-tutorial.rst
    internals-tutorial.rst
    how2contribute.rst
+   t8ntool.rst
 
 .. toctree::
    :maxdepth: 3
