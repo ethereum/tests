@@ -1,0 +1,92 @@
+# Call the ecrecover precompile with a short (<128 bytes) buffer
+
+
+ecrecoverShortBuff:
+
+  env:
+    currentCoinbase: 2adc25665018aa1fe0e6bc666dac8fc2697ff9ba
+    currentDifficulty: '0x20000'
+    currentGasLimit: '0xFF112233445566'
+    currentNumber: '1'
+    currentTimestamp: '1000'
+    previousHash: 5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6
+
+
+  pre:  
+
+
+    cccccccccccccccccccccccccccccccccccccccc:
+      code: |
+        :yul {
+          let maxLength := 0xF0     
+
+          // Initialization
+          for { let i := 0 } lt(i, maxLength) { i := add(i, 1) } {
+             mstore8(i, i)   // Initialize the memory to send ecrecover
+             // Initialize storage to verify it gets overwritten 
+             sstore(i, 0xdead60A7)
+             sstore(add(0x1000,i), 0xdead60A7)
+          }
+
+    
+
+          // Call ecrecover with every possible length that's too short, the right length
+          // (0x80), and some excessive lengths
+          for { let len := 0 } lt(len, maxLength) { len := add(len,1) } {
+             // Call ecrecoer
+             sstore(len, call(gas(), 1, 0, 0, len, 0x100, 0x20))
+
+             // The expected retval is one, so to avoid specifying every length
+             // in the expect: section we subtract one.
+             sstore(len, sub(sload(len), 1))
+
+             // The returned address should always be zero, because it is not a valid signature
+             sstore(add(0x1000,len), mload(0x100))
+          }
+        }
+      nonce: 1
+      storage: {}
+      balance: 0
+
+
+
+    a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: '1000000000000000000'
+      code: 0x
+      nonce: 1
+      storage: {}
+
+
+  transaction:
+    data:
+    - 0x00
+    gasLimit:
+    - 'F000000000'
+    gasPrice: '10'
+    nonce: 1
+    secretKey: 45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8
+    to: cccccccccccccccccccccccccccccccccccccccc
+    value:
+    - '100000'
+
+
+
+  expect:
+
+  - indexes:
+      data: !!int -1
+      gas: !!int -1
+      value: !!int -1
+    network: 
+    - ">=London"
+    result:
+      cccccccccccccccccccccccccccccccccccccccc:
+        storage:
+          # The return value for ecrecover is always one, the smart contract subtracts that
+          # so we won't have to specify every value
+          0x00: 0
+          0x01: 0
+          # .
+          # .
+          # .
+          0x7F: 0
