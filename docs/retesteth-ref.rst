@@ -101,20 +101,19 @@ Option                        Meaning
 -\\-verbosity <level>         Set logs verbosity. 0 - silent, 1 - only errors, 
                               2 - informative, >2 - detailed
 -\\-exectimelog               Output execution time for each test suite
--\\-statediff                 Trace state difference for state tests
 -\\-stderr                    Redirect ipc client stderr to stdout
 -\\-travisout                 Output \`.\` to stdout
 ============================= ===================================================
-    
-Additional Tests
-----------------------------------
 
-======================================= ===================================
-Option                                  Meaning
-======================================= ===================================
--\\-all                                 Enable all tests
--\\-lowcpu                              Disable cpu intensive tests
-======================================= ===================================
+..    
+  Additional Tests
+  ----------------------------------
+
+  ======================================= ===================================
+  Option                                  Meaning
+  ======================================= ===================================
+  -\\-all                                 Enable all tests
+  ======================================= ===================================
 
 
 
@@ -144,7 +143,7 @@ If you used different directories, or did not use docker, the commands
 will be slightly different.
 
 
-#. Run most state tests:
+#. Run state tests:
 
    ::
 
@@ -156,14 +155,8 @@ will be slightly different.
 
      ./dretesteth.sh -t GeneralStateTests -- --testpath ~/tests -j 8
 
-   Run all the tests including the time consuming ones:
 
-   ::
-
-     ./dretesteth.sh -t GeneralStateTests -- --testpath ~/tests -all
-
-
-#. Run most blockchain tests:
+#. Run blockchain tests:
 
    ::
 
