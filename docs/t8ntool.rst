@@ -1,4 +1,4 @@
-.. _t8ntool:
+.. t8ntool-tutorial:
 
 ================================================================
 Adding Transition Tool Support to your Execution Layer Client
@@ -8,7 +8,7 @@ Adding Transition Tool Support to your Execution Layer Client
 
 .. note::
     This document is a tutorial. For reference on the **t8ntool** options
-    `look here <https://ethereum-tests.readthedocs.io/en/latest/t8ntool-ref.html>`_.
+    `look here <https://ethereum-tests.readthedocs.io/en/latest/retesteth-ref.html>`__.
 
 
 Why Do This?
@@ -111,17 +111,17 @@ Optionally, there may be EVM tracing turned on, in which case you get the additi
 
 The parameters are:
 
-==================== ====================================-== ==============
+==================== ======================================= ==============
 Parameter name       Value                                   More details
 ==================== ======================================= ==============
--\\-input.txs        RLP encoded transactions file name      `see here <./t8ntool-ref.html#transaction-file>`_
+-\\-input.txs        RLP encoded transactions file name      `transaction files <./t8ntool-ref.html#transaction-file>`_
 -\\-state.fork       Fork to check against                   Istanbul, London, Merged, etc.
--\\-input.alloc      Pretest allocation file with the state  `see here <./t8ntool-ref.html#allocation-files>`_
--\\-input.txs        Transactions file                       `see here <./t8ntool-ref.html#transaction-file>`_
+-\\-input.alloc      Pretest allocation file with the state  `allocation files <./t8ntool-ref.html#allocation-files>`_
+-\\-input.txs        Transactions file                       `same as for -\\-input.txs <./t8ntool-ref.html#transaction-file>`_
 -\\-input.env        Environment file
 -\\-output.basedir   Directory to write output files
--\\-output.result    Test output                             `see here <./t8ntool-ref.html#result-file>`_
--\\-output.alloc     Posttest allocation file with the state `see here <./t8ntool-ref.html#allocation-files>`_
+-\\-output.result    Test output                             `results file <./t8ntool-ref.html#result-file>`_
+-\\-output.alloc     Posttest allocation file with the state `same as for -\\-input.alloc <./t8ntool-ref.html#allocation-files>`_
 -\\-trace            None (a flag)
 -\\-trace.memory     None (a flag)
 -\\-trace.returndata None (a flag)
@@ -135,8 +135,8 @@ If **-\\-trace** is specified, you need to reate a file (or files) called
 trace-<transaction number>-<transaction hash>.jsonl. The format of this file is specified in 
 `EIP 3155 <https://github.com/ethereum/EIPs/blob/master/EIPS/eip-3155.md>`_.
 
-This file should include the content of the memory only if **-\-trace.memory** is specified.
-It should include the content of the return buffer only if **-\-.returndata** is specified.
+This file should include the content of the memory only if **-\\-trace.memory** is specified.
+It should include the content of the return buffer only if **-\\-trace.returndata** is specified.
 
 
 
