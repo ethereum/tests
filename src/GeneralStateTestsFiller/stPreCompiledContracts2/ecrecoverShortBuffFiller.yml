@@ -1,6 +1,44 @@
 # Call the ecrecover precompile with a short (<128 bytes) buffer, or an excessively long one.
 
 
+# Using 
+#     wallet = ethers.Wallet.createRandom()
+# 
+# SigningKey {
+#  curve: 'secp256k1',
+#  privateKey: '0xaedd8fff1fea5cc2513c2db88712d7e2345cd9ba6bcebdd745ec77640961695e',
+#  publicKey: '0x04b2a40facc0b5f39f3d6f2c8986586ceb8a98cf1574d63f5f797b4db6d3a6ae5efaafdb83ee78f78c2b10021a5cb$
+#  compressedPublicKey: '0x03b2a40facc0b5f39f3d6f2c8986586ceb8a98cf1574d63f5f797b4db6d3a6ae5e',
+#  _isSigningKey: true
+# }
+#
+# Wallet {
+#  _isSigner: true,
+#  _signingKey: [Function (anonymous)],
+#  address: '0x3f9Ecb7B25fa567AFB2a4c7B633749bdA578B593',
+#  _mnemonic: [Function (anonymous)],
+#  provider: null
+# }
+#
+#     zero = "0x0000000000000000000000000000000000000000000000000000000000000000"
+#
+# wallet._signingKey().signDigest(zero)
+# wallet._signingKey().signDigest(zero)
+#    {
+#       r: '0x184870a8e4faa6065ddf65c873935d3e48e3d1c7b7853f25cd79b8247f771910',
+#       s: '0x226140b6b66554c7fcfa38589e433cc148ebe5c8482eb3093ab1d9a932c96f58',
+#       _vs: '0x226140b6b66554c7fcfa38589e433cc148ebe5c8482eb3093ab1d9a932c96f58',
+#       recoveryParam: 0,
+#       v: 27,
+#       yParityAndS: '0x226140b6b66554c7fcfa38589e433cc148ebe5c8482eb3093ab1d9a932c96f58',
+#       compact: '0x184870a8e4faa6065ddf65c873935d3e48e3d1c7b7853f25cd79b8247f771910226140b6b66554c7fcfa38589e$
+#    }
+#
+# ethers.utils.recoverAddress(zero, 
+#      "0x184870a8e4faa6065ddf65c873935d3e48e3d1c7b7853f25cd79b8247f771910226140b6b66554c7fcfa38589e433cc148eb$
+#
+# '0x3f9Ecb7B25fa567AFB2a4c7B633749bdA578B593'
+
 ecrecoverShortBuff:
 
   env:
