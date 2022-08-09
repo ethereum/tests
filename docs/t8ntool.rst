@@ -151,3 +151,53 @@ Blockchain tests are very similar to state transition tests, with these differen
 
 
 
+Minimal t8ntool client
+======================
+This is a minimal **t8ntool** client, written in Python (the retesteth docker image already has Python, 
+and we'd need to change it to get Node.js). It writes the two files that **t8ntool** requires, the
+output file and the output allocations file. The values it writes are nonsensical, but they pass the 
+minimal requirements.
+
+
+
+::
+
+   #! /usr/bin/python
+
+   import sys
+   import shutil
+
+   conf = {}
+
+   def parseParams(argv):
+      """parse the parameters to the script"""
+      for i in range(len(argv)):
+         if argv[i][:2] == "--":
+            conf[argv[i]] = argv[i+1]
+
+
+   parseParams(sys.argv)
+
+   # No change in the blockchain state
+   shutil.copyfile(conf["--input.alloc"], conf["--output.basedir"] + "/" + conf["--output.alloc"])
+
+
+   # Read the environment
+   envFile = open(conf["--input.env"])
+   envJSON = envFile.read()
+   envFile.close()
+
+   # Write the output
+   resFile = open(conf["--output.basedir"] + "/" + conf["--output.result"], "w")
+   resFile.write("""
+     {
+       "currentDifficulty" : "0x020000",
+       "logsBloom": "0x""" + '01'*256 + """",
+       "logsHash": "0x0102030405060708091011121314151617181920212223242526272829303132",
+       "receipts": [],
+       "receiptsRoot": "0x0102030405060708091011121314151617181920212223242526272829303132",
+       "stateRoot": "0x0102030405060708091011121314151617181920212223242526272829303132",
+       "txRoot": "0x0102030405060708091011121314151617181920212223242526272829303132"
+     }
+   """)
+   resFile.close()
