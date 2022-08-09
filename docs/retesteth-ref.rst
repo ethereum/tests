@@ -115,6 +115,14 @@ Option                                  Meaning
 -\\-all                                 Enable all tests
 ======================================= ===================================
 
+This setting enables the following test suites:
+
+* `GeenralStateTests/stTimeConsuming <https://github.com/ethereum/tests/tree/develop/src/GeneralStateTestsFiller/stTimeConsuming>`_
+* `GeenralStateTests/stQuadraticComplexityTest <https://github.com/ethereum/tests/tree/develop/src/GeneralStateTestsFiller/stQuadraticComplexityTest>`_
+* `GeneralStateTests/VMTests/vmPerformance <https://github.com/ethereum/tests/tree/develop/src/GeneralStateTestsFiller/VMTests/vmPerformance>`_
+* `BlockchainTests/ValidBlocks/bcExploitTest <https://github.com/ethereum/tests/tree/develop/src/BlockchainTestsFiller/ValidBlocks/bcExploitTest>`_
+* `BlockchainTests/ValidBlocks/bcWalletTest <https://github.com/ethereum/tests/tree/develop/src/BlockchainTestsFiller/ValidBlocks/bcWalletTest>`_
+* `BlockchainTests/InvalidBlocks/bcExpectSection <https://github.com/ethereum/tests/tree/develop/src/BlockchainTestsFiller/InvalidBlocks/bcExpectSection>`_
 
 
 Test Generation
