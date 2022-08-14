@@ -24,6 +24,7 @@ Ethereum Tests
    internals-tutorial.rst
    how2contribute.rst
    t8ntool.rst
+   custom-compiler.rst
 
 .. toctree::
    :maxdepth: 3

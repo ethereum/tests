@@ -15,7 +15,7 @@ Why Do This?
 =============
 Typically you would add transition tools (t8ntool) support to a client to run the state 
 transition and blockchain tests from `the standard repository <https://github.com/ethereum/tests>`_
-using the `**retesteth** <./retesteth-tutorial.html>`_ tool.
+using the `retesteth <./retesteth-tutorial.html>`_ tool.
 
 
 Configuration

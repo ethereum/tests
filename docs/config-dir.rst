@@ -22,8 +22,7 @@ These directories can contain this information:
     by **t8ntool**, which runs a separate instance of **evm t8n** for each test.
 
     You can find more information about the communication between **retesteth**
-    and clients in `the retesteth wiki 
-    <https://github.com/ethereum/retesteth/wiki/Add-client-configuration-to-Retesteth>`_.
+    and clients in `the t8ntool tutorial <t8ntool.html>`_. 
 
 .. _socketAddress:
 
@@ -31,13 +30,18 @@ These directories can contain this information:
     the format **<ip>:<port>**), a file for IPC, or an executable to run (for
     **transition-tool**).
 
+  - **customCompilers**, definitions for custom compilers.
+    You can find more information about using custom compilers in `the tutorial <custom-compiler.html>`_.
+
   - **initializeTime**, the time to wait for the client to initialize before
     sending it tests.
 
   - **forks**, the main supported forks.
 
   - **additionalForks**, additional forks, which are supported but only if they 
-    are specified explicitly. For example, if a client's **config** file specifies:
+    are specified explicitly. 
+
+    For example, if a client's **config** file specifies:
 
     ::
 
@@ -112,6 +116,10 @@ These directories can contain this information:
 
   In the case of **t8ntool**, at writing the only client that uses the **transition-tool**
   socket type, this script is **start.sh**. 
+
+- **mycompiler.sh**, a sample custom compiler script.
+    You can find more information about using custom compilers in `the tutorial <custom-compiler.html>`_.
+
 
 - **genesis/<forkname>.json**, this is the genesis config for the client, primarily
   the way to specify for the client what fork it is running. The forkname value is
