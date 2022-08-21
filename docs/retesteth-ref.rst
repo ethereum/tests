@@ -93,7 +93,7 @@ Option                        Meaning
                               GeneralStateTests
 -v <index>                    Set the transaction value array index when running 
                               GeneralStateTests
--\\-vmtraceraw                Trace transaction execution
+-\\-vmtraceraw [<folder>]     Trace transaction execution (see note)
 -\\-vmtrace                   Trace transaction execution, simplified version
 -\\-limitblocks <num>         Limit the block exectuion in blockchain tests for 
                               debugging to the first <num> blocks
@@ -104,6 +104,16 @@ Option                        Meaning
 -\\-stderr                    Redirect ipc client stderr to stdout
 -\\-travisout                 Output \`.\` to stdout
 ============================= ===================================================
+
+
+.. note::
+
+   Normally the **-\\-vmtraceraw** output goes to standard output. However, you could specify a directory
+   name and it would get written there (under a different file name for every fork, data value, etc.).
+   If you are using docker that directory is in the folder, so it is easiest to use a directory such as
+   **/tests/results** (because **/tests** on the docker is the tests repository on a file system outside
+   the docker).
+
 
 
 Additional Tests
@@ -135,9 +145,21 @@ Option                          Meaning
 -\\-fillchain                   When filling the state tests, fill 
                                 tests as blockchain instead
 -\\-showhash                    Show filler hash debug information
--\\-poststate                   Show post state hash or fullstate
+-\\-poststate [<folder>]        Show post state hash or fullstate
+                                Normally goes to output, but if a folder is specified written to that folder.
+                                If you use Docker, those are on the image, so it's best to use **/test/...**.
+
 -\\-fullstate                   Do not compress large states to hash
 =============================== ===================================
+
+
+.. note::
+
+   Normally the **-\\-poststate** output goes to standard output. However, you could specify a directory
+   name and it would get written there (under a different file name for every fork, data value, etc.).
+   If you are using docker that directory is in the folder, so it is easiest to use a directory such as
+   **/tests/results** (because **/tests** on the docker is the tests repository on a file system outside
+   the docker).
 
 
 
