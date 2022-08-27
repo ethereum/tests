@@ -21,16 +21,48 @@ CreateAddressWarmAfterNonceMax:
 
     00000000000000000000000000000000000c0deC:
       nonce: "0xffffffffffffffff"
-      balance: 0
+      balance: 0x1000000
       storage: {}
       code: |
         :yul
           object "C" {
             code {
-              sstore(0, create(0, 0, 0))
-              // Call the create address.
-              sstore(1, call(0, 0xf4eb6941ffbbffd112b83bda0d43f1c9d98d450a, callvalue(), 0, 0, 0, 0))
-              stop()
+              // Make storage cells here warm
+              sstore( 0, 0xdead60A7)
+              sstore( 1, 0xdead60A7)
+              sstore( 2, 0xdead60A7)
+              sstore( 3, 0xdead60A7)
+              sstore( 4, 0xdead60A7)
+              sstore(10, 0xdead60A7)
+              sstore(11, 0xdead60A7)
+              sstore(12, 0xdead60A7)
+              sstore(13, 0xdead60A7)
+              sstore(14, 0xdead60A7)
+
+              // Run create and measure the gas cost
+              sstore(10, gas())
+              sstore(0, create(0, 0, 0x100))
+              sstore(10, sub(sload(10), gas()))
+
+              // Run create again and measure the gas cost
+              sstore(11, gas())
+              sstore(1, create(0, 0, 0x100))
+              sstore(11, sub(sload(11), gas()))
+
+              // Call the create address and measure the gas cost
+              sstore(12, gas())
+              sstore(2, call(0, 0xf4eb6941ffbbffd112b83bda0d43f1c9d98d450a, callvalue(), 0, 0, 0, 0))
+              sstore(12, sub(sload(12), gas()))
+
+              // Call the create address a second time and measure the gas cost
+              sstore(13, gas())
+              sstore(3, call(0, 0xf4eb6941ffbbffd112b83bda0d43f1c9d98d450a, callvalue(), 0, 0, 0, 0))
+              sstore(13, sub(sload(13), gas()))
+
+              // Call a random (cold) address and measure the gas cost
+              sstore(14, gas())
+              sstore(4, call(0, 0xd4e7ae083132925a4927c1f5816238ba17b82a00, callvalue(), 0, 0, 0, 0))
+              sstore(14, sub(sload(14), gas()))
             }
           }
   
@@ -60,10 +92,17 @@ CreateAddressWarmAfterNonceMax:
           nonce: 1
         00000000000000000000000000000000000c0deC:
           nonce: "0xffffffffffffffff"    # Create failed because nonce value is maximum.
-          balance: 0
           storage:
             0: 0    # Create failed
-            1: 1    # Call to create address successful
+            1: 0    # 2nd create failed
+            2: 1    # Call to create address successful
+            3: 1    # Call to create address successful
+            4: 1    # Call to random address successful
+            10: 32241    # Gas cost of create (cold address)
+            11: 32217    # Gas cost of second create
+            12:  2828    # Gas cost of call to created address (warm address)
+            13:   328    # Gas cost of 2nd call to created address
+            14:  2828    # Gas cost of call to empty random (cold) address
         f4eb6941ffbbffd112b83bda0d43f1c9d98d450a: # Create address
           shouldnotexist: true
 
@@ -81,8 +120,16 @@ CreateAddressWarmAfterNonceMax:
           nonce: "0xffffffffffffffff"    # Create failed because nonce value is maximum.
           storage:
             0: 0    # Create failed
-            1: 1    # Call to create address successful
+            1: 0    # 2nd create failed
+            2: 1    # Call to create address successful
+            3: 1    # Call to create address successful
+            4: 1    # Call to random address successful
+            10: 32241    # Gas cost of create (cold address)
+            11: 32217    # Gas cost of second create
+            12: 34528    # Gas cost of call to created address (warm address), need to create
+                         # a record to store the balance
+            13:  7028    # Gas cost of 2nd call to created address
+            14: 34528    # Gas cost of call to empty random (cold) address
         f4eb6941ffbbffd112b83bda0d43f1c9d98d450a: # Create address
-          nonce: 0
-          balance: 1   # Funded with the call after failed create.
+          balance: 2   # Funded with the calls after failed create.
           code: ""

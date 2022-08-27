@@ -21,7 +21,9 @@ CreateAddressWarmAfterInitcodeFailure:
 
     00000000000000000000000000000000000c0deC:
       nonce: 0
-      balance: 0
+      # Need extra gas to be able to send some to the "random" address
+      # And to send to the created address twice
+      balance: 0x1000
       storage: {}
       code: |
         :yul
@@ -29,9 +31,46 @@ CreateAddressWarmAfterInitcodeFailure:
             code {
               let initcode_size := datasize("initcode")
               datacopy(0, dataoffset("initcode"), initcode_size)
+
+              // Make storage cells here warm
+              sstore( 0, 0xdead60A7)
+              sstore( 1, 0xdead60A7)
+              sstore( 2, 0xdead60A7)
+              sstore( 3, 0xdead60A7)
+              sstore( 4, 0xdead60A7)
+              sstore(10, 0xdead60A7)
+              sstore(11, 0xdead60A7)
+              sstore(12, 0xdead60A7)
+              sstore(13, 0xdead60A7)
+              sstore(14, 0xdead60A7)
+
+              // Run create and measure the gas cost
+              sstore(10, gas())
               sstore(0, create(0, 0, initcode_size))
-              // Call the create address.
-              sstore(1, call(0, 0xd4e7ae083132925a4927c1f5816238ba17b82a65, callvalue(), 0, 0, 0, 0))
+              sstore(10, sub(sload(10), gas()))
+
+              // Run create again and measure the gas cost
+              sstore(11, gas())
+              sstore(1, create(0, 0, initcode_size))
+              sstore(11, sub(sload(11), gas()))
+
+              // Call the create address and measure the gas cost
+              sstore(12, gas())
+              sstore(2, call(0, 0xd4e7ae083132925a4927c1f5816238ba17b82a65, callvalue(), 0, 0, 0, 0))
+              sstore(12, sub(sload(12), gas()))
+
+              // Call the create address a second time and measure the gas cost
+              sstore(13, gas())
+              sstore(3, call(0, 0xd4e7ae083132925a4927c1f5816238ba17b82a65, callvalue(), 0, 0, 0, 0))
+              sstore(13, sub(sload(13), gas()))
+
+              // Call a random (cold) address and measure the gas cost
+              sstore(14, gas())
+              sstore(4, call(0, 0xd4e7ae083132925a4927c1f5816238ba17b82a00, callvalue(), 0, 0, 0, 0))
+              sstore(14, sub(sload(14), gas()))
+
+             
+
               stop()
             }
             object "initcode" {
@@ -66,11 +105,19 @@ CreateAddressWarmAfterInitcodeFailure:
         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           nonce: 1
         00000000000000000000000000000000000c0deC:
-          nonce: 1    # Create failed, but nonce is bumped.
-          balance: 0
+          nonce: 2    # Create failed, but nonce is bumped.
           storage:
             0: 0    # Create failed
-            1: 1    # Call to create address successful
+            1: 0    # 2nd create failed
+            2: 1    # Call to create address successful
+            3: 1    # Call to create address successful
+            4: 1    # Call to random address successful
+            10: 32223    # Gas cost of create (cold address)
+            11: 32223    # Gas cost of second create
+            12:   328    # Gas cost of call to created address (warm address)
+            13:   328    # Gas cost of 2nd call to created address
+            14:  2828    # Gas cost of call to empty random (cold) address
+
         d4e7ae083132925a4927c1f5816238ba17b82a65: # Create address
           shouldnotexist: true
 
@@ -85,12 +132,23 @@ CreateAddressWarmAfterInitcodeFailure:
         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           nonce: 1
         00000000000000000000000000000000000c0deC:
-          nonce: 1    # Create failed, but nonce is bumped.
+          nonce: 2    # Create failed, but nonce is bumped.
           storage:
             0: 0    # Create failed
-            1: 1    # Call to create address successful
+            1: 0    # 2nd create failed
+            2: 1    # Call to create address successful
+            3: 1    # Call to create address successful
+            4: 1    # Call to random address successful
+
+            10: 32223    # Gas cost of create (cold address)
+            11: 32223    # Gas cost of second create
+ 
+            # Expensive because to send gas to a previously empty address we need to create it first
+            12: 32028    # Gas cost of call to created address (warm address)
+            13:  7028    # Gas cost of 2nd call to created address, much cheaper because 
+            14: 34528    # Gas cost of call to empty random (cold) address
         d4e7ae083132925a4927c1f5816238ba17b82a65: # Create address
           nonce: 0
-          balance: 1   # Funded with the call after failed create.
+          balance: 2   # Funded with two calls after failed create.
           code: ""
 
