@@ -1,0 +1,227 @@
+CreateAddressWarmAfterFail:
+  _info:
+    comment: |
+      Invokes failing CREATE (because initcode fails) and checks
+      if the create address is considered warm in the follow up call as required by EIP-2929.
+  env:
+    currentCoinbase: 2adc25665018aa1fe0e6bc666dac8fc2697ff9ba
+    currentDifficulty: 1
+    currentGasLimit: 3000000000
+    currentNumber: 2
+    currentTimestamp: 999
+    previousHash: 5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6
+
+  pre:
+    # Tx sender
+    a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      nonce: 0
+      balance: 1000000000001
+      storage: {}
+      code: ''
+
+    00000000000000000000000000000000000c0deC:
+      nonce: 0
+      # Need extra gas to be able to send some to the "random" address
+      # And to send to the created address twice
+      balance: 0x1000
+      storage: {}
+      code: |
+        :yul
+          object "C" {
+            code {
+              let failType := calldataload(4)
+              let initcode_size 
+
+
+              if eq(failType, 0) {
+                  initcode_size := datasize("revert-constructor")
+                  datacopy(0, dataoffset("revert-constructor"), initcode_size)
+              }
+
+
+              if eq(failType, 1) {
+                  initcode_size := datasize("code-too-big")
+                  datacopy(0, dataoffset("code-too-big"), initcode_size)
+              }
+
+              // The return values of various actions. Done twice to see if there is a difference
+              let create_1 := 0
+              let create_2 := 1
+              let call_created_1 := 2
+              let call_created_2 := 3
+              let call_empty_1 := 4
+              let call_empty_2 := 5
+
+              // The costs of those operations
+              let create_1_cost := 10
+              let create_2_cost := 11
+              let call_created_1_cost := 12
+              let call_created_2_cost := 13
+              let call_empty_1_cost := 14
+              let call_empty_2_cost := 15
+
+              // Make the storage cells we use here are warm
+              sstore(create_1, 0xdead60A7)
+              sstore(create_2, 0xdead60A7)
+              sstore(call_created_1, 0xdead60A7)
+              sstore(call_created_2, 0xdead60A7)
+              sstore(call_empty_1, 0xdead60A7)
+              sstore(call_empty_2, 0xdead60A7)
+
+              // I decided not to measure the cost of CREATE's because:
+              //
+              // 1. It is irrelevant to the cold/warm address issue
+              // 2. This lets the test results be the same regardless of data
+              //
+              // sstore(create_1_cost, 0xdead60A7)
+              // sstore(create_2_cost, 0xdead60A7)
+              
+              sstore(call_created_1_cost, 0xdead60A7)
+              sstore(call_created_2_cost, 0xdead60A7)
+              sstore(call_empty_1_cost, 0xdead60A7)
+              sstore(call_empty_2_cost, 0xdead60A7)
+
+              let addrEmpty := 0xd4e7ae083132925a4927c1f5816238ba17b82a00
+              let addrCreated := 0xd4e7ae083132925a4927c1f5816238ba17b82a65
+
+              // Run create and measure the gas cost
+              // sstore(create_1_cost, gas())
+              sstore(create_1, create(0, 0, initcode_size))
+              // sstore(create_1_cost, sub(sload(create_1_cost), gas()))
+
+              // Run create again and measure the gas cost
+              // sstore(create_2_cost, gas())
+              sstore(create_2, create(0, 0, initcode_size))
+              // sstore(create_2_cost, sub(sload(create_2_cost), gas()))
+
+              // Call the create address and measure the gas cost
+              sstore(call_created_1_cost, gas())
+              sstore(call_created_1, call(0, addrCreated, callvalue(), 0, 0, 0, 0))
+              sstore(call_created_1_cost, sub(sload(call_created_1_cost), gas()))
+
+              // Call the create address a second time and measure the gas cost
+              sstore(call_created_2_cost, gas())
+              sstore(call_created_2, call(0, addrCreated, callvalue(), 0, 0, 0, 0))
+              sstore(call_created_2_cost, sub(sload(call_created_2_cost), gas()))
+
+              // Call a empty (cold) address and measure the gas cost
+              sstore(call_empty_1_cost, gas())
+              sstore(call_empty_1, call(0, addrEmpty, callvalue(), 0, 0, 0, 0))
+              sstore(call_empty_1_cost, sub(sload(call_empty_1_cost), gas()))
+
+              // Call the same address again
+              sstore(call_empty_2_cost, gas())
+              sstore(call_empty_2, call(0, addrEmpty, callvalue(), 0, 0, 0, 0))
+              sstore(call_empty_2_cost, sub(sload(call_empty_2_cost), gas()))
+
+             
+
+              stop()
+            }
+            object "revert-constructor" {   // Data 0
+              code {
+                 revert(0, 0)
+              }
+            }
+            object "code-too-big" {   // Data 1
+              code {
+                 return(0, 0x6001)
+              }
+            }
+            object "out-of-gas" {     // Data 2
+              code {
+                pop(call(0x1000, 0xC0DE0006, callvalue(), 0, 0, 0, 0))
+                revert(0x100, 0)
+              }
+            }
+          }
+  
+  transaction:
+    data:
+      - :abi fail(uint) 0   # Revert in the constructor
+      - :abi fail(uint) 1   # Code too big
+      - :abi fail(uint) 2   # Creator out of gas
+    gasLimit:
+      - 400000000
+    gasPrice: 10
+    nonce: 0
+    to: "00000000000000000000000000000000000c0deC"
+    secretKey: "45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8"
+    value:
+      - 0
+      - 1
+
+  expect:
+    - indexes:
+        data: !!int -1
+        gas: !!int -1
+        value:
+          - !!int 0
+      network:
+        - ">=London"
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        00000000000000000000000000000000000c0deC:
+          nonce: 2    # Create failed, but nonce is bumped.
+          storage:
+            0: 0    # Create failed
+            1: 0    # 2nd create failed
+            2: 1    # Call to create address successful
+            3: 1    # Call to create address successful
+            4: 1    # Call to random address successful
+            5: 1    # Call to random address successful
+#            10: 32223    # Gas cost of create
+#            11: 32223    # Gas cost of second create
+            12:   328    # Gas cost of call to created address (warm address)
+            13:   328    # Gas cost of 2nd call to created address
+            14:  2828    # Gas cost of call to empty (cold) address
+            15:   328    # Gas cost of 2nd call to empty (now warm) address
+
+        d4e7ae083132925a4927c1f5816238ba17b82a65: # Create address
+          shouldnotexist: true
+
+    - indexes:
+        data: !!int -1
+        gas: !!int -1
+        value:
+          - !!int 1
+      network:
+        - ">=London"
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        00000000000000000000000000000000000c0deC:
+          nonce: 2    # Create failed, but nonce is bumped.
+          storage:
+            0: 0    # Create failed
+            1: 0    # 2nd create failed
+            2: 1    # Call to create address successful
+            3: 1    # Call to create address successful
+            4: 1    # Call to random address successful
+            5: 1    # Call to random address successful
+
+#            10: 32223    # Gas cost of create (cold address)
+#            11: 32223    # Gas cost of second create
+ 
+            # The first call is expensive because when sending eth to an empty address it has to be
+            # created, which is an extra cost
+            12: 32028    # Gas cost of call to created address (warm address)
+            13:  7028    # Gas cost of 2nd call to created address, much cheaper because 
+            14: 34528    # Gas cost of call to empty random (cold) address
+            15:  7028    # Gas cost of second call to (now warm) address
+
+
+        # Create address
+        d4e7ae083132925a4927c1f5816238ba17b82a65:
+          nonce: 0
+          balance: 2   # Funded with two calls after failed create.
+          code: ""     # No code
+
+
+        # Empty address
+        d4e7ae083132925a4927c1f5816238ba17b82a00:
+          nonce: 0
+          balance: 2   # Funded with two calls after failed create.
+          code: ""     # No code
+
