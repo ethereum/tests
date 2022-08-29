@@ -99,8 +99,16 @@ CreateAddressWarmAfterFail:
               }
               case 5 {    // Nonce too high to create another contract
                 addrCreated := 0xB2050fc27aB6d6D42dc0CE6f7C0BF9481a4c3Fc3
-                sstore(create_1, call(0x100000, 0xC0DEFFFF, 0, 0, 0, 0, 0))
+                sstore(create_1, call(0x10000, 0xC0DEFFFF, 0, 0, 0, 0, 0))
               }
+              case 6 {    // Creating a contract that starts with 0xEF, which is not allowed EIP-3541
+                addrCreated := 0xd4e7ae083132925a4927c1f5816238ba17b82a65
+                initcode_size := datasize("start-ef")
+                datacopy(0, dataoffset("start-ef"), initcode_size)
+                sstore(create_1, create(0, 0, initcode_size))
+
+              }
+
               default { revert(0,0) }   // Not supposed to ever happen
       
 
@@ -140,6 +148,12 @@ CreateAddressWarmAfterFail:
             object "invalid" {        // Data 2
               code {
                  invalid()
+                 return(0, 10)
+              }
+            }
+            object "start-ef" {        // Data 6
+              code {
+                 mstore8(0, 0xEF)    // Cannot be the first byte as per https://eips.ethereum.org/EIPS/eip-3541
                  return(0, 10)
               }
             }
@@ -197,6 +211,7 @@ CreateAddressWarmAfterFail:
       - :abi fail(uint) 3   # Constructor OOG because it returns the max contract size
       - :abi fail(uint) 4   # OOG after the constructor
       - :abi fail(uint) 5   # Nonce too high to create an account
+      - :abi fail(uint) 6   # Contract starts with 0xEF, which is not allowed
     gasLimit:
       - 400000000
     gasPrice: 10
@@ -215,6 +230,7 @@ CreateAddressWarmAfterFail:
           - !!int 0
           - !!int 1
           - !!int 2
+          - !!int 6
         gas: !!int -1
         value:
           - !!int 0
@@ -245,6 +261,7 @@ CreateAddressWarmAfterFail:
           - !!int 0
           - !!int 1
           - !!int 2
+          - !!int 6
         value:
           - !!int 1
       network:
@@ -337,7 +354,7 @@ CreateAddressWarmAfterFail:
         00000000000000000000000000000000000c0deC:
           nonce: 0   # No nonce bump
           storage:
-            0: 1    # Call to creator contract successful
+            0: 1    # Creator account call is successful
             2: 1    # Call to create address successful
             3: 1    # Call to create address successful
             4: 1    # Call to random address successful
