@@ -18,7 +18,8 @@ push0Gas:
 
     0000000000000000000000000000000000000100:
       balance: 0
-      code: ':raw 0x5f'
+      # sstore(0, gas) push0 sstore(0, (sub(sload(0), gas))) stop
+      code: ':raw 0x5a6000555f5a6000540360015500'
       nonce: '0'
       storage: {}
 
@@ -42,8 +43,9 @@ push0Gas:
       network:
         - 'London'
       result:
-        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
-          balance: 9000000
+        # In London, PUSH0 is invalid, contract fails.
+        0000000000000000000000000000000000000100:
+          storage: {}
     - indexes:
         data: !!int -1
         gas:  !!int -1
@@ -51,6 +53,14 @@ push0Gas:
       network:
         - 'London+3855'
       result:
-        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
-          # cost is (21000 instrinsic gas + 2 gas for PUSH0) * 10 gasPrice = 210020
-          balance: 9789980
+        0000000000000000000000000000000000000100:
+          # Initial gas: 100000
+          #                         Initial Gas     Intrinsic cost   GAS 
+          # Initial EVM Gas: 78998 (100000          - 21000          - 2)
+          #                         PUSH1   SSTORE  PUSH0   GAS
+          # Gas Used :       21107 ( 3    + 22100   + 2    + 2  )
+          storage: 
+            0: 78998 
+            1: 22107
+            
+
