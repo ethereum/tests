@@ -108,6 +108,12 @@ CreateAddressWarmAfterFail:
                 sstore(create_1, create(0, 0, initcode_size))
 
               }
+              case 7 {   // Successful create.
+                addrCreated := 0xd4e7ae083132925a4927c1f5816238ba17b82a65
+                initcode_size := datasize("success")
+                datacopy(0, dataoffset("success"), initcode_size)
+                sstore(create_1, create(0, 0, initcode_size))
+              }
 
               default { revert(0,0) }   // Not supposed to ever happen
       
@@ -155,6 +161,11 @@ CreateAddressWarmAfterFail:
               code {
                  mstore8(0, 0xEF)    // Cannot be the first byte as per https://eips.ethereum.org/EIPS/eip-3541
                  return(0, 10)
+              }
+            }
+            object "success" {         // Data 7
+              code {
+                return(0, 1)     // A zero, which makes it a STOP when it is called
               }
             }
           }
@@ -212,6 +223,7 @@ CreateAddressWarmAfterFail:
       - :abi fail(uint) 4   # OOG after the constructor
       - :abi fail(uint) 5   # Nonce too high to create an account
       - :abi fail(uint) 6   # Contract starts with 0xEF, which is not allowed
+      - :abi fail(uint) 7   # Successfully create the account
     gasLimit:
       - 400000000
     gasPrice: 10
@@ -454,5 +466,72 @@ CreateAddressWarmAfterFail:
 
 
 
+
+    # CREATE executed directly by c0deC (successfully)
+    - indexes:
+        data: 
+          - !!int 7
+        gas: !!int -1
+        value:
+          - !!int 0
+      network:
+        - ">=London"
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        00000000000000000000000000000000000c0deC:
+          nonce: 1 
+          storage:
+            0: 0xd4e7ae083132925a4927c1f5816238ba17b82a65  # Create successful, created this address
+            2: 1    # Call to create address successful
+            3: 1    # Call to create address successful
+            4: 1    # Call to random address successful
+            5: 1    # Call to random address successful
+            12:   328    # Gas cost of call to created address (warm address)
+            13:   328    # Gas cost of 2nd call to created address
+            14:  2828    # Gas cost of call to empty (cold) address
+            15:   328    # Gas cost of 2nd call to empty (now warm) address
+
+        d4e7ae083132925a4927c1f5816238ba17b82a65: # Create address
+          code: 0x00
+
+    # CREATE executed directly by c0deC (successfully)
+    - indexes:
+        data: 
+          - !!int 7
+        value:
+          - !!int 1
+      network:
+        - ">=London"
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+
+        00000000000000000000000000000000000c0deC:
+          nonce: 1
+          storage:
+            0: 0xd4e7ae083132925a4927c1f5816238ba17b82a65  # Create successful, created this address
+            2: 1    # Call to create address successful
+            3: 1    # Call to create address successful
+            4: 1    # Call to random address successful
+            5: 1    # Call to random address successful
+            12:  7028    # Gas cost of call to created address, no need to create it
+            13:  7028    # Gas cost of 2nd call to created address, much cheaper because 
+            14: 34528    # Gas cost of call to empty random (cold) address
+            15:  7028    # Gas cost of second call to (now warm) address
+
+
+        # Create address, nonce=1 because it really is created
+        d4e7ae083132925a4927c1f5816238ba17b82a65:
+          nonce: 1
+          balance: 2     # Funded with two calls after create.
+          code: 0x00     # One byte of code
+
+
+        # Empty address, filled when ETH is sent to it
+        d4e7ae083132925a4927c1f5816238ba17b82a00:
+          nonce: 0
+          balance: 2   # Funded with two calls
+          code: ""     # No code
 
 
