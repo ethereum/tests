@@ -3,6 +3,7 @@ CreateAddressWarmAfterFail:
     comment: |
       Invokes failing CREATE (because initcode fails) and checks
       if the create address is considered warm in the follow up call as required by EIP-2929.
+      Addresses taken from https://toolkit.abdk.consulting/ethereum#contract-address
   env:
     currentCoinbase: 2adc25665018aa1fe0e6bc666dac8fc2697ff9ba
     currentDifficulty: 1
@@ -119,12 +120,25 @@ CreateAddressWarmAfterFail:
                 addrCreated := 0xB2050fc27aB6d6D42dc0CE6f7C0BF9481a4c3Fc3
                 sstore(create_1, call(0x10000, 0xC0DEFFFF, 0, 0, 0, 0, 0))
               }
+              case 13 {    // Out of gas (due to constructor returning a huge contract) 
+                          // We need it to be a called contract
+                          // so the transaction will be overall successful
+                addrCreated := 0xd70dF326038a3c7cA8FAc785a99162BFe75CCc46
+                          // gas amount calculated to cause the CREATE to fail
+                sstore(create_1, call(0x7000, 0x20C0DE1006, 0, 0, 0, 0, 0))
+              }
+              case 14 {    // OOG after the CREATE2
+                           // We need it to be a called contract
+                           // so the transaction will be overall successful
+                addrCreated := 0xd70dF326038a3c7cA8FAc785a99162BFe75CCc46
+                          // gas amount calculated to cause failure after the CREATE
+                sstore(create_1, call(0x10000, 0x20C0DE1006, 0, 0, 0, 0, 0))
+              }
               case 6 {    // Creating a contract that starts with 0xEF, which is not allowed EIP-3541
                 addrCreated := 0xd4e7ae083132925a4927c1f5816238ba17b82a65
                 initcode_size := datasize("start-ef")
                 datacopy(0, dataoffset("start-ef"), initcode_size)
                 sstore(create_1, create(0, 0, initcode_size))
-
               }
               case 16 {    // Create2 a contract that starts with 0xEF, which is not allowed EIP-3541
                 addrCreated := 0x562D97e3E4d6d3C6e791EA64bB73d820871Aa219
@@ -227,6 +241,30 @@ CreateAddressWarmAfterFail:
          }  
 
 
+    # Data 13 - Out of gas through a constructor that returns too much
+    # Data 14 - Out of gas later in the call (past the constructor)
+    00000000000000000000000000000020c0de1006:
+      nonce: 1
+      balance: 0x1000
+      storage: {}
+      code: |
+        :yul
+          object "C" {
+            code {
+              datacopy(0, dataoffset("dummy"), datasize("dummy"))
+              sstore(0, create2(0, 0, datasize("dummy"), 0))
+              stop()
+            }
+            object "dummy" {
+              code {
+                return(0,0x6000)
+            }
+          }
+         }  
+
+
+
+
     # Data 5 - Nonce too high to create another contract
     00000000000000000000000000000000c0deFFFF:
       nonce: 0xFFFFFFFFFFFFFFFF
@@ -257,6 +295,8 @@ CreateAddressWarmAfterFail:
       - :label create2-invalid-opcode    :abi fail(uint) 12  # Constructor has invalid opcode
       - :label create-oog-constructor    :abi fail(uint) 3   # Constructor OOG because it returns the max contract size
       - :label create-oog-post-constr    :abi fail(uint) 4   # OOG after the constructor
+      - :label create2-oog-constructor   :abi fail(uint) 13  # Constructor OOG because it returns the max contract size
+      - :label create2-oog-post-constr   :abi fail(uint) 14  # OOG after the constructor
       - :label create-high-nonce         :abi fail(uint) 5   # Nonce too high to create an account
       - :label create-0xef               :abi fail(uint) 6   # Contract starts with 0xEF, which is not allowed
       - :label create2-0xef              :abi fail(uint) 16  # Contract starts with 0xEF, which is not allowed
@@ -731,11 +771,13 @@ CreateAddressWarmAfterFail:
 
 
 
-    # Call to a different account to do CREATE, which reverts as out of gas
+    # Call to a different account to do CREATE[2], which reverts as out of gas
     - indexes:
         data: 
           - :label create-oog-constructor
           - :label create-oog-post-constr   
+          - :label create2-oog-constructor
+          - :label create2-oog-post-constr   
         gas: !!int -1
         value:
           - !!int 0
@@ -762,11 +804,15 @@ CreateAddressWarmAfterFail:
         d4e7ae083132925a4927c1f5816238ba17b82a65: # Create address
           shouldnotexist: true
 
-    # Call to a different account to do CREATE, which reverts
+
+
+    # Call to a different account to do CREATE[2], which reverts
     - indexes:
         data: 
           - :label create-oog-constructor
           - :label create-oog-post-constr   
+          - :label create2-oog-constructor
+          - :label create2-oog-post-constr   
         value:
           - !!int 1
       network:
