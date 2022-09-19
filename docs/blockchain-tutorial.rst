@@ -197,22 +197,34 @@ that in real execution would come from the consensus layer.
 Note that **mixHash** has to be a 32 byte value.
 Even if most of the bytes are zeros, you have to specify them.
 
-When you run the test, it fails on the first block where the state is a function of the random value:
+When you run the test, it fails on the first block where the state is a function of the random value with an error that includes these lines:
 
 ::
 
-   gasLimit 0xf00000000000 vs 0xf00000000000
-   gasUsed 0x6594 vs 0x6594
-   hash 0x606435568815021b4a86eea337411f13fe54d8c0bb9c892a536b08d3fe627ee1 vs 0xeef45608da53d5ceea6349cf06b3568615e38d718ffc2fc9e77870f06f29c08b
-   mixHash 0x0102030405060708091011121314151617181920212223242526272829303132 vs 0x0102030405060708091011121314151617181920212223242526272829303132
-   nonce 0x0000000000000000 vs 0x0000000000000000
-   number 0x01 vs 0x01
-   parentHash 0x2f9715fb0249fa1b10dc55b3d7fc04a4e83a82e7046d56c2df38d08d6535a514 vs 0x2f9715fb0249fa1b10dc55b3d7fc04a4e83a82e7046d56c2df38d08d6535a514
+   /retesteth/retesteth/TestOutputHelper.cpp(227): error: in "BlockchainTests/ValidBlocks/bcStateTests": 
+   Error: Postmine block tweak expected no exception! Client errors with: 'Error importing raw rlp block: Block from pending block != t8ntool constructed block!
+   Error in field: stateRoot
+      .
+      .
+      .
+   parentHash 0x76898c312aea29aa17df32e97399ccdf88e72c544305c9ddc3e76996e35ab951 vs 0x76898c312aea29aa17df32e97399ccdf88e72c544305c9ddc3e76996e35ab951
    receiptTrie 0x71043553dd2c4fbc22100a69d47ba3a790f7e428796792c552362b81e6cf5331 vs 0x71043553dd2c4fbc22100a69d47ba3a790f7e428796792c552362b81e6cf5331
-   stateRoot 0x9f21e7c91ed3c1eb1aa5b3ab1a497af91af75da2a56f7c5742fe27634057cf24 vs 0xbfba6ab1bf48ac123ad0fbed27a9a56560f6fcb8e5177e019c8d3eef545b8b6e
-   timestamp 0x54c99069 vs 0x54c99069
+   stateRoot 0x7a3760ed3aa3e40711b3ecd1cb898a9f37c14cbde7f95b7c5c7af05e6d794864 vs 0x1b5647d3ca49c4b0e9e57e113f85b1be28ac10f0577b6e70c76fb7d767949bf8
 
-Copy the yellow **stateRoot** value into the block header. 
+In the error there are two separate values of **stateRoot**.
+The first, shown in red, is the expected value.
+The second, shown in yellow, is the actual value.
+You need to copy that second value into the block header.
+
+
+::
+
+    - blockHeader:
+        mixHash: 0x0102030405060708091011121314151617181920212223242526272829303131
+        stateRoot: 0x1b5647d3ca49c4b0e9e57e113f85b1be28ac10f0577b6e70c76fb7d767949bf8
+
+
+
 If you use the random value also in another block, you repeat the process, once per block.
 
 `You can see an example of this type of test here 
