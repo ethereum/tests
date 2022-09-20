@@ -1,0 +1,129 @@
+# Verify a withdrawal can withdraw to any account:
+#   - Any valid account in range: 0x0000000000000000000000000000000000000000 - 0xffffffffffffffffffffffffffffffffffffffff
+#   - Account with or without code (or precompiles)
+#   - Account with code deployed in the same block
+#   - Self-destructed account
+#   - 0 or "full" nonce
+
+validAddressesWithdraw:
+  genesisBlockHeader:
+    bloom: 0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+    coinbase: 0x8888f1f195afa192cfee860698584c030f4c9db1
+    difficulty: 131072
+    extraData: 0x42
+    gasLimit: 3141592
+    gasUsed: 0
+    mixHash: 0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421
+    nonce: 0x0102030405060708
+    number: 0
+    parentHash: 0x0000000000000000000000000000000000000000000000000000000000000000
+    receiptTrie: 0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421
+    stateRoot: 0xf99eb1626cfa6db435c0836235942d7ccaa935f1ae247d3f1c21e495685f903a
+    timestamp: 0x54c98c81
+    transactionsTrie: 0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421
+    uncleHash: 0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347
+#  sealEngine: NoProof
+
+  pre:
+    0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: '10000000000'
+      nonce: '1'
+      code: ''
+      storage: {}
+    0x00000000000000000000000000000000000c0deA:
+      balance: '0'
+      nonce: '0'
+      code: |
+          :yul {
+            sstore(0, 1)
+          }
+      storage: {}
+    0x00000000000000000000000000000000000c0deB:
+      balance: '2'
+      nonce: '0'
+      code: |
+          :yul {
+            let recipient := calldataload(4)
+            selfdestruct(recipient)
+          }
+      storage: {}
+    0x000000000000000000000000000000000000000b:
+      balance: '0'
+      nonce: 0xffffffffffffffff
+      code: ''
+      storage: {}
+
+  blocks:
+  - transactions:
+    # Transaction to self-destruct contract, then withdraw to both the
+    # self-destruct recipient and the self-destructing contract.
+    - data: :abi f(address) 0x000000000000000000000000000000000000000a
+      accessList: []
+      gasLimit: 50000   
+      maxPriorityFeePerGas:   0
+      maxFeePerGas:        1000
+      nonce: auto
+      secretKey: 45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8
+      to: 0x00000000000000000000000000000000000c0deB
+      value: 0x0
+    withdrawals:
+    # Account address range
+    - index: 0
+      address: 0x0000000000000000000000000000000000000000
+      amount: '1'
+    - index: 1
+      address: 0xffffffffffffffffffffffffffffffffffffffff
+      amount: '1'
+    # Account with pre-compile
+    - index: 2
+      address: 0x0000000000000000000000000000000000000001
+      amount: '1'
+    # Account with code
+    - index: 3
+      address: 0x00000000000000000000000000000000000c0deA
+      amount: '1'
+    # Self-destructing account
+    - index: 4
+      address: 0x00000000000000000000000000000000000c0deB
+      amount: '1'
+    # Self-destruct balance recipient
+    - index: 5
+      address: 0x000000000000000000000000000000000000000a
+      amount: '1'
+    # Account with max nonce
+    - index: 6
+      address: 0x000000000000000000000000000000000000000b
+      amount: '1'
+    
+  expect:
+  - network:
+    - ">=Shanghai"
+    result:
+      0x0000000000000000000000000000000000000000:
+        balance: '1'
+        nonce: '0'
+        storage: {}
+      0xffffffffffffffffffffffffffffffffffffffff:
+        balance: '1'
+        nonce: '0'
+        storage: {}
+      0x0000000000000000000000000000000000000001:
+        balance: '1'
+        nonce: '0'
+        storage: {}
+      0x00000000000000000000000000000000000c0deA:
+        balance: '1'
+        nonce: '0'
+        storage: {}
+      0x00000000000000000000000000000000000c0deB:
+        balance: '1'
+        nonce: '0'
+        storage: {}
+      0x000000000000000000000000000000000000000a:
+        balance: '3'
+        nonce: '0'
+        storage: {}
+      0x000000000000000000000000000000000000000b:
+        balance: '1'
+        nonce: '0'
+        storage: {}
