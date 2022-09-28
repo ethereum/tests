@@ -1,0 +1,112 @@
+# Ensure the correct gas is returned after call operation using different values
+# as gas parameter
+
+callGasLeak:
+
+  env:
+    currentCoinbase: 2adc25665018aa1fe0e6bc666dac8fc2697ff9ba
+    currentDifficulty: '0x20000'
+    currentGasLimit: "100000000"
+    currentNumber: "1"
+    currentTimestamp: "1000"
+    previousHash: 5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6
+
+  _info:
+    comment: Based on https://hackmd.io/@shemnon/besu-gas-leak
+
+
+  pre:
+
+
+    bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb:
+      balance: '0x0ba1a9ce0ba1a9ce'
+      code: '0x00'
+      nonce: 1
+      storage: {}
+
+    # Main stack frame should not run out of gas:
+    # on besu, a gas value between 2^64-1 and 2^63-1 was incorrectly interpreted
+    # as a negative number, then added to the remaining gas of the calling stack.
+    # Gas should also not increase after the call.
+    cccccccccccccccccccccccccccccccccccccccc:
+      balance: '0x0ba1a9ce0ba1a9ce'
+      code: |
+       :yul {
+         let calltype  := calldataload(0x04)
+         let gasAmount := calldataload(0x24)
+         let callAddr  := 0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+         let prevGas := gas()
+
+         switch calltype
+         case 0 { pop(call(gasAmount, callAddr, 0, 0, 0, 0, 0)) }
+         case 1 { pop(callcode(gasAmount, callAddr, 0, 0, 0, 0, 0)) }
+         case 2 { pop(delegatecall(gasAmount, callAddr, 0, 0, 0, 0)) }
+         case 3 { pop(staticcall(gasAmount, callAddr, 0, 0, 0, 0)) }
+         
+         /* If the remaining gas increased, or we ran out of gas, test fails */
+         if gt(gas(), prevGas) { sstore (1, 1) }
+         sstore (0, 1)
+       }        
+      nonce: 1
+      storage: {}
+
+    a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: '0x0ba1a9ce0ba1a9ce'
+      code: 0x
+      nonce: 1
+      storage: {}
+
+
+  transaction:
+    data:
+    # Test all limit values around 2**63 and 2**64.
+    # CALL
+    - :label ok :abi f(uint,uint) 0 0x7fffffffffffffff
+    - :label ok :abi f(uint,uint) 0 0x8000000000000000
+    - :label ok :abi f(uint,uint) 0 0x8000000000000001
+    - :label ok :abi f(uint,uint) 0 0x8fffffffffffffff
+    - :label ok :abi f(uint,uint) 0 0xffffffffffffffff
+    - :label ok :abi f(uint,uint) 0 0x10000000000000000
+    # CALLCODE
+    - :label ok :abi f(uint,uint) 1 0x7fffffffffffffff
+    - :label ok :abi f(uint,uint) 1 0x8000000000000000
+    - :label ok :abi f(uint,uint) 1 0x8000000000000001
+    - :label ok :abi f(uint,uint) 1 0x8fffffffffffffff
+    - :label ok :abi f(uint,uint) 1 0xffffffffffffffff
+    - :label ok :abi f(uint,uint) 1 0x10000000000000000
+    # DELEGATECALL
+    - :label ok :abi f(uint,uint) 2 0x7fffffffffffffff
+    - :label ok :abi f(uint,uint) 2 0x8000000000000000
+    - :label ok :abi f(uint,uint) 2 0x8000000000000001
+    - :label ok :abi f(uint,uint) 2 0x8fffffffffffffff
+    - :label ok :abi f(uint,uint) 2 0xffffffffffffffff
+    - :label ok :abi f(uint,uint) 2 0x10000000000000000
+    # STATICCALL
+    - :label ok :abi f(uint,uint) 3 0x7fffffffffffffff
+    - :label ok :abi f(uint,uint) 3 0x8000000000000000
+    - :label ok :abi f(uint,uint) 3 0x8000000000000001
+    - :label ok :abi f(uint,uint) 3 0x8fffffffffffffff
+    - :label ok :abi f(uint,uint) 3 0xffffffffffffffff
+    - :label ok :abi f(uint,uint) 3 0x10000000000000000
+
+    gasLimit:
+    - 8000000
+    gasPrice: 10
+    nonce: 1
+    to: cccccccccccccccccccccccccccccccccccccccc
+    secretKey: "45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8"
+    value:
+    - 0
+
+  expect:
+    - indexes:
+        data: 
+        - :label ok
+        gas:  !!int -1
+        value: !!int -1
+      network:
+        - 'London'
+      result:
+        cccccccccccccccccccccccccccccccccccccccc:
+          storage:
+            0: 1
