@@ -113,6 +113,13 @@ push0:
       code: ':raw 0x60ff5f5360016000f3'
       nonce: 0
       storage: {}
+    0000000000000000000000000000000000000700:
+      balance: 0
+      # Jumps to a JUMPDEST next to PUSH0
+      # push1(4) jump push0 jumpdest push1(1) push0 sstore stop
+      code: ':raw 0x6004565f5b60015f5500'
+      nonce: 0
+      storage: {}
 
   transaction:
     data:
@@ -121,6 +128,7 @@ push0:
       - ':label 1025_push0   :raw 0x0000000000000000000000000000000000000300'
       - ':label push0_upd_storage :raw 0x0000000000000000000000000000000000000400'
       - ':label push0_upd_storage_sc :raw 0x0000000000000000000000000000000000000500'
+      - ':label jumpdest :raw 0x0000000000000000000000000000000000000700'
     gasLimit:
       - 700000
     gasPrice: 10
@@ -267,5 +275,32 @@ push0:
         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           storage:
             0x00: 0x01 # Call to contract 0x0..500 succeeded
+            0x01: 0x01 # Contract 0xb94f... continued executing and stored value 1.
+    - indexes:
+        data: ':label jumpdest'
+        gas:  !!int -1
+        value: !!int -1
+      network:
+        - 'London'
+      result:
+        0000000000000000000000000000000000000700:
+          storage: {} # Contract fails, nothing stored
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            0x00: 0x00
+            0x01: 0x01
+    - indexes:
+        data: ':label jumpdest'
+        gas:  !!int -1
+        value: !!int -1
+      network:
+        - 'London+3855'
+      result:
+        0000000000000000000000000000000000000700:
+          storage:
+            0x00: 0x01 # Contract 0x0..700 jumped to correct destination and stored value 1.
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            0x00: 0x01 # Call to contract 0x0..700 succeeded
             0x01: 0x01 # Contract 0xb94f... continued executing and stored value 1.
 
