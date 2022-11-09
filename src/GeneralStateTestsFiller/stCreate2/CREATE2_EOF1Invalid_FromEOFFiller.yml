@@ -1,0 +1,293 @@
+# CREATE2 opcode with invalid EOF1 in initcode or in deployed code called from inside EOF contract
+CREATE2_EOF1Invalid_FromEOF:
+  env:
+    currentCoinbase: 2adc25665018aa1fe0e6bc666dac8fc2697ff9ba
+    currentDifficulty: '0x020000'
+    currentGasLimit: '89128960'
+    currentBaseFee: '10'
+    currentNumber: '1'
+    currentTimestamp: '1000'
+    previousHash: 5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6
+
+  pre:
+    a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: 200000000
+      code: ''
+      nonce: 0
+      storage: {}
+    b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: 0
+      # code: ":yul { calldatacopy(0, 0, calldatasize()) sstore(0, create2(0, 0, calldatasize(), 0)) sstore(1, 1) }"
+      code: ":raw 0xEF00010100170036600060003760003660006000f5600055600160015500"
+      nonce: 0
+      storage: {}
+
+  transaction:
+    data: 
+      # Malformed initcode
+      
+      # No magic
+      - ':raw 0xef'
+      # Invalid magic
+      - ':raw 0xef0101010029007fef00010100030060000000000000000000000000000000000000000000000000600052600a6000f3'
+      - ':raw 0xef0201010029007fef00010100030060000000000000000000000000000000000000000000000000600052600a6000f3'
+      - ':raw 0xefff01010029007fef00010100030060000000000000000000000000000000000000000000000000600052600a6000f3'
+      # No version
+      - ':raw 0xef00'
+      # Invalid version
+      - ':raw 0xef0000010029007fef00010100030060000000000000000000000000000000000000000000000000600052600a6000f3'
+      - ':raw 0xef0200010029007fef00010100030060000000000000000000000000000000000000000000000000600052600a6000f3'
+      - ':raw 0xefff00010029007fef00010100030060000000000000000000000000000000000000000000000000600052600a6000f3'
+      # No header
+      - ':raw 0xef0001'
+      # No code section
+      - ':raw 0xef000100'
+      # No code section size
+      - ':raw 0xef000101'
+      # Code section size incomplete
+      - ':raw 0xef00010100'
+      # No section terminator after code section size
+      - ':raw 0xef0001010003'
+      - ':raw 0xef0001010003600000'
+      # No code section contents
+      - ':raw 0xef000101000200'
+      # Code section contents incomplete
+      - ':raw 0xef00010100020060'
+      # Trailing bytes after code section
+      - ':raw 0xef000101000300600000deadbeef'
+      # Multiple code sections
+      - ':raw 0xef000101000301000300600000600000'
+      # Empty code section
+      - ':raw 0xef000101000000'
+      # Empty code section with non-empty data section
+      - ':raw 0xef000101000002000200aabb'
+      # Data section preceding code section
+      - ':raw 0xef000102000401000300aabbccdd600000'
+      # Data section without code section
+      - ':raw 0xef000102000400aabbccdd'
+      # No data section size
+      - ':raw 0xef000101000202'
+      # Data section size incomplete
+      - ':raw 0xef00010100020200'
+      # No section terminator after data section size
+      - ':raw 0xef0001010003020004'
+      - ':raw 0xef0001010003020004600000aabbccdd'
+      # No data section contents
+      - ':raw 0xef000101000302000400600000'
+      # Data section contents incomplete
+      - ':raw 0xef000101000302000400600000aabbcc'
+      # Trailing bytes after data section
+      - ':raw 0xef000101000302000400600000aabbccddee'
+      # Multiple data sections
+      - ':raw 0xef000101000302000402000400600000aabbccddaabbccdd'
+      # Multiple code and data sections
+      - ':raw 0xef000101000101000102000102000100fefeaabb'
+      # Empty data section
+      - ':raw 0xef000101000302000000600000'
+      # Unknown section IDs
+      - ':raw 0xef000103000300600000'
+      - ':raw 0xef000104000300600000'
+      - ':raw 0xef0001ff000300600000'
+      - ':raw 0xef000101000303000400600000aabbccdd'
+      - ':raw 0xef000101000304000400600000aabbccdd'
+      - ':raw 0xef0001010003ff000400600000aabbccdd'
+
+      # Valid legacy initcode returning malformed code
+      
+      # No magic
+      - ':yul { mstore8(0, 0xef) return(0, 1) }'
+      # Invalid magic
+      - ':yul { mstore(0, 0xef010101000100fe000000000000000000000000000000000000000000000000) return(0, 8) }'
+      - ':yul { mstore(0, 0xef020101000100fe000000000000000000000000000000000000000000000000) return(0, 8) }'
+      - ':yul { mstore(0, 0xefff0101000100fe000000000000000000000000000000000000000000000000) return(0, 8) }'
+      # No version
+      - ':yul { mstore(0, 0xef00000000000000000000000000000000000000000000000000000000000000) return(0, 2) }'
+      # Invalid version
+      - ':yul { mstore(0, 0xef000001000100fe000000000000000000000000000000000000000000000000) return(0, 8) }'
+      - ':yul { mstore(0, 0xef000201000100fe000000000000000000000000000000000000000000000000) return(0, 8) }'
+      - ':yul { mstore(0, 0xef00ff01000100fe000000000000000000000000000000000000000000000000) return(0, 8) }'
+      # No header
+      - ':yul { mstore(0, 0xef00010000000000000000000000000000000000000000000000000000000000) return(0, 3) }'
+      # No code section
+      - ':yul { mstore(0, 0xef00010000000000000000000000000000000000000000000000000000000000) return(0, 4) }'
+      # No code section size
+      - ':yul { mstore(0, 0xef00010100000000000000000000000000000000000000000000000000000000) return(0, 4) }'
+      # Code section size incomplete
+      - ':yul { mstore(0, 0xef00010100000000000000000000000000000000000000000000000000000000) return(0, 5) }'
+      # No section terminator after code section size
+      - ':yul { mstore(0, 0xef00010100030000000000000000000000000000000000000000000000000000) return(0, 6) }'
+      - ':yul { mstore(0, 0xef00010100036000000000000000000000000000000000000000000000000000) return(0, 9) }'
+      # No code section contents
+      - ':yul { mstore(0, 0xef00010100020000000000000000000000000000000000000000000000000000) return(0, 7) }'
+      # Code section contents incomplete
+      - ':yul { mstore(0, 0xef00010100020060000000000000000000000000000000000000000000000000) return(0, 8) }'
+      # Trailing bytes after code section
+      - ':yul { mstore(0, 0xef000101000300600000deadbeef000000000000000000000000000000000000) return(0, 14) }'
+      # Multiple code sections
+      - ':yul { mstore(0, 0xef00010100030100030060000060000000000000000000000000000000000000) return(0, 16) }'
+      # Empty code section
+      - ':yul { mstore(0, 0xef00010100000000000000000000000000000000000000000000000000000000) return(0, 7) }'
+      # Empty code section with non-empty data section
+      - ':yul { mstore(0, 0xef000101000002000200aabb0000000000000000000000000000000000000000) return(0, 12) }'
+      # Data section preceding code section
+      - ':yul { mstore(0, 0xef000102000401000300aabbccdd600000000000000000000000000000000000) return(0, 17) }'
+      # Data section without code section
+      - ':yul { mstore(0, 0xef000102000400aabbccdd000000000000000000000000000000000000000000) return(0, 11) }'
+      # No data section size
+      - ':yul { mstore(0, 0xef00010100020200000000000000000000000000000000000000000000000000) return(0, 7) }'
+      # Data section size incomplete
+      - ':yul { mstore(0, 0xef00010100020200000000000000000000000000000000000000000000000000) return(0, 8) }'
+      # No section terminator after data section size
+      - ':yul { mstore(0, 0xef00010100030200040000000000000000000000000000000000000000000000) return(0, 9) }'
+      - ':yul { mstore(0, 0xef0001010003020004600000aabbccdd00000000000000000000000000000000) return(0, 16) }'
+      # No data section contents
+      - ':yul { mstore(0, 0xef00010100030200040060000000000000000000000000000000000000000000) return(0, 13) }'
+      # Data section contents incomplete
+      - ':yul { mstore(0, 0xef000101000302000400600000aabbcc00000000000000000000000000000000) return(0, 16) }'
+      # Trailing bytes after data section
+      - ':yul { mstore(0, 0xef000101000302000400600000aabbccddee0000000000000000000000000000) return(0, 18) }'
+      # Multiple data sections
+      - ':yul { mstore(0, 0xef000101000302000402000400600000aabbccddaabbccdd0000000000000000) return(0, 24) }'
+      # Multiple code and data sections
+      - ':yul { mstore(0, 0xef000101000101000102000102000100fefeaabb000000000000000000000000) return(0, 20) }'
+      # Empty data section
+      - ':yul { mstore(0, 0xef00010100030200000060000000000000000000000000000000000000000000) return(0, 13) }'
+      # Unknown section IDs
+      - ':yul { mstore(0, 0xef00010300030060000000000000000000000000000000000000000000000000) return(0, 10) }'
+      - ':yul { mstore(0, 0xef00010400030060000000000000000000000000000000000000000000000000) return(0, 10) }'
+      - ':yul { mstore(0, 0xef0001ff00030060000000000000000000000000000000000000000000000000) return(0, 10) }'
+      - ':yul { mstore(0, 0xef000101000303000400600000aabbccdd000000000000000000000000000000) return(0, 17) }'
+      - ':yul { mstore(0, 0xef000101000304000400600000aabbccdd000000000000000000000000000000) return(0, 17) }'
+      - ':yul { mstore(0, 0xef0001010003ff000400600000aabbccdd000000000000000000000000000000) return(0, 17) }'
+
+      # Valid EOF initcode returning malformed code
+
+      # code section: PUSH1 23 CODEDIZE SUB DUP1 PUSH1 23 CODECOPY PUSH1 0 RETURN
+      # 23 is offset of data section
+      # data section contains deployed code
+
+      # No magic
+      # deployed code: ef
+      - ':raw 0xef000101000d02000100601738038060176000396000f3ef'
+      # Invalid magic
+      # deployed code: ef010101000100fe
+      - ':raw 0xef000101000d02000800601738038060176000396000f3ef010101000100fe'
+      # deployed code: ef020101000100fe
+      - ':raw 0xef000101000d02000800601738038060176000396000f3ef020101000100fe'
+      # deployed code: efff0101000100fe
+      - ':raw 0xef000101000d02000800601738038060176000396000f3efff0101000100fe'
+      # No version
+      # deployed code: ef00
+      - ':raw 0xef000101000d02000200601738038060176000396000f3ef00'
+      # Invalid version
+      # deployed code: ef000001000100fe
+      - ':raw 0xef000101000d02000800601738038060176000396000f3ef000001000100fe'
+      # deployed code: ef000201000100fe
+      - ':raw 0xef000101000d02000800601738038060176000396000f3ef000201000100fe'
+      # deployed code: ef00ff01000100fe
+      - ':raw 0xef000101000d02000800601738038060176000396000f3ef00ff01000100fe'
+      # No header
+      # deployed code: ef0001
+      - ':raw 0xef000101000d02000300601738038060176000396000f3ef0001'
+      # No code section
+      # deployed code: ef000100
+      - ':raw 0xef000101000d02000400601738038060176000396000f3ef000100'
+      # No code section size
+      # deployed code: ef000101
+      - ':raw 0xef000101000d02000400601738038060176000396000f3ef000101'
+      # Code section size incomplete
+      # deployed code: ef00010100
+      - ':raw 0xef000101000d02000500601738038060176000396000f3ef00010100'
+      # No section terminator after code section size
+      # deployed code: ef0001010003
+      - ':raw 0xef000101000d02000600601738038060176000396000f3ef0001010003'
+      # deployed code: ef0001010003600000
+      - ':raw 0xef000101000d02000900601738038060176000396000f3ef0001010003600000'
+      # No code section contents
+      # deployed code: ef000101000200
+      - ':raw 0xef000101000d02000700601738038060176000396000f3ef000101000200'
+      # Code section contents incomplete
+      # deployed code: ef00010100020060
+      - ':raw 0xef000101000d02000800601738038060176000396000f3ef00010100020060'
+      # Trailing bytes after code section
+      # deployed code: ef000101000300600000deadbeef
+      - ':raw 0xef000101000d02000e00601738038060176000396000f3ef000101000300600000deadbeef'
+      # Multiple code sections
+      # deployed code: ef000101000301000300600000600000
+      - ':raw 0xef000101000d02001000601738038060176000396000f3ef000101000301000300600000600000'
+      # Empty code section
+      # deployed code: ef000101000000
+      - ':raw 0xef000101000d02000700601738038060176000396000f3ef000101000000'
+      # Empty code section with non-empty data section
+      # deployed code: ef000101000002000200aabb
+      - ':raw 0xef000101000d02000c00601738038060176000396000f3ef000101000002000200aabb'
+      # Data section preceding code section
+      # deployed code: ef000102000401000300aabbccdd600000
+      - ':raw 0xef000101000d02001100601738038060176000396000f3ef000102000401000300aabbccdd600000'
+      # Data section without code section
+      # deployed code: ef000102000400aabbccdd
+      - ':raw 0xef000101000d02000b00601738038060176000396000f3ef000102000400aabbccdd'
+      # No data section size
+      # deployed code: ef000101000202
+      - ':raw 0xef000101000d02000700601738038060176000396000f3ef000101000202'
+      # Data section size incomplete
+      # deployed code: ef00010100020200
+      - ':raw 0xef000101000d02000800601738038060176000396000f3ef00010100020200'
+      # No section terminator after data section size
+      # deployed code: ef0001010003020004
+      - ':raw 0xef000101000d02000900601738038060176000396000f3ef0001010002020004'
+      # deployed code: ef0001010003020004600000aabbccdd
+      - ':raw 0xef000101000d02001000601738038060176000396000f3ef0001010003020004600000aabbccdd'
+      # No data section contents
+      # deployed code: ef000101000302000400600000
+      - ':raw 0xef000101000d02000d00601738038060176000396000f3ef000101000302000400600000'
+      # Data section contents incomplete
+      # deployed code: ef000101000302000400600000aabbcc
+      - ':raw 0xef000101000d02001000601738038060176000396000f3ef000101000302000400600000aabbcc'
+      # Trailing bytes after data section
+      # deployed code: ef000101000302000400600000aabbccddee
+      - ':raw 0xef000101000d02001200601738038060176000396000f3ef000101000302000400600000aabbccddee'
+      # Multiple data sections
+      # deployed code: ef000101000302000402000400600000aabbccddaabbccdd
+      - ':raw 0xef000101000d02001800601738038060176000396000f3ef000101000302000402000400600000aabbccddaabbccdd'
+      # Multiple code and data sections
+      # deployed code: ef000101000101000102000102000100fefeaabb
+      - ':raw 0xef000101000d02001400601738038060176000396000f3ef000101000101000102000102000100fefeaabb'
+      # Empty data section
+      # deployed code: ef000101000302000000600000
+      - ':raw 0xef000101000d02000d00601738038060176000396000f3ef000101000302000000600000'
+      # Unknown section IDs
+      # deployed code: ef000103000300600000
+      - ':raw 0xef000101000d02000a00601738038060176000396000f3ef000103000300600000'
+      # deployed code: ef000104000300600000
+      - ':raw 0xef000101000d02000a00601738038060176000396000f3ef000104000300600000'
+      # deployed code: ef0001ff000300600000
+      - ':raw 0xef000101000d02000a00601738038060176000396000f3ef0001ff000300600000'
+      # deployed code: ef000101000303000400600000aabbccdd
+      - ':raw 0xef000101000d02001100601738038060176000396000f3ef000101000303000400600000aabbccdd'
+      # deployed code: ef000101000304000400600000aabbccdd
+      - ':raw 0xef000101000d02001100601738038060176000396000f3ef000101000304000400600000aabbccdd'
+      # deployed code: ef0001010003ff000400600000aabbccdd
+      - ':raw 0xef000101000d02001100601738038060176000396000f3ef0001010003ff000400600000aabbccdd'
+
+    gasLimit:
+      - 15000000
+    gasPrice: 10
+    nonce: 0
+    secretKey: 45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8
+    to: 'b94f5374fce5edbc8e2a8697c15331677e6ebf0b'
+    value:
+    - 0
+
+  expect:
+    - indexes: {}
+      network:
+        - 'Merge+3540+3670'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: '1'
+          storage:
+            '0': '0'
+            '1': '1'
