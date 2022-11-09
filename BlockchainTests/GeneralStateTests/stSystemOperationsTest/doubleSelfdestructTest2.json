@@ -2,8 +2,8 @@
     "doubleSelfdestructTest2_d0g0v0_Berlin" : {
         "_info" : {
             "comment" : "The second test case requested here https://github.com/ethereum/tests/issues/431#issue-306081539 .\nInvoked Solidity 0.4.21 with solc --bin-runtime --optimize\ncontract DoubleSelfdestructTest2 {\n  address constant B = 0x3;\n  function remoteSelfdestruct() external {\n    selfdestruct(this);\n  }\n  function() external payable {\n    this.remoteSelfdestruct();\n    selfdestruct(B);\n  }\n}\nThe version of Solidity emits code that always enter OOG for Homestead and Frontier.  So no new accounts\nare created for Homestead and Frontier.  EIP158 changes the behavior of zero-amount transfer so that no new accounts are created.\nThis leaves EIP150 as a special case.\nBecause gasprice is 0 and mining reward is 0, the mining account is created as empty in the post state. (imitating blockchain rules)\n",
-            "filling-rpc-server" : "evm version 1.10.16-unstable-0f893109-20220105",
-            "filling-tool-version" : "retesteth-0.2.2-testinfo+commit.01c6aac2.Linux.g++",
+            "filling-rpc-server" : "evm version 1.10.18-unstable-53304ff6-20220503",
+            "filling-tool-version" : "retesteth-0.2.2-testinfo+commit.05e0b8ca.Linux.g++",
             "generatedTestHash" : "a96c73ededaae90f2cecd53b6acad3a8ffb346e3cc546126032933f51cadb4e9",
             "lllcversion" : "Version: 0.5.14-develop.2021.11.27+commit.401d5358.Linux.g++",
             "solidity" : "Version: 0.8.5+commit.a4f2e591.Linux.g++",
@@ -107,8 +107,8 @@
     "doubleSelfdestructTest2_d0g0v0_Istanbul" : {
         "_info" : {
             "comment" : "The second test case requested here https://github.com/ethereum/tests/issues/431#issue-306081539 .\nInvoked Solidity 0.4.21 with solc --bin-runtime --optimize\ncontract DoubleSelfdestructTest2 {\n  address constant B = 0x3;\n  function remoteSelfdestruct() external {\n    selfdestruct(this);\n  }\n  function() external payable {\n    this.remoteSelfdestruct();\n    selfdestruct(B);\n  }\n}\nThe version of Solidity emits code that always enter OOG for Homestead and Frontier.  So no new accounts\nare created for Homestead and Frontier.  EIP158 changes the behavior of zero-amount transfer so that no new accounts are created.\nThis leaves EIP150 as a special case.\nBecause gasprice is 0 and mining reward is 0, the mining account is created as empty in the post state. (imitating blockchain rules)\n",
-            "filling-rpc-server" : "evm version 1.10.16-unstable-0f893109-20220105",
-            "filling-tool-version" : "retesteth-0.2.2-testinfo+commit.01c6aac2.Linux.g++",
+            "filling-rpc-server" : "evm version 1.10.18-unstable-53304ff6-20220503",
+            "filling-tool-version" : "retesteth-0.2.2-testinfo+commit.05e0b8ca.Linux.g++",
             "generatedTestHash" : "801edc44510b320582481dde9e30e1743faeafe4f1c0772708fd7659440eee3d",
             "lllcversion" : "Version: 0.5.14-develop.2021.11.27+commit.401d5358.Linux.g++",
             "solidity" : "Version: 0.8.5+commit.a4f2e591.Linux.g++",
@@ -212,8 +212,8 @@
     "doubleSelfdestructTest2_d0g0v0_London" : {
         "_info" : {
             "comment" : "The second test case requested here https://github.com/ethereum/tests/issues/431#issue-306081539 .\nInvoked Solidity 0.4.21 with solc --bin-runtime --optimize\ncontract DoubleSelfdestructTest2 {\n  address constant B = 0x3;\n  function remoteSelfdestruct() external {\n    selfdestruct(this);\n  }\n  function() external payable {\n    this.remoteSelfdestruct();\n    selfdestruct(B);\n  }\n}\nThe version of Solidity emits code that always enter OOG for Homestead and Frontier.  So no new accounts\nare created for Homestead and Frontier.  EIP158 changes the behavior of zero-amount transfer so that no new accounts are created.\nThis leaves EIP150 as a special case.\nBecause gasprice is 0 and mining reward is 0, the mining account is created as empty in the post state. (imitating blockchain rules)\n",
-            "filling-rpc-server" : "evm version 1.10.16-unstable-0f893109-20220105",
-            "filling-tool-version" : "retesteth-0.2.2-testinfo+commit.01c6aac2.Linux.g++",
+            "filling-rpc-server" : "evm version 1.10.18-unstable-53304ff6-20220503",
+            "filling-tool-version" : "retesteth-0.2.2-testinfo+commit.05e0b8ca.Linux.g++",
             "generatedTestHash" : "1ffacefe3c8eb3ddc462f57a8d95b5f2fd957d9e6158cb3cea5e9deeeb6be9de",
             "lllcversion" : "Version: 0.5.14-develop.2021.11.27+commit.401d5358.Linux.g++",
             "solidity" : "Version: 0.8.5+commit.a4f2e591.Linux.g++",
@@ -290,6 +290,106 @@
                 "storage" : {
                 }
             },
+            "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                "balance" : "0x0de0b6b3a75dab06",
+                "code" : "0x",
+                "nonce" : "0x01",
+                "storage" : {
+                }
+            }
+        },
+        "pre" : {
+            "0x095e7baea6a6c7c4c2dfeb977efac326af552d87" : {
+                "balance" : "0x0de0b6b3a7640000",
+                "code" : "0x606060405260043610603e5763ffffffff7c01000000000000000000000000000000000000000000000000000000006000350416632c3f2bf3811460b4575b3073ffffffffffffffffffffffffffffffffffffffff16632c3f2bf36040518163ffffffff167c0100000000000000000000000000000000000000000000000000000000028152600401600060405180830381600087803b151560a057600080fd5b5af1151560ac57600080fd5b506003915050ff5b341560be57600080fd5b60c460c6565b005b3073ffffffffffffffffffffffffffffffffffffffff16ff00a165627a7a7230582004c215a78ad0add6ec7f9e2488a74efe60734d3dfe25da652ef8ac9dae892c4a0029",
+                "nonce" : "0x00",
+                "storage" : {
+                }
+            },
+            "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                "balance" : "0x0de0b6b3a7640000",
+                "code" : "0x",
+                "nonce" : "0x00",
+                "storage" : {
+                }
+            }
+        },
+        "sealEngine" : "NoProof"
+    },
+    "doubleSelfdestructTest2_d0g0v0_Merge" : {
+        "_info" : {
+            "comment" : "The second test case requested here https://github.com/ethereum/tests/issues/431#issue-306081539 .\nInvoked Solidity 0.4.21 with solc --bin-runtime --optimize\ncontract DoubleSelfdestructTest2 {\n  address constant B = 0x3;\n  function remoteSelfdestruct() external {\n    selfdestruct(this);\n  }\n  function() external payable {\n    this.remoteSelfdestruct();\n    selfdestruct(B);\n  }\n}\nThe version of Solidity emits code that always enter OOG for Homestead and Frontier.  So no new accounts\nare created for Homestead and Frontier.  EIP158 changes the behavior of zero-amount transfer so that no new accounts are created.\nThis leaves EIP150 as a special case.\nBecause gasprice is 0 and mining reward is 0, the mining account is created as empty in the post state. (imitating blockchain rules)\n",
+            "filling-rpc-server" : "evm version 1.10.18-unstable-53304ff6-20220503",
+            "filling-tool-version" : "retesteth-0.2.2-testinfo+commit.05e0b8ca.Linux.g++",
+            "generatedTestHash" : "1ca7e243303e7d34ba1628ded2e54ca1029794a5c877d728cba07e87408c0878",
+            "lllcversion" : "Version: 0.5.14-develop.2021.11.27+commit.401d5358.Linux.g++",
+            "solidity" : "Version: 0.8.5+commit.a4f2e591.Linux.g++",
+            "source" : "src/GeneralStateTestsFiller/stSystemOperationsTest/doubleSelfdestructTest2Filler.yml",
+            "sourceHash" : "33ae53c705ded21f3751a1266782336e3c9a68c9593f370eec8ab1550a48890a"
+        },
+        "blocks" : [
+            {
+                "blockHeader" : {
+                    "baseFeePerGas" : "0x0a",
+                    "bloom" : "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+                    "coinbase" : "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba",
+                    "difficulty" : "0x00",
+                    "extraData" : "0x00",
+                    "gasLimit" : "0x02540be400",
+                    "gasUsed" : "0x7b09",
+                    "hash" : "0x6e204f04950f37d3dccff121f6ce7999cd7555af58168f4089bae97c6b0a83c1",
+                    "mixHash" : "0x0000000000000000000000000000000000000000000000000000000000020000",
+                    "nonce" : "0x0000000000000000",
+                    "number" : "0x01",
+                    "parentHash" : "0x1879e5486b649cb912aaad533987cd3705177d618d89f072e24625ab14d79d4e",
+                    "receiptTrie" : "0xea2625b7d75964ab454a95488f5a43fabba49c49bec9d7bdcf065a97caf4d4eb",
+                    "stateRoot" : "0x46544c6670adbd3cbc20ec5e58b265615e518d7c5d813be1be3d5b8ffc2c41ae",
+                    "timestamp" : "0x03e8",
+                    "transactionsTrie" : "0x9b8c613858ce476b80aa5f4d2908e22edada9f78371df33a6f37d22fa20e4eed",
+                    "uncleHash" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347"
+                },
+                "rlp" : "0xf90263f901f7a01879e5486b649cb912aaad533987cd3705177d618d89f072e24625ab14d79d4ea01dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347942adc25665018aa1fe0e6bc666dac8fc2697ff9baa046544c6670adbd3cbc20ec5e58b265615e518d7c5d813be1be3d5b8ffc2c41aea09b8c613858ce476b80aa5f4d2908e22edada9f78371df33a6f37d22fa20e4eeda0ea2625b7d75964ab454a95488f5a43fabba49c49bec9d7bdcf065a97caf4d4ebb901000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000080018502540be400827b098203e800a000000000000000000000000000000000000000000000000000000000000200008800000000000000000af866f864800a843b9aca0094095e7baea6a6c7c4c2dfeb977efac326af552d87830186a0801ca074457fed2b2c7eb1656a7764820d6abc640a61a9cc1cdba895fb722db4180d98a0538ec00d6d68933a7031f2803f032ddf4f150249b92ac351239ba76e12d90c9dc0",
+                "transactions" : [
+                    {
+                        "data" : "0x",
+                        "gasLimit" : "0x3b9aca00",
+                        "gasPrice" : "0x0a",
+                        "nonce" : "0x00",
+                        "r" : "0x74457fed2b2c7eb1656a7764820d6abc640a61a9cc1cdba895fb722db4180d98",
+                        "s" : "0x538ec00d6d68933a7031f2803f032ddf4f150249b92ac351239ba76e12d90c9d",
+                        "sender" : "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b",
+                        "to" : "0x095e7baea6a6c7c4c2dfeb977efac326af552d87",
+                        "v" : "0x1c",
+                        "value" : "0x0186a0"
+                    }
+                ],
+                "uncleHeaders" : [
+                ]
+            }
+        ],
+        "genesisBlockHeader" : {
+            "baseFeePerGas" : "0x0b",
+            "bloom" : "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+            "coinbase" : "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba",
+            "difficulty" : "0x00",
+            "extraData" : "0x00",
+            "gasLimit" : "0x02540be400",
+            "gasUsed" : "0x00",
+            "hash" : "0x1879e5486b649cb912aaad533987cd3705177d618d89f072e24625ab14d79d4e",
+            "mixHash" : "0x0000000000000000000000000000000000000000000000000000000000020000",
+            "nonce" : "0x0000000000000000",
+            "number" : "0x00",
+            "parentHash" : "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "receiptTrie" : "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
+            "stateRoot" : "0xdee120be57e9d149de0a77a155f90026af9ad09375930e9ea3224684f4483f0d",
+            "timestamp" : "0x00",
+            "transactionsTrie" : "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
+            "uncleHash" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347"
+        },
+        "genesisRLP" : "0xf901f8f901f3a00000000000000000000000000000000000000000000000000000000000000000a01dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347942adc25665018aa1fe0e6bc666dac8fc2697ff9baa0dee120be57e9d149de0a77a155f90026af9ad09375930e9ea3224684f4483f0da056e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421a056e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421b901000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000080808502540be400808000a000000000000000000000000000000000000000000000000000000000000200008800000000000000000bc0c0",
+        "lastblockhash" : "0x6e204f04950f37d3dccff121f6ce7999cd7555af58168f4089bae97c6b0a83c1",
+        "network" : "Merge",
+        "postState" : {
             "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
                 "balance" : "0x0de0b6b3a75dab06",
                 "code" : "0x",

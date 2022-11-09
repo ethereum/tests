@@ -28,9 +28,8 @@ If you go to **tests/src/BlockchainTestsFiller** you will see three different di
 - **TransitionTests** are tests that verify the transitions between different 
   versions of the Ethereum protocol (called `forks 
   <https://medium.com/mycrypto/the-history-of-ethereum-hard-forks-6a6dae76d56f>`_) 
-  are handled correctly. These tests are very important, but the people who write 
-  them are typically the people who write the tests software so I am not going to 
-  explain them here.
+  are handled correctly.
+  
    
 
 Valid Block Tests
@@ -177,6 +176,72 @@ that address, zero.
       value: '30'
 
 
+
+.. _test-random-val:
+
+Tests using the blockchain random value
+---------------------------------------
+Once Ethereum moves to proof of stake (PoS), there will no longer be any need for the block header 
+fields **difficulty** and **mixHash**.
+When the block header comes from a consensus client, the **mixHash** is a mostly random value that is 
+produced by the beacon chain (the validators can each affect a bit on it, so it's not exactly random).
+The **DIFFICULTY** opcode is no longer relevant either, so it is replaced by an opcode with the same 
+value (0x44) called **PREVRANDAO**.
+You can read more about this topic in `EIP-4399 <https://eips.ethereum.org/EIPS/eip-4399>`_.
+
+In block tests we can simulate this value by specifying a **mixHash** as part of **blockHeader**.
+However, the interaction of **mixHash** and **stateRoot** makes this process a bit complicated.
+
+First, you write the test normally, using the block header field **mixHash** for the random value 
+that in real execution would come from the consensus layer.
+Note that **mixHash** has to be a 32 byte value.
+Even if most of the bytes are zeros, you have to specify them.
+
+When you run the test, it fails on the first block where the state is a function of the random value with an error that includes these lines:
+
+::
+
+   /retesteth/retesteth/TestOutputHelper.cpp(227): error: in "BlockchainTests/ValidBlocks/bcStateTests": 
+   Error: Postmine block tweak expected no exception! Client errors with: 'Error importing raw rlp block: Block from pending block != t8ntool constructed block!
+   Error in field: stateRoot
+      .
+      .
+      .
+   parentHash 0x76898c312aea29aa17df32e97399ccdf88e72c544305c9ddc3e76996e35ab951 vs 0x76898c312aea29aa17df32e97399ccdf88e72c544305c9ddc3e76996e35ab951
+   receiptTrie 0x71043553dd2c4fbc22100a69d47ba3a790f7e428796792c552362b81e6cf5331 vs 0x71043553dd2c4fbc22100a69d47ba3a790f7e428796792c552362b81e6cf5331
+   stateRoot 0x7a3760ed3aa3e40711b3ecd1cb898a9f37c14cbde7f95b7c5c7af05e6d794864 vs 0x1b5647d3ca49c4b0e9e57e113f85b1be28ac10f0577b6e70c76fb7d767949bf8
+
+In the error there are two separate values of **stateRoot**.
+The first, shown in red, is the expected value.
+The second, shown in yellow, is the actual value.
+You need to copy that second value into the block header.
+
+
+::
+
+    - blockHeader:
+        mixHash: 0x0102030405060708091011121314151617181920212223242526272829303131
+        stateRoot: 0x1b5647d3ca49c4b0e9e57e113f85b1be28ac10f0577b6e70c76fb7d767949bf8
+
+
+
+If you use the random value also in another block, you repeat the process, once per block.
+
+`You can see an example of this type of test here 
+<https://github.com/ethereum/tests/blob/develop/src/BlockchainTestsFiller/ValidBlocks/bcStateTests/randomFiller.yml>`_.
+
+
+Why is this procedure necessary?
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Retesteth was written back during the proof of work (PoW) days, when **mixHash** was a function of the 
+**nonce**, which itself was produced from the completed block (including the post-block **stateRoot**).
+The way that it fills the block header is to first get the block processed by the client, read the 
+resulting **stateRoot** (as well as some other fields).
+Then it reverts out of the block and sends it again, this time with the **blockHeader** fields and the 
+calculated fields from the client.
+
+This algorithm fails when the state, and therefore **stateRoot**, is affected by block header fields.
+
 .. _invalid-block-tests:
 
 Invalid Block Tests
@@ -243,6 +308,17 @@ this line:
       "TooMuchGasUsed" : "Invalid gasUsed:",
 
 This tells us that the exception to expect is **TooMuchGasUsed**.
+
+
+Transition Tests
+================
+Transition Tests start with one fork, which is used to execute blocks 1-4. 
+Then, typically starting at block 5, it is the following fork.
+You can see the list of `transition networks here <https://github.com/ethereum/retesteth/blob/develop/retesteth/configs/clientconfigs/t8ntool.cpp#L24-L33>`_ or in **.../tests/config/t8ntool/config**.
+
+In the case of the ArrowGlacier to Merge transition it happens at a specific difficulty, 0x0C0000.
+At the block difficulty most tests use, 0x020000, this happens on block 6.
+
 
 
 Conclusion

@@ -5,11 +5,14 @@ bloom                         `bloom filter <https://en.wikipedia.org/wiki/Bloom
                               speed searches
 coinbase                      beneficiary of mining fee
 extraData                     data added to the block, ignored by **retesteth**
-difficulty                    difficulty of previous block
+
+difficulty (pre-merge)        difficulty of previous block
+difficulty (post-merge)       not used anymore (value zero), identifies a block as pre-merge
 gasLimit                      limit of gas usage per block
 gasUsed                       gas used by this block
-mixHash and nonce             used by the `proof of work algorithm 
-                              <https://en.wikipedia.org/wiki/Ethash>`_, ignored by **retesteth**
+mixHash and nonce (pre-merge) used by the `proof of work algorithm 
+                              <https://en.wikipedia.org/wiki/Ethash>`_, ignored by **retesteth**.
+mixHash (post-merge)          block random value, has to be 32 bytes (it is not automatically zero padded)
 number                        number of ancestor blocks
 parentHash                    hash of previous block
 receiptTrie                   The root of the `receipt trie 

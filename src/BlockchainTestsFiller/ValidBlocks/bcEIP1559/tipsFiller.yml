@@ -35,7 +35,13 @@ tips:
       code: ''
       storage: {}
 
-    # Store the change in coinbase balance (minus the block reward, 2 ETH)
+    0xBA5E000000000000000000000000000000000000:
+      balance: 0
+      nonce: 1
+      code: ''
+      storage: {}
+
+    # Store the change in coinbase balance
     0xcccccccccccccccccccccccccccccccccccccccc:
       balance: 0x10000000000
       nonce: 1
@@ -44,7 +50,7 @@ tips:
             // Inside block n we can see the balance at the end of block n-1,
             // because the end of block processing hasn't happened yet            
             let miner := 0xBA5E000000000000000000000000000000000000
-            let blockReward := 2000000000000000000  // Block reward, 2 ETH (in wei)
+            let blockReward := 0  // No block reward after the merge
             let lastBalance := 0xFFFF   // Storage for last balance
             let minerBalance := balance(miner)
           
@@ -575,7 +581,7 @@ tips:
 
   expect:
   - network:
-    - ">=London"
+    - ">=Merge"
     result:
       # Change in miner balance, minus the block reward
       0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC:

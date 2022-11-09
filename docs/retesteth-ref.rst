@@ -51,6 +51,8 @@ Retesteth Options
  -\\-help -h                      Display list of command arguments                  
  -\\-version -v                   Display build information                          
  -\\-list                         Display available test suites                      
+ -\\-testfolder                   Use to create a new test folder inside the suite.
+                                  Not compatible with using a test case folder
 ================================= ======================================================
 
 
@@ -91,7 +93,7 @@ Option                        Meaning
                               GeneralStateTests
 -v <index>                    Set the transaction value array index when running 
                               GeneralStateTests
--\\-vmtraceraw                Trace transaction execution
+-\\-vmtraceraw [<folder>]     Trace transaction execution (see note)
 -\\-vmtrace                   Trace transaction execution, simplified version
 -\\-limitblocks <num>         Limit the block exectuion in blockchain tests for 
                               debugging to the first <num> blocks
@@ -99,11 +101,21 @@ Option                        Meaning
 -\\-verbosity <level>         Set logs verbosity. 0 - silent, 1 - only errors, 
                               2 - informative, >2 - detailed
 -\\-exectimelog               Output execution time for each test suite
--\\-statediff                 Trace state difference for state tests
 -\\-stderr                    Redirect ipc client stderr to stdout
 -\\-travisout                 Output \`.\` to stdout
 ============================= ===================================================
-    
+
+
+.. note::
+
+   Normally the **-\\-vmtraceraw** output goes to standard output. However, you could specify a directory
+   name and it would get written there (under a different file name for every fork, data value, etc.).
+   If you are using docker that directory is in the folder, so it is easiest to use a directory such as
+   **/tests/results** (because **/tests** on the docker is the tests repository on a file system outside
+   the docker).
+
+
+
 Additional Tests
 ----------------------------------
 
@@ -111,9 +123,16 @@ Additional Tests
 Option                                  Meaning
 ======================================= ===================================
 -\\-all                                 Enable all tests
--\\-lowcpu                              Disable cpu intensive tests
 ======================================= ===================================
 
+This setting enables the following test suites:
+
+* `GeenralStateTests/stTimeConsuming <https://github.com/ethereum/tests/tree/develop/src/GeneralStateTestsFiller/stTimeConsuming>`_
+* `GeenralStateTests/stQuadraticComplexityTest <https://github.com/ethereum/tests/tree/develop/src/GeneralStateTestsFiller/stQuadraticComplexityTest>`_
+* `GeneralStateTests/VMTests/vmPerformance <https://github.com/ethereum/tests/tree/develop/src/GeneralStateTestsFiller/VMTests/vmPerformance>`_
+* `BlockchainTests/ValidBlocks/bcExploitTest <https://github.com/ethereum/tests/tree/develop/src/BlockchainTestsFiller/ValidBlocks/bcExploitTest>`_
+* `BlockchainTests/ValidBlocks/bcWalletTest <https://github.com/ethereum/tests/tree/develop/src/BlockchainTestsFiller/ValidBlocks/bcWalletTest>`_
+* `BlockchainTests/InvalidBlocks/bcExpectSection <https://github.com/ethereum/tests/tree/develop/src/BlockchainTestsFiller/InvalidBlocks/bcExpectSection>`_
 
 
 Test Generation
@@ -126,9 +145,21 @@ Option                          Meaning
 -\\-fillchain                   When filling the state tests, fill 
                                 tests as blockchain instead
 -\\-showhash                    Show filler hash debug information
--\\-poststate                   Show post state hash or fullstate
+-\\-poststate [<folder>]        Show post state hash or fullstate
+                                Normally goes to output, but if a folder is specified written to that folder.
+                                If you use Docker, those are on the image, so it's best to use **/test/...**.
+
 -\\-fullstate                   Do not compress large states to hash
 =============================== ===================================
+
+
+.. note::
+
+   Normally the **-\\-poststate** output goes to standard output. However, you could specify a directory
+   name and it would get written there (under a different file name for every fork, data value, etc.).
+   If you are using docker that directory is in the folder, so it is easiest to use a directory such as
+   **/tests/results** (because **/tests** on the docker is the tests repository on a file system outside
+   the docker).
 
 
 
@@ -142,7 +173,7 @@ If you used different directories, or did not use docker, the commands
 will be slightly different.
 
 
-#. Run most state tests:
+#. Run state tests:
 
    ::
 
@@ -154,14 +185,8 @@ will be slightly different.
 
      ./dretesteth.sh -t GeneralStateTests -- --testpath ~/tests -j 8
 
-   Run all the tests including the time consuming ones:
 
-   ::
-
-     ./dretesteth.sh -t GeneralStateTests -- --testpath ~/tests -all
-
-
-#. Run most blockchain tests:
+#. Run blockchain tests:
 
    ::
 

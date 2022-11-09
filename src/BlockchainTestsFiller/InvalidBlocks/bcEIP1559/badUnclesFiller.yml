@@ -58,8 +58,8 @@ badUncles:
       - populateFromBlock: 1
         gasLimit: 10230000
     expectException:
-      '>=London': InvalidGasLimit2
-
+      'London': InvalidGasLimit2
+      '>=Merge': 3675PreMerge1559BlockRejected
 
   # Excessively high gasLimit in uncle
   - transactions: []
@@ -68,7 +68,8 @@ badUncles:
       - populateFromBlock: 1
         gasLimit: 10250000
     expectException:
-      '>=London': InvalidGasLimit2
+      'London': InvalidGasLimit2
+      '>=Merge': 3675PreMerge1559BlockRejected
 
 
   # Acceptable gasLimit (same as the previous one)
@@ -79,44 +80,52 @@ badUncles:
     uncleHeaders:
       - populateFromBlock: 1
         gasLimit: 10240000
+    expectException:
+      '>=Merge': 3675PreMerge1559BlockRejected
 
 
   # Acceptable gasLimit (almost too low)
   - transactions: []
-    blocknumber: 4
+    //blocknumber: 4
     blockHeader:
       stateRoot: 0xd826e9bd0c4f924eaea9428d63fd199bfbc05f9521a466b37febf4027e99a48c
     uncleHeaders:
       - populateFromBlock: 1
         gasLimit: 10230001
+    expectException:
+      '>=Merge': 3675PreMerge1559BlockRejected
 
 
   # Acceptable gasLimit (almost too high)
   - transactions: []
-    blocknumber: 5
+    //blocknumber: 5
     blockHeader:
       stateRoot: 0xe18cb70de5d4a2e7f4cd80ee2be02baf4c31cd07f00b6cf2e03eb39ca4f271a1
     uncleHeaders:
       - populateFromBlock: 1
         gasLimit: 10249999
+    expectException:
+      '>=Merge': 3675PreMerge1559BlockRejected
 
   # Wrong baseFee
   - transactions: []
-    blocknumber: 6
+    //blocknumber: 6
     uncleHeaders:
       - populateFromBlock: 2
         baseFeePerGas: 670
     expectException:
-      '>=London': 1559BlockImportImpossible_BaseFeeWrong
+      'London': 1559BlockImportImpossible_BaseFeeWrong
+      '>=Merge': 3675PreMerge1559BlockRejected
 
   # Wrong baseFee
   - transactions: []
-    blocknumber: 6
+    //blocknumber: 6
     uncleHeaders:
       - populateFromBlock: 2
         baseFeePerGas: 672
     expectException:
-      '>=London': 1559BlockImportImpossible_BaseFeeWrong
+      'London': 1559BlockImportImpossible_BaseFeeWrong
+      '>=Merge': 3675PreMerge1559BlockRejected
 
 
   # Correct baseFee
@@ -130,12 +139,14 @@ badUncles:
       secretKey: 0x1ab42cc412b618bdea3a599e3c9bae199ebf030895b039e9db1e30dafb12b727
       to: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
       value: 0x0
-    blocknumber: 6
+    //blocknumber: 6
     blockHeader:
       stateRoot: 0xd2b1ef17def4cd9e772f940a118629d743b0bcec2bd6c019dd29a37e86a1167c
     uncleHeaders:
       - populateFromBlock: 2
         baseFeePerGas: 671
+    expectException:
+      '>=Merge': 3675PreMerge1559BlockRejected
 
 
 

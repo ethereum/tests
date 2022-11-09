@@ -2,10 +2,10 @@
     "transactionCollidingWithNonEmptyAccount_callsItself" : {
         "_info" : {
             "comment" : "Account with non-empty code attempts to send tx to call itself",
-            "filling-rpc-server" : "evm version 1.10.16-unstable-0f893109-20220105",
-            "filling-tool-version" : "retesteth-0.2.2-testinfo+commit.01c6aac2.Linux.g++",
-            "generatedTestHash" : "086fd7342943171218b4aef9447f874603afd671bf58eb23296d3af01767a5bc",
-            "lllcversion" : "Version: 0.5.14-develop.2021.11.27+commit.401d5358.Linux.g++",
+            "filling-rpc-server" : "evm version 1.10.21-unstable-692bfd1b-20220630",
+            "filling-tool-version" : "retesteth-0.2.2-testinfo+commit.1e11e5ce.Linux.g++",
+            "generatedTestHash" : "4005c67bbb07bc0fd4b1d869a3cd160f69cf16c2840437c5f5e5cde778560313",
+            "lllcversion" : "Version: 0.5.14-develop.2022.6.6+commit.245805fe.Linux.g++",
             "solidity" : "Version: 0.8.5+commit.a4f2e591.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/stEIP3607/transactionCollidingWithNonEmptyAccount_callsItselfFiller.yml",
             "sourceHash" : "69eb2b63e8120c345a44d6f84f692566a476fe31953ab362f725e47b592683a3"
@@ -16,11 +16,25 @@
             "currentDifficulty" : "0x020000",
             "currentGasLimit" : "0xff112233445566",
             "currentNumber" : "0x01",
+            "currentRandom" : "0x0000000000000000000000000000000000000000000000000000000000020000",
             "currentTimestamp" : "0x03e8",
             "previousHash" : "0x5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6"
         },
         "post" : {
             "London" : [
+                {
+                    "expectException" : "SenderNotEOA",
+                    "hash" : "0xb326b0f9bdbf3dac935ffe578676ceb8c10e369aac5d96521900815951e04ff9",
+                    "indexes" : {
+                        "data" : 0,
+                        "gas" : 0,
+                        "value" : 0
+                    },
+                    "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "txbytes" : "0xf863800a83061a8094a94f5374fce5edbc8e2a8697c15331677e6ebf0b830186a0801ba02babb190411301aad79da24e4a6bf1cb3197855e76dfadbc76a85bbf5b1e3ea3a033b4a142663a140757c5eb1af576fc328eb0a4f711730886c03a587abc2173de"
+                }
+            ],
+            "Merge" : [
                 {
                     "expectException" : "SenderNotEOA",
                     "hash" : "0xb326b0f9bdbf3dac935ffe578676ceb8c10e369aac5d96521900815951e04ff9",
