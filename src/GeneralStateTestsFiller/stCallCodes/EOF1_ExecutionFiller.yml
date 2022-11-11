@@ -1,0 +1,1261 @@
+# Calls to various EOF-formatted contracts, tests EOF execution rules
+EOF1_Execution:
+  env:
+    currentCoinbase: 2adc25665018aa1fe0e6bc666dac8fc2697ff9ba
+    currentDifficulty: '0x020000'
+    currentGasLimit: '89128960'
+    currentBaseFee: '10'
+    currentNumber: '1'
+    currentTimestamp: '1000'
+    previousHash: 5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6
+
+  pre:
+    a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: 10000000
+      code: ''
+      nonce: 0
+      storage: {}
+    b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: 0
+      code: ':yul { sstore(0, call(100000, shr(96, calldataload(0)), 0, 0, 0, 0, 0)) sstore(1, 1) }'
+      nonce: 0
+      storage: {}
+
+    c94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: 0
+      # Basic valid EOF code
+      # code section: ':yul { sstore(0, 1) stop() }'
+      code: ':raw 0xEF000101000600600160005500'
+      nonce: 0
+      storage: {}
+
+    d94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: 0
+      # Basic valid EOF code with data section
+      # code section: ':yul { sstore(0, 1) stop() }'
+      # data section: 'aabbccdd'
+      code: ':raw 0xEF000101000602000400600160005500aabbccdd'
+      nonce: 0
+      storage: {}
+
+    004f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: 0
+      # PC value at execution start
+      # code: ':yul { sstore(0, pc()) stop() }'
+      code: ':raw 0xEF0001010005005860005500'
+      nonce: 0
+      storage: {}
+
+    014f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: 0
+      # PC value in the middle of execution
+      # code: ':yul { push4(aabbccdd) sstore(0, pc()) stop() }'
+      code: ':raw 0xEF000101000A0063AABBCCDD5860005500'
+      nonce: 0
+      storage: {}
+
+    024f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: 0
+      # PUSH with complete pushdata
+      # code: ':yul { sstore(0, push4(aabbccdd)) stop() }'
+      code: ':raw 0xEF00010100090063AABBCCDD60005500'
+      nonce: 0
+      storage: {}
+
+    # Valid jumps
+
+    104f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: 0
+      # JUMP inside code section
+      # code section: 'jump x sstore(0, 1) x: sstore(0, 2) stop()'
+      code: ':raw 0xEF000101000F0060085660016000555B600260005500'
+      nonce: 0
+      storage: {}
+
+    114f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: 0
+      # JUMP inside code section with data section
+      # code section: 'jump x sstore(0, 1) x: sstore(0, 2) stop()'
+      # data section: 'aabbccdd'
+      code: ':raw 0xEF000101000F0200040060085660016000555B600260005500AABBCCDD'
+      nonce: 0
+      storage: {}
+
+    124f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: 0
+      # JUMPI inside code section
+      # code section: 'push1(1) jumpi x sstore(0, 1) x: sstore(0, 2) stop()'
+      code: ':raw 0xEF0001010011006001600A5760016000555B600260005500'
+      nonce: 0
+      storage: {}
+
+    134f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: 0
+      # JUMPI inside code section with data section
+      # code section: 'push1(1) jumpi x sstore(0, 1) x: sstore(0, 2) stop()'
+      # data section: 'aabbccdd'
+      code: ':raw 0xEF0001010011020004006001600A5760016000555B600260005500AABBCCDD'
+      nonce: 0
+      storage: {}
+
+    144f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: 0
+      # JUMP destination as last byte before terminating instruction
+      # code section: 'sstore(0, 1) jump x sstore(0, 2) stop() x: stop()'
+      code: ':raw 0xEF000101000F006001600055600D5660026000555B00'
+      nonce: 0
+      storage: {}
+
+    154f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: 0
+      # JUMPI destination as last byte before terminating instruction
+      # code section: 'sstore(0, 1) push1(1) jumpi x sstore(0, 2) x: stop()'
+      code: ':raw 0xEF00010100110060016000556001600F5760026000555B00'
+      nonce: 0
+      storage: {}
+
+    164f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: 0
+      # Data section is 0x65 (101) bytes long, so header contains 0x65 (PUSH6) byte,
+      # but it must not affect jumpdest analysis (JUMPDEST stays valid)
+      # code section: 'jump x invalid x: sstore(0, 1) stop()'
+      code: ':raw 0xEF000101000B02006500600456FE5B600160005500FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF'
+      nonce: 0
+      storage: {}
+
+    174f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: 0
+      # Data section is 0x67 (103) bytes long, so header contains 0x67 (PUSH8) byte,
+      # but it must not affect jumpdest analysis (JUMPDEST stays valid)
+      # code section: 'push1(1) jumpi x invalid x: sstore(0, 1) stop()'
+      code: ':raw 0xEF000101000D020067006001600657FE5B600160005500FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF'
+      nonce: 0
+      storage: {}
+
+    # Invalid jumps
+
+    204f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: 0
+      # JUMP into data section
+      # code section: 'sstore(0, 1) jump x stop()'
+      # data section containg code: 'x: sstore(0, 2) stop()'
+      code: ':raw 0xEF0001010009020007006001600055600956005B600260005500'
+      nonce: 0
+      storage: {}
+
+    214f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: 0
+      # JUMPI into data section
+      # code section: 'sstore(0, 1) push1(1) jumpi x stop()'
+      # data section containg code: 'x: sstore(0, 2) stop()'
+      code: ':raw 0xEF000101000B0200070060016000556001600B57005B600260005500'
+      nonce: 0
+      storage: {}
+
+    224f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: 0
+      # JUMP outside of container
+      # code section: 'sstore(0, 1) jump(9) stop()'
+      code: ':raw 0xEF000101000900600160005560095600'
+      nonce: 0
+      storage: {}
+
+    234f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: 0
+      # JUMP outside of container with data section
+      # code section: 'sstore(0, 1) jump(13) stop()'
+      # data section: 'aabbccdd'
+      code: ':raw 0xEF0001010009020004006001600055600D5600AABBCCDD'
+      nonce: 0
+      storage: {}
+
+    244f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: 0
+      # JUMPI outside of container
+      # code section: 'sstore(0, 1) push1(1) jumpi(11) stop()'
+      code: ':raw 0xEF000101000B0060016000556001600B5700'
+      nonce: 0
+      storage: {}
+
+    254f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: 0
+      # JUMPI outside of container with data section
+      # code section: 'sstore(0, 1) push1(1) jumpi(15) stop()'
+      # data section: 'aabbccdd'
+      code: ':raw 0xEF000101000B0200040060016000556001600F5700AABBCCDD'
+      nonce: 0
+      storage: {}
+
+    264f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: 0
+      # JUMP into non-JUMPDEST byte
+      # code section: 'jump(4) stop() sstore(0, 1) stop()'
+      code: ':raw 0xEF000101000A0060045600600160005500'
+      nonce: 0
+      storage: {}
+
+    274f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: 0
+      # JUMPI into non-JUMPDEST byte
+      # code section: 'push1(1) jumpi(6) stop() sstore(0, 1) stop()'
+      code: ':raw 0xEF000101000C00600160065700600160005500'
+      nonce: 0
+      storage: {}
+
+    284f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: 0
+      # JUMP into JUMPDEST byte inside pushdata
+      # code section: 'jump(5) stop() push1(0x5B) sstore(0, 1) stop()'
+      code: ':raw 0xEF000101000C0060055600605B600160005500'
+      nonce: 0
+      storage: {}
+
+    294f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: 0
+      # JUMPI into JUMPDEST byte inside pushdata
+      # code section: 'push1(1) jumpi(7) stop() push1(0x5B) sstore(0, 1) stop()'
+      code: ':raw 0xEF000101000E00600160075700605B600160005500'
+      nonce: 0
+      storage: {}
+
+    504f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: 0
+      # CODESIZE
+      # code section: 'sstore(0, codesize()) stop()'
+      code: ':raw 0xEF0001010005003860005500'
+      nonce: 0
+      storage: {}
+
+    514f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: 0
+      # CODECOPY copying part of header + code section + part of data section
+      # code section: 'codecopy(0, 1, 0x19) sstore(0, mload(0)) stop()'
+      code: ':raw 0xEF000101000E020004006019600160003960005160005500AABBCCDD'
+      nonce: 0
+      storage: {}
+
+    524f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: 0
+      # CODECOPY data section with len out of bounds
+      # code section: 'mstore(0, 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff) codecopy(0, 0x3C, 8) sstore(0, mload(0)) stop()'
+      code: ':raw 0xEF0001010032020004007FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF6000526008603C60003960005160005500AABBCCDD'
+      nonce: 0
+      storage: {}
+
+    604f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: 0
+      # EXTCODESIZE of EOF contract
+      code: ':yul { sstore(0, extcodesize(0xd94f5374fce5edbc8e2a8697c15331677e6ebf0b)) }'
+      nonce: 0
+      storage: {}
+
+    614f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: 0
+      # EXTCODESIZE of EOF contract executed inside EOF contract
+      code: ':raw 0xEF000101001A0073d94f5374fce5edbc8e2a8697c15331677e6ebf0b3b60005500'
+      nonce: 0
+      storage: {}
+
+    624f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: 0
+      # EXTCODEHASH of EOF contract
+      code: ':yul { sstore(0, extcodehash(0xd94f5374fce5edbc8e2a8697c15331677e6ebf0b)) }'
+      nonce: 0
+      storage: {}
+
+    634f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: 0
+      # EXTCODEHASH of EOF contract executed inside EOF contract
+      code: ':raw 0xEF000101001A0073d94f5374fce5edbc8e2a8697c15331677e6ebf0b3f60005500'
+      nonce: 0
+      storage: {}
+
+    644f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: 0
+      # EXTCODECOPY copying part of header + code section + part of data section
+      code: ':yul { extcodecopy(0xd94f5374fce5edbc8e2a8697c15331677e6ebf0b, 0, 1, 17) sstore(0, mload(0)) }'
+      nonce: 0
+      storage: {}
+
+    654f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: 0
+      # EXTCODECOPY copying part of header + code section + part of data section inside EOF contract
+      code: ':raw 0xEF00010100230060116001600073d94f5374fce5edbc8e2a8697c15331677e6ebf0b3c60005160005500'
+      nonce: 0
+      storage: {}
+
+    664f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: 0
+      # EXTCODECOPY with len out of bounds
+      code: ':yul { mstore(0, 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff) extcodecopy(0xd94f5374fce5edbc8e2a8697c15331677e6ebf0b, 0, 16, 8) sstore(0, mload(0)) }'
+      nonce: 0
+      storage: {}
+
+    674f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: 0
+      # EXTCODECOPY with len out of bounds executed inside EOF contract
+      code: ':raw 0xEF0001010047007fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff60005260086010600073d94f5374fce5edbc8e2a8697c15331677e6ebf0b3c60005160005500'
+      nonce: 0
+      storage: {}
+
+  transaction:
+    data:
+      - ':label basic_valid_eof                 :raw 0xc94f5374fce5edbc8e2a8697c15331677e6ebf0b'
+      - ':label basic_valid_eof_with_data       :raw 0xd94f5374fce5edbc8e2a8697c15331677e6ebf0b'
+      - ':label pc_start                        :raw 0x004f5374fce5edbc8e2a8697c15331677e6ebf0b'
+      - ':label pc_middle                       :raw 0x014f5374fce5edbc8e2a8697c15331677e6ebf0b'
+      - ':label push_complete                   :raw 0x024f5374fce5edbc8e2a8697c15331677e6ebf0b'
+      - ':label valid_jump                      :raw 0x104f5374fce5edbc8e2a8697c15331677e6ebf0b'
+      - ':label valid_jump_with_data_section    :raw 0x114f5374fce5edbc8e2a8697c15331677e6ebf0b'
+      - ':label valid_jumpi                     :raw 0x124f5374fce5edbc8e2a8697c15331677e6ebf0b'
+      - ':label valid_jumpi_with_data_section   :raw 0x134f5374fce5edbc8e2a8697c15331677e6ebf0b'
+      - ':label valid_jump_last_byte            :raw 0x144f5374fce5edbc8e2a8697c15331677e6ebf0b'
+      - ':label valid_jumpi_last_byte           :raw 0x154f5374fce5edbc8e2a8697c15331677e6ebf0b'
+      - ':label valid_jump_push_in_header       :raw 0x164f5374fce5edbc8e2a8697c15331677e6ebf0b'
+      - ':label valid_jumpi_push_in_header      :raw 0x174f5374fce5edbc8e2a8697c15331677e6ebf0b'
+      - ':label invalid_jump_into_data_section  :raw 0x204f5374fce5edbc8e2a8697c15331677e6ebf0b'
+      - ':label invalid_jumpi_into_data_section :raw 0x214f5374fce5edbc8e2a8697c15331677e6ebf0b'
+      - ':label invalid_jump_out_of_container   :raw 0x224f5374fce5edbc8e2a8697c15331677e6ebf0b'
+      - ':label invalid_jump_out_of_container2  :raw 0x234f5374fce5edbc8e2a8697c15331677e6ebf0b'
+      - ':label invalid_jumpi_out_of_container  :raw 0x244f5374fce5edbc8e2a8697c15331677e6ebf0b'
+      - ':label invalid_jumpi_out_of_container2 :raw 0x254f5374fce5edbc8e2a8697c15331677e6ebf0b'
+      - ':label invalid_jump_not_jumpdest       :raw 0x264f5374fce5edbc8e2a8697c15331677e6ebf0b'
+      - ':label invalid_jumpi_not_jumpdest      :raw 0x274f5374fce5edbc8e2a8697c15331677e6ebf0b'
+      - ':label invalid_jump_pushdata           :raw 0x284f5374fce5edbc8e2a8697c15331677e6ebf0b'
+      - ':label invalid_jumpi_pushdata          :raw 0x294f5374fce5edbc8e2a8697c15331677e6ebf0b'
+      - ':label codesize                        :raw 0x504f5374fce5edbc8e2a8697c15331677e6ebf0b'
+      - ':label codecopy                        :raw 0x514f5374fce5edbc8e2a8697c15331677e6ebf0b'
+      - ':label codecopy_out_out_bounds         :raw 0x524f5374fce5edbc8e2a8697c15331677e6ebf0b'
+      - ':label extcodesize                     :raw 0x604f5374fce5edbc8e2a8697c15331677e6ebf0b'
+      - ':label extcodesize_inside_eof          :raw 0x614f5374fce5edbc8e2a8697c15331677e6ebf0b'
+      - ':label extcodehash                     :raw 0x624f5374fce5edbc8e2a8697c15331677e6ebf0b'
+      - ':label extcodehash_inside_eof          :raw 0x634f5374fce5edbc8e2a8697c15331677e6ebf0b'
+      - ':label extcodecopy                     :raw 0x644f5374fce5edbc8e2a8697c15331677e6ebf0b'
+      - ':label extcodecopy_inside_eof          :raw 0x654f5374fce5edbc8e2a8697c15331677e6ebf0b'
+      - ':label extcodecopy_out_of_bounds       :raw 0x664f5374fce5edbc8e2a8697c15331677e6ebf0b'
+      - ':label extcodecopy_out_of_bounds_eof   :raw 0x674f5374fce5edbc8e2a8697c15331677e6ebf0b'
+    gasLimit:
+      - 700000
+    gasPrice: 10
+    nonce: 0
+    secretKey: 45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8
+    to: 'b94f5374fce5edbc8e2a8697c15331677e6ebf0b'
+    value:
+    - 0
+
+  expect:
+    - indexes:
+       data: ':label basic_valid_eof'
+      network:
+        - 'Merge'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '1': '1'
+        c94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage: {}
+    - indexes:
+       data: ':label basic_valid_eof'
+      network:
+        - 'Merge+3540+3670'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '1'
+            '1': '1'
+        c94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '1'
+
+    - indexes:
+       data: ':label basic_valid_eof_with_data'
+      network:
+        - 'Merge'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '1': '1'
+        d94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage: {}
+    - indexes:
+       data: ':label basic_valid_eof_with_data'
+      network:
+        - 'Merge+3540+3670'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '1'
+            '1': '1'
+        d94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '1'
+
+    - indexes:
+       data: ':label pc_start'
+      network:
+        - 'Merge'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '1': '1'
+        004f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage: {}
+    - indexes:
+       data: ':label pc_start'
+      network:
+        - 'Merge+3540+3670'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '1'
+            '1': '1'
+        004f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          # PC equals 0 at start of execution
+          storage: {}
+
+    - indexes:
+       data: ':label pc_middle'
+      network:
+        - 'Merge'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '1': '1'
+        014f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage: {}
+    - indexes:
+       data: ':label pc_middle'
+      network:
+        - 'Merge+3540+3670'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '1'
+            '1': '1'
+        014f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            # non-0 PC returned
+            '0': '5'
+
+    - indexes:
+       data: ':label push_complete'
+      network:
+        - 'Merge'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '1': '1'
+        024f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage: {}
+    - indexes:
+       data: ':label push_complete'
+      network:
+        - 'Merge+3540+3670'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '1'
+            '1': '1'
+        024f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': 'aabbccdd'
+
+    - indexes:
+       data: ':label valid_jump'
+      network:
+        - 'Merge'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '1': '1'
+        104f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage: {}
+    - indexes:
+       data: ':label valid_jump'
+      network:
+        - 'Merge+3540+3670'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '1'
+            '1': '1'
+        104f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '2'
+
+    - indexes:
+       data: ':label valid_jump_with_data_section'
+      network:
+        - 'Merge'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '1': '1'
+        114f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage: {}
+    - indexes:
+       data: ':label valid_jump_with_data_section'
+      network:
+        - 'Merge+3540+3670'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '1'
+            '1': '1'
+        114f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '2'
+
+    - indexes:
+       data: ':label valid_jumpi'
+      network:
+        - 'Merge'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '1': '1'
+        124f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage: {}
+    - indexes:
+       data: ':label valid_jumpi'
+      network:
+        - 'Merge+3540+3670'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '1'
+            '1': '1'
+        124f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '2'
+
+
+    - indexes:
+       data: ':label valid_jumpi_with_data_section'
+      network:
+        - 'Merge'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '1': '1'
+        134f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage: {}
+    - indexes:
+       data: ':label valid_jumpi_with_data_section'
+      network:
+        - 'Merge+3540+3670'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '1'
+            '1': '1'
+        134f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '2'
+
+    - indexes:
+       data: ':label valid_jump_last_byte'
+      network:
+        - 'Merge'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '1': '1'
+        144f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage: {}
+    - indexes:
+       data: ':label valid_jump_last_byte'
+      network:
+        - 'Merge+3540+3670'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '1'
+            '1': '1'
+        144f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '1'
+
+    - indexes:
+       data: ':label valid_jumpi_last_byte'
+      network:
+        - 'Merge'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '1': '1'
+        154f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage: {}
+    - indexes:
+       data: ':label valid_jumpi_last_byte'
+      network:
+        - 'Merge+3540+3670'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '1'
+            '1': '1'
+        154f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '1'
+
+    - indexes:
+       data: ':label valid_jump_push_in_header'
+      network:
+        - 'Merge'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '1': '1'
+        164f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage: {}
+    - indexes:
+       data: ':label valid_jump_push_in_header'
+      network:
+        - 'Merge+3540+3670'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '1'
+            '1': '1'
+        164f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '1'
+
+    - indexes:
+       data: ':label valid_jumpi_push_in_header'
+      network:
+        - 'Merge'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '1': '1'
+        174f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage: {}
+    - indexes:
+       data: ':label valid_jumpi_push_in_header'
+      network:
+        - 'Merge+3540+3670'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '1'
+            '1': '1'
+        174f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '1'
+
+    - indexes:
+       data: ':label invalid_jump_into_data_section'
+      network:
+        - 'Merge'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '1': '1'
+        204f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage: {}
+    # Same expectation, but for Merge execution fails on EF byte, for 3540 it fails on invalid jump destination
+    - indexes:
+       data: ':label invalid_jump_into_data_section'
+      network:
+        - 'Merge+3540+3670'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '1': '1'
+        204f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage: {}
+
+    - indexes:
+       data: ':label invalid_jumpi_into_data_section'
+      network:
+        - 'Merge'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '1': '1'
+        214f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage: {}
+    # Same expectation, but for Merge execution fails on EF byte, for 3540 it fails on invalid jump destination
+    - indexes:
+       data: ':label invalid_jumpi_into_data_section'
+      network:
+        - 'Merge+3540+3670'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '1': '1'
+        214f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage: {}
+
+    - indexes:
+       data: ':label invalid_jump_out_of_container'
+      network:
+        - 'Merge'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '1': '1'
+        224f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage: {}
+    # Same expectation, but for Merge execution fails on EF byte, for 3540 it fails on invalid jump destination
+    - indexes:
+       data: ':label invalid_jump_out_of_container'
+      network:
+        - 'Merge+3540+3670'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '1': '1'
+        224f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage: {}
+
+    - indexes:
+       data: ':label invalid_jump_out_of_container2'
+      network:
+        - 'Merge'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '1': '1'
+        234f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage: {}
+    # Same expectation, but for Merge execution fails on EF byte, for 3540 it fails on invalid jump destination
+    - indexes:
+       data: ':label invalid_jump_out_of_container2'
+      network:
+        - 'Merge+3540+3670'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '1': '1'
+        234f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage: {}
+
+    - indexes:
+       data: ':label invalid_jumpi_out_of_container'
+      network:
+        - 'Merge'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '1': '1'
+        244f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage: {}
+    # Same expectation, but for Merge execution fails on EF byte, for 3540 it fails on invalid jump destination
+    - indexes:
+       data: ':label invalid_jumpi_out_of_container'
+      network:
+        - 'Merge+3540+3670'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '1': '1'
+        244f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage: {}
+
+    - indexes:
+       data: ':label invalid_jumpi_out_of_container2'
+      network:
+        - 'Merge'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '1': '1'
+        254f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage: {}
+    # Same expectation, but for Merge execution fails on EF byte, for 3540 it fails on invalid jump destination
+    - indexes:
+       data: ':label invalid_jumpi_out_of_container2'
+      network:
+        - 'Merge+3540+3670'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '1': '1'
+        254f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage: {}
+
+    - indexes:
+       data: ':label invalid_jump_not_jumpdest'
+      network:
+        - 'Merge'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '1': '1'
+        264f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage: {}
+    # Same expectation, but for Merge execution fails on EF byte, for 3540 it fails on invalid jump destination
+    - indexes:
+       data: ':label invalid_jump_not_jumpdest'
+      network:
+        - 'Merge+3540+3670'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '1': '1'
+        264f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage: {}
+
+    - indexes:
+       data: ':label invalid_jumpi_not_jumpdest'
+      network:
+        - 'Merge'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '1': '1'
+        274f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage: {}
+    # Same expectation, but for Merge execution fails on EF byte, for 3540 it fails on invalid jump destination
+    - indexes:
+       data: ':label invalid_jumpi_not_jumpdest'
+      network:
+        - 'Merge+3540+3670'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '1': '1'
+        274f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage: {}
+
+    - indexes:
+       data: ':label invalid_jump_pushdata'
+      network:
+        - 'Merge'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '1': '1'
+        284f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage: {}
+    # Same expectation, but for Merge execution fails on EF byte, for 3540 it fails on invalid jump destination
+    - indexes:
+       data: ':label invalid_jump_pushdata'
+      network:
+        - 'Merge+3540+3670'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '1': '1'
+        284f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage: {}
+
+    - indexes:
+       data: ':label invalid_jumpi_pushdata'
+      network:
+        - 'Merge'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '1': '1'
+        294f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage: {}
+    # Same expectation, but for Merge execution fails on EF byte, for 3540 it fails on invalid jump destination
+    - indexes:
+       data: ':label invalid_jumpi_pushdata'
+      network:
+        - 'Merge+3540+3670'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '1': '1'
+        294f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage: {}
+
+    - indexes:
+       data: ':label codesize'
+      network:
+        - 'Merge'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '1': '1'
+        504f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage: {}
+    - indexes:
+       data: ':label codesize'
+      network:
+        - 'Merge+3540+3670'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '1'
+            '1': '1'
+        504f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '12'
+
+    - indexes:
+       data: ':label codecopy'
+      network:
+        - 'Merge'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '1': '1'
+        514f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage: {}
+    - indexes:
+       data: ':label codecopy'
+      network:
+        - 'Merge+3540+3670'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '1'
+            '1': '1'
+        514f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '0x000101000E020004006019600160003960005160005500AABB00000000000000'
+
+    - indexes:
+       data: ':label codecopy_out_out_bounds'
+      network:
+        - 'Merge'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '1': '1'
+        524f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage: {}
+    - indexes:
+       data: ':label codecopy_out_out_bounds'
+      network:
+        - 'Merge+3540+3670'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '1'
+            '1': '1'
+        524f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '0xAABBCCDD00000000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF'
+
+    - indexes:
+       data: ':label extcodesize'
+      network:
+        - 'Merge'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '1'
+            '1': '1'
+        604f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '20'
+    - indexes:
+       data: ':label extcodesize'
+      network:
+        - 'Merge+3540+3670'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '1'
+            '1': '1'
+        604f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '20'
+
+    - indexes:
+       data: ':label extcodesize_inside_eof'
+      network:
+        - 'Merge'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '1': '1'
+        614f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage: {}
+    - indexes:
+       data: ':label extcodesize_inside_eof'
+      network:
+        - 'Merge+3540+3670'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '1'
+            '1': '1'
+        614f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '20'
+
+    - indexes:
+       data: ':label extcodehash'
+      network:
+        - 'Merge'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '1'
+            '1': '1'
+        624f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '527e39b7a7e7e9587589a214f513567a31bc9997cfe106fb824a01e87b37f128'
+    - indexes:
+       data: ':label extcodehash'
+      network:
+        - 'Merge+3540+3670'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '1'
+            '1': '1'
+        624f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '527e39b7a7e7e9587589a214f513567a31bc9997cfe106fb824a01e87b37f128'
+
+    - indexes:
+       data: ':label extcodehash_inside_eof'
+      network:
+        - 'Merge'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '1': '1'
+    - indexes:
+       data: ':label extcodehash_inside_eof'
+      network:
+        - 'Merge+3540+3670'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '1'
+            '1': '1'
+        634f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '527e39b7a7e7e9587589a214f513567a31bc9997cfe106fb824a01e87b37f128'
+
+    - indexes:
+       data: ':label extcodecopy'
+      network:
+        - 'Merge'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '1'
+            '1': '1'
+        644f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '000101000602000400600160005500aabb000000000000000000000000000000'
+    - indexes:
+       data: ':label extcodecopy'
+      network:
+        - 'Merge+3540+3670'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '1'
+            '1': '1'
+        644f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '000101000602000400600160005500aabb000000000000000000000000000000'
+
+    - indexes:
+       data: ':label extcodecopy_inside_eof'
+      network:
+        - 'Merge'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '1': '1'
+        654f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage: {}
+    - indexes:
+       data: ':label extcodecopy_inside_eof'
+      network:
+        - 'Merge+3540+3670'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '1'
+            '1': '1'
+        654f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '000101000602000400600160005500aabb000000000000000000000000000000'
+
+    - indexes:
+       data: ':label extcodecopy_out_of_bounds'
+      network:
+        - 'Merge'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '1'
+            '1': '1'
+        664f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': 'aabbccdd00000000ffffffffffffffffffffffffffffffffffffffffffffffff'
+    - indexes:
+       data: ':label extcodecopy_out_of_bounds'
+      network:
+        - 'Merge+3540+3670'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '1'
+            '1': '1'
+        664f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': 'aabbccdd00000000ffffffffffffffffffffffffffffffffffffffffffffffff'
+
+    - indexes:
+       data: ':label extcodecopy_out_of_bounds_eof'
+      network:
+        - 'Merge'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '1': '1'
+        674f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage: {}
+    - indexes:
+       data: ':label extcodecopy_out_of_bounds_eof'
+      network:
+        - 'Merge+3540+3670'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '1'
+            '1': '1'
+        674f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': 'aabbccdd00000000ffffffffffffffffffffffffffffffffffffffffffffffff'
