@@ -83,7 +83,7 @@ The fields in each block are optional. Only include those fields you need.
 
   Note that starting with London **gasLimit** cannot be changed by more than 1/1024
   from the previous value because of `EIP 1559 <https://github.com/ethereum/EIPs/blob/master/EIPS/eip-1559.md>`_.
-  You can specify **baseFee**, but the block is only valid if it is the same value
+  You can specify **baseFeePerGas**, but the block is only valid if it is the same value
   that was calculated from the previous block.
 
 - **blocknumber** and **chainname**:
