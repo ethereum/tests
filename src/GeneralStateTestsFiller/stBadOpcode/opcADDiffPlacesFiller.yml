@@ -635,122 +635,86 @@ opcADDiffPlaces:
   transaction:
     data:
     # Run the code snippet normally
-    - data: :label normal :abi f(uint) 0x00
-      accessList: []
+    - :label normal :abi f(uint) 0x00
 
     # Single level call stack
     # CALL
-    - data: :label normal :abi f(uint) 0xf1
-      accessList: []
+    - :label normal :abi f(uint) 0xf1
     # CALLCODE
-    - data: :label normal :abi f(uint) 0xf2
-      accessList: []
+    - :label normal :abi f(uint) 0xf2
     # DELEGATECALL
-    - data: :abi f(uint) 0xf4
-      accessList: []
+    - :abi f(uint) 0xf4
     # STATICCALL
-    - data: :abi f(uint) 0xfa
-      accessList: []
+    - :abi f(uint) 0xfa
 
     # Two level call stack
     # CALL CALL
-    - data: :abi f(uint) 0xf1f1
-      accessList: []
+    - :abi f(uint) 0xf1f1
     # CALLCODE CALL
-    - data: :abi f(uint) 0xf2f1
-      accessList: []
+    - :abi f(uint) 0xf2f1
     # DELEGATECALL CALL
-    - data: :abi f(uint) 0xf4f1
-      accessList: []
+    - :abi f(uint) 0xf4f1
     # STATICCALL CALL
-    - data: :abi f(uint) 0xfaf1
-      accessList: []
+    - :abi f(uint) 0xfaf1
     # CALL CALLCODE
-    - data: :abi f(uint) 0xf1f2
-      accessList: []
+    - :abi f(uint) 0xf1f2
     # CALLCODE CALLCODE
-    - data: :abi f(uint) 0xf2f2
-      accessList: []
+    - :abi f(uint) 0xf2f2
     # DELEGATECALL CALLCODE
-    - data: :abi f(uint) 0xf4f2
-      accessList: []
+    - :abi f(uint) 0xf4f2
     # STATICCALL CALLCODE
-    - data: :abi f(uint) 0xfaf2
-      accessList: []
+    - :abi f(uint) 0xfaf2
     # CALL DELEGATECALL
-    - data: :abi f(uint) 0xf1f4
-      accessList: []
+    - :abi f(uint) 0xf1f4
     # CALLCODE DELEGATECALL
-    - data: :abi f(uint) 0xf2f4
-      accessList: []
+    - :abi f(uint) 0xf2f4
     # DELEGATECALL DELEGATECALL
-    - data: :abi f(uint) 0xf4f4
-      accessList: []
+    - :abi f(uint) 0xf4f4
     # STATICCALL DELEGATECALL
-    - data: :abi f(uint) 0xfaf4
-      accessList: []
+    - :abi f(uint) 0xfaf4
     # CALL STATICCALL
-    - data: :abi f(uint) 0xf1fa
-      accessList: []
+    - :abi f(uint) 0xf1fa
     # CALLCODE STATICCALL
-    - data: :abi f(uint) 0xf2fa
-      accessList: []
+    - :abi f(uint) 0xf2fa
     # DELEGATECALL STATICCALL
-    - data: :abi f(uint) 0xf4fa
-      accessList: []
+    - :abi f(uint) 0xf4fa
     # STATICCALL STATICCALL
-    - data: :abi f(uint) 0xfafa
-      accessList: []
+    - :abi f(uint) 0xfafa
 
     # Call after something fails
     # REVERT
-    - data: :abi f(uint) 0xfd
-      accessList: []
+    - :abi f(uint) 0xfd
     # Out of gas
-    - data: :abi f(uint) 0xfe
-      accessList: []
+    - :abi f(uint) 0xfe
     # SELFDESTRUCT
-    - data: :abi f(uint) 0xff
-      accessList: []
+    - :abi f(uint) 0xff
 
 
     # Combined with creation of contracts
     # CREATE (run code in the constructor)
-    - data: :abi f(uint) 0xf0
-      accessList: []
+    - :abi f(uint) 0xf0
     # CREATE2 (run code in the constructor)
-    - data: :abi f(uint) 0xf5
-      accessList: []
+    - :abi f(uint) 0xf5
     # CREATE and then CALL
-    - data: :abi f(uint) 0xf0f1
-      accessList: []
+    - :abi f(uint) 0xf0f1
     # CREATE2 and then CALL
-    - data: :abi f(uint) 0xf5f1
-      accessList: []
+    - :abi f(uint) 0xf5f1
     # CREATE and then CALLCODE
-    - data: :abi f(uint) 0xf0f2
-      accessList: []
+    - :abi f(uint) 0xf0f2
     # CREATE2 and then CALLCODE
-    - data: :abi f(uint) 0xf5f2
-      accessList: []
+    - :abi f(uint) 0xf5f2
     # CREATE and then DELEGATECALL
-    - data: :abi f(uint) 0xf0f4
-      accessList: []
+    - :abi f(uint) 0xf0f4
     # CREATE2 and then DELEGATECALL
-    - data: :abi f(uint) 0xf5f4
-      accessList: []
+    - :abi f(uint) 0xf5f4
     # CREATE and then STATICCALL
-    - data: :abi f(uint) 0xf0fa
-      accessList: []
+    - :abi f(uint) 0xf0fa
     # CREATE2 and then STATICCALL
-    - data: :abi f(uint) 0xf5fa
-      accessList: []
+    - :abi f(uint) 0xf5fa
 
 
     # Recurse almost until the limit
-    - data: :abi f(uint) 0x60BACCFA57
-      accessList: []
-
+    - :abi f(uint) 0x60BACCFA57
 
 
     gasLimit:
@@ -760,8 +724,7 @@ opcADDiffPlaces:
     value:
     - 0
     secretKey: "45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8"
-    maxPriorityFeePerGas: 0
-    maxFeePerGas: 2000
+    gasPrice: 2000
 
 
   expect:
