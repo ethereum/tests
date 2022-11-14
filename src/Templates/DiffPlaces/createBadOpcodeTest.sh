@@ -1,6 +1,8 @@
 #! /bin/bash
 
 # Given a HEX opcode, create a template test for it
+#
+# YOU SHOULD NOT RUN THIS DIRECTLY. INSTEAD, USE createTemplateTests.sh
 
 op=$1
 stateTestDir=../../GeneralStateTestsFiller
