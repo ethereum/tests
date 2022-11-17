@@ -76,16 +76,14 @@ creationTxInitCodeSizeLimit:
           code: '0x60606040523615610074576000357c01'
           storage: {}
 
-      # TODO this transaction is considered invalid by the latest EIP rules, it is checked by transaction tests
-      # TODO this can be removed
-    # - indexes:
-    #    data: ':label invalid'
-    #    gas: !!int -1
-    #    value: !!int -1
-    #   network:
-    #     - 'Merge+3860'
-    #   result:
-    #    a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
-    #       nonce: 1
-    #    6295ee1b4f6dd65047762f924ecd367c17eabf8f:
-    #       shouldnotexist: 1
+    - indexes:
+       data: ':label invalid'
+      network:
+        - 'Merge+3860'
+      expectException:
+        'Merge+3860' : 'TR_InitCodeLimitExceeded'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 0
+       6295ee1b4f6dd65047762f924ecd367c17eabf8f:
+          shouldnotexist: 1
