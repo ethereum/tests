@@ -1,5 +1,7 @@
 #! /usr/bin/node
-
+//
+// You should not run this directly. Instead, use
+// createTemplateTests.sh
 
 const fs = require('fs')
 
