@@ -1,74 +1,37 @@
 #!/bin/bash
 
 echo "Translate all known forks to ETC style forks..."
-sleep 2
+declare -A forkMap=( ["Byzantium"]="ETC_Atlantis"
+                     ["Istanbul"]="ETC_Phoenix"
+                     ["ConstantinopleFix"]="ETC_Agharta"
+                     ["Berlin"]="ETC_Magneto"
+                     ["London"]="ETC_Mystique"
+                     ["Merge"]="ETC_Mystique")
+
+function replaceFork()  {
+    infile=$1
+    ethfork=$2
+    etcfork=$3
+    if [[ "$infile" == *".yml"* ]]; then
+        sed -i -e 's/- '$ethfork'/- '$etcfork'/g' $infile
+        sed -i -e 's/\x27'$ethfork'/\x27'$etcfork'/g' $infile
+        sed -i -e 's/ '$ethfork':/ '$etcfork':/g' $infile
+    fi
+
+    sed -i -e 's/\"'$ethfork'/\"'$etcfork'/g' $infile
+    sed -i -e 's/='$ethfork'/='$etcfork'/g' $infile
+    sed -i -e 's/>'$ethfork'/>'$etcfork'/g' $infile
+    sed -i -e 's/<'$ethfork'/<'$etcfork'/g' $infile
+}
 
 function translateFile() {
-    if [[ "$1" == *".yml"* ]]; then
-        sed -i -e 's/- Byzantium/- ETC_Atlantis/g' $1
-        sed -i -e 's/\x27Byzantium/\x27ETC_Atlantis/g' $1
-        sed -i -e 's/ Byzantium:/ ETC_Atlantis:/g' $1
-
-        sed -i -e 's/- Istanbul/- ETC_Phoenix/g' $1
-        sed -i -e 's/\x27Istanbul/\x27ETC_Phoenix/g' $1
-        sed -i -e 's/ Istanbul:/ ETC_Phoenix:/g' $1
-
-        sed -i -e 's/- ConstantinopleFix/- ETC_Agharta/g' $1
-        sed -i -e 's/\x27ConstantinopleFix/\x27ETC_Agharta/g' $1
-        sed -i -e 's/ ConstantinopleFix:/ ETC_Agharta:/g' $1
-
-        sed -i -e 's/- Constantinople/- ETC_Agharta/g' $1
-        sed -i -e 's/\x27Constantinople/\x27ETC_Agharta/g' $1
-        sed -i -e 's/ Constantinople:/ ETC_Agharta:/g' $1
-
-        sed -i -e 's/- Berlin/- ETC_Magneto/g' $1
-        sed -i -e 's/\x27Berlin/\x27ETC_Magneto/g' $1
-        sed -i -e 's/ Berlin:/ ETC_Magneto:/g' $1
-
-        sed -i -e 's/- London/- ETC_Mystique/g' $1
-        sed -i -e 's/\x27London/\x27ETC_Mystique/g' $1
-        sed -i -e 's/ London:/ ETC_Mystique:/g' $1
-
-
-        sed -i -e 's/- Merge/- ETC_Mystique/g' $1
-        sed -i -e 's/\x27Merge/\x27ETC_Mystique/g' $1
-        sed -i -e 's/ Merge:/ ETC_Mystique:/g' $1
-   fi
-
-        sed -i -e 's/\"Byzantium/\"ETC_Atlantis/g' $1
-        sed -i -e 's/=Byzantium/=ETC_Atlantis/g' $1
-        sed -i -e 's/>Byzantium/>ETC_Atlantis/g' $1
-        sed -i -e 's/<Byzantium/<ETC_Atlantis/g' $1
-
-        sed -i -e 's/\"Istanbul/\"ETC_Phoenix/g' $1
-        sed -i -e 's/=Istanbul/=ETC_Phoenix/g' $1
-        sed -i -e 's/>Istanbul/>ETC_Phoenix/g' $1
-        sed -i -e 's/<Istanbul/<ETC_Phoenix/g' $1
-
-        sed -i -e 's/\"ConstantinopleFix/\"ETC_Agharta/g' $1
-        sed -i -e 's/=ConstantinopleFix/=ETC_Agharta/g' $1
-        sed -i -e 's/>ConstantinopleFix/>ETC_Agharta/g' $1
-        sed -i -e 's/<ConstantinopleFix/<ETC_Agharta/g' $1
-
-        sed -i -e 's/\"Constantinople/\"ETC_Agharta/g' $1
-        sed -i -e 's/=Constantinople/=ETC_Agharta/g' $1
-        sed -i -e 's/>Constantinople/>ETC_Agharta/g' $1
-        sed -i -e 's/<Constantinople/<ETC_Agharta/g' $1
-
-        sed -i -e 's/\"Berlin/\"ETC_Magneto/g' $1
-        sed -i -e 's/=Berlin/=ETC_Magneto/g' $1
-        sed -i -e 's/>Berlin/>ETC_Magneto/g' $1
-        sed -i -e 's/<Berlin/<ETC_Magneto/g' $1
-
-        sed -i -e 's/\"London/\"ETC_Mystique/g' $1
-        sed -i -e 's/=London/=ETC_Mystique/g' $1
-        sed -i -e 's/>London/>ETC_Mystique/g' $1
-        sed -i -e 's/<London/<ETC_Mystique/g' $1
-
-        sed -i -e 's/\"Merge/\"ETC_Mystique/g' $1
-        sed -i -e 's/=Merge/=ETC_Mystique/g' $1
-        sed -i -e 's/>Merge/>ETC_Mystique/g' $1
-        sed -i -e 's/<Merge/<ETC_Mystique/g' $1
+    infile=$1
+    for ethFork in ${!forkMap[@]}
+    do    
+        replaceFork $infile $ethFork ${forkMap[$ethFork]}
+    done
+    # Constantinople must be processed after ConstantinopleFix
+    replaceFork $infile Constantinople ETC_Agharta
 }
 
 replaceForks() {
