@@ -1,0 +1,556 @@
+# Validates every PUSH* opcodes is valid to deploy
+CREATE2_EOF1DeployValidPUSHOpcodes:
+  env:
+    currentCoinbase: 2adc25665018aa1fe0e6bc666dac8fc2697ff9ba
+    currentDifficulty: '0x020000'
+    currentGasLimit: '89128960'
+    currentBaseFee: '10'
+    currentNumber: '1'
+    currentTimestamp: '1000'
+    previousHash: 5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6
+
+  pre:
+    a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: 200000000
+      code: ''
+      nonce: 0
+      storage: {}
+    b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: 0
+      code: |
+        :yul 
+        {
+          let init_code_len := calldatasize()
+          calldatacopy(0, 0, init_code_len)
+          if create2(0, 0, init_code_len, 0) { sstore(1, 1) }
+        }
+      nonce: 0
+      storage: {}
+
+  transaction:
+    data: 
+      - ':label push1  :raw 0x7fef00010100030060ff0000000000000000000000000000000000000000000000600052600a6000f3'
+      - ':label push2  :raw 0x7fef00010100040061fff300000000000000000000000000000000000000000000600052600b6000f3'
+      - ':label push3  :raw 0x7fef00010100050062fff3fd000000000000000000000000000000000000000000600052600c6000f3'
+      - ':label push4  :raw 0x7fef00010100060063fff3fdfe0000000000000000000000000000000000000000600052600d6000f3'
+      - ':label push5  :raw 0x7fef00010100070064fff3fdfeff00000000000000000000000000000000000000600052600e6000f3'
+      - ':label push6  :raw 0x7fef00010100080065fff3fdfeff00000000000000000000000000000000000000600052600f6000f3'
+      - ':label push7  :raw 0x7fef00010100090066fff3fdfeff00f3000000000000000000000000000000000060005260106000f3'
+      - ':label push8  :raw 0x7fef000101000a0067fff3fdfeff00f3fd0000000000000000000000000000000060005260116000f3'
+      - ':label push9  :raw 0x7fef000101000b0068fff3fdfeff00f3fdfe00000000000000000000000000000060005260126000f3'
+      - ':label push10 :raw 0x7fef000101000c0069fff3fdfeff00f3fdfeff000000000000000000000000000060005260136000f3'
+      - ':label push11 :raw 0x7fef000101000d006afff3fdfeff00f3fdfeff000000000000000000000000000060005260146000f3'
+      - ':label push12 :raw 0x7fef000101000e006bfff3fdfeff00f3fdfeff00f300000000000000000000000060005260156000f3'
+      - ':label push13 :raw 0x7fef000101000f006cfff3fdfeff00f3fdfeff00f3fd000000000000000000000060005260166000f3'
+      - ':label push14 :raw 0x7fef0001010010006dfff3fdfeff00f3fdfeff00f3fdfe0000000000000000000060005260176000f3'
+      - ':label push15 :raw 0x7fef0001010011006efff3fdfeff00f3fdfeff00f3fdfeff00000000000000000060005260186000f3'
+      - ':label push16 :raw 0x7fef0001010012006ffff3fdfeff00f3fdfeff00f3fdfeff00000000000000000060005260196000f3'
+      - ':label push17 :raw 0x7fef00010100130070fff3fdfeff00f3fdfeff00f3fdfeff00f300000000000000600052601a6000f3'
+      - ':label push18 :raw 0x7fef00010100140071fff3fdfeff00f3fdfeff00f3fdfeff00f3fd000000000000600052601b6000f3'
+      - ':label push19 :raw 0x7fef00010100150072fff3fdfeff00f3fdfeff00f3fdfeff00f3fdfe0000000000600052601c6000f3'
+      - ':label push20 :raw 0x7fef00010100160073fff3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00000000600052601d6000f3'
+      - ':label push21 :raw 0x7fef00010100170074fff3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00000000600052601e6000f3'
+      - ':label push22 :raw 0x7fef00010100180075fff3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f30000600052601f6000f3'
+      - ':label push23 :raw 0x7fef00010100190076fff3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fd0060005260206000f3'
+      - ':label push24 :raw 0x7fef000101001a0077fff3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfe600052600060205260216000f3'
+      - ':label push25 :raw 0x7fef000101001b0078fff3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfe6000527fff0000000000000000000000000000000000000000000000000000000000000060205260226000f3'
+      - ':label push26 :raw 0x7fef000101001c0079fff3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfe6000527fff0000000000000000000000000000000000000000000000000000000000000060205260236000f3'
+      - ':label push27 :raw 0x7fef000101001d007afff3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfe6000527fff00f3000000000000000000000000000000000000000000000000000000000060205260246000f3'
+      - ':label push28 :raw 0x7fef000101001e007bfff3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfe6000527fff00f3fd0000000000000000000000000000000000000000000000000000000060205260256000f3'
+      - ':label push29 :raw 0x7fef000101001f007cfff3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfe6000527fff00f3fdfe00000000000000000000000000000000000000000000000000000060205260266000f3'
+      - ':label push30 :raw 0x7fef0001010020007dfff3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfe6000527fff00f3fdfeff000000000000000000000000000000000000000000000000000060205260276000f3'
+      - ':label push31 :raw 0x7fef0001010021007efff3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfe6000527fff00f3fdfeff000000000000000000000000000000000000000000000000000060205260286000f3'
+      - ':label push32 :raw 0x7fef0001010022007ffff3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfe6000527fff00f3fdfeff00f300000000000000000000000000000000000000000000000060205260296000f3'
+    gasLimit:
+      - 15000000
+    gasPrice: 10
+    nonce: 0
+    secretKey: 45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8
+    to: 'b94f5374fce5edbc8e2a8697c15331677e6ebf0b'
+    to: ''
+    value:
+      - 0
+
+  expect:
+    - indexes:
+        data: ':label push1'
+      network:
+        - 'Merge+3540+3670'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+          storage:
+            1: 1
+       f442b79f52d38865773ce8f27927c1988db8bcb9:  # PUSH1
+          nonce: 1
+          storage: {}
+          code: '0xef00010100030060ff00'
+
+    - indexes:
+        data: ':label push2'
+      network:
+        - 'Merge+3540+3670'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+          storage:
+            1: 1
+       85b52e5a2a6c9d3683e164954008e0e8a32683aa:  # PUSH2
+          nonce: 1
+          storage: {}
+          code: '0xef00010100040061fff300'
+    - indexes:
+        data: ':label push3'
+      network:
+        - 'Merge+3540+3670'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+          storage:
+            1: 1
+       d66753d414851efb1c2bf13c96a88e88112dfbd3:  # PUSH3
+          nonce: 1
+          storage: {}
+          code: '0xef00010100050062fff3fd00'
+    - indexes:
+        data: ':label push4'
+      network:
+        - 'Merge+3540+3670'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+          storage:
+            1: 1
+       6fc55e96c6390a0dd6edde87962fe8a9a2214576:  # PUSH4
+          nonce: 1
+          storage: {}
+          code: '0xef00010100060063fff3fdfe00'
+    - indexes:
+        data: ':label push5'
+      network:
+        - 'Merge+3540+3670'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+          storage:
+            1: 1
+       16504dc245244f7e5f2a1ce8e0ad08ee4306930a:  # PUSH5
+          nonce: 1
+          storage: {}
+          code: '0xef00010100070064fff3fdfeff00'
+    - indexes:
+        data: ':label push6'
+      network:
+        - 'Merge+3540+3670'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+          storage:
+            1: 1
+       6b8e0f8ee7b3ce84e12d1a803370bda4a8d7a4e4:  # PUSH6
+          nonce: 1
+          storage: {}
+          code: '0xef00010100080065fff3fdfeff0000'
+    - indexes:
+        data: ':label push7'
+      network:
+        - 'Merge+3540+3670'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+          storage:
+            1: 1
+       f4d1dace9600cbd751799d9891be4665293f42ae:  # PUSH7
+          nonce: 1
+          storage: {}
+          code: '0xef00010100090066fff3fdfeff00f300'
+    - indexes:
+        data: ':label push8'
+      network:
+        - 'Merge+3540+3670'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+          storage:
+            1: 1
+       5c1d407c8bbb1008e455d6f271d31b483f9b8030:  # PUSH8
+          nonce: 1
+          storage: {}
+          code: '0xef000101000a0067fff3fdfeff00f3fd00'
+    - indexes:
+        data: ':label push9'
+      network:
+        - 'Merge+3540+3670'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+          storage:
+            1: 1
+       96392429308b8a25700337128396944d8b96f7ea:  # PUSH9
+          nonce: 1
+          storage: {}
+          code: '0xef000101000b0068fff3fdfeff00f3fdfe00'
+    - indexes:
+        data: ':label push10'
+      network:
+        - 'Merge+3540+3670'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+          storage:
+            1: 1
+       5e314f49264afb3dad526c3d879cc65505627568:  # PUSH10
+          nonce: 1
+          storage: {}
+          code: '0xef000101000c0069fff3fdfeff00f3fdfeff00'
+    - indexes:
+        data: ':label push11'
+      network:
+        - 'Merge+3540+3670'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+          storage:
+            1: 1
+       9a3a749524b23c878948fc437318c643fce27297:  # PUSH11
+          nonce: 1
+          storage: {}
+          code: '0xef000101000d006afff3fdfeff00f3fdfeff0000'
+    - indexes:
+        data: ':label push12'
+      network:
+        - 'Merge+3540+3670'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+          storage:
+            1: 1
+       d64ff20921b705058e925ee8d1aaadccf84d4c88:  # PUSH12
+          nonce: 1
+          storage: {}
+          code: '0xef000101000e006bfff3fdfeff00f3fdfeff00f300'
+    - indexes:
+        data: ':label push13'
+      network:
+        - 'Merge+3540+3670'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+          storage:
+            1: 1
+       238522612342d278ea9c7b7a9e3560c2fb080895:  # PUSH13
+          nonce: 1
+          storage: {}
+          code: '0xef000101000f006cfff3fdfeff00f3fdfeff00f3fd00'
+    - indexes:
+        data: ':label push14'
+      network:
+        - 'Merge+3540+3670'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+          storage:
+            1: 1
+       5f5d8cbeed4179168d137a21d2a641fac8d4449d:  # PUSH14
+          nonce: 1
+          storage: {}
+          code: '0xef0001010010006dfff3fdfeff00f3fdfeff00f3fdfe00'
+    - indexes:
+        data: ':label push15'
+      network:
+        - 'Merge+3540+3670'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+          storage:
+            1: 1
+       cc491f649ee2343e1e38cae87b5c7f0a0622542a:  # PUSH15
+          nonce: 1
+          storage: {}
+          code: '0xef0001010011006efff3fdfeff00f3fdfeff00f3fdfeff00'
+    - indexes:
+        data: ':label push16'
+      network:
+        - 'Merge+3540+3670'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+          storage:
+            1: 1
+       e86d65a1bf73cd55a279e2a60d2b1571cb07ac8b:  # PUSH16
+          nonce: 1
+          storage: {}
+          code: '0xef0001010012006ffff3fdfeff00f3fdfeff00f3fdfeff0000'
+    - indexes:
+        data: ':label push17'
+      network:
+        - 'Merge+3540+3670'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+          storage:
+            1: 1
+       abc9da8bef04861fb0226a3e7a8da752449f5124:  # PUSH17
+          nonce: 1
+          storage: {}
+          code: '0xef00010100130070fff3fdfeff00f3fdfeff00f3fdfeff00f300'
+    - indexes:
+        data: ':label push18'
+      network:
+        - 'Merge+3540+3670'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+          storage:
+            1: 1
+       75a524652421cb2de55be340ffca263f8b454002:  # PUSH18
+          nonce: 1
+          storage: {}
+          code: '0xef00010100140071fff3fdfeff00f3fdfeff00f3fdfeff00f3fd00'
+    - indexes:
+        data: ':label push19'
+      network:
+        - 'Merge+3540+3670'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+          storage:
+            1: 1
+       27a7de08e82df6789fa638e81ecb2b8535bf5431:  # PUSH19
+          nonce: 1
+          storage: {}
+          code: '0xef00010100150072fff3fdfeff00f3fdfeff00f3fdfeff00f3fdfe00'
+    - indexes:
+        data: ':label push20'
+      network:
+        - 'Merge+3540+3670'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+          storage:
+            1: 1
+       e2b022660d89009de0a29d176e367d766d63d29f:  # PUSH20
+          nonce: 1
+          storage: {}
+          code: '0xef00010100160073fff3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00'
+    - indexes:
+        data: ':label push21'
+      network:
+        - 'Merge+3540+3670'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+          storage:
+            1: 1
+       48bba84507bd37c636cee46d30b3543b9dae5d9e:  # PUSH21
+          nonce: 1
+          storage: {}
+          code: '0xef00010100170074fff3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff0000'
+    - indexes:
+        data: ':label push22'
+      network:
+        - 'Merge+3540+3670'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+          storage:
+            1: 1
+       82712773430aaba01ed0a4ca94eabdfbcc5fafcd:  # PUSH22
+          nonce: 1
+          storage: {}
+          code: '0xef00010100180075fff3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f300'
+    - indexes:
+        data: ':label push23'
+      network:
+        - 'Merge+3540+3670'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+          storage:
+            1: 1
+       6ebee01a185e6abf30086b6f923dff26f23ae18b:  # PUSH23
+          nonce: 1
+          storage: {}
+          code: '0xef00010100190076fff3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fd00'
+    - indexes:
+        data: ':label push24'
+      network:
+        - 'Merge+3540+3670'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+          storage:
+            1: 1
+       b2d8e6527ced49182035e8d687751b78c280f745:  # PUSH24
+          nonce: 1
+          storage: {}
+          code: '0xef000101001a0077fff3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfe00'
+    - indexes:
+        data: ':label push25'
+      network:
+        - 'Merge+3540+3670'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+          storage:
+            1: 1
+       77b4e4027437da1834b7dae992ba029b805f0a9c:  # PUSH25
+          nonce: 1
+          storage: {}
+          code: '0xef000101001b0078fff3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00'
+    - indexes:
+        data: ':label push26'
+      network:
+        - 'Merge+3540+3670'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+          storage:
+            1: 1
+       1a818bb96efe61c90f8c6b5091e7769ae5cf8325:  # PUSH26
+          nonce: 1
+          storage: {}
+          code: '0xef000101001c0079fff3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff0000'
+    - indexes:
+        data: ':label push27'
+      network:
+        - 'Merge+3540+3670'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+          storage:
+            1: 1
+       9483d58dc01af1eeaafbde230100ee7f76d4403b:  # PUSH27
+          nonce: 1
+          storage: {}
+          code: '0xef000101001d007afff3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f300'
+    - indexes:
+        data: ':label push28'
+      network:
+        - 'Merge+3540+3670'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+          storage:
+            1: 1
+       ba785ba68e26f6135fa25b181be2cf641237f40b:  # PUSH28
+          nonce: 1
+          storage: {}
+          code: '0xef000101001e007bfff3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fd00'
+    - indexes:
+        data: ':label push29'
+      network:
+        - 'Merge+3540+3670'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+          storage:
+            1: 1
+       ced958072173d744fadaa1f57c75f0a9e1caf791:  # PUSH29
+          nonce: 1
+          storage: {}
+          code: '0xef000101001f007cfff3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfe00'
+    - indexes:
+        data: ':label push30'
+      network:
+        - 'Merge+3540+3670'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+          storage:
+            1: 1
+       3b8b889f11fcf3e1a78a1b4b7d1e617590f1cd6e:  # PUSH30
+          nonce: 1
+          storage: {}
+          code: '0xef0001010020007dfff3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00'
+    - indexes:
+        data: ':label push31'
+      network:
+        - 'Merge+3540+3670'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+          storage:
+            1: 1
+       69935c33cfdf7106883424e98fa4098a9222807c:  # PUSH31
+          nonce: 1
+          storage: {}
+          code: '0xef0001010021007efff3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff0000'
+    - indexes:
+        data: ':label push32'
+      network:
+        - 'Merge+3540+3670'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+          storage:
+            1: 1
+       b5c4d06a16e44d05bb41237e2038bcfa90c74e8f:  # PUSH32
+          nonce: 1
+          storage: {}
+          code: '0xef0001010022007ffff3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f300'
+

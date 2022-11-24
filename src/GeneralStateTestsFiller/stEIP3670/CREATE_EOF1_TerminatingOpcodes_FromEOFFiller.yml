@@ -1,0 +1,249 @@
+CREATE_EOF1_TerminatingOpcodes_FromEOF:
+  env:
+    currentCoinbase: 2adc25665018aa1fe0e6bc666dac8fc2697ff9ba
+    currentDifficulty: '0x020000'
+    currentGasLimit: '89128960'
+    currentBaseFee: '10'
+    currentNumber: '1'
+    currentTimestamp: '1000'
+    previousHash: 5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6
+
+  pre:
+    a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: 200000000
+      code: ''
+      nonce: 0
+      storage: {}
+    b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: 0
+      # code: ":yul { calldatacopy(0, 0, calldatasize()) sstore(0, create(0, 0, calldatasize())) sstore(1, 1) stop() }"
+      code: ":raw 0xEF0001010015003660006000373660006000f0600055600160015500"
+      nonce: 0
+      storage: {}
+
+  transaction:
+    data: 
+      # deployed code section: 'PUSH1 0 STOP'
+      - ':label deploying_valid_eof1_stop :yul { mstore(0, 0xef00010100030060000000000000000000000000000000000000000000000000) return(0, 10) }'
+      # deployed code section: 'PUSH1 0 PUSH1 0 RETURN'
+      - ':label deploying_valid_eof1_return :yul { mstore(0, 0xef00010100050060006000f30000000000000000000000000000000000000000) return(0, 12) }'
+      # deployed code section: 'PUSH1 01 PUSH1 00 SSTORE PUSH1 00 PUSH1 00 REVERT'
+      - ':label deploying_valid_eof1_revert :yul { mstore(0, 0xef000101000a00600160005560006000fd000000000000000000000000000000)  return(0, 17) }'
+      # deployed code section: 'PUSH1 0 INVALID'
+      - ':label deploying_valid_eof1_invalid :yul { mstore(0, 0xef0001010003006000fe00000000000000000000000000000000000000000000) return(0, 10) }'
+
+      # initcode code section: ':yul { mstore(0, 0xef00010100030060000000000000000000000000000000000000000000000000) return(0, 10) }'
+      # deployed code section: 'PUSH1 0 STOP'
+      - ':label eof1_initcode_deploying_valid_eof1_stop :raw 0xef0001010029007fef00010100030060000000000000000000000000000000000000000000000000600052600a6000f3'
+      # initcode code section: ':yul { mstore(0, 0xef00010100050060006000f30000000000000000000000000000000000000000) return(0, 12) }'
+      # deployed code section: 'PUSH1 0 PUSH1 0 RETURN'
+      - ':label eof1_initcode_deploying_valid_eof1_return :raw 0xef0001010029007fef00010100050060006000f30000000000000000000000000000000000000000600052600c6000f3'
+      # initcode code section: ':yul { mstore(0, 0xef000101000a00600160005560006000fd000000000000000000000000000000)  return(0, 17) }'
+      # deployed code section: 'PUSH1 1 PUSH1 0 SSTORE PUSH1 0 PUSH1 0 REVERT'
+      - ':label eof1_initcode_deploying_valid_eof1_revert :raw 0xef0001010029007fef000101000a00600160005560006000fd00000000000000000000000000000060005260116000f3'
+      # initcode code section: ':yul { mstore(0, 0xef0001010003006000fe00000000000000000000000000000000000000000000) return(0, 10) }'
+      # deployed code section: 'PUSH1 0 INVALID'
+      - ':label eof1_initcode_deploying_valid_eof1_invalid :raw 0xef0001010029007fef0001010003006000fe00000000000000000000000000000000000000000000600052600a6000f3'
+      # initcode code section: ':yul { mstore(0, 0xef0001010003006000ff00000000000000000000000000000000000000000000) return(0, 10) }'
+
+      # Valid EOF initcode ending with terminating instruction STOP
+      # deployed code section: 'PUSH1 0 STOP'
+      # Note: RETURN at the end is already tested in cases above
+      # initcode code section: ':yul { mstore(0, 0xef00010100030060000000000000000000000000000000000000000000000000) return(0, 10) stop() }'
+      - ':label eof1_initcode_with_terminating_opcode_stop :raw 0xef000101002a007fef00010100030060000000000000000000000000000000000000000000000000600052600a6000f300'
+      # Valid EOF initcode ending with terminating instruction REVERT
+      # initcode code section: ':yul { mstore(0, 0xef00010100030060000000000000000000000000000000000000000000000000) return(0, 10) revert(0, 0) }'
+      - ':label eof1_initcode_with_terminating_opcode_revert :raw 0xef000101002e007fef00010100030060000000000000000000000000000000000000000000000000600052600a6000f360006000fd'
+      # Valid EOF initcode ending with terminating instruction INVALID
+      # initcode code section: :yul { mstore(0, 0xef00010100030060000000000000000000000000000000000000000000000000) return(0, 10) invalid() }'
+      - ':label eof1_initcode_with_terminating_opcode_invalid :raw 0xef000101002a007fef00010100030060000000000000000000000000000000000000000000000000600052600a6000f3fe'
+
+    gasLimit:
+      - 15000000
+    gasPrice: 10
+    nonce: 0
+    secretKey: 45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8
+    to: 'b94f5374fce5edbc8e2a8697c15331677e6ebf0b'
+    value:
+      - 0
+
+  expect:
+    - indexes:
+       data: ':label deploying_valid_eof1_stop'
+      network:
+        - 'Merge+3540+3670'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+          storage:
+            '0': 'f1ecf98489fa9ed60a664fc4998db699cfa39d40'
+            '1': '1'
+       f1ecf98489fa9ed60a664fc4998db699cfa39d40:
+          nonce: 1
+          code: '0xef000101000300600000'
+          storage: {}
+    - indexes:
+       data: ':label deploying_valid_eof1_return'
+      network:
+        - 'Merge+3540+3670'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+          storage:
+            '0': 'f1ecf98489fa9ed60a664fc4998db699cfa39d40'
+            '1': '1'
+       f1ecf98489fa9ed60a664fc4998db699cfa39d40:
+          nonce: 1
+          code: '0xef00010100050060006000f3'
+          storage: {}
+    - indexes:
+       data: ':label deploying_valid_eof1_revert'
+      network:
+        - 'Merge+3540+3670'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+          storage:
+            '0': 'f1ecf98489fa9ed60a664fc4998db699cfa39d40'
+            '1': '1'
+       f1ecf98489fa9ed60a664fc4998db699cfa39d40:
+          nonce: 1
+          code: '0xef000101000a00600160005560006000fd'
+          storage: {}
+    - indexes:
+       data: ':label deploying_valid_eof1_invalid'
+      network:
+        - 'Merge+3540+3670'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+          storage:
+            '0': 'f1ecf98489fa9ed60a664fc4998db699cfa39d40'
+            '1': '1'
+       f1ecf98489fa9ed60a664fc4998db699cfa39d40:
+          nonce: 1
+          code: '0xef0001010003006000fe'
+          storage: {}
+    - indexes:
+       data: ':label eof1_initcode_deploying_valid_eof1_stop'
+      network:
+        - 'Merge+3540+3670'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+          storage:
+            '0': 'f1ecf98489fa9ed60a664fc4998db699cfa39d40'
+            '1': '1'
+       f1ecf98489fa9ed60a664fc4998db699cfa39d40:
+          nonce: 1
+          code: '0xef000101000300600000'
+          storage: {}
+    - indexes:
+       data: ':label eof1_initcode_deploying_valid_eof1_return'
+      network:
+        - 'Merge+3540+3670'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+          storage:
+            '0': 'f1ecf98489fa9ed60a664fc4998db699cfa39d40'
+            '1': '1'
+       f1ecf98489fa9ed60a664fc4998db699cfa39d40:
+          nonce: 1
+          code: '0xef00010100050060006000f3'
+          storage: {}
+    - indexes:
+       data: ':label eof1_initcode_deploying_valid_eof1_revert'
+      network:
+        - 'Merge+3540+3670'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+          storage:
+            '0': 'f1ecf98489fa9ed60a664fc4998db699cfa39d40'
+            '1': '1'
+       f1ecf98489fa9ed60a664fc4998db699cfa39d40:
+          nonce: 1
+          code: '0xef000101000a00600160005560006000fd'
+          storage: {}
+    - indexes:
+       data: ':label eof1_initcode_deploying_valid_eof1_invalid'
+      network:
+        - 'Merge+3540+3670'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+          storage:
+            '0': 'f1ecf98489fa9ed60a664fc4998db699cfa39d40'
+            '1': '1'
+       f1ecf98489fa9ed60a664fc4998db699cfa39d40:
+          nonce: 1
+          code: '0xef0001010003006000fe'
+          storage: {}
+    - indexes:
+       data: ':label eof1_initcode_with_terminating_opcode_stop'
+      network:
+        - 'Merge+3540+3670'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+          storage:
+            '0': 'f1ecf98489fa9ed60a664fc4998db699cfa39d40'
+            '1': '1'
+       f1ecf98489fa9ed60a664fc4998db699cfa39d40:
+          nonce: 1
+          code: '0xef000101000300600000'
+          storage: {}
+
+    - indexes:
+       data: ':label eof1_initcode_with_terminating_opcode_revert'
+      network:
+        - 'Merge+3540+3670'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+          storage:
+            '0': 'f1ecf98489fa9ed60a664fc4998db699cfa39d40'
+            '1': '1'
+       f1ecf98489fa9ed60a664fc4998db699cfa39d40:
+          nonce: 1
+          code: '0xef000101000300600000'
+          storage: {}
+
+    - indexes:
+       data: ':label eof1_initcode_with_terminating_opcode_invalid'
+      network:
+        - 'Merge+3540+3670'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+          storage:
+            '0': 'f1ecf98489fa9ed60a664fc4998db699cfa39d40'
+            '1': '1'
+       f1ecf98489fa9ed60a664fc4998db699cfa39d40:
+          nonce: 1
+          code: '0xef000101000300600000'
+          storage: {}
+

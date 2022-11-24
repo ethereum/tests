@@ -1,0 +1,78 @@
+# Deploy every Valid Opcode (not including PUSH opcodes)
+CREATE2_EOF1DeployValidOpcodes:
+  env:
+    currentCoinbase: 2adc25665018aa1fe0e6bc666dac8fc2697ff9ba
+    currentDifficulty: '0x020000'
+    currentGasLimit: '89128960'
+    currentBaseFee: '10'
+    currentNumber: '1'
+    currentTimestamp: '1000'
+    previousHash: 5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6
+
+  pre:
+    a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: 1000000000
+      code: ''
+      nonce: 0
+      storage: {}
+    b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: 0
+      code: |
+        :yul
+        {
+          // valid opcodes
+          mstore(0,  0x000102030405060708090a0b101112131415161718191a1b1c1d203031323334)
+          mstore(32, 0x35363738393a3b3c3d3e3f404142434445464748505153545558595a5b808182)
+          mstore(64, 0x838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2)
+          mstore(96, 0xa3a4f0f1f3f4f5fafdfe00000000000000000000000000000000000000000000)
+
+          // initcode: { mstore(0, 0xef0001010002000000) return(23, 9) } }
+          mstore(128, 0x68ef000101000200000060005260096017f30000000000000000000000000000)
+          for { let os := 0 } lt(os, 106) { os := add(os, 1) } 
+          { 
+            let code := shr(248, mload(os))
+            mstore8(136, code) // change returned byte in initcode
+            if iszero(create2(0, 128, 19, 0)) { sstore(code, 1) }
+          }
+          sstore(256, 1)
+        }
+      nonce: 0
+      storage: {}
+
+  transaction:
+    data: 
+      - ''
+    gasLimit:
+      - 89000000
+    gasPrice: 10
+    nonce: 0
+    secretKey: 45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8
+    to: 'b94f5374fce5edbc8e2a8697c15331677e6ebf0b'
+    value:
+    - 0
+
+  expect:
+    - indexes:
+       data: !!int -1
+       gas: !!int -1
+       value: !!int -1
+      network:
+        - 'Shanghai'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 106 # Total created contracts, one contract for each valid opcode
+          storage:
+            '256': 1
+       # Sample of created contracts
+       770f4708c5f362303fdb69198cfdcb485d6e5cda:
+          storage: {}
+          code: '0xef0001010002000000' # STOP
+       719fdAbA231F705D7480Ed67F7739ef676fbc0f7:
+          storage: {}
+          code: '0xef0001010002000100' # ADD
+       2dabdc0228bb7838cf4f9ed6585c05f93bd8e847:
+          storage: {}
+          code: '0xef000101000200fe00' # INVALID
+
