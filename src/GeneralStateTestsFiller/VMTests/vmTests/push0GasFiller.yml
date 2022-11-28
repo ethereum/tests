@@ -36,22 +36,14 @@ push0Gas:
     - 0
         
   expect:
-    - indexes:
-        data: !!int -1
-        gas:  !!int -1
-        value: !!int -1
-      network:
-        - 'London'
+    - network:
+        - 'Merge'
       result:
-        # In London, PUSH0 is invalid, contract fails.
+        # In Merge, PUSH0 is invalid, contract fails.
         0000000000000000000000000000000000000100:
           storage: {}
-    - indexes:
-        data: !!int -1
-        gas:  !!int -1
-        value: !!int -1
-      network:
-        - 'London+3855'
+    - network:
+        - 'Merge+3855'
       result:
         0000000000000000000000000000000000000100:
           # Initial gas: 100000

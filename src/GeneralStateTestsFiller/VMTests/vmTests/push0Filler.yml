@@ -141,10 +141,8 @@ push0:
   expect:
     - indexes:
         data: ':label single_push0'
-        gas:  !!int -1
-        value: !!int -1
       network:
-        - 'London'
+        - 'Merge'
       result:
         0000000000000000000000000000000000000100:
           storage: {}
@@ -153,10 +151,8 @@ push0:
             0x01: 0x01  # Key 1 is filled after the call, indicating contract 0xb94... continued executing
     - indexes:
         data: ':label single_push0'
-        gas:  !!int -1
-        value: !!int -1
       network:
-        - 'London+3855'
+        - 'Merge+3855'
       result:
         0000000000000000000000000000000000000100:
           storage:
@@ -168,10 +164,8 @@ push0:
 
     - indexes:
         data: ':label 1024_push0'
-        gas:  !!int -1
-        value: !!int -1
       network:
-        - 'London'
+        - 'Merge'
       result:
         0000000000000000000000000000000000000200:
           storage: {}
@@ -180,10 +174,8 @@ push0:
             0x01: 0x01  # Key 1 is filled after the call, indicating contract 0xb94... continued executing
     - indexes:
         data: ':label 1024_push0'
-        gas:  !!int -1
-        value: !!int -1
       network:
-        - 'London+3855'
+        - 'Merge+3855'
       result:
         0000000000000000000000000000000000000200:
           storage:
@@ -195,10 +187,8 @@ push0:
 
     - indexes:
         data: ':label 1025_push0'
-        gas:  !!int -1
-        value: !!int -1
       network:
-        - 'London'
+        - 'Merge'
       result:
         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           storage:     # Key 0 remained empty, contract 0x0..300 failed
@@ -206,20 +196,16 @@ push0:
     # Same expectation, but for London execution fails on 5f opcode, for 3855 it fails with stack overflow     
     - indexes:
         data: ':label 1025_push0'
-        gas:  !!int -1
-        value: !!int -1
       network:
-        - 'London+3855'
+        - 'Merge+3855'
       result:
         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           storage:      # Key 0 remained empty, contract 0x0..300 failed
             0x01: 0x01  # Key 1 filled after the call as the contract 0xb94... continued executing
     - indexes:
         data: ':label push0_upd_storage'
-        gas:  !!int -1
-        value: !!int -1
       network:
-        - 'London'
+        - 'Merge'
       result:
         0000000000000000000000000000000000000400:
           storage: # Contract failed to execute due to invalid 0x5f opcode, storage remained untouched
@@ -230,10 +216,8 @@ push0:
             0x01: 0x01 # Key 1 filled after the call, indicating contract 0xb94.. continued executing
     - indexes:
         data: ':label push0_upd_storage'
-        gas:  !!int -1
-        value: !!int -1
       network:
-        - 'London+3855'
+        - 'Merge+3855'
       result:
         0000000000000000000000000000000000000400:
           storage:     # Contract executed and changed initial storage
@@ -245,10 +229,8 @@ push0:
             0x01: 0x01 # Filled after the call, indicating contract 0xb84 continued executing
     - indexes:
         data: ':label push0_upd_storage_sc'
-        gas:  !!int -1
-        value: !!int -1
       network:
-        - 'London'
+        - 'Merge'
       result:
         0000000000000000000000000000000000000500:
           storage:
@@ -260,10 +242,8 @@ push0:
             0x01: 0x01
     - indexes:
         data: ':label push0_upd_storage_sc'
-        gas:  !!int -1
-        value: !!int -1
       network:
-        - 'London+3855'
+        - 'Merge+3855'
       result:
         0000000000000000000000000000000000000500:
           storage:
@@ -281,7 +261,7 @@ push0:
         gas:  !!int -1
         value: !!int -1
       network:
-        - 'London'
+        - 'Merge'
       result:
         0000000000000000000000000000000000000700:
           storage: {} # Contract fails, nothing stored
@@ -294,7 +274,7 @@ push0:
         gas:  !!int -1
         value: !!int -1
       network:
-        - 'London+3855'
+        - 'Merge+3855'
       result:
         0000000000000000000000000000000000000700:
           storage:
