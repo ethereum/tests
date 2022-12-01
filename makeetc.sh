@@ -71,6 +71,7 @@ etcpatch "GeneralStateTestsFiller/stSStoreTest"
 etcpatch "GeneralStateTestsFiller/stExample"
 
 etcclean "src/GeneralStateTestsFiller/stEIP1559"
+etcclean "src/GeneralStateTestsFiller/stExpectSection"
 etcclean "GeneralStateTests/stEIP1559"
 etcclean "BlockchainTests/GeneralStateTests/stEIP1559"
 etcpatch "GeneralStateTestsFiller/stEIP1559"
