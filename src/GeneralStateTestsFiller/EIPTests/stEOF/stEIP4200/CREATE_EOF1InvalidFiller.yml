@@ -1,0 +1,1288 @@
+# CREATE opcode with invalid EOF1 in initcode or in deployed code
+CREATE_EOF1Invalid:
+  env:
+    currentCoinbase: 2adc25665018aa1fe0e6bc666dac8fc2697ff9ba
+    currentDifficulty: '0x020000'
+    currentGasLimit: '89128960'
+    currentBaseFee: '10'
+    currentNumber: '1'
+    currentTimestamp: '1000'
+    previousHash: 5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6
+
+  pre:
+    a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: 200000000
+      code: ''
+      nonce: 0
+      storage: {}
+    b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: 0
+      code: |
+        :yul 
+        {
+          calldatacopy(0, 0, calldatasize()) 
+          sstore(0, create(0, 0, calldatasize()))
+          sstore(1, 1)
+        }
+      nonce: 0
+      storage: {}
+
+  transaction:
+    data: 
+      # Invalid EOF Initcode containing containing truncated RJUMP
+      # Code to be deployed: ef000101000100FE (contained in initcode's data)
+      # Initcode: PUSH1(8) PUSH1(23) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN RJUMP(
+      - ':raw 0xef000101000d020008006008601760003960086000f35cef000101000100FE'
+      # Code to be deployed: ef000101000100FE (contained in initcode's data)
+      # Initcode: PUSH1(8) PUSH1(24) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN RJUMP(0?
+      - ':raw 0xef000101000e020008006008601860003960086000f35c00ef000101000100FE'
+
+      # Invalid EOF Initcode containing RJUMP with target outside of code bounds
+      # - Jump into header
+      # Code to be deployed: ef000101000100FE (contained in initcode's data)
+      # Initcode: PUSH1(8) PUSH1(26) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN RJUMP(-20) STOP
+      - ':raw 0xef0001010010020008006008601a60003960086000f35cffec00ef000101000100FE'
+      # - Jump to before code begin
+      # Code to be deployed: ef000101000100FE (contained in initcode's data)
+      # Initcode: PUSH1(8) PUSH1(26) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN RJUMP(-27) STOP
+      - ':raw 0xef0001010010020008006008601a60003960086000f35cffe500ef000101000100FE'
+      # - Jump into data section
+      # Code to be deployed: ef000101000100FE (contained in initcode's data)
+      # Initcode: PUSH1(8) PUSH1(26) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN RJUMP(2) STOP
+      - ':raw 0xef0001010010020008006008601a60003960086000f35cffe500ef000101000100FE'
+      # - Jump to after code end
+      # Code to be deployed: ef000101000100FE (contained in initcode's data)
+      # Initcode: PUSH1(8) PUSH1(26) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN RJUMP(10) STOP
+      - ':raw 0xef0001010010020008006008601a60003960086000f35cffe500ef000101000100FE'
+      # - Jump to code end
+      # Code to be deployed: ef000101000100FE (contained in initcode's data)
+      # Initcode: PUSH1(8) PUSH1(26) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN RJUMP(1) STOP
+      - ':raw 0xef0001010010020008006008601a60003960086000f35cffe500ef000101000100FE'
+
+      # Invalid EOF Initcode containing RJUMP with target PUSH/RJUMP/RJUMPI immediate 
+      # - Jump to same RJUMP immediate
+      # Code to be deployed: ef000101000100FE (contained in initcode's data)
+      # Initcode: PUSH1(8) PUSH1(26) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN RJUMP(-1) STOP
+      - ':raw 0xef0001010010020008006008601a60003960086000f35cffe500ef000101000100FE'
+      # - Jump to another RJUMP immediate
+      # Code to be deployed: ef000101000100FE (contained in initcode's data)
+      # Initcode: PUSH1(8) PUSH1(30) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN RJUMP(1) STOP RJUMP(-5) STOP
+      - ':raw 0xef0001010014020008006008601e60003960086000f35c0001005cfffb00ef000101000100FE'
+      # - Jump to RJUMPI immediate
+      # Code to be deployed: ef000101000100FE (contained in initcode's data)
+      # Initcode: PUSH1(8) PUSH1(32) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN RJUMP(2) STOP RJUMP(4) STOP PUSH1(1) RJUMPI(-6)
+      - ':raw 0xef0001010016020008006008602060003960086000f35c00040060015cfffa00ef000101000100FE'
+      # - Jump to PUSH immediate
+      # Code to be deployed: ef000101000100FE (contained in initcode's data)
+      # Initcode: PUSH1(8) PUSH1(26) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN RJUMP(-5) STOP
+      - ':raw 0xef0001010010020008006008601a60003960086000f35cffe500ef000101000100FE'
+
+      # Invalid EOF Initcode containing containing truncated RJUMPI
+      # Code to be deployed: ef000101000100FE (contained in initcode's data)
+      # Initcode: PUSH1(8) PUSH1(25) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN PUSH1(1) RJUMPI(
+      - ':raw 0xef000101000f020008006008601960003960086000f360015def000101000100FE'
+      # Code to be deployed: ef000101000100FE (contained in initcode's data)
+      # Initcode: PUSH1(8) PUSH1(26) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN PUSH1(1) RJUMPI(0?
+      - ':raw 0xef0001010010020008006008601a60003960086000f360015d00ef000101000100FE'
+
+      # Invalid EOF Initcode containing RJUMPI with target outside of code bounds
+      # - Jump into header
+      # Code to be deployed: ef000101000100FE (contained in initcode's data)
+      # Initcode: PUSH1(8) PUSH1(28) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN PUSH1(1) RJUMPI(-22) STOP
+      - ':raw 0xef0001010012020008006008601c60003960086000f360015dffea00ef000101000100FE'
+      # - Jump to before code begin
+      # Code to be deployed: ef000101000100FE (contained in initcode's data)
+      # Initcode: PUSH1(8) PUSH1(28) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN PUSH1(1) RJUMPI(-29) STOP
+      - ':raw 0xef0001010012020008006008601c60003960086000f360015dFFE300ef000101000100FE'
+      # - Jump into data section
+      # Code to be deployed: ef000101000100FE (contained in initcode's data)
+      # Initcode: PUSH1(8) PUSH1(28) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN PUSH1(1) RJUMPI(2) STOP
+      - ':raw 0xef0001010012020008006008601c60003960086000f360015d000200ef000101000100FE'
+      # - Jump to after code end
+      # Code to be deployed: ef000101000100FE (contained in initcode's data)
+      # Initcode: PUSH1(8) PUSH1(28) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN PUSH1(1) RJUMPI(10) STOP
+      - ':raw 0xef0001010012020008006008601c60003960086000f360015d000A00ef000101000100FE'
+      # - Jump to code end
+      # Code to be deployed: ef000101000100FE (contained in initcode's data)
+      # Initcode: PUSH1(8) PUSH1(28) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN PUSH1(1) RJUMPI(1) STOP
+      - ':raw 0xef0001010012020008006008601c60003960086000f360015d000100ef000101000100FE'
+
+      # Invalid EOF Initcode containing RJUMPI with target PUSH/RJUMP/RJUMPI immediate 
+      # - Jump to same RJUMPI immediate
+      # Code to be deployed: ef000101000100FE (contained in initcode's data)
+      # Initcode: PUSH1(8) PUSH1(28) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN PUSH1(1) RJUMPI(-1) STOP
+      - ':raw 0xef0001010012020008006008601c60003960086000f360015dFFFF00ef000101000100FE'
+      # - Jump to another RJUMPI immediate
+      # Code to be deployed: ef000101000100FE (contained in initcode's data)
+      # Initcode: PUSH1(8) PUSH1(34) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN PUSH1(1) RJUMPI(1) STOP PUSH1(1) RJUMPI(-7) STOP
+      - ':raw 0xef0001010018020008006008602260003960086000f360015d00010060015dFFF900ef000101000100FE'
+      # - Jump to RJUMP immediate
+      # Code to be deployed: ef000101000100FE (contained in initcode's data)
+      # Initcode: PUSH1(8) PUSH1(32) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN RJUMP(2) STOP RJUMP(1) STOP PUSH1(1) RJUMPI(-7)
+      - ':raw 0xef0001010016020008006008602060003960086000f35c00010060015cfff900ef000101000100FE'
+      # - Jump to PUSH immediate
+      # Code to be deployed: ef000101000100FE (contained in initcode's data)
+      # Initcode: PUSH1(8) PUSH1(28) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN PUSH1(1) RJUMPI(-4) STOP
+      - ':raw 0xef0001010012020008006008601c60003960086000f360015dFFFC00ef000101000100FE'
+
+      # Valid legacy initcode returning malformed code
+      
+      # No magic
+      - ':yul { mstore8(0, 0xef) return(0, 1) }'
+      # Invalid magic
+      - ':yul { mstore(0, 0xef010101000100fe000000000000000000000000000000000000000000000000) return(0, 8) }'
+      - ':yul { mstore(0, 0xef020101000100fe000000000000000000000000000000000000000000000000) return(0, 8) }'
+      - ':yul { mstore(0, 0xefff0101000100fe000000000000000000000000000000000000000000000000) return(0, 8) }'
+      # No version
+      - ':yul { mstore(0, 0xef00000000000000000000000000000000000000000000000000000000000000) return(0, 2) }'
+      # Invalid version
+      - ':yul { mstore(0, 0xef000001000100fe000000000000000000000000000000000000000000000000) return(0, 8) }'
+      - ':yul { mstore(0, 0xef000201000100fe000000000000000000000000000000000000000000000000) return(0, 8) }'
+      - ':yul { mstore(0, 0xef00ff01000100fe000000000000000000000000000000000000000000000000) return(0, 8) }'
+      # No header
+      - ':yul { mstore(0, 0xef00010000000000000000000000000000000000000000000000000000000000) return(0, 3) }'
+      # No code section
+      - ':yul { mstore(0, 0xef00010000000000000000000000000000000000000000000000000000000000) return(0, 4) }'
+      # No code section size
+      - ':yul { mstore(0, 0xef00010100000000000000000000000000000000000000000000000000000000) return(0, 4) }'
+      # Code section size incomplete
+      - ':yul { mstore(0, 0xef00010100000000000000000000000000000000000000000000000000000000) return(0, 5) }'
+      # No section terminator after code section size
+      - ':yul { mstore(0, 0xef00010100030000000000000000000000000000000000000000000000000000) return(0, 6) }'
+      - ':yul { mstore(0, 0xef00010100036000000000000000000000000000000000000000000000000000) return(0, 9) }'
+      # No code section contents
+      - ':yul { mstore(0, 0xef00010100020000000000000000000000000000000000000000000000000000) return(0, 7) }'
+      # Code section contents incomplete
+      - ':yul { mstore(0, 0xef00010100020060000000000000000000000000000000000000000000000000) return(0, 8) }'
+      # Trailing bytes after code section
+      - ':yul { mstore(0, 0xef000101000300600000deadbeef000000000000000000000000000000000000) return(0, 14) }'
+      # Multiple code sections
+      - ':yul { mstore(0, 0xef00010100030100030060000060000000000000000000000000000000000000) return(0, 16) }'
+      # Empty code section
+      - ':yul { mstore(0, 0xef00010100000000000000000000000000000000000000000000000000000000) return(0, 7) }'
+      # Empty code section with non-empty data section
+      - ':yul { mstore(0, 0xef000101000002000200aabb0000000000000000000000000000000000000000) return(0, 12) }'
+      # Data section preceding code section
+      - ':yul { mstore(0, 0xef000102000401000300aabbccdd600000000000000000000000000000000000) return(0, 17) }'
+      # Data section without code section
+      - ':yul { mstore(0, 0xef000102000400aabbccdd000000000000000000000000000000000000000000) return(0, 11) }'
+      # No data section size
+      - ':yul { mstore(0, 0xef00010100020200000000000000000000000000000000000000000000000000) return(0, 7) }'
+      # Data section size incomplete
+      - ':yul { mstore(0, 0xef00010100020200000000000000000000000000000000000000000000000000) return(0, 8) }'
+      # No section terminator after data section size
+      - ':yul { mstore(0, 0xef00010100030200040000000000000000000000000000000000000000000000) return(0, 9) }'
+      - ':yul { mstore(0, 0xef0001010003020004600000aabbccdd00000000000000000000000000000000) return(0, 16) }'
+      # No data section contents
+      - ':yul { mstore(0, 0xef00010100030200040060000000000000000000000000000000000000000000) return(0, 13) }'
+      # Data section contents incomplete
+      - ':yul { mstore(0, 0xef000101000302000400600000aabbcc00000000000000000000000000000000) return(0, 16) }'
+      # Trailing bytes after data section
+      - ':yul { mstore(0, 0xef000101000302000400600000aabbccddee0000000000000000000000000000) return(0, 18) }'
+      # Multiple data sections
+      - ':yul { mstore(0, 0xef000101000302000402000400600000aabbccddaabbccdd0000000000000000) return(0, 24) }'
+      # Multiple code and data sections
+      - ':yul { mstore(0, 0xef000101000101000102000102000100fefeaabb000000000000000000000000) return(0, 20) }'
+      # Empty data section
+      - ':yul { mstore(0, 0xef00010100030200000060000000000000000000000000000000000000000000) return(0, 13) }'
+      # Unknown section IDs
+      - ':yul { mstore(0, 0xef00010300030060000000000000000000000000000000000000000000000000) return(0, 10) }'
+      - ':yul { mstore(0, 0xef00010400030060000000000000000000000000000000000000000000000000) return(0, 10) }'
+      - ':yul { mstore(0, 0xef0001ff00030060000000000000000000000000000000000000000000000000) return(0, 10) }'
+      - ':yul { mstore(0, 0xef000101000303000400600000aabbccdd000000000000000000000000000000) return(0, 17) }'
+      - ':yul { mstore(0, 0xef000101000304000400600000aabbccdd000000000000000000000000000000) return(0, 17) }'
+      - ':yul { mstore(0, 0xef0001010003ff000400600000aabbccdd000000000000000000000000000000) return(0, 17) }'
+
+      # EIP-3670 - Valid legacy initcode returning invalid EOF code: Truncated PUSH data at the end
+      # code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push1( - ef000101000b006001600155600260025560
+      - ':yul { mstore(0, 0xef000101000b0060016001556002600255600000000000000000000000000000)  return(0, 18) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push2( - ef000101000b006001600155600260025561
+      - ':yul { mstore(0, 0xef000101000b0060016001556002600255610000000000000000000000000000)  return(0, 18) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push2(0x00 - ef000101000c00600160015560026002556100
+      - ':yul { mstore(0, 0xef000101000c0060016001556002600255610000000000000000000000000000)  return(0, 19) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push3( - ef000101000b006001600155600260025562
+      - ':yul { mstore(0, 0xef000101000b0060016001556002600255620000000000000000000000000000)  return(0, 18) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push3(0x00f3 - ef000101000d00600160015560026002556200f3
+      - ':yul { mstore(0, 0xef000101000d00600160015560026002556200f3000000000000000000000000)  return(0, 20) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push4( - ef000101000b006001600155600260025563
+      - ':yul { mstore(0, 0xef000101000b0060016001556002600255630000000000000000000000000000)  return(0, 18) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push4(0x00f3fd - ef000101000e00600160015560026002556300f3fd
+      - ':yul { mstore(0, 0xef000101000e00600160015560026002556300f3fd0000000000000000000000)  return(0, 21) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push5( - ef000101000b006001600155600260025564
+      - ':yul { mstore(0, 0xef000101000b0060016001556002600255640000000000000000000000000000)  return(0, 18) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push5(0x00f3fdfe - ef000101000f00600160015560026002556400f3fdfe
+      - ':yul { mstore(0, 0xef000101000f00600160015560026002556400f3fdfe00000000000000000000)  return(0, 22) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push6( - ef000101000b006001600155600260025565
+      - ':yul { mstore(0, 0xef000101000b0060016001556002600255650000000000000000000000000000)  return(0, 18) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push6(0x00f3fdfeff - ef000101001000600160015560026002556500f3fdfeff
+      - ':yul { mstore(0, 0xef000101001000600160015560026002556500f3fdfeff000000000000000000)  return(0, 23) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push7( - ef000101000b006001600155600260025566
+      - ':yul { mstore(0, 0xef000101000b0060016001556002600255660000000000000000000000000000)  return(0, 18) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push7(0x00f3fdfeff00 - ef000101001100600160015560026002556600f3fdfeff00
+      - ':yul { mstore(0, 0xef000101001100600160015560026002556600f3fdfeff000000000000000000)  return(0, 24) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push8( - ef000101000b006001600155600260025567
+      - ':yul { mstore(0, 0xef000101000b0060016001556002600255670000000000000000000000000000)  return(0, 18) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push8(0x00f3fdfeff00f3 - ef000101001200600160015560026002556700f3fdfeff00f3
+      - ':yul { mstore(0, 0xef000101001200600160015560026002556700f3fdfeff00f300000000000000)  return(0, 25) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push9( - ef000101000b006001600155600260025568
+      - ':yul { mstore(0, 0xef000101000b0060016001556002600255680000000000000000000000000000)  return(0, 18) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push9(0x00f3fdfeff00f3fd - ef000101001300600160015560026002556800f3fdfeff00f3fd
+      - ':yul { mstore(0, 0xef000101001300600160015560026002556800f3fdfeff00f3fd000000000000)  return(0, 26) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push10( - ef000101000b006001600155600260025569
+      - ':yul { mstore(0, 0xef000101000b0060016001556002600255690000000000000000000000000000)  return(0, 18) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push10(0x00f3fdfeff00f3fdfe - ef000101001400600160015560026002556900f3fdfeff00f3fdfe
+      - ':yul { mstore(0, 0xef000101001400600160015560026002556900f3fdfeff00f3fdfe0000000000)  return(0, 27) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push11( - ef000101000b00600160015560026002556a
+      - ':yul { mstore(0, 0xef000101000b00600160015560026002556a0000000000000000000000000000)  return(0, 18) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push11(0x00f3fdfeff00f3fdfeff - ef000101001500600160015560026002556a00f3fdfeff00f3fdfeff
+      - ':yul { mstore(0, 0xef000101001500600160015560026002556a00f3fdfeff00f3fdfeff00000000)  return(0, 28) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push12( - ef000101000b00600160015560026002556b
+      - ':yul { mstore(0, 0xef000101000b00600160015560026002556b0000000000000000000000000000)  return(0, 18) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push12(0x00f3fdfeff00f3fdfeff00 - ef000101001600600160015560026002556b00f3fdfeff00f3fdfeff00
+      - ':yul { mstore(0, 0xef000101001600600160015560026002556b00f3fdfeff00f3fdfeff00000000)  return(0, 29) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push13( - ef000101000b00600160015560026002556c
+      - ':yul { mstore(0, 0xef000101000b00600160015560026002556c0000000000000000000000000000)  return(0, 18) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push13(0x00f3fdfeff00f3fdfeff00f3 - ef000101001700600160015560026002556c00f3fdfeff00f3fdfeff00f3
+      - ':yul { mstore(0, 0xef000101001700600160015560026002556c00f3fdfeff00f3fdfeff00f30000)  return(0, 30) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push14( - ef000101000b00600160015560026002556d
+      - ':yul { mstore(0, 0xef000101000b00600160015560026002556d0000000000000000000000000000)  return(0, 18) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push14(0x00f3fdfeff00f3fdfeff00f3fd - ef000101001800600160015560026002556d00f3fdfeff00f3fdfeff00f3fd
+      - ':yul { mstore(0, 0xef000101001800600160015560026002556d00f3fdfeff00f3fdfeff00f3fd00)  return(0, 31) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push15( - ef000101000b00600160015560026002556e
+      - ':yul { mstore(0, 0xef000101000b00600160015560026002556e0000000000000000000000000000)  return(0, 18) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push15(0x00f3fdfeff00f3fdfeff00f3fdfe - ef000101001900600160015560026002556e00f3fdfeff00f3fdfeff00f3fdfe
+      - ':yul { mstore(0, 0xef000101001900600160015560026002556e00f3fdfeff00f3fdfeff00f3fdfe)  return(0, 32) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push16( - ef000101000b00600160015560026002556f
+      - ':yul { mstore(0, 0xef000101000b00600160015560026002556f0000000000000000000000000000)  return(0, 18) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push16(0x00f3fdfeff00f3fdfeff00f3fdfeff - ef000101001a00600160015560026002556f00f3fdfeff00f3fdfeff00f3fdfeff
+      - ':yul { mstore(0, 0xef000101001a00600160015560026002556f00f3fdfeff00f3fdfeff00f3fdfe) mstore(32, 0xff00000000000000000000000000000000000000000000000000000000000000)  return(0, 33) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push17( - ef000101000b006001600155600260025570
+      - ':yul { mstore(0, 0xef000101000b0060016001556002600255700000000000000000000000000000)  return(0, 18) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push17(0x00f3fdfeff00f3fdfeff00f3fdfeff00 - ef000101001b00600160015560026002557000f3fdfeff00f3fdfeff00f3fdfeff00
+      - ':yul { mstore(0, 0xef000101001b00600160015560026002557000f3fdfeff00f3fdfeff00f3fdfe) mstore(32, 0xff00000000000000000000000000000000000000000000000000000000000000)  return(0, 34) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push18( - ef000101000b006001600155600260025571
+      - ':yul { mstore(0, 0xef000101000b0060016001556002600255710000000000000000000000000000)  return(0, 18) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push18(0x00f3fdfeff00f3fdfeff00f3fdfeff00f3 - ef000101001c00600160015560026002557100f3fdfeff00f3fdfeff00f3fdfeff00f3
+      - ':yul { mstore(0, 0xef000101001c00600160015560026002557100f3fdfeff00f3fdfeff00f3fdfe) mstore(32, 0xff00f30000000000000000000000000000000000000000000000000000000000)  return(0, 35) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push19( - ef000101000b006001600155600260025572
+      - ':yul { mstore(0, 0xef000101000b0060016001556002600255720000000000000000000000000000)  return(0, 18) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push19(0x00f3fdfeff00f3fdfeff00f3fdfeff00f3fd - ef000101001d00600160015560026002557200f3fdfeff00f3fdfeff00f3fdfeff00f3fd
+      - ':yul { mstore(0, 0xef000101001d00600160015560026002557200f3fdfeff00f3fdfeff00f3fdfe) mstore(32, 0xff00f3fd00000000000000000000000000000000000000000000000000000000)  return(0, 36) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push20( - ef000101000b006001600155600260025573
+      - ':yul { mstore(0, 0xef000101000b0060016001556002600255730000000000000000000000000000)  return(0, 18) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push20(0x00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfe - ef000101001e00600160015560026002557300f3fdfeff00f3fdfeff00f3fdfeff00f3fdfe
+      - ':yul { mstore(0, 0xef000101001e00600160015560026002557300f3fdfeff00f3fdfeff00f3fdfe) mstore(32, 0xff00f3fdfe000000000000000000000000000000000000000000000000000000)  return(0, 37) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push21( - ef000101000b006001600155600260025574
+      - ':yul { mstore(0, 0xef000101000b0060016001556002600255740000000000000000000000000000)  return(0, 18) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push21(0x00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff - ef000101001f00600160015560026002557400f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff
+      - ':yul { mstore(0, 0xef000101001f00600160015560026002557400f3fdfeff00f3fdfeff00f3fdfe) mstore(32, 0xff00f3fdfeff0000000000000000000000000000000000000000000000000000)  return(0, 38) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push22( - ef000101000b006001600155600260025575
+      - ':yul { mstore(0, 0xef000101000b0060016001556002600255750000000000000000000000000000)  return(0, 18) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push22(0x00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00 - ef000101002000600160015560026002557500f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00
+      - ':yul { mstore(0, 0xef000101002000600160015560026002557500f3fdfeff00f3fdfeff00f3fdfe) mstore(32, 0xff00f3fdfeff0000000000000000000000000000000000000000000000000000)  return(0, 39) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push23( - ef000101000b006001600155600260025576
+      - ':yul { mstore(0, 0xef000101000b0060016001556002600255760000000000000000000000000000)  return(0, 18) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push23(0x00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3 - ef000101002100600160015560026002557600f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3
+      - ':yul { mstore(0, 0xef000101002100600160015560026002557600f3fdfeff00f3fdfeff00f3fdfe) mstore(32, 0xff00f3fdfeff00f3000000000000000000000000000000000000000000000000)  return(0, 40) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push24( - ef000101000b006001600155600260025577
+      - ':yul { mstore(0, 0xef000101000b0060016001556002600255770000000000000000000000000000)  return(0, 18) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push24(0x00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fd - ef000101002200600160015560026002557700f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fd
+      - ':yul { mstore(0, 0xef000101002200600160015560026002557700f3fdfeff00f3fdfeff00f3fdfe) mstore(32, 0xff00f3fdfeff00f3fd0000000000000000000000000000000000000000000000)  return(0, 41) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push25( - ef000101000b006001600155600260025578
+      - ':yul { mstore(0, 0xef000101000b0060016001556002600255780000000000000000000000000000)  return(0, 18) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push25(0x00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfe - ef000101002300600160015560026002557800f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfe
+      - ':yul { mstore(0, 0xef000101002300600160015560026002557800f3fdfeff00f3fdfeff00f3fdfe) mstore(32, 0xff00f3fdfeff00f3fdfe00000000000000000000000000000000000000000000)  return(0, 42) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push26( - ef000101000b006001600155600260025579
+      - ':yul { mstore(0, 0xef000101000b0060016001556002600255790000000000000000000000000000)  return(0, 18) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push26(0x00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff - ef000101002400600160015560026002557900f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff
+      - ':yul { mstore(0, 0xef000101002400600160015560026002557900f3fdfeff00f3fdfeff00f3fdfe) mstore(32, 0xff00f3fdfeff00f3fdfeff000000000000000000000000000000000000000000)  return(0, 43) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push27( - ef000101000b00600160015560026002557a
+      - ':yul { mstore(0, 0xef000101000b00600160015560026002557a0000000000000000000000000000)  return(0, 18) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push27(0x00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00 - ef000101002500600160015560026002557a00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00
+      - ':yul { mstore(0, 0xef000101002500600160015560026002557a00f3fdfeff00f3fdfeff00f3fdfe) mstore(32, 0xff00f3fdfeff00f3fdfeff000000000000000000000000000000000000000000)  return(0, 44) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push28( - ef000101000b00600160015560026002557b
+      - ':yul { mstore(0, 0xef000101000b00600160015560026002557b0000000000000000000000000000)  return(0, 18) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push28(0x00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3 - ef000101002600600160015560026002557b00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3
+      - ':yul { mstore(0, 0xef000101002600600160015560026002557b00f3fdfeff00f3fdfeff00f3fdfe) mstore(32, 0xff00f3fdfeff00f3fdfeff00f300000000000000000000000000000000000000)  return(0, 45) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push29( - ef000101000b00600160015560026002557c
+      - ':yul { mstore(0, 0xef000101000b00600160015560026002557c0000000000000000000000000000)  return(0, 18) }'
+      # { sstore(0x1, 0x1) sstore(0x2, 0x2) push29(0x00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fd - ef000101002700600160015560026002557c00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fd
+      - ':yul { mstore(0, 0xef000101002700600160015560026002557c00f3fdfeff00f3fdfeff00f3fdfe) mstore(32, 0xff00f3fdfeff00f3fdfeff00f3fd000000000000000000000000000000000000)  return(0, 46) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push30( - ef000101000b00600160015560026002557d
+      - ':yul { mstore(0, 0xef000101000b00600160015560026002557d0000000000000000000000000000)  return(0, 18) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push30(0x00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfe - ef000101002800600160015560026002557d00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfe
+      - ':yul { mstore(0, 0xef000101002800600160015560026002557d00f3fdfeff00f3fdfeff00f3fdfe) mstore(32, 0xff00f3fdfeff00f3fdfeff00f3fdfe0000000000000000000000000000000000)  return(0, 47) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push31( - ef000101000b00600160015560026002557e
+      - ':yul { mstore(0, 0xef000101000b00600160015560026002557e0000000000000000000000000000)  return(0, 18) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push31(0x00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff - ef000101002900600160015560026002557e00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff
+      - ':yul { mstore(0, 0xef000101002900600160015560026002557e00f3fdfeff00f3fdfeff00f3fdfe) mstore(32, 0xff00f3fdfeff00f3fdfeff00f3fdfeff00000000000000000000000000000000)  return(0, 48) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push32( - ef000101000b00600160015560026002557f
+      - ':yul { mstore(0, 0xef000101000b00600160015560026002557f0000000000000000000000000000)  return(0, 18) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push32(0x00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00 - ef000101002a00600160015560026002557f00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00
+      - ':yul { mstore(0, 0xef000101002a00600160015560026002557f00f3fdfeff00f3fdfeff00f3fdfe) mstore(32, 0xff00f3fdfeff00f3fdfeff00f3fdfeff00000000000000000000000000000000)  return(0, 49) }'
+
+      # EIP-3670 - Valid legacy init code returning invalid EOF: Containing undefined instruction after STOP
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() 0xf6 } - ef000101000c006001600155600260025500f6
+      - ':yul { mstore(0x0, 0xef000101000c006001600155600260025500f600000000000000000000000000) return (0x00, 0x13) }'
+
+      # EIP-3670 - Valid legacy init code returning invalid EOF: Containing non terminating instruction at the end
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() add(0,0) } - ef00010100100060016001556002600255006000600001
+      - ':yul { mstore(0, 0xef00010100100060016001556002600255006000600001000000000000000000)  return(0, 23) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() mul(0,0) } - ef00010100100060016001556002600255006000600002
+      - ':yul { mstore(0, 0xef00010100100060016001556002600255006000600002000000000000000000)  return(0, 23) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() sub(0,0) } - ef00010100100060016001556002600255006000600003
+      - ':yul { mstore(0, 0xef00010100100060016001556002600255006000600003000000000000000000)  return(0, 23) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() div(0,0) } - ef00010100100060016001556002600255006000600004
+      - ':yul { mstore(0, 0xef00010100100060016001556002600255006000600004000000000000000000)  return(0, 23) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() sdiv(0,0) } - ef00010100100060016001556002600255006000600005
+      - ':yul { mstore(0, 0xef00010100100060016001556002600255006000600005000000000000000000)  return(0, 23) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() mod(0,0) } - ef00010100100060016001556002600255006000600006
+      - ':yul { mstore(0, 0xef00010100100060016001556002600255006000600006000000000000000000)  return(0, 23) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() smod(0,0) } - ef00010100100060016001556002600255006000600007
+      - ':yul { mstore(0, 0xef00010100100060016001556002600255006000600007000000000000000000)  return(0, 23) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() addmod(0,0,0) } - ef000101001200600160015560026002550060006000600008
+      - ':yul { mstore(0, 0xef00010100120060016001556002600255006000600060000800000000000000)  return(0, 25) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() mulmod(0,0,0) } - ef000101001200600160015560026002550060006000600009
+      - ':yul { mstore(0, 0xef00010100120060016001556002600255006000600060000900000000000000)  return(0, 25) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() exp(0,0) } - ef0001010010006001600155600260025500600060000a
+      - ':yul { mstore(0, 0xef0001010010006001600155600260025500600060000a000000000000000000)  return(0, 23) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() signextend(0,0) } - ef0001010010006001600155600260025500600060000b
+      - ':yul { mstore(0, 0xef0001010010006001600155600260025500600060000b000000000000000000)  return(0, 23) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() lt(0,0) } - ef00010100100060016001556002600255006000600010
+      - ':yul { mstore(0, 0xef00010100100060016001556002600255006000600010000000000000000000)  return(0, 23) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() gt(0,0) } - ef00010100100060016001556002600255006000600011
+      - ':yul { mstore(0, 0xef00010100100060016001556002600255006000600011000000000000000000)  return(0, 23) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() slt(0,0) } - ef00010100100060016001556002600255006000600012
+      - ':yul { mstore(0, 0xef00010100100060016001556002600255006000600012000000000000000000)  return(0, 23) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() sgt(0,0) } - ef00010100100060016001556002600255006000600013
+      - ':yul { mstore(0, 0xef00010100100060016001556002600255006000600013000000000000000000)  return(0, 23) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() eq(0,0) } - ef00010100100060016001556002600255006000600014
+      - ':yul { mstore(0, 0xef00010100100060016001556002600255006000600014000000000000000000)  return(0, 23) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() iszero(0) } - ef000101000e006001600155600260025500600015
+      - ':yul { mstore(0, 0xef000101000e0060016001556002600255006000150000000000000000000000)  return(0, 21) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() and(0,0) } - ef00010100100060016001556002600255006000600016
+      - ':yul { mstore(0, 0xef00010100100060016001556002600255006000600016000000000000000000)  return(0, 23) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() or(0,0) } - ef00010100100060016001556002600255006000600017
+      - ':yul { mstore(0, 0xef00010100100060016001556002600255006000600017000000000000000000)  return(0, 23) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() xor(0,0) } - ef00010100100060016001556002600255006000600018
+      - ':yul { mstore(0, 0xef00010100100060016001556002600255006000600018000000000000000000)  return(0, 23) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() not(0) } - ef000101000e006001600155600260025500600019
+      - ':yul { mstore(0, 0xef000101000e0060016001556002600255006000190000000000000000000000)  return(0, 21) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() byte(0,0) } - ef0001010010006001600155600260025500600060001a
+      - ':yul { mstore(0, 0xef0001010010006001600155600260025500600060001a000000000000000000)  return(0, 23) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() shl(0,0) } - ef0001010010006001600155600260025500600060001b
+      - ':yul { mstore(0, 0xef0001010010006001600155600260025500600060001b000000000000000000)  return(0, 23) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() shr(0,0) } - ef0001010010006001600155600260025500600060001c
+      - ':yul { mstore(0, 0xef0001010010006001600155600260025500600060001c000000000000000000)  return(0, 23) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() sar(0,0) } - ef0001010010006001600155600260025500600060001d
+      - ':yul { mstore(0, 0xef0001010010006001600155600260025500600060001d000000000000000000)  return(0, 23) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() keccak256(0,0) } - ef00010100100060016001556002600255006000600020
+      - ':yul { mstore(0, 0xef00010100100060016001556002600255006000600020000000000000000000)  return(0, 23) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() address() } - ef000101000c00600160015560026002550030
+      - ':yul { mstore(0, 0xef000101000c0060016001556002600255003000000000000000000000000000)  return(0, 19) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() balance(0) } - ef000101000e006001600155600260025500600031
+      - ':yul { mstore(0, 0xef000101000e0060016001556002600255006000310000000000000000000000)  return(0, 21) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() origin() } - ef000101000c00600160015560026002550032
+      - ':yul { mstore(0, 0xef000101000c0060016001556002600255003200000000000000000000000000)  return(0, 19) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() caller() } - ef000101000c00600160015560026002550033
+      - ':yul { mstore(0, 0xef000101000c0060016001556002600255003300000000000000000000000000)  return(0, 19) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() callvalue() } - ef000101000c00600160015560026002550034
+      - ':yul { mstore(0, 0xef000101000c0060016001556002600255003400000000000000000000000000)  return(0, 19) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() calldataload(0) } - ef000101000e006001600155600260025500600035
+      - ':yul { mstore(0, 0xef000101000e0060016001556002600255006000350000000000000000000000)  return(0, 21) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() calldatasize() } - ef000101000c00600160015560026002550036
+      - ':yul { mstore(0, 0xef000101000c0060016001556002600255003600000000000000000000000000)  return(0, 19) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() calldatacopy(0,0,0) } - ef000101001200600160015560026002550060006000600037
+      - ':yul { mstore(0, 0xef00010100120060016001556002600255006000600060003700000000000000)  return(0, 25) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() codesize() } - ef000101000c00600160015560026002550038
+      - ':yul { mstore(0, 0xef000101000c0060016001556002600255003800000000000000000000000000)  return(0, 19) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() codecopy(0,0,0) } - ef000101001200600160015560026002550060006000600039
+      - ':yul { mstore(0, 0xef00010100120060016001556002600255006000600060003900000000000000)  return(0, 25) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() gasprice() } - ef000101000c0060016001556002600255003a
+      - ':yul { mstore(0, 0xef000101000c0060016001556002600255003a00000000000000000000000000)  return(0, 19) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() extcodesize(0) } - ef000101000e00600160015560026002550060003b
+      - ':yul { mstore(0, 0xef000101000e00600160015560026002550060003b0000000000000000000000)  return(0, 21) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() extcodecopy(0,0,0,1) } - ef000101001400600160015560026002550060016000600060003c
+      - ':yul { mstore(0, 0xef000101001400600160015560026002550060016000600060003c0000000000)  return(0, 27) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() returndatasize() } - ef000101000c0060016001556002600255003d
+      - ':yul { mstore(0, 0xef000101000c0060016001556002600255003d00000000000000000000000000)  return(0, 19) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() returndatacopy(0,0,0) } - ef00010100120060016001556002600255006000600060003e
+      - ':yul { mstore(0, 0xef00010100120060016001556002600255006000600060003e00000000000000)  return(0, 25) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() extcodehash(0) } - ef000101000e00600160015560026002550060003f
+      - ':yul { mstore(0, 0xef000101000e00600160015560026002550060003f0000000000000000000000)  return(0, 21) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() blockhash(0) } - ef000101000e006001600155600260025500600040
+      - ':yul { mstore(0, 0xef000101000e0060016001556002600255006000400000000000000000000000)  return(0, 21) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() coinbase() } - ef000101000c00600160015560026002550041
+      - ':yul { mstore(0, 0xef000101000c0060016001556002600255004100000000000000000000000000)  return(0, 19) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() timestamp() } - ef000101000c00600160015560026002550042
+      - ':yul { mstore(0, 0xef000101000c0060016001556002600255004200000000000000000000000000)  return(0, 19) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() number() } - ef000101000c00600160015560026002550043
+      - ':yul { mstore(0, 0xef000101000c0060016001556002600255004300000000000000000000000000)  return(0, 19) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() difficulty() } - ef000101000c00600160015560026002550044
+      - ':yul { mstore(0, 0xef000101000c0060016001556002600255004400000000000000000000000000)  return(0, 19) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() gaslimit() } - ef000101000c00600160015560026002550045
+      - ':yul { mstore(0, 0xef000101000c0060016001556002600255004500000000000000000000000000)  return(0, 19) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() chainid() } - ef000101000c00600160015560026002550046
+      - ':yul { mstore(0, 0xef000101000c0060016001556002600255004600000000000000000000000000)  return(0, 19) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() selfbalance() } - ef000101000c00600160015560026002550047
+      - ':yul { mstore(0, 0xef000101000c0060016001556002600255004700000000000000000000000000)  return(0, 19) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop  basefee - ef000101000c00600160015560026002550048
+      - ':yul { mstore(0, 0xef000101000c0060016001556002600255004800000000000000000000000000)  return(0, 19) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() pop(0) } - ef000101000e006001600155600260025500600050
+      - ':yul { mstore(0, 0xef000101000e0060016001556002600255006000500000000000000000000000)  return(0, 21) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() mload(0) } - ef000101000e006001600155600260025500600051
+      - ':yul { mstore(0, 0xef000101000e0060016001556002600255006000510000000000000000000000)  return(0, 21) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() mstore(0,0) } - ef00010100100060016001556002600255006000600052
+      - ':yul { mstore(0, 0xef00010100100060016001556002600255006000600052000000000000000000)  return(0, 23) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() mstore8(0,0) } - ef00010100100060016001556002600255006000600053
+      - ':yul { mstore(0, 0xef00010100100060016001556002600255006000600053000000000000000000)  return(0, 23) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() sload(0) } - ef000101000e006001600155600260025500600054
+      - ':yul { mstore(0, 0xef000101000e0060016001556002600255006000540000000000000000000000)  return(0, 21) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() sstore(0,0) } - ef00010100100060016001556002600255006000600055
+      - ':yul { mstore(0, 0xef00010100100060016001556002600255006000600055000000000000000000)  return(0, 23) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop push1(0) jump - ef000101000e006001600155600260025500600056
+      - ':yul { mstore(0, 0xef000101000e0060016001556002600255006000560000000000000000000000)  return(0, 21) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop push1(0) push1(0) jumpi - ef00010100100060016001556002600255006000600057
+      - ':yul { mstore(0, 0xef00010100100060016001556002600255006000600057000000000000000000)  return(0, 23) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop  pc - ef000101000c00600160015560026002550058
+      - ':yul { mstore(0, 0xef000101000c0060016001556002600255005800000000000000000000000000)  return(0, 19) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() msize() } - ef000101000c00600160015560026002550059
+      - ':yul { mstore(0, 0xef000101000c0060016001556002600255005900000000000000000000000000)  return(0, 19) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() gas() } - ef000101000c0060016001556002600255005a
+      - ':yul { mstore(0, 0xef000101000c0060016001556002600255005a00000000000000000000000000)  return(0, 19) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop  jumpdest - ef000101000c0060016001556002600255005b
+      - ':yul { mstore(0, 0xef000101000c0060016001556002600255005b00000000000000000000000000)  return(0, 19) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop  push1(0) - ef000101000d0060016001556002600255006000
+      - ':yul { mstore(0, 0xef000101000d0060016001556002600255006000000000000000000000000000)  return(0, 20) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop  push2(0) - ef000101000e006001600155600260025500610000
+      - ':yul { mstore(0, 0xef000101000e0060016001556002600255006100000000000000000000000000)  return(0, 21) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop  push3(0) - ef000101000f00600160015560026002550062000000
+      - ':yul { mstore(0, 0xef000101000f0060016001556002600255006200000000000000000000000000)  return(0, 22) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop  push4(0) - ef00010100100060016001556002600255006300000000
+      - ':yul { mstore(0, 0xef00010100100060016001556002600255006300000000000000000000000000)  return(0, 23) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop  push5(0) - ef0001010011006001600155600260025500640000000000
+      - ':yul { mstore(0, 0xef00010100110060016001556002600255006400000000000000000000000000)  return(0, 24) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop  push6(0) - ef000101001200600160015560026002550065000000000000
+      - ':yul { mstore(0, 0xef00010100120060016001556002600255006500000000000000000000000000)  return(0, 25) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop  push7(0) - ef00010100130060016001556002600255006600000000000000
+      - ':yul { mstore(0, 0xef00010100130060016001556002600255006600000000000000000000000000)  return(0, 26) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop  push8(0) - ef0001010014006001600155600260025500670000000000000000
+      - ':yul { mstore(0, 0xef00010100140060016001556002600255006700000000000000000000000000)  return(0, 27) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop  push9(0) - ef000101001500600160015560026002550068000000000000000000
+      - ':yul { mstore(0, 0xef00010100150060016001556002600255006800000000000000000000000000)  return(0, 28) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop  push10(0) - ef00010100160060016001556002600255006900000000000000000000
+      - ':yul { mstore(0, 0xef00010100160060016001556002600255006900000000000000000000000000)  return(0, 29) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop  push11(0) - ef00010100170060016001556002600255006a0000000000000000000000
+      - ':yul { mstore(0, 0xef00010100170060016001556002600255006a00000000000000000000000000)  return(0, 30) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop  push12(0) - ef00010100180060016001556002600255006b000000000000000000000000
+      - ':yul { mstore(0, 0xef00010100180060016001556002600255006b00000000000000000000000000)  return(0, 31) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop  push13(0) - ef00010100190060016001556002600255006c00000000000000000000000000
+      - ':yul { mstore(0, 0xef00010100190060016001556002600255006c00000000000000000000000000)  return(0, 32) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop  push14(0) - ef000101001a0060016001556002600255006d0000000000000000000000000000
+      - ':yul { mstore(0, 0xef000101001a0060016001556002600255006d00000000000000000000000000) mstore(32, 0x0000000000000000000000000000000000000000000000000000000000000000)  return(0, 33) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop  push15(0) - ef000101001b0060016001556002600255006e000000000000000000000000000000
+      - ':yul { mstore(0, 0xef000101001b0060016001556002600255006e00000000000000000000000000) mstore(32, 0x0000000000000000000000000000000000000000000000000000000000000000)  return(0, 34) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop  push16(0) - ef000101001c0060016001556002600255006f00000000000000000000000000000000
+      - ':yul { mstore(0, 0xef000101001c0060016001556002600255006f00000000000000000000000000) mstore(32, 0x0000000000000000000000000000000000000000000000000000000000000000)  return(0, 35) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop  push17(0) - ef000101001d006001600155600260025500700000000000000000000000000000000000
+      - ':yul { mstore(0, 0xef000101001d0060016001556002600255007000000000000000000000000000) mstore(32, 0x0000000000000000000000000000000000000000000000000000000000000000)  return(0, 36) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop  push18(0) - ef000101001e00600160015560026002550071000000000000000000000000000000000000
+      - ':yul { mstore(0, 0xef000101001e0060016001556002600255007100000000000000000000000000) mstore(32, 0x0000000000000000000000000000000000000000000000000000000000000000)  return(0, 37) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop  push19(0) - ef000101001f0060016001556002600255007200000000000000000000000000000000000000
+      - ':yul { mstore(0, 0xef000101001f0060016001556002600255007200000000000000000000000000) mstore(32, 0x0000000000000000000000000000000000000000000000000000000000000000)  return(0, 38) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop  push20(0) - ef0001010020006001600155600260025500730000000000000000000000000000000000000000
+      - ':yul { mstore(0, 0xef00010100200060016001556002600255007300000000000000000000000000) mstore(32, 0x0000000000000000000000000000000000000000000000000000000000000000)  return(0, 39) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop  push21(0) - ef000101002100600160015560026002550074000000000000000000000000000000000000000000
+      - ':yul { mstore(0, 0xef00010100210060016001556002600255007400000000000000000000000000) mstore(32, 0x0000000000000000000000000000000000000000000000000000000000000000)  return(0, 40) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop  push22(0) - ef00010100220060016001556002600255007500000000000000000000000000000000000000000000
+      - ':yul { mstore(0, 0xef00010100220060016001556002600255007500000000000000000000000000) mstore(32, 0x0000000000000000000000000000000000000000000000000000000000000000)  return(0, 41) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop  push23(0) - ef0001010023006001600155600260025500760000000000000000000000000000000000000000000000
+      - ':yul { mstore(0, 0xef00010100230060016001556002600255007600000000000000000000000000) mstore(32, 0x0000000000000000000000000000000000000000000000000000000000000000)  return(0, 42) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop  push24(0) - ef000101002400600160015560026002550077000000000000000000000000000000000000000000000000
+      - ':yul { mstore(0, 0xef00010100240060016001556002600255007700000000000000000000000000) mstore(32, 0x0000000000000000000000000000000000000000000000000000000000000000)  return(0, 43) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop  push25(0) - ef00010100250060016001556002600255007800000000000000000000000000000000000000000000000000
+      - ':yul { mstore(0, 0xef00010100250060016001556002600255007800000000000000000000000000) mstore(32, 0x0000000000000000000000000000000000000000000000000000000000000000)  return(0, 44) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop  push26(0) - ef0001010026006001600155600260025500790000000000000000000000000000000000000000000000000000
+      - ':yul { mstore(0, 0xef00010100260060016001556002600255007900000000000000000000000000) mstore(32, 0x0000000000000000000000000000000000000000000000000000000000000000)  return(0, 45) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop  push27(0) - ef00010100270060016001556002600255007a000000000000000000000000000000000000000000000000000000
+      - ':yul { mstore(0, 0xef00010100270060016001556002600255007a00000000000000000000000000) mstore(32, 0x0000000000000000000000000000000000000000000000000000000000000000)  return(0, 46) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop  push28(0) - ef00010100280060016001556002600255007b00000000000000000000000000000000000000000000000000000000
+      - ':yul { mstore(0, 0xef00010100280060016001556002600255007b00000000000000000000000000) mstore(32, 0x0000000000000000000000000000000000000000000000000000000000000000)  return(0, 47) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop  push29(0) - ef00010100290060016001556002600255007c0000000000000000000000000000000000000000000000000000000000
+      - ':yul { mstore(0, 0xef00010100290060016001556002600255007c00000000000000000000000000) mstore(32, 0x0000000000000000000000000000000000000000000000000000000000000000)  return(0, 48) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop  push30(0) - ef000101002a0060016001556002600255007d000000000000000000000000000000000000000000000000000000000000
+      - ':yul { mstore(0, 0xef000101002a0060016001556002600255007d00000000000000000000000000) mstore(32, 0x0000000000000000000000000000000000000000000000000000000000000000)  return(0, 49) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop  push31(0) - ef000101002b0060016001556002600255007e00000000000000000000000000000000000000000000000000000000000000
+      - ':yul { mstore(0, 0xef000101002b0060016001556002600255007e00000000000000000000000000) mstore(32, 0x0000000000000000000000000000000000000000000000000000000000000000)  return(0, 50) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop  push32(0) - ef000101002c0060016001556002600255007f0000000000000000000000000000000000000000000000000000000000000000
+      - ':yul { mstore(0, 0xef000101002c0060016001556002600255007f00000000000000000000000000) mstore(32, 0x0000000000000000000000000000000000000000000000000000000000000000)  return(0, 51) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop push1(0) dup1 - ef000101000e006001600155600260025500600080
+      - ':yul { mstore(0, 0xef000101000e0060016001556002600255006000800000000000000000000000)  return(0, 21) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop push1(0) push1(0) dup2 - ef00010100100060016001556002600255006000600081
+      - ':yul { mstore(0, 0xef00010100100060016001556002600255006000600081000000000000000000)  return(0, 23) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop push1(0) push1(0) push1(0) dup3 - ef000101001200600160015560026002550060006000600082
+      - ':yul { mstore(0, 0xef00010100120060016001556002600255006000600060008200000000000000)  return(0, 25) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop push1(0) push1(0) push1(0) push1(0) dup4 - ef0001010014006001600155600260025500600060006000600083
+      - ':yul { mstore(0, 0xef00010100140060016001556002600255006000600060006000830000000000)  return(0, 27) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop push1(0) push1(0) push1(0) push1(0) push1(0) dup5 - ef00010100160060016001556002600255006000600060006000600084
+      - ':yul { mstore(0, 0xef00010100160060016001556002600255006000600060006000600084000000)  return(0, 29) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) dup6 - ef000101001800600160015560026002550060006000600060006000600085
+      - ':yul { mstore(0, 0xef00010100180060016001556002600255006000600060006000600060008500)  return(0, 31) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) dup7 - ef000101001a006001600155600260025500600060006000600060006000600086
+      - ':yul { mstore(0, 0xef000101001a0060016001556002600255006000600060006000600060006000) mstore(32, 0x8600000000000000000000000000000000000000000000000000000000000000)  return(0, 33) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) dup8 - ef000101001c0060016001556002600255006000600060006000600060006000600087
+      - ':yul { mstore(0, 0xef000101001c0060016001556002600255006000600060006000600060006000) mstore(32, 0x6000870000000000000000000000000000000000000000000000000000000000)  return(0, 35) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) dup9 - ef000101001e00600160015560026002550060006000600060006000600060006000600088
+      - ':yul { mstore(0, 0xef000101001e0060016001556002600255006000600060006000600060006000) mstore(32, 0x6000600088000000000000000000000000000000000000000000000000000000)  return(0, 37) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) dup10 - ef0001010020006001600155600260025500600060006000600060006000600060006000600089
+      - ':yul { mstore(0, 0xef00010100200060016001556002600255006000600060006000600060006000) mstore(32, 0x6000600060008900000000000000000000000000000000000000000000000000)  return(0, 39) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) dup11 - ef0001010022006001600155600260025500600060006000600060006000600060006000600060008a
+      - ':yul { mstore(0, 0xef00010100220060016001556002600255006000600060006000600060006000) mstore(32, 0x60006000600060008a0000000000000000000000000000000000000000000000)  return(0, 41) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) dup12 - ef00010100240060016001556002600255006000600060006000600060006000600060006000600060008b
+      - ':yul { mstore(0, 0xef00010100240060016001556002600255006000600060006000600060006000) mstore(32, 0x600060006000600060008b000000000000000000000000000000000000000000)  return(0, 43) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) dup13 - ef000101002600600160015560026002550060006000600060006000600060006000600060006000600060008c
+      - ':yul { mstore(0, 0xef00010100260060016001556002600255006000600060006000600060006000) mstore(32, 0x6000600060006000600060008c00000000000000000000000000000000000000)  return(0, 45) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) dup14 - ef0001010028006001600155600260025500600060006000600060006000600060006000600060006000600060008d
+      - ':yul { mstore(0, 0xef00010100280060016001556002600255006000600060006000600060006000) mstore(32, 0x60006000600060006000600060008d0000000000000000000000000000000000)  return(0, 47) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) dup15 - ef000101002a0060016001556002600255006000600060006000600060006000600060006000600060006000600060008e
+      - ':yul { mstore(0, 0xef000101002a0060016001556002600255006000600060006000600060006000) mstore(32, 0x600060006000600060006000600060008e000000000000000000000000000000)  return(0, 49) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) dup16 - ef000101002c00600160015560026002550060006000600060006000600060006000600060006000600060006000600060008f
+      - ':yul { mstore(0, 0xef000101002c0060016001556002600255006000600060006000600060006000) mstore(32, 0x6000600060006000600060006000600060008f00000000000000000000000000)  return(0, 51) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop push1(0) push1(0) swap1 - ef00010100100060016001556002600255006000600090
+      - ':yul { mstore(0, 0xef00010100100060016001556002600255006000600090000000000000000000)  return(0, 23) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop push1(0) push1(0) push1(0) swap2 - ef000101001200600160015560026002550060006000600091
+      - ':yul { mstore(0, 0xef00010100120060016001556002600255006000600060009100000000000000)  return(0, 25) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop push1(0) push1(0) push1(0) push1(0) swap3 - ef0001010014006001600155600260025500600060006000600092
+      - ':yul { mstore(0, 0xef00010100140060016001556002600255006000600060006000920000000000)  return(0, 27) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop push1(0) push1(0) push1(0) push1(0) push1(0) swap4 - ef00010100160060016001556002600255006000600060006000600093
+      - ':yul { mstore(0, 0xef00010100160060016001556002600255006000600060006000600093000000)  return(0, 29) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) swap5 - ef000101001800600160015560026002550060006000600060006000600094
+      - ':yul { mstore(0, 0xef00010100180060016001556002600255006000600060006000600060009400)  return(0, 31) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) swap6 - ef000101001a006001600155600260025500600060006000600060006000600095
+      - ':yul { mstore(0, 0xef000101001a0060016001556002600255006000600060006000600060006000) mstore(32, 0x9500000000000000000000000000000000000000000000000000000000000000)  return(0, 33) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) swap7 - ef000101001c0060016001556002600255006000600060006000600060006000600096
+      - ':yul { mstore(0, 0xef000101001c0060016001556002600255006000600060006000600060006000) mstore(32, 0x6000960000000000000000000000000000000000000000000000000000000000)  return(0, 35) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) swap8 - ef000101001e00600160015560026002550060006000600060006000600060006000600097
+      - ':yul { mstore(0, 0xef000101001e0060016001556002600255006000600060006000600060006000) mstore(32, 0x6000600097000000000000000000000000000000000000000000000000000000)  return(0, 37) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) swap9 - ef0001010020006001600155600260025500600060006000600060006000600060006000600098
+      - ':yul { mstore(0, 0xef00010100200060016001556002600255006000600060006000600060006000) mstore(32, 0x6000600060009800000000000000000000000000000000000000000000000000)  return(0, 39) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) swap10 - ef00010100220060016001556002600255006000600060006000600060006000600060006000600099
+      - ':yul { mstore(0, 0xef00010100220060016001556002600255006000600060006000600060006000) mstore(32, 0x6000600060006000990000000000000000000000000000000000000000000000)  return(0, 41) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) swap11 - ef00010100240060016001556002600255006000600060006000600060006000600060006000600060009a
+      - ':yul { mstore(0, 0xef00010100240060016001556002600255006000600060006000600060006000) mstore(32, 0x600060006000600060009a000000000000000000000000000000000000000000)  return(0, 43) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) swap12 - ef000101002600600160015560026002550060006000600060006000600060006000600060006000600060009b
+      - ':yul { mstore(0, 0xef00010100260060016001556002600255006000600060006000600060006000) mstore(32, 0x6000600060006000600060009b00000000000000000000000000000000000000)  return(0, 45) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) swap13 - ef0001010028006001600155600260025500600060006000600060006000600060006000600060006000600060009c
+      - ':yul { mstore(0, 0xef00010100280060016001556002600255006000600060006000600060006000) mstore(32, 0x60006000600060006000600060009c0000000000000000000000000000000000)  return(0, 47) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) swap14 - ef000101002a0060016001556002600255006000600060006000600060006000600060006000600060006000600060009d
+      - ':yul { mstore(0, 0xef000101002a0060016001556002600255006000600060006000600060006000) mstore(32, 0x600060006000600060006000600060009d000000000000000000000000000000)  return(0, 49) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) swap15 - ef000101002c00600160015560026002550060006000600060006000600060006000600060006000600060006000600060009e
+      - ':yul { mstore(0, 0xef000101002c0060016001556002600255006000600060006000600060006000) mstore(32, 0x6000600060006000600060006000600060009e00000000000000000000000000)  return(0, 51) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) swap16 - ef000101002e006001600155600260025500600060006000600060006000600060006000600060006000600060006000600060009f
+      - ':yul { mstore(0, 0xef000101002e0060016001556002600255006000600060006000600060006000) mstore(32, 0x60006000600060006000600060006000600060009f0000000000000000000000)  return(0, 53) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() log0(0,0) } - ef000101001000600160015560026002550060006000a0
+      - ':yul { mstore(0, 0xef000101001000600160015560026002550060006000a0000000000000000000)  return(0, 23) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() log1(0,0,0) } - ef0001010012006001600155600260025500600060006000a1
+      - ':yul { mstore(0, 0xef0001010012006001600155600260025500600060006000a100000000000000)  return(0, 25) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() log2(0,0,0,1) } - ef00010100140060016001556002600255006001600060006000a2
+      - ':yul { mstore(0, 0xef00010100140060016001556002600255006001600060006000a20000000000)  return(0, 27) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() log3(0,0,0,1,0) } - ef000101001600600160015560026002550060006001600060006000a3
+      - ':yul { mstore(0, 0xef000101001600600160015560026002550060006001600060006000a3000000)  return(0, 29) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() log4(0,0,0,1,0,2) } - ef0001010018006001600155600260025500600260006001600060006000a4
+      - ':yul { mstore(0, 0xef0001010018006001600155600260025500600260006001600060006000a400)  return(0, 31) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() create(0,0,0) } - ef0001010012006001600155600260025500600060006000f0
+      - ':yul { mstore(0, 0xef0001010012006001600155600260025500600060006000f000000000000000)  return(0, 25) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() call(0,0,0,1,0,2,0) } - ef000101001a0060016001556002600255006000600260006001600060006000f1
+      - ':yul { mstore(0, 0xef000101001a0060016001556002600255006000600260006001600060006000) mstore(32, 0xf100000000000000000000000000000000000000000000000000000000000000)  return(0, 33) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() callcode(0,0,0,1,0,2,0) } - ef000101001a0060016001556002600255006000600260006001600060006000f2
+      - ':yul { mstore(0, 0xef000101001a0060016001556002600255006000600260006001600060006000) mstore(32, 0xf200000000000000000000000000000000000000000000000000000000000000)  return(0, 33) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() delegatecall(0,0,0,1,0,2) } - ef0001010018006001600155600260025500600260006001600060006000f4
+      - ':yul { mstore(0, 0xef0001010018006001600155600260025500600260006001600060006000f400)  return(0, 31) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() create2(0,0,0,1) } - ef00010100140060016001556002600255006001600060006000f5
+      - ':yul { mstore(0, 0xef00010100140060016001556002600255006001600060006000f50000000000)  return(0, 27) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() staticcall(0,0,0,1,0,2) } - ef0001010018006001600155600260025500600260006001600060006000fa
+      - ':yul { mstore(0, 0xef0001010018006001600155600260025500600260006001600060006000fa00)  return(0, 31) }'     
+
+      # Valid EOF initcode returning malformed code
+
+      # code section: PUSH1 23 CODEDIZE SUB DUP1 PUSH1 23 CODECOPY PUSH1 0 RETURN
+      # 23 is offset of data section
+      # data section contains deployed code
+
+      # No magic
+      # deployed code: ef
+      - ':raw 0xef000101000d02000100601738038060176000396000f3ef'
+      # Invalid magic
+      # deployed code: ef010101000100fe
+      - ':raw 0xef000101000d02000800601738038060176000396000f3ef010101000100fe'
+      # deployed code: ef020101000100fe
+      - ':raw 0xef000101000d02000800601738038060176000396000f3ef020101000100fe'
+      # deployed code: efff0101000100fe
+      - ':raw 0xef000101000d02000800601738038060176000396000f3efff0101000100fe'
+      # No version
+      # deployed code: ef00
+      - ':raw 0xef000101000d02000200601738038060176000396000f3ef00'
+      # Invalid version
+      # deployed code: ef000001000100fe
+      - ':raw 0xef000101000d02000800601738038060176000396000f3ef000001000100fe'
+      # deployed code: ef000201000100fe
+      - ':raw 0xef000101000d02000800601738038060176000396000f3ef000201000100fe'
+      # deployed code: ef00ff01000100fe
+      - ':raw 0xef000101000d02000800601738038060176000396000f3ef00ff01000100fe'
+      # No header
+      # deployed code: ef0001
+      - ':raw 0xef000101000d02000300601738038060176000396000f3ef0001'
+      # No code section
+      # deployed code: ef000100
+      - ':raw 0xef000101000d02000400601738038060176000396000f3ef000100'
+      # No code section size
+      # deployed code: ef000101
+      - ':raw 0xef000101000d02000400601738038060176000396000f3ef000101'
+      # Code section size incomplete
+      # deployed code: ef00010100
+      - ':raw 0xef000101000d02000500601738038060176000396000f3ef00010100'
+      # No section terminator after code section size
+      # deployed code: ef0001010003
+      - ':raw 0xef000101000d02000600601738038060176000396000f3ef0001010003'
+      # deployed code: ef0001010003600000
+      - ':raw 0xef000101000d02000900601738038060176000396000f3ef0001010003600000'
+      # No code section contents
+      # deployed code: ef000101000200
+      - ':raw 0xef000101000d02000700601738038060176000396000f3ef000101000200'
+      # Code section contents incomplete
+      # deployed code: ef00010100020060
+      - ':raw 0xef000101000d02000800601738038060176000396000f3ef00010100020060'
+      # Trailing bytes after code section
+      # deployed code: ef000101000300600000deadbeef
+      - ':raw 0xef000101000d02000e00601738038060176000396000f3ef000101000300600000deadbeef'
+      # Multiple code sections
+      # deployed code: ef000101000301000300600000600000
+      - ':raw 0xef000101000d02001000601738038060176000396000f3ef000101000301000300600000600000'
+      # Empty code section
+      # deployed code: ef000101000000
+      - ':raw 0xef000101000d02000700601738038060176000396000f3ef000101000000'
+      # Empty code section with non-empty data section
+      # deployed code: ef000101000002000200aabb
+      - ':raw 0xef000101000d02000c00601738038060176000396000f3ef000101000002000200aabb'
+      # Data section preceding code section
+      # deployed code: ef000102000401000300aabbccdd600000
+      - ':raw 0xef000101000d02001100601738038060176000396000f3ef000102000401000300aabbccdd600000'
+      # Data section without code section
+      # deployed code: ef000102000400aabbccdd
+      - ':raw 0xef000101000d02000b00601738038060176000396000f3ef000102000400aabbccdd'
+      # No data section size
+      # deployed code: ef000101000202
+      - ':raw 0xef000101000d02000700601738038060176000396000f3ef000101000202'
+      # Data section size incomplete
+      # deployed code: ef00010100020200
+      - ':raw 0xef000101000d02000800601738038060176000396000f3ef00010100020200'
+      # No section terminator after data section size
+      # deployed code: ef0001010003020004
+      - ':raw 0xef000101000d02000900601738038060176000396000f3ef0001010002020004'
+      # deployed code: ef0001010003020004600000aabbccdd
+      - ':raw 0xef000101000d02001000601738038060176000396000f3ef0001010003020004600000aabbccdd'
+      # No data section contents
+      # deployed code: ef000101000302000400600000
+      - ':raw 0xef000101000d02000d00601738038060176000396000f3ef000101000302000400600000'
+      # Data section contents incomplete
+      # deployed code: ef000101000302000400600000aabbcc
+      - ':raw 0xef000101000d02001000601738038060176000396000f3ef000101000302000400600000aabbcc'
+      # Trailing bytes after data section
+      # deployed code: ef000101000302000400600000aabbccddee
+      - ':raw 0xef000101000d02001200601738038060176000396000f3ef000101000302000400600000aabbccddee'
+      # Multiple data sections
+      # deployed code: ef000101000302000402000400600000aabbccddaabbccdd
+      - ':raw 0xef000101000d02001800601738038060176000396000f3ef000101000302000402000400600000aabbccddaabbccdd'
+      # Multiple code and data sections
+      # deployed code: ef000101000101000102000102000100fefeaabb
+      - ':raw 0xef000101000d02001400601738038060176000396000f3ef000101000101000102000102000100fefeaabb'
+      # Empty data section
+      # deployed code: ef000101000302000000600000
+      - ':raw 0xef000101000d02000d00601738038060176000396000f3ef000101000302000000600000'
+      # Unknown section IDs
+      # deployed code: ef000103000300600000
+      - ':raw 0xef000101000d02000a00601738038060176000396000f3ef000103000300600000'
+      # deployed code: ef000104000300600000
+      - ':raw 0xef000101000d02000a00601738038060176000396000f3ef000104000300600000'
+      # deployed code: ef0001ff000300600000
+      - ':raw 0xef000101000d02000a00601738038060176000396000f3ef0001ff000300600000'
+      # deployed code: ef000101000303000400600000aabbccdd
+      - ':raw 0xef000101000d02001100601738038060176000396000f3ef000101000303000400600000aabbccdd'
+      # deployed code: ef000101000304000400600000aabbccdd
+      - ':raw 0xef000101000d02001100601738038060176000396000f3ef000101000304000400600000aabbccdd'
+      # deployed code: ef0001010003ff000400600000aabbccdd
+      - ':raw 0xef000101000d02001100601738038060176000396000f3ef0001010003ff000400600000aabbccdd'
+
+      # EIP-3670: Valid EOF initcode returning invalid EOF - Truncated PUSH  data at the end
+      # init code: { mstore(0, 0xef000101000b0060016001556002600255600000000000000000000000000000) return(0, 18) }
+      # deployed code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push1( - ef000101000b006001600155600260025560
+      - ':raw 0xef0001010029007fef000101000b006001600155600260025560000000000000000000000000000060005260126000f3'
+      # init code: { mstore(0, 0xef000101000b0060016001556002600255610000000000000000000000000000) return(0, 18) }
+      # deployed code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push2( - ef000101000b006001600155600260025561
+      - ':raw 0xef0001010029007fef000101000b006001600155600260025561000000000000000000000000000060005260126000f3'
+      # init code: { mstore(0, 0xef000101000c0060016001556002600255610000000000000000000000000000) return(0, 19) }
+      # deployed code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push2(0x00 - ef000101000c00600160015560026002556100
+      - ':raw 0xef0001010029007fef000101000c006001600155600260025561000000000000000000000000000060005260136000f3'
+      # init code: { mstore(0, 0xef000101000b0060016001556002600255620000000000000000000000000000) return(0, 18) }
+      # deployed code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push3( - ef000101000b006001600155600260025562
+      - ':raw 0xef0001010029007fef000101000b006001600155600260025562000000000000000000000000000060005260126000f3'
+      # init code: { mstore(0, 0xef000101000d00600160015560026002556200f3000000000000000000000000) return(0, 20) }
+      # deployed code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push3(0x00f3 - ef000101000d00600160015560026002556200f3
+      - ':raw 0xef0001010029007fef000101000d00600160015560026002556200f300000000000000000000000060005260146000f3'
+      # init code: { mstore(0, 0xef000101000b0060016001556002600255630000000000000000000000000000) return(0, 18) }
+      # deployed code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push4( - ef000101000b006001600155600260025563
+      - ':raw 0xef0001010029007fef000101000b006001600155600260025563000000000000000000000000000060005260126000f3'
+      # init code: { mstore(0, 0xef000101000e00600160015560026002556300f3fd0000000000000000000000) return(0, 21) }
+      # deployed code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push4(0x00f3fd - ef000101000e00600160015560026002556300f3fd
+      - ':raw 0xef0001010029007fef000101000e00600160015560026002556300f3fd000000000000000000000060005260156000f3'
+      # init code: { mstore(0, 0xef000101000b0060016001556002600255640000000000000000000000000000) return(0, 18) }
+      # deployed code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push5( - ef000101000b006001600155600260025564
+      - ':raw 0xef0001010029007fef000101000b006001600155600260025564000000000000000000000000000060005260126000f3'
+      # init code: { mstore(0, 0xef000101000f00600160015560026002556400f3fdfe00000000000000000000) return(0, 22) }
+      # deployed code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push5(0x00f3fdfe - ef000101000f00600160015560026002556400f3fdfe
+      - ':raw 0xef0001010029007fef000101000f00600160015560026002556400f3fdfe0000000000000000000060005260166000f3'
+      # init code: { mstore(0, 0xef000101000b0060016001556002600255650000000000000000000000000000) return(0, 18) }
+      # deployed code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push6( - ef000101000b006001600155600260025565
+      - ':raw 0xef0001010029007fef000101000b006001600155600260025565000000000000000000000000000060005260126000f3'
+      # init code: { mstore(0, 0xef000101001000600160015560026002556500f3fdfeff000000000000000000) return(0, 23) }
+      # deployed code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push6(0x00f3fdfeff - ef000101001000600160015560026002556500f3fdfeff
+      - ':raw 0xef0001010029007fef000101001000600160015560026002556500f3fdfeff00000000000000000060005260176000f3'
+      # init code: { mstore(0, 0xef000101000b0060016001556002600255660000000000000000000000000000) return(0, 18) }
+      # deployed code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push7( - ef000101000b006001600155600260025566
+      - ':raw 0xef0001010029007fef000101000b006001600155600260025566000000000000000000000000000060005260126000f3'
+      # init code: { mstore(0, 0xef000101001100600160015560026002556600f3fdfeff000000000000000000) return(0, 24) }
+      # deployed code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push7(0x00f3fdfeff00 - ef000101001100600160015560026002556600f3fdfeff00
+      - ':raw 0xef0001010029007fef000101001100600160015560026002556600f3fdfeff00000000000000000060005260186000f3'
+      # init code: { mstore(0, 0xef000101000b0060016001556002600255670000000000000000000000000000) return(0, 18) }
+      # deployed code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push8( - ef000101000b006001600155600260025567
+      - ':raw 0xef0001010029007fef000101000b006001600155600260025567000000000000000000000000000060005260126000f3'
+      # init code: { mstore(0, 0xef000101001200600160015560026002556700f3fdfeff00f300000000000000) return(0, 25) }
+      # deployed code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push8(0x00f3fdfeff00f3 - ef000101001200600160015560026002556700f3fdfeff00f3 
+      - ':raw 0xef0001010029007fef000101001200600160015560026002556700f3fdfeff00f30000000000000060005260196000f3'
+      # init code: { mstore(0, 0xef000101000b0060016001556002600255680000000000000000000000000000) return(0, 18) }
+      # deployed code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push9( - ef000101000b006001600155600260025568
+      - ':raw 0xef0001010029007fef000101000b006001600155600260025568000000000000000000000000000060005260126000f3'
+      # init code: { mstore(0, 0xef000101001300600160015560026002556800f3fdfeff00f3fd000000000000) return(0, 26) }
+      # deployed code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push9(0x00f3fdfeff00f3fd - ef000101001300600160015560026002556800f3fdfeff00f3fd 
+      - ':raw 0xef0001010029007fef000101001300600160015560026002556800f3fdfeff00f3fd000000000000600052601a6000f3'
+      # init code: { mstore(0, 0xef000101000b0060016001556002600255690000000000000000000000000000) return(0, 18) }
+      # deployed code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push10( - ef000101000b006001600155600260025569
+      - ':raw 0xef0001010029007fef000101000b006001600155600260025569000000000000000000000000000060005260126000f3'
+      # init code: { mstore(0, 0xef000101001400600160015560026002556900f3fdfeff00f3fdfe0000000000) return(0, 27) }
+      # deployed code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push10(0x00f3fdfeff00f3fdfe - ef000101001400600160015560026002556900f3fdfeff00f3fdfe
+      - ':raw 0xef0001010029007fef000101001400600160015560026002556900f3fdfeff00f3fdfe0000000000600052601b6000f3'
+      # init code: { mstore(0, 0xef000101000b00600160015560026002556a0000000000000000000000000000) return(0, 18) }
+      # deployed code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push11( - ef000101000b00600160015560026002556a
+      - ':raw 0xef0001010029007fef000101000b00600160015560026002556a000000000000000000000000000060005260126000f3'
+      # init code: { mstore(0, 0xef000101001500600160015560026002556a00f3fdfeff00f3fdfeff00000000) return(0, 28) }
+      # deployed code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push11(0x00f3fdfeff00f3fdfeff - ef000101001500600160015560026002556a00f3fdfeff00f3fdfeff
+      - ':raw 0xef0001010029007fef000101001500600160015560026002556a00f3fdfeff00f3fdfeff00000000600052601c6000f3'
+      # init code: { mstore(0, 0xef000101000b00600160015560026002556b0000000000000000000000000000) return(0, 18) }
+      # deployed code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push12( - ef000101000b00600160015560026002556b
+      - ':raw 0xef0001010029007fef000101000b00600160015560026002556b000000000000000000000000000060005260126000f3'
+      # init code: { mstore(0, 0xef000101001600600160015560026002556b00f3fdfeff00f3fdfeff00000000) return(0, 29) }
+      # deployed code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push12(0x00f3fdfeff00f3fdfeff00 - ef000101001600600160015560026002556b00f3fdfeff00f3fdfeff00
+      - ':raw 0xef0001010029007fef000101001600600160015560026002556b00f3fdfeff00f3fdfeff00000000600052601d6000f3'
+      # init code: { mstore(0, 0xef000101000b00600160015560026002556c0000000000000000000000000000) return(0, 18) }
+      # deployed code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push13( - ef000101000b00600160015560026002556c
+      - ':raw 0xef0001010029007fef000101000b00600160015560026002556c000000000000000000000000000060005260126000f3'
+      # init code: { mstore(0, 0xef000101001700600160015560026002556c00f3fdfeff00f3fdfeff00f30000) return(0, 30) }
+      # deployed code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push13(0x00f3fdfeff00f3fdfeff00f3 - ef000101001700600160015560026002556c00f3fdfeff00f3fdfeff00f3
+      - ':raw 0xef0001010029007fef000101001700600160015560026002556c00f3fdfeff00f3fdfeff00f30000600052601e6000f3'
+      # init code: { mstore(0, 0xef000101000b00600160015560026002556d0000000000000000000000000000) return(0, 18) }
+      # deployed code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push14( - ef000101000b00600160015560026002556d
+      - ':raw 0xef0001010029007fef000101000b00600160015560026002556d000000000000000000000000000060005260126000f3'
+      # init code: { mstore(0, 0xef000101001800600160015560026002556d00f3fdfeff00f3fdfeff00f3fd00) return(0, 31) }
+      # deployed code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push14(0x00f3fdfeff00f3fdfeff00f3fd - ef000101001800600160015560026002556d00f3fdfeff00f3fdfeff00f3fd
+      - ':raw 0xef0001010029007fef000101001800600160015560026002556d00f3fdfeff00f3fdfeff00f3fd00600052601f6000f3'
+      # init code: { mstore(0, 0xef000101000b00600160015560026002556e0000000000000000000000000000) return(0, 18) }
+      # deployed code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push15( - ef000101000b00600160015560026002556e 
+      - ':raw 0xef0001010029007fef000101000b00600160015560026002556e000000000000000000000000000060005260126000f3'
+      # init code: { mstore(0, 0xef000101001900600160015560026002556e00f3fdfeff00f3fdfeff00f3fdfe) return(0, 32) }
+      # deployed code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push15(0x00f3fdfeff00f3fdfeff00f3fdfe - ef000101001900600160015560026002556e00f3fdfeff00f3fdfeff00f3fdfe
+      - ':raw 0xef0001010029007fef000101001900600160015560026002556e00f3fdfeff00f3fdfeff00f3fdfe60005260206000f3'
+      # init code: { mstore(0, 0xef000101000b00600160015560026002556f0000000000000000000000000000) return(0, 18) }
+      # deployed code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push16( - ef000101000b00600160015560026002556f
+      - ':raw 0xef0001010029007fef000101000b00600160015560026002556f000000000000000000000000000060005260126000f3'
+      # init code: { mstore(0, 0xef000101001a00600160015560026002556f00f3fdfeff00f3fdfeff00f3fdfe) mstore(32, 0xff00000000000000000000000000000000000000000000000000000000000000) return(0, 33) }
+      # deployed code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push16(0x00f3fdfeff00f3fdfeff00f3fdfeff - ef000101001a00600160015560026002556f00f3fdfeff00f3fdfeff00f3fdfeff
+      - ':raw 0xef000101004d007fef000101001a00600160015560026002556f00f3fdfeff00f3fdfeff00f3fdfe6000527fff0000000000000000000000000000000000000000000000000000000000000060205260216000f3'
+      # init code: { mstore(0, 0xef000101000b0060016001556002600255700000000000000000000000000000) return(0, 18) }
+      # deployed code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push17( - ef000101000b006001600155600260025570
+      - ':raw 0xef0001010029007fef000101000b006001600155600260025570000000000000000000000000000060005260126000f3'
+      # init code: { mstore(0, 0xef000101001b00600160015560026002557000f3fdfeff00f3fdfeff00f3fdfe) mstore(32, 0xff00000000000000000000000000000000000000000000000000000000000000) return(0, 34) }
+      # deployed code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push17(0x00f3fdfeff00f3fdfeff00f3fdfeff00 - ef000101001b00600160015560026002557000f3fdfeff00f3fdfeff00f3fdfeff00
+      - ':raw 0xef000101004d007fef000101001b00600160015560026002557000f3fdfeff00f3fdfeff00f3fdfe6000527fff0000000000000000000000000000000000000000000000000000000000000060205260226000f3'
+      # init code: { mstore(0, 0xef000101000b0060016001556002600255710000000000000000000000000000) return(0, 18) }
+      # deployed code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push18( - ef000101000b006001600155600260025571
+      - ':raw 0xef0001010029007fef000101000b006001600155600260025571000000000000000000000000000060005260126000f3'
+      # init code: { mstore(0, 0xef000101001c00600160015560026002557100f3fdfeff00f3fdfeff00f3fdfe) mstore(32, 0xff00f30000000000000000000000000000000000000000000000000000000000) return(0, 35) }
+      # deployed code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push18(0x00f3fdfeff00f3fdfeff00f3fdfeff00f3 - ef000101001c00600160015560026002557100f3fdfeff00f3fdfeff00f3fdfeff00f3
+      - ':raw 0xef000101004d007fef000101001c00600160015560026002557100f3fdfeff00f3fdfeff00f3fdfe6000527fff00f3000000000000000000000000000000000000000000000000000000000060205260236000f3'
+      # init code: { mstore(0, 0xef000101000b0060016001556002600255720000000000000000000000000000) return(0, 18) }
+      # deployed code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push19( - ef000101000b006001600155600260025572
+      - ':raw 0xef0001010029007fef000101000b006001600155600260025572000000000000000000000000000060005260126000f3'
+      # init code: { mstore(0, 0xef000101001d00600160015560026002557200f3fdfeff00f3fdfeff00f3fdfe) mstore(32, 0xff00f3fd00000000000000000000000000000000000000000000000000000000) return(0, 36) }
+      # deployed code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push19(0x00f3fdfeff00f3fdfeff00f3fdfeff00f3fd - ef000101001d00600160015560026002557200f3fdfeff00f3fdfeff00f3fdfeff00f3fd
+      - ':raw 0xef000101004d007fef000101001d00600160015560026002557200f3fdfeff00f3fdfeff00f3fdfe6000527fff00f3fd0000000000000000000000000000000000000000000000000000000060205260246000f3'
+      # init code: { mstore(0, 0xef000101000b0060016001556002600255730000000000000000000000000000) return(0, 18) }
+      # deployed code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push20( - ef000101000b006001600155600260025573
+      - ':raw 0xef0001010029007fef000101000b006001600155600260025573000000000000000000000000000060005260126000f3'
+      # init code: { mstore(0, 0xef000101001e00600160015560026002557300f3fdfeff00f3fdfeff00f3fdfe) mstore(32, 0xff00f3fdfe000000000000000000000000000000000000000000000000000000) return(0, 37) }
+      # deployed code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push20(0x00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfe - ef000101001e00600160015560026002557300f3fdfeff00f3fdfeff00f3fdfeff00f3fdfe
+      - ':raw 0xef000101004d007fef000101001e00600160015560026002557300f3fdfeff00f3fdfeff00f3fdfe6000527fff00f3fdfe00000000000000000000000000000000000000000000000000000060205260256000f3'
+      # init code: { mstore(0, 0xef000101000b0060016001556002600255740000000000000000000000000000) return(0, 18) }
+      # deployed code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push21( - ef000101000b006001600155600260025574
+      - ':raw 0xef0001010029007fef000101000b006001600155600260025574000000000000000000000000000060005260126000f3'
+      # init code: { mstore(0, 0xef000101001f00600160015560026002557400f3fdfeff00f3fdfeff00f3fdfe) mstore(32, 0xff00f3fdfeff0000000000000000000000000000000000000000000000000000) return(0, 38) }
+      # deployed code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push21(0x00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff - ef000101001f00600160015560026002557400f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff
+      - ':raw 0xef000101004d007fef000101001f00600160015560026002557400f3fdfeff00f3fdfeff00f3fdfe6000527fff00f3fdfeff000000000000000000000000000000000000000000000000000060205260266000f3'
+      # init code: { mstore(0, 0xef000101000b0060016001556002600255750000000000000000000000000000) return(0, 18) }
+      # deployed code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push22( - ef000101000b006001600155600260025575
+      - ':raw 0xef0001010029007fef000101000b006001600155600260025575000000000000000000000000000060005260126000f3'
+      # init code: { mstore(0, 0xef000101002000600160015560026002557500f3fdfeff00f3fdfeff00f3fdfe) mstore(32, 0xff00f3fdfeff0000000000000000000000000000000000000000000000000000) return(0, 39) }
+      # deployed code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push22(0x00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00 - ef000101002000600160015560026002557500f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00
+      - ':raw 0xef000101004d007fef000101002000600160015560026002557500f3fdfeff00f3fdfeff00f3fdfe6000527fff00f3fdfeff000000000000000000000000000000000000000000000000000060205260276000f3'
+      # init code: { mstore(0, 0xef000101000b0060016001556002600255760000000000000000000000000000) return(0, 18) }
+      # deployed code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push23( - ef000101000b006001600155600260025576
+      - ':raw 0xef0001010029007fef000101000b006001600155600260025576000000000000000000000000000060005260126000f3'
+      # init code: { mstore(0, 0xef000101002100600160015560026002557600f3fdfeff00f3fdfeff00f3fdfe) mstore(32, 0xff00f3fdfeff00f3000000000000000000000000000000000000000000000000) return(0, 40) }
+      # deployed code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push23(0x00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3 - ef000101002100600160015560026002557600f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3
+      - ':raw 0xef000101004d007fef000101002100600160015560026002557600f3fdfeff00f3fdfeff00f3fdfe6000527fff00f3fdfeff00f300000000000000000000000000000000000000000000000060205260286000f3'
+      # init code: { mstore(0, 0xef000101000b0060016001556002600255770000000000000000000000000000) return(0, 18) }
+      # deployed code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push24( - ef000101000b006001600155600260025577
+      - ':raw 0xef0001010029007fef000101000b006001600155600260025577000000000000000000000000000060005260126000f3'
+      # init code: { mstore(0, 0xef000101002200600160015560026002557700f3fdfeff00f3fdfeff00f3fdfe) mstore(32, 0xff00f3fdfeff00f3fd0000000000000000000000000000000000000000000000) return(0, 41) }
+      # deployed code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push24(0x00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fd - ef000101002200600160015560026002557700f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fd
+      - ':raw 0xef000101004d007fef000101002200600160015560026002557700f3fdfeff00f3fdfeff00f3fdfe6000527fff00f3fdfeff00f3fd000000000000000000000000000000000000000000000060205260296000f3'
+      # init code: { mstore(0, 0xef000101000b0060016001556002600255780000000000000000000000000000) return(0, 18) }
+      # deployed code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push25( - ef000101000b006001600155600260025578
+      - ':raw 0xef0001010029007fef000101000b006001600155600260025578000000000000000000000000000060005260126000f3'
+      # init code: { mstore(0, 0xef000101002300600160015560026002557800f3fdfeff00f3fdfeff00f3fdfe) mstore(32, 0xff00f3fdfeff00f3fdfe00000000000000000000000000000000000000000000) return(0, 42) }
+      # deployed code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push25(0x00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfe - ef000101002300600160015560026002557800f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfe
+      - ':raw 0xef000101004d007fef000101002300600160015560026002557800f3fdfeff00f3fdfeff00f3fdfe6000527fff00f3fdfeff00f3fdfe00000000000000000000000000000000000000000000602052602a6000f3'
+      # init code: { mstore(0, 0xef000101000b0060016001556002600255790000000000000000000000000000) return(0, 18) }
+      # deployed code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push26( - ef000101000b006001600155600260025579
+      - ':raw 0xef0001010029007fef000101000b006001600155600260025579000000000000000000000000000060005260126000f3'
+      # init code: { mstore(0, 0xef000101002400600160015560026002557900f3fdfeff00f3fdfeff00f3fdfe) mstore(32, 0xff00f3fdfeff00f3fdfeff000000000000000000000000000000000000000000) return(0, 43) }
+      # deployed code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push26(0x00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff - ef000101002400600160015560026002557900f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff
+      - ':raw 0xef000101004d007fef000101002400600160015560026002557900f3fdfeff00f3fdfeff00f3fdfe6000527fff00f3fdfeff00f3fdfeff000000000000000000000000000000000000000000602052602b6000f3'
+      # init code: { mstore(0, 0xef000101000b00600160015560026002557a0000000000000000000000000000) return(0, 18) }
+      # deployed code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push27( - ef000101000b00600160015560026002557a
+      - ':raw 0xef0001010029007fef000101000b00600160015560026002557a000000000000000000000000000060005260126000f3'
+      # init code: { mstore(0, 0xef000101002500600160015560026002557a00f3fdfeff00f3fdfeff00f3fdfe) mstore(32, 0xff00f3fdfeff00f3fdfeff000000000000000000000000000000000000000000) return(0, 44) }
+      # deployed code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push27(0x00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00 - ef000101002500600160015560026002557a00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00
+      - ':raw 0xef000101004d007fef000101002500600160015560026002557a00f3fdfeff00f3fdfeff00f3fdfe6000527fff00f3fdfeff00f3fdfeff000000000000000000000000000000000000000000602052602c6000f3'
+      # init code: { mstore(0, 0xef000101000b00600160015560026002557b0000000000000000000000000000) return(0, 18) }
+      # deployed code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push28( - ef000101000b00600160015560026002557b
+      - ':raw 0xef0001010029007fef000101000b00600160015560026002557b000000000000000000000000000060005260126000f3'
+      # init code: { mstore(0, 0xef000101002600600160015560026002557b00f3fdfeff00f3fdfeff00f3fdfe) mstore(32, 0xff00f3fdfeff00f3fdfeff00f300000000000000000000000000000000000000) return(0, 45) }
+      # deployed code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push28(0x00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3 - ef000101002600600160015560026002557b00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3
+      - ':raw 0xef000101004d007fef000101002600600160015560026002557b00f3fdfeff00f3fdfeff00f3fdfe6000527fff00f3fdfeff00f3fdfeff00f300000000000000000000000000000000000000602052602d6000f3'
+      # init code: { mstore(0, 0xef000101000b00600160015560026002557c0000000000000000000000000000) return(0, 18) }
+      # deployed code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push29( - ef000101000b00600160015560026002557c
+      - ':raw 0xef0001010029007fef000101000b00600160015560026002557c000000000000000000000000000060005260126000f3'
+      # init code: { mstore(0, 0xef000101002700600160015560026002557c00f3fdfeff00f3fdfeff00f3fdfe) mstore(32, 0xff00f3fdfeff00f3fdfeff00f3fd000000000000000000000000000000000000) return(0, 46) }
+      # deployed code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push29(0x00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fd - ef000101002700600160015560026002557c00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fd
+      - ':raw 0xef000101004d007fef000101002700600160015560026002557c00f3fdfeff00f3fdfeff00f3fdfe6000527fff00f3fdfeff00f3fdfeff00f3fd000000000000000000000000000000000000602052602e6000f3'
+      # init code: { mstore(0, 0xef000101000b00600160015560026002557d0000000000000000000000000000) return(0, 18) }
+      # deployed code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push30( - ef000101000b00600160015560026002557d
+      - ':raw 0xef0001010029007fef000101000b00600160015560026002557d000000000000000000000000000060005260126000f3'
+      # init code: { mstore(0, 0xef000101002800600160015560026002557d00f3fdfeff00f3fdfeff00f3fdfe) mstore(32, 0xff00f3fdfeff00f3fdfeff00f3fdfe0000000000000000000000000000000000) return(0, 47) }
+      # deployed code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push30(0x00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfe - ef000101002800600160015560026002557d00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfe
+      - ':raw 0xef000101004d007fef000101002800600160015560026002557d00f3fdfeff00f3fdfeff00f3fdfe6000527fff00f3fdfeff00f3fdfeff00f3fdfe0000000000000000000000000000000000602052602f6000f3'
+      # init code: { mstore(0, 0xef000101000b00600160015560026002557e0000000000000000000000000000) return(0, 18) }
+      # deployed code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push31( - ef000101000b00600160015560026002557e 
+      - ':raw 0xef0001010029007fef000101000b00600160015560026002557e000000000000000000000000000060005260126000f3'
+      # init code: { mstore(0, 0xef000101002900600160015560026002557e00f3fdfeff00f3fdfeff00f3fdfe) mstore(32, 0xff00f3fdfeff00f3fdfeff00f3fdfeff00000000000000000000000000000000) return(0, 48) }
+      # deployed code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push31(0x00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff - ef000101002900600160015560026002557e00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff
+      - ':raw 0xef000101004d007fef000101002900600160015560026002557e00f3fdfeff00f3fdfeff00f3fdfe6000527fff00f3fdfeff00f3fdfeff00f3fdfeff0000000000000000000000000000000060205260306000f3'
+      # init code: { mstore(0, 0xef000101000b00600160015560026002557f0000000000000000000000000000) return(0, 18) }
+      # deployed code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push32( - ef000101000b00600160015560026002557f
+      - ':raw 0xef0001010029007fef000101000b00600160015560026002557f000000000000000000000000000060005260126000f3'
+      # init code: { mstore(0, 0xef000101002a00600160015560026002557f00f3fdfeff00f3fdfeff00f3fdfe) mstore(32, 0xff00f3fdfeff00f3fdfeff00f3fdfeff00000000000000000000000000000000) return(0, 49) }
+      # deployed code: { sstore(0x1, 0x1) sstore(0x2, 0x2) push32(0x00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00 - ef000101002a00600160015560026002557f00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00f3fdfeff00
+      - ':raw 0xef000101004d007fef000101002a00600160015560026002557f00f3fdfeff00f3fdfeff00f3fdfe6000527fff00f3fdfeff00f3fdfeff00f3fdfeff0000000000000000000000000000000060205260316000f3'
+
+      # EIP-3670: Valid EOF initcode returning invalid EOF - Containing undefined instruction (0xf6) after STOP
+      # init code: { mstore(0x0, 0xef000101000c006001600155600260025500f600000000000000000000000000) return (0x00, 0x13) }
+      # deployed code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() 0xf6 } - ef000101000c006001600155600260025500f6
+      - ':raw 0xef0001010029007fef000101000c006001600155600260025500f60000000000000000000000000060005260136000f3'
+
+      # EIP-3670: Valid EOF initcode returning invalid EOF - Non terminating instruction at the end (SSTORE)
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() add(0,0) } - ef00010100100060016001556002600255006000600001
+      - ':yul { mstore(0, 0xef00010100100060016001556002600255006000600001000000000000000000)  return(0, 23) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() mul(0,0) } - ef00010100100060016001556002600255006000600002
+      - ':yul { mstore(0, 0xef00010100100060016001556002600255006000600002000000000000000000)  return(0, 23) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() sub(0,0) } - ef00010100100060016001556002600255006000600003
+      - ':yul { mstore(0, 0xef00010100100060016001556002600255006000600003000000000000000000)  return(0, 23) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() div(0,0) } - ef00010100100060016001556002600255006000600004
+      - ':yul { mstore(0, 0xef00010100100060016001556002600255006000600004000000000000000000)  return(0, 23) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() sdiv(0,0) } - ef00010100100060016001556002600255006000600005
+      - ':yul { mstore(0, 0xef00010100100060016001556002600255006000600005000000000000000000)  return(0, 23) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() mod(0,0) } - ef00010100100060016001556002600255006000600006
+      - ':yul { mstore(0, 0xef00010100100060016001556002600255006000600006000000000000000000)  return(0, 23) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() smod(0,0) } - ef00010100100060016001556002600255006000600007
+      - ':yul { mstore(0, 0xef00010100100060016001556002600255006000600007000000000000000000)  return(0, 23) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() addmod(0,0,0) } - ef000101001200600160015560026002550060006000600008
+      - ':yul { mstore(0, 0xef00010100120060016001556002600255006000600060000800000000000000)  return(0, 25) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() mulmod(0,0,0) } - ef000101001200600160015560026002550060006000600009
+      - ':yul { mstore(0, 0xef00010100120060016001556002600255006000600060000900000000000000)  return(0, 25) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() exp(0,0) } - ef0001010010006001600155600260025500600060000a
+      - ':yul { mstore(0, 0xef0001010010006001600155600260025500600060000a000000000000000000)  return(0, 23) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() signextend(0,0) } - ef0001010010006001600155600260025500600060000b
+      - ':yul { mstore(0, 0xef0001010010006001600155600260025500600060000b000000000000000000)  return(0, 23) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() lt(0,0) } - ef00010100100060016001556002600255006000600010
+      - ':yul { mstore(0, 0xef00010100100060016001556002600255006000600010000000000000000000)  return(0, 23) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() gt(0,0) } - ef00010100100060016001556002600255006000600011
+      - ':yul { mstore(0, 0xef00010100100060016001556002600255006000600011000000000000000000)  return(0, 23) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() slt(0,0) } - ef00010100100060016001556002600255006000600012
+      - ':yul { mstore(0, 0xef00010100100060016001556002600255006000600012000000000000000000)  return(0, 23) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() sgt(0,0) } - ef00010100100060016001556002600255006000600013
+      - ':yul { mstore(0, 0xef00010100100060016001556002600255006000600013000000000000000000)  return(0, 23) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() eq(0,0) } - ef00010100100060016001556002600255006000600014
+      - ':yul { mstore(0, 0xef00010100100060016001556002600255006000600014000000000000000000)  return(0, 23) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() iszero(0) } - ef000101000e006001600155600260025500600015
+      - ':yul { mstore(0, 0xef000101000e0060016001556002600255006000150000000000000000000000)  return(0, 21) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() and(0,0) } - ef00010100100060016001556002600255006000600016
+      - ':yul { mstore(0, 0xef00010100100060016001556002600255006000600016000000000000000000)  return(0, 23) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() or(0,0) } - ef00010100100060016001556002600255006000600017
+      - ':yul { mstore(0, 0xef00010100100060016001556002600255006000600017000000000000000000)  return(0, 23) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() xor(0,0) } - ef00010100100060016001556002600255006000600018
+      - ':yul { mstore(0, 0xef00010100100060016001556002600255006000600018000000000000000000)  return(0, 23) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() not(0) } - ef000101000e006001600155600260025500600019
+      - ':yul { mstore(0, 0xef000101000e0060016001556002600255006000190000000000000000000000)  return(0, 21) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() byte(0,0) } - ef0001010010006001600155600260025500600060001a
+      - ':yul { mstore(0, 0xef0001010010006001600155600260025500600060001a000000000000000000)  return(0, 23) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() shl(0,0) } - ef0001010010006001600155600260025500600060001b
+      - ':yul { mstore(0, 0xef0001010010006001600155600260025500600060001b000000000000000000)  return(0, 23) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() shr(0,0) } - ef0001010010006001600155600260025500600060001c
+      - ':yul { mstore(0, 0xef0001010010006001600155600260025500600060001c000000000000000000)  return(0, 23) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() sar(0,0) } - ef0001010010006001600155600260025500600060001d
+      - ':yul { mstore(0, 0xef0001010010006001600155600260025500600060001d000000000000000000)  return(0, 23) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() keccak256(0,0) } - ef00010100100060016001556002600255006000600020
+      - ':yul { mstore(0, 0xef00010100100060016001556002600255006000600020000000000000000000)  return(0, 23) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() address() } - ef000101000c00600160015560026002550030
+      - ':yul { mstore(0, 0xef000101000c0060016001556002600255003000000000000000000000000000)  return(0, 19) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() balance(0) } - ef000101000e006001600155600260025500600031
+      - ':yul { mstore(0, 0xef000101000e0060016001556002600255006000310000000000000000000000)  return(0, 21) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() origin() } - ef000101000c00600160015560026002550032
+      - ':yul { mstore(0, 0xef000101000c0060016001556002600255003200000000000000000000000000)  return(0, 19) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() caller() } - ef000101000c00600160015560026002550033
+      - ':yul { mstore(0, 0xef000101000c0060016001556002600255003300000000000000000000000000)  return(0, 19) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() callvalue() } - ef000101000c00600160015560026002550034
+      - ':yul { mstore(0, 0xef000101000c0060016001556002600255003400000000000000000000000000)  return(0, 19) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() calldataload(0) } - ef000101000e006001600155600260025500600035
+      - ':yul { mstore(0, 0xef000101000e0060016001556002600255006000350000000000000000000000)  return(0, 21) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() calldatasize() } - ef000101000c00600160015560026002550036
+      - ':yul { mstore(0, 0xef000101000c0060016001556002600255003600000000000000000000000000)  return(0, 19) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() calldatacopy(0,0,0) } - ef000101001200600160015560026002550060006000600037
+      - ':yul { mstore(0, 0xef00010100120060016001556002600255006000600060003700000000000000)  return(0, 25) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() codesize() } - ef000101000c00600160015560026002550038
+      - ':yul { mstore(0, 0xef000101000c0060016001556002600255003800000000000000000000000000)  return(0, 19) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() codecopy(0,0,0) } - ef000101001200600160015560026002550060006000600039
+      - ':yul { mstore(0, 0xef00010100120060016001556002600255006000600060003900000000000000)  return(0, 25) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() gasprice() } - ef000101000c0060016001556002600255003a
+      - ':yul { mstore(0, 0xef000101000c0060016001556002600255003a00000000000000000000000000)  return(0, 19) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() extcodesize(0) } - ef000101000e00600160015560026002550060003b
+      - ':yul { mstore(0, 0xef000101000e00600160015560026002550060003b0000000000000000000000)  return(0, 21) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() extcodecopy(0,0,0,1) } - ef000101001400600160015560026002550060016000600060003c
+      - ':yul { mstore(0, 0xef000101001400600160015560026002550060016000600060003c0000000000)  return(0, 27) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() returndatasize() } - ef000101000c0060016001556002600255003d
+      - ':yul { mstore(0, 0xef000101000c0060016001556002600255003d00000000000000000000000000)  return(0, 19) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() returndatacopy(0,0,0) } - ef00010100120060016001556002600255006000600060003e
+      - ':yul { mstore(0, 0xef00010100120060016001556002600255006000600060003e00000000000000)  return(0, 25) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() extcodehash(0) } - ef000101000e00600160015560026002550060003f
+      - ':yul { mstore(0, 0xef000101000e00600160015560026002550060003f0000000000000000000000)  return(0, 21) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() blockhash(0) } - ef000101000e006001600155600260025500600040
+      - ':yul { mstore(0, 0xef000101000e0060016001556002600255006000400000000000000000000000)  return(0, 21) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() coinbase() } - ef000101000c00600160015560026002550041
+      - ':yul { mstore(0, 0xef000101000c0060016001556002600255004100000000000000000000000000)  return(0, 19) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() timestamp() } - ef000101000c00600160015560026002550042
+      - ':yul { mstore(0, 0xef000101000c0060016001556002600255004200000000000000000000000000)  return(0, 19) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() number() } - ef000101000c00600160015560026002550043
+      - ':yul { mstore(0, 0xef000101000c0060016001556002600255004300000000000000000000000000)  return(0, 19) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() difficulty() } - ef000101000c00600160015560026002550044
+      - ':yul { mstore(0, 0xef000101000c0060016001556002600255004400000000000000000000000000)  return(0, 19) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() gaslimit() } - ef000101000c00600160015560026002550045
+      - ':yul { mstore(0, 0xef000101000c0060016001556002600255004500000000000000000000000000)  return(0, 19) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() chainid() } - ef000101000c00600160015560026002550046
+      - ':yul { mstore(0, 0xef000101000c0060016001556002600255004600000000000000000000000000)  return(0, 19) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() selfbalance() } - ef000101000c00600160015560026002550047
+      - ':yul { mstore(0, 0xef000101000c0060016001556002600255004700000000000000000000000000)  return(0, 19) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop  basefee - ef000101000c00600160015560026002550048
+      - ':yul { mstore(0, 0xef000101000c0060016001556002600255004800000000000000000000000000)  return(0, 19) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() pop(0) } - ef000101000e006001600155600260025500600050
+      - ':yul { mstore(0, 0xef000101000e0060016001556002600255006000500000000000000000000000)  return(0, 21) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() mload(0) } - ef000101000e006001600155600260025500600051
+      - ':yul { mstore(0, 0xef000101000e0060016001556002600255006000510000000000000000000000)  return(0, 21) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() mstore(0,0) } - ef00010100100060016001556002600255006000600052
+      - ':yul { mstore(0, 0xef00010100100060016001556002600255006000600052000000000000000000)  return(0, 23) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() mstore8(0,0) } - ef00010100100060016001556002600255006000600053
+      - ':yul { mstore(0, 0xef00010100100060016001556002600255006000600053000000000000000000)  return(0, 23) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() sload(0) } - ef000101000e006001600155600260025500600054
+      - ':yul { mstore(0, 0xef000101000e0060016001556002600255006000540000000000000000000000)  return(0, 21) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() sstore(0,0) } - ef00010100100060016001556002600255006000600055
+      - ':yul { mstore(0, 0xef00010100100060016001556002600255006000600055000000000000000000)  return(0, 23) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop push1(0) jump - ef000101000e006001600155600260025500600056
+      - ':yul { mstore(0, 0xef000101000e0060016001556002600255006000560000000000000000000000)  return(0, 21) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop push1(0) push1(0) jumpi - ef00010100100060016001556002600255006000600057
+      - ':yul { mstore(0, 0xef00010100100060016001556002600255006000600057000000000000000000)  return(0, 23) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop  pc - ef000101000c00600160015560026002550058
+      - ':yul { mstore(0, 0xef000101000c0060016001556002600255005800000000000000000000000000)  return(0, 19) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() msize() } - ef000101000c00600160015560026002550059
+      - ':yul { mstore(0, 0xef000101000c0060016001556002600255005900000000000000000000000000)  return(0, 19) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() gas() } - ef000101000c0060016001556002600255005a
+      - ':yul { mstore(0, 0xef000101000c0060016001556002600255005a00000000000000000000000000)  return(0, 19) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop  jumpdest - ef000101000c0060016001556002600255005b
+      - ':yul { mstore(0, 0xef000101000c0060016001556002600255005b00000000000000000000000000)  return(0, 19) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop  push1(0) - ef000101000d0060016001556002600255006000
+      - ':yul { mstore(0, 0xef000101000d0060016001556002600255006000000000000000000000000000)  return(0, 20) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop  push2(0) - ef000101000e006001600155600260025500610000
+      - ':yul { mstore(0, 0xef000101000e0060016001556002600255006100000000000000000000000000)  return(0, 21) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop  push3(0) - ef000101000f00600160015560026002550062000000
+      - ':yul { mstore(0, 0xef000101000f0060016001556002600255006200000000000000000000000000)  return(0, 22) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop  push4(0) - ef00010100100060016001556002600255006300000000
+      - ':yul { mstore(0, 0xef00010100100060016001556002600255006300000000000000000000000000)  return(0, 23) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop  push5(0) - ef0001010011006001600155600260025500640000000000
+      - ':yul { mstore(0, 0xef00010100110060016001556002600255006400000000000000000000000000)  return(0, 24) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop  push6(0) - ef000101001200600160015560026002550065000000000000
+      - ':yul { mstore(0, 0xef00010100120060016001556002600255006500000000000000000000000000)  return(0, 25) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop  push7(0) - ef00010100130060016001556002600255006600000000000000
+      - ':yul { mstore(0, 0xef00010100130060016001556002600255006600000000000000000000000000)  return(0, 26) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop  push8(0) - ef0001010014006001600155600260025500670000000000000000
+      - ':yul { mstore(0, 0xef00010100140060016001556002600255006700000000000000000000000000)  return(0, 27) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop  push9(0) - ef000101001500600160015560026002550068000000000000000000
+      - ':yul { mstore(0, 0xef00010100150060016001556002600255006800000000000000000000000000)  return(0, 28) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop  push10(0) - ef00010100160060016001556002600255006900000000000000000000
+      - ':yul { mstore(0, 0xef00010100160060016001556002600255006900000000000000000000000000)  return(0, 29) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop  push11(0) - ef00010100170060016001556002600255006a0000000000000000000000
+      - ':yul { mstore(0, 0xef00010100170060016001556002600255006a00000000000000000000000000)  return(0, 30) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop  push12(0) - ef00010100180060016001556002600255006b000000000000000000000000
+      - ':yul { mstore(0, 0xef00010100180060016001556002600255006b00000000000000000000000000)  return(0, 31) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop  push13(0) - ef00010100190060016001556002600255006c00000000000000000000000000
+      - ':yul { mstore(0, 0xef00010100190060016001556002600255006c00000000000000000000000000)  return(0, 32) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop  push14(0) - ef000101001a0060016001556002600255006d0000000000000000000000000000
+      - ':yul { mstore(0, 0xef000101001a0060016001556002600255006d00000000000000000000000000) mstore(32, 0x0000000000000000000000000000000000000000000000000000000000000000)  return(0, 33) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop  push15(0) - ef000101001b0060016001556002600255006e000000000000000000000000000000
+      - ':yul { mstore(0, 0xef000101001b0060016001556002600255006e00000000000000000000000000) mstore(32, 0x0000000000000000000000000000000000000000000000000000000000000000)  return(0, 34) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop  push16(0) - ef000101001c0060016001556002600255006f00000000000000000000000000000000
+      - ':yul { mstore(0, 0xef000101001c0060016001556002600255006f00000000000000000000000000) mstore(32, 0x0000000000000000000000000000000000000000000000000000000000000000)  return(0, 35) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop  push17(0) - ef000101001d006001600155600260025500700000000000000000000000000000000000
+      - ':yul { mstore(0, 0xef000101001d0060016001556002600255007000000000000000000000000000) mstore(32, 0x0000000000000000000000000000000000000000000000000000000000000000)  return(0, 36) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop  push18(0) - ef000101001e00600160015560026002550071000000000000000000000000000000000000
+      - ':yul { mstore(0, 0xef000101001e0060016001556002600255007100000000000000000000000000) mstore(32, 0x0000000000000000000000000000000000000000000000000000000000000000)  return(0, 37) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop  push19(0) - ef000101001f0060016001556002600255007200000000000000000000000000000000000000
+      - ':yul { mstore(0, 0xef000101001f0060016001556002600255007200000000000000000000000000) mstore(32, 0x0000000000000000000000000000000000000000000000000000000000000000)  return(0, 38) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop  push20(0) - ef0001010020006001600155600260025500730000000000000000000000000000000000000000
+      - ':yul { mstore(0, 0xef00010100200060016001556002600255007300000000000000000000000000) mstore(32, 0x0000000000000000000000000000000000000000000000000000000000000000)  return(0, 39) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop  push21(0) - ef000101002100600160015560026002550074000000000000000000000000000000000000000000
+      - ':yul { mstore(0, 0xef00010100210060016001556002600255007400000000000000000000000000) mstore(32, 0x0000000000000000000000000000000000000000000000000000000000000000)  return(0, 40) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop  push22(0) - ef00010100220060016001556002600255007500000000000000000000000000000000000000000000
+      - ':yul { mstore(0, 0xef00010100220060016001556002600255007500000000000000000000000000) mstore(32, 0x0000000000000000000000000000000000000000000000000000000000000000)  return(0, 41) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop  push23(0) - ef0001010023006001600155600260025500760000000000000000000000000000000000000000000000
+      - ':yul { mstore(0, 0xef00010100230060016001556002600255007600000000000000000000000000) mstore(32, 0x0000000000000000000000000000000000000000000000000000000000000000)  return(0, 42) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop  push24(0) - ef000101002400600160015560026002550077000000000000000000000000000000000000000000000000
+      - ':yul { mstore(0, 0xef00010100240060016001556002600255007700000000000000000000000000) mstore(32, 0x0000000000000000000000000000000000000000000000000000000000000000)  return(0, 43) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop  push25(0) - ef00010100250060016001556002600255007800000000000000000000000000000000000000000000000000
+      - ':yul { mstore(0, 0xef00010100250060016001556002600255007800000000000000000000000000) mstore(32, 0x0000000000000000000000000000000000000000000000000000000000000000)  return(0, 44) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop  push26(0) - ef0001010026006001600155600260025500790000000000000000000000000000000000000000000000000000
+      - ':yul { mstore(0, 0xef00010100260060016001556002600255007900000000000000000000000000) mstore(32, 0x0000000000000000000000000000000000000000000000000000000000000000)  return(0, 45) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop  push27(0) - ef00010100270060016001556002600255007a000000000000000000000000000000000000000000000000000000
+      - ':yul { mstore(0, 0xef00010100270060016001556002600255007a00000000000000000000000000) mstore(32, 0x0000000000000000000000000000000000000000000000000000000000000000)  return(0, 46) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop  push28(0) - ef00010100280060016001556002600255007b00000000000000000000000000000000000000000000000000000000
+      - ':yul { mstore(0, 0xef00010100280060016001556002600255007b00000000000000000000000000) mstore(32, 0x0000000000000000000000000000000000000000000000000000000000000000)  return(0, 47) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop  push29(0) - ef00010100290060016001556002600255007c0000000000000000000000000000000000000000000000000000000000
+      - ':yul { mstore(0, 0xef00010100290060016001556002600255007c00000000000000000000000000) mstore(32, 0x0000000000000000000000000000000000000000000000000000000000000000)  return(0, 48) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop  push30(0) - ef000101002a0060016001556002600255007d000000000000000000000000000000000000000000000000000000000000
+      - ':yul { mstore(0, 0xef000101002a0060016001556002600255007d00000000000000000000000000) mstore(32, 0x0000000000000000000000000000000000000000000000000000000000000000)  return(0, 49) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop  push31(0) - ef000101002b0060016001556002600255007e00000000000000000000000000000000000000000000000000000000000000
+      - ':yul { mstore(0, 0xef000101002b0060016001556002600255007e00000000000000000000000000) mstore(32, 0x0000000000000000000000000000000000000000000000000000000000000000)  return(0, 50) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop  push32(0) - ef000101002c0060016001556002600255007f0000000000000000000000000000000000000000000000000000000000000000
+      - ':yul { mstore(0, 0xef000101002c0060016001556002600255007f00000000000000000000000000) mstore(32, 0x0000000000000000000000000000000000000000000000000000000000000000)  return(0, 51) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop push1(0) dup1 - ef000101000e006001600155600260025500600080
+      - ':yul { mstore(0, 0xef000101000e0060016001556002600255006000800000000000000000000000)  return(0, 21) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop push1(0) push1(0) dup2 - ef00010100100060016001556002600255006000600081
+      - ':yul { mstore(0, 0xef00010100100060016001556002600255006000600081000000000000000000)  return(0, 23) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop push1(0) push1(0) push1(0) dup3 - ef000101001200600160015560026002550060006000600082
+      - ':yul { mstore(0, 0xef00010100120060016001556002600255006000600060008200000000000000)  return(0, 25) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop push1(0) push1(0) push1(0) push1(0) dup4 - ef0001010014006001600155600260025500600060006000600083
+      - ':yul { mstore(0, 0xef00010100140060016001556002600255006000600060006000830000000000)  return(0, 27) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop push1(0) push1(0) push1(0) push1(0) push1(0) dup5 - ef00010100160060016001556002600255006000600060006000600084
+      - ':yul { mstore(0, 0xef00010100160060016001556002600255006000600060006000600084000000)  return(0, 29) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) dup6 - ef000101001800600160015560026002550060006000600060006000600085
+      - ':yul { mstore(0, 0xef00010100180060016001556002600255006000600060006000600060008500)  return(0, 31) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) dup7 - ef000101001a006001600155600260025500600060006000600060006000600086
+      - ':yul { mstore(0, 0xef000101001a0060016001556002600255006000600060006000600060006000) mstore(32, 0x8600000000000000000000000000000000000000000000000000000000000000)  return(0, 33) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) dup8 - ef000101001c0060016001556002600255006000600060006000600060006000600087
+      - ':yul { mstore(0, 0xef000101001c0060016001556002600255006000600060006000600060006000) mstore(32, 0x6000870000000000000000000000000000000000000000000000000000000000)  return(0, 35) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) dup9 - ef000101001e00600160015560026002550060006000600060006000600060006000600088
+      - ':yul { mstore(0, 0xef000101001e0060016001556002600255006000600060006000600060006000) mstore(32, 0x6000600088000000000000000000000000000000000000000000000000000000)  return(0, 37) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) dup10 - ef0001010020006001600155600260025500600060006000600060006000600060006000600089
+      - ':yul { mstore(0, 0xef00010100200060016001556002600255006000600060006000600060006000) mstore(32, 0x6000600060008900000000000000000000000000000000000000000000000000)  return(0, 39) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) dup11 - ef0001010022006001600155600260025500600060006000600060006000600060006000600060008a
+      - ':yul { mstore(0, 0xef00010100220060016001556002600255006000600060006000600060006000) mstore(32, 0x60006000600060008a0000000000000000000000000000000000000000000000)  return(0, 41) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) dup12 - ef00010100240060016001556002600255006000600060006000600060006000600060006000600060008b
+      - ':yul { mstore(0, 0xef00010100240060016001556002600255006000600060006000600060006000) mstore(32, 0x600060006000600060008b000000000000000000000000000000000000000000)  return(0, 43) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) dup13 - ef000101002600600160015560026002550060006000600060006000600060006000600060006000600060008c
+      - ':yul { mstore(0, 0xef00010100260060016001556002600255006000600060006000600060006000) mstore(32, 0x6000600060006000600060008c00000000000000000000000000000000000000)  return(0, 45) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) dup14 - ef0001010028006001600155600260025500600060006000600060006000600060006000600060006000600060008d
+      - ':yul { mstore(0, 0xef00010100280060016001556002600255006000600060006000600060006000) mstore(32, 0x60006000600060006000600060008d0000000000000000000000000000000000)  return(0, 47) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) dup15 - ef000101002a0060016001556002600255006000600060006000600060006000600060006000600060006000600060008e
+      - ':yul { mstore(0, 0xef000101002a0060016001556002600255006000600060006000600060006000) mstore(32, 0x600060006000600060006000600060008e000000000000000000000000000000)  return(0, 49) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) dup16 - ef000101002c00600160015560026002550060006000600060006000600060006000600060006000600060006000600060008f
+      - ':yul { mstore(0, 0xef000101002c0060016001556002600255006000600060006000600060006000) mstore(32, 0x6000600060006000600060006000600060008f00000000000000000000000000)  return(0, 51) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop push1(0) push1(0) swap1 - ef00010100100060016001556002600255006000600090
+      - ':yul { mstore(0, 0xef00010100100060016001556002600255006000600090000000000000000000)  return(0, 23) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop push1(0) push1(0) push1(0) swap2 - ef000101001200600160015560026002550060006000600091
+      - ':yul { mstore(0, 0xef00010100120060016001556002600255006000600060009100000000000000)  return(0, 25) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop push1(0) push1(0) push1(0) push1(0) swap3 - ef0001010014006001600155600260025500600060006000600092
+      - ':yul { mstore(0, 0xef00010100140060016001556002600255006000600060006000920000000000)  return(0, 27) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop push1(0) push1(0) push1(0) push1(0) push1(0) swap4 - ef00010100160060016001556002600255006000600060006000600093
+      - ':yul { mstore(0, 0xef00010100160060016001556002600255006000600060006000600093000000)  return(0, 29) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) swap5 - ef000101001800600160015560026002550060006000600060006000600094
+      - ':yul { mstore(0, 0xef00010100180060016001556002600255006000600060006000600060009400)  return(0, 31) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) swap6 - ef000101001a006001600155600260025500600060006000600060006000600095
+      - ':yul { mstore(0, 0xef000101001a0060016001556002600255006000600060006000600060006000) mstore(32, 0x9500000000000000000000000000000000000000000000000000000000000000)  return(0, 33) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) swap7 - ef000101001c0060016001556002600255006000600060006000600060006000600096
+      - ':yul { mstore(0, 0xef000101001c0060016001556002600255006000600060006000600060006000) mstore(32, 0x6000960000000000000000000000000000000000000000000000000000000000)  return(0, 35) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) swap8 - ef000101001e00600160015560026002550060006000600060006000600060006000600097
+      - ':yul { mstore(0, 0xef000101001e0060016001556002600255006000600060006000600060006000) mstore(32, 0x6000600097000000000000000000000000000000000000000000000000000000)  return(0, 37) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) swap9 - ef0001010020006001600155600260025500600060006000600060006000600060006000600098
+      - ':yul { mstore(0, 0xef00010100200060016001556002600255006000600060006000600060006000) mstore(32, 0x6000600060009800000000000000000000000000000000000000000000000000)  return(0, 39) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) swap10 - ef00010100220060016001556002600255006000600060006000600060006000600060006000600099
+      - ':yul { mstore(0, 0xef00010100220060016001556002600255006000600060006000600060006000) mstore(32, 0x6000600060006000990000000000000000000000000000000000000000000000)  return(0, 41) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) swap11 - ef00010100240060016001556002600255006000600060006000600060006000600060006000600060009a
+      - ':yul { mstore(0, 0xef00010100240060016001556002600255006000600060006000600060006000) mstore(32, 0x600060006000600060009a000000000000000000000000000000000000000000)  return(0, 43) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) swap12 - ef000101002600600160015560026002550060006000600060006000600060006000600060006000600060009b
+      - ':yul { mstore(0, 0xef00010100260060016001556002600255006000600060006000600060006000) mstore(32, 0x6000600060006000600060009b00000000000000000000000000000000000000)  return(0, 45) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) swap13 - ef0001010028006001600155600260025500600060006000600060006000600060006000600060006000600060009c
+      - ':yul { mstore(0, 0xef00010100280060016001556002600255006000600060006000600060006000) mstore(32, 0x60006000600060006000600060009c0000000000000000000000000000000000)  return(0, 47) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) swap14 - ef000101002a0060016001556002600255006000600060006000600060006000600060006000600060006000600060009d
+      - ':yul { mstore(0, 0xef000101002a0060016001556002600255006000600060006000600060006000) mstore(32, 0x600060006000600060006000600060009d000000000000000000000000000000)  return(0, 49) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) swap15 - ef000101002c00600160015560026002550060006000600060006000600060006000600060006000600060006000600060009e
+      - ':yul { mstore(0, 0xef000101002c0060016001556002600255006000600060006000600060006000) mstore(32, 0x6000600060006000600060006000600060009e00000000000000000000000000)  return(0, 51) }'
+      # code: push1(1) push1(1) sstore push1(2) push1(2) sstore stop push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) push1(0) swap16 - ef000101002e006001600155600260025500600060006000600060006000600060006000600060006000600060006000600060009f
+      - ':yul { mstore(0, 0xef000101002e0060016001556002600255006000600060006000600060006000) mstore(32, 0x60006000600060006000600060006000600060009f0000000000000000000000)  return(0, 53) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() log0(0,0) } - ef000101001000600160015560026002550060006000a0
+      - ':yul { mstore(0, 0xef000101001000600160015560026002550060006000a0000000000000000000)  return(0, 23) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() log1(0,0,0) } - ef0001010012006001600155600260025500600060006000a1
+      - ':yul { mstore(0, 0xef0001010012006001600155600260025500600060006000a100000000000000)  return(0, 25) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() log2(0,0,0,1) } - ef00010100140060016001556002600255006001600060006000a2
+      - ':yul { mstore(0, 0xef00010100140060016001556002600255006001600060006000a20000000000)  return(0, 27) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() log3(0,0,0,1,0) } - ef000101001600600160015560026002550060006001600060006000a3
+      - ':yul { mstore(0, 0xef000101001600600160015560026002550060006001600060006000a3000000)  return(0, 29) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() log4(0,0,0,1,0,2) } - ef0001010018006001600155600260025500600260006001600060006000a4
+      - ':yul { mstore(0, 0xef0001010018006001600155600260025500600260006001600060006000a400)  return(0, 31) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() create(0,0,0) } - ef0001010012006001600155600260025500600060006000f0
+      - ':yul { mstore(0, 0xef0001010012006001600155600260025500600060006000f000000000000000)  return(0, 25) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() call(0,0,0,1,0,2,0) } - ef000101001a0060016001556002600255006000600260006001600060006000f1
+      - ':yul { mstore(0, 0xef000101001a0060016001556002600255006000600260006001600060006000) mstore(32, 0xf100000000000000000000000000000000000000000000000000000000000000)  return(0, 33) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() callcode(0,0,0,1,0,2,0) } - ef000101001a0060016001556002600255006000600260006001600060006000f2
+      - ':yul { mstore(0, 0xef000101001a0060016001556002600255006000600260006001600060006000) mstore(32, 0xf200000000000000000000000000000000000000000000000000000000000000)  return(0, 33) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() delegatecall(0,0,0,1,0,2) } - ef0001010018006001600155600260025500600260006001600060006000f4
+      - ':yul { mstore(0, 0xef0001010018006001600155600260025500600260006001600060006000f400)  return(0, 31) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() create2(0,0,0,1) } - ef00010100140060016001556002600255006001600060006000f5
+      - ':yul { mstore(0, 0xef00010100140060016001556002600255006001600060006000f50000000000)  return(0, 27) }'
+      # code: { sstore(0x1, 0x1) sstore(0x2,0x2) stop() staticcall(0,0,0,1,0,2) } - ef0001010018006001600155600260025500600260006001600060006000fa
+      - ':yul { mstore(0, 0xef0001010018006001600155600260025500600260006001600060006000fa00)  return(0, 31) }'
+
+      # Valid EOF Initcode trying to deploy invalid EOF code containing RJUMP with target PUSH/RJUMP/RJUMPI's immediate
+      # - Jump to same RJUMP Immediate
+      # Code to be deployed: RJUMP(-1) STOP - ef0001010004005cFFFF00
+      # Initcode: PUSH1(code_length) PUSH1(data_offset) PUSH1(0) CODECOPY PUSH1(code_lenght) PUSH1(1) RETURN
+      - ':label :raw 0xef000101000c02000b00600b6016600039600b6000f3ef0001010004005cFFFF00'
+      # - Jump to another RJUMP immediate
+      # Code to be deployed: RJUMP(3) STOP RJUMP(-7) STOP - ef0001010008005c0003005cFFF900
+      # Initcode: PUSH1(code_length) PUSH1(data_offset) PUSH1(0) CODECOPY PUSH1(code_lenght) PUSH1(1) RETURN
+      - ':label :raw 0xef000101000c02000f00600f6016600039600f6000f3ef0001010008005c0003005cFFF900'
+      # - Jump to RJUMPI immediate
+      # Code to be deployed: RJUMP(5) STOP PUSH1(1) RJUMPI(-9) STOP - ef000101000a005c00050060015dFFF700
+      # Initcode: PUSH1(code_length) PUSH1(data_offset) PUSH1(0) CODECOPY PUSH1(code_lenght) PUSH1(1) RETURN
+      - ':label :raw 0xef000101000c020011006011601660003960116000f3ef000101000a005c00050060015dFFF700'
+      # - Jump to PUSH immediate
+      # Code to be deployed: RJUMP(2) STOP PUSH1(1) PUSH1(1) SSTORE STOP - ef000101000a005c000200600160015500
+      # Initcode: PUSH1(code_length) PUSH1(data_offset) PUSH1(0) CODECOPY PUSH1(code_lenght) PUSH1(1) RETURN
+      - ':label raw 0xef000101000c020011006011601660003960116000f3ef000101000a005c000200600160015500'
+
+      # Valid EOF Initcode trying to deploy invalid EOF code containing truncated RJUMPI
+      # Code to be deployed: RJUMPI( - ef0001010001005d
+      # Initcode: PUSH1(code_length) PUSH1(data_offset) PUSH1(0) CODECOPY PUSH1(code_lenght) PUSH1(1) RETURN
+      - ':label :raw 0xef000101000c020008006008601660003960086000f3ef0001010001005d'
+      # Code to be deployed: RJUMPI(0? - ef0001010002005d00
+      # Initcode: PUSH1(code_length) PUSH1(data_offset) PUSH1(0) CODECOPY PUSH1(code_lenght) PUSH1(1) RETURN
+      - ':label :raw 0xef000101000c020009006009601660003960096000f3ef0001010002005d00'
+
+      # Valid EOF Initcode trying to deploy invalid EOF code containing RJUMPI with target outside of code bounds
+      # - Jump into header
+      # Code to be deployed: PUSH1(1) RJUMPI(-7) STOP - ef00010100060060015dFFF900
+      # Initcode: PUSH1(code_length) PUSH1(data_offset) PUSH1(0) CODECOPY PUSH1(code_lenght) PUSH1(1) RETURN
+      - ':label :raw 0xef000101000c02000d00600d6016600039600d6000f3ef00010100060060015dFFF900'
+      # - Jump to before code begin
+      # Code to be deployed: PUSH1(1) RJUMPI(-15) STOP - ef00010100060060015dFFF100
+      # Initcode: PUSH1(code_length) PUSH1(data_offset) PUSH1(0) CODECOPY PUSH1(code_lenght) PUSH1(1) RETURN
+      - ':label :raw 0xef000101000c02000d00600d6016600039600d6000f3ef00010100060060015dFFF100'
+      # - Jump into data section
+      # Code to be deployed: PUSH1(1) RJUMPI(2) STOP - Data aabbccdd - ef00010100060200040060015d000200aabbccdd
+      # Initcode: PUSH1(code_length) PUSH1(data_offset) PUSH1(0) CODECOPY PUSH1(code_lenght) PUSH1(1) RETURN
+      - ':label :raw 0xef000101000c020014006014601660003960146000f3ef00010100060200040060015d000200aabbccdd'
+      # - Jump to after code end
+      # Code to be deployed: PUSH1(1) RJUMPI(2) STOP - ef00010100060060015d000200
+      # Initcode: PUSH1(code_length) PUSH1(data_offset) PUSH1(0) CODECOPY PUSH1(code_lenght) PUSH1(1) RETURN
+      - ':label :raw 0xef000101000c02000d00600d6016600039600d6000f3ef00010100060060015d000200'
+      # - Jump to code end
+      # Code to be deployed: PUSH1(1) RJUMPI(1) STOP - ef00010100060060015d000100
+      # Initcode: PUSH1(code_length) PUSH1(data_offset) PUSH1(0) CODECOPY PUSH1(code_lenght) PUSH1(1) RETURN
+      - ':label :raw 0xef000101000c02000d00600d6016600039600d6000f3ef00010100060060015d000100'
+
+      # Valid EOF Initcode containing RJUMPI with target PUSH/RJUMP/RJUMPI immediate
+      # - Jump to same RJUMPI immediate
+      # Code to be deployed: PUSH1(1) RJUMPI(-1) STOP - ef00010100060060015dFFFF00
+      - ':label :raw 0xef000101000c02000d00600d6016600039600d6000f3ef00010100060060015dFFFF00'
+      # - Jump to another RJUMPI immediate
+      # Code to be deployed: PUSH1(1) RJUMPI(5) STOP PUSH1(1) RJUMPI(-9) STOP - ef000101000c0060015d00050060015dFFF900
+      - ':label :raw 0xef000101000c020013006013601660003960136000f3ef000101000c0060015d00050060015dFFF900'
+      # - Jump to RJUMP Immediate
+      # Code to be deployed: PUSH1(1) RJUMPI(3) STOP RJUMP(-7) STOP - ef000101000a0060015d0003005cFFF900
+      - ':label :raw 0xef000101000c020011006011601660003960116000f3ef000101000a0060015d0003005cFFF900'
+      # - Jump to PUSH Immediate
+      # Code to be deployed: PUSH1(1) RJUMPI(-4) STOP - ef00010100060060015dFFFC00
+      - ':label :raw 0xef000101000c02000d00600d6016600039600d6000f3ef00010100060060015dFFFC00'
+
+    gasLimit:
+      - 15000000
+    gasPrice: 10
+    nonce: 0
+    secretKey: 45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8
+    to: 'b94f5374fce5edbc8e2a8697c15331677e6ebf0b'
+    value:
+      - 0
+
+  expect:
+    - indexes: {}
+      network:
+        - 'Merge'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: '1'
+          storage:
+            '0': '0'
+            '1': '1'
+       f1ecf98489fa9ed60a664fc4998db699cfa39d40:
+          shouldnotexist: 1
+    # Same expectation, but for Merge execution fails on EF byte, for 4200 it fails because EOF initcode or code is invalid
+    - indexes: {}
+      network:
+        - 'Merge+3540+3670+4200'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: '1'
+          storage:
+            '0': '0'
+            '1': '1'
+       f1ecf98489fa9ed60a664fc4998db699cfa39d40:
+          shouldnotexist: 1

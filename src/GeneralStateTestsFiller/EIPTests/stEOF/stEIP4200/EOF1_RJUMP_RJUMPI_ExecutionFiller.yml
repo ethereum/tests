@@ -1,0 +1,364 @@
+EOF1_RJUMP_RJUMPI_Execution:
+  env:
+    currentCoinbase: 2adc25665018aa1fe0e6bc666dac8fc2697ff9ba
+    currentDifficulty: '0x020000'
+    currentGasLimit: '89128960'
+    currentBaseFee: '10'
+    currentNumber: '1'
+    currentTimestamp: '1000'
+    previousHash: 5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6
+
+  pre:
+    a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: 10000000
+      code: ''
+      nonce: 0
+      storage: {}
+    b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: 10000000
+      # Input data: <address>[byte] calls <address> using [byte] as calldata
+      code: ':yul { calldatacopy(0, 0, 21) sstore(0, call(100000, shr(96, mload(0)), 0, 20, 1, 32, 1)) sstore(1, shr(248, mload(32))) }'
+      nonce: 0
+      storage: {}
+    1000000000000000000000000000000000000001: 
+      balance: 0
+      # RJUMP(1) INVALID PUSH1(1) PUSH1(0) MSTORE8 PUSH1(1) PUSH1(0) RETURN 
+      code: ':raw 0xef000101000e005c0001fe600160005360016000f3'
+      nonce: 0
+      storage: {}
+    1000000000000000000000000000000000000002: 
+      balance: 0
+      # RJUMP(1) INVALID PUSH1(1) PUSH1(0) MSTORE8 PUSH1(1) PUSH1(0) RETURN 
+      code: ':raw 0xef000101000e020004005c0001fe600160005360016000f3deadbeef'
+      nonce: 0
+      storage: {}
+    1000000000000000000000000000000000000003: 
+      balance: 0
+      # RJUMP(11) INVALID PUSH1(1) PUSH1(0) MSTORE8 PUSH1(1) PUSH1(0) RETURN RJUMP(-13) STOP
+      code: ':raw 0xef0001010012005c000bfe600160005360016000f35cfff300'
+      nonce: 0
+      storage: {}
+    1000000000000000000000000000000000000004: 
+      balance: 0
+      # RJUMP(-11) INVALID PUSH1(1) PUSH1(0) MSTORE8 PUSH1(1) PUSH1(0) RETURN RJUMP(-11) STOP 
+      code: ':raw 0xef0001010012020004005c000bfe600160005360016000f35cfff300deadbeef'
+      nonce: 0
+      storage: {}
+    1000000000000000000000000000000000000005: 
+      balance: 0
+      # RJUMP(0) PUSH1(1) PUSH1(0) MSTORE8 PUSH1(1) PUSH1(0) RETURN 
+      code: ':raw 0xef000101000d005c0000600160005360016000f3'
+      nonce: 0
+      storage: {}
+    1000000000000000000000000000000000000006: 
+      balance: 0
+      # PUSH1(0) CALLDATALOAD RJUMPI(10) PUSH1(2) PUSH1(0) MSTORE8 PUSH1(1) PUSH1(0) RETURN PUSH1(1) PUSH1(0) MSTORE8 PUSH1(1) PUSH1(0) RETURN 
+      code: ':raw 0xef000101001a006000355d000a600260005360016000f3600160005360016000f3'
+      nonce: 0
+      storage: {}
+    1000000000000000000000000000000000000007: 
+      balance: 0
+      # RJUMP(11) INVALID PUSH1(1) PUSH1(0) MSTORE8 PUSH1(1) PUSH1(0) RETURN PUSH1(0) CALLDATALOAD RJUMPI(-16) PUSH1(2) PUSH1(0) MSTORE8 PUSH1(1) PUSH1(0) RETURN 
+      code: ':raw 0xef000101001e005c000bfe600160005360016000f36000355dfff0600260005360016000f3'
+      nonce: 0
+      storage: {}
+    1000000000000000000000000000000000000008: 
+      balance: 0
+      # PUSH1(0) CALLDATALOAD RJUMPI(0) PUSH1(1) PUSH1(0) MSTORE8 PUSH1(1) PUSH1(0) RETURN 
+      code: ':raw 0xef0001010010006000355d0000600160005360016000f3'
+      nonce: 0
+      storage: {}
+
+  transaction:
+    data:
+      - ':label rjump           :raw 0x1000000000000000000000000000000000000001'
+      - ':label rjump_with_data :raw 0x1000000000000000000000000000000000000002'
+      - ':label rjump_backward  :raw 0x1000000000000000000000000000000000000003'
+      - ':label rjump_backward_with_data  :raw 0x1000000000000000000000000000000000000004'
+      - ':label rjump_zero_offset  :raw 0x1000000000000000000000000000000000000005'
+      - ':label rjumpi_condition_true  :raw 0x100000000000000000000000000000000000000601'
+      - ':label rjumpi_condition_false  :raw 0x100000000000000000000000000000000000000600'
+      - ':label rjumpi_backward_condition_true  :raw 0x100000000000000000000000000000000000000701'
+      - ':label rjumpi_backward_condition_false  :raw 0x100000000000000000000000000000000000000700'
+      - ':label rjumpi_zero_condition_true  :raw 0x100000000000000000000000000000000000000801'
+      - ':label rjumpi_zero_condition_false  :raw 0x100000000000000000000000000000000000000800'
+    gasLimit:
+      - 700000
+    gasPrice: 10
+    nonce: 0
+    secretKey: 45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8
+    to: 'b94f5374fce5edbc8e2a8697c15331677e6ebf0b'
+    value:
+    - 0
+
+  expect:
+    - indexes:
+       data: ':label rjump'
+      network:
+        - 'Merge'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage: {}
+        1000000000000000000000000000000000000001:
+          storage: {}
+    - indexes:
+       data: ':label rjump'
+      network:
+        - 'Merge+3540+3670+4200'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '1'
+            '1': '1'
+        1000000000000000000000000000000000000001:
+          storage: {}
+
+    - indexes:
+       data: ':label rjump_with_data'
+      network:
+        - 'Merge'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage: {}
+        1000000000000000000000000000000000000001:
+          storage: {}
+    - indexes:
+       data: ':label rjump_with_data'
+      network:
+        - 'Merge+3540+3670+4200'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '1'
+            '1': '1'
+        1000000000000000000000000000000000000001:
+          storage: {}
+
+    - indexes:
+       data: ':label rjump_backward'
+      network:
+        - 'Merge'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage: {}
+        1000000000000000000000000000000000000001:
+          storage: {}
+    - indexes:
+       data: ':label rjump_backward'
+      network:
+        - 'Merge+3540+3670+4200'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '1'
+            '1': '1'
+        1000000000000000000000000000000000000001:
+          storage: {}
+
+    - indexes:
+       data: ':label rjump_backward_with_data'
+      network:
+        - 'Merge'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage: {}
+        1000000000000000000000000000000000000001:
+          storage: {}
+    - indexes:
+       data: ':label rjump_backward_with_data'
+      network:
+        - 'Merge+3540+3670+4200'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '1'
+            '1': '1'
+        1000000000000000000000000000000000000001:
+          storage: {}
+
+    - indexes:
+       data: ':label rjump_zero_offset'
+      network:
+        - 'Merge'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage: {}
+        1000000000000000000000000000000000000001:
+          storage: {}
+    - indexes:
+       data: ':label rjump_zero_offset'
+      network:
+        - 'Merge+3540+3670+4200'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '1'
+            '1': '1'
+        1000000000000000000000000000000000000001:
+          storage: {}
+
+    - indexes:
+       data: ':label rjumpi_condition_true'
+      network:
+        - 'Merge'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage: {}
+        1000000000000000000000000000000000000001:
+          storage: {}
+    - indexes:
+       data: ':label rjumpi_condition_true'
+      network:
+        - 'Merge+3540+3670+4200'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '1'
+            '1': '1'
+        1000000000000000000000000000000000000001:
+          storage: {}
+    - indexes:
+       data: ':label rjumpi_condition_false'
+      network:
+        - 'Merge'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage: {}
+        1000000000000000000000000000000000000001:
+          storage: {}
+    - indexes:
+       data: ':label rjumpi_condition_false'
+      network:
+        - 'Merge+3540+3670+4200'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '1'
+            '1': '2'
+        1000000000000000000000000000000000000001:
+          storage: {}
+    - indexes:
+       data: ':label rjumpi_backward_condition_true'
+      network:
+        - 'Merge'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage: {}
+        1000000000000000000000000000000000000001:
+          storage: {}
+    - indexes:
+       data: ':label rjumpi_backward_condition_true'
+      network:
+        - 'Merge+3540+3670+4200'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '1'
+            '1': '1'
+        1000000000000000000000000000000000000001:
+          storage: {}
+    - indexes:
+       data: ':label rjumpi_backward_condition_false'
+      network:
+        - 'Merge'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage: {}
+        1000000000000000000000000000000000000001:
+          storage: {}
+    - indexes:
+       data: ':label rjumpi_backward_condition_false'
+      network:
+        - 'Merge+3540+3670+4200'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '1'
+            '1': '2'
+        1000000000000000000000000000000000000001:
+          storage: {}
+    - indexes:
+       data: ':label rjumpi_zero_condition_true'
+      network:
+        - 'Merge'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage: {}
+        1000000000000000000000000000000000000001:
+          storage: {}
+    - indexes:
+       data: ':label rjumpi_zero_condition_true'
+      network:
+        - 'Merge+3540+3670+4200'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '1'
+            '1': '1'
+        1000000000000000000000000000000000000001:
+          storage: {}
+    - indexes:
+       data: ':label rjumpi_zero_condition_false'
+      network:
+        - 'Merge'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage: {}
+        1000000000000000000000000000000000000001:
+          storage: {}
+    - indexes:
+       data: ':label rjumpi_zero_condition_false'
+      network:
+        - 'Merge+3540+3670+4200'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '1'
+            '1': '1'
+        1000000000000000000000000000000000000001:
+          storage: {}
+

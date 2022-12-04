@@ -1,0 +1,234 @@
+# Creation transaction with invalid EOF1 in initcode or in deployed code
+---
+CreateTransactionInvalidEOF1:
+  env:
+    currentCoinbase: 2adc25665018aa1fe0e6bc666dac8fc2697ff9ba
+    currentDifficulty: '0x020000'
+    currentGasLimit: '89128960'
+    currentBaseFee: '10'
+    currentNumber: '1'
+    currentTimestamp: '1000'
+    previousHash: 5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6
+
+  pre:
+    a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: 1000000000
+      code: ''
+      nonce: 0
+      storage: {}
+
+  transaction:
+    data:
+      # Invalid EOF Initcode containing containing truncated RJUMP
+      # Code to be deployed: ef000101000100FE (contained in initcode's data)
+      # Initcode: PUSH1(8) PUSH1(23) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN RJUMP(
+      - ':label truncated_rjump_a :raw 0xef000101000d020008006008601760003960086000f35cef000101000100FE'
+      # Code to be deployed: ef000101000100FE (contained in initcode's data)
+      # Initcode: PUSH1(8) PUSH1(24) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN RJUMP(0?
+      - ':label truncated_rjump_b :raw 0xef000101000e020008006008601860003960086000f35c00ef000101000100FE'
+
+      # Invalid EOF Initcode containing RJUMP with target outside of code bounds
+      # - Jump into header
+      # Code to be deployed: ef000101000100FE (contained in initcode's data)
+      # Initcode: PUSH1(8) PUSH1(26) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN RJUMP(-20) STOP
+      - ':label invalid_initcode_rjump_into_header :raw 0xef0001010010020008006008601a60003960086000f35cffec00ef000101000100FE'
+      # - Jump to before code begin
+      # Code to be deployed: ef000101000100FE (contained in initcode's data)
+      # Initcode: PUSH1(8) PUSH1(26) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN RJUMP(-27) STOP
+      - ':label invalid_initcode_rjump_to_before_code_begin :raw 0xef0001010010020008006008601a60003960086000f35cffe500ef000101000100FE'
+      # - Jump into data section
+      # Code to be deployed: ef000101000100FE (contained in initcode's data)
+      # Initcode: PUSH1(8) PUSH1(26) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN RJUMP(2) STOP
+      - ':label invalid_initcode_rjump_into_data_section :raw 0xef0001010010020008006008601a60003960086000f35cffe500ef000101000100FE'
+      # - Jump to after code end
+      # Code to be deployed: ef000101000100FE (contained in initcode's data)
+      # Initcode: PUSH1(8) PUSH1(26) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN RJUMP(10) STOP
+      - ':label invalid_initcode_rjump_to_after_code_end :raw 0xef0001010010020008006008601a60003960086000f35cffe500ef000101000100FE'
+      # - Jump to code end
+      # Code to be deployed: ef000101000100FE (contained in initcode's data)
+      # Initcode: PUSH1(8) PUSH1(26) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN RJUMP(1) STOP
+      - ':label invalid_initcode_rjump_to_code_end :raw 0xef0001010010020008006008601a60003960086000f35cffe500ef000101000100FE'
+
+      # Invalid EOF Initcode containing RJUMP with target PUSH/RJUMP/RJUMPI immediate 
+      # - Jump to same RJUMP immediate
+      # Code to be deployed: ef000101000100FE (contained in initcode's data)
+      # Initcode: PUSH1(8) PUSH1(26) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN RJUMP(-1) STOP
+      - ':label invalid_initcode_rjump_to_self_immediate :raw 0xef0001010010020008006008601a60003960086000f35cffe500ef000101000100FE'
+      # - Jump to another RJUMP immediate
+      # Code to be deployed: ef000101000100FE (contained in initcode's data)
+      # Initcode: PUSH1(8) PUSH1(30) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN RJUMP(1) STOP RJUMP(-5) STOP
+      - ':label invalid_initcode_rjump_to_rjump_immediate :raw 0xef0001010014020008006008601e60003960086000f35c0001005cfffb00ef000101000100FE'
+      # - Jump to RJUMPI immediate
+      # Code to be deployed: ef000101000100FE (contained in initcode's data)
+      # Initcode: PUSH1(8) PUSH1(32) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN RJUMP(2) STOP RJUMP(4) STOP PUSH1(1) RJUMPI(-6)
+      - ':label invalid_initcode_rjump_to_rjumpi_immediate :raw 0xef0001010016020008006008602060003960086000f35c00040060015cfffa00ef000101000100FE'
+      # - Jump to PUSH immediate
+      # Code to be deployed: ef000101000100FE (contained in initcode's data)
+      # Initcode: PUSH1(8) PUSH1(26) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN RJUMP(-5) STOP
+      - ':label invalid_initcode_rjump_to_push_immediate :raw 0xef0001010010020008006008601a60003960086000f35cffe500ef000101000100FE'
+
+      # Invalid EOF Initcode containing containing truncated RJUMPI
+      # Code to be deployed: ef000101000100FE (contained in initcode's data)
+      # Initcode: PUSH1(8) PUSH1(25) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN PUSH1(1) RJUMPI(
+      - ':label invalid_initcode_truncated_rjumpi_a :raw 0xef000101000f020008006008601960003960086000f360015def000101000100FE'
+      # Code to be deployed: ef000101000100FE (contained in initcode's data)
+      # Initcode: PUSH1(8) PUSH1(26) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN PUSH1(1) RJUMPI(0?
+      - ':label invalid_initcode_truncated_rjumpi_b :raw 0xef0001010010020008006008601a60003960086000f360015d00ef000101000100FE'
+
+      # Invalid EOF Initcode containing RJUMPI with target outside of code bounds
+      # - Jump into header
+      # Code to be deployed: ef000101000100FE (contained in initcode's data)
+      # Initcode: PUSH1(8) PUSH1(28) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN PUSH1(1) RJUMPI(-22) STOP
+      - ':label invalid_initcode_rjumpi_into_header :raw 0xef0001010012020008006008601c60003960086000f360015dffea00ef000101000100FE'
+      # - Jump to before code begin
+      # Code to be deployed: ef000101000100FE (contained in initcode's data)
+      # Initcode: PUSH1(8) PUSH1(28) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN PUSH1(1) RJUMPI(-29) STOP
+      - ':label invalid_initcode_rjumpi_to_before_code_begin :raw 0xef0001010012020008006008601c60003960086000f360015dFFE300ef000101000100FE'
+      # - Jump into data section
+      # Code to be deployed: ef000101000100FE (contained in initcode's data)
+      # Initcode: PUSH1(8) PUSH1(28) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN PUSH1(1) RJUMPI(2) STOP
+      - ':label invalid_initcode_rjumpi_into_data_section :raw 0xef0001010012020008006008601c60003960086000f360015d000200ef000101000100FE'
+      # - Jump to after code end
+      # Code to be deployed: ef000101000100FE (contained in initcode's data)
+      # Initcode: PUSH1(8) PUSH1(28) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN PUSH1(1) RJUMPI(10) STOP
+      - ':label invalid_initcode_rjumpi_to_after_code_end :raw 0xef0001010012020008006008601c60003960086000f360015d000A00ef000101000100FE'
+      # - Jump to code end
+      # Code to be deployed: ef000101000100FE (contained in initcode's data)
+      # Initcode: PUSH1(8) PUSH1(28) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN PUSH1(1) RJUMPI(1) STOP
+      - ':label invalid_initcode_rjumpi_to_after_code_end :raw 0xef0001010012020008006008601c60003960086000f360015d000100ef000101000100FE'
+
+      # Invalid EOF Initcode containing RJUMPI with target PUSH/RJUMP/RJUMPI immediate 
+      # - Jump to same RJUMPI immediate
+      # Code to be deployed: ef000101000100FE (contained in initcode's data)
+      # Initcode: PUSH1(8) PUSH1(28) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN PUSH1(1) RJUMPI(-1) STOP
+      - ':label invalid_initcode_rjumpi_to_self_immediate :raw 0xef0001010012020008006008601c60003960086000f360015dFFFF00ef000101000100FE'
+      # - Jump to another RJUMPI immediate
+      # Code to be deployed: ef000101000100FE (contained in initcode's data)
+      # Initcode: PUSH1(8) PUSH1(34) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN PUSH1(1) RJUMPI(1) STOP PUSH1(1) RJUMPI(-7) STOP
+      - ':label invalid_initcode_rjumpi_to_rjumpi_immediate :raw 0xef0001010018020008006008602260003960086000f360015d00010060015dFFF900ef000101000100FE'
+      # - Jump to RJUMP immediate
+      # Code to be deployed: ef000101000100FE (contained in initcode's data)
+      # Initcode: PUSH1(8) PUSH1(32) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN RJUMP(2) STOP RJUMP(1) STOP PUSH1(1) RJUMPI(-7)
+      - ':label invalid_initcode_rjumpi_to_rjump_immediate :raw 0xef0001010016020008006008602060003960086000f35c00010060015cfff900ef000101000100FE'
+      # - Jump to PUSH immediate
+      # Code to be deployed: ef000101000100FE (contained in initcode's data)
+      # Initcode: PUSH1(8) PUSH1(28) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN PUSH1(1) RJUMPI(-4) STOP
+      - ':label invalid_initcode_rjumpi_to_push_immediate :raw 0xef0001010012020008006008601c60003960086000f360015dFFFC00ef000101000100FE'
+
+      # Valid EOF Initcode trying to deploy invalid EOF code containing truncated RJUMP
+      # Code to be deployed: RJUMP( - ef0001010001005c
+      # Initcode: PUSH1(code_length) PUSH1(data_offset) PUSH1(0) CODECOPY PUSH1(code_lenght) PUSH1(1) RETURN
+      - ':label valid_init_invalid_code_truncated_rjump_a :raw 0xef000101000c020008006008601660003960086000f3ef0001010001005c'
+      # Code to be deployed: RJUMP(0? - ef0001010001005c00
+      # Initcode: PUSH1(code_length) PUSH1(data_offset) PUSH1(0) CODECOPY PUSH1(code_lenght) PUSH1(1) RETURN
+      - ':label valid_init_invalid_code_truncated_rjump_b :raw 0xef000101000c020009006009601660003960096000f3ef0001010001005c00'
+
+      # Valid EOF Initcode trying to deploy invalid EOF code containing RJUMP with target outside of code bounds
+      # - Jump into header
+      # Code to be deployed: RJUMP(-5) STOP - ef0001010004005cFFFB00
+      # Initcode: PUSH1(code_length) PUSH1(data_offset) PUSH1(0) CODECOPY PUSH1(code_lenght) PUSH1(1) RETURN
+      - ':label valid_init_invalid_code_rjump_into_header :raw 0xef000101000c02000b00600b6016600039600b6000f3ef0001010004005cFFFB00'
+      # - Jump before code begin
+      # Code to be deployed: RJUMP(-13) STOP - ef0001010004005cFFF300
+      # Initcode: PUSH1(code_length) PUSH1(data_offset) PUSH1(0) CODECOPY PUSH1(code_lenght) PUSH1(1) RETURN
+      - ':label valid_init_invalid_code_rjump_to_before_code_begin :raw 0xef000101000c02000b00600b6016600039600b6000f3ef0001010004005cFFF300'
+      # - Jump into data section
+      # Code to be deployed: RJUMP(2) STOP - Data: aabbccdd -  ef0001010004020004005c000200aabbccdd
+      # Initcode: PUSH1(code_length) PUSH1(data_offset) PUSH1(0) CODECOPY PUSH1(code_lenght) PUSH1(1) RETURN
+      - ':label valid_init_invalid_code_rjump_into_data_section :raw 0xef000101000c020012006012601660003960126000f3ef0001010004020004005c000200aabbccdd'
+      # - Jump after code end
+      # Code to be deployed: RJUMP(2) STOP - ef0001010004005c000200
+      # Initcode: PUSH1(code_length) PUSH1(data_offset) PUSH1(0) CODECOPY PUSH1(code_lenght) PUSH1(1) RETURN
+      - ':label valid_init_invalid_code_rjump_to_after_code_end :raw 0xef000101000c02000b00600b6016600039600b6000f3ef0001010004005c000200'
+      # - Jump to code end
+      # Code to be deployed: RJUMP(1) STOP - ef0001010004005c000100
+      # Initcode: PUSH1(code_length) PUSH1(data_offset) PUSH1(0) CODECOPY PUSH1(code_lenght) PUSH1(1) RETURN
+      - ':label valid_init_invalid_code_rjump_to_code_end :raw 0xef000101000c02000b00600b6016600039600b6000f3ef0001010004005c000100'
+
+      # Valid EOF Initcode trying to deploy invalid EOF code containing RJUMP with target PUSH/RJUMP/RJUMPI's immediate
+      # - Jump to same RJUMP Immediate
+      # Code to be deployed: RJUMP(-1) STOP - ef0001010004005cFFFF00
+      # Initcode: PUSH1(code_length) PUSH1(data_offset) PUSH1(0) CODECOPY PUSH1(code_lenght) PUSH1(1) RETURN
+      - ':label valid_init_invalid_code_rjump_to_self_immediate :raw 0xef000101000c02000b00600b6016600039600b6000f3ef0001010004005cFFFF00'
+      # - Jump to another RJUMP immediate
+      # Code to be deployed: RJUMP(3) STOP RJUMP(-7) STOP - ef0001010008005c0003005cFFF900
+      # Initcode: PUSH1(code_length) PUSH1(data_offset) PUSH1(0) CODECOPY PUSH1(code_lenght) PUSH1(1) RETURN
+      - ':label valid_init_invalid_code_rjump_to_rjump_immediate :raw 0xef000101000c02000f00600f6016600039600f6000f3ef0001010008005c0003005cFFF900'
+      # - Jump to RJUMPI immediate
+      # Code to be deployed: RJUMP(5) STOP PUSH1(1) RJUMPI(-9) STOP - ef000101000a005c00050060015dFFF700
+      # Initcode: PUSH1(code_length) PUSH1(data_offset) PUSH1(0) CODECOPY PUSH1(code_lenght) PUSH1(1) RETURN
+      - ':label valid_init_invalid_code_rjump_to_rjumpi_immediate :raw 0xef000101000c020011006011601660003960116000f3ef000101000a005c00050060015dFFF700'
+      # - Jump to PUSH immediate
+      # Code to be deployed: RJUMP(2) STOP PUSH1(1) PUSH1(1) SSTORE STOP - ef000101000a005c000200600160015500
+      # Initcode: PUSH1(code_length) PUSH1(data_offset) PUSH1(0) CODECOPY PUSH1(code_lenght) PUSH1(1) RETURN
+      - ':label valid_init_invalid_code_rjump_to_push_immediate :raw 0xef000101000c020011006011601660003960116000f3ef000101000a005c000200600160015500'
+
+      # Valid EOF Initcode trying to deploy invalid EOF code containing truncated RJUMPI
+      # Code to be deployed: RJUMPI( - ef0001010001005d
+      # Initcode: PUSH1(code_length) PUSH1(data_offset) PUSH1(0) CODECOPY PUSH1(code_lenght) PUSH1(1) RETURN
+      - ':label valid_init_invalid_code_truncated_rjumpi_a :raw 0xef000101000c020008006008601660003960086000f3ef0001010001005d'
+      # Code to be deployed: RJUMPI(0? - ef0001010002005d00
+      # Initcode: PUSH1(code_length) PUSH1(data_offset) PUSH1(0) CODECOPY PUSH1(code_lenght) PUSH1(1) RETURN
+      - ':label valid_init_invalid_code_truncated_rjumpi_b :raw 0xef000101000c020009006009601660003960096000f3ef0001010002005d00'
+      # Valid EOF Initcode trying to deploy invalid EOF code containing RJUMPI with target outside of code bounds
+      # - Jump into header
+      # Code to be deployed: PUSH1(1) RJUMPI(-7) STOP - ef00010100060060015dFFF900
+      # Initcode: PUSH1(code_length) PUSH1(data_offset) PUSH1(0) CODECOPY PUSH1(code_lenght) PUSH1(1) RETURN
+      - ':label valid_init_invalid_code_rjumpi_into_header :raw 0xef000101000c02000d00600d6016600039600d6000f3ef00010100060060015dFFF900'
+      # - Jump to before code begin
+      # Code to be deployed: PUSH1(1) RJUMPI(-15) STOP - ef00010100060060015dFFF100
+      # Initcode: PUSH1(code_length) PUSH1(data_offset) PUSH1(0) CODECOPY PUSH1(code_lenght) PUSH1(1) RETURN
+      - ':label valid_init_invalid_code_rjumpi_to_before_code_begin :raw 0xef000101000c02000d00600d6016600039600d6000f3ef00010100060060015dFFF100'
+      # - Jump into data section
+      # Code to be deployed: PUSH1(1) RJUMPI(2) STOP - Data aabbccdd - ef00010100060200040060015d000200aabbccdd
+      # Initcode: PUSH1(code_length) PUSH1(data_offset) PUSH1(0) CODECOPY PUSH1(code_lenght) PUSH1(1) RETURN
+      - ':label valid_init_invalid_code_rjumpi_into_data_section :raw 0xef000101000c020014006014601660003960146000f3ef00010100060200040060015d000200aabbccdd'
+      # - Jump to after code end
+      # Code to be deployed: PUSH1(1) RJUMPI(2) STOP - ef00010100060060015d000200
+      # Initcode: PUSH1(code_length) PUSH1(data_offset) PUSH1(0) CODECOPY PUSH1(code_lenght) PUSH1(1) RETURN
+      - ':label valid_init_invalid_code_rjumpi_to_after_code_end :raw 0xef000101000c02000d00600d6016600039600d6000f3ef00010100060060015d000200'
+      # - Jump to code end
+      # Code to be deployed: PUSH1(1) RJUMPI(1) STOP - ef00010100060060015d000100
+      # Initcode: PUSH1(code_length) PUSH1(data_offset) PUSH1(0) CODECOPY PUSH1(code_lenght) PUSH1(1) RETURN
+      - ':label valid_init_invalid_code_rjumpi_to_code_end :raw 0xef000101000c02000d00600d6016600039600d6000f3ef00010100060060015d000100'
+
+      # Valid EOF Initcode containing RJUMPI with target PUSH/RJUMP/RJUMPI immediate
+      # - Jump to same RJUMPI immediate
+      # Code to be deployed: PUSH1(1) RJUMPI(-1) STOP - ef00010100060060015dFFFF00
+      - ':label valid_init_invalid_code_rjumpi_to_self_immediate :raw 0xef000101000c02000d00600d6016600039600d6000f3ef00010100060060015dFFFF00'
+      # - Jump to another RJUMPI immediate
+      # Code to be deployed: PUSH1(1) RJUMPI(5) STOP PUSH1(1) RJUMPI(-9) STOP - ef000101000c0060015d00050060015dFFF900
+      - ':label valid_init_invalid_code_rjumpi_to_rjumpi_immediate :raw 0xef000101000c020013006013601660003960136000f3ef000101000c0060015d00050060015dFFF900'
+      # - Jump to RJUMP Immediate
+      # Code to be deployed: PUSH1(1) RJUMPI(3) STOP RJUMP(-7) STOP - ef000101000a0060015d0003005cFFF900
+      - ':label valid_init_invalid_code_rjumpi_to_rjump_immediate :raw 0xef000101000c020011006011601660003960116000f3ef000101000a0060015d0003005cFFF900'
+      # - Jump to PUSH Immediate
+      # Code to be deployed: PUSH1(1) RJUMPI(-4) STOP - ef00010100060060015dFFFC00
+      - ':label valid_init_invalid_code_rjumpi_to_push_immediate :raw 0xef000101000c02000d00600d6016600039600d6000f3ef00010100060060015dFFFC00'
+    gasLimit:
+      - 70000
+    gasPrice: 10
+    nonce: 0
+    secretKey: 45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8
+    to: ''
+    value:
+      - 0
+
+  expect:
+    - indexes: {}
+      network:
+        - 'Merge'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+         nonce: 1
+       6295ee1b4f6dd65047762f924ecd367c17eabf8f:
+         shouldnotexist: 1
+    # Same expectation, but for London execution fails on EF byte, for 4200 it fails because EOF initcode or code is invalid
+    - indexes: {}
+      network:
+        - 'Merge+3540+3670+4200'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+         nonce: 1
+       6295ee1b4f6dd65047762f924ecd367c17eabf8f:
+         shouldnotexist: 1
