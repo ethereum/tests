@@ -1,0 +1,538 @@
+# CREATE2 opcode with EOF1 initcode or/and code (EIP-3541, EIP-3540, EIP-3670)
+CREATE2_EOF1:
+  env:
+    currentCoinbase: 2adc25665018aa1fe0e6bc666dac8fc2697ff9ba
+    currentDifficulty: '0x020000'
+    currentGasLimit: '89128960'
+    currentBaseFee: '10'
+    currentNumber: '1'
+    currentTimestamp: '1000'
+    previousHash: 5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6
+
+  pre:
+    a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: 200000000
+      code: ''
+      nonce: 0
+      storage: {}
+    b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: 0
+      code: |
+        :yul 
+        {
+          calldatacopy(0, 0, calldatasize())
+          sstore(0, create2(0, 0, calldatasize(), 0))
+          sstore(1, 1)
+        }
+      nonce: 0
+      storage: {}
+
+  transaction:
+    data: 
+      # Valid EOF initcode containing RJUMP with JUMPDEST as a target
+      # - Positive:
+      # Initcode (data): ef000101000100FE (code to be deployed)
+      # Initcode: RJUMP(3) STOP RETURN STOP JUMPDEST PUSH1(8) PUSH1(29) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN
+      - ':label eof1_initcode_rjump_jumpdest_pos :raw 0xef0001010013020008005c000300f3005b6008601d60003960086000f3ef000101000100FE'
+      # - Negative:
+      # Initcode (data): ef000101000100FE (code to be deployed)
+      # Initcode: RJUMP(13) JUMPEST PUSH1(8) PUSH1(31) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN JUMPDEST RJUMP(-17) STOP
+      - ':label eof1_initcode_rjump_jumpdest_neg :raw 0xef0001010015020008005c000D5b6008601f60003960086000f35b5cFFEF00ef000101000100FE'
+      # - Zero:
+      # Initcode (data): ef000101000100FE (code to be deployed)
+      # Initcode: RJUMP(0) JUMPDEST PUSH1(8) PUSH1(26) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN
+      - ':label eof1_initcode_rjump_jumpdest_zer :raw 0xef0001010010020008005c00005b6008601a60003960086000f3ef000101000100FE'
+
+      # Valid EOF initcode containing RJUMP with other instruction than JUMPDEST as target
+      # - Positive:
+      # Deployed code: ef000101000100FE (contained in initcode data)
+      # Initcode: RJUMP(3) STOP RETURN STOP PUSH1(8) PUSH1(29) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN
+      - ':label eof1_initcode_rjump_pos :raw 0xef0001010012020008005c000300f3006008601c60003960086000f3ef000101000100FE'
+      # - Negative:
+      # Deployed code: ef000101000100FE (contained in initcode data)
+      # Initcode: RJUMP(12) PUSH1(8) PUSH1(30) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN JUMPDEST RJUMP(-16) STOP
+      - ':label eof1_initcode_rjump_neg :raw 0xef0001010014020008005c000C6008601e60003960086000f35b5cFFF000ef000101000100FE'
+      # - Zero:
+      # Deployed code: ef000101000100FE (contained in initcode data)
+      # Initcode: RJUMP(0) PUSH1(8) PUSH1(26) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN
+      - ':label eof1_initcode_rjump_zer :raw 0xef000101000f020008005c00006008601960003960086000f3ef000101000100FE'
+
+      # Valid EOF initcode containing RJUMPI with JUMPDEST as a target
+      # - Positive:
+      # Initcode (data): ef000101000100FE (code to be deployed)
+      # Initcode: PUSH1(1) RJUMPI(3) STOP RETURN STOP JUMPDEST PUSH1(8) PUSH1(31) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN
+      - ':label eof1_initcode_rjumpi_jumpdest_pos :raw 0xef00010100150200080060015d000300f3005b6008601F60003960086000f3ef000101000100FE'
+      # - Negative:
+      # Initcode (data): ef000101000100FE (code to be deployed)
+      # Initcode: RJUMP(13) JUMPEST PUSH1(8) PUSH1(33) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN JUMPDEST PUSH1(1) RJUMPI(-19) STOP
+      - ':label eof1_initcode_rjumpi_jumpdest_neg :raw 0xef0001010017020008005c000d5b6008602160003960086000f35b60015dFFED00ef000101000100FE'
+      # - Zero:
+      # Initcode (data): ef000101000100FE (code to be deployed)
+      # Initcode: PUSH1(1) RJUMPI(0) JUMPDEST PUSH1(8) PUSH1(28) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN
+      - ':label eof1_initcode_rjumpi_jumpdest_zer :raw 0xef00010100120200080060015d00005b6008601C60003960086000f3ef000101000100FE'
+
+      # Valid EOF initcode containing RJUMPI with other instruction than JUMPDEST as target
+      # - Positive:
+      # Initcode (data): ef000101000100FE (code to be deployed)
+      # Initcode: PUSH1(1) RJUMPI(3) STOP RETURN STOP PUSH1(8) PUSH1(30) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN
+      - ':label eof1_initcode_rjumpi_pos :raw 0xef00010100140200080060015d000300f3006008601E60003960086000f3ef000101000100FE'
+      # - Negative:
+      # Initcode (data): ef000101000100FE (code to be deployed)
+      # Initcode: RJUMP(12) PUSH1(8) PUSH1(32) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN JUMPDEST PUSH1(1) RJUMPI(-18) STOP
+      - ':label eof1_initcode_rjumpi_neg :raw 0xef0001010016020008005c000C6008602060003960086000f35b60015dFFEE00ef000101000100FE'
+      # - Zero:
+      # Initcode (data): ef000101000100FE (code to be deployed)
+      # Initcode: PUSH1(1) RJUMPI(0) PUSH1(8) PUSH1(27) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN
+      - ':label eof1_initcode_rjumpi_zer :raw 0xef00010100110200080060015d00006008601B60003960086000f3ef000101000100FE'
+
+      # Valid EOF deployed code with RJUMP having JUMPDEST as target
+      # - Positive:
+      # Deployed code: RJUMP(3) STOP RETURN STOP JUMPDEST PUSH1(1) PUSH1(1) SSTORE STOP - ef000101000d005c000300f3005b600160015500
+      # Initcode: [Data: contract_code, Code: PUSH1(contract_size) PUSH1(data_offset) PUSH1(0) CODECOPY PUSH1(contract_size) PUSH1(0) RETURN]
+      - ':label eof1_initcode_deploy_eof1_rjump_jumpdest_pos :raw 0xef000101000c020014006014601660003960146000f3ef000101000d005c000300f3005b600160015500'
+      # - Negative:
+      # Deployed code: RJUMP(8) STOP JUMPDEST PUSH1(1) PUSH1(1) SSTORE STOP JUMPDEST RJUMP(-11) STOP - ef0001010010005c0008005b6001600155005b5cFFF500
+      # Initcode: [Data: contract_code, Code: PUSH1(contract_size) PUSH1(data_offset) PUSH1(0) CODECOPY PUSH1(contract_size) PUSH1(0) RETURN]
+      - ':label eof1_initcode_deploy_eof1_rjump_jumpdest_neg :raw 0xef000101000c020017006017601660003960176000f3ef0001010010005c0008005b6001600155005b5cFFF500'
+      # - Zero:
+      # Deployed code: RJUMP(0) JUMPDEST PUSH1(1) PUSH1(1) SSTORE STOP - ef000101000a005c00005b600160015500
+      # Initcode: [Data: contract_code, Code: PUSH1(contract_size) PUSH1(data_offset) PUSH1(0) CODECOPY PUSH1(contract_size) PUSH1(0) RETURN]
+      - ':label eof1_initcode_deploy_eof1_rjump_jumpdest_zer :raw 0xef000101000c020011006011601660003960116000f3ef000101000a005c00005b600160015500'
+
+      # Valid EOF deployed code with RJUMPI having JUMPDEST as target
+      # - Positive:
+      # Deployed code: PUSH1(1) RJUMPI(3) STOP RETURN STOP JUMPDEST PUSH1(1) PUSH1(1) SSTORE STOP - ef000101000f0060015d000300f3005b600160015500
+      # Initcode: [Data: contract_code, Code: PUSH1(contract_size) PUSH1(data_offset) PUSH1(0) CODECOPY PUSH1(contract_size) PUSH1(0) RETURN]
+      - ':label eof1_initcode_deploy_eof1_rjumpi_jumpdest_pos :raw 0xef000101000c020016006016601660003960166000f3ef000101000f0060015d000300f3005b600160015500'
+      # - Negative:
+      # Deployed code: RJUMP(8) STOP JUMPDEST PUSH1(1) PUSH1(1) SSTORE STOP JUMPDEST PUSH1(1) RJUMPI(-13) STOP - ef0001010012005c0008005b6001600155005b60015dFFF300
+      # Initcode: [Data: contract_code, Code: PUSH1(contract_size) PUSH1(data_offset) PUSH1(0) CODECOPY PUSH1(contract_size) PUSH1(0) RETURN]
+      - ':label eof1_initcode_deploy_eof1_rjumpi_jumpdest_neg :raw 0xef000101000c020019006019601660003960196000f3ef0001010012005c0008005b6001600155005b60015dFFF300'
+      # - Zero:
+      # Deployed code: PUSH1(1) RJUMPI(0) JUMPDEST PUSH1(1) PUSH1(1) SSTORE STOP - ef000101000c0060015d00005b600160015500
+      # Initcode: [Data: contract_code, Code: PUSH1(contract_size) PUSH1(data_offset) PUSH1(0) CODECOPY PUSH1(contract_size) PUSH1(0) RETURN]
+      - ':label eof1_initcode_deploy_eof1_rjumpi_jumpdest_zer :raw 0xef000101000c020013006013601660003960136000f3ef000101000c0060015d00005b600160015500'
+
+      # Valid EOF deployed code with RJUMP having other instruction than JUMPDEST as target
+      # Positive:
+      # Deployed code: RJUMP(3) STOP RETURN STOP PUSH1(1) PUSH1(1) SSTORE STOP - ef000101000c005c000300f300600160015500
+      # Initcode: [Data: contract_code, Code: PUSH1(contract_size) PUSH1(data_offset) PUSH1(0) CODECOPY PUSH1(contract_size) PUSH1(0) RETURN]
+      - ':label eof1_initcode_deploy_eof1_rjump_pos :raw 0xef000101000c020013006013601660003960136000f3ef000101000c005c000300f300600160015500'
+      # Negative:
+      # Deployed code: RJUMP(7) STOP PUSH1(1) PUSH1(1) SSTORE STOP JUMPDEST RJUMP(-10) STOP - ef000101000f005c0007006001600155005b5cFFF600
+      # Initcode: [Data: contract_code, Code: PUSH1(contract_size) PUSH1(data_offset) PUSH1(0) CODECOPY PUSH1(contract_size) PUSH1(0) RETURN]
+      - ':label eof1_initcode_deploy_eof1_rjump_neg :raw 0xef000101000c020016006016601660003960166000f3ef000101000f005c0007006001600155005b5cFFF600'
+      # Zero:
+      # Deployed code: RJUMP(0) PUSH1(1) PUSH1(1) SSTORE STOP - ef0001010009005c0000600160015500
+      # Initcode: [Data: contract_code, Code: PUSH1(contract_size) PUSH1(data_offset) PUSH1(0) CODECOPY PUSH1(contract_size) PUSH1(0) RETURN]
+      - ':label eof1_initcode_deploy_eof1_rjump_zer :raw 0xef000101000c020010006010601660003960106000f3ef0001010009005c0000600160015500'
+
+      # Valid EOF deployed code with RJUMPI having other instruction than JUMPDEST as target
+      # - Positive:
+      # Deployed code: PUSH1(1) RJUMPI(3) STOP RETURN STOP PUSH1(1) PUSH1(1) SSTORE STOP - ef000101000e0060015d000300f300600160015500
+      # Initcode: [Data: contract_code, Code: PUSH1(contract_size) PUSH1(data_offset) PUSH1(0) CODECOPY PUSH1(contract_size) PUSH1(0) RETURN]
+      - ':label eof1_initcode_deploy_eof1_rjumpi_pos :raw 0xef000101000c020015006015601660003960156000f3ef000101000e0060015d000300f300600160015500'
+      # - Negative:
+      # Deployed code: RJUMP(7) STOP PUSH1(1) PUSH1(1) SSTORE STOP JUMPDEST PUSH1(1) RJUMPI(-12) STOP - ef0001010011005c0007006001600155005b60015dFFF400
+      # Initcode: [Data: contract_code, Code: PUSH1(contract_size) PUSH1(data_offset) PUSH1(0) CODECOPY PUSH1(contract_size) PUSH1(0) RETURN]
+      - ':label eof1_initcode_deploy_eof1_rjumpi_neg :raw 0xef000101000c020018006018601660003960186000f3ef0001010011005c0007006001600155005b60015dFFF400'
+      # - Zero:
+      # Deployed code: PUSH1(1) RJUMPI(0) PUSH1(1) PUSH1(1) SSTORE STOP - ef000101000b0060015d0000600160015500
+      # Initcode: [Data: contract_code, Code: PUSH1(contract_size) PUSH1(data_offset) PUSH1(0) CODECOPY PUSH1(contract_size) PUSH1(0) RETURN]
+      - ':label eof1_initcode_deploy_eof1_rjumpi_zer :raw 0xef000101000c020012006012601660003960126000f3ef000101000b0060015d0000600160015500'
+
+    gasLimit:
+      - 15000000
+    gasPrice: 10
+    nonce: 0
+    secretKey: 45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8
+    to: 'b94f5374fce5edbc8e2a8697c15331677e6ebf0b'
+    value:
+    - 0
+
+  expect:
+    - indexes:
+       data: ':label eof1_initcode_rjump_jumpdest_pos'
+      network:
+        - 'Merge+3540+3670+4200'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+          storage:
+            '0': 'fC495DC9F6C8E1A5A1C796834f09f1FE48A19fDd'
+            '1': '1'
+       fC495DC9F6C8E1A5A1C796834f09f1FE48A19fDd:
+          nonce: 1
+          code: '0xef000101000100FE'
+          storage: {}
+    - indexes:
+       data: ':label eof1_initcode_rjump_jumpdest_neg'
+      network:
+        - 'Merge+3540+3670+4200'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+          storage:
+            '0': 'e23666f837022aCe9767C6aAB19bfAdB3b69fC7F'
+            '1': '1'
+       e23666f837022aCe9767C6aAB19bfAdB3b69fC7F:
+          nonce: 1
+          code: '0xef000101000100FE'
+          storage: {}
+    - indexes:
+       data: ':label eof1_initcode_rjump_jumpdest_zer'
+      network:
+        - 'Merge+3540+3670+4200'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+          storage:
+            '0': 'Fce6beE9B34af482c6F7d5fdB3Ed89C2d52Db64b'
+            '1': '1'
+       Fce6beE9B34af482c6F7d5fdB3Ed89C2d52Db64b:
+          nonce: 1
+          code: '0xef000101000100FE'
+          storage: {}
+    - indexes:
+       data: ':label eof1_initcode_rjump_pos'
+      network:
+        - 'Merge+3540+3670+4200'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+          storage:
+            '0': '91e178fd117a11cd1f3EFf7eF70ba07977Eb278F'
+            '1': '1'
+       91e178fd117a11cd1f3EFf7eF70ba07977Eb278F:
+          nonce: 1
+          code: '0xef000101000100FE'
+          storage: {}
+    - indexes:
+       data: ':label eof1_initcode_rjump_neg'
+      network:
+        - 'Merge+3540+3670+4200'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+          storage:
+            '0': '21a585154467A9620bED65bd56e0145037448885'
+            '1': '1'
+       21a585154467A9620bED65bd56e0145037448885:
+          nonce: 1
+          code: '0xef000101000100FE'
+          storage: {}
+    - indexes:
+       data: ':label eof1_initcode_rjump_zer'
+      network:
+        - 'Merge+3540+3670+4200'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+          storage:
+            '0': 'aAaD96FCC5134616509A92C3CC9d2DaB55acA70D'
+            '1': '1'
+       aAaD96FCC5134616509A92C3CC9d2DaB55acA70D:
+          nonce: 1
+          code: '0xef000101000100FE'
+          storage: {}
+    - indexes:
+       data: ':label eof1_initcode_rjumpi_jumpdest_pos'
+      network:
+        - 'Merge+3540+3670+4200'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+          storage:
+            '0': '5ab8BE653C8Ddfb8D68EA8E221F8A86eEDa5c456'
+            '1': '1'
+       5ab8BE653C8Ddfb8D68EA8E221F8A86eEDa5c456:
+          nonce: 1
+          code: '0xef000101000100FE'
+          storage: {}
+    - indexes:
+       data: ':label eof1_initcode_rjumpi_jumpdest_neg'
+      network:
+        - 'Merge+3540+3670+4200'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+          storage:
+            '0': '2128bE90e4eAf3bb8249B6F8CBC8D522B6527C34'
+            '1': '1'
+       2128bE90e4eAf3bb8249B6F8CBC8D522B6527C34:
+          nonce: 1
+          code: '0xef000101000100FE'
+          storage: {}
+    - indexes:
+       data: ':label eof1_initcode_rjumpi_jumpdest_zer'
+      network:
+        - 'Merge+3540+3670+4200'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+          storage:
+            '0': '5E6FE35E0fc18De4960af54661B57883Fd9DD4A1'
+            '1': '1'
+       5E6FE35E0fc18De4960af54661B57883Fd9DD4A1:
+          nonce: 1
+          code: '0xef000101000100FE'
+          storage: {}
+    - indexes:
+       data: ':label eof1_initcode_rjumpi_pos'
+      network:
+        - 'Merge+3540+3670+4200'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+          storage:
+            '0': 'bCA3B9D08FFca5fb971A87ae13b581AEdea6F610'
+            '1': '1'
+       bCA3B9D08FFca5fb971A87ae13b581AEdea6F610:
+          nonce: 1
+          code: '0xef000101000100FE'
+          storage: {}
+    - indexes:
+       data: ':label eof1_initcode_rjumpi_neg'
+      network:
+        - 'Merge+3540+3670+4200'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+          storage:
+           '0': '6b644349796D2a3c6901B2106B2Ee50dd624c29b'
+           '1': '1'
+       6b644349796D2a3c6901B2106B2Ee50dd624c29b:
+          nonce: 1
+          code: '0xef000101000100FE'
+          storage: {}
+    - indexes:
+       data: ':label eof1_initcode_rjumpi_zer'
+      network:
+        - 'Merge+3540+3670+4200'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+          storage:
+            '0': 'a2489D993c91fFDe3E7126935eAFEA3AFc9Ae89b'
+            '1': '1'
+       a2489D993c91fFDe3E7126935eAFEA3AFc9Ae89b:
+          nonce: 1
+          code: '0xef000101000100FE'
+          storage: {}
+    - indexes:
+       data: ':label eof1_initcode_deploy_eof1_rjump_jumpdest_pos'
+      network:
+        - 'Merge+3540+3670+4200'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+          storage:
+            '0': '0E71Ae8909d6Ee1390254C6F245F44F4Eb879151'
+            '1': '1'
+       0E71Ae8909d6Ee1390254C6F245F44F4Eb879151:
+          nonce: 1
+          code: '0xef000101000d005c000300f3005b600160015500'
+          storage: {}
+    - indexes:
+       data: ':label eof1_initcode_deploy_eof1_rjump_jumpdest_neg'
+      network:
+        - 'Merge+3540+3670+4200'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+          storage:
+            '0': '815c693eB3935db4402969a2E2fa03aB065efB69'
+            '1': '1'
+       815c693eB3935db4402969a2E2fa03aB065efB69:
+          nonce: 1
+          code: '0xef0001010010005c0008005b6001600155005b5cFFF500'
+          storage: {}
+    - indexes:
+       data: ':label eof1_initcode_deploy_eof1_rjump_jumpdest_zer'
+      network:
+        - 'Merge+3540+3670+4200'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+          storage:
+            '0': '54B949C6E41cd41c83767E527Af201A02301cC42'
+            '1': '1'
+       54B949C6E41cd41c83767E527Af201A02301cC42:
+          nonce: 1
+          code: '0xef000101000a005c00005b600160015500'
+          storage: {}
+    - indexes:
+       data: ':label eof1_initcode_deploy_eof1_rjumpi_jumpdest_pos'
+      network:
+        - 'Merge+3540+3670+4200'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+          storage:
+            '0': '4f522227143A5F1054f225028418649FB8c9167A'
+            '1': '1'
+       4f522227143A5F1054f225028418649FB8c9167A:
+          nonce: 1
+          code: '0xef000101000f0060015d000300f3005b600160015500'
+          storage: {}
+    - indexes:
+       data: ':label eof1_initcode_deploy_eof1_rjumpi_jumpdest_neg'
+      network:
+        - 'Merge+3540+3670+4200'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+          storage:
+            '0': 'd3d96607C80B52D20B64EB8491bEa0ecDA07511b'
+            '1': '1'
+       d3d96607C80B52D20B64EB8491bEa0ecDA07511b:
+          nonce: 1
+          code: '0xef0001010012005c0008005b6001600155005b60015dFFF300'
+          storage: {}
+    - indexes:
+       data: ':label eof1_initcode_deploy_eof1_rjumpi_jumpdest_zer'
+      network:
+        - 'Merge+3540+3670+4200'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+          storage:
+            '0': 'f1b82b50849Cc406c1a7d72E70BabBD268Ed2cDb'
+            '1': '1'
+       f1b82b50849Cc406c1a7d72E70BabBD268Ed2cDb:
+          nonce: 1
+          code: '0xef000101000c0060015d00005b600160015500'
+          storage: {}
+    - indexes:
+       data: ':label eof1_initcode_deploy_eof1_rjump_pos'
+      network:
+        - 'Merge+3540+3670+4200'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+          storage:
+            '0': '607A53690c6D8D67A7320433e5284E04D079811F'
+            '1': '1'
+       607A53690c6D8D67A7320433e5284E04D079811F:
+          nonce: 1
+          code: '0xef000101000c005c000300f300600160015500'
+          storage: {}
+    - indexes:
+       data: ':label eof1_initcode_deploy_eof1_rjump_neg'
+      network:
+        - 'Merge+3540+3670+4200'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+          storage:
+            '0': '368eFc2B6907098416265e648FaeAbd9e972c3D9'
+            '1': '1'
+       368eFc2B6907098416265e648FaeAbd9e972c3D9:
+          nonce: 1
+          code: '0xef000101000f005c0007006001600155005b5cFFF600'
+          storage: {}
+    - indexes:
+       data: ':label eof1_initcode_deploy_eof1_rjump_zer'
+      network:
+        - 'Merge+3540+3670+4200'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+          storage:
+            '0': '5596a5C016344a8DA1C1917bebE96249D1Ff32fA'
+            '1': '1'
+       5596a5C016344a8DA1C1917bebE96249D1Ff32fA:
+          nonce: 1
+          code: '0xef0001010009005c0000600160015500'
+          storage: {}
+    - indexes:
+       data: ':label eof1_initcode_deploy_eof1_rjumpi_pos'
+      network:
+        - 'Merge+3540+3670+4200'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+          storage:
+            '0': '914f9D5D77A6aef09ee0012E190CfC05008F4407'
+            '1': '1'
+       914f9D5D77A6aef09ee0012E190CfC05008F4407:
+          nonce: 1
+          code: '0xef000101000e0060015d000300f300600160015500'
+          storage: {}
+    - indexes:
+       data: ':label eof1_initcode_deploy_eof1_rjumpi_neg'
+      network:
+        - 'Merge+3540+3670+4200'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+          storage:
+            '0': '792911196CBf4A035693d34BE110A21ed496659E'
+            '1': '1'
+       0x792911196CBf4A035693d34BE110A21ed496659E:
+          nonce: 1
+          code: '0xef0001010011005c0007006001600155005b60015dFFF400'
+          storage: {}
+    - indexes:
+       data: ':label eof1_initcode_deploy_eof1_rjumpi_zer'
+      network:
+        - 'Merge+3540+3670+4200'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+          storage:
+            '0': '0890dBD2187b5E76C4dcCDeE2a794c6dd36f5eD2'
+            '1': '1'
+       0890dBD2187b5E76C4dcCDeE2a794c6dd36f5eD2:
+          nonce: 1
+          code: '0xef000101000b0060015d0000600160015500'
+          storage: {}
+
