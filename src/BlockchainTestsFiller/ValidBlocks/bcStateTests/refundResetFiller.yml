@@ -517,3 +517,148 @@ refundReset:
 
           # Final calculation
           0x0110: 0x075cb0
+
+
+
+  - network:
+    - Berlin
+    result:
+      0x000000000000000000000000000000000000DA7A:
+        storage:
+          # Block 1, just checking the algorithm
+          0x0101: 0x40ac90    # Filling previously unfilled storage
+          0x0102: 0x16ec70    # Modifying previously filled storage
+          0x0103: 0x0f2454    # Emptying previously filled storage
+
+          # Block 2, refund called through a different contract
+          0x0104: 0x40ac90    # Filling previously unfilled storage
+          0x0105: 0x17bac4    # Modifying (control), then calling 0x600D
+          0x0106: 0x0f8b1a    # Emptying the storage in a call, then calling 0x600D
+
+          # Block 3, refund and then a REVERT
+          0x0107: 0x40ac90    # Filling previously unfilled storage
+          0x0108: 0x17bac4    # Modifying (control), then calling 0xBAD3
+          0x0109: 0x0f8b1a    # Emptying the storage in a call, then calling 0xBAD3
+
+          # Block 4, refund and then an INVALID
+          0x010A: 0x40ac90    # Filling previously unfilled storage
+          0x010B: 0x1b15e8    # Modifying (control), then calling 0xBAD4
+          0x010C: 0x1138ac    # Emptying the storage in a call, then calling 0xBAD4
+
+          # Block 5, refund and then a CREATE that ends in a REVERT
+          0x010D: 0x40ac90    # Filling previously unfilled storage
+          0x010E: 0x1c387e    # Modifying (control)
+          0x010F: 0x11c9fc    # Emptying the storage in a call
+
+          # Final calculation
+          0x0110: 0x075cb0
+
+
+
+
+  - network:
+    - Byzantium
+    - Constantinople
+    - ConstantinopleFix
+    result:
+      0x000000000000000000000000000000000000DA7A:
+        storage:
+          # Block 1, just checking the algorithm
+          0x0101: 0x3b51a0    # Filling previously unfilled storage
+          0x0102: 0x16aff8    # Modifying previously filled storage
+          0x0103: 0x0ee5d4    # Emptying previously filled storage
+
+          # Block 2, refund called through a different contract
+          0x0104: 0x3b51a0    # Filling previously unfilled storage
+          0x0105: 0x16ebe4    # Modifying (control), then calling 0x600D
+          0x0106: 0x0f0262    # Emptying the storage in a call, then calling 0x600D
+
+          # Block 3, refund and then a REVERT
+          0x0107: 0x3b51a0    # Filling previously unfilled storage
+          0x0108: 0x16ebe4    # Modifying (control), then calling 0xBAD3
+          0x0109: 0x0f0262    # Emptying the storage in a call, then calling 0xBAD3
+
+          # Block 4, refund and then an INVALID
+          0x010A: 0x3b51a0    # Filling previously unfilled storage
+          0x010B: 0x1a4708    # Modifying (control), then calling 0xBAD4
+          0x010C: 0x10aff4    # Emptying the storage in a call, then calling 0xBAD4
+
+          # Block 5, refund and then a CREATE that ends in a REVERT
+          0x010D: 0x3b51a0    # Filling previously unfilled storage
+          0x010E: 0x1bb3d6    # Modifying (control)
+          0x010F: 0x116660    # Emptying the storage in a call
+
+          # Final calculation
+          0x0110: 0x071e30
+
+
+
+
+  - network:
+    - EIP150
+    - EIP158
+    result:
+      0x000000000000000000000000000000000000DA7A:
+        storage:
+          # Block 1, just checking the algorithm
+          0x0101: 0x3b51a0    # Filling previously unfilled storage
+          0x0102: 0x16aff8    # Modifying previously filled storage
+          0x0103: 0x0ee5d4    # Emptying previously filled storage
+
+          # Block 2, refund called through a different contract
+          0x0104: 0x3b51a0    # Filling previously unfilled storage
+          0x0105: 0x16ebe4    # Modifying (control), then calling 0x600D
+          0x0106: 0x0f0262    # Emptying the storage in a call, then calling 0x600D
+
+          # Block 3, refund and then a REVERT
+          0x0107: 0x3b51a0    # Filling previously unfilled storage
+          0x0108: 0x1a4708    # Modifying (control), then calling 0xBAD3
+          0x0109: 0x10aff4    # Emptying the storage in a call, then calling 0xBAD3
+
+          # Block 4, refund and then an INVALID
+          0x010A: 0x3b51a0    # Filling previously unfilled storage
+          0x010B: 0x1a4708    # Modifying (control), then calling 0xBAD4
+          0x010C: 0x10aff4    # Emptying the storage in a call, then calling 0xBAD4
+
+          # Block 5, refund and then a CREATE that ends in a REVERT
+          0x010D: 0x3b51a0    # Filling previously unfilled storage
+          0x010E: 0x1d5da008    # Modifying (control)
+          0x010F: 0x1d3900f4    # Emptying the storage in a call
+
+          # Final calculation
+          0x0110: 0x071e30
+
+
+
+  - network:
+    - <EIP150
+    result:
+      0x000000000000000000000000000000000000DA7A:
+        storage:
+          # Block 1, just checking the algorithm
+          0x0101: 0x3b3cec    # Filling previously unfilled storage
+          0x0102: 0x169b44    # Modifying previously filled storage
+          0x0103: 0x0ed120    # Emptying previously filled storage
+
+          # Block 2, refund called through a different contract
+          0x0104: 0x3b3cec    # Filling previously unfilled storage
+          0x0105: 0x1dd46e7c    # Modifying (control), then calling 0x600D
+          0x0106: 0x1dd46e7c    # Emptying the storage in a call, then calling 0x600D
+
+          # Block 3, refund and then a REVERT
+          0x0107: 0x169dec    # Filling previously unfilled storage
+          0x0108: 0x1dd46e7c    # Modifying (control), then calling 0xBAD3
+          0x0109: 0x1dd46e7c    # Emptying the storage in a call, then calling 0xBAD3
+
+          # Block 4, refund and then an INVALID
+          0x010A: 0x169dec    # Filling previously unfilled storage
+          0x010B: 0x1dd46e7c    # Modifying (control), then calling 0xBAD4
+          0x010C: 0x1dd46e7c    # Emptying the storage in a call, then calling 0xBAD4
+
+          # Block 5, refund and then a CREATE that ends in a REVERT
+          0x010D: 0x169dec  # Filling previously unfilled storage
+          0x010E: 0x1dd46e7c    # Modifying (control)
+          0x010F: 0x1dd46e7c    # Emptying the storage in a call
+
+          # Final calculation
+          0x0110: 0x07097c
