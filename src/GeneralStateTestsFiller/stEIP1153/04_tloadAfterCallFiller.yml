@@ -1,10 +1,12 @@
 # 04
 # Contracts have separate transient storage.
 # Loading a slot in a separate contract after storing returns 0: TSTORE(x, y), CALL(z, ...), TLOAD(x) returns 0
+# Storing to a slot in a separate contract does not affect calling contract: TSTORE(x, y), CALL(z, ...), TSTORE(x, f) and original calling contract TLOAD(x) returns y
 #
-# Expect storage slot 0 of address a to be 10.
+# Expect storage slot 0 of address a to be 10. Ensures that tstore in a different contract doesn't modify calling contract transient storage.
 # Expect storage slot 1 of address a to be 1 (successful call).
-# Expect storage slot 0 of address b to be 0.
+# Expect storage slot 0 of address b to be 0. Ensures that tload doesn't load the calling contracts transient storage.
+# Expect storage slot 1 of address b to be 20. Ensures that tstore did result in a change to the transient storage of a called contract.
 
 04_tloadAfterCall:
   _info:
@@ -39,6 +41,10 @@
         :yul {
           let val := verbatim_1i_1o(hex"b3", 0)
           sstore(0, val)
+          
+          verbatim_2i_0o(hex"b4", 0, 20)
+          let updated_val := verbatim_1i_1o(hex"b3", 0)
+          sstore(1, updated_val)
         }
       storage: { 0x00: 0xffff }
     a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
@@ -73,3 +79,4 @@
         000000000000000000000000000000000000000B:
           storage:
             0x00: 0
+            0x01: 20
