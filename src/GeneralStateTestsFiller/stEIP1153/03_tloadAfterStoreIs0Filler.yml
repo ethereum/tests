@@ -2,7 +2,7 @@
 # Loading from a different slot after storing to a slot returns 0: TSTORE(x, y), TLOAD(z) returns 0
 #
 # Expect storage slot 0 to have value 0
-# Ex 1) stores 30 at slot 0, loads from slot 1, expects storage slot 0 to have 0
+# Ex 1) stores 30 at slot 0, loads from slot 1, expects storage slot 0 to have 0, expects storage slot 1 to have 0
 
 03_tloadAfterStoreIs0:
   _info:
@@ -25,9 +25,9 @@
         :yul {
           verbatim_2i_0o(hex"b4", 0, 30)
           let val := verbatim_1i_1o(hex"b3", 1)
-          sstore(0, val)
+          sstore(1, val)
         }
-      storage: { 0x00: 0xffff }
+      storage: { 0x00: 0xffff, 0x01: 0xffff }
     a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
       balance: 1000000000000000000000
       code: "0x"
@@ -55,4 +55,5 @@
         000000000000000000000000000000000000000A:
           storage:
             # The result we expect
-            0x00: 0
+            0x00: 0xffff # ensure tstore never wrote to storage
+            0x01: 0 # ensure loading from an unused key is 0
