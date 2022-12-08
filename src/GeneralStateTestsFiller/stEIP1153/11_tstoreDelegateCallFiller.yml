@@ -25,19 +25,36 @@
       code: |
         :yul {
           verbatim_2i_0o(hex"b4", 0, 1)
+
+          // transient storage at slot 0 successfully changes
           let success := delegatecall(0xffff, 0x000000000000000000000000000000000000000B, 0, 32, 0, 0)
-          let v := verbatim_1i_1o(hex"b3", 0)
+          let v0 := verbatim_1i_1o(hex"b3", 0)
           sstore(0, success)
-          sstore(1, v)
+          sstore(1, v0)
+
+          // transient storage at slot 0 does not change
+          let fail := delegatecall(0xffff, 0x000000000000000000000000000000000000000C, 0, 32, 0, 0)
+          let v1 := verbatim_1i_1o(hex"b3", 0)
+          sstore(2, fail)
+          sstore(3, v1)
         }
 
-      storage: {}
+      storage: { 0x02: 0xffff }
     000000000000000000000000000000000000000B:
       balance: 1000000000000000000
       nonce: 0
       code: |
         :yul {
           verbatim_2i_0o(hex"b4", 0, 2)
+        }
+      storage: {}
+    000000000000000000000000000000000000000C:
+      balance: 1000000000000000000
+      nonce: 0
+      code: |
+        :yul {
+          verbatim_2i_0o(hex"b4", 0, 3)
+          revert(0,0)
         }
       storage: {}
     a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
@@ -68,3 +85,5 @@
           storage:
             0x00: 1
             0x01: 2
+            0x02: 0
+            0x03: 2
