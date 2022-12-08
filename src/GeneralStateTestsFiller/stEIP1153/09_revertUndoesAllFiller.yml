@@ -3,7 +3,8 @@
 # TSTORE(x, y), CALL(self, ...), TSTORE(x, z), TSTORE(x, z + 1) REVERT, TLOAD(x) returns y
 #
 # Expect storage slot 0 of address a to be 0. Call failed.
-# Expect storage slot 1 of address a to be 4. The original value in transient storage before failed call.
+# Expect storage slot 1 of address a to be 4. The original value in transient storage before failed reentrant subcall.
+# Expect storage slot 2 of address a to be 10. The original value in transient storage before failed reentrant subcall.
 
 09_revertUndoesAll:
   _info:
@@ -39,16 +40,24 @@
           function storeTwiceAndRevert() {
             verbatim_2i_0o(hex"b4", 0, 5)
             verbatim_2i_0o(hex"b4", 0, 6)
+            verbatim_2i_0o(hex"b4", 1, 11)
+            verbatim_2i_0o(hex"b4", 1, 12)
             revert(0,0)
           }
 
           function doReenter() {
             verbatim_2i_0o(hex"b4", 0, 4)
+            verbatim_2i_0o(hex"b4", 1, 10)
             mstore(0, hex"578290e5")
-            let success := call(0xffff, 0x000000000000000000000000000000000000000A, 0, 0, 32, 0, 0)
-            let v := verbatim_1i_1o(hex"b3", 0)
-            sstore(0, success)
-            sstore(1, v)
+
+            let fail := call(0xffff, 0x000000000000000000000000000000000000000A, 0, 0, 32, 0, 0)
+            sstore(0, fail)
+
+            let v0 := verbatim_1i_1o(hex"b3", 0)
+            sstore(1, v0)
+
+            let v1 := verbatim_1i_1o(hex"b3", 1)
+            sstore(2, v1)
           }
 
           function selector() -> s {
@@ -86,3 +95,4 @@
           storage:
             0x00: 0
             0x01: 4
+            0x02: 10
