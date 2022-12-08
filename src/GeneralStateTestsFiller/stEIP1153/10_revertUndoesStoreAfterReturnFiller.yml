@@ -49,8 +49,8 @@
             let v := verbatim_1i_1o(hex"b3", 0)
             sstore(0, v)
 
-            let success := doReenter(hex"76b85d23") // calls doCallThenRevert()
-            sstore(1, success) // should be 0 (revert)
+            let fail := doReenter(hex"76b85d23") // calls doCallThenRevert()
+            sstore(1, fail) // should be 0 (revert)
 
             let val := verbatim_1i_1o(hex"b3", 0)
             sstore(2, val)
