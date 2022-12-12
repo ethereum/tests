@@ -42,7 +42,7 @@
           function doCall(n) {
             mstore(0, hex"f7d6c0eb") // doNStores(n)
             mstore(32, n)
-            let t := call(0xffff, 0x000000000000000000000000000000000000000A, 0, 0, 64, 0, 0)
+            let t := call(gas(), 0x000000000000000000000000000000000000000A, 0, 0, 64, 0, 0)
             sstore(0, t) // should revert
 
             let v := verbatim_1i_1o(hex"b3", 0)
