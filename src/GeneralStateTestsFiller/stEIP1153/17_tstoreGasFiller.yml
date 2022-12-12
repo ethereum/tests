@@ -26,24 +26,14 @@
       code: |
         :yul {
           let extraOpcodes := 8
-
-          // calculate warm dirty sstore gas
-          sstore(5, 1)
-          let g1 := gas()
-          sstore(5, 2)
-          let g2 := gas()
-          sstore(0, sub(sub(g1, g2), extraOpcodes))
           
           // calculate tstore gas
-          let g3 := gas()
+          let g1 := gas()
           verbatim_2i_0o(hex"b4", 0, 3)
-          let g4 := gas()
-          sstore(1, sub(sub(g3, g4), extraOpcodes))
-
-          sstore(2, eq(sub(g3, g4),sub(g1, g2)))
+          let g2 := gas()
+          sstore(1, sub(sub(g1, g2), extraOpcodes))
         }
-      storage:
-        0x05: 5
+      storage: {}
     a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
       balance: 1000000000000000000000
       code: "0x"
@@ -70,7 +60,4 @@
       result:
         000000000000000000000000000000000000000A:
           storage:
-            0x00: 100
             0x01: 100
-            0x02: 0x01
-            0x05: 0x02
