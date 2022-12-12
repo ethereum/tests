@@ -1,5 +1,5 @@
 # Call the ecrecover precompile with a short (<128 bytes) buffer, or an excessively long one.
-
+# These tests are >=TangerineWhistle for using the 63/64th rule, but let's use >=Byzantium. Should be >=FRontier otherwise.
 
 # Using 
 #     wallet = ethers.Wallet.createRandom()
@@ -143,7 +143,7 @@ ecrecoverShortBuff:
       gas: !!int -1
       value: !!int -1
     network: 
-    - ">=London"
+    - ">=Byzantium"
     result:
       cccccccccccccccccccccccccccccccccccccccc:
         storage:
