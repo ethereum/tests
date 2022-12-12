@@ -26,24 +26,15 @@
         :yul {
           let extraOpcodesGas := 5
 
-          // calculate warm sload gas
-          let s := sload(5)
+          // calculate tload gas
+          verbatim_2i_0o(hex"b4", 0, 2)
           let g1 := gas()
-          let s2 := sload(5)
+          let t := verbatim_1i_1o(hex"b3", 0)
           let g2 := gas()
           sstore(0, sub(sub(g1, g2), extraOpcodesGas))
 
-          // calculate tload gas
-          verbatim_2i_0o(hex"b4", 0, 2)
-          let g3 := gas()
-          let t := verbatim_1i_1o(hex"b3", 0)
-          let g4 := gas()
-          sstore(1, sub(sub(g3, g4), extraOpcodesGas))
-
-          sstore(2, eq(sub(g1, g2), sub(g3, g4)))
         }
-      storage:
-        0x05: 5
+      storage: {}
     a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
       balance: 1000000000000000000000
       code: "0x"
@@ -71,6 +62,3 @@
         000000000000000000000000000000000000000A:
           storage:
             0x00: 100
-            0x01: 100
-            0x02: 1
-            0x05: 5
