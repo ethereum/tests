@@ -1,0 +1,474 @@
+# Validates CREATE doesn't deploy contracts when there is invalid EOF1 initcode or invalid EOF code to deploy
+CREATE_EOF1Invalid_FromEOF:
+  env:
+    currentCoinbase: 2adc25665018aa1fe0e6bc666dac8fc2697ff9ba
+    currentDifficulty: '0x020000'
+    currentGasLimit: '89128960'
+    currentBaseFee: '10'
+    currentNumber: '1'
+    currentTimestamp: '1000'
+    previousHash: 5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6
+
+  pre:
+    a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: 200000000
+      code: ''
+      nonce: 0
+      storage: {}
+    b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: 0
+      code: |
+        :yul-eof
+        {
+          calldatacopy(0, 0, calldatasize())
+          sstore(0, create(0, 0, calldatasize()))
+          sstore(1, 1)
+        }
+      nonce: 0
+      storage: {}
+
+  transaction:
+    data: 
+      # Stack height mismatch for different paths
+      # - Branches pushing different number of items:
+      #   Code to deploy: PUSH1(0) RJUMPI(label_true) PUSH1(1) label_true: PUSH1(2) STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000a030000000000000260005d00026001600200" }'
+      #   Code to deploy: PUSH1(0) RJUMPI(label_true) label_false: PUSH1(1) RJUMP(exit) label_true: PUSH1(2) PUSH1(3) exit: STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000f030000000000000260005d000560015c00046002600300" }'
+      # - Calls returning different total outputs
+      #   Code to deploy:
+      #      Code[0] (Inputs: 0, Outputs: 0): PUSH1(0) RJUMPI(label_true) label_false: CALLF(1) RJUMP(exit) label_true: CALLF(2) exit: STOP
+      #      Code[1] (Inputs: 0, Outputs: 1): PUSH1(1) RETF
+      #      Code[2] (Inputs: 0, Outputs: 2): PUSH1(1) PUSH1(1) RETF
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101000c020003000f000300050300000000000002000100010002000260005d000560015c000460026003006001b160016001b1" }'
+      # - Pushing loop
+      #   Code to deploy: start: PUSH1(0) RJUMP(start)
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010005030000000000000160005cfffb" }'
+      # - Popping loop
+      #   Code to deploy: PUSH1(0) PUSH1(0) PUSH1(0) start: POP RJUMP(start)
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000a0300000000000003600060006000505cfffc" }'
+      # - Jump table with different stack heights
+      #   Code to deploy: PUSH1(0) RJUMPV(case1,case2) PUSH1(1) RJUMP(exit) case1: PUSH1(02) PUSH1(3) RJUMP(exit) case2: PUSH1(3) PUSH1(4) PUSH1(5) exit: STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001001b030000000000000360005e020005000c60015c000d600260035c000660036004600500" }'
+      # Stack underflow
+      #   Code to deploy: ADD STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000203000000000000000100" }'
+      #   Code to deploy: PUSH1(1)  ADD STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010004030000000000000160010100" }'
+      #   Code to deploy: MUL STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000203000000000000000200" }'
+      #   Code to deploy: PUSH1(1)  MUL STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010004030000000000000160010200" }'
+      #   Code to deploy: SUB STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000203000000000000000300" }'
+      #   Code to deploy: PUSH1(1)  SUB STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010004030000000000000160010300" }'
+      #   Code to deploy: DIV STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000203000000000000000400" }'
+      #   Code to deploy: PUSH1(1)  DIV STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010004030000000000000160010400" }'
+      #   Code to deploy: SDIV STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000203000000000000000500" }'
+      #   Code to deploy: PUSH1(1)  SDIV STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010004030000000000000160010500" }'
+      #   Code to deploy: MOD STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000203000000000000000600" }'
+      #   Code to deploy: PUSH1(1)  MOD STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010004030000000000000160010600" }'
+      #   Code to deploy: SMOD STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000203000000000000000700" }'
+      #   Code to deploy: PUSH1(1)  SMOD STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010004030000000000000160010700" }'
+      #   Code to deploy: ADDMOD STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000203000000000000000800" }'
+      #   Code to deploy: PUSH1(1) PUSH1(1)  ADDMOD STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101000402000100060300000000000002600160010800" }'
+      #   Code to deploy: MULMOD STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000203000000000000000900" }'
+      #   Code to deploy: PUSH1(1) PUSH1(1)  MULMOD STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101000402000100060300000000000002600160010900" }'
+      #   Code to deploy: EXP STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000203000000000000000a00" }'
+      #   Code to deploy: PUSH1(1)  EXP STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010004030000000000000160010a00" }'
+      #   Code to deploy: SIGNEXTEND STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000203000000000000000b00" }'
+      #   Code to deploy: PUSH1(1)  SIGNEXTEND STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010004030000000000000160010b00" }'
+      #   Code to deploy: LT STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000203000000000000001000" }'
+      #   Code to deploy: PUSH1(1)  LT STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010004030000000000000160011000" }'
+      #   Code to deploy: GT STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000203000000000000001100" }'
+      #   Code to deploy: PUSH1(1)  GT STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010004030000000000000160011100" }'
+      #   Code to deploy: SLT STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000203000000000000001200" }'
+      #   Code to deploy: PUSH1(1)  SLT STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010004030000000000000160011200" }'
+      #   Code to deploy: SGT STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000203000000000000001300" }'
+      #   Code to deploy: PUSH1(1)  SGT STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010004030000000000000160011300" }'
+      #   Code to deploy: EQ STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000203000000000000001400" }'
+      #   Code to deploy: PUSH1(1)  EQ STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010004030000000000000160011400" }'
+      #   Code to deploy: ISZERO STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000203000000000000001500" }'
+      #   Code to deploy: AND STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000203000000000000001600" }'
+      #   Code to deploy: PUSH1(1)  AND STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010004030000000000000160011600" }'
+      #   Code to deploy: OR STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000203000000000000001700" }'
+      #   Code to deploy: PUSH1(1)  OR STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010004030000000000000160011700" }'
+      #   Code to deploy: XOR STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000203000000000000001800" }'
+      #   Code to deploy: PUSH1(1)  XOR STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010004030000000000000160011800" }'
+      #   Code to deploy: NOT STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000203000000000000001900" }'
+      #   Code to deploy: BYTE STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000203000000000000001a00" }'
+      #   Code to deploy: PUSH1(1)  BYTE STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010004030000000000000160011a00" }'
+      #   Code to deploy: SHL STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000203000000000000001b00" }'
+      #   Code to deploy: PUSH1(1)  SHL STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010004030000000000000160011b00" }'
+      #   Code to deploy: SHR STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000203000000000000001c00" }'
+      #   Code to deploy: PUSH1(1)  SHR STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010004030000000000000160011c00" }'
+      #   Code to deploy: SAR STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000203000000000000001d00" }'
+      #   Code to deploy: PUSH1(1)  SAR STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010004030000000000000160011d00" }'
+      #   Code to deploy: SHA3 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000203000000000000002000" }'
+      #   Code to deploy: PUSH1(1)  SHA3 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010004030000000000000160012000" }'
+      #   Code to deploy: BALANCE STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000203000000000000003100" }'
+      #   Code to deploy: CALLDATALOAD STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000203000000000000003500" }'
+      #   Code to deploy: CALLDATACOPY STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000203000000000000003700" }'
+      #   Code to deploy: PUSH1(1) PUSH1(1)  CALLDATACOPY STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101000402000100060300000000000002600160013700" }'
+      #   Code to deploy: CODECOPY STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000203000000000000003900" }'
+      #   Code to deploy: PUSH1(1) PUSH1(1)  CODECOPY STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101000402000100060300000000000002600160013900" }'
+      #   Code to deploy: EXTCODESIZE STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000203000000000000003b00" }'
+      #   Code to deploy: EXTCODECOPY STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000203000000000000003c00" }'
+      #   Code to deploy: PUSH1(1) PUSH1(1) PUSH1(1)  EXTCODECOPY STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000803000000000000036001600160013c00" }'
+      #   Code to deploy: RETURNDATACOPY STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000203000000000000003e00" }'
+      #   Code to deploy: PUSH1(1) PUSH1(1)  RETURNDATACOPY STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101000402000100060300000000000002600160013e00" }'
+      #   Code to deploy: EXTCODEHASH STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000203000000000000003f00" }'
+      #   Code to deploy: BLOCKHASH STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000203000000000000004000" }'
+      #   Code to deploy: POP STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000203000000000000005000" }'
+      #   Code to deploy: MLOAD STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000203000000000000005100" }'
+      #   Code to deploy: MSTORE STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000203000000000000005200" }'
+      #   Code to deploy: PUSH1(1)  MSTORE STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010004030000000000000160015200" }'
+      #   Code to deploy: MSTORE8 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000203000000000000005300" }'
+      #   Code to deploy: PUSH1(1)  MSTORE8 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010004030000000000000160015300" }'
+      #   Code to deploy: SLOAD STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000203000000000000005400" }'
+      #   Code to deploy: SSTORE STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000203000000000000005500" }'
+      #   Code to deploy: PUSH1(1)  SSTORE STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010004030000000000000160015500" }'
+      #   Code to deploy: DUP1 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000203000000000000008000" }'
+      #   Code to deploy: DUP2 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000203000000000000008100" }'
+      #   Code to deploy: PUSH1(1)  DUP2 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010004030000000000000160018100" }'
+      #   Code to deploy: DUP3 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000203000000000000008200" }'
+      #   Code to deploy: PUSH1(1) PUSH1(1)  DUP3 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101000402000100060300000000000002600160018200" }'
+      #   Code to deploy: DUP4 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000203000000000000008300" }'
+      #   Code to deploy: PUSH1(1) PUSH1(1) PUSH1(1)  DUP4 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000803000000000000036001600160018300" }'
+      #   Code to deploy: DUP5 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000203000000000000008400" }'
+      #   Code to deploy: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1)  DUP5 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000a030000000000000460016001600160018400" }'
+      #   Code to deploy: DUP6 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000203000000000000008500" }'
+      #   Code to deploy: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1)  DUP6 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000c0300000000000005600160016001600160018500" }'
+      #   Code to deploy: DUP7 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000203000000000000008600" }'
+      #   Code to deploy: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1)  DUP7 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000e03000000000000066001600160016001600160018600" }'
+      #   Code to deploy: DUP8 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000203000000000000008700" }'
+      #   Code to deploy: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1)  DUP8 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010010030000000000000760016001600160016001600160018700" }'
+      #   Code to deploy: DUP9 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000203000000000000008800" }'
+      #   Code to deploy: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1)  DUP9 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101000402000100120300000000000008600160016001600160016001600160018800" }'
+      #   Code to deploy: DUP10 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000203000000000000008900" }'
+      #   Code to deploy: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1)  DUP10 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001001403000000000000096001600160016001600160016001600160018900" }'
+      #   Code to deploy: DUP11 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000203000000000000008a00" }'
+      #   Code to deploy: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1)  DUP11 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010016030000000000000a60016001600160016001600160016001600160018a00" }'
+      #   Code to deploy: DUP12 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000203000000000000008b00" }'
+      #   Code to deploy: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1)  DUP12 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010018030000000000000b600160016001600160016001600160016001600160018b00" }'
+      #   Code to deploy: DUP13 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000203000000000000008c00" }'
+      #   Code to deploy: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1)  DUP13 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001001a030000000000000c6001600160016001600160016001600160016001600160018c00" }'
+      #   Code to deploy: DUP14 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000203000000000000008d00" }'
+      #   Code to deploy: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1)  DUP14 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001001c030000000000000d60016001600160016001600160016001600160016001600160018d00" }'
+      #   Code to deploy: DUP15 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000203000000000000008e00" }'
+      #   Code to deploy: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1)  DUP15 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001001e030000000000000e600160016001600160016001600160016001600160016001600160018e00" }'
+      #   Code to deploy: DUP16 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000203000000000000008f00" }'
+      #   Code to deploy: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1)  DUP16 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010020030000000000000f6001600160016001600160016001600160016001600160016001600160018f00" }'
+      #   Code to deploy: SWAP1 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000203000000000000009000" }'
+      #   Code to deploy: PUSH1(1)  SWAP1 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010004030000000000000160019000" }'
+      #   Code to deploy: SWAP2 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000203000000000000009100" }'
+      #   Code to deploy: PUSH1(1) PUSH1(1)  SWAP2 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101000402000100060300000000000002600160019100" }'
+      #   Code to deploy: SWAP3 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000203000000000000009200" }'
+      #   Code to deploy: PUSH1(1) PUSH1(1) PUSH1(1)  SWAP3 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000803000000000000036001600160019200" }'
+      #   Code to deploy: SWAP4 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000203000000000000009300" }'
+      #   Code to deploy: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1)  SWAP4 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000a030000000000000460016001600160019300" }'
+      #   Code to deploy: SWAP5 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000203000000000000009400" }'
+      #   Code to deploy: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1)  SWAP5 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000c0300000000000005600160016001600160019400" }'
+      #   Code to deploy: SWAP6 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000203000000000000009500" }'
+      #   Code to deploy: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1)  SWAP6 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000e03000000000000066001600160016001600160019500" }'
+      #   Code to deploy: SWAP7 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000203000000000000009600" }'
+      #   Code to deploy: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1)  SWAP7 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010010030000000000000760016001600160016001600160019600" }'
+      #   Code to deploy: SWAP8 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000203000000000000009700" }'
+      #   Code to deploy: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1)  SWAP8 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101000402000100120300000000000008600160016001600160016001600160019700" }'
+      #   Code to deploy: SWAP9 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000203000000000000009800" }'
+      #   Code to deploy: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1)  SWAP9 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001001403000000000000096001600160016001600160016001600160019800" }'
+      #   Code to deploy: SWAP10 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000203000000000000009900" }'
+      #   Code to deploy: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1)  SWAP10 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010016030000000000000a60016001600160016001600160016001600160019900" }'
+      #   Code to deploy: SWAP11 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000203000000000000009a00" }'
+      #   Code to deploy: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1)  SWAP11 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010018030000000000000b600160016001600160016001600160016001600160019a00" }'
+      #   Code to deploy: SWAP12 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000203000000000000009b00" }'
+      #   Code to deploy: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1)  SWAP12 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001001a030000000000000c6001600160016001600160016001600160016001600160019b00" }'
+      #   Code to deploy: SWAP13 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000203000000000000009c00" }'
+      #   Code to deploy: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1)  SWAP13 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001001c030000000000000d60016001600160016001600160016001600160016001600160019c00" }'
+      #   Code to deploy: SWAP14 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000203000000000000009d00" }'
+      #   Code to deploy: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1)  SWAP14 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001001e030000000000000e600160016001600160016001600160016001600160016001600160019d00" }'
+      #   Code to deploy: SWAP15 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000203000000000000009e00" }'
+      #   Code to deploy: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1)  SWAP15 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010020030000000000000f6001600160016001600160016001600160016001600160016001600160019e00" }'
+      #   Code to deploy: SWAP16 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000203000000000000009f00" }'
+      #   Code to deploy: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1)  SWAP16 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010022030000000000001060016001600160016001600160016001600160016001600160016001600160019f00" }'
+      #   Code to deploy: LOG0 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101000402000100020300000000000000a000" }'
+      #   Code to deploy: PUSH1(1)  LOG0 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000403000000000000016001a000" }'
+      #   Code to deploy: LOG1 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101000402000100020300000000000000a100" }'
+      #   Code to deploy: PUSH1(1) PUSH1(1)  LOG1 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010006030000000000000260016001a100" }'
+      #   Code to deploy: LOG2 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101000402000100020300000000000000a200" }'
+      #   Code to deploy: PUSH1(1) PUSH1(1) PUSH1(1)  LOG2 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101000402000100080300000000000003600160016001a200" }'
+      #   Code to deploy: LOG3 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101000402000100020300000000000000a300" }'
+      #   Code to deploy: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1)  LOG3 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000a03000000000000046001600160016001a300" }'
+      #   Code to deploy: LOG4 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101000402000100020300000000000000a400" }'
+      #   Code to deploy: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1)  LOG4 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000c030000000000000560016001600160016001a400" }'
+      #   Code to deploy: CREATE STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101000402000100020300000000000000f000" }'
+      #   Code to deploy: PUSH1(1) PUSH1(1)  CREATE STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010006030000000000000260016001f000" }'
+      #   Code to deploy: CALL STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101000402000100020300000000000000f100" }'
+      #   Code to deploy: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1)  CALL STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000e0300000000000006600160016001600160016001f100" }'
+      #   Code to deploy: RETURN STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101000402000100020300000000000000f300" }'
+      #   Code to deploy: PUSH1(1)  RETURN STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000403000000000000016001f300" }'
+      #   Code to deploy: DELEGATECALL STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101000402000100020300000000000000f400" }'
+      #   Code to deploy: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1)  DELEGATECALL STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000c030000000000000560016001600160016001f400" }'
+      #   Code to deploy: CREATE2 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101000402000100020300000000000000f500" }'
+      #   Code to deploy: PUSH1(1) PUSH1(1) PUSH1(1)  CREATE2 STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101000402000100080300000000000003600160016001f500" }'
+      #   Code to deploy: STATICCALL STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101000402000100020300000000000000fa00" }'
+      #   Code to deploy: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1)  STATICCALL STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000c030000000000000560016001600160016001fa00" }'
+      #   Code to deploy: REVERT STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101000402000100020300000000000000fd00" }'
+      #   Code to deploy: PUSH1(1)  REVERT STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000403000000000000016001fd00" }'
+      # Calling function without enough stack items: Function 0 calls Function 1 without enough parameters
+      #   Code to deploy:
+      #      Code[0] (Inputs: 0, Outputs: 0): CALLF(1) STOP
+      #      Code[1] (Inputs: 1, Outputs: 0): PUSH1(0) PUSH1(0) CALLF(2)
+      #      Code[2] (Inputs: 2, Outputs: 0): POP POP RETF
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101000c020003000400070003030000000000000101000003020000026001fd0060006000b000025050b1" }'
+      # Calling function without enough stack items: Function 1 calls Function 2 without enough parameters
+      #   Code to deploy:
+      #      Code[0] (Inputs: 0, Outputs: 0): PUSH1(0) CALLF(1) STOP
+      #      Code[1] (Inputs: 1, Outputs: 0): PUSH1(0) CALLF(2)
+      #      Code[2] (Inputs: 2, Outputs: 0): POP POP RETF
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101000c020003000400050003030000000000000101000002020000026001fd006000b000025050b1" }'
+      # Calling function without enough stack items: Function 0 calls Function 1 without enough parameters, wich calls function 2 without enough parameters
+      #   Code to deploy:
+      #      Code[0] (Inputs: 0, Outputs: 0): CALLF(1) STOP
+      #      Code[1] (Inputs: 1, Outputs: 0): PUSH1(0) CALLF(2)
+      #      Code[2] (Inputs: 2, Outputs: 0): POP POP RETF
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101000c020003000400050003030000000000000101000002020000026001fd006000b000025050b1" }'
+      # Stack Overflow
+      # - Function pushing more than 1024 items to the stack
+      #   Code to deploy: PUSH1(0) (1024 times)
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101000402000108010300000000000400600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600000" }'
+      # - Function 1 when called is pushing more than 1024 items to the stack
+      #   Code to deploy:
+      #     Code[0]: PUSH1(0) (1020 times) CALLF(1)
+      #     Code[1]: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) RETF
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100080200020801000b03000000000004000005000560006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060000060016001600160016001b1" }'
+      # Function ending with non-terminating instruction
+      # Code to deploy: PUSH1(0)
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000203000000000000016000" }'
+      # Code to deploy: PUSH1(0) RJUMPI(exit) STOP exit: NOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010007030000000000000160005d0001005b" }'
+      # Code to deploy: PUSH1(0) RJUMPV(case1,case2) INVALID case1: STOP case2: NOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000b030000000000000160005e0200010002fe005b" }'
+      # Function containing unreachable code
+      # - Function containing unreachable code after 0x00
+      #   Code to deploy: STOP STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000203000000000000000000" }'
+      # - Function containing unreachable code after 0x00
+      #   Code to deploy: STOP PUSH1(1) STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010004030000000000000000600100" }'
+      # - Function containing unreachable code after 0xb1
+      #   Code to deploy: RETF STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101000402000100020300000000000000b100" }'
+      # - Function containing unreachable code after 0xb1
+      #   Code to deploy: RETF PUSH1(1) STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101000402000100040300000000000000b1600100" }'
+      # - Function containing unreachable code after 0xf3
+      #   Code to deploy: PUSH1(0) PUSH1(0) RETURN STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010006030000000000000260006000f300" }'
+      # - Function containing unreachable code after 0xf3
+      #   Code to deploy: PUSH1(0) PUSH1(0) RETURN PUSH1(1) STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010008030000000000000260006000f3600100" }'
+      # - Function containing unreachable code after 0xfd
+      #   Code to deploy: PUSH1(0) PUSH1(0) REVERT STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010006030000000000000260006000fd00" }'
+      # - Function containing unreachable code after 0xfd
+      #   Code to deploy: PUSH1(0) PUSH1(0) REVERT PUSH1(1) STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010008030000000000000260006000fd600100" }'
+      # - Function containing unreachable code after 0xfe
+      #   Code to deploy: INVALID STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101000402000100020300000000000000fe00" }'
+      # - Function containing unreachable code after 0xfe
+      #   Code to deploy: INVALID PUSH1(1) STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101000402000100040300000000000000fe600100" }'
+      # Unreachable code after RJUMP
+      #   Code to deploy: RJUMP(start) PUSH1(0) start: PUSH1(0) STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000803000000000000015c00026000600000" }'
+      # Unreachable code after infinite loop
+      #   Code to deploy: RJUMP(start) PUSH1(0) start: PUSH1(0) STOP
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000803000000000000015c00026000600000" }'
+    gasLimit:
+      - 15000000
+    gasPrice: 10
+    nonce: 0
+    secretKey: 45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8
+    to: 'b94f5374fce5edbc8e2a8697c15331677e6ebf0b'
+    value:
+    - 0
+
+  expect:
+    - indexes: {}
+      network:
+        - 'Merge'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: '0'
+          storage: {}
+    # Same expectation, but for Merge execution fails on EF byte, for Shanghai it fails because EOF initcode or code is invalid
+    - indexes: {}
+      network:
+        - 'Shanghai'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: '1'
+          storage:
+            '0': '0'
+            '1': '1'
+

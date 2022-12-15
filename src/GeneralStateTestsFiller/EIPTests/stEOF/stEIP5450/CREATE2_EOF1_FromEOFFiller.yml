@@ -1,0 +1,1922 @@
+CREATE2_EOF1_FromEOF:
+  env:
+    currentCoinbase: 2adc25665018aa1fe0e6bc666dac8fc2697ff9ba
+    currentDifficulty: '0x020000'
+    currentGasLimit: '89128960'
+    currentBaseFee: '10'
+    currentNumber: '1'
+    currentTimestamp: '1000'
+    previousHash: 5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6
+
+  pre:
+    a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: 200000000
+      code: ''
+      nonce: 0
+      storage: {}
+    b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: 0
+      code: |
+        :yul-eof
+        {
+          calldatacopy(0, 0, calldatasize())
+          sstore(0, create2(0, 0, calldatasize(), 0))
+          sstore(1, 1)
+        }
+      nonce: 0
+      storage: {}
+
+  transaction:
+    data: 
+      # EOF Initcode returning valid EOF code with branches having same stack height
+      # Code to deploy: PUSH1(0) RJUMPI(label_true) PUSH1(1) PUSH1(2) RJUMP(exit) label_true: PUSH1(3) PUSH1(4) exit: STOP
+      - ':label branches_same_stack_height :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010011030000000000000260005d0007600160025c00046003600400" }'
+      # EOF Initcode returning valid EOF code calling functions returning same total outputs
+      # Code to deploy:
+      #   - Types: [(0,0), (0,1), (0, 1)]
+      #   - Code[0]: PUSH1(0) RJUMPI(label_true) label_false: CALLF(1) RJUMP(exit) label_true: CALLF(2) exit: STOP
+      #   - Code[1]: ADDRESS STOP
+      #   - Code[2]: CODESIZE STOP
+      - ':label branches_callf_same_total_outputs :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101000c0200030011000200020300000000000002000100010001000160005d0007600160025c0004600360040030003800" }'
+      # EOF Initcode returning valid EOF code containing infinite loop
+      # Code to deploy:
+      #   - Code:
+      - ':label infinite_loop :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000903000000000000026000600150505cfff7" }'
+      # EOF Initcode returning valid EOF code containing jump table using RJUMPV
+      # Code to deploy: ef000101001b0060005e020004000e600160025c000b600360045c00046005600600
+      #   - Code: PUSH1(0) RJUMPV(case1,case2) PUSH1(1) PUSH1(2) RJUMP(exit) case1: PUSH1(3) PUSH1(4) RJUMP(exit) case2: PUSH1(5) PUSH1(6) exit: STOP
+      - ':label jump_table :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001001b030000000000000260005e020007000e600160025c000b600360045c00046005600600" }'
+      # EOF Initcode returning valid EOF code with all instructions passing validation with the right number of input stack items
+      # Code to deploy: PUSH1(1) DUP1 ADD STOP
+      - ':label validate_input_add :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000503000000000000026001800100" }'
+      # Code to deploy: PUSH1(1) DUP1 MUL STOP
+      - ':label validate_input_mul :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000503000000000000026001800200" }'
+      # Code to deploy: PUSH1(1) DUP1 SUB STOP
+      - ':label validate_input_sub :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000503000000000000026001800300" }'
+      # Code to deploy: PUSH1(1) DUP1 DIV STOP
+      - ':label validate_input_div :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000503000000000000026001800400" }'
+      # Code to deploy: PUSH1(1) DUP1 SDIV STOP
+      - ':label validate_input_sdiv :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000503000000000000026001800500" }'
+      # Code to deploy: PUSH1(1) DUP1 MOD STOP
+      - ':label validate_input_mod :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000503000000000000026001800600" }'
+      # Code to deploy: PUSH1(1) DUP1 SMOD STOP
+      - ':label validate_input_smod :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000503000000000000026001800700" }'
+      # Code to deploy: PUSH1(1) DUP1 DUP1 ADDMOD STOP
+      - ':label validate_input_addmod :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101000402000100060300000000000003600180800800" }'
+      # Code to deploy: PUSH1(1) DUP1 DUP1 MULMOD STOP
+      - ':label validate_input_mulmod :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101000402000100060300000000000003600180800900" }'
+      # Code to deploy: PUSH1(1) DUP1 EXP STOP
+      - ':label validate_input_exp :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000503000000000000026001800a00" }'
+      # Code to deploy: PUSH1(1) DUP1 SIGNEXTEND STOP
+      - ':label validate_input_signextend :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000503000000000000026001800b00" }'
+      # Code to deploy: PUSH1(1) DUP1 LT STOP
+      - ':label validate_input_lt :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000503000000000000026001801000" }'
+      # Code to deploy: PUSH1(1) DUP1 GT STOP
+      - ':label validate_input_gt :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000503000000000000026001801100" }'
+      # Code to deploy: PUSH1(1) DUP1 SLT STOP
+      - ':label validate_input_slt :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000503000000000000026001801200" }'
+      # Code to deploy: PUSH1(1) DUP1 SGT STOP
+      - ':label validate_input_sgt :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000503000000000000026001801300" }'
+      # Code to deploy: PUSH1(1) DUP1 EQ STOP
+      - ':label validate_input_eq :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000503000000000000026001801400" }'
+      # Code to deploy: PUSH1(1) ISZERO STOP
+      - ':label validate_input_iszero :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010004030000000000000160011500" }'
+      # Code to deploy: PUSH1(1) DUP1 AND STOP
+      - ':label validate_input_and :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000503000000000000026001801600" }'
+      # Code to deploy: PUSH1(1) DUP1 OR STOP
+      - ':label validate_input_or :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000503000000000000026001801700" }'
+      # Code to deploy: PUSH1(1) DUP1 XOR STOP
+      - ':label validate_input_xor :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000503000000000000026001801800" }'
+      # Code to deploy: PUSH1(1) NOT STOP
+      - ':label validate_input_not :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010004030000000000000160011900" }'
+      # Code to deploy: PUSH1(1) DUP1 BYTE STOP
+      - ':label validate_input_byte :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000503000000000000026001801a00" }'
+      # Code to deploy: PUSH1(1) DUP1 SHL STOP
+      - ':label validate_input_shl :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000503000000000000026001801b00" }'
+      # Code to deploy: PUSH1(1) DUP1 SHR STOP
+      - ':label validate_input_shr :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000503000000000000026001801c00" }'
+      # Code to deploy: PUSH1(1) DUP1 SAR STOP
+      - ':label validate_input_sar :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000503000000000000026001801d00" }'
+      # Code to deploy: PUSH1(1) DUP1 SHA3 STOP
+      - ':label validate_input_sha3 :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000503000000000000026001802000" }'
+      # Code to deploy: PUSH1(1) BALANCE STOP
+      - ':label validate_input_balance :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010004030000000000000160013100" }'
+      # Code to deploy: PUSH1(1) CALLDATALOAD STOP
+      - ':label validate_input_calldataload :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010004030000000000000160013500" }'
+      # Code to deploy: PUSH1(1) DUP1 DUP1 CALLDATACOPY STOP
+      - ':label validate_input_calldatacopy :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101000402000100060300000000000003600180803700" }'
+      # Code to deploy: PUSH1(1) DUP1 DUP1 CODECOPY STOP
+      - ':label validate_input_codecopy :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101000402000100060300000000000003600180803900" }'
+      # Code to deploy: PUSH1(1) EXTCODESIZE STOP
+      - ':label validate_input_extcodesize :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010004030000000000000160013b00" }'
+      # Code to deploy: PUSH1(1) DUP1 DUP1 DUP1 EXTCODECOPY STOP
+      - ':label validate_input_extcodecopy :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010007030000000000000460018080803c00" }'
+      # Code to deploy: PUSH1(1) DUP1 DUP1 RETURNDATACOPY STOP
+      - ':label validate_input_returndatacopy :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101000402000100060300000000000003600180803e00" }'
+      # Code to deploy: PUSH1(1) EXTCODEHASH STOP
+      - ':label validate_input_extcodehash :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010004030000000000000160013f00" }'
+      # Code to deploy: PUSH1(1) BLOCKHASH STOP
+      - ':label validate_input_blockhash :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010004030000000000000160014000" }'
+      # Code to deploy: PUSH1(1) POP STOP
+      - ':label validate_input_pop :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010004030000000000000160015000" }'
+      # Code to deploy: PUSH1(1) MLOAD STOP
+      - ':label validate_input_mload :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010004030000000000000160015100" }'
+      # Code to deploy: PUSH1(1) DUP1 MSTORE STOP
+      - ':label validate_input_mstore :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000503000000000000026001805200" }'
+      # Code to deploy: PUSH1(1) DUP1 MSTORE8 STOP
+      - ':label validate_input_mstore8 :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000503000000000000026001805300" }'
+      # Code to deploy: PUSH1(1) SLOAD STOP
+      - ':label validate_input_sload :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010004030000000000000160015400" }'
+      # Code to deploy: PUSH1(1) DUP1 SSTORE STOP
+      - ':label validate_input_sstore :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000503000000000000026001805500" }'
+      # Code to deploy: PUSH1(1) DUP1 STOP
+      - ':label validate_input_dup1 :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010004030000000000000260018000" }'
+      # Code to deploy: PUSH1(1) DUP1 DUP2 STOP
+      - ':label validate_input_dup2 :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000503000000000000036001808100" }'
+      # Code to deploy: PUSH1(1) DUP1 DUP1 DUP3 STOP
+      - ':label validate_input_dup3 :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101000402000100060300000000000004600180808200" }'
+      # Code to deploy: PUSH1(1) DUP1 DUP1 DUP1 DUP4 STOP
+      - ':label validate_input_dup4 :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010007030000000000000560018080808300" }'
+      # Code to deploy: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP5 STOP
+      - ':label validate_input_dup5 :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000803000000000000066001808080808400" }'
+      # Code to deploy: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP6 STOP
+      - ':label validate_input_dup6 :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101000402000100090300000000000007600180808080808500" }'
+      # Code to deploy: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP7 STOP
+      - ':label validate_input_dup7 :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000a030000000000000860018080808080808600" }'
+      # Code to deploy: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP8 STOP
+      - ':label validate_input_dup8 :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000b03000000000000096001808080808080808700" }'
+      # Code to deploy: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP9 STOP
+      - ':label validate_input_dup9 :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000c030000000000000a600180808080808080808800" }'
+      # Code to deploy: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP10 STOP
+      - ':label validate_input_dup10 :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000d030000000000000b60018080808080808080808900" }'
+      # Code to deploy: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP11 STOP
+      - ':label validate_input_dup11 :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000e030000000000000c6001808080808080808080808a00" }'
+      # Code to deploy: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP12 STOP
+      - ':label validate_input_dup12 :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000f030000000000000d600180808080808080808080808b00" }'
+      # Code to deploy: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP13 STOP
+      - ':label validate_input_dup13 :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010010030000000000000e60018080808080808080808080808c00" }'
+      # Code to deploy: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP14 STOP
+      - ':label validate_input_dup14 :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010011030000000000000f6001808080808080808080808080808d00" }'
+      # Code to deploy: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP15 STOP
+      - ':label validate_input_dup15 :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101000402000100120300000000000010600180808080808080808080808080808e00" }'
+      # Code to deploy: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP16 STOP
+      - ':label validate_input_dup16 :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010013030000000000001160018080808080808080808080808080808f00" }'
+      # Code to deploy: PUSH1(1) DUP1 SWAP1 STOP
+      - ':label validate_input_swap1 :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000503000000000000026001809000" }'
+      # Code to deploy: PUSH1(1) DUP1 DUP1 SWAP2 STOP
+      - ':label validate_input_swap2 :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101000402000100060300000000000003600180809100" }'
+      # Code to deploy: PUSH1(1) DUP1 DUP1 DUP1 SWAP3 STOP
+      - ':label validate_input_swap3 :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010007030000000000000460018080809200" }'
+      # Code to deploy: PUSH1(1) DUP1 DUP1 DUP1 DUP1 SWAP4 STOP
+      - ':label validate_input_swap4 :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000803000000000000056001808080809300" }'
+      # Code to deploy: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 SWAP5 STOP
+      - ':label validate_input_swap5 :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101000402000100090300000000000006600180808080809400" }'
+      # Code to deploy: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 SWAP6 STOP
+      - ':label validate_input_swap6 :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000a030000000000000760018080808080809500" }'
+      # Code to deploy: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 SWAP7 STOP
+      - ':label validate_input_swap7 :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000b03000000000000086001808080808080809600" }'
+      # Code to deploy: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 SWAP8 STOP
+      - ':label validate_input_swap8 :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000c0300000000000009600180808080808080809700" }'
+      # Code to deploy: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 SWAP9 STOP
+      - ':label validate_input_swap9 :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000d030000000000000a60018080808080808080809800" }'
+      # Code to deploy: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 SWAP10 STOP
+      - ':label validate_input_swap10 :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000e030000000000000b6001808080808080808080809900" }'
+      # Code to deploy: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 SWAP11 STOP
+      - ':label validate_input_swap11 :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000f030000000000000c600180808080808080808080809a00" }'
+      # Code to deploy: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 SWAP12 STOP
+      - ':label validate_input_swap12 :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010010030000000000000d60018080808080808080808080809b00" }'
+      # Code to deploy: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 SWAP13 STOP
+      - ':label validate_input_swap13 :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010011030000000000000e6001808080808080808080808080809c00" }'
+      # Code to deploy: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 SWAP14 STOP
+      - ':label validate_input_swap14 :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010012030000000000000f600180808080808080808080808080809d00" }'
+      # Code to deploy: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 SWAP15 STOP
+      - ':label validate_input_swap15 :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010013030000000000001060018080808080808080808080808080809e00" }'
+      # Code to deploy: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 SWAP16 STOP
+      - ':label validate_input_swap16 :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001001403000000000000116001808080808080808080808080808080809f00" }'
+      # Code to deploy: PUSH1(1) DUP1 LOG0 STOP
+      - ':label validate_input_log0 :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101000402000100050300000000000002600180a000" }'
+      # Code to deploy: PUSH1(1) DUP1 DUP1 LOG1 STOP
+      - ':label validate_input_log1 :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010006030000000000000360018080a100" }'
+      # Code to deploy: PUSH1(1) DUP1 DUP1 DUP1 LOG2 STOP
+      - ':label validate_input_log2 :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000703000000000000046001808080a200" }'
+      # Code to deploy: PUSH1(1) DUP1 DUP1 DUP1 DUP1 LOG3 STOP
+      - ':label validate_input_log3 :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101000402000100080300000000000005600180808080a300" }'
+      # Code to deploy: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 LOG4 STOP
+      - ':label validate_input_log4 :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010009030000000000000660018080808080a400" }'
+      # Code to deploy: PUSH1(1) DUP1 DUP1 CREATE STOP
+      - ':label validate_input_create :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010006030000000000000360018080f000" }'
+      # Code to deploy: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 CALL STOP
+      - ':label validate_input_call :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000a03000000000000076001808080808080f100" }'
+      # Code to deploy: PUSH1(1) DUP1 RETURN
+      - ':label validate_input_return :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101000402000100040300000000000002600180f3" }'
+      # Code to deploy: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DELEGATECALL STOP
+      - ':label validate_input_delegatecall :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010009030000000000000660018080808080f400" }'
+      # Code to deploy: PUSH1(1) DUP1 DUP1 DUP1 CREATE2 STOP
+      - ':label validate_input_create2 :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000703000000000000046001808080f500" }'
+      # Code to deploy: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 STATICCALL STOP
+      - ':label validate_input_staticcall :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010009030000000000000660018080808080fa00" }'
+      # Code to deploy: PUSH1(1) DUP1 REVERT
+      - ':label validate_input_revert :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101000402000100040300000000000002600180fd" }'
+      # EOF Initcode returning valid EOF code passing validation with right number of input stack parameters for functions (CALLF)
+      #   Types: [(0,0), (1, 0), (2, 0), (127, 0)]
+      #   Code[0]: CALLF(0) STOP
+      #   Code[1]: PUSH1(0) CALLF(1) STOP
+      #   Code[2]: PUSH1(0) PUSH1(0) CALLF(2) STOP
+      #   Code[3]: PUSH1(0) DUP1(x126 times)  CALLF(3) STOP
+      - ':label callf_inputs :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100100200040004000600080084030000000000000001000002020000047f0000feb00000006000b000010060006000b00002006000808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080b0000300" }'
+      # EOF Initcode returning valid EOF code containing terminating instruction at the end
+      # Code to deploy: PUSH1(0) POP  STOP
+      - ':label terminating_instruction_stop :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010004030000000000000160005000" }'
+      # Code to deploy: PUSH1(0) POP  RETF
+      - ':label terminating_instruction_retf :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101000402000100040300000000000001600050b1" }'
+      # Code to deploy: PUSH1(0) POP  PUSH1(0) PUSH1(1) DUP1 DUP1 RETURN
+      - ':label terminating_instruction_return :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000a0300000000000004600050600060018080f3" }'
+      # Code to deploy: PUSH1(0) POP  PUSH1(0) PUSH1(1) DUP1 DUP1 DUP1 REVERT
+      - ':label terminating_instruction_revert :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000b030000000000000560005060006001808080fd" }'
+      # Code to deploy: PUSH1(0) POP  INVALID
+      - ':label terminating_instruction_invalid :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101000402000100040300000000000001600050fe" }'
+      # Loop ending with unconditional RJUMP
+      #     - Code to deploy: start: RJUMP(start)
+      - ':label loop_ending_with_unconditional_rjump_a :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000303000000000000005cfffd" }'
+      # Loop ending with unconditional RJUMP
+      #     - Code to deploy: PUSH1(10) start: PUSH1(1) SWAP1 SUB DUP1 RJUMPI(end) STOP end: RJUMP(start)
+      - ':label loop_ending_with_unconditional_rjump_b :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000e0300000000000002600a60019003805d0001005cfff4" }'
+      # Functions ending with RETF
+      #  - Code to deploy:
+      #      - code[0] (Inputs: 0, Outputs: 0): PUSH1(0) CALLF(1) STOP
+      #      - code[1] (Inputs: 1, Outputs: 1): RETF
+      #      - code[2] (Inputs: 0, Outputs: 2): PUSH1(0) PUSH2(0x0000) RETF
+      - ':label functions_ending_with_retf :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101000c020003000600010006030000000000000101010001000200026000b0000100b16000610000b1" }'
+      # Stack not required to be clean on terminating instruction
+      # Code to deploy: PUSH1(0) PUSH1(0) PUSH1(0)  STOP
+      - ':label stack_not_clean_before_stop :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010007030000000000000360006000600000" }'
+      # Code to deploy: PUSH1(0) PUSH1(0) PUSH1(0)  PUSH1(0) PUSH1(1) DUP1 DUP1 DUP1 DUP1 RETURN
+      - ':label stack_not_clean_before_return :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000f03000000000000096000600060006000600180808080f3" }'
+      # Code to deploy: PUSH1(0) PUSH1(0) PUSH1(0)  PUSH1(0) PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 REVERT
+      - ':label stack_not_clean_before_revert :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010010030000000000000a600060006000600060018080808080fd" }'
+      # Code to deploy: PUSH1(0) PUSH1(0) PUSH1(0)  INVALID
+      - ':label stack_not_clean_before_invalid :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101000402000100070300000000000003600060006000fe" }'
+      # Code to deploy:
+      #    Types: [(0,0), (1,1), (0,2)
+      #    Code[0]: CALLF(1) STOP
+      #    Code[1]: PUSH1(0) DUP1*126 RETF
+      #    Code[2]: PUSH1(0) PUSH2(0x0000) RETF
+      - ':label retf_512_output :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101000802000200040081030000000000007f007f007fb00001006000808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080b1" }'
+    gasLimit:
+      - 15000000
+    gasPrice: 10
+    nonce: 0
+    secretKey: 45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8
+    to: 'b94f5374fce5edbc8e2a8697c15331677e6ebf0b'
+    value:
+    - 0
+
+  expect:
+      - indexes:
+         data: ':label branches_same_stack_height'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': '3D350fc8F11644e60f2ce976Ea44F4FcE2095AB4'
+              '1': '1'
+         3D350fc8F11644e60f2ce976Ea44F4FcE2095AB4:
+            nonce: 1
+            code: '0xef00010100040200010011030000000000000260005d0007600160025c00046003600400'
+            storage: {}
+      - indexes:
+         data: ':label branches_callf_same_total_outputs'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': '41EAc0008F0adf6811D4C4A8d48570580fbaa58c'
+              '1': '1'
+         41EAc0008F0adf6811D4C4A8d48570580fbaa58c:
+            nonce: 1
+            code: '0xef000101000c0200030011000200020300000000000002000100010001000160005d0007600160025c0004600360040030003800'
+            storage: {}
+      - indexes:
+         data: ':label infinite_loop'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': 'a0975a56D3C40A021f5118991Bf15B3485dA0ee3'
+              '1': '1'
+         a0975a56D3C40A021f5118991Bf15B3485dA0ee3:
+            nonce: 1
+            code: '0xef0001010004020001000903000000000000026000600150505cfff7'
+            storage: {}
+      - indexes:
+         data: ':label jump_table'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': 'd1aD826631a06bd985A3daA864A2151B67d459f1'
+              '1': '1'
+         d1aD826631a06bd985A3daA864A2151B67d459f1:
+            nonce: 1
+            code: '0xef0001010004020001001b030000000000000260005e020007000e600160025c000b600360045c00046005600600'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_add'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': '7bA41a57C194Fdc0214ca2492D1f8219d30Fa6a7'
+              '1': '1'
+         7bA41a57C194Fdc0214ca2492D1f8219d30Fa6a7:
+            nonce: 1
+            code: '0xef0001010004020001000503000000000000026001800100'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_mul'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': '4094DEE53E50682482448f137953766bFdfBe052'
+              '1': '1'
+         4094DEE53E50682482448f137953766bFdfBe052:
+            nonce: 1
+            code: '0xef0001010004020001000503000000000000026001800200'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_sub'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': 'E163533F3fA524e45773120d7C74f5d79aA1DFB7'
+              '1': '1'
+         E163533F3fA524e45773120d7C74f5d79aA1DFB7:
+            nonce: 1
+            code: '0xef0001010004020001000503000000000000026001800300'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_div'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': '4fb957D9d7394022D1205831Dd652872611fc8Fb'
+              '1': '1'
+         4fb957D9d7394022D1205831Dd652872611fc8Fb:
+            nonce: 1
+            code: '0xef0001010004020001000503000000000000026001800400'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_sdiv'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': '8e13E48FA3bbc73A892D94cE601C180A3C469d95'
+              '1': '1'
+         8e13E48FA3bbc73A892D94cE601C180A3C469d95:
+            nonce: 1
+            code: '0xef0001010004020001000503000000000000026001800500'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_mod'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': '5665743C05F69c57B7C04d7537154532aD992Eba'
+              '1': '1'
+         5665743C05F69c57B7C04d7537154532aD992Eba:
+            nonce: 1
+            code: '0xef0001010004020001000503000000000000026001800600'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_smod'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': 'eAd6A8F5fA07dc902f797C1209D9871C02736330'
+              '1': '1'
+         eAd6A8F5fA07dc902f797C1209D9871C02736330:
+            nonce: 1
+            code: '0xef0001010004020001000503000000000000026001800700'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_addmod'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': '1b6d1646Bd9Fa1B2b073Dc332F626bA35423BC09'
+              '1': '1'
+         1b6d1646Bd9Fa1B2b073Dc332F626bA35423BC09:
+            nonce: 1
+            code: '0xef000101000402000100060300000000000003600180800800'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_mulmod'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': '6ceE93968890fb02c581b998A62f1F959C39a856'
+              '1': '1'
+         6ceE93968890fb02c581b998A62f1F959C39a856:
+            nonce: 1
+            code: '0xef000101000402000100060300000000000003600180800900'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_exp'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': 'C6d572D2C91BA42CBCA1fE6Bfcb7DA9510e671Ee'
+              '1': '1'
+         C6d572D2C91BA42CBCA1fE6Bfcb7DA9510e671Ee:
+            nonce: 1
+            code: '0xef0001010004020001000503000000000000026001800a00'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_signextend'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': '19aB1cea8aDb7622BcFf6Cb53264C2A36Ea7F6Be'
+              '1': '1'
+         19aB1cea8aDb7622BcFf6Cb53264C2A36Ea7F6Be:
+            nonce: 1
+            code: '0xef0001010004020001000503000000000000026001800b00'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_lt'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': '5879cF17F6FBfC6f498FA79dF0E93105C82a1013'
+              '1': '1'
+         5879cF17F6FBfC6f498FA79dF0E93105C82a1013:
+            nonce: 1
+            code: '0xef0001010004020001000503000000000000026001801000'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_gt'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': '1A1350Ac99356BEF652cD46B3794c913036155F4'
+              '1': '1'
+         1A1350Ac99356BEF652cD46B3794c913036155F4:
+            nonce: 1
+            code: '0xef0001010004020001000503000000000000026001801100'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_slt'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': 'a8630AD0ca4Db3389fdbEc8Cd292298b29789Eb0'
+              '1': '1'
+         a8630AD0ca4Db3389fdbEc8Cd292298b29789Eb0:
+            nonce: 1
+            code: '0xef0001010004020001000503000000000000026001801200'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_sgt'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': '9B5054787c3fF35E0B6872D7396978C7D77Fd9e6'
+              '1': '1'
+         9B5054787c3fF35E0B6872D7396978C7D77Fd9e6:
+            nonce: 1
+            code: '0xef0001010004020001000503000000000000026001801300'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_eq'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': 'bB695f96E89F507406Da561A7067d6d21d2D12D2'
+              '1': '1'
+         bB695f96E89F507406Da561A7067d6d21d2D12D2:
+            nonce: 1
+            code: '0xef0001010004020001000503000000000000026001801400'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_iszero'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': 'Bb8B5cDbE34ad4BDE6426cBf0b1E6b87A10Cc1ED'
+              '1': '1'
+         Bb8B5cDbE34ad4BDE6426cBf0b1E6b87A10Cc1ED:
+            nonce: 1
+            code: '0xef00010100040200010004030000000000000160011500'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_and'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': 'F3b4B82670A16d35A7ddE797a89854A78FD810Eb'
+              '1': '1'
+         F3b4B82670A16d35A7ddE797a89854A78FD810Eb:
+            nonce: 1
+            code: '0xef0001010004020001000503000000000000026001801600'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_or'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': 'A9e6F04898BAcf12054A16f519606393835d5D51'
+              '1': '1'
+         A9e6F04898BAcf12054A16f519606393835d5D51:
+            nonce: 1
+            code: '0xef0001010004020001000503000000000000026001801700'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_xor'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': '17a43e24E02E092623a5272BFfEB3a37386AE91A'
+              '1': '1'
+         17a43e24E02E092623a5272BFfEB3a37386AE91A:
+            nonce: 1
+            code: '0xef0001010004020001000503000000000000026001801800'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_not'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': 'd706F6262d170d2c885C79b80D6c13C36EEF8A07'
+              '1': '1'
+         d706F6262d170d2c885C79b80D6c13C36EEF8A07:
+            nonce: 1
+            code: '0xef00010100040200010004030000000000000160011900'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_byte'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': '977F094f642bDE31e58229fAEd15512Fb525f3f7'
+              '1': '1'
+         977F094f642bDE31e58229fAEd15512Fb525f3f7:
+            nonce: 1
+            code: '0xef0001010004020001000503000000000000026001801a00'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_shl'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': '659fCE5ed1Ec561e03633Fa120521707F163E306'
+              '1': '1'
+         659fCE5ed1Ec561e03633Fa120521707F163E306:
+            nonce: 1
+            code: '0xef0001010004020001000503000000000000026001801b00'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_shr'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': '28e82766233d0599Cc4af2840508eD8Ff427c5B3'
+              '1': '1'
+         28e82766233d0599Cc4af2840508eD8Ff427c5B3:
+            nonce: 1
+            code: '0xef0001010004020001000503000000000000026001801c00'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_sar'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': '224F3548Ce4C47633334d5CCEA2B91C12f5A5518'
+              '1': '1'
+         224F3548Ce4C47633334d5CCEA2B91C12f5A5518:
+            nonce: 1
+            code: '0xef0001010004020001000503000000000000026001801d00'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_sha3'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': 'bE99DFe4C980707320a1849c0f4A6883FfCA378c'
+              '1': '1'
+         bE99DFe4C980707320a1849c0f4A6883FfCA378c:
+            nonce: 1
+            code: '0xef0001010004020001000503000000000000026001802000'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_balance'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': 'dc79c9b2D51270F13e9DDde757BA2B713120566e'
+              '1': '1'
+         dc79c9b2D51270F13e9DDde757BA2B713120566e:
+            nonce: 1
+            code: '0xef00010100040200010004030000000000000160013100'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_calldataload'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': '0e3d119849600B93996ccB6Daee77a0d62B49C21'
+              '1': '1'
+         0e3d119849600B93996ccB6Daee77a0d62B49C21:
+            nonce: 1
+            code: '0xef00010100040200010004030000000000000160013500'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_calldatacopy'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': 'De8AeF0C1BEdBA5D814f83554DEFac7A42827363'
+              '1': '1'
+         De8AeF0C1BEdBA5D814f83554DEFac7A42827363:
+            nonce: 1
+            code: '0xef000101000402000100060300000000000003600180803700'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_codecopy'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': 'D1d450f23265EcCcC9081f3628a77e345417f828'
+              '1': '1'
+         D1d450f23265EcCcC9081f3628a77e345417f828:
+            nonce: 1
+            code: '0xef000101000402000100060300000000000003600180803900'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_extcodesize'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': 'eAe717182F407364D76BE1b4B994D0bf1a708642'
+              '1': '1'
+         eAe717182F407364D76BE1b4B994D0bf1a708642:
+            nonce: 1
+            code: '0xef00010100040200010004030000000000000160013b00'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_extcodecopy'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': 'c720F20bfCFDa215C70fCF2C9f757C9bf6A0ce10'
+              '1': '1'
+         c720F20bfCFDa215C70fCF2C9f757C9bf6A0ce10:
+            nonce: 1
+            code: '0xef00010100040200010007030000000000000460018080803c00'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_returndatacopy'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': 'fFD668AB4A4090CCc3C4c7224EED652C363aE43A'
+              '1': '1'
+         fFD668AB4A4090CCc3C4c7224EED652C363aE43A:
+            nonce: 1
+            code: '0xef000101000402000100060300000000000003600180803e00'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_extcodehash'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': '665308A85859B0A4dB6C47E39Ee928c8A4e2fD89'
+              '1': '1'
+         665308A85859B0A4dB6C47E39Ee928c8A4e2fD89:
+            nonce: 1
+            code: '0xef00010100040200010004030000000000000160013f00'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_blockhash'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': '5E148226d63Da1f00dE7d0F9F24ac2D4D88ede51'
+              '1': '1'
+         5E148226d63Da1f00dE7d0F9F24ac2D4D88ede51:
+            nonce: 1
+            code: '0xef00010100040200010004030000000000000160014000'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_pop'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': 'B37e312fF8dC98F79049C9B2f661D5550856E978'
+              '1': '1'
+         B37e312fF8dC98F79049C9B2f661D5550856E978:
+            nonce: 1
+            code: '0xef00010100040200010004030000000000000160015000'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_mload'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': 'ED81C8c5c809A6e6EA4Eae45240f636A1C0068B0'
+              '1': '1'
+         ED81C8c5c809A6e6EA4Eae45240f636A1C0068B0:
+            nonce: 1
+            code: '0xef00010100040200010004030000000000000160015100'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_mstore'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': 'dE474551151aE282A03cfEE946643c2886Ef1e89'
+              '1': '1'
+         dE474551151aE282A03cfEE946643c2886Ef1e89:
+            nonce: 1
+            code: '0xef0001010004020001000503000000000000026001805200'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_mstore8'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': '9d56Ce4f0314646b314B2496b7C3e6CFb2330010'
+              '1': '1'
+         9d56Ce4f0314646b314B2496b7C3e6CFb2330010:
+            nonce: 1
+            code: '0xef0001010004020001000503000000000000026001805300'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_sload'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': 'd88a8A2868dFD21c3f3dd3A920cfA74328C16daE'
+              '1': '1'
+         d88a8A2868dFD21c3f3dd3A920cfA74328C16daE:
+            nonce: 1
+            code: '0xef00010100040200010004030000000000000160015400'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_sstore'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': 'AF8278DeD444EF73c3FFe26306D1f3f13a0c5D56'
+              '1': '1'
+         AF8278DeD444EF73c3FFe26306D1f3f13a0c5D56:
+            nonce: 1
+            code: '0xef0001010004020001000503000000000000026001805500'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_dup1'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': '532c0fd96C6fFb460930C91F60DaAd99B9fB58b8'
+              '1': '1'
+         532c0fd96C6fFb460930C91F60DaAd99B9fB58b8:
+            nonce: 1
+            code: '0xef00010100040200010004030000000000000260018000'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_dup2'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': 'bF413F8E97814b277B542Ee5f34ab47DfE51494f'
+              '1': '1'
+         bF413F8E97814b277B542Ee5f34ab47DfE51494f:
+            nonce: 1
+            code: '0xef0001010004020001000503000000000000036001808100'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_dup3'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': 'Cf67c4082036C65b1c00F6CCA8677F691387621f'
+              '1': '1'
+         Cf67c4082036C65b1c00F6CCA8677F691387621f:
+            nonce: 1
+            code: '0xef000101000402000100060300000000000004600180808200'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_dup4'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': '24ee544af86748c1F6DC432651613082B0f058D5'
+              '1': '1'
+         24ee544af86748c1F6DC432651613082B0f058D5:
+            nonce: 1
+            code: '0xef00010100040200010007030000000000000560018080808300'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_dup5'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': 'D431E26f2D06bAb9DfC71988aEe9C85C3F6E32E3'
+              '1': '1'
+         D431E26f2D06bAb9DfC71988aEe9C85C3F6E32E3:
+            nonce: 1
+            code: '0xef0001010004020001000803000000000000066001808080808400'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_dup6'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': 'cCe5B007404F96C926315C84C6bd55f39f213880'
+              '1': '1'
+         cCe5B007404F96C926315C84C6bd55f39f213880:
+            nonce: 1
+            code: '0xef000101000402000100090300000000000007600180808080808500'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_dup7'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': '67065943E2A7A059da639c45F883d809AB14bc8b'
+              '1': '1'
+         67065943E2A7A059da639c45F883d809AB14bc8b:
+            nonce: 1
+            code: '0xef0001010004020001000a030000000000000860018080808080808600'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_dup8'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': 'DAEa9b5Ea871d8133548cA3d39344338Ca3C62f0'
+              '1': '1'
+         DAEa9b5Ea871d8133548cA3d39344338Ca3C62f0:
+            nonce: 1
+            code: '0xef0001010004020001000b03000000000000096001808080808080808700'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_dup9'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': 'ca34D2204Fa2716A5d669075c8430FDA4bA19C59'
+              '1': '1'
+         ca34D2204Fa2716A5d669075c8430FDA4bA19C59:
+            nonce: 1
+            code: '0xef0001010004020001000c030000000000000a600180808080808080808800'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_dup10'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': 'C8722ee173fFe9f1c454E685C7bf7072057AB2Fe'
+              '1': '1'
+         C8722ee173fFe9f1c454E685C7bf7072057AB2Fe:
+            nonce: 1
+            code: '0xef0001010004020001000d030000000000000b60018080808080808080808900'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_dup11'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': 'A9aD7F9540E857CFB22b15375b2dd93C048C4fB7'
+              '1': '1'
+         A9aD7F9540E857CFB22b15375b2dd93C048C4fB7:
+            nonce: 1
+            code: '0xef0001010004020001000e030000000000000c6001808080808080808080808a00'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_dup12'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': '75Bad0c48E1fB2DA7c1CB9F1030898253e424699'
+              '1': '1'
+         75Bad0c48E1fB2DA7c1CB9F1030898253e424699:
+            nonce: 1
+            code: '0xef0001010004020001000f030000000000000d600180808080808080808080808b00'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_dup13'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': '558aECbB2d1CE51A0355f2617ABBDD55671BAd78'
+              '1': '1'
+         558aECbB2d1CE51A0355f2617ABBDD55671BAd78:
+            nonce: 1
+            code: '0xef00010100040200010010030000000000000e60018080808080808080808080808c00'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_dup14'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': 'Bf6f017C2e2aDB3aa929c6F8dE25f2f1eA1cCA02'
+              '1': '1'
+         Bf6f017C2e2aDB3aa929c6F8dE25f2f1eA1cCA02:
+            nonce: 1
+            code: '0xef00010100040200010011030000000000000f6001808080808080808080808080808d00'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_dup15'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': 'C49462451a5049706Cc4d2329B8d0BCe3b0Ffe9c'
+              '1': '1'
+         C49462451a5049706Cc4d2329B8d0BCe3b0Ffe9c:
+            nonce: 1
+            code: '0xef000101000402000100120300000000000010600180808080808080808080808080808e00'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_dup16'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': '83811a0642C00A58C15382ED4AaB9AE8bbACEb78'
+              '1': '1'
+         83811a0642C00A58C15382ED4AaB9AE8bbACEb78:
+            nonce: 1
+            code: '0xef00010100040200010013030000000000001160018080808080808080808080808080808f00'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_swap1'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': '397E29346f9eA1e1443B1DEb0534E91e3feD06FB'
+              '1': '1'
+         397E29346f9eA1e1443B1DEb0534E91e3feD06FB:
+            nonce: 1
+            code: '0xef0001010004020001000503000000000000026001809000'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_swap2'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': '3c57E214cE190092Fcad90902b168d15fc9767c3'
+              '1': '1'
+         3c57E214cE190092Fcad90902b168d15fc9767c3:
+            nonce: 1
+            code: '0xef000101000402000100060300000000000003600180809100'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_swap3'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': '6fFc9362f7695e577BA1E30FE6999C072E9BeBD8'
+              '1': '1'
+         6fFc9362f7695e577BA1E30FE6999C072E9BeBD8:
+            nonce: 1
+            code: '0xef00010100040200010007030000000000000460018080809200'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_swap4'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': '7d72b7C6d4fA3deCDd8Eae60aC50CCCB463c935E'
+              '1': '1'
+         7d72b7C6d4fA3deCDd8Eae60aC50CCCB463c935E:
+            nonce: 1
+            code: '0xef0001010004020001000803000000000000056001808080809300'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_swap5'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': 'E20DF62f8C9fe71766B08779eaA4fFb0E8567056'
+              '1': '1'
+         E20DF62f8C9fe71766B08779eaA4fFb0E8567056:
+            nonce: 1
+            code: '0xef000101000402000100090300000000000006600180808080809400'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_swap6'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': 'Ca289Ac07688Cee54b4330c437Dfbc063F8B4654'
+              '1': '1'
+         Ca289Ac07688Cee54b4330c437Dfbc063F8B4654:
+            nonce: 1
+            code: '0xef0001010004020001000a030000000000000760018080808080809500'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_swap7'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': 'C2d5c02A5F02d5fA9A9bd3d2D8B6ED95EFC7a02A'
+              '1': '1'
+         C2d5c02A5F02d5fA9A9bd3d2D8B6ED95EFC7a02A:
+            nonce: 1
+            code: '0xef0001010004020001000b03000000000000086001808080808080809600'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_swap8'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': 'c6FD6dE4200e9985CE811B1b0aCFDbFa4A763b92'
+              '1': '1'
+         c6FD6dE4200e9985CE811B1b0aCFDbFa4A763b92:
+            nonce: 1
+            code: '0xef0001010004020001000c0300000000000009600180808080808080809700'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_swap9'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': '4A5dfcE6061f2c40a34642cFfB120Ccc4923201E'
+              '1': '1'
+         4A5dfcE6061f2c40a34642cFfB120Ccc4923201E:
+            nonce: 1
+            code: '0xef0001010004020001000d030000000000000a60018080808080808080809800'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_swap10'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': 'ca145BeFE6074d0945F3001a151CE8B68B6fAd7C'
+              '1': '1'
+         ca145BeFE6074d0945F3001a151CE8B68B6fAd7C:
+            nonce: 1
+            code: '0xef0001010004020001000e030000000000000b6001808080808080808080809900'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_swap11'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': 'c0799d742662929834B47A3cf061E08E3D1E51a8'
+              '1': '1'
+         c0799d742662929834B47A3cf061E08E3D1E51a8:
+            nonce: 1
+            code: '0xef0001010004020001000f030000000000000c600180808080808080808080809a00'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_swap12'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': '19Bc198a820B9C3Ae4c98B9AEA564db2c92b6467'
+              '1': '1'
+         19Bc198a820B9C3Ae4c98B9AEA564db2c92b6467:
+            nonce: 1
+            code: '0xef00010100040200010010030000000000000d60018080808080808080808080809b00'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_swap13'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': 'a1bA729259e32Bd4A7759CE29618Ee1792DeaD95'
+              '1': '1'
+         a1bA729259e32Bd4A7759CE29618Ee1792DeaD95:
+            nonce: 1
+            code: '0xef00010100040200010011030000000000000e6001808080808080808080808080809c00'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_swap14'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': 'd5F2B135d4855520ae61a21C363D30f567363F2B'
+              '1': '1'
+         d5F2B135d4855520ae61a21C363D30f567363F2B:
+            nonce: 1
+            code: '0xef00010100040200010012030000000000000f600180808080808080808080808080809d00'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_swap15'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': '6e29a43d68836858e8f2A4AbD2413818fb99057F'
+              '1': '1'
+         6e29a43d68836858e8f2A4AbD2413818fb99057F:
+            nonce: 1
+            code: '0xef00010100040200010013030000000000001060018080808080808080808080808080809e00'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_swap16'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': 'FB028c57521b6F3424Bf27AaF5612A29bA867c44'
+              '1': '1'
+         FB028c57521b6F3424Bf27AaF5612A29bA867c44:
+            nonce: 1
+            code: '0xef0001010004020001001403000000000000116001808080808080808080808080808080809f00'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_log0'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': '1A98fa471d3a78afb004D0041F9CcF5405ba5f4C'
+              '1': '1'
+         1A98fa471d3a78afb004D0041F9CcF5405ba5f4C:
+            nonce: 1
+            code: '0xef000101000402000100050300000000000002600180a000'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_log1'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': '3051D1F91ce5AA7e3A5f8098338EBA614D97F4fb'
+              '1': '1'
+         3051D1F91ce5AA7e3A5f8098338EBA614D97F4fb:
+            nonce: 1
+            code: '0xef00010100040200010006030000000000000360018080a100'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_log2'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': '887e5839ff8017eB50b076b97d569F1b79C5a39f'
+              '1': '1'
+         887e5839ff8017eB50b076b97d569F1b79C5a39f:
+            nonce: 1
+            code: '0xef0001010004020001000703000000000000046001808080a200'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_log3'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': '27792D21A53A927D58C89BF9DB2F440217ECF918'
+              '1': '1'
+         27792D21A53A927D58C89BF9DB2F440217ECF918:
+            nonce: 1
+            code: '0xef000101000402000100080300000000000005600180808080a300'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_log4'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': 'C251f8b852360Ee6f7c8Cc6fC22C7bD2EDB13E7F'
+              '1': '1'
+         C251f8b852360Ee6f7c8Cc6fC22C7bD2EDB13E7F:
+            nonce: 1
+            code: '0xef00010100040200010009030000000000000660018080808080a400'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_create'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': '15a2E6F601Ed266F141db62b03Cd7D11DC3fe4b5'
+              '1': '1'
+         15a2E6F601Ed266F141db62b03Cd7D11DC3fe4b5:
+            nonce: 1
+            code: '0xef00010100040200010006030000000000000360018080f000'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_call'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': 'cdc2EBE646733dd3EF717BD117dd8DdA7C402Dfc'
+              '1': '1'
+         cdc2EBE646733dd3EF717BD117dd8DdA7C402Dfc:
+            nonce: 1
+            code: '0xef0001010004020001000a03000000000000076001808080808080f100'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_return'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': 'Ab44e53cAB572C170cFd1e44cf8358A563898888'
+              '1': '1'
+         Ab44e53cAB572C170cFd1e44cf8358A563898888:
+            nonce: 1
+            code: '0xef000101000402000100040300000000000002600180f3'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_delegatecall'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': '72B8841B07C5AE2742B945dCB9075153742fdAB6'
+              '1': '1'
+         72B8841B07C5AE2742B945dCB9075153742fdAB6:
+            nonce: 1
+            code: '0xef00010100040200010009030000000000000660018080808080f400'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_create2'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': 'dD4435908699F7bd7D94ED81Ed2E2a0f392D1DF4'
+              '1': '1'
+         dD4435908699F7bd7D94ED81Ed2E2a0f392D1DF4:
+            nonce: 1
+            code: '0xef0001010004020001000703000000000000046001808080f500'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_staticcall'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': '05E4F8fE2d3C794b5EaDf9AFB94F8093e3f528e3'
+              '1': '1'
+         05E4F8fE2d3C794b5EaDf9AFB94F8093e3f528e3:
+            nonce: 1
+            code: '0xef00010100040200010009030000000000000660018080808080fa00'
+            storage: {}
+      - indexes:
+         data: ':label validate_input_revert'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': '9C577854A1069b4006288C022eCE2B94b7C14716'
+              '1': '1'
+         9C577854A1069b4006288C022eCE2B94b7C14716:
+            nonce: 1
+            code: '0xef000101000402000100040300000000000002600180fd'
+            storage: {}
+      - indexes:
+         data: ':label callf_inputs'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': '65594D14d8B0f1CdA02CDEB1A40CF79d156B75Af'
+              '1': '1'
+         65594D14d8B0f1CdA02CDEB1A40CF79d156B75Af:
+            nonce: 1
+            code: '0xef00010100100200040004000600080084030000000000000001000002020000047f0000feb00000006000b000010060006000b00002006000808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080b0000300'
+            storage: {}
+      - indexes:
+         data: ':label terminating_instruction_stop'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': '307dD9dc20A0dFFE6c516418c5c1fDa8E693f6b8'
+              '1': '1'
+         307dD9dc20A0dFFE6c516418c5c1fDa8E693f6b8:
+            nonce: 1
+            code: '0xef00010100040200010004030000000000000160005000'
+            storage: {}
+      - indexes:
+         data: ':label terminating_instruction_retf'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': '3eF852b36AC87094d70D76fF4462667155520cC7'
+              '1': '1'
+         3eF852b36AC87094d70D76fF4462667155520cC7:
+            nonce: 1
+            code: '0xef000101000402000100040300000000000001600050b1'
+            storage: {}
+      - indexes:
+         data: ':label terminating_instruction_return'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': 'c58c592B4D61534deBe3E9DBeA809c5Ef31B1A67'
+              '1': '1'
+         c58c592B4D61534deBe3E9DBeA809c5Ef31B1A67:
+            nonce: 1
+            code: '0xef0001010004020001000a0300000000000004600050600060018080f3'
+            storage: {}
+      - indexes:
+         data: ':label terminating_instruction_revert'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': '6389854e342A614EF85A4434E7f20B029f041De5'
+              '1': '1'
+         6389854e342A614EF85A4434E7f20B029f041De5:
+            nonce: 1
+            code: '0xef0001010004020001000b030000000000000560005060006001808080fd'
+            storage: {}
+      - indexes:
+         data: ':label terminating_instruction_invalid'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': 'C542a8487bBBde6f84f39c543B1661fF81bF57Ca'
+              '1': '1'
+         C542a8487bBBde6f84f39c543B1661fF81bF57Ca:
+            nonce: 1
+            code: '0xef000101000402000100040300000000000001600050fe'
+            storage: {}
+      - indexes:
+         data: ':label loop_ending_with_unconditional_rjump_a'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': 'e339Ee6A792f797d79f7aB59A6Aa00C891142045'
+              '1': '1'
+         e339Ee6A792f797d79f7aB59A6Aa00C891142045:
+            nonce: 1
+            code: '0xef0001010004020001000303000000000000005cfffd'
+            storage: {}
+      - indexes:
+         data: ':label loop_ending_with_unconditional_rjump_b'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': '939cdEaaCB1a5db6422FB2f28DdE0129B99feDEc'
+              '1': '1'
+         939cdEaaCB1a5db6422FB2f28DdE0129B99feDEc:
+            nonce: 1
+            code: '0xef0001010004020001000e0300000000000002600a60019003805d0001005cfff4'
+            storage: {}
+      - indexes:
+         data: ':label functions_ending_with_retf'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': 'd82e1d41c48bda595d5072a2674A417E4571E4D4'
+              '1': '1'
+         d82e1d41c48bda595d5072a2674A417E4571E4D4:
+            nonce: 1
+            code: '0xef000101000c020003000600010006030000000000000101010001000200026000b0000100b16000610000b1'
+            storage: {}
+      - indexes:
+         data: ':label stack_not_clean_before_stop'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': 'd053E02551990F285284e541A70602CDdfC3Ab6e'
+              '1': '1'
+         d053E02551990F285284e541A70602CDdfC3Ab6e:
+            nonce: 1
+            code: '0xef00010100040200010007030000000000000360006000600000'
+            storage: {}
+      - indexes:
+         data: ':label stack_not_clean_before_return'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': '9e2AD5B4cD6F27e99B7f75fE0E0B3cb0fC147e2A'
+              '1': '1'
+         9e2AD5B4cD6F27e99B7f75fE0E0B3cb0fC147e2A:
+            nonce: 1
+            code: '0xef0001010004020001000f03000000000000096000600060006000600180808080f3'
+            storage: {}
+      - indexes:
+         data: ':label stack_not_clean_before_revert'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': '2edD780F8DeA51E49bD25C4c9757868Ee4E1F755'
+              '1': '1'
+         2edD780F8DeA51E49bD25C4c9757868Ee4E1F755:
+            nonce: 1
+            code: '0xef00010100040200010010030000000000000a600060006000600060018080808080fd'
+            storage: {}
+      - indexes:
+         data: ':label stack_not_clean_before_invalid'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': '39Cc259D53A597Cb58Af7eb64de6001bF84a2542'
+              '1': '1'
+         39Cc259D53A597Cb58Af7eb64de6001bF84a2542:
+            nonce: 1
+            code: '0xef000101000402000100070300000000000003600060006000fe'
+            storage: {}
+      - indexes:
+         data: ':label retf_512_output'
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+            storage:
+              '0': 'f354392286450B069CbdB3Fc6C8D5C21B6184058'
+              '1': '1'
+         f354392286450B069CbdB3Fc6C8D5C21B6184058:
+            nonce: 1
+            code: '0xef000101000802000200040081030000000000007f007f007fb00001006000808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080808080b1'
+            storage: {}
