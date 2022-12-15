@@ -50,7 +50,7 @@
             sstore(0, v)
 
             mstore(0, hex"f8dfc2d0") // doCallToStore()
-            let success := staticcall(0xffff, 0x000000000000000000000000000000000000000A, 0, 32, 0, 0)
+            let success := staticcall(0xffff, address(), 0, 32, 0, 0)
             
             let size := returndatasize()
             returndatacopy(0, 0, size)
@@ -64,7 +64,7 @@
           
           function doCallToStore() {
             mstore(0, hex"62fdb9be") // doStore()
-            let f := call(0xffff, 0x000000000000000000000000000000000000000A, 0, 0, 32, 0, 0) // call with zero-value
+            let f := call(0xffff, address(), 0, 0, 32, 0, 0) // call with zero-value
             mstore(0, f)
             return(0, 32)
           }

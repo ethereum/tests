@@ -56,13 +56,13 @@
           function doReenter() {
             verbatim_2i_0o(hex"b4", 0, 2)
             mstore(0, hex"611e535a") // tstore3()
-            let fail := staticcall(0xffff, 0x000000000000000000000000000000000000000A, 0, 32, 0, 0)
+            let fail := staticcall(0xffff, address(), 0, 32, 0, 0)
             let v := verbatim_1i_1o(hex"b3", 0)
             sstore(0, fail)
             sstore(1, v)
 
             mstore(0, hex"01729275") // tload0()
-            let success := staticcall(0xffff, 0x000000000000000000000000000000000000000A, 0, 32, 0, 32)
+            let success := staticcall(0xffff, address(), 0, 32, 0, 32)
             let v0 := mload(0)
             sstore(2, success)
             sstore(3, v0)

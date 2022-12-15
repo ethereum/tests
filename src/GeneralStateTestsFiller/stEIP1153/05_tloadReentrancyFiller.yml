@@ -54,10 +54,10 @@
 
           function doReenter() {
             mstore(0, hex"62fdb9be") // doStore()
-            let successStore := call(0xffff, 0x000000000000000000000000000000000000000A, 0, 0, 32, 0, 0)
+            let successStore := call(0xffff, address(), 0, 0, 32, 0, 0)
 
             mstore(0, hex"43ac1c39") // doLoad()
-            let successLoad := call(0xffff, 0x000000000000000000000000000000000000000A, 0, 0, 32, 0, 0)
+            let successLoad := call(0xffff, address(), 0, 0, 32, 0, 0)
 
             let v := verbatim_1i_1o(hex"b3", 0)
             sstore(0, v)
