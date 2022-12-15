@@ -29,10 +29,32 @@ accessListExample:
         value: !!int -1
 
       network:
-        - '<Berlin'
+        - '<EIP158'
+      result:
+        # 0 touch mining reward creates account in state tests
+        2adc25665018aa1fe0e6bc666dac8fc2697ff9ba:
+           nonce: 0
+      expectException:     
+        '<EIP158': TR_TypeNotSupported
+
+    - indexes:
+        data: !!int -1
+        gas:  !!int -1
+        value: !!int -1
+
+      network:
+        - 'EIP158'
+        - 'Byzantium'
+        - 'Constantinople'
+        - 'ConstantinopleFix'
+        - 'Istanbul'
       result: {}
       expectException:     
-        '<Berlin': TR_TypeNotSupported
+        'EIP158': TR_TypeNotSupported
+        'Byzantium': TR_TypeNotSupported
+        'Constantinople': TR_TypeNotSupported
+        'ConstantinopleFix': TR_TypeNotSupported
+        'Istanbul': TR_TypeNotSupported
 
 
 

@@ -129,7 +129,7 @@ Fields
 - **maxPriorityFeePerGas**:
 
   Tip to give the miner (per gas, in Wei). The real tip is either this value or 
-  **maxFeePerGas-baseFee** (the lower of the two). Available in London and later.
+  **maxFeePerGas-baseFeePerGas** (the lower of the two). Available in London and later.
 
 - **value**:
 

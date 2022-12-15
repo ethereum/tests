@@ -36,7 +36,7 @@ Format
                     "timestamp" : "0x54c98c81",
                     "transactionsTrie" : "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
                     "uncleHash" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347"
-                    "baseFee" : "1000"
+                    "baseFeePerGas" : "1000"
                  }
               }
            }
@@ -63,7 +63,7 @@ Format
                  timestamp: 0x54c98c81
                  transactionsTrie: 0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421
                  uncleHash: 0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347
-                 baseFee: 1000
+                 baseFeePerGas: 1000
 
 Fields
 ------

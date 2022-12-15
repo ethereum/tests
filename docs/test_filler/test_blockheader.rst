@@ -26,7 +26,7 @@ transactionTrie               The root of the `transaction trie
                               <https://medium.com/shyft-network-media/understanding-trie-databases-in-ethereum-9f03d2c3325d>`_
                               after this block
 uncleHash                     hash of uncle block or blocks
-baseFee                       The base fee per gas required of transactions
+baseFeePerGas                 The base fee per gas required of transactions
                               (London and later, because of 
                               `EIP 1559 <https://github.com/ethereum/EIPs/blob/master/EIPS/eip-1559.md>`_)
 ============================= ========================
