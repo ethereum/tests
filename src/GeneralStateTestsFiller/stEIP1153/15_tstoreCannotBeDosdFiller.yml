@@ -26,7 +26,7 @@
           switch selector()
 
           case 0x883264e8 { // doCall(uint)
-            let n:= div(calldataload(32), 0x100000000000000000000000000000000000000000000000000000000)
+            let n:= calldataload(4)
             doCall(n)
           }
 
@@ -42,22 +42,27 @@
           function doCall(n) {
             mstore(0, hex"f7d6c0eb") // doNStores(n)
             mstore(32, n)
-            let t := call(gas(), 0x000000000000000000000000000000000000000A, 0, 0, 64, 0, 0)
+            let t := call(gas(), 0x000000000000000000000000000000000000000A, 0, 0, 64, 0, 32)
             sstore(0, t) // should revert
+
+            sstore(2, mload(0))
 
             let v := verbatim_1i_1o(hex"b3", 0)
             sstore(1, v)
           }
 
           function doNStores(n) {
-            for { let i := 0 } lt(i, n) { i := add(i, 1) } {
+            let i
+            for {i := 0 } lt(i, n) { i := add(i, 1) } {
               verbatim_2i_0o(hex"b4", i, 48)
             }
+            mstore(0, i)
+            revert(0, 32)
           }
 
           function selector() -> s {
             let value := calldataload(0)
-            s := div(value, 0x100000000000000000000000000000000000000000000000000000000)
+            s := shr(224, value)
           }
         }
       storage: { 0x00: 0xffff, 0x01: 0xffff }
@@ -69,7 +74,7 @@
 
   transaction:
     data:
-      - data: :abi doCall(uint) 0x30d40
+      - data: :abi doCall(uint) 0x249F0
         accessList: []
     gasLimit:
       - "30000000"
@@ -89,3 +94,4 @@
           storage:
             0x00: 0
             0x01: 0
+            0x02: 0x249F0
