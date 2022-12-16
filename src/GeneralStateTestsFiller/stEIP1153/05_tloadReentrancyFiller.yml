@@ -3,8 +3,7 @@
 #
 # Expect slot 0 to have 44 from the first tstore & tload.
 # Expect slot 1 to have 44 from the re-entered call.
-# Expect slot 2 to have 1 (for successful call to doStore()).
-# Expect slot 3 to have 1 (for successful call to doLoad()).
+# Expect slot 2 to have 1 (for successful call to doLoad()).
 
 05_tloadReentrancy:
   _info:
@@ -27,10 +26,6 @@
         :yul {
           switch selector()
 
-          case 0x62fdb9be {
-            doStore() // doStore()
-          }
-          
           case 0x43ac1c39 { // doLoad()
             doLoad()
           }
@@ -39,31 +34,22 @@
             doReenter()
           }
 
-          default {
-            sstore(2, 0)
-          }
-
-          function doStore() {
-            verbatim_2i_0o(hex"b4", 0, 44)
-          }
-
           function doLoad() {
             let v := verbatim_1i_1o(hex"b3", 0)
             sstore(1, v)
           }
 
           function doReenter() {
-            mstore(0, hex"62fdb9be") // doStore()
-            let successStore := call(0xffff, address(), 0, 0, 32, 0, 0)
+
+            verbatim_2i_0o(hex"b4", 0, 44)
 
             mstore(0, hex"43ac1c39") // doLoad()
-            let successLoad := call(0xffff, address(), 0, 0, 32, 0, 0)
+            let successLoad := call(gas(), address(), 0, 0, 32, 0, 0)
 
             let v := verbatim_1i_1o(hex"b3", 0)
             sstore(0, v)
 
-            sstore(2, successStore)
-            sstore(3, successLoad)
+            sstore(2, successLoad)
           } 
 
           function selector() -> s {
@@ -102,4 +88,3 @@
             0x00: 44
             0x01: 44
             0x02: 1
-            0x03: 1
