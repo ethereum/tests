@@ -39,10 +39,6 @@
             doStore()
           }
 
-          default {
-            sstore(2, 1)
-          }
-
           function doStoreAndStaticCall() {
             verbatim_2i_0o(hex"b4", 0, 10)
 
@@ -50,13 +46,10 @@
             sstore(0, v)
 
             mstore(0, hex"f8dfc2d0") // doCallToStore()
-            let success := staticcall(0xffff, address(), 0, 32, 0, 0)
+            let success := staticcall(0xffff, address(), 0, 32, 0, 32)
             
-            let size := returndatasize()
-            returndatacopy(0, 0, size)
-            
-            sstore(1, mload(0)) // should be 0 from unsuccessful call
-            sstore(2, success) // should be 1 since no store inside nested call
+            sstore(1, mload(0)) // should be 0 from nested unsuccessful call
+            sstore(2, success) // should be 1
 
             let val := verbatim_1i_1o(hex"b3", 0)
             sstore(3, val)
@@ -64,7 +57,7 @@
           
           function doCallToStore() {
             mstore(0, hex"62fdb9be") // doStore()
-            let f := call(0xffff, address(), 0, 0, 32, 0, 0) // call with zero-value
+            let f := call(gas(), address(), 0, 0, 32, 0, 0) // call with zero-value
             mstore(0, f)
             return(0, 32)
           }
