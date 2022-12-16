@@ -4,6 +4,7 @@
 # Expect slot 0 to have 80 from the first tstore & tload.
 # Expect slot 1 to have 90 from the re-entered call.
 # Expect slot 2 to have 1. Call was successful.
+# Expect slot 3 to have 90. The updated tstored value from the re-entered call.
 
 06_tstoreInReentrancyCall:
   _info:
@@ -30,36 +31,27 @@
             doStoreAndLoad()
           }
           
-          case 0x43ac1c39 { // doLoad()
-            doLoad()
-          }
-
           case 0x3f371692 { // doReenter()
             doReenter()
           }
 
-          default {
-            sstore(2, 0)
-          }
-
           function doStoreAndLoad() {
-            verbatim_2i_0o(hex"b4", 0, 90)
-            doLoad()
-          }
-
-          function doLoad() {
-            let v := verbatim_1i_1o(hex"b3", 0)
+            verbatim_2i_0o(hex"b4", 0xff, 90)
+            let v := verbatim_1i_1o(hex"b3", 0xff)
             sstore(1, v)
           }
 
           function doReenter() {
-            verbatim_2i_0o(hex"b4", 0, 80)
-            let v := verbatim_1i_1o(hex"b3", 0)
+            verbatim_2i_0o(hex"b4", 0xff, 80)
+            let v := verbatim_1i_1o(hex"b3", 0xff)
             sstore(0, v)
 
             mstore(0, hex"0accf739") // doStoreAndLoad()
-            let success := call(0xffff, address(), 0, 0, 32, 0, 0)
+            let success := call(gas(), address(), 0, 0, 32, 0, 0)
             sstore(2, success)
+
+            let updated_val := verbatim_1i_1o(hex"b3", 0xff)
+            sstore(3, updated_val)
           } 
 
           function selector() -> s {
@@ -100,3 +92,4 @@
             0x00: 80
             0x01: 90
             0x02: 1
+            0x03: 90
