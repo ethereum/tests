@@ -4,7 +4,8 @@
 #
 # Expect slot 0 to have 5 from the first tstore & tload.
 # Expect slot 1 to have 0. Call was unsuccessful.
-# Expect slot 2 to have 5. Should load the value stored before the unsuccessful call.
+# Expect slot 2 to have 1. Inner call was successful.
+# Expect slot 3 to have 5. Should load the value stored before the unsuccessful call.
 
 10_revertUndoesStoreAfterReturn:
   _info:
@@ -39,27 +40,28 @@
             doSuccessfulStore()
           }
 
-          default {
-            sstore(2, 1)
-          }
-
           function doFirstCall() {
             verbatim_2i_0o(hex"b4", 0, 5)
 
             let v := verbatim_1i_1o(hex"b3", 0)
             sstore(0, v)
 
-            let fail := doReenter(hex"76b85d23") // calls doCallThenRevert()
+            mstore(0, hex"76b85d23") // calls doCallThenRevert()
+            let fail := call(gas(), address(), 0, 0, 32, 0, 32)
+
             sstore(1, fail) // should be 0 (revert)
+            sstore(2, mload(0)) // load 1 (successful call)
 
             let val := verbatim_1i_1o(hex"b3", 0)
-            sstore(2, val)
+            sstore(3, val)
           }
 
           
           function doCallThenRevert() {
-            let s := doReenter(hex"4ccca553") // calls doSuccessfulStore()
-            revert(0, 0)
+            mstore(0, hex"4ccca553") // calls doSuccessfulStore()
+            let s := call(gas(), address(), 0, 0, 32, 0, 0)
+            mstore(0, s)
+            revert(0, 32)
           }
 
           function doSuccessfulStore() {
@@ -68,7 +70,7 @@
 
           function doReenter(fs) -> f {
              mstore(0, fs)
-             f := call(0xffff, address(), 0, 0, 32, 0, 0)
+             f := call(gas(), address(), 0, 0, 32, 0, 0)
            }
 
           function selector() -> s {
@@ -105,4 +107,5 @@
           storage:
             0x00: 5
             0x01: 0
-            0x02: 5
+            0x02: 1
+            0x03: 5
