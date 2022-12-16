@@ -38,33 +38,37 @@
           }
 
           case 0x01729275 { // tload0()
-            let saved_val := tload0()
+            tload0()
           }
-
-          default {}
 
           function tstore3() {
             verbatim_2i_0o(hex"b4", 0, 3)
           }
 
-          function tload0() -> v{
-            v := verbatim_1i_1o(hex"b3", 0)
+          function tload0() {
+            let v := verbatim_1i_1o(hex"b3", 0)
             mstore(0, v)
             return(0, 32)
           }
 
           function doReenter() {
             verbatim_2i_0o(hex"b4", 0, 2)
+
             mstore(0, hex"611e535a") // tstore3()
+
+            // cap the gas to continue execution
             let fail := staticcall(0xffff, address(), 0, 32, 0, 0)
-            let v := verbatim_1i_1o(hex"b3", 0)
             sstore(0, fail)
+            
+            // should load prev value, 2
+            let v := verbatim_1i_1o(hex"b3", 0)
             sstore(1, v)
 
             mstore(0, hex"01729275") // tload0()
-            let success := staticcall(0xffff, address(), 0, 32, 0, 32)
-            let v0 := mload(0)
+            let success := staticcall(gas(), address(), 0, 32, 0, 32)
             sstore(2, success)
+            
+            let v0 := mload(0)
             sstore(3, v0)
           }
 
