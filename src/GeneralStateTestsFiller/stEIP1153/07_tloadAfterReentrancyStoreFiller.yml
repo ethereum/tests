@@ -34,10 +34,6 @@
             doReenter()
           }
 
-          default {
-            sstore(2, 0)
-          }
-
           function doStore() {
             verbatim_2i_0o(hex"b4", 0, 78)
           }
@@ -48,7 +44,7 @@
             sstore(0, v)
 
             mstore(0, hex"62fdb9be") // doStore()
-            let success := call(0xffff, address(), 0, 0, 32, 0, 0)
+            let success := call(gas(), address(), 0, 0, 32, 0, 0)
             sstore(2, success)
 
             sstore(1, verbatim_1i_1o(hex"b3", 0))
