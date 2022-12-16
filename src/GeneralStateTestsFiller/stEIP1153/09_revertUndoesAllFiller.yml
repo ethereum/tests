@@ -35,8 +35,6 @@
             storeTwiceAndRevert()
           }
 
-          default {}
-
           function storeTwiceAndRevert() {
             verbatim_2i_0o(hex"b4", 0, 5)
             verbatim_2i_0o(hex"b4", 0, 6)
@@ -48,9 +46,9 @@
           function doReenter() {
             verbatim_2i_0o(hex"b4", 0, 4)
             verbatim_2i_0o(hex"b4", 1, 10)
-            mstore(0, hex"578290e5")
+            mstore(0, hex"578290e5") // storeTwiceAndRevert()
 
-            let fail := call(0xffff, address(), 0, 0, 32, 0, 0)
+            let fail := call(gas(), address(), 0, 0, 32, 0, 0)
             sstore(0, fail)
 
             let v0 := verbatim_1i_1o(hex"b3", 0)
