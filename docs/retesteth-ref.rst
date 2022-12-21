@@ -130,12 +130,15 @@ Option                         Meaning
 -\\-statediff <a>:<b>to<c>:<d> State changes from just after tx b on block a to
                                just before tx d on block c. The first transaction
                                in a block is numbered zero.
+-\\-poststate <a>              The state changes just after block a
+-\\-poststate <a>:<b>          The state just after tx b on block a
 -\\-vmtrace[raw] <a>:<b>       Trace a specific transaction          
 ============================== ===================================================
 
 .. note::
 
-   You can only view the state in the middle of a block when you use 
+   You can only view the state in the middle of a block (**-\\-statediff**
+   **-\\-poststate** when you use 
    **-\\-filltests**. Otherwise only the state at the end of blocks is 
    available. 
 
