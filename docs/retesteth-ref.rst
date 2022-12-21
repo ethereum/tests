@@ -103,8 +103,8 @@ Option                        Meaning
 -\\-exectimelog               Output execution time for each test suite
 -\\-stderr                    Redirect ipc client stderr to stdout
 -\\-travisout                 Output \`.\` to stdout
+-\\-statediff                 State changes between before and after the test
 ============================= ===================================================
-
 
 .. note::
 
@@ -113,6 +113,34 @@ Option                        Meaning
    If you are using docker that directory is in the folder, so it is easiest to use a directory such as
    **/tests/results** (because **/tests** on the docker is the tests repository on a file system outside
    the docker).
+
+
+
+Blockchain test debugging
+..........................
+
+Blockchain tests contain multiple transactions, so to debug them it is useful to
+look between transactions.
+
+============================== ===================================================
+Option                         Meaning
+============================== ===================================================
+-\\-statediff <a>to<c>         State changes from just after block a to 
+                               just after block c. The first block is numbered 1
+-\\-statediff <a>:<b>to<c>:<d> State changes from just after tx b on block a to
+                               just before tx d on block c. The first transaction
+                               in a block is numbered zero.
+-\\-poststate <a>              The state changes just after block a
+-\\-poststate <a>:<b>          The state just after tx b on block a
+-\\-vmtrace[raw] <a>:<b>       Trace a specific transaction          
+============================== ===================================================
+
+.. note::
+
+   You can only view the state in the middle of a block (**-\\-statediff**
+   **-\\-poststate** when you use 
+   **-\\-filltests**. Otherwise only the state at the end of blocks is 
+   available. 
 
 
 
