@@ -270,6 +270,16 @@ CREATE2_EOF1Invalid_FromEOF:
       # deployed code: ef0001010003ff000400600000aabbccdd
       - ':raw 0xef000101000d02001100601738038060176000396000f3ef0001010003ff000400600000aabbccdd'
 
+      # EOF initcode => legacy code
+      # initcode without data section
+      # initcode code section: 'RETURN(0, 1)'
+      # deployed code: 'STOP'
+      - ':raw 0xef00010100050060016000f3'
+      # inicode with data section
+      # initcode code section: 'RETURN(0, 1)' data section: 'aabbccdd'
+      # deployed code: 'STOP'
+      - ':raw 0xef00010100050200040060016000f3aabbccdd'
+
     gasLimit:
       - 15000000
     gasPrice: 10

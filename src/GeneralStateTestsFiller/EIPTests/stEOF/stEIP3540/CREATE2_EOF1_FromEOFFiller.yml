@@ -63,16 +63,6 @@ CREATE2_EOF1_FromEOF:
       # deployed code section: 'PUSH1 0 STOP' data section: 'aabbccdd'
       - ':label eof1_initcode_with_data_deploying_valid_eof1_with_data :raw 0xef0001010029020002007fef000101000302000400600000aabbccdd00000000000000000000000000000060005260116000f3eeff'
 
-      # EOF initcode => legacy code
-      # initcode without data section
-      # initcode code section: 'RETURN(0, 1)'
-      # deployed code: 'STOP'
-      - ':label eof1_initcode_deploying_legacy :raw 0xef00010100050060016000f3'
-      # inicode with data section
-      # initcode code section: 'RETURN(0, 1)' data section: 'aabbccdd'
-      # deployed code: 'STOP'
-      - ':label eof1_initcode_with_data_deploying_legacy :raw 0xef00010100050200040060016000f3aabbccdd'
-
       # legacy initcode => legacy code (checking that it works inside EOF contract)
       - ':label legacy_initcode_deploying_legacy :yul { return(0, 1) }'
 
@@ -247,41 +237,6 @@ CREATE2_EOF1_FromEOF:
        2e02c32beb5a1be30fb2f37aea2fe4d1ae35a512:
           nonce: 1
           code: '0xef000101000302000400600000aabbccdd'
-          storage: {}
-
-
-    - indexes:
-       data: ':label eof1_initcode_deploying_legacy'
-      network:
-        - 'Merge+3540+3670'
-      result:
-       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
-          nonce: 1
-       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
-          nonce: 1
-          storage:
-            '0': '806f2614992abcb0332c9f07574e0888a6307045'
-            '1': '1'
-       806f2614992abcb0332c9f07574e0888a6307045:
-          nonce: 1
-          code: '0x00'
-          storage: {}
-
-    - indexes:
-       data: ':label eof1_initcode_with_data_deploying_legacy'
-      network:
-        - 'Merge+3540+3670'
-      result:
-       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
-          nonce: 1
-       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
-          nonce: 1
-          storage:
-            '0': 'e858e7f0aa88a77391094a9ee92e71d2a4a1ece0'
-            '1': '1'
-       e858e7f0aa88a77391094a9ee92e71d2a4a1ece0:
-          nonce: 1
-          code: '0x00'
           storage: {}
 
     - indexes:

@@ -59,16 +59,6 @@ CreateTransactionEOF1:
       # deployed code section: 'PUSH1 0 STOP' data section: 'aabbccdd'
       - ':label eof1_initcode_with_data_deploying_valid_eof1_with_data :raw 0xef0001010029020002007fef000101000302000400600000aabbccdd00000000000000000000000000000060005260116000f3eeff'
 
-      # EOF initcode => legacy code
-      # initcode without data section
-      # initcode code section: 'RETURN(0, 1)'
-      # deployed code: 'STOP'
-      - ':label eof1_initcode_deploying_legacy :raw 0xef00010100050060016000f3'
-      # inicode with data section
-      # initcode code section: 'RETURN(0, 1)' data section: 'aabbccdd'
-      # deployed code: 'STOP'
-      - ':label eof1_initcode_with_data_deploying_legacy :raw 0xef00010100050200040060016000f3aabbccdd'
-
     gasLimit:
       - 70000
     gasPrice: 10
@@ -299,46 +289,3 @@ CreateTransactionEOF1:
          code: '0xEF000101000302000400600000AABBCCDD'
          nonce: 1
 
-    - indexes:
-       data: ':label eof1_initcode_deploying_legacy'
-      network:
-        - 'Merge'
-      result:
-       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
-         nonce: 1
-         balance: 999300000
-       6295ee1b4f6dd65047762f924ecd367c17eabf8f:
-         shouldnotexist: 1
-    - indexes:
-       data: ':label eof1_initcode_deploying_legacy'
-      network:
-        - 'Merge+3540+3670'
-      result:
-       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
-         nonce: 1
-       6295ee1b4f6dd65047762f924ecd367c17eabf8f:
-         balance: 0
-         code: '0x00'
-         nonce: 1
-
-    - indexes:
-       data: ':label eof1_initcode_with_data_deploying_legacy'
-      network:
-        - 'Merge'
-      result:
-       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
-         nonce: 1
-         balance: 999300000
-       6295ee1b4f6dd65047762f924ecd367c17eabf8f:
-         shouldnotexist: 1
-    - indexes:
-       data: ':label eof1_initcode_with_data_deploying_legacy'
-      network:
-        - 'Merge+3540+3670'
-      result:
-       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
-         nonce: 1
-       6295ee1b4f6dd65047762f924ecd367c17eabf8f:
-         balance: 0
-         code: '0x00'
-         nonce: 1
