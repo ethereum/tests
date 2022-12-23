@@ -1,7 +1,7 @@
 {
      "shanghaiBeforeTransition" : {
         "_info" : {
-            "comment" : "test vectors: BSHA0001, BSHA0002"
+            "comment" : "test vectors: BSHA0001, BSHA0002, BSHA0003"
         },
         "genesisBlockHeader" : {
             "bloom" : "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
@@ -25,10 +25,8 @@
             {
                 "network" : "MergeToShanghaiAt5",
                 "result" : {
-                    "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-                        "storage" : {
-                            "0x00" : "0x00"
-                        }
+                    "0xc94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                        "balance" : "10003"
                     }
                 }
             }
@@ -105,6 +103,44 @@
                 "transactions" : [
                 ],
         		"uncleHeaders" : [
+                ]
+            },
+            {
+                "blocknumber" : "6",
+                "blockHeader" : {
+                    "baseFeePerGas" : "11",
+                    "remove" : [ "withdrawalsRoot" ] 
+                },
+                "expectException" : {
+                    "//comment" : "TEST ID: BSHA0003",
+                    "MergeToShanghaiAt5" : "MergeBlockImportImpossible"
+                },
+                "transactions" : [
+                ],
+        		"uncleHeaders" : [
+                ],
+                "withdrawals" : [
+                    {
+                        "index": "0",
+                        "validatorIndex": "0",
+                        "address": "0xc94f5374fce5edbc8e2a8697c15331677e6ebf0b",
+                        "amount": "10000"
+                    }
+                ]
+            },
+            {
+                "blocknumber" : "6",
+                "transactions" : [
+                ],
+        		"uncleHeaders" : [
+                ],
+                "withdrawals" : [
+                    {
+                        "index": "0",
+                        "validatorIndex": "0",
+                        "address": "0xc94f5374fce5edbc8e2a8697c15331677e6ebf0b",
+                        "amount": "10003"
+                    }
                 ]
             }
         ]
