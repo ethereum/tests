@@ -63,6 +63,8 @@ CREATE2_EOF1InvalidOpcodes:
       - '0x4d'
       - '0x4e'
       - '0x4f'
+      - '0x56' # JUMP deprecated in EIP-4750
+      - '0x57' # JUMPI deprecated in EIP-4750
       - '0x5e'
       - '0x5f'
       - '0xa5'
@@ -158,7 +160,7 @@ CREATE2_EOF1InvalidOpcodes:
   expect:
     - indexes: {}
       network:
-        - 'Merge+3540+3670'
+        - 'Merge+3540+3670+4750'
       result:
        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
          nonce: 1
