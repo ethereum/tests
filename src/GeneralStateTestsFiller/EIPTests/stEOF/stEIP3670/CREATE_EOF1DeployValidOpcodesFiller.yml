@@ -26,13 +26,14 @@ CREATE_EOF1DeployValidOpcodes:
           mstore(64, 0x838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2)
           mstore(96, 0xa3a4f0f1f3f4f5fafdfe00000000000000000000000000000000000000000000)
 
-          // initcode: { mstore(0, 0xef0001010002000000) return(23, 9) } }
-          mstore(128, 0x68ef000101000200000060005260096017f30000000000000000000000000000)
+          // initcode: { mstore(0, 0x0xef00010100130060018080808080808080808080808080808000) return(0, 26)
+          mstore(128, 0x7fef000101001300600180808080808080808080808080808080000000000000)
+          mstore(160, 0x00600052601a6000f30000000000000000000000000000000000000000000000)
           for { let os := 0 } lt(os, 106) { os := add(os, 1) } 
           { 
             let code := shr(248, mload(os))
-            mstore8(136, code) // change returned byte in initcode
-            if iszero(create(0, 128, 19)) { sstore(code, 1) }
+            mstore8(154, code) // change returned byte in initcode
+            if iszero(create(0, 128, 41)) { sstore(code, 1) }
           }
           sstore(256, 1)
         }
@@ -64,10 +65,10 @@ CREATE_EOF1DeployValidOpcodes:
        # Sample of created contracts
        f1ecf98489fa9ed60a664fc4998db699cfa39d40:
          nonce: 1
-         code: '0xef0001010002000000' # STOP
+         code: '0xef00010100130060018080808080808080808080808080808000' # STOP
        30c7cc0d18123b445c2636ff9069ef28c0dc32b5:
          nonce: 1
-         code: '0xef0001010002000100' # ADD
+         code: '0xef00010100130060018080808080808080808080808080808001' # ADD
        0a4946646a97515a003183f807ee05f45d09f3fd:
          nonce: 1
-         code: '0xef000101000200fe00' # INVALID
+         code: '0xef000101001300600180808080808080808080808080808080fe' # INVALID
