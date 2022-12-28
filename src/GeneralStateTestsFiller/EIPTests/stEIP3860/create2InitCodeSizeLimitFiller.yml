@@ -25,7 +25,7 @@ create2InitCodeSizeLimit:
           // get initcode size from calldata
           let initcode_size := calldataload(0)
           let gas_before := gas()
-          let create_result := create2(0, 0, initcode_size, 0)
+          let create_result := create2(0, 0, initcode_size, 0xdeadbeef)
           sstore(10, sub(gas_before, gas()))
           sstore(0, create_result)
           sstore(1, 1)
@@ -58,10 +58,10 @@ create2InitCodeSizeLimit:
           nonce: 1
        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           storage:
-              '0': '7b453b2ba212f731bec025f8f441f01547d79bfb'
+              '0': 'd6a6b48801accf08b474a42d01d4b82666e4952c'
               '1': 1
               '10': 52467
-       7b453b2ba212f731bec025f8f441f01547d79bfb:
+       d6a6b48801accf08b474a42d01d4b82666e4952c:
           balance: 0
           code: '0x600a80600080396000f3'
           nonce: 1
@@ -76,10 +76,10 @@ create2InitCodeSizeLimit:
           nonce: 1
        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           storage:
-              '0': '094147686c565aa7ccac18000c3b7b4d099f92d3'
+              '0': '23cebc55ea992f8b7d924cdbeee710e66d9bfd3b'
               '1': 1
               '10': 52482
-       094147686c565aa7ccac18000c3b7b4d099f92d3:
+       23cebc55ea992f8b7d924cdbeee710e66d9bfd3b:
           balance: 0
           code: '0x600a80600080396000f3'
           nonce: 1
@@ -94,11 +94,11 @@ create2InitCodeSizeLimit:
           nonce: 1
        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           storage:
-              '0': '7b453b2ba212f731bec025f8f441f01547d79bfb'
+              '0': 'd6a6b48801accf08b474a42d01d4b82666e4952c'
               '1': 1
                # Difference with Merge is the charge for initcode 49152 // 32 * 2 = 3072 gas
               '10': 55539
-       7b453b2ba212f731bec025f8f441f01547d79bfb:
+       d6a6b48801accf08b474a42d01d4b82666e4952c:
           balance: 0
           code: '0x600a80600080396000f3'
           nonce: 1
@@ -117,5 +117,5 @@ create2InitCodeSizeLimit:
               '0': 0
               '1': 1
               '10': 41236
-       094147686c565aa7ccac18000c3b7b4d099f92d3:
+       23cebc55ea992f8b7d924cdbeee710e66d9bfd3b:
           shouldnotexist: 1
