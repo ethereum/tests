@@ -1,0 +1,108 @@
+
+
+EOF1ValidInvalid:
+
+  env:
+    currentCoinbase: 2adc25665018aa1fe0e6bc666dac8fc2697ff9ba
+    currentDifficulty: '0x20000'
+    currentGasLimit: "100000000"
+    currentNumber: "1"
+    currentTimestamp: "1000"
+    previousHash: 5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6
+
+  _info:
+    comment: Ori Pomerantz   qbzzt1@gmail.com
+
+
+  pre:
+
+
+    0000000000000000000000000000000000000100:
+      balance: 0
+      code: :raw 0xef000101000402000100030300010000000400305000ff
+      nonce: 1
+      storage: {}
+
+    0000000000000000000000000000000000000101:
+      balance: 0
+      code: :raw 0xef0001010008020002000300050300010000000400000004003050003030505000ff
+      nonce: 1
+      storage: {}
+
+    0000000000000000000000000000000000000102:
+      balance: 0
+      code: :raw 0xef000101001002000400030003000300030300010000000400000004000000040000000400305000305000305000305000ff
+      nonce: 1
+      storage: {}
+
+
+
+    0000000000000000000000000000000000000103:
+      balance: 0
+      code: :raw 0xef020101000402000100030300010000000400305000ff
+      nonce: 1
+      storage: {}
+
+
+    # The contract the transaction calls
+    cccccccccccccccccccccccccccccccccccccccc:
+      balance: 0
+      code: |
+        :yul {
+          let addr := calldataload(0x04)
+          let ret := call(gas(), addr, 0, 0, 0, 0, 0)
+          sstore(0, ret)
+        }
+      nonce: 1
+      storage: {}
+
+    # User account
+    a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: '0x0ba1a9ce0ba1a9ce'
+      code: 0x
+      nonce: 1
+      storage: {}
+
+  transaction:
+    data:
+
+    - :label good :abi f(uint) 0x0100
+    - :label good :abi f(uint) 0x0101
+    - :label good :abi f(uint) 0x0102
+    - :label bad  :abi f(uint) 0x0103
+    gasLimit:
+    - 80000000
+    gasPrice: 10
+    nonce: 1
+    to: cccccccccccccccccccccccccccccccccccccccc
+    secretKey: "45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8"
+    value:
+    - 0
+
+  expect:
+
+    # Good
+    - indexes:
+        data:
+        - :label good
+      network:
+        - '>=Shanghai'
+      result:
+        cccccccccccccccccccccccccccccccccccccccc:
+          storage:
+             0: 1
+
+
+    # Bad
+    - indexes:
+        data:
+        - :label bad
+      network:
+        - '>=Shanghai'
+      result:
+        cccccccccccccccccccccccccccccccccccccccc:
+          storage:
+             0: 0
+
+
+
