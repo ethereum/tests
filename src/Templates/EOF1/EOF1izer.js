@@ -5,6 +5,11 @@
 //
 // code - command line parameter, or default (STOP)
 // data - command line parameter, export data=0x... in the env, or empty
+//
+// Note that this only works for the pre: section, where contracts are assumed
+// to be valid. Do actually create contracts, or initcode, you need to specify the
+// maximum stack size per code segment, and it's not enough to specify a maximum
+// that's higher than the value - the code actually checks.
 
 // For locations in the list
 const CODE=0
