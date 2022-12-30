@@ -99,7 +99,6 @@ Format
 Fields
 --------------
 - **data**:
-
   The data, either in hexadecimal or an 
   `ABI call <https://solidity.readthedocs.io/en/v0.7.1/abi-spec.html>`_
   with this format:
@@ -107,42 +106,36 @@ Fields
 
 
 - **accessList**:
-
   An optional `EIP2930 <https://eips.ethereum.org/EIPS/eip-2930>`_ access list. 
   The **accessList** is a list of structures, each of which has to have an **address**
   and a list of **storageKeys** (which may be empty).
 
 
-- **gasLimit**:
-  
+- **gasLimit**: 
   Gas limit for the transaction
 
 
 - **gasPrice**:
-
   Gas price in Wei, prior to London (changed by `EIP 1559 <https://github.com/ethereum/EIPs/blob/master/EIPS/eip-1559.md>`_).
 
 - **maxFeePerGas**:
-
   Maximum acceptable gas price in Wei. Available in London and later.
 
 - **maxPriorityFeePerGas**:
-
   Tip to give the miner (per gas, in Wei). The real tip is either this value or 
   **maxFeePerGas-baseFeePerGas** (the lower of the two). Available in London and later.
 
 - **value**:
-
   The value the transaction transmits in Wei
 
 
 - **to**:
-
-  The destination address, typically a contract
+  The destination address, typically a contract. 
+  If you want to submit a create transaction, 
+  put an empty string here (and the data segment is the constructor).
 
 
 - **secretKey**:
-
   The secret key for the sending address. That address is derived from the
   secret key and therefore does not need to be specified explicitely
   (`see here 
@@ -150,7 +143,6 @@ Fields
 
 
 - **nonce**:
-
   The nonce value for the transaction. The first transaction for an address
   has the nonce value of the address itself, the second transaction has the
   nonce plus one, etc. Alternatively, if you replace all the **nonce** values
@@ -158,9 +150,7 @@ Fields
 
 
 - **invalid**:
-
   If the transaction is invalid, meaning clients should reject it, set this value to "1"
 
 - **expectException**:
-
   .. include:: ../test_filler/test_expect_exception.rst
