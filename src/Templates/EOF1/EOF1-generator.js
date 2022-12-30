@@ -34,7 +34,7 @@ const eof1Good = {
          code: "305000",
          stackInputs: 0,
          stackOutputs: 0,
-         maxStack: 1024
+         maxStack: 1      // maxStack needs to be accurate, otherwise CREATE[2] fails
       }
   ],
   data: "ff"
@@ -158,6 +158,7 @@ eof1TwoCode.code = [
    JSON.parse(JSON.stringify(eof1Good.code[0]))
 ]
 eof1TwoCode.code[1].code = "3030505000"
+eof1TwoCode.code[1].maxStack = 2
 
 
 eof1FourCode = cloneEof1Good()
