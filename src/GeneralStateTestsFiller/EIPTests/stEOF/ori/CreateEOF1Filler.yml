@@ -1,14 +1,5 @@
 CreateEOF1:
 
-#   TODO:
-#
-#    - :label legacy-eof1-create    :abi f(uint,uint) 0xADD0 0x0001F0
-#    - :label legacy-eof1-create2   :abi f(uint,uint) 0xADD0 0x0001F5
-#    - :label eof1-legacy-create    :abi f(uint,uint) 0xADD0 0x0100F0
-#    - :label eof1-legacy-create2   :abi f(uint,uint) 0xADD0 0x0100F5
-#    - :label eof1-eof1-create      :abi f(uint,uint) 0xADD0 0x0101F0
-#    - :label eof1-eof1-create2     :abi f(uint,uint) 0xADD0 0x0101F5
-
   env:
     currentCoinbase: 2adc25665018aa1fe0e6bc666dac8fc2697ff9ba
     currentDifficulty: '0x20000'
@@ -18,7 +9,7 @@ CreateEOF1:
     previousHash: 5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6
 
   _info:
-    comment: Covers: EOF1C000, EOF1C001, EOF1C002, EOF1C003
+    comment: Covers EOF1C000, EOF1C001, EOF1C002, EOF1C003
 
 
   pre:
@@ -50,8 +41,7 @@ CreateEOF1:
     # EOF code, 3 bytes
     0000000000000000000000000000000000c0de03:
       balance: 0
-      code: :raw 0xEF000101000402000100030300000000000400305000
-      # code: :raw 0xBAD060A7
+      code: :raw 0xEF000101000402000100030300000000000001305000
       nonce: 1
       storage: {}
 
@@ -75,7 +65,7 @@ CreateEOF1:
     # different address. Same code as add0add0, but EOF1-ized
     00000000000000000000000000000000add1add1:
       balance: 0
-      code: :raw 0xEF0001010004020001003003000000000004007fadd0add0add0add0add0add0add0add0add0add0add0add0add0add0add0add0803b8060006000843c806000f35050
+      code: :raw 0xEF0001010004020001003003000000000000067fadd0add0add0add0add0add0add0add0add0add0add0add0add0add0add0add0803b8060006000843c806000f35050
       nonce: 1
       storage: {}
 
@@ -133,8 +123,9 @@ CreateEOF1:
               sstore(0, create2(0, 0, len, 0x5a17))
            }
 
-           // Propagate failure
-           if eq(sload(0), 0) { revert(0,0) }
+           // Propagate failure by sending a value
+           mstore(0, 0x0BAD)
+           if eq(sload(0), 0) { return(0,0x20) }
         }
       nonce: 1
       storage: {}
@@ -162,7 +153,13 @@ CreateEOF1:
           // Call with the second parameter, which encodes what CREATE we want to run
           mstore(0, calldataload(0x24))
           let ret := call(gas(), addr, 0, 0, 0x20, 0, 0)
+ 
+          // Store the call's return value
           sstore(0, ret)
+          
+          // Store the returned data, if any (mostly for sanity checks)
+          returndatacopy(0x40, 0, returndatasize())
+          sstore(1, mload(0x40))
         }        
       nonce: 1
       storage: {}
@@ -191,6 +188,9 @@ CreateEOF1:
     - :label eof1-legacy-create2   :abi f(uint,uint) 0xADD0 0x0100F5
     - :label eof1-eof1-create      :abi f(uint,uint) 0xADD0 0x0101F0
     - :label eof1-eof1-create2     :abi f(uint,uint) 0xADD0 0x0101F5
+    # Sanity checks
+    - :label sanity-legacy-init    :abi f(uint) 0xADD0ADD0
+    - :label sanity-eof1-init      :abi f(uint) 0xADD1ADD1
     gasLimit:
     - 80000000
     gasPrice: 10
@@ -203,17 +203,9 @@ CreateEOF1:
   expect:
 
     # Legacy, works always
-    # For now, put the CREATE test cases here, because it's 
-    # too early to test CREATE anyway
     - indexes:
         data: 
         - :label legacy
-        - :label legacy-eof1-create
-        - :label legacy-eof1-create2
-        - :label eof1-legacy-create
-        - :label eof1-legacy-create2
-        - :label eof1-eof1-create
-        - :label eof1-eof1-create2
         gas:  !!int -1
         value: !!int -1
       network:
@@ -231,6 +223,7 @@ CreateEOF1:
         - :label eof1-1byte
         - :label eof1-2bytes
         - :label eof1-3bytes
+        - :label sanity-eof1-init
         gas:  !!int -1
         value: !!int -1
       network:
@@ -313,3 +306,150 @@ CreateEOF1:
         # Newly created account
         b240aee9244aa6e21055d8ad0f817e91944c2969:
           code: 0x305000
+
+
+    # All of these fail on Merge
+    - indexes:
+        data: 
+        # Fail because we're trying to create a contract that starts with 0xEF.
+        # That has been forbidden since London.
+        - :label legacy-eof1-create
+        - :label legacy-eof1-create2
+
+        # Fail because EOF1 code starts with 0xEF, so Merge won't accept it
+        - :label eof1-legacy-create
+        - :label eof1-legacy-create2
+        - :label eof1-eof1-create
+        - :label eof1-eof1-create2
+        gas:  !!int -1
+        value: !!int -1
+      network:
+        - Merge
+      result:
+        cccccccccccccccccccccccccccccccccccccccc:
+          storage:
+             0:      1
+             1: 0x0BAD
+
+
+    # EOF1 init code can't send a legacy contract
+    - indexes:
+        data: 
+        - :label eof1-legacy-create
+        - :label eof1-legacy-create2
+        gas:  !!int -1
+        value: !!int -1
+      network:
+        - '>=Shanghai'
+      result:
+        cccccccccccccccccccccccccccccccccccccccc:
+          storage:
+             0:      1
+             1: 0x0BAD
+
+
+    - indexes:
+        data: 
+        - :label legacy-eof1-create
+        gas:  !!int -1
+        value: !!int -1
+      network:
+        - '>=Shanghai'
+      result:
+        cccccccccccccccccccccccccccccccccccccccc:
+          storage:
+             0: 1
+
+        000000000000000000000000000000000000add0:
+          storage:
+            0x00: 0xa7685ec0b42bf8b420dd66d94c973c7091d9706b
+            0x10: 0xadd0add0   # Init code
+            0x11: 0x00c0de03   # Contract code to duplicate
+            0x12: 0x000000f0   # CREATE
+
+        a7685ec0b42bf8b420dd66d94c973c7091d9706b:
+            code: 0xef000101000402000100030300000000000001305000
+
+
+    - indexes:
+        data: 
+        - :label legacy-eof1-create2
+        gas:  !!int -1
+        value: !!int -1
+      network:
+        - '>=Shanghai'
+      result:
+        cccccccccccccccccccccccccccccccccccccccc:
+          storage:
+             0: 1
+
+        000000000000000000000000000000000000add0:
+          storage:
+            0x00: 0xb58d45549d2dd877e8af5045c75d2c8eb48101df
+            0x10: 0xadd0add0   # Init code
+            0x11: 0x00c0de03   # Contract code to duplicate
+            0x12: 0x000000f5   # CREATE2
+
+        b58d45549d2dd877e8af5045c75d2c8eb48101df:
+            code: 0xef000101000402000100030300000000000001305000
+
+
+
+    - indexes:
+        data: 
+        - :label eof1-eof1-create
+        - :label eof1-eof1-create2
+        gas:  !!int -1
+        value: !!int -1
+      network:
+        - '>=Shanghai'
+      result:
+        cccccccccccccccccccccccccccccccccccccccc:
+          storage:
+             0: 1
+
+        000000000000000000000000000000000000add0:
+          storage:
+            0x00: 0xb58d45549d2dd877e8af5045c75d2c8eb48101df
+            0x10: 0xadd1add1   # Init code
+            0x11: 0x00c0de03   # Contract code to duplicate
+            0x12: 0x000000f0   # CREATE2
+
+        b58d45549d2dd877e8af5045c75d2c8eb48101df:
+            code: 0xef000101000402000100030300000000000001305000
+
+
+
+
+    # Sanity checks, make sure that by default the init codes
+    # return 0xDEAD60A7  
+    - indexes:
+        data: 
+        - :label sanity-legacy-init
+        - :label sanity-eof1-init
+        gas:  !!int -1
+        value: !!int -1
+      network:
+        - '>=Shanghai'
+      result:
+        cccccccccccccccccccccccccccccccccccccccc:
+          storage:
+             0: 1
+             1: 0xdead60a700000000000000000000000000000000000000000000000000000000
+
+
+    # The legacy init code should also work on Merge
+    - indexes:
+        data: 
+        - :label sanity-legacy-init
+        gas:  !!int -1
+        value: !!int -1
+      network:
+        - Merge
+      result:
+        cccccccccccccccccccccccccccccccccccccccc:
+          storage:
+             0: 1
+             1: 0xdead60a700000000000000000000000000000000000000000000000000000000
+
+
