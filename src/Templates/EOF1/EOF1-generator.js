@@ -111,10 +111,8 @@ eof1BadMagic.magic = 0xEF02
 eof1BadVersion0 = cloneEof1Good()
 eof1BadVersion0.version = 0
 
-
 eof1BadVersion2 = cloneEof1Good()
 eof1BadVersion2.version = 2
-
 
 eof1BadSectionOrder = cloneEof1Good()
 eof1BadSectionOrder.sections = [
@@ -129,7 +127,6 @@ eof1NoCodeSection.sections = [
    eof1Good.sections[2]
 ]
 
-
 eof1NoDataSection = cloneEof1Good()
 eof1NoDataSection.sections = [
    eof1Good.sections[0],
@@ -140,10 +137,8 @@ eof1NoDataSection.data = ""
 eof1BadEndOfSections = cloneEof1Good()
 eof1BadEndOfSections.endOfSections = 255
 
-
 eof1InconsistentCodeSec = cloneEof1Good()
 eof1InconsistentCodeSec.sections[0].size = 8
-
 
 eof1ExtraBytes = cloneEof1Good()
 eof1ExtraBytes.data = "000bad"
@@ -151,13 +146,70 @@ eof1ExtraBytes.data = "000bad"
 eof1DataTooShort = cloneEof1Good()
 eof1DataTooShort.sections[2].size = 6
 
-
 eof1WierdSectionSize = cloneEof1Good()
 eof1WierdSectionSize.sections[0].size = 3
 
+eof1StackHeightTooHigh = cloneEof1Good()
+eof1StackHeightTooHigh.code[0].maxStack = 2
+
+eof1StackHeightTooLow = cloneEof1Good()
+eof1StackHeightTooLow.code[0].code = '3030505000'
+eof1StackHeightTooLow.sections[1].lengths = [5]
+
+eof1StackUnderflow = cloneEof1Good()
+eof1StackUnderflow.code[0].code = '3050505000'
+eof1StackUnderflow.sections[1].lengths = [5]
+
+// The first code section can't have parameters, because it is called directly
+eof1StackParamSec0 = cloneEof1Good()
+eof1StackParamSec0.sections[0].size = 8
+eof1StackParamSec0.sections[1].size = 2
+eof1StackParamSec0.sections[1].lengths = [3, 3]
+eof1StackParamSec0.code = [
+   JSON.parse(JSON.stringify(eof1Good.code[0])),
+   JSON.parse(JSON.stringify(eof1Good.code[0]))
+]
+eof1StackParamSec0.code[0].code = "300100"
+eof1StackParamSec0.code[0].maxStack = 2
+eof1StackParamSec0.code[0].stackInputs = 1
+
+
+
+// The first code section can't have return values, because it is called directly
+eof1StackRetvalSec0 = cloneEof1Good()
+eof1StackRetvalSec0.sections[0].size = 8
+eof1StackRetvalSec0.sections[1].size = 2
+eof1StackRetvalSec0.sections[1].lengths = [1, 3]
+eof1StackRetvalSec0.code = [
+   JSON.parse(JSON.stringify(eof1Good.code[0])),
+   JSON.parse(JSON.stringify(eof1Good.code[0]))
+]
+eof1StackRetvalSec0.code[0].code = "30"
+eof1StackRetvalSec0.code[0].maxStack = 1
+eof1StackRetvalSec0.code[0].stackOutputs = 1
+
+
+const eof1BadList = [
+	eof1BadMagic,
+        eof1BadVersion0,
+        eof1BadVersion2,
+        eof1BadSectionOrder,
+        eof1NoCodeSection,
+        eof1NoDataSection,
+        eof1BadEndOfSections,
+        eof1InconsistentCodeSec,
+        eof1ExtraBytes,
+        eof1DataTooShort,
+        eof1WierdSectionSize,
+        eof1StackHeightTooHigh,
+        eof1StackHeightTooLow,
+        eof1StackParamSec0
+]  // eof1BadList
+
+
+
 
 // Good (valid) EOF1's
-
 eof1TwoCode = cloneEof1Good()
 eof1TwoCode.sections[0].size = 8
 eof1TwoCode.sections[1].size = 2
@@ -182,26 +234,38 @@ eof1FourCode.code = [
 ]
 
 
-const eof1BadList = [
-	eof1BadMagic,
-        eof1BadVersion0,
-        eof1BadVersion2,
-        eof1BadSectionOrder,
-        eof1NoCodeSection,
-        eof1NoDataSection,
-        eof1BadEndOfSections,
-        eof1InconsistentCodeSec,
-        eof1ExtraBytes,
-        eof1DataTooShort,
-        eof1WierdSectionSize
-]  // eof1BadList
+eof1StackParam = cloneEof1Good()
+eof1StackParam.sections[0].size = 8
+eof1StackParam.sections[1].size = 2
+eof1StackParam.sections[1].lengths = [3, 3]
+eof1StackParam.code = [
+   JSON.parse(JSON.stringify(eof1Good.code[0])),
+   JSON.parse(JSON.stringify(eof1Good.code[0]))
+]
+eof1StackParam.code[1].code = "300100"
+eof1StackParam.code[1].maxStack = 2
+eof1StackParam.code[1].stackInputs = 1
+
+eof1StackRetval = cloneEof1Good()
+eof1StackRetval.sections[0].size = 8
+eof1StackRetval.sections[1].size = 2
+eof1StackRetval.sections[1].lengths = [3, 1]
+eof1StackRetval.code = [
+   JSON.parse(JSON.stringify(eof1Good.code[0])),
+   JSON.parse(JSON.stringify(eof1Good.code[0]))
+]
+eof1StackRetval.code[1].code = "30"
+eof1StackRetval.code[1].maxStack = 1
+eof1StackRetval.code[1].stackOutputs = 1
 
 
 
 const eof1GoodList = [
 	eof1Good,
 	eof1TwoCode,
-	eof1FourCode
+	eof1FourCode,
+	eof1StackParam,
+	eof1StackRetval
 ]   // eof1GoodList
 
 badContracts = eof1BadList.map(encode).map(code2init)
