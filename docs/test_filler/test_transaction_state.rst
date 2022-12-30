@@ -79,7 +79,6 @@ Format
 Fields
 --------------
 - **data**:
-
   The data, either in hexadecimal or an 
   `ABI call <https://solidity.readthedocs.io/en/v0.7.1/abi-spec.html>`_
   with this format:
@@ -96,52 +95,43 @@ Fields
   and may have a list of **storageKeys**.
 
 - **gasLimit**:
-  
   Gas limit for the transaction.
   This value is specified as a list to enable
   `files with multiple tests <../state-transition-tutorial.html#multitest-files>`_
 
 
 - **gasPrice**:
-
   Gas price in Wei, only in Berlin and earlier 
   (replaced by maxFeePerGas in London)
 
 
 - **value**:
-
   The value the transaction transmits in Wei.
   This value is specified as a list to enable
   `files with multiple tests <../state-transition-tutorial.html#multitest-files>`_
 
 
 - **to**:
-
-  The destination address, typically a contract
-
+  The destination address, typically a contract. If you want to submit a create
+  transaction, put an empty string here (and the data segment is the constructor).
 
 - **secretKey**:
-
   The secret key for the sending address. That address is derived from the
   secret key and therefore does not need to be specified explicitely
   (`see here 
   <https://www.freecodecamp.org/news/how-to-create-an-ethereum-wallet-address-from-a-private-key-ae72b0eee27b/>`_). 
 
-
 - **nonce**:
-
   The nonce value for the transaction. The first transaction for an address
   has the nonce value of the address itself, the second transaction has the
   nonce plus one, etc.
 
 - **maxPriorityFeePerGas**:
-  
   The maximum priority fee per gas (a.k.a. tip) the transaction is willing to pay to
   be included in the block (London and later, `added by 
   eip 1559 <https://github.com/ethereum/EIPs/blob/master/EIPS/eip-1559.md>`_).
 
 - **maxFeePerGas**:
-  
   The maximum total fee per gas the transaction is willing to pay to
   be included in the block (London and later, `added by 
   eip 1559 <https://github.com/ethereum/EIPs/blob/master/EIPS/eip-1559.md>`_).
