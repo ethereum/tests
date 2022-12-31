@@ -18,3 +18,6 @@
 - ID: **BSHB0007** withdrawals address is 0x0000..00
 - ID: **BSHB0008** withdrawals address is less than 20 bytes
 - ID: **BSHB0009** withdrawals address is more than 20 bytes
+- ID: **BSHB0010** withdrawals amount 0 is fine
+- ID: **BSHB0011** withdrawals amount more 2^256 is bad
+- ID: **BSHB0012** withdrawals amount more 2^64 is ok
