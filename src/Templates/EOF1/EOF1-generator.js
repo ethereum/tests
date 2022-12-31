@@ -100,6 +100,30 @@ const encode = hash => {
 const code2init = code => `386000600039600D3803600DF3${code}`
 
 
+// Create a valid code section in an EOF1 structure
+const createEOF1Code = (codeList, maxStacks) => {
+    // Start from a valid copy
+    eof1 = cloneEof1Good()
+
+    // Size of sections
+    eof1.sections[0].size = codeList.length*4
+    eof1.sections[1].size = codeList.length
+
+    // The values for each entry
+    eof1.sections[1].lengths = codeList.map(code => code.length/2)
+
+    // Assume stackInputs, stackOutputs, and maxStack are zero.
+    // let it be fixed
+    eof1.code = codeList.map((code, i) => { return {
+	code: code,
+	stackInputs: 0,
+	stackOutputs: 0,
+	maxStack: maxStacks[i]
+    }})
+
+    return eof1
+}  // createEOF1Code
+
 
 
 // Make sure to do a deep copy so we can abuse it
@@ -173,8 +197,6 @@ eof1StackParamSec0.code[0].code = "300100"
 eof1StackParamSec0.code[0].maxStack = 2
 eof1StackParamSec0.code[0].stackInputs = 1
 
-
-
 // The first code section can't have return values, because it is called directly
 eof1StackRetvalSec0 = cloneEof1Good()
 eof1StackRetvalSec0.sections[0].size = 8
@@ -187,6 +209,13 @@ eof1StackRetvalSec0.code = [
 eof1StackRetvalSec0.code[0].code = "30"
 eof1StackRetvalSec0.code[0].maxStack = 1
 eof1StackRetvalSec0.code[0].stackOutputs = 1
+
+// Call a function that doesn't exist
+eof1FunCallHyperspace = createEOF1Code(["B00002", "3050B1"], [0, 1])
+
+eof1BadOpcode = createEOF1Code(["EF"], [0])
+
+
 
 
 const eof1BadList = [
@@ -203,61 +232,40 @@ const eof1BadList = [
         eof1WierdSectionSize,
         eof1StackHeightTooHigh,
         eof1StackHeightTooLow,
-        eof1StackParamSec0
+        eof1StackParamSec0,
+        eof1FunCallHyperspace,
+	eof1BadOpcode
 ]  // eof1BadList
 
 
 
 
 // Good (valid) EOF1's
-eof1TwoCode = cloneEof1Good()
-eof1TwoCode.sections[0].size = 8
-eof1TwoCode.sections[1].size = 2
-eof1TwoCode.sections[1].lengths = [3, 5]
-eof1TwoCode.code = [
-   JSON.parse(JSON.stringify(eof1Good.code[0])),
-   JSON.parse(JSON.stringify(eof1Good.code[0]))
-]
-eof1TwoCode.code[1].code = "3030505000"
-eof1TwoCode.code[1].maxStack = 2
+eof1TwoCode = createEOF1Code(["305000", "3030505000"], [1, 2])
 
+eof1FourCode = createEOF1Code(["305000", "305000", "305000", "305000"],
+                              [1,1,1,1])
 
-eof1FourCode = cloneEof1Good()
-eof1FourCode.sections[0].size = 16
-eof1FourCode.sections[1].size = 4
-eof1FourCode.sections[1].lengths = [3, 3, 3, 3]
-eof1FourCode.code = [
-   JSON.parse(JSON.stringify(eof1Good.code[0])),
-   JSON.parse(JSON.stringify(eof1Good.code[0])),
-   JSON.parse(JSON.stringify(eof1Good.code[0])),
-   JSON.parse(JSON.stringify(eof1Good.code[0]))
-]
-
-
-eof1StackParam = cloneEof1Good()
-eof1StackParam.sections[0].size = 8
-eof1StackParam.sections[1].size = 2
-eof1StackParam.sections[1].lengths = [3, 3]
-eof1StackParam.code = [
-   JSON.parse(JSON.stringify(eof1Good.code[0])),
-   JSON.parse(JSON.stringify(eof1Good.code[0]))
-]
-eof1StackParam.code[1].code = "300100"
-eof1StackParam.code[1].maxStack = 2
+eof1StackParam = createEOF1Code(["305000", "300150"], [1, 2])
 eof1StackParam.code[1].stackInputs = 1
 
-eof1StackRetval = cloneEof1Good()
-eof1StackRetval.sections[0].size = 8
-eof1StackRetval.sections[1].size = 2
-eof1StackRetval.sections[1].lengths = [3, 1]
-eof1StackRetval.code = [
-   JSON.parse(JSON.stringify(eof1Good.code[0])),
-   JSON.parse(JSON.stringify(eof1Good.code[0]))
-]
-eof1StackRetval.code[1].code = "30"
-eof1StackRetval.code[1].maxStack = 1
+eof1StackRetval = createEOF1Code(["00", "30"], [0,1])
 eof1StackRetval.code[1].stackOutputs = 1
 
+eof1FunCall = createEOF1Code(["B00000", "3050B1"], [0, 1])
+
+eof1EndlessLoop = createEOF1Code(["B00000"], [0])
+
+// Use the stack for input and output
+eof1StackIO = createEOF1Code(["60FF60FFB0000100", "01B1"], [2, 1])
+eof1StackIO.code[1].stackInputs = 2
+eof1StackIO.code[1].stackOutputs = 1
+
+// Revert inside internal function
+eof1IntervalRevert = createEOF1Code(["00", "60006000FD"], [0, 2])
+
+// FE is the "valid invalid opcode" and as such allowed
+eof1FENotBad = createEOF1Code(["FE"], [0])
 
 
 const eof1GoodList = [
@@ -265,7 +273,12 @@ const eof1GoodList = [
 	eof1TwoCode,
 	eof1FourCode,
 	eof1StackParam,
-	eof1StackRetval
+	eof1StackRetval,
+        eof1FunCall,
+	eof1EndlessLoop,
+        eof1StackIO,
+        eof1IntervalRevert,
+        eof1FENotBad
 ]   // eof1GoodList
 
 badContracts = eof1BadList.map(encode).map(code2init)
@@ -305,11 +318,13 @@ EOF1ValidInvalid:
 
   transaction:
     data:
-${badContracts.map(code => `
+${badContracts.map((code, i) => `
+      # Data ${i}
       - :label bad  :raw 0x${code}
 `).reduce((a,b) => a+b)}
 
-${goodContracts.map(code => `
+${goodContracts.map((code, i) => `
+      # Data ${i+badContracts.length}
       - :label good :raw 0x${code}
 `).reduce((a,b) => a+b)}
 
