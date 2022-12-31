@@ -12,3 +12,6 @@
 - ID: **BSHB0001** withdrawals index is 2^64-1
 - ID: **BSHB0002** withdrawals index is 2^64
 - ID: **BSHB0003** withdrawals index is bigint
+- ID: **BSHB0004** withdrawals validatorIndex 2^64-1
+- ID: **BSHB0005** withdrawals validatorIndex 2^64
+- ID: **BSHB0006** withdrawals validatorIndex bigint
