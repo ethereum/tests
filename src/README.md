@@ -15,3 +15,6 @@
 - ID: **BSHB0004** withdrawals validatorIndex 2^64-1
 - ID: **BSHB0005** withdrawals validatorIndex 2^64
 - ID: **BSHB0006** withdrawals validatorIndex bigint
+- ID: **BSHB0007** withdrawals address is 0x0000..00
+- ID: **BSHB0008** withdrawals address is less than 20 bytes
+- ID: **BSHB0009** withdrawals address is more than 20 bytes
