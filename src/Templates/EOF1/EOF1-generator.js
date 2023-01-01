@@ -173,150 +173,147 @@ eof1DataTooShort.sections[2].size = 6
 eof1WierdSectionSize = cloneEof1Good()
 eof1WierdSectionSize.sections[0].size = 3
 
-const eof1BadList = [
-	eof1BadMagic,
-        eof1BadVersion0,
-        eof1BadVersion2,
-        eof1BadSectionOrder,
-        eof1NoCodeSection,
-        eof1NoDataSection,
-        eof1BadEndOfSections,
-        eof1InconsistentCodeSec,
-        eof1ExtraBytes,
-        eof1DataTooShort,
-        eof1WierdSectionSize,
+eof1BadList = [
+	[eof1BadMagic, "EOF1I0001"],
+        [eof1BadVersion0, "EOF1I0002"],
+        [eof1BadVersion2, "EOF1I0002"],
+        [eof1BadSectionOrder, "EOF1I0003"],
+        [eof1NoCodeSection, "EOF1I0004"],
+        [eof1NoDataSection, "EOF1I0004"],
+        [eof1BadEndOfSections, "EOF1I0005"],
+        [eof1InconsistentCodeSec, ""],
+        [eof1ExtraBytes, "EOF1I0006"],
+        [eof1DataTooShort, "EOF1I0006"],
+        [eof1WierdSectionSize, ""]
 ]  // eof1BadList
 
 
-eof1GoodList = [eof1Good]
+eof1GoodList = [[eof1Good, "EOF1V0001"]]
 
 // Multiple code segments are fine
-eof1GoodList.push(createEOF1Code(["305000", "3030505000"], [1, 2]))
-eof1GoodList.push(createEOF1Code(["305000", "305000", "305000", "305000"],
-                              [1,1,1,1]))
+eof1GoodList.push([createEOF1Code(["305000", "3030505000"], [1, 2]), "EOF1V0002"])
+eof1GoodList.push([createEOF1Code(["305000", "305000", "305000", "305000"],
+                              [1,1,1,1]), "EOF1V0003"])
 
 // Create tests in groups. A good example, and bad examples that are related
 // so we know they fail for the right reason.
 
 // FE, the designated invalid opcode, is valid in a code segment.
 // Other opcode values, however, are invalid
-eof1GoodList.push(createEOF1Code(["FE00"], [0]))
- eof1BadList.push(createEOF1Code(["EF00"], [0]))
+eof1GoodList.push([createEOF1Code(["FE00"], [0]), "EOF1V0004"])
+ eof1BadList.push([createEOF1Code(["EF00"], [0]), "EOF1I0008"])
 
 
 // maxStack needs to be the correct value,
-eof1GoodList.push(createEOF1Code(["3030505000"], [2]))
- eof1BadList.push(createEOF1Code(["3030505000"], [1]))
- eof1BadList.push(createEOF1Code(["3030505000"], [3]))
+eof1GoodList.push([createEOF1Code(["3030505000"], [2]), "EOF1V0001"])
+ eof1BadList.push([createEOF1Code(["3030505000"], [1]), "EOF1I0009"])
+ eof1BadList.push([createEOF1Code(["3030505000"], [3]), "EOF1I0009"])
 
 // stack underflow
- eof1BadList.push(createEOF1Code(["30505000"], [1]))
+ eof1BadList.push([createEOF1Code(["30505000"], [1]), "EOF1I0012"])
 
 
 // parameters are allowed except on section 0
 temp = createEOF1Code(["305000", "300150"], [1, 2])
 temp.code[1].stackInputs = 1
-eof1GoodList.push(temp)
+eof1GoodList.push([temp, "EOF1V0009"])
 
 temp = createEOF1Code(["300150", "305000"], [2, 1])
 temp.code[0].stackInputs = 1
- eof1BadList.push(temp)
+ eof1BadList.push([temp, "EOF1I0017"])
 
 
 // Return values are allowed, except on section 0
 temp = createEOF1Code(["305000", "303001"], [1, 2])
 temp.code[1].stackOutputs = 1
-eof1GoodList.push(temp)
+eof1GoodList.push([temp, "EOF1V0006"])
 
 temp = createEOF1Code(["303001", "305000"], [2, 1])
 temp.code[0].stackOutputs = 1
- eof1BadList.push(temp)
+ eof1BadList.push([temp, "EOF1I0010"])
 
 
 // Function calls are allowed, as long as the function exists
-eof1GoodList.push(createEOF1Code(["B0000100", "00"], [0, 0]))
- eof1BadList.push(createEOF1Code(["B0000200", "00"], [0, 0]))
+eof1GoodList.push([createEOF1Code(["B0000100", "00"], [0, 0]), ""])
+ eof1BadList.push([createEOF1Code(["B0000200", "00"], [0, 0]), ""])
 
 
 // Stack underflow is bad
-eof1GoodList.push(createEOF1Code(["3030015000"], [2]))
- eof1BadList.push(createEOF1Code(["30015000"], [1]))
+eof1GoodList.push([createEOF1Code(["3030015000"], [2]), ""])
+ eof1BadList.push([createEOF1Code(["30015000"], [1]), "EOF1I0012"])
 
 
 // Endless loops are OK, but stack overflow isn't
-eof1GoodList.push(createEOF1Code(["3050B0000000"], [1]))
- eof1BadList.push(createEOF1Code(["30B0000000"], [1]))
+eof1GoodList.push([createEOF1Code(["3050B0000000"], [1]), "EOF1V0007"])
+ eof1BadList.push([createEOF1Code(["30B0000000"], [1]), "EOF1I0013"])
 
 
 // The parameters aren't part of maxStackHeight
 temp = createEOF1Code(["60FF" + "B00001" + "00", "50" + "B1"], [1, 0])
 temp.code[1].stackInputs = 1
 temp.code[1].stackOutputs = 0
- eof1GoodList.push(temp)
+ eof1GoodList.push([temp, ""])
 
 temp = createEOF1Code(["60FF" + "B00001" + "00", "50" + "B1"], [1, 1])
 temp.code[1].stackInputs = 1
 temp.code[1].stackOutputs = 0
- eof1BadList.push(temp)
+ eof1BadList.push([temp, ""])
 
 // We can't dig below our parameters
 // with POP
 temp = createEOF1Code(["00", "505050" + "B1"], [0, 0])
 temp.code[1].stackInputs = 2
 temp.code[1].stackOutputs = 0
- eof1BadList.push(temp)
+ eof1BadList.push([temp, "EOF1I0014"])
 
 // DUP
 temp = createEOF1Code(["00", "81" + "B1"], [0, 3])
 temp.code[1].stackInputs = 2
 temp.code[1].stackOutputs = 0
-eof1GoodList.push(temp)
+eof1GoodList.push([temp, "EOF1I0014"])
 
 temp = createEOF1Code(["00", "82" + "B1"], [0, 3])
 temp.code[1].stackInputs = 2
 temp.code[1].stackOutputs = 0
- eof1BadList.push(temp)
+ eof1BadList.push([temp, "EOF1I0014"])
 
 
 // SWAP
 temp = createEOF1Code(["00", "90" + "B1"], [0, 2])
 temp.code[1].stackInputs = 2
 temp.code[1].stackOutputs = 0
-eof1GoodList.push(temp)
+eof1GoodList.push([temp, ""])
 
 temp = createEOF1Code(["00", "91" + "B1"], [0, 2])
 temp.code[1].stackInputs = 2
 temp.code[1].stackOutputs = 0
- eof1BadList.push(temp)
+ eof1BadList.push([temp, "EOF1I0014"])
 
 
 
 // Jumps
 
 // Try an old style jump, see it fails
- eof1BadList.push(createEOF1Code(["00", "5B600056"], [0, 1]))
+ eof1BadList.push([createEOF1Code(["00", "5B600056"], [0, 1]), "EOF1I0015"])
 
 // Old style conditional jump
- eof1BadList.push(createEOF1Code(["00", "5B6001600057"], [0, 1]))
+ eof1BadList.push([createEOF1Code(["00", "5B6001600057"], [0, 1]), "EOF1I0015"])
 
 // New style jump
-eof1GoodList.push(createEOF1Code(["00", "5C0000"], [0, 0]))
+eof1GoodList.push([createEOF1Code(["00", "5C0000"], [0, 0]), "EOF1V0008"])
 
 // New style jump that actually does something
-eof1GoodList.push(createEOF1Code(["00", "5C000260FF60FFB1"], [0, 1]))
-eof1GoodList.push(createEOF1Code(["00", "60FF5C0002600150", "00"], [0, 1, 0]))
+eof1GoodList.push([createEOF1Code(["00", "5C000260FF60FFB1"], [0, 1]), "EOF1V0008"])
+eof1GoodList.push([createEOF1Code(["00", "60FF5C0002600150", "00"], [0, 1, 0]), "EOF1V0008"])
 
 // New style jump to hyperspace
- eof1BadList.push(createEOF1Code(["00", "5C0010"], [0, 0]))
- eof1BadList.push(createEOF1Code(["00", "5CFF00"], [0, 0]))
-
-
+ eof1BadList.push([createEOF1Code(["00", "5C0010"], [0, 0]), "EOF1I0016"])
+ eof1BadList.push([createEOF1Code(["00", "5CFF00"], [0, 0]), "EOF1I0016"])
 
 
 // GOON: Things that shouldn't work but do for some reason
 
 /*
-
 // Function with output only, the output doesn't contribute to maxStackHeight
 temp = createEOF1Code(["B00001" + "50" + "00", "60FF" + "B1"], [0, 1])
 temp.code[1].stackInputs = 0
@@ -346,7 +343,6 @@ eof1GoodList.push(createEOF1Code(["00", "5C0001"], [0, 0]))
 // New style conditional jump
 // Why is maxStackHeight 2? we push a value, pop it, and push a different value
 eof1GoodList.push(createEOF1Code(["00", "6000" + "5D0000" + "30"], [0, 2]))
-
 
 
 // These should be good, but instead they fail
@@ -387,8 +383,8 @@ eof1GoodList.push(createEOF1Code(["00", "6000" + "5D0002" + "5B5B5B5B5B"], [0, 1
 */
 
 
-badContracts = eof1BadList.map(encode).map(code2init)
-goodContracts = eof1GoodList.map(encode).map(code2init)
+badContracts = eof1BadList.map(c => [encode(c[0]), c[1]]).map(c => [code2init(c[0]), c[1]])
+goodContracts = eof1GoodList.map(c => [encode(c[0]), c[1]]).map(c => [code2init(c[0]), c[1]])
 
 
 
@@ -410,7 +406,15 @@ EOF1ValidInvalid:
     previousHash: 5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6
 
   _info:
-    comment: Ori Pomerantz  qbzzt1@gmail.com
+    comment: |
+      Ori Pomerantz  qbzzt1@gmail.com
+      Implements EOF1I0001, EOF1I0002, EOF1I0003, EOF1I0004, EOF1I0005,
+      EOF1I0006, EOF1I0007, EOF1I0008, EOF1I0009, EOF1I0010,
+      EOF1I0011, EOF1I0012, EOF1I0013, EOF1I0014, EOF1I0015,
+      EOF1I0016, EIPI0017
+
+      Implements: EOF1V0001, EOF1V0002, EOF1V0003, EOF1V0004, EOF1V0005, EOF1V0006,
+      EOF1V0007, EOF1V0008, EOF1V0009
 
   pre:
 
@@ -425,13 +429,13 @@ EOF1ValidInvalid:
   transaction:
     data:
 ${badContracts.map((code, i) => `
-      # Data ${i}
-      - :label bad  :raw 0x${code}
+      # Data ${i}   implements ${code[1]}
+      - :label bad  :raw 0x${code[0]}
 `).reduce((a,b) => a+b)}
 
 ${goodContracts.map((code, i) => `
-      # Data ${i+badContracts.length}
-      - :label good :raw 0x${code}
+      # Data ${i+badContracts.length} implements ${code[1]}
+      - :label good :raw 0x${code[0]}
 `).reduce((a,b) => a+b)}
 
     gasLimit:

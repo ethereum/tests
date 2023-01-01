@@ -27,3 +27,35 @@
 - ID: **BSHB0016** different validators withdraw to the same address
 - ID: **BSHB0017** withdrawal amount is 0 (WARNING: touch empty account)
 - ID: **BSHB0018** withdrawal amount is 0, plus transaction
+
+
+
+## Valid and Invalid EOF1 contracts
+- ID: **EOF1I0001** check that EOF1 with a bad magic number fails
+- ID: **EOF1I0002** check that EOF1 with a bad version number fails
+- ID: **EOF1I0003** check that EOF1 with a bad section order fails
+- ID: **EOF1I0004** check that EOF1 missing a section fails
+- ID: **EOF1I0005** check that EOF1 with a bad end of sections number fails
+- ID: **EOF1I0006** check that EOF1 with too many or too few bytes fails
+- ID: **EOF1I0007** check that EOF1 with a malformed code section fails
+- ID: **EOF1I0008** check that EOF1 with an illegal opcode fails
+- ID: **EOF1I0009** check that EOF1 with the wrong maxStackDepth fails
+- ID: **EOF1I0010** check that return values are not allowed on section 0
+- ID: **EOF1I0011** check that function calls to code sections that don't exist fail
+- ID: **EOF1I0012** check that code sections that cause stack underflow fail
+- ID: **EOF1I0013** check that code sections that cause stack overflow fail
+- ID: **EOF1I0014** check that code that looks deeper in the stack than the parameters fails
+- ID: **EOF1I0015** check that code that uses old style JUMP[I] (56 or 57) fails
+- ID: **EOF1I0016** check that code that uses new relative jumps to outside the section fails
+- ID: **EOF1I0017** check that parameters are not allowed on section 0
+
+
+- ID: **EOF1V0001** check that simple valid EOF1 deploys
+- ID: **EOF1V0002** check that valid EOF1 with two code sections deploys
+- ID: **EOF1V0003** check that valid EOF1 with four code sections deploys
+- ID: **EOF1V0004** check that valid EOF1 can include 0xFE, the designated "invalid opcode"
+- ID: **EOF1V0005** check that EOF1 with the right maxStackDepth deploys
+- ID: **EOF1V0006** check that return values are allowed on code sections that aren't zero
+- ID: **EOF1V0007** check that function calls to code sections that exist are allowed
+- ID: **EOF1V0008** check that code that uses a new style relative jump (5C) succeeds
+- ID: **EOF1V0009** check that parameters are allowed on code sections that aren't zero
