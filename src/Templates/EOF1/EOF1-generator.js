@@ -173,51 +173,6 @@ eof1DataTooShort.sections[2].size = 6
 eof1WierdSectionSize = cloneEof1Good()
 eof1WierdSectionSize.sections[0].size = 3
 
-eof1StackHeightTooHigh = cloneEof1Good()
-eof1StackHeightTooHigh.code[0].maxStack = 2
-
-eof1StackHeightTooLow = cloneEof1Good()
-eof1StackHeightTooLow.code[0].code = '3030505000'
-eof1StackHeightTooLow.sections[1].lengths = [5]
-
-eof1StackUnderflow = cloneEof1Good()
-eof1StackUnderflow.code[0].code = '3050505000'
-eof1StackUnderflow.sections[1].lengths = [5]
-
-// The first code section can't have parameters, because it is called directly
-eof1StackParamSec0 = cloneEof1Good()
-eof1StackParamSec0.sections[0].size = 8
-eof1StackParamSec0.sections[1].size = 2
-eof1StackParamSec0.sections[1].lengths = [3, 3]
-eof1StackParamSec0.code = [
-   JSON.parse(JSON.stringify(eof1Good.code[0])),
-   JSON.parse(JSON.stringify(eof1Good.code[0]))
-]
-eof1StackParamSec0.code[0].code = "300100"
-eof1StackParamSec0.code[0].maxStack = 2
-eof1StackParamSec0.code[0].stackInputs = 1
-
-// The first code section can't have return values, because it is called directly
-eof1StackRetvalSec0 = cloneEof1Good()
-eof1StackRetvalSec0.sections[0].size = 8
-eof1StackRetvalSec0.sections[1].size = 2
-eof1StackRetvalSec0.sections[1].lengths = [1, 3]
-eof1StackRetvalSec0.code = [
-   JSON.parse(JSON.stringify(eof1Good.code[0])),
-   JSON.parse(JSON.stringify(eof1Good.code[0]))
-]
-eof1StackRetvalSec0.code[0].code = "30"
-eof1StackRetvalSec0.code[0].maxStack = 1
-eof1StackRetvalSec0.code[0].stackOutputs = 1
-
-// Call a function that doesn't exist
-eof1FunCallHyperspace = createEOF1Code(["B00002", "3050B1"], [0, 1])
-
-eof1BadOpcode = createEOF1Code(["EF"], [0])
-
-
-
-
 const eof1BadList = [
 	eof1BadMagic,
         eof1BadVersion0,
@@ -230,56 +185,207 @@ const eof1BadList = [
         eof1ExtraBytes,
         eof1DataTooShort,
         eof1WierdSectionSize,
-        eof1StackHeightTooHigh,
-        eof1StackHeightTooLow,
-        eof1StackParamSec0,
-        eof1FunCallHyperspace,
-	eof1BadOpcode
 ]  // eof1BadList
 
 
+eof1GoodList = [eof1Good]
+
+// Multiple code segments are fine
+eof1GoodList.push(createEOF1Code(["305000", "3030505000"], [1, 2]))
+eof1GoodList.push(createEOF1Code(["305000", "305000", "305000", "305000"],
+                              [1,1,1,1]))
+
+// Create tests in groups. A good example, and bad examples that are related
+// so we know they fail for the right reason.
+
+// FE, the designated invalid opcode, is valid in a code segment.
+// Other opcode values, however, are invalid
+eof1GoodList.push(createEOF1Code(["FE00"], [0]))
+ eof1BadList.push(createEOF1Code(["EF00"], [0]))
 
 
-// Good (valid) EOF1's
-eof1TwoCode = createEOF1Code(["305000", "3030505000"], [1, 2])
+// maxStack needs to be the correct value,
+eof1GoodList.push(createEOF1Code(["3030505000"], [2]))
+ eof1BadList.push(createEOF1Code(["3030505000"], [1]))
+ eof1BadList.push(createEOF1Code(["3030505000"], [3]))
 
-eof1FourCode = createEOF1Code(["305000", "305000", "305000", "305000"],
-                              [1,1,1,1])
-
-eof1StackParam = createEOF1Code(["305000", "300150"], [1, 2])
-eof1StackParam.code[1].stackInputs = 1
-
-eof1StackRetval = createEOF1Code(["00", "30"], [0,1])
-eof1StackRetval.code[1].stackOutputs = 1
-
-eof1FunCall = createEOF1Code(["B00000", "3050B1"], [0, 1])
-
-eof1EndlessLoop = createEOF1Code(["B00000"], [0])
-
-// Use the stack for input and output
-eof1StackIO = createEOF1Code(["60FF60FFB0000100", "01B1"], [2, 1])
-eof1StackIO.code[1].stackInputs = 2
-eof1StackIO.code[1].stackOutputs = 1
-
-// Revert inside internal function
-eof1IntervalRevert = createEOF1Code(["00", "60006000FD"], [0, 2])
-
-// FE is the "valid invalid opcode" and as such allowed
-eof1FENotBad = createEOF1Code(["FE"], [0])
+// stack underflow
+ eof1BadList.push(createEOF1Code(["30505000"], [1]))
 
 
-const eof1GoodList = [
-	eof1Good,
-	eof1TwoCode,
-	eof1FourCode,
-	eof1StackParam,
-	eof1StackRetval,
-        eof1FunCall,
-	eof1EndlessLoop,
-        eof1StackIO,
-        eof1IntervalRevert,
-        eof1FENotBad
-]   // eof1GoodList
+// parameters are allowed except on section 0
+temp = createEOF1Code(["305000", "300150"], [1, 2])
+temp.code[1].stackInputs = 1
+eof1GoodList.push(temp)
+
+temp = createEOF1Code(["300150", "305000"], [2, 1])
+temp.code[0].stackInputs = 1
+ eof1BadList.push(temp)
+
+
+// Return values are allowed, except on section 0
+temp = createEOF1Code(["305000", "303001"], [1, 2])
+temp.code[1].stackOutputs = 1
+eof1GoodList.push(temp)
+
+temp = createEOF1Code(["303001", "305000"], [2, 1])
+temp.code[0].stackOutputs = 1
+ eof1BadList.push(temp)
+
+
+// Function calls are allowed, as long as the function exists
+eof1GoodList.push(createEOF1Code(["B0000100", "00"], [0, 0]))
+ eof1BadList.push(createEOF1Code(["B0000200", "00"], [0, 0]))
+
+
+// Stack underflow is bad
+eof1GoodList.push(createEOF1Code(["3030015000"], [2]))
+ eof1BadList.push(createEOF1Code(["30015000"], [1]))
+
+
+// Endless loops are OK, but stack overflow isn't
+eof1GoodList.push(createEOF1Code(["3050B0000000"], [1]))
+ eof1BadList.push(createEOF1Code(["30B0000000"], [1]))
+
+
+// The parameters aren't part of maxStackHeight
+temp = createEOF1Code(["60FF" + "B00001" + "00", "50" + "B1"], [1, 0])
+temp.code[1].stackInputs = 1
+temp.code[1].stackOutputs = 0
+ eof1GoodList.push(temp)
+
+temp = createEOF1Code(["60FF" + "B00001" + "00", "50" + "B1"], [1, 1])
+temp.code[1].stackInputs = 1
+temp.code[1].stackOutputs = 0
+ eof1BadList.push(temp)
+
+// We can't dig below our parameters
+// with POP
+temp = createEOF1Code(["00", "505050" + "B1"], [0, 0])
+temp.code[1].stackInputs = 2
+temp.code[1].stackOutputs = 0
+ eof1BadList.push(temp)
+
+// DUP
+temp = createEOF1Code(["00", "81" + "B1"], [0, 3])
+temp.code[1].stackInputs = 2
+temp.code[1].stackOutputs = 0
+eof1GoodList.push(temp)
+
+temp = createEOF1Code(["00", "82" + "B1"], [0, 3])
+temp.code[1].stackInputs = 2
+temp.code[1].stackOutputs = 0
+ eof1BadList.push(temp)
+
+
+// SWAP
+temp = createEOF1Code(["00", "90" + "B1"], [0, 2])
+temp.code[1].stackInputs = 2
+temp.code[1].stackOutputs = 0
+eof1GoodList.push(temp)
+
+temp = createEOF1Code(["00", "91" + "B1"], [0, 2])
+temp.code[1].stackInputs = 2
+temp.code[1].stackOutputs = 0
+ eof1BadList.push(temp)
+
+
+
+// Jumps
+
+// Try an old style jump, see it fails
+ eof1BadList.push(createEOF1Code(["00", "5B600056"], [0, 1]))
+
+// Old style conditional jump
+ eof1BadList.push(createEOF1Code(["00", "5B6001600057"], [0, 1]))
+
+// New style jump
+eof1GoodList.push(createEOF1Code(["00", "5C0000"], [0, 0]))
+
+// New style jump that actually does something
+eof1GoodList.push(createEOF1Code(["00", "5C000260FF60FFB1"], [0, 1]))
+eof1GoodList.push(createEOF1Code(["00", "60FF5C0002600150", "00"], [0, 1, 0]))
+
+// New style jump to hyperspace
+ eof1BadList.push(createEOF1Code(["00", "5C0010"], [0, 0]))
+ eof1BadList.push(createEOF1Code(["00", "5CFF00"], [0, 0]))
+
+
+
+
+// GOON: Things that shouldn't work but do for some reason
+
+/*
+
+// Function with output only, the output doesn't contribute to maxStackHeight
+temp = createEOF1Code(["B00001" + "50" + "00", "60FF" + "B1"], [0, 1])
+temp.code[1].stackInputs = 0
+temp.code[1].stackOutputs = 1
+eof1GoodList.push(temp)
+
+
+// But why do we get here a maxStackHeight of one,
+// not zero (without the inputs) or two (with them)?
+temp = createEOF1Code(["00", "5050" + "B1"], [0, 1])
+temp.code[1].stackInputs = 2
+temp.code[1].stackOutputs = 0
+eof1GoodList.push(temp)
+
+// Why are we allowed to push values that aren't stack outputs?
+eof1GoodList.push(createEOF1Code(["00", "600160026003B1"], [0, 3]))
+
+// New style jump into the middle of an instruction
+eof1GoodList.push(createEOF1Code(["00", "5C000160FF60FFB1"], [0, 1]))
+
+
+// Jump slightly beyond the segment
+eof1GoodList.push(createEOF1Code(["00", "5C0001", "00"], [0, 0, 0]))
+eof1GoodList.push(createEOF1Code(["00", "5C0001"], [0, 0]))
+
+
+// New style conditional jump
+// Why is maxStackHeight 2? we push a value, pop it, and push a different value
+eof1GoodList.push(createEOF1Code(["00", "6000" + "5D0000" + "30"], [0, 2]))
+
+
+
+// These should be good, but instead they fail
+eof1GoodList.push(createEOF1Code(["00", "5C00005C0000"], [0, 0]))
+
+// Error: DebugVMTrace parse error: Error in DataObject:
+// key: '' type: 'object'
+// assert: count(_key) _key=time (DataObject::atKey)
+// {
+//     "output" : "ef000101000802000200010006030001000000000000000000005c00005c0000ff",
+//     "gasUsed" : "0x4c3e320",
+//     "error" : "relative offset out-of-bounds: 3"
+// }
+
+eof1GoodList.push(createEOF1Code(["00", "6000" + "5D0000"], [0, 1]))
+
+// Error: ERROR OCCURED FILLING TESTS: DebugVMTrace parse error: Error in DataObject:
+// key: '' type: 'object'
+// assert: count(_key) _key=time (DataObject::atKey)
+// {
+//     "output" : "ef0001010008020002000100050300010000000000000000020060005d0000ff",
+//     "gasUsed" : "0x4c3e318",
+//     "error" : "relative offset out-of-bounds: 2"
+// }
+
+eof1GoodList.push(createEOF1Code(["00", "6000" + "5D0002" + "5B5B5B5B5B"], [0, 1]))
+
+// Error: ERROR OCCURED FILLING TESTS: DebugVMTrace parse error: Error in DataObject:
+// key: '' type: 'object'
+// assert: count(_key) _key=time (DataObject::atKey)
+// {
+//     "output" : "ef00010100080200020001000a0300010000000000000000010060005d00025b5b5b5b5bff",
+//     "gasUsed" : "0x4c3e2bc",
+//     "error" : "stack underflow"
+// }
+
+
+*/
+
 
 badContracts = eof1BadList.map(encode).map(code2init)
 goodContracts = eof1GoodList.map(encode).map(code2init)
