@@ -25,3 +25,5 @@
 - ID: **BSHB0014** withdrawals body has less than 4 elements
 - ID: **BSHB0015** two withdrawals record with the same index  (WARNING: ALLOWED)
 - ID: **BSHB0016** different validators withdraw to the same address
+- ID: **BSHB0017** withdrawal amount is 0 (WARNING: touch empty account)
+- ID: **BSHB0018** withdrawal amount is 0, plus transaction
