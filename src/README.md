@@ -23,3 +23,5 @@
 - ID: **BSHB0012** withdrawals amount more 2^64 is ok
 - ID: **BSHB0013** withdrawals body has more than 4 elements
 - ID: **BSHB0014** withdrawals body has less than 4 elements
+- ID: **BSHB0015** two withdrawals record with the same index  (WARNING: ALLOWED)
+- ID: **BSHB0016** different validators withdraw to the same address
