@@ -51,6 +51,7 @@
 - ID: **EOF1I0018** inconsistent number of code sections (between types and code)
 - ID: **EOF1I0019** check that jumps into the middle on an opcode are not allowed
 - ID: **EOF1I0020** check that you can't get to the same opcode with two different stack heights
+- ID: **EOF1I0021** empty jump table
 
 - ID: **EOF1V0001** check that simple valid EOF1 deploys
 - ID: **EOF1V0002** check that valid EOF1 with two code sections deploys
@@ -63,3 +64,5 @@
 - ID: **EOF1V0009** check that parameters are allowed on code sections that aren't zero
 - ID: **EOF1V0010** parameters are part of the max stack height
 - ID: **EOF1V0011** check that code that uses a new style conditional jump (5D) succeeds
+- ID: **EOF1V0012** return values on code sections affect maxStackHeight of the caller
+- ID: **EOF1V0013** jump tables work
