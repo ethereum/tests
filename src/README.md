@@ -45,13 +45,16 @@
 - ID: **EOF1I0012** check that code sections that cause stack underflow fail
 - ID: **EOF1I0013** check that we can't return more values than we declare
 - ID: **EOF1I0014** check that code that looks deeper in the stack than the parameters fails
-- ID: **EOF1I0015** check that code that uses old style JUMP[I] (56 or 57) fails
+- ID: **EOF1I0015** check that code that uses removed opcodes fails
 - ID: **EOF1I0016** check that code that uses new relative jumps to outside the section fails
 - ID: **EOF1I0017** check that parameters are not allowed on section 0
 - ID: **EOF1I0018** inconsistent number of code sections (between types and code)
 - ID: **EOF1I0019** check that jumps into the middle on an opcode are not allowed
 - ID: **EOF1I0020** check that you can't get to the same opcode with two different stack heights
 - ID: **EOF1I0021** empty jump table
+- ID: **EOF1I0022** stack underflow caused by a function call
+- ID: **EOF1I0023** sections with unreachable code fail
+- ID: **EOF1I0024** sections that end with a non-terminator opcode fail
 
 - ID: **EOF1V0001** check that simple valid EOF1 deploys
 - ID: **EOF1V0002** check that valid EOF1 with two code sections deploys
@@ -66,3 +69,4 @@
 - ID: **EOF1V0011** check that code that uses a new style conditional jump (5D) succeeds
 - ID: **EOF1V0012** return values on code sections affect maxStackHeight of the caller
 - ID: **EOF1V0013** jump tables work
+- ID: **EOF1V0014** sections that end with a legit terminating opcode are OK
