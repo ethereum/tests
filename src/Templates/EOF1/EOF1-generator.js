@@ -339,18 +339,107 @@ eof1GoodList.push([createEOF1Code(["00", "6000" + "5D0002" + "3050" + "3000"], [
 		"EOF1I0020"])
 
 
-/*
-// Function with output only, the output doesn't contribute to maxStackHeight
+// section output affects maxStackHeight on the caller
 temp = createEOF1Code(["B00001" + "50" + "00", "60FF" + "B1"], [1, 1])
 temp.code[1].stackInputs = 0
 temp.code[1].stackOutputs = 1
-eof1GoodList.push([temp, "GOON https://github.com/ethereum/go-ethereum/pull/26133#issuecomment-1369297383"])
-*/
+eof1GoodList.push([temp, "EOFV0012"])
+
+
+// RJUMPV, use jump table
+eof1GoodList.push(
+  [
+    createEOF1Code
+      ([
+	"6001" +   // PUSH1 1
+        "5E"   +   // RJUMPV, use jump table
+        "05"   +   // Number of entries in jump table
+        "0000" +   // Relative address, case 0
+        "0000" +   // Relative address, case 1
+        "0000" +   // Relative address, case 2
+        "0000" +   // Relative address, case 3
+        "0000" +   // Relative address, case 4
+        "00"       // STOP
+       ], [1]
+      ), "EOF1V0013"])
+
+
+// RJUMPV that actually does something
+eof1GoodList.push(
+  [
+    createEOF1Code
+      ([
+	"6001" +   // PUSH1 1
+        "5E"   +   // RJUMPV, use jump table
+        "05"   +   // Number of entries in jump table
+        "0000" +   // Relative address, case 0
+        "0001" +   // Relative address, case 1
+        "0001" +   // Relative address, case 2
+        "0000" +   // Relative address, case 3
+        "0001" +   // Relative address, case 4
+        "00" +     // STOP
+        "305000"   // ADDRESS, POP, STOP
+       ], [1]
+      ), "EOF1V0013"])
 
 
 
-badContracts = eof1BadList.map(c => [encode(c[0]), c[1]]).map(c => [code2init(c[0]), c[1]])
-goodContracts = eof1GoodList.map(c => [encode(c[0]), c[1]]).map(c => [code2init(c[0]), c[1]])
+// RJUMPV into the middle of an opcode
+ eof1BadList.push(
+  [
+    createEOF1Code
+      ([
+	"6001" +   // PUSH1 1
+        "5E"   +   // RJUMPV, use jump table
+        "05"   +   // Number of entries in jump table
+        "0000" +   // Relative address, case 0
+        "0001" +   // Relative address, case 1
+        "0001" +   // Relative address, case 2
+        "0002" +   // Relative address, case 3
+        "0001" +   // Relative address, case 4
+        "00" +     // STOP
+        "60FF5000" // PUSH1, POP, STOP
+       ], [1]
+      ), "EOF1I0019"])
+
+
+// RJUMPV into its own middle
+ eof1BadList.push(
+  [
+    createEOF1Code
+      ([
+	"6001" +   // PUSH1 1
+        "5E"   +   // RJUMPV, use jump table
+        "05"   +   // Number of entries in jump table
+        "0000" +   // Relative address, case 0
+        "0001" +   // Relative address, case 1
+        "0001" +   // Relative address, case 2
+        "FFFE" +   // Relative address, case 3
+        "0001" +   // Relative address, case 4
+        "00" +     // STOP
+        "60FF5000" // PUSH1, POP, STOP
+       ], [1]
+      ), "EOF1I0019"])
+
+
+// RJUMPV with an empty jump table
+ eof1BadList.push(
+  [
+    createEOF1Code
+      ([
+	"6001" +   // PUSH1 1
+        "5E"   +   // RJUMPV, use jump table
+        "00"   +   // Number of entries in jump table
+        "60FF5000" // PUSH1, POP, STOP
+       ], [1]
+      ), "EOF1I0021"])
+
+
+
+badContracts = eof1BadList.map(c => [encode(c[0]), c[1]]).
+	map(c => [code2init(c[0]), c[1]])
+goodContracts = eof1GoodList.map(c => [encode(c[0]), c[1]]).
+	map(c => [code2init(c[0]), c[1]])
 
 
 
@@ -377,10 +466,12 @@ EOF1ValidInvalid:
       Implements EOF1I0001, EOF1I0002, EOF1I0003, EOF1I0004, EOF1I0005,
       EOF1I0006, EOF1I0007, EOF1I0008, EOF1I0009, EOF1I0010,
       EOF1I0011, EOF1I0012, EOF1I0013, EOF1I0014, EOF1I0015,
-      EOF1I0016, EIPI0017
+      EOF1I0016, EOF1I0017, EOF1I0018, EOF1I0019, EOF1I0020,
+      EOF1I0021
 
-      Implements: EOF1V0001, EOF1V0002, EOF1V0003, EOF1V0004, EOF1V0005, EOF1V0006,
-      EOF1V0007, EOF1V0008, EOF1V0009
+      Implements EOF1V0001, EOF1V0002, EOF1V0003, EOF1V0004, EOF1V0005,
+      EOF1V0006, EOF1V0007, EOF1V0008, EOF1V0009, EOF1V0010,
+      EOF1V0011, EOF1V0012, EOF1V0013
 
   pre:
 
