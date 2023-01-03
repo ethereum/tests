@@ -43,12 +43,14 @@
 - ID: **EOF1I0010** check that return values are not allowed on section 0
 - ID: **EOF1I0011** check that function calls to code sections that don't exist fail
 - ID: **EOF1I0012** check that code sections that cause stack underflow fail
-- ID: **EOF1I0013** check that code sections that cause stack overflow fail
+- ID: **EOF1I0013** check that we can't return more values than we declare
 - ID: **EOF1I0014** check that code that looks deeper in the stack than the parameters fails
 - ID: **EOF1I0015** check that code that uses old style JUMP[I] (56 or 57) fails
 - ID: **EOF1I0016** check that code that uses new relative jumps to outside the section fails
 - ID: **EOF1I0017** check that parameters are not allowed on section 0
-
+- ID: **EOF1I0018** inconsistent number of code sections (between types and code)
+- ID: **EOF1I0019** check that jumps into the middle on an opcode are not allowed
+- ID: **EOF1I0020** check that you can't get to the same opcode with two different stack heights
 
 - ID: **EOF1V0001** check that simple valid EOF1 deploys
 - ID: **EOF1V0002** check that valid EOF1 with two code sections deploys
@@ -59,3 +61,5 @@
 - ID: **EOF1V0007** check that function calls to code sections that exist are allowed
 - ID: **EOF1V0008** check that code that uses a new style relative jump (5C) succeeds
 - ID: **EOF1V0009** check that parameters are allowed on code sections that aren't zero
+- ID: **EOF1V0010** parameters are part of the max stack height
+- ID: **EOF1V0011** check that code that uses a new style conditional jump (5D) succeeds
