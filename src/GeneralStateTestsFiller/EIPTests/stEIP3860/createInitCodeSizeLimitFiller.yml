@@ -20,6 +20,18 @@ createInitCodeSizeLimit:
       code: |
         :yul 
         {
+          mstore(0, calldataload(0))
+          let call_result := call(10000000, 0xc94f5374fce5edbc8e2a8697c15331677e6ebf0b, 0, 0, calldatasize(), 0, 0)
+          sstore(0, call_result)
+          sstore(1, 1)
+        }
+      nonce: 0
+      storage: {}
+    c94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: 0
+      code: |
+        :yul 
+        {
           // :yul { codecopy(0x00, 0x00, 0x0a) return(0x00, 0x0a) }
           mstore(0, 0x600a80600080396000f300000000000000000000000000000000000000000000) 
           // get initcode size from calldata
@@ -28,7 +40,6 @@ createInitCodeSizeLimit:
           let create_result := create(0, 0, initcode_size)
           sstore(10, sub(gas_before, gas()))
           sstore(0, create_result)
-          sstore(1, 1)
         }
       nonce: 0
       storage: {}
@@ -58,10 +69,13 @@ createInitCodeSizeLimit:
           nonce: 1
        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           storage:
-              '0': 'f1ecf98489fa9ed60a664fc4998db699cfa39d40'
-              '1': 1
-              '10': 43248
-       f1ecf98489fa9ed60a664fc4998db699cfa39d40:
+              '0': 1 # subcall successful
+              '1': 1 # test successful, no OOG
+       c94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+              '0': '682327124c5d2dc0cd2158ba65d37ac3d2140c91' # created account
+              '10': 43248                                     # gas used by CREATE
+       682327124c5d2dc0cd2158ba65d37ac3d2140c91:
           balance: 0
           code: '0x600a80600080396000f3'
           nonce: 1
@@ -76,10 +90,13 @@ createInitCodeSizeLimit:
           nonce: 1
        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           storage:
-              '0': 'f1ecf98489fa9ed60a664fc4998db699cfa39d40'
-              '1': 1
-              '10': 43257
-       f1ecf98489fa9ed60a664fc4998db699cfa39d40:
+              '0': 1 # subcall successful
+              '1': 1 # test successful, no OOG
+       c94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+              '0': '682327124c5d2dc0cd2158ba65d37ac3d2140c91' # created account
+              '10': 43257                                     # gas used by CREATE
+       682327124c5d2dc0cd2158ba65d37ac3d2140c91:
           balance: 0
           code: '0x600a80600080396000f3'
           nonce: 1
@@ -94,11 +111,14 @@ createInitCodeSizeLimit:
           nonce: 1
        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           storage:
-              '0': 'f1ecf98489fa9ed60a664fc4998db699cfa39d40'
-              '1': 1
+              '0': 1 # subcall successful
+              '1': 1 # test successful, no OOG
+       c94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+              '0': '682327124c5d2dc0cd2158ba65d37ac3d2140c91' # created account
                # Difference with Merge is the charge for initcode 49152 // 32 * 2 = 3072 gas
-              '10': 46320
-       f1ecf98489fa9ed60a664fc4998db699cfa39d40:
+              '10': 46320                                     # gas used by CREATE
+       682327124c5d2dc0cd2158ba65d37ac3d2140c91:
           balance: 0
           code: '0x600a80600080396000f3'
           nonce: 1
@@ -114,8 +134,9 @@ createInitCodeSizeLimit:
        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           nonce: 0
           storage:
-              '0': 0
-              '1': 1
-              '10': 41233
-       f1ecf98489fa9ed60a664fc4998db699cfa39d40:
+              '0': 0 # subcall aborted
+              '1': 1 # test successful, no OOG
+       c94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage: {}
+       682327124c5d2dc0cd2158ba65d37ac3d2140c91:
           shouldnotexist: 1
