@@ -34,7 +34,7 @@ const eof1Good = {
          maxStack: 1      // maxStack needs to be accurate, otherwise CREATE[2] fails
       }
   ],
-  data: "ff"
+  data: "ef"
 }
 
 
@@ -283,14 +283,24 @@ temp.code[1].stackOutputs = 0
 
 
 
-// Jumps
-
+// Removed opcodes
 // Try an old style jump, see it fails
  eof1BadList.push([createEOF1Code(["00", "5B600056"], [0, 1]), "EOF1I0015"])
 
 // Old style conditional jump
  eof1BadList.push([createEOF1Code(["00", "5B6001600057"], [0, 1]), "EOF1I0015"])
 
+
+// Suicidal code
+ eof1BadList.push([createEOF1Code(["60016002FF00"], [2, 0]), "EOF1I0015"])
+
+
+// CALLCODE
+ eof1BadList.push([createEOF1Code(["6001600260036004600560066007F200"], [7, 0]), "EOF1I0015"])
+
+
+
+// Jumps
 // New style jump
 eof1GoodList.push([createEOF1Code(["00", "5C000000"], [0, 0]), "EOF1V0008"])
 
@@ -435,6 +445,64 @@ eof1GoodList.push(
       ), "EOF1I0021"])
 
 
+// Unreachable code fails
+
+// Uncoditional jump
+eof1GoodList.push([createEOF1Code(["5C000000"], [0]), ""])
+ eof1BadList.push([createEOF1Code(["5C00010000"], [0]), "EOF1I0023"])
+
+// Conditional jump
+eof1GoodList.push([createEOF1Code(["60015D000100305000"], [1]), ""])
+ eof1BadList.push([createEOF1Code(["60015D00020000305000"], [1]), "EOF1I0023"])
+
+// Jump table
+eof1GoodList.push([createEOF1Code(["6001" +
+                                   "5E02" +
+                                     "0002" +
+                                     "0004" +
+                                   "3050" +
+                                   "3050" +
+                                   "3050" +
+                                   "00"], [1]), ""])
+
+
+ eof1BadList.push([createEOF1Code(["6001" +
+                                   "5E02" +
+                                     "0002" +
+                                     "0004" +
+                                   "3050" +
+                                   "0000" +
+                                   "3050" +
+                                   "00"], [1]), "EOF1I0023"])
+
+
+
+// Stack underflow caused by a function call
+temp = createEOF1Code(["3030B0000100", "5050" + "B1"], [2, 2])
+temp.code[1].stackInputs = 2
+temp.code[1].stackOutputs = 0
+eof1GoodList.push([temp, "EOF1V0007"])
+
+temp = createEOF1Code(["30B0000100", "5050" + "B1"], [1, 2])
+temp.code[1].stackInputs = 2
+temp.code[1].stackOutputs = 0
+ eof1BadList.push([temp, "EOF1I0022"])
+
+
+// Sections that end with an opcode that isn't an approved terminator fail
+eof1GoodList.push([createEOF1Code(["600060006000600000"], [4]), "EOF1V0014"])
+eof1GoodList.push([createEOF1Code(["6000600060006000F3"], [4]), "EOF1V0014"])
+eof1GoodList.push([createEOF1Code(["6000600060006000FD"], [4]), "EOF1V0014"])
+eof1GoodList.push([createEOF1Code(["6000600060006000FE"], [4]), "EOF1V0014"])
+eof1GoodList.push([createEOF1Code(["3050B1"], [1]), "EOF1V0014"])
+ eof1BadList.push([createEOF1Code(["6000600060006000"], [4]), "EOF1I0024"])
+ eof1BadList.push([createEOF1Code(["600060006000600001"], [4]), "EOF1I0024"])
+ eof1BadList.push([createEOF1Code(["600060006000600034"], [4]), "EOF1I0024"])
+ eof1BadList.push([createEOF1Code(["600060006000600003"], [4]), "EOF1I0024"])
+ eof1BadList.push([createEOF1Code(["6000600060006000A4"], [4]), "EOF1I0024"])
+ eof1BadList.push([createEOF1Code(["6000600060006000F5"], [4]), "EOF1I0024"])
+
+
 
 badContracts = eof1BadList.map(c => [encode(c[0]), c[1]]).
 	map(c => [code2init(c[0]), c[1]])
@@ -467,11 +535,10 @@ EOF1ValidInvalid:
       EOF1I0006, EOF1I0007, EOF1I0008, EOF1I0009, EOF1I0010,
       EOF1I0011, EOF1I0012, EOF1I0013, EOF1I0014, EOF1I0015,
       EOF1I0016, EOF1I0017, EOF1I0018, EOF1I0019, EOF1I0020,
-      EOF1I0021
-
-      Implements EOF1V0001, EOF1V0002, EOF1V0003, EOF1V0004, EOF1V0005,
+      EOF1I0021, EOF1I0022, EOF1I0023, EOF1I0024,
+      EOF1V0001, EOF1V0002, EOF1V0003, EOF1V0004, EOF1V0005,
       EOF1V0006, EOF1V0007, EOF1V0008, EOF1V0009, EOF1V0010,
-      EOF1V0011, EOF1V0012, EOF1V0013
+      EOF1V0011, EOF1V0012, EOF1V0013, EOF1V0014
 
   pre:
 
