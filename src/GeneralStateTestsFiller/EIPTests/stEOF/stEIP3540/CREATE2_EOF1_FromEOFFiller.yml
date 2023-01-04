@@ -1,4 +1,7 @@
 # CREATE2 opcode with EOF1 initcode or/and code called from inside EOF contract
+# ---
+# Tests filled with geth version in: https://github.com/ipsilon/go-ethereum/tree/c673883fae922f84c3ae1e66fd4e3f9a3d6683c3
+# Active EIPs: 3540, 3670, 4200, 4750, 5450
 CREATE2_EOF1_FromEOF:
   env:
     currentCoinbase: 2adc25665018aa1fe0e6bc666dac8fc2697ff9ba
@@ -7,6 +10,7 @@ CREATE2_EOF1_FromEOF:
     currentBaseFee: '10'
     currentNumber: '1'
     currentTimestamp: '1000'
+    currentRandom: '0x0000000000000000000000000000000000000000000000000000000000000000'
     previousHash: 5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6
 
   pre:
@@ -17,8 +21,8 @@ CREATE2_EOF1_FromEOF:
       storage: {}
     b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
       balance: 0
-      # code: ":yul { calldatacopy(0, 0, calldatasize()) sstore(0, create2(0, 0, calldatasize(), 0)) sstore(1, 1) }"
-      code: ":raw 0xEF00010100170036600060003760003660006000f5600055600160015500"
+      # code: ":yul { calldatacopy(0, 0, calldatasize()) sstore(0, create2(0, 0, calldatasize(), 0)) sstore(1, 1) stop() }"
+      code: '0xef00010100040200010017030000000000000436600060003760003660006000f5600055600160015500'
       nonce: 0
       storage: {}
 
@@ -35,46 +39,33 @@ CREATE2_EOF1_FromEOF:
       #- ':yul { mstore8(0, 0xef) return(0, 32) }'
       - ':label deploying_0xef00..00 :raw 0x60ef60005360206000f3'
 
-      # Valid EOF1 initcode and code combinations (both with and withoug data section)
-
-      # Legacy initcode => EOF code
-      # deployed code without data section
-      # deployed code section: 'PUSH1 0 STOP'
-      - ':label deploying_valid_eof1 :yul { mstore(0, 0xef00010100030060000000000000000000000000000000000000000000000000) return(0, 10) }'
-      # deployed code with data section
-      # deployed code section: 'PUSH1 0 STOP' data section: 'aabbccdd'
-      - ':label deploying_valid_eof1_with_data :yul { mstore(0, 0xef000101000302000400600000aabbccdd000000000000000000000000000000) return(0, 17) }'
+      # Valid EOF1 initcode and code combinations (both with and without data section)
 
       # EOF initcode => EOF code
       # initcode without data section, deployed code without data section
-      # initcode code section: ':yul { mstore(0, ef00010100030060000000000000000000000000000000000000000000000000) return(0, 10) }'
-      # deployed code section: 'PUSH1 0 STOP'
-      - ':label eof1_initcode_deploying_valid_eof1 :raw 0xef0001010029007fef00010100030060000000000000000000000000000000000000000000000000600052600a6000f3'
+      # initcode code section: :yul { mstore(0, 0xef00010100040200010004030000000000000160005000000000000000000000) return(0, 23) }
+      # deployed code section: PUSH1(0) POP STOP
+      - ':label eof1_initcode_deploying_valid_eof1 :raw 0xef0001010004020001002903000000000000027fef0001010004020001000403000000000000016000500000000000000000000060005260176000f3'
       # initcode without data section, deployed code with data section
-      # initcode code section: ':yul { mstore(0, ef000101000302000400600000aabbccdd000000000000000000000000000000) return(0, 17) }'
-      # deployed code section: 'PUSH1 0 STOP' data section: 'aabbccdd'
-      - ':label eof1_initcode_deploying_valid_eof1_with_data :raw 0xef0001010029007fef000101000302000400600000aabbccdd00000000000000000000000000000060005260116000f3'
+      # initcode code section: :yul { mstore(0, 0xef00010100040200010004030004000000000160005000aabbccdd0000000000) return(0, 27) }
+      # deployed code:
+      #   code section: PUSH1(0) POP STOP 
+      #   data section: aabbccdd
+      - ':label eof1_initcode_deploying_valid_eof1_with_data :raw 0xef0001010004020001002903000000000000027fef00010100040200010004030004000000000160005000aabbccdd0000000000600052601b6000f3'
       # initcode with data section, deployed code without data section
-      # initcode code section: ':yul { mstore(0, ef00010100030060000000000000000000000000000000000000000000000000) return(0, 10) }' data section: 'aabbccdd'
-      # deployed code section: 'PUSH1 0 STOP'
-      - ':label eof1_initcode_with_data_deploying_valid_eof1 :raw 0xef0001010029020004007fef00010100030060000000000000000000000000000000000000000000000000600052600a6000f3aabbccdd'
+      # initcode:
+      #   code section: :yul { mstore(0, 0xef00010100040200010004030000000000000160005000000000000000000000) return(0, 23) }
+      #   data section: aabbccdd
+      # deployed code section: PUSH1(0) POP STOP
+      - ':label eof1_initcode_with_data_deploying_valid_eof1 :raw 0xef0001010004020001002903000400000000027fef0001010004020001000403000000000000016000500000000000000000000060005260176000f3aabbccdd'
       # initcode with data section, deployed code with data section
-      # initcode code section: ':yul { mstore(0, ef000101000302000400600000aabbccdd000000000000000000000000000000) return(0, 17) }' data section: 'eeff'
-      # deployed code section: 'PUSH1 0 STOP' data section: 'aabbccdd'
-      - ':label eof1_initcode_with_data_deploying_valid_eof1_with_data :raw 0xef0001010029020002007fef000101000302000400600000aabbccdd00000000000000000000000000000060005260116000f3eeff'
-
-      # EOF initcode => legacy code
-      # initcode without data section
-      # initcode code section: 'RETURN(0, 1)'
-      # deployed code: 'STOP'
-      - ':label eof1_initcode_deploying_legacy :raw 0xef00010100050060016000f3'
-      # inicode with data section
-      # initcode code section: 'RETURN(0, 1)' data section: 'aabbccdd'
-      # deployed code: 'STOP'
-      - ':label eof1_initcode_with_data_deploying_legacy :raw 0xef00010100050200040060016000f3aabbccdd'
-
-      # legacy initcode => legacy code (checking that it works inside EOF contract)
-      - ':label legacy_initcode_deploying_legacy :yul { return(0, 1) }'
+      # initcode 
+      #   code section: :yul { mstore(0, 0xef00010100040200010004030004000000000160005000aabbccdd0000000000) return(0, 27) }
+      #   data section: eeff
+      # deployed code:
+      #   code section: PUSH1(0) POP STOP
+      #   data section: aabbccdd
+      - ':label eof1_initcode_with_data_deploying_valid_eof1_with_data :raw 0xef0001010004020001002903000200000000027fef00010100040200010004030004000000000160005000aabbccdd0000000000600052601b6000f3eeff'
 
     gasLimit:
       - 15000000
@@ -89,7 +80,7 @@ CREATE2_EOF1_FromEOF:
     - indexes:
        data: ':label deploying_0xef'
       network:
-        - 'Merge+3540+3670'
+        - 'Shanghai'
       result:
        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           nonce: 1
@@ -98,13 +89,13 @@ CREATE2_EOF1_FromEOF:
           storage:
             '0': '0'
             '1': '1'
-       e893e8a20a685f12abde1714eb00b59859d8bdef:
+       E893e8A20a685f12aBdE1714EB00B59859D8bDEF:
           shouldnotexist: 1
 
     - indexes:
        data: ':label deploying_0xef00'
       network:
-        - 'Merge+3540+3670'
+        - 'Shanghai'
       result:
        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           nonce: 1
@@ -113,13 +104,13 @@ CREATE2_EOF1_FromEOF:
           storage:
             '0': '0'
             '1': '1'
-       c24985cc378689a2951d7e044b0794424f631123:
+       C24985Cc378689A2951d7E044b0794424f631123:
           shouldnotexist: 1
 
     - indexes:
        data: ':label deploying_0xef0000'
       network:
-        - 'Merge+3540+3670'
+        - 'Shanghai'
       result:
        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           nonce: 1
@@ -128,13 +119,13 @@ CREATE2_EOF1_FromEOF:
           storage:
             '0': '0'
             '1': '1'
-       95504c711c399fb9a53d7e42059565699dc0c68d:
+       95504c711C399fB9A53D7E42059565699dC0C68D:
           shouldnotexist: 1
 
     - indexes:
        data: ':label deploying_0xef00..00'
       network:
-        - 'Merge+3540+3670'
+        - 'Shanghai'
       result:
        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           nonce: 1
@@ -146,157 +137,71 @@ CREATE2_EOF1_FromEOF:
        421215f8ccd501c1f153d756a8695b12cf9400dc:
           shouldnotexist: 1
 
-
-    - indexes:
-       data: ':label deploying_valid_eof1'
-      network:
-        - 'Merge+3540+3670'
-      result:
-       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
-          nonce: 1
-       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
-          nonce: 1
-          storage:
-            '0': '0144766749b2d9936e989b9f058b29dc9ca366d4'
-            '1': '1'
-       0144766749b2d9936e989b9f058b29dc9ca366d4:
-          nonce: 1
-          code: '0xef000101000300600000'
-          storage: {}
-
-    - indexes:
-       data: ':label deploying_valid_eof1_with_data'
-      network:
-        - 'Merge+3540+3670'
-      result:
-       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
-          nonce: 1
-       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
-          nonce: 1
-          storage:
-            '0': '86e3a1a96cc7a1b32fe8f137e8c6552d99e3a492'
-            '1': '1'
-       86e3a1a96cc7a1b32fe8f137e8c6552d99e3a492:
-          nonce: 1
-          code: '0xef000101000302000400600000aabbccdd'
-          storage: {}
-
     - indexes:
        data: ':label eof1_initcode_deploying_valid_eof1'
       network:
-        - 'Merge+3540+3670'
+        - 'Shanghai'
       result:
        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           nonce: 1
        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           nonce: 1
           storage:
-            '0': '43cb7ffaab9f11ba4d8c1063f71f3382e13ee8b2'
+            '0': 'F170e980acfc212a0541F26dC254AC9afbb324B1'
             '1': '1'
-       43cb7ffaab9f11ba4d8c1063f71f3382e13ee8b2:
+       F170e980acfc212a0541F26dC254AC9afbb324B1:
           nonce: 1
-          code: '0xef000101000300600000'
+          code: '0xef00010100040200010004030000000000000160005000'
           storage: {}
 
     - indexes:
        data: ':label eof1_initcode_deploying_valid_eof1_with_data'
       network:
-        - 'Merge+3540+3670'
+        - 'Shanghai'
       result:
        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           nonce: 1
        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           nonce: 1
           storage:
-            '0': '734f207b9f4bb100c393e9b2ca7cc5e0122ad1c5'
+            '0': '2aC3a6717eCb1dBacFD456cd61fc28f278739E81'
             '1': '1'
-       734f207b9f4bb100c393e9b2ca7cc5e0122ad1c5:
+       2aC3a6717eCb1dBacFD456cd61fc28f278739E81:
           nonce: 1
-          code: '0xef000101000302000400600000aabbccdd'
+          code: '0xef00010100040200010004030004000000000160005000aabbccdd'
           storage: {}
 
     - indexes:
        data: ':label eof1_initcode_with_data_deploying_valid_eof1'
       network:
-        - 'Merge+3540+3670'
+        - 'Shanghai'
       result:
        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           nonce: 1
        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           nonce: 1
           storage:
-            '0': '4ed2b62afa956b291c0eef91d0724c904f438efd'
+            '0': '10cED2940D1371A21F1D9bE22dC4859867fc0E1b'
             '1': '1'
-       4ed2b62afa956b291c0eef91d0724c904f438efd:
+       10cED2940D1371A21F1D9bE22dC4859867fc0E1b:
           nonce: 1
-          code: '0xef000101000300600000'
+          code: '0xef00010100040200010004030000000000000160005000'
           storage: {}
 
     - indexes:
        data: ':label eof1_initcode_with_data_deploying_valid_eof1_with_data'
       network:
-        - 'Merge+3540+3670'
+        - 'Shanghai'
       result:
        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           nonce: 1
        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           nonce: 1
           storage:
-            '0': '2e02c32beb5a1be30fb2f37aea2fe4d1ae35a512'
+            '0': '8A825C525a0123AEbC6BF6cc6C3d968083F4CA0f'
             '1': '1'
-       2e02c32beb5a1be30fb2f37aea2fe4d1ae35a512:
+       8A825C525a0123AEbC6BF6cc6C3d968083F4CA0f:
           nonce: 1
-          code: '0xef000101000302000400600000aabbccdd'
+          code: '0xef00010100040200010004030004000000000160005000aabbccdd'
           storage: {}
 
-
-    - indexes:
-       data: ':label eof1_initcode_deploying_legacy'
-      network:
-        - 'Merge+3540+3670'
-      result:
-       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
-          nonce: 1
-       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
-          nonce: 1
-          storage:
-            '0': '806f2614992abcb0332c9f07574e0888a6307045'
-            '1': '1'
-       806f2614992abcb0332c9f07574e0888a6307045:
-          nonce: 1
-          code: '0x00'
-          storage: {}
-
-    - indexes:
-       data: ':label eof1_initcode_with_data_deploying_legacy'
-      network:
-        - 'Merge+3540+3670'
-      result:
-       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
-          nonce: 1
-       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
-          nonce: 1
-          storage:
-            '0': 'e858e7f0aa88a77391094a9ee92e71d2a4a1ece0'
-            '1': '1'
-       e858e7f0aa88a77391094a9ee92e71d2a4a1ece0:
-          nonce: 1
-          code: '0x00'
-          storage: {}
-
-    - indexes:
-       data: ':label legacy_initcode_deploying_legacy'
-      network:
-        - 'Merge+3540+3670'
-      result:
-       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
-          nonce: 1
-       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
-          nonce: 1
-          storage:
-            '0': '77dd5d2a2b742ca01ee2cfff306445e3741ef744'
-            '1': '1'
-       77dd5d2a2b742ca01ee2cfff306445e3741ef744:
-          nonce: 1
-          code: '0x00'
-          storage: {}
