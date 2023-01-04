@@ -1,0 +1,2387 @@
+# Deploy every Valid Opcode (not including PUSH opcodes)
+CREATE2_EOF1DeployValidOpcodes:
+  env:
+    currentCoinbase: 2adc25665018aa1fe0e6bc666dac8fc2697ff9ba
+    currentDifficulty: '0x020000'
+    currentGasLimit: '89128960'
+    currentBaseFee: '10'
+    currentNumber: '1'
+    currentTimestamp: '1000'
+    previousHash: 5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6
+
+  pre:
+    a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: 1000000000
+      code: ''
+      nonce: 0
+      storage: {}
+    b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: 0
+      code: |
+        :yul 
+        {
+          let init_code_len := calldatasize()
+          calldatacopy(0, 0, init_code_len)
+          if create2(0, 0, init_code_len, 0) { sstore(1, 1) }
+        }
+      nonce: 0
+      storage: {}
+
+  transaction:
+    data: 
+     # Deployed EOF Code: STOP 
+     - ':label stop :raw 0x7fef0001010004020001000103000000000000000000000000000000000000000060005260146000f3'
+     # Deployed EOF Code: PUSH1(1) DUP1  ADD STOP 
+     - ':label add :raw 0x7fef0001010004020001000503000000000000026001800100000000000000000060005260186000f3'
+     # Deployed EOF Code: PUSH1(1) DUP1  MUL STOP 
+     - ':label mul :raw 0x7fef0001010004020001000503000000000000026001800200000000000000000060005260186000f3'
+     # Deployed EOF Code: PUSH1(1) DUP1  SUB STOP 
+     - ':label sub :raw 0x7fef0001010004020001000503000000000000026001800300000000000000000060005260186000f3'
+     # Deployed EOF Code: PUSH1(1) DUP1  DIV STOP 
+     - ':label div :raw 0x7fef0001010004020001000503000000000000026001800400000000000000000060005260186000f3'
+     # Deployed EOF Code: PUSH1(1) DUP1  SDIV STOP 
+     - ':label sdiv :raw 0x7fef0001010004020001000503000000000000026001800500000000000000000060005260186000f3'
+     # Deployed EOF Code: PUSH1(1) DUP1  MOD STOP 
+     - ':label mod :raw 0x7fef0001010004020001000503000000000000026001800600000000000000000060005260186000f3'
+     # Deployed EOF Code: PUSH1(1) DUP1  SMOD STOP 
+     - ':label smod :raw 0x7fef0001010004020001000503000000000000026001800700000000000000000060005260186000f3'
+     # Deployed EOF Code: PUSH1(1) DUP1 DUP1  ADDMOD STOP 
+     - ':label addmod :raw 0x7fef0001010004020001000603000000000000036001808008000000000000000060005260196000f3'
+     # Deployed EOF Code: PUSH1(1) DUP1 DUP1  MULMOD STOP 
+     - ':label mulmod :raw 0x7fef0001010004020001000603000000000000036001808009000000000000000060005260196000f3'
+     # Deployed EOF Code: PUSH1(1) DUP1  EXP STOP 
+     - ':label exp :raw 0x7fef0001010004020001000503000000000000026001800a00000000000000000060005260186000f3'
+     # Deployed EOF Code: PUSH1(1) DUP1  SIGNEXTEND STOP 
+     - ':label signextend :raw 0x7fef0001010004020001000503000000000000026001800b00000000000000000060005260186000f3'
+     # Deployed EOF Code: PUSH1(1) DUP1  LT STOP 
+     - ':label lt :raw 0x7fef0001010004020001000503000000000000026001801000000000000000000060005260186000f3'
+     # Deployed EOF Code: PUSH1(1) DUP1  GT STOP 
+     - ':label gt :raw 0x7fef0001010004020001000503000000000000026001801100000000000000000060005260186000f3'
+     # Deployed EOF Code: PUSH1(1) DUP1  SLT STOP 
+     - ':label slt :raw 0x7fef0001010004020001000503000000000000026001801200000000000000000060005260186000f3'
+     # Deployed EOF Code: PUSH1(1) DUP1  SGT STOP 
+     - ':label sgt :raw 0x7fef0001010004020001000503000000000000026001801300000000000000000060005260186000f3'
+     # Deployed EOF Code: PUSH1(1) DUP1  EQ STOP 
+     - ':label eq :raw 0x7fef0001010004020001000503000000000000026001801400000000000000000060005260186000f3'
+     # Deployed EOF Code: PUSH1(1) ISZERO STOP 
+     - ':label iszero :raw 0x7fef0001010004020001000403000000000000016001150000000000000000000060005260176000f3'
+     # Deployed EOF Code: PUSH1(1) DUP1  AND STOP 
+     - ':label and :raw 0x7fef0001010004020001000503000000000000026001801600000000000000000060005260186000f3'
+     # Deployed EOF Code: PUSH1(1) DUP1  OR STOP 
+     - ':label or :raw 0x7fef0001010004020001000503000000000000026001801700000000000000000060005260186000f3'
+     # Deployed EOF Code: PUSH1(1) DUP1  XOR STOP 
+     - ':label xor :raw 0x7fef0001010004020001000503000000000000026001801800000000000000000060005260186000f3'
+     # Deployed EOF Code: PUSH1(1) NOT STOP 
+     - ':label not :raw 0x7fef0001010004020001000403000000000000016001190000000000000000000060005260176000f3'
+     # Deployed EOF Code: PUSH1(1) DUP1  BYTE STOP 
+     - ':label byte :raw 0x7fef0001010004020001000503000000000000026001801a00000000000000000060005260186000f3'
+     # Deployed EOF Code: PUSH1(1) DUP1  SHL STOP 
+     - ':label shl :raw 0x7fef0001010004020001000503000000000000026001801b00000000000000000060005260186000f3'
+     # Deployed EOF Code: PUSH1(1) DUP1  SHR STOP 
+     - ':label shr :raw 0x7fef0001010004020001000503000000000000026001801c00000000000000000060005260186000f3'
+     # Deployed EOF Code: PUSH1(1) DUP1  SAR STOP 
+     - ':label sar :raw 0x7fef0001010004020001000503000000000000026001801d00000000000000000060005260186000f3'
+     # Deployed EOF Code: PUSH1(1) DUP1  SHA3 STOP 
+     - ':label sha3 :raw 0x7fef0001010004020001000503000000000000026001802000000000000000000060005260186000f3'
+     # Deployed EOF Code: ADDRESS STOP 
+     - ':label address :raw 0x7fef0001010004020001000203000000000000013000000000000000000000000060005260156000f3'
+     # Deployed EOF Code: PUSH1(1) BALANCE STOP 
+     - ':label balance :raw 0x7fef0001010004020001000403000000000000016001310000000000000000000060005260176000f3'
+     # Deployed EOF Code: ORIGIN STOP 
+     - ':label origin :raw 0x7fef0001010004020001000203000000000000013200000000000000000000000060005260156000f3'
+     # Deployed EOF Code: CALLER STOP 
+     - ':label caller :raw 0x7fef0001010004020001000203000000000000013300000000000000000000000060005260156000f3'
+     # Deployed EOF Code: CALLVALUE STOP 
+     - ':label callvalue :raw 0x7fef0001010004020001000203000000000000013400000000000000000000000060005260156000f3'
+     # Deployed EOF Code: PUSH1(1) CALLDATALOAD STOP 
+     - ':label calldataload :raw 0x7fef0001010004020001000403000000000000016001350000000000000000000060005260176000f3'
+     # Deployed EOF Code: CALLDATASIZE STOP 
+     - ':label calldatasize :raw 0x7fef0001010004020001000203000000000000013600000000000000000000000060005260156000f3'
+     # Deployed EOF Code: PUSH1(1) DUP1 DUP1  CALLDATACOPY STOP 
+     - ':label calldatacopy :raw 0x7fef0001010004020001000603000000000000036001808037000000000000000060005260196000f3'
+     # Deployed EOF Code: CODESIZE STOP 
+     - ':label codesize :raw 0x7fef0001010004020001000203000000000000013800000000000000000000000060005260156000f3'
+     # Deployed EOF Code: PUSH1(1) DUP1 DUP1  CODECOPY STOP 
+     - ':label codecopy :raw 0x7fef0001010004020001000603000000000000036001808039000000000000000060005260196000f3'
+     # Deployed EOF Code: GASPRICE STOP 
+     - ':label gasprice :raw 0x7fef0001010004020001000203000000000000013a00000000000000000000000060005260156000f3'
+     # Deployed EOF Code: PUSH1(1) EXTCODESIZE STOP 
+     - ':label extcodesize :raw 0x7fef00010100040200010004030000000000000160013b0000000000000000000060005260176000f3'
+     # Deployed EOF Code: PUSH1(1) DUP1 DUP1 DUP1  EXTCODECOPY STOP 
+     - ':label extcodecopy :raw 0x7fef00010100040200010007030000000000000460018080803c00000000000000600052601a6000f3'
+     # Deployed EOF Code: RETURNDATASIZE STOP 
+     - ':label returndatasize :raw 0x7fef0001010004020001000203000000000000013d00000000000000000000000060005260156000f3'
+     # Deployed EOF Code: PUSH1(1) DUP1 DUP1  RETURNDATACOPY STOP 
+     - ':label returndatacopy :raw 0x7fef000101000402000100060300000000000003600180803e000000000000000060005260196000f3'
+     # Deployed EOF Code: PUSH1(1) EXTCODEHASH STOP 
+     - ':label extcodehash :raw 0x7fef00010100040200010004030000000000000160013f0000000000000000000060005260176000f3'
+     # Deployed EOF Code: PUSH1(1) BLOCKHASH STOP 
+     - ':label blockhash :raw 0x7fef0001010004020001000403000000000000016001400000000000000000000060005260176000f3'
+     # Deployed EOF Code: COINBASE STOP 
+     - ':label coinbase :raw 0x7fef0001010004020001000203000000000000014100000000000000000000000060005260156000f3'
+     # Deployed EOF Code: TIMESTAMP STOP 
+     - ':label timestamp :raw 0x7fef0001010004020001000203000000000000014200000000000000000000000060005260156000f3'
+     # Deployed EOF Code: NUMBER STOP 
+     - ':label number :raw 0x7fef0001010004020001000203000000000000014300000000000000000000000060005260156000f3'
+     # Deployed EOF Code: DIFFICULTY STOP 
+     - ':label difficulty :raw 0x7fef0001010004020001000203000000000000014400000000000000000000000060005260156000f3'
+     # Deployed EOF Code: GASLIMIT STOP 
+     - ':label gaslimit :raw 0x7fef0001010004020001000203000000000000014500000000000000000000000060005260156000f3'
+     # Deployed EOF Code: CHAINID STOP 
+     - ':label chainid :raw 0x7fef0001010004020001000203000000000000014600000000000000000000000060005260156000f3'
+     # Deployed EOF Code: SELFBALANCE STOP 
+     - ':label selfbalance :raw 0x7fef0001010004020001000203000000000000014700000000000000000000000060005260156000f3'
+     # Deployed EOF Code: BASEFEE STOP 
+     - ':label basefee :raw 0x7fef0001010004020001000203000000000000014800000000000000000000000060005260156000f3'
+     # Deployed EOF Code: PUSH1(1) POP STOP 
+     - ':label pop :raw 0x7fef0001010004020001000403000000000000016001500000000000000000000060005260176000f3'
+     # Deployed EOF Code: PUSH1(1) MLOAD STOP 
+     - ':label mload :raw 0x7fef0001010004020001000403000000000000016001510000000000000000000060005260176000f3'
+     # Deployed EOF Code: PUSH1(1) DUP1  MSTORE8 STOP 
+     - ':label mstore8 :raw 0x7fef0001010004020001000503000000000000026001805300000000000000000060005260186000f3'
+     # Deployed EOF Code: PUSH1(1) SLOAD STOP 
+     - ':label sload :raw 0x7fef0001010004020001000403000000000000016001540000000000000000000060005260176000f3'
+     # Deployed EOF Code: PUSH1(1) DUP1  SSTORE STOP 
+     - ':label sstore :raw 0x7fef0001010004020001000503000000000000026001805500000000000000000060005260186000f3'
+     # Deployed EOF Code: MSIZE STOP 
+     - ':label msize :raw 0x7fef0001010004020001000203000000000000015900000000000000000000000060005260156000f3'
+     # Deployed EOF Code: GAS STOP 
+     - ':label gas :raw 0x7fef0001010004020001000203000000000000015a00000000000000000000000060005260156000f3'
+     # Deployed EOF Code: JUMPDEST STOP 
+     - ':label jumpdest :raw 0x7fef0001010004020001000203000000000000005b00000000000000000000000060005260156000f3'
+     # Deployed EOF Code: PUSH0 STOP 
+     - ':label push0 :raw 0x7fef0001010004020001000203000000000000015f00000000000000000000000060005260156000f3'
+     # Deployed EOF Code: PUSH1(1) STOP 
+     - ':label push1 :raw 0x7fef0001010004020001000303000000000000016001000000000000000000000060005260166000f3'
+     # Deployed EOF Code: PUSH2(0xffff) STOP 
+     - ':label push2 :raw 0x7fef00010100040200010004030000000000000161ffff0000000000000000000060005260176000f3'
+     # Deployed EOF Code: PUSH3(0xffffff) STOP 
+     - ':label push3 :raw 0x7fef00010100040200010005030000000000000162ffffff00000000000000000060005260186000f3'
+     # Deployed EOF Code: PUSH4(0xffffffff) STOP 
+     - ':label push4 :raw 0x7fef00010100040200010006030000000000000163ffffffff000000000000000060005260196000f3'
+     # Deployed EOF Code: PUSH5(0xffffffffff) STOP 
+     - ':label push5 :raw 0x7fef00010100040200010007030000000000000164ffffffffff00000000000000600052601a6000f3'
+     # Deployed EOF Code: PUSH6(0xffffffffffff) STOP 
+     - ':label push6 :raw 0x7fef00010100040200010008030000000000000165ffffffffffff000000000000600052601b6000f3'
+     # Deployed EOF Code: PUSH7(0xffffffffffffff) STOP 
+     - ':label push7 :raw 0x7fef00010100040200010009030000000000000166ffffffffffffff0000000000600052601c6000f3'
+     # Deployed EOF Code: PUSH8(0xffffffffffffffff) STOP 
+     - ':label push8 :raw 0x7fef0001010004020001000a030000000000000167ffffffffffffffff00000000600052601d6000f3'
+     # Deployed EOF Code: PUSH9(0xffffffffffffffffff) STOP 
+     - ':label push9 :raw 0x7fef0001010004020001000b030000000000000168ffffffffffffffffff000000600052601e6000f3'
+     # Deployed EOF Code: PUSH10(0xffffffffffffffffffff) STOP 
+     - ':label push10 :raw 0x7fef0001010004020001000c030000000000000169ffffffffffffffffffff0000600052601f6000f3'
+     # Deployed EOF Code: PUSH11(0xffffffffffffffffffffff) STOP 
+     - ':label push11 :raw 0x7fef0001010004020001000d03000000000000016affffffffffffffffffffff0060005260206000f3'
+     # Deployed EOF Code: PUSH12(0xffffffffffffffffffffffff) STOP 
+     - ':label push12 :raw 0x7fef0001010004020001000e03000000000000016bffffffffffffffffffffffff600052600060205260216000f3'
+     # Deployed EOF Code: PUSH13(0xffffffffffffffffffffffffff) STOP 
+     - ':label push13 :raw 0x7fef0001010004020001000f03000000000000016cffffffffffffffffffffffff6000527fff0000000000000000000000000000000000000000000000000000000000000060205260226000f3'
+     # Deployed EOF Code: PUSH14(0xffffffffffffffffffffffffffff) STOP 
+     - ':label push14 :raw 0x7fef0001010004020001001003000000000000016dffffffffffffffffffffffff6000527fffff00000000000000000000000000000000000000000000000000000000000060205260236000f3'
+     # Deployed EOF Code: PUSH15(0xffffffffffffffffffffffffffffff) STOP 
+     - ':label push15 :raw 0x7fef0001010004020001001103000000000000016effffffffffffffffffffffff6000527fffffff000000000000000000000000000000000000000000000000000000000060205260246000f3'
+     # Deployed EOF Code: PUSH16(0xffffffffffffffffffffffffffffffff) STOP 
+     - ':label push16 :raw 0x7fef0001010004020001001203000000000000016fffffffffffffffffffffffff6000527fffffffff0000000000000000000000000000000000000000000000000000000060205260256000f3'
+     # Deployed EOF Code: PUSH17(0xffffffffffffffffffffffffffffffffff) STOP 
+     - ':label push17 :raw 0x7fef00010100040200010013030000000000000170ffffffffffffffffffffffff6000527fffffffffff00000000000000000000000000000000000000000000000000000060205260266000f3'
+     # Deployed EOF Code: PUSH18(0xffffffffffffffffffffffffffffffffffff) STOP 
+     - ':label push18 :raw 0x7fef00010100040200010014030000000000000171ffffffffffffffffffffffff6000527fffffffffffff000000000000000000000000000000000000000000000000000060205260276000f3'
+     # Deployed EOF Code: PUSH19(0xffffffffffffffffffffffffffffffffffffff) STOP 
+     - ':label push19 :raw 0x7fef00010100040200010015030000000000000172ffffffffffffffffffffffff6000527fffffffffffffff0000000000000000000000000000000000000000000000000060205260286000f3'
+     # Deployed EOF Code: PUSH20(0xffffffffffffffffffffffffffffffffffffffff) STOP 
+     - ':label push20 :raw 0x7fef00010100040200010016030000000000000173ffffffffffffffffffffffff6000527fffffffffffffffff00000000000000000000000000000000000000000000000060205260296000f3'
+     # Deployed EOF Code: PUSH21(0xffffffffffffffffffffffffffffffffffffffffff) STOP 
+     - ':label push21 :raw 0x7fef00010100040200010017030000000000000174ffffffffffffffffffffffff6000527fffffffffffffffffff0000000000000000000000000000000000000000000000602052602a6000f3'
+     # Deployed EOF Code: PUSH22(0xffffffffffffffffffffffffffffffffffffffffffff) STOP 
+     - ':label push22 :raw 0x7fef00010100040200010018030000000000000175ffffffffffffffffffffffff6000527fffffffffffffffffffff00000000000000000000000000000000000000000000602052602b6000f3'
+     # Deployed EOF Code: PUSH23(0xffffffffffffffffffffffffffffffffffffffffffffff) STOP 
+     - ':label push23 :raw 0x7fef00010100040200010019030000000000000176ffffffffffffffffffffffff6000527fffffffffffffffffffffff000000000000000000000000000000000000000000602052602c6000f3'
+     # Deployed EOF Code: PUSH24(0xffffffffffffffffffffffffffffffffffffffffffffffff) STOP 
+     - ':label push24 :raw 0x7fef0001010004020001001a030000000000000177ffffffffffffffffffffffff6000527fffffffffffffffffffffffff0000000000000000000000000000000000000000602052602d6000f3'
+     # Deployed EOF Code: PUSH25(0xffffffffffffffffffffffffffffffffffffffffffffffffff) STOP 
+     - ':label push25 :raw 0x7fef0001010004020001001b030000000000000178ffffffffffffffffffffffff6000527fffffffffffffffffffffffffff00000000000000000000000000000000000000602052602e6000f3'
+     # Deployed EOF Code: PUSH26(0xffffffffffffffffffffffffffffffffffffffffffffffffffff) STOP 
+     - ':label push26 :raw 0x7fef0001010004020001001c030000000000000179ffffffffffffffffffffffff6000527fffffffffffffffffffffffffffff000000000000000000000000000000000000602052602f6000f3'
+     # Deployed EOF Code: PUSH27(0xffffffffffffffffffffffffffffffffffffffffffffffffffffff) STOP 
+     - ':label push27 :raw 0x7fef0001010004020001001d03000000000000017affffffffffffffffffffffff6000527fffffffffffffffffffffffffffffff000000000000000000000000000000000060205260306000f3'
+     # Deployed EOF Code: PUSH28(0xffffffffffffffffffffffffffffffffffffffffffffffffffffffff) STOP 
+     - ':label push28 :raw 0x7fef0001010004020001001e03000000000000017bffffffffffffffffffffffff6000527fffffffffffffffffffffffffffffffff0000000000000000000000000000000060205260316000f3'
+     # Deployed EOF Code: PUSH29(0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffff) STOP 
+     - ':label push29 :raw 0x7fef0001010004020001001f03000000000000017cffffffffffffffffffffffff6000527fffffffffffffffffffffffffffffffffff00000000000000000000000000000060205260326000f3'
+     # Deployed EOF Code: PUSH30(0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff) STOP 
+     - ':label push30 :raw 0x7fef0001010004020001002003000000000000017dffffffffffffffffffffffff6000527fffffffffffffffffffffffffffffffffffff000000000000000000000000000060205260336000f3'
+     # Deployed EOF Code: PUSH31(0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff) STOP 
+     - ':label push31 :raw 0x7fef0001010004020001002103000000000000017effffffffffffffffffffffff6000527fffffffffffffffffffffffffffffffffffffff0000000000000000000000000060205260346000f3'
+     # Deployed EOF Code: PUSH32(0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff) STOP 
+     - ':label push32 :raw 0x7fef0001010004020001002203000000000000017fffffffffffffffffffffffff6000527fffffffffffffffffffffffffffffffffffffffff00000000000000000000000060205260356000f3'
+     # Deployed EOF Code: PUSH1(1) DUP1 STOP 
+     - ':label dup1 :raw 0x7fef0001010004020001000403000000000000026001800000000000000000000060005260176000f3'
+     # Deployed EOF Code: PUSH1(1) DUP1  DUP2 STOP 
+     - ':label dup2 :raw 0x7fef0001010004020001000503000000000000036001808100000000000000000060005260186000f3'
+     # Deployed EOF Code: PUSH1(1) DUP1 DUP1  DUP3 STOP 
+     - ':label dup3 :raw 0x7fef0001010004020001000603000000000000046001808082000000000000000060005260196000f3'
+     # Deployed EOF Code: PUSH1(1) DUP1 DUP1 DUP1  DUP4 STOP 
+     - ':label dup4 :raw 0x7fef00010100040200010007030000000000000560018080808300000000000000600052601a6000f3'
+     # Deployed EOF Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1  DUP5 STOP 
+     - ':label dup5 :raw 0x7fef00010100040200010008030000000000000660018080808084000000000000600052601b6000f3'
+     # Deployed EOF Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1  DUP6 STOP 
+     - ':label dup6 :raw 0x7fef00010100040200010009030000000000000760018080808080850000000000600052601c6000f3'
+     # Deployed EOF Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1  DUP7 STOP 
+     - ':label dup7 :raw 0x7fef0001010004020001000a030000000000000860018080808080808600000000600052601d6000f3'
+     # Deployed EOF Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1  DUP8 STOP 
+     - ':label dup8 :raw 0x7fef0001010004020001000b030000000000000960018080808080808087000000600052601e6000f3'
+     # Deployed EOF Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1  DUP9 STOP 
+     - ':label dup9 :raw 0x7fef0001010004020001000c030000000000000a60018080808080808080880000600052601f6000f3'
+     # Deployed EOF Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1  DUP10 STOP 
+     - ':label dup10 :raw 0x7fef0001010004020001000d030000000000000b6001808080808080808080890060005260206000f3'
+     # Deployed EOF Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1  DUP11 STOP 
+     - ':label dup11 :raw 0x7fef0001010004020001000e030000000000000c6001808080808080808080808a600052600060205260216000f3'
+     # Deployed EOF Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1  DUP12 STOP 
+     - ':label dup12 :raw 0x7fef0001010004020001000f030000000000000d600180808080808080808080806000527f8b0000000000000000000000000000000000000000000000000000000000000060205260226000f3'
+     # Deployed EOF Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1  DUP13 STOP 
+     - ':label dup13 :raw 0x7fef00010100040200010010030000000000000e600180808080808080808080806000527f808c00000000000000000000000000000000000000000000000000000000000060205260236000f3'
+     # Deployed EOF Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1  DUP14 STOP 
+     - ':label dup14 :raw 0x7fef00010100040200010011030000000000000f600180808080808080808080806000527f80808d000000000000000000000000000000000000000000000000000000000060205260246000f3'
+     # Deployed EOF Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1  DUP15 STOP 
+     - ':label dup15 :raw 0x7fef000101000402000100120300000000000010600180808080808080808080806000527f8080808e0000000000000000000000000000000000000000000000000000000060205260256000f3'
+     # Deployed EOF Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1  DUP16 STOP 
+     - ':label dup16 :raw 0x7fef000101000402000100130300000000000011600180808080808080808080806000527f808080808f00000000000000000000000000000000000000000000000000000060205260266000f3'
+     # Deployed EOF Code: PUSH1(1) DUP1  SWAP1 STOP 
+     - ':label swap1 :raw 0x7fef0001010004020001000503000000000000026001809000000000000000000060005260186000f3'
+     # Deployed EOF Code: PUSH1(1) DUP1 DUP1  SWAP2 STOP 
+     - ':label swap2 :raw 0x7fef0001010004020001000603000000000000036001808091000000000000000060005260196000f3'
+     # Deployed EOF Code: PUSH1(1) DUP1 DUP1 DUP1  SWAP3 STOP 
+     - ':label swap3 :raw 0x7fef00010100040200010007030000000000000460018080809200000000000000600052601a6000f3'
+     # Deployed EOF Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1  SWAP4 STOP 
+     - ':label swap4 :raw 0x7fef00010100040200010008030000000000000560018080808093000000000000600052601b6000f3'
+     # Deployed EOF Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1  SWAP5 STOP 
+     - ':label swap5 :raw 0x7fef00010100040200010009030000000000000660018080808080940000000000600052601c6000f3'
+     # Deployed EOF Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1  SWAP6 STOP 
+     - ':label swap6 :raw 0x7fef0001010004020001000a030000000000000760018080808080809500000000600052601d6000f3'
+     # Deployed EOF Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1  SWAP7 STOP 
+     - ':label swap7 :raw 0x7fef0001010004020001000b030000000000000860018080808080808096000000600052601e6000f3'
+     # Deployed EOF Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1  SWAP8 STOP 
+     - ':label swap8 :raw 0x7fef0001010004020001000c030000000000000960018080808080808080970000600052601f6000f3'
+     # Deployed EOF Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1  SWAP9 STOP 
+     - ':label swap9 :raw 0x7fef0001010004020001000d030000000000000a6001808080808080808080980060005260206000f3'
+     # Deployed EOF Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1  SWAP10 STOP 
+     - ':label swap10 :raw 0x7fef0001010004020001000e030000000000000b60018080808080808080808099600052600060205260216000f3'
+     # Deployed EOF Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1  SWAP11 STOP 
+     - ':label swap11 :raw 0x7fef0001010004020001000f030000000000000c600180808080808080808080806000527f9a0000000000000000000000000000000000000000000000000000000000000060205260226000f3'
+     # Deployed EOF Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1  SWAP12 STOP 
+     - ':label swap12 :raw 0x7fef00010100040200010010030000000000000d600180808080808080808080806000527f809b00000000000000000000000000000000000000000000000000000000000060205260236000f3'
+     # Deployed EOF Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1  SWAP13 STOP 
+     - ':label swap13 :raw 0x7fef00010100040200010011030000000000000e600180808080808080808080806000527f80809c000000000000000000000000000000000000000000000000000000000060205260246000f3'
+     # Deployed EOF Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1  SWAP14 STOP 
+     - ':label swap14 :raw 0x7fef00010100040200010012030000000000000f600180808080808080808080806000527f8080809d0000000000000000000000000000000000000000000000000000000060205260256000f3'
+     # Deployed EOF Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1  SWAP15 STOP 
+     - ':label swap15 :raw 0x7fef000101000402000100130300000000000010600180808080808080808080806000527f808080809e00000000000000000000000000000000000000000000000000000060205260266000f3'
+     # Deployed EOF Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1  SWAP16 STOP 
+     - ':label swap16 :raw 0x7fef000101000402000100140300000000000011600180808080808080808080806000527f80808080809f000000000000000000000000000000000000000000000000000060205260276000f3'
+     # Deployed EOF Code: PUSH1(1) DUP1  LOG0 STOP 
+     - ':label log0 :raw 0x7fef000101000402000100050300000000000002600180a000000000000000000060005260186000f3'
+     # Deployed EOF Code: PUSH1(1) DUP1 DUP1  LOG1 STOP 
+     - ':label log1 :raw 0x7fef00010100040200010006030000000000000360018080a1000000000000000060005260196000f3'
+     # Deployed EOF Code: PUSH1(1) DUP1 DUP1 DUP1  LOG2 STOP 
+     - ':label log2 :raw 0x7fef0001010004020001000703000000000000046001808080a200000000000000600052601a6000f3'
+     # Deployed EOF Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1  LOG3 STOP 
+     - ':label log3 :raw 0x7fef000101000402000100080300000000000005600180808080a3000000000000600052601b6000f3'
+     # Deployed EOF Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1  LOG4 STOP 
+     - ':label log4 :raw 0x7fef00010100040200010009030000000000000660018080808080a40000000000600052601c6000f3'
+     # Deployed EOF Code: PUSH1(1) DUP1 DUP1  CREATE STOP 
+     - ':label create :raw 0x7fef00010100040200010006030000000000000360018080f0000000000000000060005260196000f3'
+     # Deployed EOF Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1  CALL STOP 
+     - ':label call :raw 0x7fef0001010004020001000a03000000000000076001808080808080f100000000600052601d6000f3'
+     # Deployed EOF Code: PUSH1(1) DUP1  RETURN 
+     - ':label return :raw 0x7fef000101000402000100040300000000000002600180f300000000000000000060005260176000f3'
+     # Deployed EOF Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1  DELEGATECALL STOP 
+     - ':label delegatecall :raw 0x7fef00010100040200010009030000000000000660018080808080f40000000000600052601c6000f3'
+     # Deployed EOF Code: PUSH1(1) DUP1 DUP1 DUP1  CREATE2 STOP 
+     - ':label create2 :raw 0x7fef0001010004020001000703000000000000046001808080f500000000000000600052601a6000f3'
+     # Deployed EOF Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1  STATICCALL STOP 
+     - ':label staticcall :raw 0x7fef00010100040200010009030000000000000660018080808080fa0000000000600052601c6000f3'
+     # Deployed EOF Code: PUSH1(1) DUP1  REVERT 
+     - ':label revert :raw 0x7fef000101000402000100040300000000000002600180fd00000000000000000060005260176000f3'
+     # Deployed EOF Code: INVALID 
+     - ':label invalid :raw 0x7fef000101000402000100010300000000000000fe00000000000000000000000060005260146000f3'
+    gasLimit:
+      - 89000000
+    gasPrice: 10
+    nonce: 0
+    secretKey: 45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8
+    to: 'b94f5374fce5edbc8e2a8697c15331677e6ebf0b'
+    value:
+    - 0
+
+  expect:
+     - indexes:
+         data: ':label stop'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        e1fCfd326c353039bCEF30c560820F7207926042:
+           nonce: 1
+           storage: {}
+           code: '0xef00010100040200010001030000000000000000'
+     - indexes:
+         data: ':label add'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        221d4B0B1A519C75E1CA4eA6d0d1b93cF8835C6f:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001000503000000000000026001800100'
+     - indexes:
+         data: ':label mul'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        0FB3E016b145F6011240b75Ac23599826Ec3A2af:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001000503000000000000026001800200'
+     - indexes:
+         data: ':label sub'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        4d947283d0c92f406D9A14a69888fD8b9EEc14D9:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001000503000000000000026001800300'
+     - indexes:
+         data: ':label div'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        00Ea1421cb0c779641F54cfda6F45f8fA9DDA397:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001000503000000000000026001800400'
+     - indexes:
+         data: ':label sdiv'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        86098f848bD0dc27aBF28f31812f1a9f43aF1347:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001000503000000000000026001800500'
+     - indexes:
+         data: ':label mod'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        135cE332a4eA68457f8CB2C46a55a82c531B7635:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001000503000000000000026001800600'
+     - indexes:
+         data: ':label smod'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        9cf532Fcf94c97284Ccf0E8948c8e643472A8dF6:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001000503000000000000026001800700'
+     - indexes:
+         data: ':label addmod'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        e76A7c61F0048f9C1FE3e634BC4B646ae103d4fa:
+           nonce: 1
+           storage: {}
+           code: '0xef000101000402000100060300000000000003600180800800'
+     - indexes:
+         data: ':label mulmod'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        7E46F73cE05cC6E81ca11e6744b4CBc46B0e2feC:
+           nonce: 1
+           storage: {}
+           code: '0xef000101000402000100060300000000000003600180800900'
+     - indexes:
+         data: ':label exp'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        30e0B650d49C40A81903bC888D4895F92587Ee38:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001000503000000000000026001800a00'
+     - indexes:
+         data: ':label signextend'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        F1ea4127fB6b08C1dbB33494efc2310B360f5729:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001000503000000000000026001800b00'
+     - indexes:
+         data: ':label lt'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        3e1673C88dE9C2d6F51BE8E56a7c680355fe1C8B:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001000503000000000000026001801000'
+     - indexes:
+         data: ':label gt'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        8e7c5174aA70Ea5aFb83A2d40137F29Fd4B2Be90:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001000503000000000000026001801100'
+     - indexes:
+         data: ':label slt'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        5fA5BAcE83eF17d4c39b335845aE6c43e5db1cc5:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001000503000000000000026001801200'
+     - indexes:
+         data: ':label sgt'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        53B2BCA33f349cF036Cb2324622BB3F77C5533dB:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001000503000000000000026001801300'
+     - indexes:
+         data: ':label eq'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        BFf16E10b31Ebdca7996Ed7E5862F1A91De7C383:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001000503000000000000026001801400'
+     - indexes:
+         data: ':label iszero'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        8938C646D009aE79ab48859B152a70621950c4bf:
+           nonce: 1
+           storage: {}
+           code: '0xef00010100040200010004030000000000000160011500'
+     - indexes:
+         data: ':label and'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        C822B7aCFE8f79108E2349DA348BFc6B93e2B4D2:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001000503000000000000026001801600'
+     - indexes:
+         data: ':label or'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        0669B779b48eCFB761fb68E9910b42eE54afe652:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001000503000000000000026001801700'
+     - indexes:
+         data: ':label xor'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        f2C257ED6292579b784E8a9BC25095D7CeCbBFA0:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001000503000000000000026001801800'
+     - indexes:
+         data: ':label not'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        8d62492f39897e27eBc397658742c151e4537f7f:
+           nonce: 1
+           storage: {}
+           code: '0xef00010100040200010004030000000000000160011900'
+     - indexes:
+         data: ':label byte'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        26a3F814C6574CB3A919eC9EB8CECe5e7580017C:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001000503000000000000026001801a00'
+     - indexes:
+         data: ':label shl'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        21C214272F954ad974Cb4eFD8109Dd4eD49a1479:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001000503000000000000026001801b00'
+     - indexes:
+         data: ':label shr'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        9568636Cb40498db8f30E6988c5C659a04e3e611:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001000503000000000000026001801c00'
+     - indexes:
+         data: ':label sar'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        bb336F3573b1a7747cdc108688ed2e73E1bBF60b:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001000503000000000000026001801d00'
+     - indexes:
+         data: ':label sha3'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        5700b2cd662551A7622137Ecb73A573F6b00B4ca:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001000503000000000000026001802000'
+     - indexes:
+         data: ':label address'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        951Fcef1940eC47842AE6eD063f708a8698F4747:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001000203000000000000013000'
+     - indexes:
+         data: ':label balance'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        1dBeB9C2B07AD459460c34F6A4ae295e0229A51B:
+           nonce: 1
+           storage: {}
+           code: '0xef00010100040200010004030000000000000160013100'
+     - indexes:
+         data: ':label origin'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        A51E75A42F989d4d4f79aa962e3238f18E900710:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001000203000000000000013200'
+     - indexes:
+         data: ':label caller'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        274891b1387059d2b230385BcFf4a902dB4641c4:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001000203000000000000013300'
+     - indexes:
+         data: ':label callvalue'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        E0C0f5626FF3595C8E3cF9c82EC63218487222de:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001000203000000000000013400'
+     - indexes:
+         data: ':label calldataload'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        BD6D873E19c0f933935815E74F7949FC04dA7817:
+           nonce: 1
+           storage: {}
+           code: '0xef00010100040200010004030000000000000160013500'
+     - indexes:
+         data: ':label calldatasize'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        5Ad07B0Dad4ccf27424Be9D6348CBF56E6E68b2D:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001000203000000000000013600'
+     - indexes:
+         data: ':label calldatacopy'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        93fAE26293212005738AD630dF7753A359a7d59C:
+           nonce: 1
+           storage: {}
+           code: '0xef000101000402000100060300000000000003600180803700'
+     - indexes:
+         data: ':label codesize'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        1e50651bB8620d8632f795822250f2CC1edCC7E3:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001000203000000000000013800'
+     - indexes:
+         data: ':label codecopy'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        eD91A0c65E6dda36ce27527DB1EACcfF17F664cB:
+           nonce: 1
+           storage: {}
+           code: '0xef000101000402000100060300000000000003600180803900'
+     - indexes:
+         data: ':label gasprice'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        f14b0DEdEB2fd40e4DBA3d0eeC94a4985E27963d:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001000203000000000000013a00'
+     - indexes:
+         data: ':label extcodesize'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        043283BbfBF27B2203D5BBcDD047B96D2A27ab4a:
+           nonce: 1
+           storage: {}
+           code: '0xef00010100040200010004030000000000000160013b00'
+     - indexes:
+         data: ':label extcodecopy'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        4Be8B442a643154dc4a843f96fE321B1288aF012:
+           nonce: 1
+           storage: {}
+           code: '0xef00010100040200010007030000000000000460018080803c00'
+     - indexes:
+         data: ':label returndatasize'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        7a184b9aa7Fe97DCFdC186316b8A6bBC1263EC67:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001000203000000000000013d00'
+     - indexes:
+         data: ':label returndatacopy'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        e016E5ab9480053e0F354Ab1c48d70c52c80C7Aa:
+           nonce: 1
+           storage: {}
+           code: '0xef000101000402000100060300000000000003600180803e00'
+     - indexes:
+         data: ':label extcodehash'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        bEBcE9FdACDBa2e083b79e8B4e21Dafcea9B1b0d:
+           nonce: 1
+           storage: {}
+           code: '0xef00010100040200010004030000000000000160013f00'
+     - indexes:
+         data: ':label blockhash'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        65A8Ff975d3F61616C323688E8BbAe6162A1545c:
+           nonce: 1
+           storage: {}
+           code: '0xef00010100040200010004030000000000000160014000'
+     - indexes:
+         data: ':label coinbase'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        11571b52A85761e5CdEcB7022E7D9bE340Af2f90:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001000203000000000000014100'
+     - indexes:
+         data: ':label timestamp'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        653d6395927A337C66b2a46cc5BCE1F7CE3482d3:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001000203000000000000014200'
+     - indexes:
+         data: ':label number'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        6cf655EDdf1b3339D2A14ae6D50a5926FFa3d7FA:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001000203000000000000014300'
+     - indexes:
+         data: ':label difficulty'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        2C4491Ea94db98b5067fF8776772b3721aE9F269:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001000203000000000000014400'
+     - indexes:
+         data: ':label gaslimit'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        F5593734495f22A4D511618fDa024e7872a353D3:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001000203000000000000014500'
+     - indexes:
+         data: ':label chainid'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        16c40928906F11D2C2B0d90a6bA599AE31D62150:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001000203000000000000014600'
+     - indexes:
+         data: ':label selfbalance'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        4025E2A4fAe61822c3F602e8EB30027e45906d41:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001000203000000000000014700'
+     - indexes:
+         data: ':label basefee'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        7A4898CAcbDD40397A3AD7be9d1277a92217bA0B:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001000203000000000000014800'
+     - indexes:
+         data: ':label pop'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        7Df201d3dfFC98f2B4FfDB65945e6D3466F678c7:
+           nonce: 1
+           storage: {}
+           code: '0xef00010100040200010004030000000000000160015000'
+     - indexes:
+         data: ':label mload'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        0A5C169ED3542aEd5EB680b96c5fAd7888D7300d:
+           nonce: 1
+           storage: {}
+           code: '0xef00010100040200010004030000000000000160015100'
+     - indexes:
+         data: ':label mstore8'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        48E4D249ba868579410D9A91a90c11F699f026b8:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001000503000000000000026001805300'
+     - indexes:
+         data: ':label sload'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        B214BEd12DCD7c203C7487B4124940d35a691A22:
+           nonce: 1
+           storage: {}
+           code: '0xef00010100040200010004030000000000000160015400'
+     - indexes:
+         data: ':label sstore'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        24e250a3C1d14be2b50082d7C154DaD06290CC1b:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001000503000000000000026001805500'
+     - indexes:
+         data: ':label msize'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        E11C804da6eD805471e447cd0a2dF7C88765A020:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001000203000000000000015900'
+     - indexes:
+         data: ':label gas'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        9718A6E7DC1fBBA186D318Fc02EDA258f0e22945:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001000203000000000000015a00'
+     - indexes:
+         data: ':label jumpdest'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        1fF22541288dc026debA74f7494733a5DDfaE2Ca:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001000203000000000000005b00'
+     - indexes:
+         data: ':label push0'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        2ce83b122F2695a0179b4b5D7CF9B17DE602Fc41:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001000203000000000000015f00'
+     - indexes:
+         data: ':label push1'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        6195BBE1B5C27b26a8Bd8BcE23B601bB267500A2:
+           nonce: 1
+           storage: {}
+           code: '0xef000101000402000100030300000000000001600100'
+     - indexes:
+         data: ':label push2'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        008e4aaB0217B3a7F02e0a45375A0D4ae3f59206:
+           nonce: 1
+           storage: {}
+           code: '0xef00010100040200010004030000000000000161ffff00'
+     - indexes:
+         data: ':label push3'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        825c7a27dDeC0CD052a216F92C8d81f7450446A5:
+           nonce: 1
+           storage: {}
+           code: '0xef00010100040200010005030000000000000162ffffff00'
+     - indexes:
+         data: ':label push4'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        5F43097563cb83c77a3088e183Ad00A26e277B7f:
+           nonce: 1
+           storage: {}
+           code: '0xef00010100040200010006030000000000000163ffffffff00'
+     - indexes:
+         data: ':label push5'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        65eB2752e7f661E771A39C2c965c67e2490dF7AE:
+           nonce: 1
+           storage: {}
+           code: '0xef00010100040200010007030000000000000164ffffffffff00'
+     - indexes:
+         data: ':label push6'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        18d703BC23b2b0c611c20d7ae7624B972b57274c:
+           nonce: 1
+           storage: {}
+           code: '0xef00010100040200010008030000000000000165ffffffffffff00'
+     - indexes:
+         data: ':label push7'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        8f2FEf66A0Dfe6CCcbfF3658d628d8dD41Dcc505:
+           nonce: 1
+           storage: {}
+           code: '0xef00010100040200010009030000000000000166ffffffffffffff00'
+     - indexes:
+         data: ':label push8'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        9BFA316F33660Fe6647693313761a9c24D1E7bf5:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001000a030000000000000167ffffffffffffffff00'
+     - indexes:
+         data: ':label push9'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        4Dbe4442B474aAD18fadb3e52AE45F7c0A01B978:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001000b030000000000000168ffffffffffffffffff00'
+     - indexes:
+         data: ':label push10'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        B3e89c25b1fd104D767B9146B3712f7Da971072E:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001000c030000000000000169ffffffffffffffffffff00'
+     - indexes:
+         data: ':label push11'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        aB30aEFED1147b6fd14Ff7Ee700F64f45d2C252b:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001000d03000000000000016affffffffffffffffffffff00'
+     - indexes:
+         data: ':label push12'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        E5060E577010EB452baa1725380Fa513ADCFF85b:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001000e03000000000000016bffffffffffffffffffffffff00'
+     - indexes:
+         data: ':label push13'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        2Ba01a34eE51512b8702F4919747d0b7c837597c:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001000f03000000000000016cffffffffffffffffffffffffff00'
+     - indexes:
+         data: ':label push14'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        881CFFb580836830991d384aaCc8254C73A4D338:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001001003000000000000016dffffffffffffffffffffffffffff00'
+     - indexes:
+         data: ':label push15'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        12C0A7C21ec6Cd20ceC96BFBba02E69f2DC5A536:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001001103000000000000016effffffffffffffffffffffffffffff00'
+     - indexes:
+         data: ':label push16'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        2e502897caBC77dd26E868a806e150b5d6D7Fbb1:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001001203000000000000016fffffffffffffffffffffffffffffffff00'
+     - indexes:
+         data: ':label push17'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        8a7c3f7a1E13a907504aab0Ec5032683C5b190eA:
+           nonce: 1
+           storage: {}
+           code: '0xef00010100040200010013030000000000000170ffffffffffffffffffffffffffffffffff00'
+     - indexes:
+         data: ':label push18'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        417203832670507853144BB190d6cB92D71b93E4:
+           nonce: 1
+           storage: {}
+           code: '0xef00010100040200010014030000000000000171ffffffffffffffffffffffffffffffffffff00'
+     - indexes:
+         data: ':label push19'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        665533acb273C9Ae9B92AEE333213a5e53488200:
+           nonce: 1
+           storage: {}
+           code: '0xef00010100040200010015030000000000000172ffffffffffffffffffffffffffffffffffffff00'
+     - indexes:
+         data: ':label push20'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        1b63a6356F85d66128114Fd257eDBF04a30Bb0d3:
+           nonce: 1
+           storage: {}
+           code: '0xef00010100040200010016030000000000000173ffffffffffffffffffffffffffffffffffffffff00'
+     - indexes:
+         data: ':label push21'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        7364560424E340Fa9795266ab5DAA45Ad2AAC347:
+           nonce: 1
+           storage: {}
+           code: '0xef00010100040200010017030000000000000174ffffffffffffffffffffffffffffffffffffffffff00'
+     - indexes:
+         data: ':label push22'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        5D6325a2e90A189D1Ad181F3EF1Ca02234601B24:
+           nonce: 1
+           storage: {}
+           code: '0xef00010100040200010018030000000000000175ffffffffffffffffffffffffffffffffffffffffffff00'
+     - indexes:
+         data: ':label push23'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        6608c25C845830990E750B41b74ed56602a029A2:
+           nonce: 1
+           storage: {}
+           code: '0xef00010100040200010019030000000000000176ffffffffffffffffffffffffffffffffffffffffffffff00'
+     - indexes:
+         data: ':label push24'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        aBAeFCeC9fEc06220Fe4EfdC12b5Fa8D9d6A466A:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001001a030000000000000177ffffffffffffffffffffffffffffffffffffffffffffffff00'
+     - indexes:
+         data: ':label push25'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        CE893f6E10d49Ccb612D066Ab98fD4b982D0Ad99:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001001b030000000000000178ffffffffffffffffffffffffffffffffffffffffffffffffff00'
+     - indexes:
+         data: ':label push26'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        941Ce5a808204383779d1046B339D1bC7fA544AB:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001001c030000000000000179ffffffffffffffffffffffffffffffffffffffffffffffffffff00'
+     - indexes:
+         data: ':label push27'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        c6Af9c845683A9ec73A37c30F7B0B1Ff4ee21aE2:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001001d03000000000000017affffffffffffffffffffffffffffffffffffffffffffffffffffff00'
+     - indexes:
+         data: ':label push28'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        112949A16eAA0F4A3531b561b3E90cA89b43Ece1:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001001e03000000000000017bffffffffffffffffffffffffffffffffffffffffffffffffffffffff00'
+     - indexes:
+         data: ':label push29'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        A07ECbEF8D27f8d07e119F925920df55657Bb7fc:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001001f03000000000000017cffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00'
+     - indexes:
+         data: ':label push30'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        07C055a158dEA4455aF04eDd7876CF89fBF05468:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001002003000000000000017dffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00'
+     - indexes:
+         data: ':label push31'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        3499317c19A1f00B68295028aD3F20bA2d5D4Ef2:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001002103000000000000017effffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00'
+     - indexes:
+         data: ':label push32'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        0d0C1800fC3b7f9d331B3F51796dE21105f376b2:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001002203000000000000017fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00'
+     - indexes:
+         data: ':label dup1'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        F92CA1E31a65a3C52600e38Ce549F3573078a160:
+           nonce: 1
+           storage: {}
+           code: '0xef00010100040200010004030000000000000260018000'
+     - indexes:
+         data: ':label dup2'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        DB8A9C9172638e9BD93863247b18540149253E89:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001000503000000000000036001808100'
+     - indexes:
+         data: ':label dup3'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        d26ED2D7eE5783e55C8C08b3aA0E0d749e713B98:
+           nonce: 1
+           storage: {}
+           code: '0xef000101000402000100060300000000000004600180808200'
+     - indexes:
+         data: ':label dup4'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        74744A664F8aCb3384B0102f754E8da2c4784b97:
+           nonce: 1
+           storage: {}
+           code: '0xef00010100040200010007030000000000000560018080808300'
+     - indexes:
+         data: ':label dup5'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        5F6784A07708BEB9bc01d984763F09aB72f52D90:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001000803000000000000066001808080808400'
+     - indexes:
+         data: ':label dup6'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        09C0dA84583D262038d493A977047834208dEAAd:
+           nonce: 1
+           storage: {}
+           code: '0xef000101000402000100090300000000000007600180808080808500'
+     - indexes:
+         data: ':label dup7'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        B911f9AF49a1B2D33d09F518c258de4cB95c4dD6:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001000a030000000000000860018080808080808600'
+     - indexes:
+         data: ':label dup8'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        d1073Cc84c37db778BD5AE7e7aA2A9B1Bd787C45:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001000b03000000000000096001808080808080808700'
+     - indexes:
+         data: ':label dup9'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        97E1C150BC0D37B442475915E3659C7AcDd0B147:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001000c030000000000000a600180808080808080808800'
+     - indexes:
+         data: ':label dup10'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        422FF278Cf89Af9CB5caBe019041d9bA6a74eF22:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001000d030000000000000b60018080808080808080808900'
+     - indexes:
+         data: ':label dup11'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        bc0dBAbEc33788863aD6fAE5C7b37b0619a8ebF7:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001000e030000000000000c6001808080808080808080808a00'
+     - indexes:
+         data: ':label dup12'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        981365FbF89B028D5b6C667f1215F94101B0d2c3:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001000f030000000000000d600180808080808080808080808b00'
+     - indexes:
+         data: ':label dup13'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        02f5CCC11a6A0b7F2c0EB802ffd9e100eEF386DD:
+           nonce: 1
+           storage: {}
+           code: '0xef00010100040200010010030000000000000e60018080808080808080808080808c00'
+     - indexes:
+         data: ':label dup14'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        c95Dfdcc4df8f6f27598A789900894b72B9EA688:
+           nonce: 1
+           storage: {}
+           code: '0xef00010100040200010011030000000000000f6001808080808080808080808080808d00'
+     - indexes:
+         data: ':label dup15'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        0ee99888b7FFa28eFF61E5Ddf73f4424308E3E26:
+           nonce: 1
+           storage: {}
+           code: '0xef000101000402000100120300000000000010600180808080808080808080808080808e00'
+     - indexes:
+         data: ':label dup16'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        D432039B52f224d148a232be7900D5910A544206:
+           nonce: 1
+           storage: {}
+           code: '0xef00010100040200010013030000000000001160018080808080808080808080808080808f00'
+     - indexes:
+         data: ':label swap1'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        6c9f331616A1FdC25F478929C3B27F71c8e234dA:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001000503000000000000026001809000'
+     - indexes:
+         data: ':label swap2'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        4CcA346Fe6689d6Da2610e8419Ec787D59E84011:
+           nonce: 1
+           storage: {}
+           code: '0xef000101000402000100060300000000000003600180809100'
+     - indexes:
+         data: ':label swap3'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        707582471642d3A959ee3ea5198F1895be19322D:
+           nonce: 1
+           storage: {}
+           code: '0xef00010100040200010007030000000000000460018080809200'
+     - indexes:
+         data: ':label swap4'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        9Be9Ff4B5DaACc56B2116bB5C06E84C272F6F88c:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001000803000000000000056001808080809300'
+     - indexes:
+         data: ':label swap5'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        01776c648733b06F9D6dE2FeFe86C9DB65c6FAFa:
+           nonce: 1
+           storage: {}
+           code: '0xef000101000402000100090300000000000006600180808080809400'
+     - indexes:
+         data: ':label swap6'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        a0134c7F76CCc559134BC4D999b2f71586C70BB5:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001000a030000000000000760018080808080809500'
+     - indexes:
+         data: ':label swap7'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        69C115BF5D50ccDeFcCa929649eEfAb5Cf28cAEf:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001000b03000000000000086001808080808080809600'
+     - indexes:
+         data: ':label swap8'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        95a5cf37eDDEC5Ca4476C74D8EB54811fe06B153:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001000c0300000000000009600180808080808080809700'
+     - indexes:
+         data: ':label swap9'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        d33c05f0dc3Ca82cB831029801BcbE40d9EBD5B2:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001000d030000000000000a60018080808080808080809800'
+     - indexes:
+         data: ':label swap10'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        aE5d17C6E62d628F1e70ec082fE5Db5c7664d476:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001000e030000000000000b6001808080808080808080809900'
+     - indexes:
+         data: ':label swap11'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        350337501576093B1b930c5dF4A9c5509fA0f5D7:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001000f030000000000000c600180808080808080808080809a00'
+     - indexes:
+         data: ':label swap12'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        Af77377CA3a20AaDCbaBA66EAAD2f87739Ad6232:
+           nonce: 1
+           storage: {}
+           code: '0xef00010100040200010010030000000000000d60018080808080808080808080809b00'
+     - indexes:
+         data: ':label swap13'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        f4762126CF36fB32e4D4cF125E32d356dE903318:
+           nonce: 1
+           storage: {}
+           code: '0xef00010100040200010011030000000000000e6001808080808080808080808080809c00'
+     - indexes:
+         data: ':label swap14'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        549718544211ddcB215AC29FfEf03F133EFb52C0:
+           nonce: 1
+           storage: {}
+           code: '0xef00010100040200010012030000000000000f600180808080808080808080808080809d00'
+     - indexes:
+         data: ':label swap15'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        d4f3144619AE4E172400D1D32dC7E99E0599d838:
+           nonce: 1
+           storage: {}
+           code: '0xef00010100040200010013030000000000001060018080808080808080808080808080809e00'
+     - indexes:
+         data: ':label swap16'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        6d15B150E8468236cDA9d09BF16F3782ae91D8B5:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001001403000000000000116001808080808080808080808080808080809f00'
+     - indexes:
+         data: ':label log0'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        074C8f4795807266B2b59e6f5272B6711A56C86F:
+           nonce: 1
+           storage: {}
+           code: '0xef000101000402000100050300000000000002600180a000'
+     - indexes:
+         data: ':label log1'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        6d3d321d2bF05dD4141e3C837f4Be02be9817a62:
+           nonce: 1
+           storage: {}
+           code: '0xef00010100040200010006030000000000000360018080a100'
+     - indexes:
+         data: ':label log2'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        bA3003400D2d80dE327881e9e8EC20B9f371e6e2:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001000703000000000000046001808080a200'
+     - indexes:
+         data: ':label log3'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        dF0Cf2F63f66481368f39182f8c5E49dbf3029C0:
+           nonce: 1
+           storage: {}
+           code: '0xef000101000402000100080300000000000005600180808080a300'
+     - indexes:
+         data: ':label log4'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        42530f2891D18531b1C371Faf760b498ce81fBc6:
+           nonce: 1
+           storage: {}
+           code: '0xef00010100040200010009030000000000000660018080808080a400'
+     - indexes:
+         data: ':label create'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        C93C30b3308D75aCBFdc28b5F5B53b46E2b38F0d:
+           nonce: 1
+           storage: {}
+           code: '0xef00010100040200010006030000000000000360018080f000'
+     - indexes:
+         data: ':label call'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        89c255f982a698B3D1DfE477fabc08b268F057A2:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001000a03000000000000076001808080808080f100'
+     - indexes:
+         data: ':label return'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        5d8D39A1a42F84fb9641C10A2Fb4ab312Eb5Ce8c:
+           nonce: 1
+           storage: {}
+           code: '0xef000101000402000100040300000000000002600180f3'
+     - indexes:
+         data: ':label delegatecall'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        D062A3f55dA409E7AdE19Ad473e054A707217Fc9:
+           nonce: 1
+           storage: {}
+           code: '0xef00010100040200010009030000000000000660018080808080f400'
+     - indexes:
+         data: ':label create2'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        40c24fB95211f87966eEF4e53ad36b58d25258A1:
+           nonce: 1
+           storage: {}
+           code: '0xef0001010004020001000703000000000000046001808080f500'
+     - indexes:
+         data: ':label staticcall'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        74772EF4F1EA962f21d8eBa7734622F33C246595:
+           nonce: 1
+           storage: {}
+           code: '0xef00010100040200010009030000000000000660018080808080fa00'
+     - indexes:
+         data: ':label revert'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        b5F9466d080Aa1C6e55Cdd979Ce11Dfc0F777529:
+           nonce: 1
+           storage: {}
+           code: '0xef000101000402000100040300000000000002600180fd'
+     - indexes:
+         data: ':label invalid'
+       network:
+         - 'Shanghai'
+       result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+           nonce: 1
+           storage:
+             1: 1
+        fd5cf7eACbba9dB5bBceE02E0EC679464D1b7D6a:
+           nonce: 1
+           storage: {}
+           code: '0xef000101000402000100010300000000000000fe'
