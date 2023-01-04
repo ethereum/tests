@@ -55,6 +55,8 @@
 - ID: **EOF1I0022** stack underflow caused by a function call
 - ID: **EOF1I0023** sections with unreachable code fail
 - ID: **EOF1I0024** sections that end with a non-terminator opcode fail
+- ID: **EOF1I0025** data stack height of 1024 is invalid
+
 
 - ID: **EOF1V0001** check that simple valid EOF1 deploys
 - ID: **EOF1V0002** check that valid EOF1 with two code sections deploys
@@ -70,3 +72,4 @@
 - ID: **EOF1V0012** return values on code sections affect maxStackHeight of the caller
 - ID: **EOF1V0013** jump tables work
 - ID: **EOF1V0014** sections that end with a legit terminating opcode are OK
+- ID: **EOF1V0015** data stack height of 1023 is valid

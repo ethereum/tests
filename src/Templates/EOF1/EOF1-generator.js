@@ -5,7 +5,7 @@
 // Then create a test with deploy transactions for all of them, and see that
 // only the valid ones result in contracts
 
-// The values for good eof1 code
+// Values for good eof1 code
 // This is the prototype that other examples, valid and invalid, build on
 const eof1Good = {
   magic: 0xEF00,
@@ -210,6 +210,40 @@ eof1GoodList.push([createEOF1Code(["3030505000"], [2]), "EOF1V0001"])
 
 // stack underflow
  eof1BadList.push([createEOF1Code(["30505000"], [1]), "EOF1I0012"])
+
+// stack overflow
+push10 = ""  // Push ten values into the stack
+for (i=0; i<10; i++) push10 += "30"
+
+push100 = "" // Push a hundred values into the stack
+             // assume push10 is code segment 1
+for(var i=0; i<10; i++) push100 += "B00001"
+
+push1000 = "" // Push a thousand values into the stack
+              // assume push100 is code segment 2
+for(var i=0; i<10; i++) push1000 += "B00002"
+
+// 1023 values into the stack
+temp = createEOF1Code([push1000 + push10 + push10 + "303030" + "00",   // Segment 0
+			push10+"B1",                        // Segment 1
+                        push100+"B1"],                      // Segment 2
+                        [1023, 10, 100])   // maxStackHeight
+// Specify how many outputs segments have
+temp.code[1].stackOutputs = 10
+temp.code[2].stackOutputs = 100
+eof1GoodList.push([temp, "EOF1V0015"])
+
+
+// 1024 values into the stack
+temp = createEOF1Code([push1000 + push10 + push10 + "30303030" + "00",   // Segment 0
+			push10+"B1",                        // Segment 1
+                        push100+"B1"],                      // Segment 2
+                        [1024, 10, 100])   // maxStackHeight
+// Specify how many outputs segments have
+temp.code[1].stackOutputs = 10
+temp.code[2].stackOutputs = 100
+ eof1BadList.push([temp, "EOF1I0025"])
+
 
 
 // parameters are allowed except on section 0
@@ -535,10 +569,10 @@ EOF1ValidInvalid:
       EOF1I0006, EOF1I0007, EOF1I0008, EOF1I0009, EOF1I0010,
       EOF1I0011, EOF1I0012, EOF1I0013, EOF1I0014, EOF1I0015,
       EOF1I0016, EOF1I0017, EOF1I0018, EOF1I0019, EOF1I0020,
-      EOF1I0021, EOF1I0022, EOF1I0023, EOF1I0024,
+      EOF1I0021, EOF1I0022, EOF1I0023, EOF1I0024, EOF1I0025,
       EOF1V0001, EOF1V0002, EOF1V0003, EOF1V0004, EOF1V0005,
       EOF1V0006, EOF1V0007, EOF1V0008, EOF1V0009, EOF1V0010,
-      EOF1V0011, EOF1V0012, EOF1V0013, EOF1V0014
+      EOF1V0011, EOF1V0012, EOF1V0013, EOF1V0014, EOF1V0015
 
   pre:
 
