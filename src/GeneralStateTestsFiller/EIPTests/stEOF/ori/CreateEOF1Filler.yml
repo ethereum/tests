@@ -1,0 +1,285 @@
+CreateEOF1:
+
+  env:
+    currentCoinbase: 2adc25665018aa1fe0e6bc666dac8fc2697ff9ba
+    currentDifficulty: '0x20000'
+    currentGasLimit: "100000000"
+    currentNumber: "1"
+    currentTimestamp: "1000"
+    previousHash: 5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6
+
+  _info:
+    comment: Ori Pomerantz qbzzt1@gmail.com
+
+
+  pre:
+
+    # Legacy deploy code
+    0000000000000000000000000000000000DA7A00:
+      balance: 0
+      code: :raw 0x305000
+        #   ADDRESS
+        #   POP
+        #   STOP 
+      nonce: 1
+      storage: {}
+
+
+    # EOF1 deploy code
+    0000000000000000000000000000000000DA7A01:
+      balance: 0
+      code: :raw 0xEF000101000402000100030300010000000001305000ef
+        # ef0001 - magic and version
+        # 010004 - one code segment
+        # 020001 - one code segment
+        #   0003 - three bytes
+        # 030001 - one byte data
+        # 00     - end of header
+        #     00 - no inputs
+        #     00 - no outputs
+        #   0001 - max stack: 1
+        # 305000 - code
+        #   ADDRESS
+        #   POP
+        #   STOP 
+        # ef     - data
+      nonce: 1
+      storage: {}
+
+
+    # Init code, read from a contract address and return that
+    0000000000000000000000000000000000111700:
+      balance: 0
+      code: |
+        :yul {
+          // This gets replaced with the real addr
+          // in either 0xc0de00 or 0xc0de01
+          let addr := 0x1122334411223344112233441122334411223344112233441122334411223344
+          extcodecopy(addr, 0, 0, extcodesize(addr))
+          return(0,extcodesize(addr))
+        }
+      nonce: 1
+      storage:
+        0: 0x60A7
+
+
+    # Init code, read from a contract address and return that, EOF1
+    # Same code as 0x111700, except in EOF1 (except without a terminal POP)
+    # That code is 46 bytes long
+    0000000000000000000000000000000000111701:
+      balance: 0
+      code: :raw 0xEF0001010004020001002E03000100000000057f1122334411223344112233441122334411223344112233441122334411223344803b60006000833c803b6000f3EF
+      nonce: 1
+      storage:
+        0: 0x60A7
+    
+
+
+    # Create a new contract from legacy code
+    0000000000000000000000000000000000c0de00:
+      balance: 0
+      code: |
+        :yul {
+          let createType := byte(0, calldataload(0))
+          let initAddr := add(0x111700, byte(1, calldataload(0)))
+          let deployAddr := add(0xDA7A00, byte(2, calldataload(0)))
+
+          // Offset in the initCode
+          let deployOffset
+          switch initAddr
+          case 0x111700 {
+            deployOffset := 1
+          }
+          case 0x111701 {
+            deployOffset := 20
+          }
+
+          extcodecopy(initAddr, 0, 0, extcodesize(initAddr))
+          mstore(deployOffset, deployAddr)
+
+          switch createType
+          // CREATE
+          case 0xF0 {
+             mstore(0, create(0, 0, extcodesize(initAddr)))
+          }
+          // CREATE2
+          case 0xF5 {
+             mstore(0, create2(0, 0, extcodesize(initAddr), 0x5a17))
+          }
+
+          // Return with the created addr
+          return(0, 0x20)
+        }
+      nonce: 1
+      storage: {}
+
+    # Create a new contract from EOF1 code
+    # same code as in c0de00, but in EOF1 format
+
+
+
+    # Create a new contract, using a combination of EOF1 and EOF0 (legacy)
+    #
+    # Byte 0: The contract that calls CREATE[2]
+    #   00 - legacy
+    #   01 - EOF1
+    #
+    # Byte 1: The type of CREATE[2]
+    #   F0 - CREATE
+    #   F5 - CREATE2
+    #
+    # Byte 2: The code type of the initializer
+    #   00 - legacy
+    #   01 - EOF1
+    #
+    # Byte 3: The code type of the contract code
+    #   00 - legacy
+    #   01 - EOF1
+
+    cccccccccccccccccccccccccccccccccccccccc:
+      balance: 0
+      code: |
+        :yul {
+           mstore(0, calldataload(0))
+           let creator := add(0xc0de00, byte(0x00, mload(0)))
+           // Call the creator with bytes 1-3, and read back a word
+           sstore(0, call(gas(), creator, 0, 1, 3, 0x20, 0x20))
+           sstore(1, mload(0x20))
+        }
+      nonce: 1
+      storage:
+        0: 0x60A7
+        1: 0x60A7
+
+
+
+    # For debugging purposes
+    1122334411223344112233441122334411223344:
+      balance: 0
+      code: 0xDEAD60A7
+      nonce: 1
+      storage: {}
+
+
+    # User account
+    a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: '0x0ba1a9ce0ba1a9ce'
+      code: 0x
+      nonce: 1
+      storage: {}
+
+
+  transaction:
+    data:
+    # Byte 0: The contract that calls CREATE[2]
+    #   00 - legacy
+    #   01 - EOF1
+    #
+    # Byte 1: The type of CREATE[2]
+    #   F0 - CREATE
+    #   F5 - CREATE2
+    #
+    # Byte 2: The code type of the initializer
+    #   00 - legacy
+    #   01 - EOF1
+    #
+    # Byte 3: The code type of the contract code
+    #   00 - legacy
+    #   01 - EOF1
+    - :label good-f0               :raw 0x00F00000  # legacy init, legacy contract
+    - :label good-f0               :raw 0x00F00001  # legacy init, eof1 contract
+    - :label fail                  :raw 0x00F00100  # eof1 init, legacy contract (fail)
+    - :label good-f0               :raw 0x00F00101  # eof1 init, eof1 contract
+    - :label good-f5-legacy-legacy :raw 0x00F50000  
+    - :label good-f5-legacy-eof1   :raw 0x00F50001
+    - :label fail                  :raw 0x00F50100  # eof1 init, legacy contract (fail)
+    - :label good-f5-eof1-eof1     :raw 0x00F50101  # eof1 init, eof1 contract
+    gasLimit:
+    - 80000000
+    gasPrice: 10
+    nonce: 1
+    to: cccccccccccccccccccccccccccccccccccccccc
+    # Needed for debugging sometimes
+    # to: 0000000000000000000000000000000000111701  
+    secretKey: "45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8"
+    value:
+    - 0
+
+  expect:
+
+    # Results of successful CREATE
+    - indexes:
+        data:
+        - :label good-f0
+        gas:  !!int -1
+        value: !!int -1
+      network:
+        - '>=Shanghai'
+      result:
+        cccccccccccccccccccccccccccccccccccccccc:
+          storage:
+            0: 1  # Success (in contract call)
+            1: 0x3421f105552a946813e484d5370a417fedb34c15  # Address with new contract
+
+
+
+
+    # Results of successful CREATE2 (address varies by init code)
+    - indexes:
+        data:
+        - :label good-f5-legacy-legacy
+        gas:  !!int -1
+        value: !!int -1
+      network:
+        - '>=Shanghai'
+      result:
+        cccccccccccccccccccccccccccccccccccccccc:
+          storage:
+            0: 1  # Success (in contract call)
+            1: 0xe00b34000aa5646813c4eec655e5c82783feb452  # Address with new contract
+
+
+
+    - indexes:
+        data:
+        - :label good-f5-legacy-eof1
+        gas:  !!int -1
+        value: !!int -1
+      network:
+        - '>=Shanghai'
+      result:
+        cccccccccccccccccccccccccccccccccccccccc:
+          storage:
+            0: 1  # Success (in contract call)
+            1: 0x246976f2c4529f9ad98142486837a10798682b81 # Address with new contract
+
+
+    - indexes:
+        data:
+        - :label good-f5-eof1-eof1
+        gas:  !!int -1
+        value: !!int -1
+      network:
+        - '>=Shanghai'
+      result:
+        cccccccccccccccccccccccccccccccccccccccc:
+          storage:
+            0: 1  # Success (in contract call)
+            1: 0xec789ffbcfa4859c9a47ee156983b7cae1fe1d13 # Address with new contract
+
+
+
+    # Failure
+    - indexes:
+        data:
+        - :label fail
+        gas:  !!int -1
+        value: !!int -1
+      network:
+        - '>=Shanghai'
+      result:
+        cccccccccccccccccccccccccccccccccccccccc:
+          storage:
+            0: 1  # Success (in contract call)
+            1: 0  # No address with new contract
+
