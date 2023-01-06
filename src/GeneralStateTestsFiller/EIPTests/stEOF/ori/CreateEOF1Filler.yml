@@ -9,8 +9,13 @@ CreateEOF1:
     previousHash: 5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6
 
   _info:
-    comment: Ori Pomerantz qbzzt1@gmail.com
-
+    comment: |
+       Ori Pomerantz qbzzt1@gmail.com
+       branch eof of https://github.com/lightclient/go-ethereum.git
+       EOF1C0001, EOF1C0002, EOF1C0003, EOF1C0004, EOF1C0005,
+       EOF1C0006, EOF1C0007, EOF1C0008, EOF1C0009, EOF1C0010,
+       EOF1C0011, EOF1C0012, EOF1C0013, EOF1C0014, EOF1C0015,
+       EOF1C0016
 
   pre:
 
@@ -47,6 +52,7 @@ CreateEOF1:
       storage: {}
 
 
+
     # Init code, read from a contract address and return that
     0000000000000000000000000000000000111700:
       balance: 0
@@ -72,7 +78,8 @@ CreateEOF1:
       nonce: 1
       storage:
         0: 0x60A7
-    
+
+
 
 
     # Create a new contract from legacy code
@@ -117,7 +124,6 @@ CreateEOF1:
     # This is almost the same code as in c0de00, but in EOF1 format
     # However, the c0de00 code has old style jumps in it. As solc EOF1 
     # support is still work in progress, I created this version manually.
-
     0000000000000000000000000000000000c0de01:
       balance: 0
       code: :raw 0xEF00010100040200010079030000000000000960003560001a60003560011a621117000160003560021a62da7a00016000826211170081145D000C6211170181145D000A5C000B600191505C00046014915050823B600080853c8181528360f081145D000A60f581145D000F5C0018833B600080f06000525C000C615a17843B600080F560005260206000F3
@@ -143,7 +149,7 @@ CreateEOF1:
     # Byte 3: The code type of the contract code
     #   00 - legacy
     #   01 - EOF1
-
+    #
     cccccccccccccccccccccccccccccccccccccccc:
       balance: 0
       code: |
@@ -237,12 +243,13 @@ CreateEOF1:
   expect:
 
     # Results of successful CREATE in 0xC0DE00 (the legacy contract)
+    # 
     - indexes:
         data:
         - :label good-f0
-        # 0x00F00000
-        # 0x00F00001
-        # 0x00F00101
+        # 0x00F00000    EOF1C0001
+        # 0x00F00001    EOF1C0002
+        # 0x00F00101    EOF1C0004
         gas:  !!int -1
         value: !!int -1
       network:
@@ -260,7 +267,7 @@ CreateEOF1:
     - indexes:
         data:
         - :label good-f5-legacy-legacy
-        # 0x00F50000
+        # 0x00F50000    EOF1C0005
         gas:  !!int -1
         value: !!int -1
       network:
@@ -276,7 +283,7 @@ CreateEOF1:
     - indexes:
         data:
         - :label good-f5-legacy-eof1
-        # 0x00F50001
+        # 0x00F50001      EOF1C0006
         gas:  !!int -1
         value: !!int -1
       network:
@@ -291,7 +298,7 @@ CreateEOF1:
     - indexes:
         data:
         - :label good-f5-eof1-eof1
-        # 0x00F50101
+        # 0x00F50101       EOF1C0008
         gas:  !!int -1
         value: !!int -1
       network:
@@ -307,7 +314,7 @@ CreateEOF1:
     - indexes:
         data:
         - :label good-f0-eof1-eof1-eof1
-        # 0x01F00101
+        # 0x01F00101    EOF1C0012
         gas:  !!int -1
         value: !!int -1
       network:
@@ -324,7 +331,7 @@ CreateEOF1:
     - indexes:
         data:
         - :label good-f5-eof1-eof1-eof1
-        # 0x01F50101
+        # 0x01F50101      EOF1C0016
         gas:  !!int -1
         value: !!int -1
       network:
@@ -340,6 +347,14 @@ CreateEOF1:
     # Failure
     # Either EOF1 contract calling legacy init code or
     #        EOF1 init code trying to deploy legacy deploy code
+    # EOF1C0003
+    # EOF1C0007
+    # EOF1C0009
+    # EOF1C0010
+    # EOF1C0011
+    # EOF1C0013
+    # EOF1C0014
+    # EOF1C0015
     - indexes:
         data:
         - :label fail

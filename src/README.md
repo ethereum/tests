@@ -30,7 +30,10 @@
 
 
 
-## Valid and Invalid EOF1 contracts
+## EOF1 contracts
+
+### Invalid examples
+
 - ID: **EOF1I0001** check that EOF1 with a bad magic number fails
 - ID: **EOF1I0002** check that EOF1 with a bad version number fails
 - ID: **EOF1I0003** check that EOF1 with a bad section order fails
@@ -58,6 +61,8 @@
 - ID: **EOF1I0025** data stack height of 1024 is invalid
 
 
+### Valid examples
+
 - ID: **EOF1V0001** check that simple valid EOF1 deploys
 - ID: **EOF1V0002** check that valid EOF1 with two code sections deploys
 - ID: **EOF1V0003** check that valid EOF1 with four code sections deploys
@@ -73,3 +78,23 @@
 - ID: **EOF1V0013** jump tables work
 - ID: **EOF1V0014** sections that end with a legit terminating opcode are OK
 - ID: **EOF1V0015** data stack height of 1023 is valid
+
+
+### Contract creation tests
+
+- ID: **EOF1C0001** legacy contract > CREATE > legacy init code > legacy deploy code
+- ID: **EOF1C0002** legacy contract > CREATE > legacy init code > eof1 deploy code
+- ID: **EOF1C0003** legacy contract > CREATE > eof1 init code > legacy deploy code (fail)
+- ID: **EOF1C0004** legacy contract > CREATE > eof1 init code > eof1 deploy code
+- ID: **EOF1C0005** legacy contract > CREATE2 > legacy init code > legacy deploy code
+- ID: **EOF1C0006** legacy contract > CREATE2 > legacy init code > eof1 deploy code
+- ID: **EOF1C0007** legacy contract > CREATE2 > eof1 init code > legacy deploy code (fail)
+- ID: **EOF1C0008** legacy contract > CREATE2 > eof1 init code > eof1 deploy code
+- ID: **EOF1C0009** eof1 contract > CREATE > legacy init code > legacy deploy code (fail)
+- ID: **EOF1C0010** eof1 contract > CREATE > legacy init code > eof1 deploy code (fail)
+- ID: **EOF1C0011** eof1 contract > CREATE > eof1 init code > legacy deploy code (fail)
+- ID: **EOF1C0012** eof1 contract > CREATE > eof1 init code > eof1 deploy code
+- ID: **EOF1C0013** eof1 contract > CREATE2 > legacy init code > legacy deploy code (fail)
+- ID: **EOF1C0014** eof1 contract > CREATE2 > legacy init code > eof1 deploy code (fail)
+- ID: **EOF1C0015** eof1 contract > CREATE2 > eof1 init code > legacy deploy code (fail)
+- ID: **EOF1C0016** eof1 contract > CREATE2 > eof1 init code > eof1 deploy code
