@@ -114,7 +114,15 @@ CreateEOF1:
       storage: {}
 
     # Create a new contract from EOF1 code
-    # same code as in c0de00, but in EOF1 format
+    # This is almost the same code as in c0de00, but in EOF1 format
+    # However, the c0de00 code has old style jumps in it. As solc EOF1 
+    # support is still work in progress, I created this version manually.
+
+    0000000000000000000000000000000000c0de01:
+      balance: 0
+      code: :raw 0xEF00010100040200010079030000000000000960003560001a60003560011a621117000160003560021a62da7a00016000826211170081145D000C6211170181145D000A5C000B600191505C00046014915050823B600080853c8181528360f081145D000A60f581145D000F5C0018833B600080f06000525C000C615a17843B600080F560005260206000F3
+      nonce: 1
+      storage: {}
 
 
 
@@ -156,7 +164,7 @@ CreateEOF1:
     # For debugging purposes
     1122334411223344112233441122334411223344:
       balance: 0
-      code: 0xDEAD60A7
+      code: :raw 0xDEAD60A7
       nonce: 1
       storage: {}
 
@@ -186,14 +194,35 @@ CreateEOF1:
     # Byte 3: The code type of the contract code
     #   00 - legacy
     #   01 - EOF1
-    - :label good-f0               :raw 0x00F00000  # legacy init, legacy contract
-    - :label good-f0               :raw 0x00F00001  # legacy init, eof1 contract
-    - :label fail                  :raw 0x00F00100  # eof1 init, legacy contract (fail)
-    - :label good-f0               :raw 0x00F00101  # eof1 init, eof1 contract
-    - :label good-f5-legacy-legacy :raw 0x00F50000  
-    - :label good-f5-legacy-eof1   :raw 0x00F50001
-    - :label fail                  :raw 0x00F50100  # eof1 init, legacy contract (fail)
-    - :label good-f5-eof1-eof1     :raw 0x00F50101  # eof1 init, eof1 contract
+
+    # Legacy contract doing the CREATE[2]
+    - :label good-f0                :raw 0x00F00000  # legacy init, legacy contract
+    - :label good-f0                :raw 0x00F00001  # legacy init, eof1 contract
+    - :label fail                   :raw 0x00F00100  # eof1 init, legacy contract (fail)
+    - :label good-f0                :raw 0x00F00101  # eof1 init, eof1 contract
+    - :label good-f5-legacy-legacy  :raw 0x00F50000  
+    - :label good-f5-legacy-eof1    :raw 0x00F50001
+    - :label fail                   :raw 0x00F50100  # eof1 init, legacy contract (fail)
+    - :label good-f5-eof1-eof1      :raw 0x00F50101  # eof1 init, eof1 contract
+
+    # EOF1 contract doing the CREATE[2]
+    - :label fail                   :raw 0x01F00000  # eof1 contracts can't use
+                                                     # legacy initializers
+    - :label fail                   :raw 0x01F00001  # eof1 contracts can't use
+                                                     # legacy initializers
+    - :label fail                   :raw 0x01F00100  # eof1-init can't use legacy code
+    - :label good-f0-eof1-eof1-eof1 :raw 0x01F00101  # eof1 contract -> eof1 init 
+                                                     # -> eof1 deploy code
+    - :label fail                   :raw 0x01F50000  # eof1 contracts can't use
+                                                     # legacy initializers
+    - :label fail                   :raw 0x01F50001  # eof1 contracts can't use
+                                                     # legacy initializers
+    - :label fail                   :raw 0x01F50100  # eof1-init can't use legacy code
+    - :label good-f5-eof1-eof1-eof1 :raw 0x01F50101  # eof1 contract -> eof1 init 
+                                                     # -> eof1 deploy code
+
+
+
     gasLimit:
     - 80000000
     gasPrice: 10
@@ -207,10 +236,13 @@ CreateEOF1:
 
   expect:
 
-    # Results of successful CREATE
+    # Results of successful CREATE in 0xC0DE00 (the legacy contract)
     - indexes:
         data:
         - :label good-f0
+        # 0x00F00000
+        # 0x00F00001
+        # 0x00F00101
         gas:  !!int -1
         value: !!int -1
       network:
@@ -228,6 +260,7 @@ CreateEOF1:
     - indexes:
         data:
         - :label good-f5-legacy-legacy
+        # 0x00F50000
         gas:  !!int -1
         value: !!int -1
       network:
@@ -243,6 +276,7 @@ CreateEOF1:
     - indexes:
         data:
         - :label good-f5-legacy-eof1
+        # 0x00F50001
         gas:  !!int -1
         value: !!int -1
       network:
@@ -257,6 +291,7 @@ CreateEOF1:
     - indexes:
         data:
         - :label good-f5-eof1-eof1
+        # 0x00F50101
         gas:  !!int -1
         value: !!int -1
       network:
@@ -268,8 +303,43 @@ CreateEOF1:
             1: 0xec789ffbcfa4859c9a47ee156983b7cae1fe1d13 # Address with new contract
 
 
+    # Successful CREATE from C0DE01 (EOF1 contract)
+    - indexes:
+        data:
+        - :label good-f0-eof1-eof1-eof1
+        # 0x01F00101
+        gas:  !!int -1
+        value: !!int -1
+      network:
+        - '>=Shanghai'
+      result:
+        cccccccccccccccccccccccccccccccccccccccc:
+          storage:
+            0: 1  # Success (in contract call)
+            1: 0xaed0fc70606d537ef1d91bb4cb388c939b07494d # Address with new contract
+
+
+
+    # Successful CREATE from C0DE01 (EOF1 contract)
+    - indexes:
+        data:
+        - :label good-f5-eof1-eof1-eof1
+        # 0x01F50101
+        gas:  !!int -1
+        value: !!int -1
+      network:
+        - '>=Shanghai'
+      result:
+        cccccccccccccccccccccccccccccccccccccccc:
+          storage:
+            0: 1  # Success (in contract call)
+            1: 0xdcfcc4fd33e615bd257cca92b7d68854bcf33119 # Address with new contract
+
+
 
     # Failure
+    # Either EOF1 contract calling legacy init code or
+    #        EOF1 init code trying to deploy legacy deploy code
     - indexes:
         data:
         - :label fail
