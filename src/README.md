@@ -98,3 +98,6 @@
 - ID: **EOF1C0014** eof1 contract > CREATE2 > legacy init code > eof1 deploy code (fail)
 - ID: **EOF1C0015** eof1 contract > CREATE2 > eof1 init code > legacy deploy code (fail)
 - ID: **EOF1C0016** eof1 contract > CREATE2 > eof1 init code > eof1 deploy code
+- ID: **EOF1C0017** legacy contact > CREATE[2] > legacy init code > nonsense
+- ID: **EOF1C0018** legacy contact > CREATE[2] > eof1 init code > nonsense (fail)
+- ID: **EOF1C0019** legacy contact > CREATE[2] > nonsense init code (fail)

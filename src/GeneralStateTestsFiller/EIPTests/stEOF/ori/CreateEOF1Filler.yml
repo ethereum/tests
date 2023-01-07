@@ -15,7 +15,7 @@ CreateEOF1:
        EOF1C0001, EOF1C0002, EOF1C0003, EOF1C0004, EOF1C0005,
        EOF1C0006, EOF1C0007, EOF1C0008, EOF1C0009, EOF1C0010,
        EOF1C0011, EOF1C0012, EOF1C0013, EOF1C0014, EOF1C0015,
-       EOF1C0016
+       EOF1C0016, EOF1C0017, EOF1C0018, EOF1C0019
 
   pre:
 
@@ -52,6 +52,14 @@ CreateEOF1:
       storage: {}
 
 
+    # Like EOF, except without the magic that marks it as EOF1
+    0000000000000000000000000000000000DA7AFF:
+      balance: 0
+      code: :raw 0xED000101000402000100030300010000000001305000ef
+      nonce: 1
+      storage: {}
+
+
 
     # Init code, read from a contract address and return that
     0000000000000000000000000000000000111700:
@@ -70,11 +78,19 @@ CreateEOF1:
 
 
     # Init code, read from a contract address and return that, EOF1
-    # Same code as 0x111700, except in EOF1 (except without a terminal POP)
+    # Same code as 0x111700, except in EOF1 and without a terminal POP
     # That code is 46 bytes long
     0000000000000000000000000000000000111701:
       balance: 0
       code: :raw 0xEF0001010004020001002E03000100000000057f1122334411223344112233441122334411223344112233441122334411223344803b60006000833c803b6000f3EF
+      nonce: 1
+      storage:
+        0: 0x60A7
+
+    # Like the EOF1 code, except without the magic that marks it as EOF1
+    00000000000000000000000000000000001117FF:
+      balance: 0
+      code: :raw 0xED0001010004020001002E03000100000000057f1122334411223344112233441122334411223344112233441122334411223344803b60006000833c803b6000f3EF
       nonce: 1
       storage:
         0: 0x60A7
@@ -100,6 +116,9 @@ CreateEOF1:
           case 0x111701 {
             deployOffset := 20
           }
+          case 0x1117FF {
+            deployOffset := 20
+          }
 
           extcodecopy(initAddr, 0, 0, extcodesize(initAddr))
           mstore(deployOffset, deployAddr)
@@ -120,10 +139,15 @@ CreateEOF1:
       nonce: 1
       storage: {}
 
+
     # Create a new contract from EOF1 code
     # This is almost the same code as in c0de00, but in EOF1 format
-    # However, the c0de00 code has old style jumps in it. As solc EOF1 
-    # support is still work in progress, I created this version manually.
+    #
+    # Differences:
+    # 1. The c0de00 code has old style jumps in it. As solc EOF1 
+    #    support is still work in progress, I created this version manually with
+    #    new style jumps
+    # 2. No support for DA7AFF
     0000000000000000000000000000000000c0de01:
       balance: 0
       code: :raw 0xEF00010100040200010079030000000000000960003560001a60003560011a621117000160003560021a62da7a00016000826211170081145D000C6211170181145D000A5C000B600191505C00046014915050823B600080853c8181528360f081145D000A60f581145D000F5C0018833B600080f06000525C000C615a17843B600080F560005260206000F3
@@ -145,10 +169,12 @@ CreateEOF1:
     # Byte 2: The code type of the initializer
     #   00 - legacy
     #   01 - EOF1
+    #   FF - EOF1 without the magic
     #
     # Byte 3: The code type of the contract code
     #   00 - legacy
     #   01 - EOF1
+    #   FF - EOF1 without the magic
     #
     cccccccccccccccccccccccccccccccccccccccc:
       balance: 0
@@ -196,10 +222,12 @@ CreateEOF1:
     # Byte 2: The code type of the initializer
     #   00 - legacy
     #   01 - EOF1
+    #   FF - EOF1 without the magic
     #
     # Byte 3: The code type of the contract code
     #   00 - legacy
     #   01 - EOF1
+    #   FF - EOF1 without the magic
 
     # Legacy contract doing the CREATE[2]
     - :label good-f0                :raw 0x00F00000  # legacy init, legacy contract
@@ -227,6 +255,21 @@ CreateEOF1:
     - :label good-f5-eof1-eof1-eof1 :raw 0x01F50101  # eof1 contract -> eof1 init 
                                                      # -> eof1 deploy code
 
+    # Legacy init code can deploy nonsense
+    - :label good-f0                :raw 0x00F000FF  
+    - :label good-f5-legacy-nomagic :raw 0x00F500FF  
+
+    # EOF1 code cannot deploy nonsense
+    - :label fail                   :raw 0x00F001FF 
+    - :label fail                   :raw 0x00F501FF  
+
+    # Nonsense init code fails
+    - :label fail                   :raw 0x00F0FF00  
+    - :label fail                   :raw 0x00F5FF00  
+    - :label fail                   :raw 0x00F0FF01  
+    - :label fail                   :raw 0x00F5FF01  
+    - :label fail                   :raw 0x00F0FFFF  
+    - :label fail                   :raw 0x00F5FFFF  
 
 
     gasLimit:
@@ -250,6 +293,7 @@ CreateEOF1:
         # 0x00F00000    EOF1C0001
         # 0x00F00001    EOF1C0002
         # 0x00F00101    EOF1C0004
+        # 0x00F000FF    EOF1C0017
         gas:  !!int -1
         value: !!int -1
       network:
@@ -277,6 +321,21 @@ CreateEOF1:
           storage:
             0: 1  # Success (in contract call)
             1: 0xe00b34000aa5646813c4eec655e5c82783feb452  # Address with new contract
+
+
+    - indexes:
+        data:
+        - :label good-f5-legacy-nomagic
+        # 0x00F500FF    EOF1C0017
+        gas:  !!int -1
+        value: !!int -1
+      network:
+        - '>=Shanghai'
+      result:
+        cccccccccccccccccccccccccccccccccccccccc:
+          storage:
+            0: 1  # Success (in contract call)
+            1: 0x4ccfbe23e335f4f0a9baec3053474efd0592cc88 # Address with new contract
 
 
 
@@ -345,8 +404,9 @@ CreateEOF1:
 
 
     # Failure
-    # Either EOF1 contract calling legacy init code or
-    #        EOF1 init code trying to deploy legacy deploy code
+    # 1. EOF1 contract calling legacy init code
+    # 2. EOF1 init code trying to deploy legacy deploy code
+    # 3. EOF1 init code trying to deploy nonsense deploy code
     # EOF1C0003
     # EOF1C0007
     # EOF1C0009
@@ -355,6 +415,8 @@ CreateEOF1:
     # EOF1C0013
     # EOF1C0014
     # EOF1C0015
+    # EOF1C0018
+    # EOF1C0019
     - indexes:
         data:
         - :label fail
