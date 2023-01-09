@@ -679,7 +679,7 @@ ${testName}:
         value: !!int -1
 
       network:
-        - '>=London'
+        - '>=Merge'
       result:
         cccccccccccccccccccccccccccccccccccccccc:
           storage:

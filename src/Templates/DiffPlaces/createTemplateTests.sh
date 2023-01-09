@@ -48,7 +48,8 @@ stateTestDir=../../GeneralStateTestsFiller
 ./createBadOpcodeTest.sh 5C
 ./createBadOpcodeTest.sh 5D
 ./createBadOpcodeTest.sh 5E
-./createBadOpcodeTest.sh 5F
+# As of Shanghai 5F is no longer an invalid opcode
+# ./createBadOpcodeTest.sh 5F
 ./createBadOpcodeTest.sh A5
 ./createBadOpcodeTest.sh A6
 ./createBadOpcodeTest.sh A7
@@ -127,7 +128,8 @@ stateTestDir=../../GeneralStateTestsFiller
 ./createBadOpcodeTest.sh EC
 ./createBadOpcodeTest.sh ED
 ./createBadOpcodeTest.sh EE
-./createBadOpcodeTest.sh EF
+# Special case, because it's also the magic value for EOF1
+# ./createBadOpcodeTest.sh EF
 
 ./createBadOpcodeTest.sh F6
 ./createBadOpcodeTest.sh F7
