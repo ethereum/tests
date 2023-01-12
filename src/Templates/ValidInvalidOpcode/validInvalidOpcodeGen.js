@@ -7,6 +7,19 @@
 // Usage:
 // ./validInvalidOpcodeGen.js > ../../GeneralStateTestsFiller/stBadOpcode/validInvalidOpcodeFiller.yml
 
+
+// The opcode ranges for valid opcodes, for each supported release
+const validOpcodesByFork = {
+   // List of [from,to] when from-to are valid opcodes
+   'London': [[0x01,0x0B], [0x10,0x1D], [0x20,0x20], [0x30,0x48], [0x50,0x5B],
+              [0x60,0xA4], [0xF0,0xF5], [0xFA,0xFA], [0xFD,0xFD]],
+   'Merge':  [[0x01,0x0B], [0x10,0x1D], [0x20,0x20], [0x30,0x48], [0x50,0x5B],
+              [0x60,0xA4], [0xF0,0xF5], [0xFA,0xFA], [0xFD,0xFD]]
+
+}
+
+
+
 // Turn a byte numeric value into hex
 const byte2Hex = n => n>15 ? n.toString(16) : "0"+n.toString(16)
 
@@ -89,13 +102,36 @@ const expectOpcode = op => `
             0x${byte2Hex(op)}: 1`
 
 
-const expectOpcodes = (from,to) => {
+const expectOpcodes = (lst) => {
     retVal = ""
-    for(var i=from; i<=to; i++)
+    for(var i=lst[0]; i<=lst[1]; i++)
         retVal += expectOpcode(i)
 
     return retVal
 }
+
+const forks = Object.keys(validOpcodesByFork)
+
+const fork2expect = fork => `
+    - indexes:
+        data:  !!int -1
+        gas:   !!int -1
+        value: !!int -1
+      network:
+        - ${fork}
+      result:
+        cccccccccccccccccccccccccccccccccccccccc:
+          storage:
+            # Zero if there is no opcode, 1 if there is
+            # 0x00 STOP is an opcode, but one that cannot be detected by this test.
+            # 0xFF SELFDESTRUCT may be an opcode,
+            # but one that cannot be detected by this test.
+${validOpcodesByFork[fork].
+	map(x => expectOpcodes(x)).
+	reduce((a,b) => a+b)
+}
+`
+
 
 testFiller = `
 validInvalidOpcode:
@@ -169,27 +205,8 @@ ${opContracts}
 
 
   expect:
-    - indexes:
-        data:  !!int -1
-        gas:   !!int -1
-        value: !!int -1
-      network:
-        - '>=Merge'
-      result:
-        cccccccccccccccccccccccccccccccccccccccc:
-          storage:
-            # Zero if there is no opcode, 1 if there is
-            # 0x00 STOP is an opcode, but one that cannot be detected by this test.
-${expectOpcodes(0x01,0x0B)}
-${expectOpcodes(0x10,0x1D)}
-${expectOpcodes(0x20,0x20)}
-${expectOpcodes(0x30,0x48)}
-${expectOpcodes(0x50,0x5B)}
-${expectOpcodes(0x60,0xA4)}
-${expectOpcodes(0xF0,0xF5)}
-${expectOpcodes(0xFA,0xFA)}
-${expectOpcodes(0xFD,0xFD)}
-            # 0xFF SELFDESTRUCT is an opcode, but one that cannot be detected by this test.
+
+${forks.map(fork2expect).reduce((a,b) => a+b)}
 `
 
 
