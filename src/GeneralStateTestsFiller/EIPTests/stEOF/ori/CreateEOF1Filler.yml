@@ -33,7 +33,7 @@ CreateEOF1:
     # EOF1 deploy code
     0000000000000000000000000000000000DA7A01:
       balance: 0
-      code: :raw 0xEF000101000402000100030300010000000001305000ef
+      code: :raw 0xEF0001 010004 020001 0003 030001 00 00000001 305000 ef
         # ef0001 - magic and version
         # 010004 - one code segment
         # 020001 - one code segment
@@ -55,7 +55,21 @@ CreateEOF1:
     # Like EOF, except without the magic that marks it as EOF1
     0000000000000000000000000000000000DA7AFF:
       balance: 0
-      code: :raw 0xED000101000402000100030300010000000001305000ef
+      code: :raw 0xED0001 010004 020001 0003 030001 00 00000001 305000 ef
+        # ed0001 - bad magic and then version
+        # 010004 - one code segment
+        # 020001 - one code segment
+        #   0003 - three bytes
+        # 030001 - one byte data
+        # 00     - end of header
+        #     00 - no inputs
+        #     00 - no outputs
+        #   0001 - max stack: 1
+        # 305000 - code
+        #   ADDRESS
+        #   POP
+        #   STOP 
+        # ef     - data
       nonce: 1
       storage: {}
 
@@ -82,15 +96,25 @@ CreateEOF1:
     # That code is 46 bytes long
     0000000000000000000000000000000000111701:
       balance: 0
-      code: :raw 0xEF0001010004020001002E03000100000000057f1122334411223344112233441122334411223344112233441122334411223344803b60006000833c803b6000f3EF
+      code: :raw 0xEF0001-010004-020001-002E-030001-00-00000005-7f1122334411223344112233441122334411223344112233441122334411223344803b60006000833c803b6000f3-EF
+      # EF0001     - magic and version
+      # 010004     - one code segment
+      # 020001     - one code segment
+      #   002E     - the code segment is 0x2E bytes long
+      # 030001     - one data byte
+      # 00         - end of header
+      # 00 00 0005 - code segment one, no inputs or outputs, max stack height 5
+      # 0005   - code segement one, 
+      # The actual code
+      # The data segment
       nonce: 1
       storage:
         0: 0x60A7
 
-    # Like the EOF1 code, except without the magic that marks it as EOF1
+    # Like the EOF1 code (0x111701), except without the magic that marks it as EOF1
     00000000000000000000000000000000001117FF:
       balance: 0
-      code: :raw 0xED0001010004020001002E03000100000000057f1122334411223344112233441122334411223344112233441122334411223344803b60006000833c803b6000f3EF
+      code: :raw 0xED0001-010004-020001-002E-030001-00-00000005-7f1122334411223344112233441122334411223344112233441122334411223344803b60006000833c803b6000f3-EF
       nonce: 1
       storage:
         0: 0x60A7
@@ -145,12 +169,12 @@ CreateEOF1:
     #
     # Differences:
     # 1. The c0de00 code has old style jumps in it. As solc EOF1 
-    #    support is still work in progress, I created this version manually with
+    #    support is still work in progress, I modified this version manually for
     #    new style jumps
     # 2. No support for DA7AFF
     0000000000000000000000000000000000c0de01:
       balance: 0
-      code: :raw 0xEF00010100040200010079030000000000000960003560001a60003560011a621117000160003560021a62da7a00016000826211170081145D000C6211170181145D000A5C000B600191505C00046014915050823B600080853c8181528360f081145D000A60f581145D000F5C0018833B600080f06000525C000C615a17843B600080F560005260206000F3
+      code: :raw 0xEF0001-010004-020001 0079-030000-00-00000009 60003560001a60003560011a621117000160003560021a62da7a00016000826211170081145D000C6211170181145D000A5C000B600191505C00046014915050823B600080853c8181528360f081145D000A60f581145D000F5C0018833B600080f06000525C000C615a17843B600080F560005260206000F3
       nonce: 1
       storage: {}
 
@@ -211,65 +235,65 @@ CreateEOF1:
 
   transaction:
     data:
-    # Byte 0: The contract that calls CREATE[2]
+    # Byte 1: The contract that calls CREATE[2]
     #   00 - legacy
     #   01 - EOF1
     #
-    # Byte 1: The type of CREATE[2]
+    # Byte 2: The type of CREATE[2]
     #   F0 - CREATE
     #   F5 - CREATE2
     #
-    # Byte 2: The code type of the initializer
+    # Byte 3: The code type of the initializer
     #   00 - legacy
     #   01 - EOF1
     #   FF - EOF1 without the magic
     #
-    # Byte 3: The code type of the contract code
+    # Byte 4: The code type of the contract code
     #   00 - legacy
     #   01 - EOF1
     #   FF - EOF1 without the magic
 
     # Legacy contract doing the CREATE[2]
-    - :label good-f0                :raw 0x00F00000  # legacy init, legacy contract
-    - :label good-f0                :raw 0x00F00001  # legacy init, eof1 contract
-    - :label fail                   :raw 0x00F00100  # eof1 init, legacy contract (fail)
-    - :label good-f0                :raw 0x00F00101  # eof1 init, eof1 contract
-    - :label good-f5-legacy-legacy  :raw 0x00F50000  
-    - :label good-f5-legacy-eof1    :raw 0x00F50001
-    - :label fail                   :raw 0x00F50100  # eof1 init, legacy contract (fail)
-    - :label good-f5-eof1-eof1      :raw 0x00F50101  # eof1 init, eof1 contract
+    - :label good-f0                :raw 0x00-F0-00-00  # legacy init, legacy contract
+    - :label good-f0                :raw 0x00-F0-00-01  # legacy init, eof1 contract
+    - :label fail                   :raw 0x00-F0-01-00  # eof1 init, legacy contract (fail)
+    - :label good-f0                :raw 0x00-F0-01-01  # eof1 init, eof1 contract
+    - :label good-f5-legacy-legacy  :raw 0x00-F5-00-00  
+    - :label good-f5-legacy-eof1    :raw 0x00-F5-00-01
+    - :label fail                   :raw 0x00-F5-01-00  # eof1 init, legacy contract (fail)
+    - :label good-f5-eof1-eof1      :raw 0x00-F5-01-01  # eof1 init, eof1 contract
 
     # EOF1 contract doing the CREATE[2]
-    - :label fail                   :raw 0x01F00000  # eof1 contracts can't use
-                                                     # legacy initializers
-    - :label fail                   :raw 0x01F00001  # eof1 contracts can't use
-                                                     # legacy initializers
-    - :label fail                   :raw 0x01F00100  # eof1-init can't use legacy code
-    - :label good-f0-eof1-eof1-eof1 :raw 0x01F00101  # eof1 contract -> eof1 init 
-                                                     # -> eof1 deploy code
-    - :label fail                   :raw 0x01F50000  # eof1 contracts can't use
-                                                     # legacy initializers
-    - :label fail                   :raw 0x01F50001  # eof1 contracts can't use
-                                                     # legacy initializers
-    - :label fail                   :raw 0x01F50100  # eof1-init can't use legacy code
-    - :label good-f5-eof1-eof1-eof1 :raw 0x01F50101  # eof1 contract -> eof1 init 
-                                                     # -> eof1 deploy code
+    - :label fail                   :raw 0x01-F0-00-00  # eof1 contracts can't use
+                                                        # legacy initializers
+    - :label fail                   :raw 0x01-F0-00-01  # eof1 contracts can't use
+                                                        # legacy initializers
+    - :label fail                   :raw 0x01-F0-01-00  # eof1-init can't use legacy code
+    - :label good-f0-eof1-eof1-eof1 :raw 0x01-F0-01-01  # eof1 contract -> eof1 init 
+                                                        # -> eof1 deploy code
+    - :label fail                   :raw 0x01-F5-00-00  # eof1 contracts can't use
+                                                        # legacy initializers
+    - :label fail                   :raw 0x01-F5-00-01  # eof1 contracts can't use
+                                                        # legacy initializers
+    - :label fail                   :raw 0x01-F5-01-00  # eof1-init can't use legacy code
+    - :label good-f5-eof1-eof1-eof1 :raw 0x01-F5-01-01  # eof1 contract -> eof1 init 
+                                                        # -> eof1 deploy code
 
     # Legacy init code can deploy nonsense
-    - :label good-f0                :raw 0x00F000FF  
-    - :label good-f5-legacy-nomagic :raw 0x00F500FF  
+    - :label good-f0                :raw 0x00-F0-00-FF  
+    - :label good-f5-legacy-nomagic :raw 0x00-F5-00-FF  
 
     # EOF1 code cannot deploy nonsense
-    - :label fail                   :raw 0x00F001FF 
-    - :label fail                   :raw 0x00F501FF  
+    - :label fail                   :raw 0x00-F0-01-FF 
+    - :label fail                   :raw 0x00-F5-01-FF  
 
     # Nonsense init code fails
-    - :label fail                   :raw 0x00F0FF00  
-    - :label fail                   :raw 0x00F5FF00  
-    - :label fail                   :raw 0x00F0FF01  
-    - :label fail                   :raw 0x00F5FF01  
-    - :label fail                   :raw 0x00F0FFFF  
-    - :label fail                   :raw 0x00F5FFFF  
+    - :label fail                   :raw 0x00-F0-FF-00  
+    - :label fail                   :raw 0x00-F5-FF-00  
+    - :label fail                   :raw 0x00-F0-FF-01  
+    - :label fail                   :raw 0x00-F5-FF-01  
+    - :label fail                   :raw 0x00-F0-FF-FF  
+    - :label fail                   :raw 0x00-F5-FF-FF  
 
 
     gasLimit:
@@ -320,7 +344,7 @@ CreateEOF1:
         cccccccccccccccccccccccccccccccccccccccc:
           storage:
             0: 1  # Success (in contract call)
-            1: 0xe00b34000aa5646813c4eec655e5c82783feb452  # Address with new contract
+            1: 0x8cbfefd3e513f0fe927a03d539af08638e7811e6 # Address with new contract
 
 
     - indexes:
@@ -335,7 +359,7 @@ CreateEOF1:
         cccccccccccccccccccccccccccccccccccccccc:
           storage:
             0: 1  # Success (in contract call)
-            1: 0x4ccfbe23e335f4f0a9baec3053474efd0592cc88 # Address with new contract
+            1: 0x61a0cf6fd50b2c85e33729da1a7ce2535e2d5dc6 # Address with new contract
 
 
 
@@ -351,7 +375,7 @@ CreateEOF1:
         cccccccccccccccccccccccccccccccccccccccc:
           storage:
             0: 1  # Success (in contract call)
-            1: 0x246976f2c4529f9ad98142486837a10798682b81 # Address with new contract
+            1: 0x333c85bcfa4f8e27f54f16641e222d923b0a49c1 # Address with new contract
 
 
     - indexes:
