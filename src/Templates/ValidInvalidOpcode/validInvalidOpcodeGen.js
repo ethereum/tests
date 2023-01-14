@@ -44,7 +44,7 @@ const exceptionTestCode = {
        #  5 PUSH1 0   6001
        #  7 PUSH1 1   6000
        #  9 RETURN      F3
-       code: :raw 0x600456FE5B60016000F3
+       code: :raw 0x6004-56-FE-5B-6001-6000-F3
 `,
   0x57: `
        #  0 PUSH 1 1  6001
@@ -55,7 +55,7 @@ const exceptionTestCode = {
        #  7 PUSH1 0   6001
        #  8 PUSH1 1   6000
        #  9 RETURN      F3
-       code: :raw 0x6001600657FE5B60016000F3
+       code: :raw 0x6001-6006-57-FE-5B-6001-6000-F3
 
 `
 }
