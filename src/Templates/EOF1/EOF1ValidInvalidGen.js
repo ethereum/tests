@@ -49,8 +49,8 @@ const byte2 = val => val.toString(16).padStart(4,0).slice(0,4)
 const section2eof1 = section => {
   switch (section.type) {
     case 2:   // Code sections, of which there could be many
-      return byte1(section.type) + byte2(section.size) +
-          section.lengths.map(byte2).reduce((a,b) => a+b)
+      return byte1(section.type) + byte2(section.size) + "-" +
+          section.lengths.map(byte2).reduce((a,b) => a+"-"+b)
       // return handles break for us
     default:  // Including invalid values
       return byte1(section.type) + byte2(section.size)
@@ -62,26 +62,26 @@ const section2eof1 = section => {
 
 // Create the EIP4750 section
 const code2eip4750 = code =>
-      byte1(code.stackInputs)+byte1(code.stackOutputs)+byte2(code.maxStack)
+      byte1(code.stackInputs)+"-"+byte1(code.stackOutputs)+"-"+byte2(code.maxStack)
 
 
 // Convert a hash table input EOF1 encoded value.
 // No sanity checks, because the whole point is to be able to get invalid ones
 const encode = hash => {
   // Start code
-  res = byte2(hash.magic) + byte1(hash.version)
+  res = byte2(hash.magic) + byte1(hash.version) + "  "
 
   // Section list
   res = res +
-      hash.sections.map(section2eof1).reduce((a,b) => a+b) +
-      byte1(hash.endOfSections)
+      hash.sections.map(section2eof1).reduce((a,b) => a+" "+b) +
+      " " + byte1(hash.endOfSections) + "  "
 
   // Type section
-  res = res + hash.code.map(code2eip4750).reduce((a,b) => a+b)
+  res = res + hash.code.map(code2eip4750).reduce((a,b) => a+" "+b) + " "
 
   // Finally the code sections and data section
   res = res + hash.code.map(code => code.code).reduce((a,b) => a+b) +
-              hash.data
+              " " + hash.data
 
   return res
 }  // encode
@@ -97,7 +97,7 @@ const encode = hash => {
 // 0x09 SUB      0x03
 // 0x0A PUSH1    0x600D
 // 0x0C RETURN   0xF3     return(0x0D, sub(codesize(), 0x0D))
-const code2init = code => `386000600039600D3803600DF3${code}`
+const code2init = code => `38-6000-6000-39-600D-38-03-600D-F3--${code}`
 
 
 // Create a valid code section in an EOF1 structure
