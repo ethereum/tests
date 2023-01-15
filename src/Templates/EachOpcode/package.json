@@ -1,0 +1,13 @@
+{
+  "name": "EachOpcode",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "typescript": "^4.9.4"
+  },
+  "scripts": {
+    "arith": "node_modules/.bin/tsc -t es2022 Arith.ts && node Arith.js > Arith.yul && node Yul2Filler.js Arith.yul Arith > ../../GeneralStateTestsFiller/stOpcodes/ArithFiller.yml",
+    "clean": "rm Arith.js *.yul"
+  }
+}
