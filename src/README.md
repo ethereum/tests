@@ -101,3 +101,16 @@
 - ID: **EOF1C0017** legacy contact > CREATE[2] > legacy init code > nonsense
 - ID: **EOF1C0018** legacy contact > CREATE[2] > eof1 init code > nonsense (fail)
 - ID: **EOF1C0019** legacy contact > CREATE[2] > nonsense init code (fail)
+
+
+
+### Test that invalid opcodes are treated as invalid
+
+- ID: **OPCOD0012** test the opcodes in the range 0x0C-0x0F are treated as invalid
+- ID: **OPCOD0030** test the opcodes in the range 0x1E-0x1F are treated as invalid
+- ID: **OPCOD0073** test the opcodes in the range 0x49-0x4F are treated as invalid
+- ID: **OPCOD0092** test the opcodes in the range 0x5C-0x5F are treated as invalid
+- ID: **OPCOD0165** test the opcodes in the range 0xA5-0xEF are treated as invalid
+- ID: **OPCOD0246** test the opcodes in the range 0xF6-0xF9 are treated as invalid
+- ID: **OPCOD0252** test the opcodes in the range 0xFB-0xFC are treated as invalid
+- ID: **OPCOD0254** test the opcode 0xFE is treated as invalid
