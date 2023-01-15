@@ -74,6 +74,25 @@ interface Arith3 extends Arith {
 type ArithTest = Arith1 | Arith2 | Arith3 | null
 
 
+function makeArith1(name: string, 
+    testIn: ValueIsh, testOut: ValueIsh) : ArithTest {
+
+    if (testOut == null)
+        return null
+
+    return {
+        name: name,
+        sIn: 1,
+        sOut: 1,
+        iIn: 0,
+        kind: "Arith1",
+        testIn: [ str(testIn) ],
+        testOut: str(testOut),        
+    }
+}
+
+
+
 function makeArith2(name: string, 
     testIn1: ValueIsh, testIn2: ValueIsh, testOut: ValueIsh) : ArithTest {
 
@@ -93,9 +112,30 @@ function makeArith2(name: string,
 
 
 
+function makeArith3(name: string, 
+    testIn1: ValueIsh, testIn2: ValueIsh, testIn3: ValueIsh, testOut: ValueIsh) : ArithTest {
+
+    if (testOut == null)
+        return null
+
+    return {
+        name: name,
+        sIn: 3,
+        sOut: 1,
+        iIn: 0,
+        kind: "Arith3",
+        testIn: [ str(testIn1), str(testIn2), str(testIn3)],
+        testOut: str(testOut),        
+    }
+}
+
+
+
 function randValue(max : number) : bigint {
     return BigInt(Math.floor(Math.random() * max))
 }
+
+
 
 function makeArith2Random(  name: string, 
                             max: number, 
@@ -108,8 +148,8 @@ function makeArith2Random(  name: string,
 
 
 // Make arith2 tests, a few with small numbers and then a few with random
-// big numbers. This is not appropriate, BTW, for exp because the second
-// parameter shouldn't be too big.
+// big numbers (positive and negative). This is not appropriate for exp because 
+// the second parameter shouldn't be too big.
 function makeArith2Tests(   
     name: string, 
     max: number, 
@@ -134,17 +174,23 @@ function makeArith2Tests(
     return retVal
 }
 
+
 function test2Cond(test : ArithTest) : string {
     switch (test.kind) {
         case 'Arith1':
-            return `inzero(eq(${test.name}(${test.testIn[0]}), ${test.testOut}))`        
+            return `iszero(eq(${test.name}(${test.testIn[0]}), 
+                ${test.testOut}))`        
         case 'Arith2':
             return `iszero(eq(${test.name}(
-              ${test.testIn[0]},
-              ${test.testIn[1]}), 
-           ${test.testOut}))`
+                  ${test.testIn[0]},
+                  ${test.testIn[1]}), 
+               ${test.testOut}))`
         case `Arith3`:
-            return `iszero(eq(${test.name}(${test.testIn[0]},${test.testIn[1]},${test.testIn[2]}), ${test.testOut}))`
+            return `iszero(eq(${test.name}(
+                  ${test.testIn[0]},
+                  ${test.testIn[1]},
+                  ${test.testIn[2]}), 
+               ${test.testOut}))`
     }
 }
 
@@ -184,7 +230,7 @@ let tests: ArithTest[] = []
 function unsign(val: bigint): bigint {
     return val<0 ? val+TWO_POW_256 : val
 }
-
+/* 
 
 // Simple 2 input arithmetic:
 // add,sub,mul,[s]div,[s]mod
@@ -203,8 +249,8 @@ tests = tests.concat(makeArith2Tests("smod", Math.pow(2,64),
 
 
 // exp tests (makeArith2Tests won't work because it would produce excessive high values)
-for(let i=0n; i<5n; i++)
-   for(let j=0n; j<5n; j++) {
+for(let i=0n; i<20n; i++)
+   for(let j=0n; j<32n; j++) {
       tests.push(makeArith2("exp", i, j, i**j))
       tests.push(makeArith2("exp", i*0x100n, j, (i*0x100n)**j))      
    }
@@ -262,7 +308,6 @@ for(var i=0n; i<255n; i++) {
 
 // Arithmetic shift right (if the most significant bit is on, put 1's in
 // the most significant part of the result, not 0's
-
 for(var i=0n; i<255n; i++) {
     const rand = randValue(2**64)
     tests.push(makeArith2("sar", i, 2n**254n, 2n**(254n-i)))
@@ -270,20 +315,49 @@ for(var i=0n; i<255n; i++) {
     tests.push(makeArith2("sar", i, 2n**255n, 2n**256n - 2n**(255n-i)))
 }
 
+// Arith1 - single parameter opcodes
+tests.push(makeArith1("iszero", 0, 1))
+tests.push(makeArith1("iszero", 1, 0))
+tests.push(makeArith1("iszero", 0x100, 0))
+tests.push(makeArith1("iszero", -1n, 0))
+for (let i=0; i<5; i++)
+    tests.push(makeArith1("iszero", randValue(2**64), 0))
 
-
-
-/*
-// addmod and mulmod tests
-for(let i=0; i<5; i++)
-    for(let j=0; j<5; j++)
-        for(let k=1; k<5; k++) {
-            tests.push(makeArith3("mulmod", i, j, k, (i*j)%k))            
-            tests.push(makeArith3("addmod", i, j, k, (i+j)%k))
-        }
-
-// exp tests
+tests.push(makeArith1("not", 0, -1n))
+tests.push(makeArith1("not", -1n, 0))
+for (let i=0; i<200; i++) {
+    let rand = randValue(2**64)
+    tests.push(makeArith1("not", rand, ~rand))
+}
 
 */
+
+function addmod(a,b,c: bigint): bigint {
+   if (c==0n) return 0n
+   return (a+b)%c
+}
+
+function mulmod(a,b,c: bigint): bigint {
+   console.log(`${a} : ${typeof a}`)
+   console.log(`${b} : ${typeof b}`)
+   console.log(`${a*b} : ${typeof (a*b)}`)
+   console.log(`${c} : ${typeof c}`)
+   if (c==0n) return 0n
+//   console.log(`${(a*b)%c} : ${typeof (a*b)%c}`)
+
+//   return (a*b) % c
+   return 1n
+}
+
+
+for(let i=0; i<200; i++) {
+  const a = randValue(2**64)
+  const b = randValue(2**64)
+  const c = randValue(2**32)
+  tests.push(makeArith3("addmod", a, b, c, addmod(a,b,c)))
+//  tests.push(makeArith3("mulmod", a, b, c, mulmod(a,b,c)))
+}
+
+
 
 console.log(fullYul(tests2Yul(tests)))
