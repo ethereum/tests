@@ -101,3 +101,33 @@
 - ID: **EOF1C0017** legacy contact > CREATE[2] > legacy init code > nonsense
 - ID: **EOF1C0018** legacy contact > CREATE[2] > eof1 init code > nonsense (fail)
 - ID: **EOF1C0019** legacy contact > CREATE[2] > nonsense init code (fail)
+
+
+## Opcode tests
+
+### Tests of arithmetic operations
+- ID: **OPCOD0001** test opcode ADD with various parameters
+- ID: **OPCOD0002** test opcode MUL with various parameters
+- ID: **OPCOD0003** test opcode SUB with various parameters
+- ID: **OPCOD0004** test opcode DIV with various parameters
+- ID: **OPCOD0005** test opcode SDIV with various parameters
+- ID: **OPCOD0006** test opcode MOD with various parameters
+- ID: **OPCOD0007** test opcode SMOD with various parameters
+- ID: **OPCOD0008** test opcode ADDMOD with various parameters
+- ID: **OPCOD0009** test opcode MULMOD with various parameters
+- ID: **OPCOD0010** test opcode EXP with various parameters
+- ID: **OPCOD0011** test opcode SIGNEXTEND with various parameters
+- ID: **OPCOD0016** test opcode LT with various parameters
+- ID: **OPCOD0017** test opcode GR with various parameters
+- ID: **OPCOD0018** test opcode SLT with various parameters
+- ID: **OPCOD0019** test opcode SGT with various parameters
+- ID: **OPCOD0020** test opcode EQ with various parameters
+- ID: **OPCOD0021** test opcode ISZERO with various parameters
+- ID: **OPCOD0022** test opcode AND with various parameters
+- ID: **OPCOD0023** test opcode OR with various parameters
+- ID: **OPCOD0024** test opcode XOR with various parameters
+- ID: **OPCOD0025** test opcode NOT with various parameters
+- ID: **OPCOD0026** test opcode BYTE with various parameters
+- ID: **OPCOD0027** test opcode SHL with various parameters
+- ID: **OPCOD0028** test opcode SHR with various parameters
+- ID: **OPCOD0029** test opcode SAR with various parameters

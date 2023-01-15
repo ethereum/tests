@@ -3,14 +3,18 @@
 // Take Yul as input, turn it into a filler.
 // This code needs to:
 // 1. Overwrite storage cell 0 with zero
-// 2. Not write anywhere else
+// 2. Not write anywhere else in storage
 
 let fs = require('fs')
 
 
-let yul = fs.readFileSync(process.argv[2]).toString()
+const yul = fs.readFileSync(process.argv[2]).toString()
+const yulIndent = yul.replace(/^/gm, "          ")
 
-let yulIndent = yul.replace(/^/gm, "          ")
+const tests = yul.match(/Implements:.*/gm)
+const testsIndent = tests.map(line => line.replace(/^/gm, "       ")).
+                       reduce((a,b) => a+'\n'+b)
+
 
 
 console.log(
@@ -29,6 +33,7 @@ ${process.argv[3]}:
     comment: |
        Ori Pomerantz qbzzt1@gmail.com
        Created by src/Templates/EachOpcode/Yul2Filler.js
+${testsIndent}
 
   pre:
 

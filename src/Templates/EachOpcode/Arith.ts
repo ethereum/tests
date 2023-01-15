@@ -230,7 +230,6 @@ let tests: ArithTest[] = []
 function unsign(val: bigint): bigint {
     return val<0 ? val+TWO_POW_256 : val
 }
-/* 
 
 // Simple 2 input arithmetic:
 // add,sub,mul,[s]div,[s]mod
@@ -330,7 +329,7 @@ for (let i=0; i<200; i++) {
     tests.push(makeArith1("not", rand, ~rand))
 }
 
-*/
+// Arith3 - three parameters
 
 function addmod(a,b,c: bigint): bigint {
    if (c==0n) return 0n
@@ -338,26 +337,58 @@ function addmod(a,b,c: bigint): bigint {
 }
 
 function mulmod(a,b,c: bigint): bigint {
-   console.log(`${a} : ${typeof a}`)
-   console.log(`${b} : ${typeof b}`)
-   console.log(`${a*b} : ${typeof (a*b)}`)
-   console.log(`${c} : ${typeof c}`)
    if (c==0n) return 0n
-//   console.log(`${(a*b)%c} : ${typeof (a*b)%c}`)
 
-//   return (a*b) % c
-   return 1n
+   // It makes no sense for a*b to be number when a and b are both
+   // bigint, but I don't have time to debug typescript
+   return BigInt(a*b)%c
 }
 
 
 for(let i=0; i<200; i++) {
-  const a = randValue(2**64)
-  const b = randValue(2**64)
+  // a and b are 0-2**32 because of a weird bug in mulmod that makes the result
+  // number instead of bigint
+  const a = randValue(2**32)
+  const b = randValue(2**32)
   const c = randValue(2**32)
   tests.push(makeArith3("addmod", a, b, c, addmod(a,b,c)))
-//  tests.push(makeArith3("mulmod", a, b, c, mulmod(a,b,c)))
+  tests.push(makeArith3("mulmod", a, b, c, mulmod(a,b,c)))
 }
 
-
-
 console.log(fullYul(tests2Yul(tests)))
+
+console.log('/* ')
+
+const testNums : string[] = [
+"0001",
+"0002",
+"0003",
+"0004",
+"0005",
+"0006",
+"0007",
+"0008",
+"0009",
+"0010",
+"0011",
+"0016",
+"0017",
+"0018",
+"0019",
+"0020",
+"0021",
+"0022",
+"0023",
+"0024",
+"0025",
+"0026",
+"0027",
+"0028",
+"0029"
+]
+
+
+console.log(testNums.map(x => `Implements: OPCOD${x}`).reduce((a,b) => `${a}
+${b}`))
+
+console.log('*/')

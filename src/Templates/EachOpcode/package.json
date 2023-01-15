@@ -8,6 +8,6 @@
   },
   "scripts": {
     "arith": "node_modules/.bin/tsc -t es2022 Arith.ts && node Arith.js > Arith.yul && node Yul2Filler.js Arith.yul Arith > ../../GeneralStateTestsFiller/stOpcodes/ArithFiller.yml",
-    "clean": "rm Arith.js *.yul"
+    "clean": "mv Yul2Filler.js Yul2Filler.js.safe && rm *.js *.yul x ; mv Yul2Filler.js.safe Yul2Filler.js"
   }
 }
