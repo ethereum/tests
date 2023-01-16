@@ -17,181 +17,98 @@ CREATE2_EOF1Invalid_FromEOF:
       storage: {}
     b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
       balance: 0
-      # code: ":yul { calldatacopy(0, 0, calldatasize()) sstore(0, create2(0, 0, calldatasize(), 0)) sstore(1, 1) }"
-      code: ":raw 0xEF00010100170036600060003760003660006000f5600055600160015500"
+      code: |
+        :yul-eof 
+        {
+          calldatacopy(0, 0, calldatasize())
+          sstore(0, create2(0, 0, calldatasize(), 0))
+          sstore(1, 1)
+          stop()
+        }
       nonce: 0
       storage: {}
 
   transaction:
     data: 
-      # Invalid EOF Initcode containing containing truncated RJUMP
-      # Code to be deployed: ef000101000100FE (contained in initcode's data)
-      # Initcode: PUSH1(8) PUSH1(23) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN RJUMP(
-      - ':raw 0xef000101000d020008006008601760003960086000f35cef000101000100FE'
-      # Code to be deployed: ef000101000100FE (contained in initcode's data)
-      # Initcode: PUSH1(8) PUSH1(24) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN RJUMP(0?
-      - ':raw 0xef000101000e020008006008601860003960086000f35c00ef000101000100FE'
+      # Valid EOF initcode trying to deploy invalid EOF code containing truncated RJUMP
+      # Code to be deployed: RJUMP( - 0xef0001010004020001000103000000000000005c
+      - ':label valid_init_invalid_code_truncated_rjump_a :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000103000000000000005c" }'
+      # Code to be deployed: RJUMP(0 - 0xef0001010004020001000203000000000000005c00
+      - ':label valid_init_invalid_code_truncated_rjump_b :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000203000000000000005c00" }'
 
-      # Invalid EOF Initcode containing RJUMP with target outside of code bounds
+      # Valid EOF initcode trying to deploy invalid EOF code containing RJUMP with target outside of code bounds
       # - Jump into header
-      # Code to be deployed: ef000101000100FE (contained in initcode's data)
-      # Initcode: PUSH1(8) PUSH1(26) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN RJUMP(-20) STOP
-      - ':raw 0xef0001010010020008006008601a60003960086000f35cffec00ef000101000100FE'
-      # - Jump to before code begin
-      # Code to be deployed: ef000101000100FE (contained in initcode's data)
-      # Initcode: PUSH1(8) PUSH1(26) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN RJUMP(-27) STOP
-      - ':raw 0xef0001010010020008006008601a60003960086000f35cffe500ef000101000100FE'
+      # Code to be deployed: RJUMP(-5) - 0xef0001010004020001000303000000000000005cfffb
+      - ':label valid_init_invalid_code_rjump_into_header :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000303000000000000005cfffb" }'
+      # - Jump before code begin
+      # Code to be deployed: RJUMP(-23) - 0xef0001010004020001000303000000000000005cffe9
+      - ':label valid_init_invalid_code_rjump_to_before_code_begin :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000303000000000000005cffe9" }'
       # - Jump into data section
-      # Code to be deployed: ef000101000100FE (contained in initcode's data)
-      # Initcode: PUSH1(8) PUSH1(26) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN RJUMP(2) STOP
-      - ':raw 0xef0001010010020008006008601a60003960086000f35cffe500ef000101000100FE'
-      # - Jump to after code end
-      # Code to be deployed: ef000101000100FE (contained in initcode's data)
-      # Initcode: PUSH1(8) PUSH1(26) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN RJUMP(10) STOP
-      - ':raw 0xef0001010010020008006008601a60003960086000f35cffe500ef000101000100FE'
+      # Code to be deployed: RJUMP(2) - Data: aabbccdd -  0xef0001010004020001000303000400000000005c0002aabbccdd
+      - ':label valid_init_invalid_code_rjump_into_data_section :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000303000400000000005c0002aabbccdd" }'
+      # - Jump after code end
+      # Code to be deployed: RJUMP(2) - 0xef0001010004020001000303000000000000005c0002
+      - ':label valid_init_invalid_code_rjump_to_after_code_end :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000303000000000000005c0002" }'
       # - Jump to code end
-      # Code to be deployed: ef000101000100FE (contained in initcode's data)
-      # Initcode: PUSH1(8) PUSH1(26) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN RJUMP(1) STOP
-      - ':raw 0xef0001010010020008006008601a60003960086000f35cffe500ef000101000100FE'
+      # Code to be deployed: RJUMP(1) STOP - 0xef0001010004020001000403000000000000005c000100
+      - ':label valid_init_invalid_code_rjump_to_code_end :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000403000000000000005c000100" }'
+      # - Jump to code end
+      # Code to be deployed: RJUMP(0) - 0xef0001010004020001000403000000000000005c000100
+      - ':label valid_init_invalid_code_rjump_to_code_end :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000303000000000000005c0000" }'
 
-      # Invalid EOF Initcode containing RJUMP with target PUSH/RJUMP/RJUMPI immediate 
-      # - Jump to same RJUMP immediate
-      # Code to be deployed: ef000101000100FE (contained in initcode's data)
-      # Initcode: PUSH1(8) PUSH1(26) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN RJUMP(-1) STOP
-      - ':raw 0xef0001010010020008006008601a60003960086000f35cffe500ef000101000100FE'
-      # - Jump to another RJUMP immediate
-      # Code to be deployed: ef000101000100FE (contained in initcode's data)
-      # Initcode: PUSH1(8) PUSH1(30) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN RJUMP(1) STOP RJUMP(-5) STOP
-      - ':raw 0xef0001010014020008006008601e60003960086000f35c0001005cfffb00ef000101000100FE'
-      # - Jump to RJUMPI immediate
-      # Code to be deployed: ef000101000100FE (contained in initcode's data)
-      # Initcode: PUSH1(8) PUSH1(32) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN RJUMP(2) STOP RJUMP(4) STOP PUSH1(1) RJUMPI(-6)
-      - ':raw 0xef0001010016020008006008602060003960086000f35c00040060015cfffa00ef000101000100FE'
-      # - Jump to PUSH immediate
-      # Code to be deployed: ef000101000100FE (contained in initcode's data)
-      # Initcode: PUSH1(8) PUSH1(26) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN RJUMP(-5) STOP
-      - ':raw 0xef0001010010020008006008601a60003960086000f35cffe500ef000101000100FE'
-
-      # Invalid EOF Initcode containing containing truncated RJUMPI
-      # Code to be deployed: ef000101000100FE (contained in initcode's data)
-      # Initcode: PUSH1(8) PUSH1(25) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN PUSH1(1) RJUMPI(
-      - ':raw 0xef000101000f020008006008601960003960086000f360015def000101000100FE'
-      # Code to be deployed: ef000101000100FE (contained in initcode's data)
-      # Initcode: PUSH1(8) PUSH1(26) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN PUSH1(1) RJUMPI(0?
-      - ':raw 0xef0001010010020008006008601a60003960086000f360015d00ef000101000100FE'
-
-      # Valid EOF Initcode trying to deploy invalid EOF code containing RJUMP with target PUSH/RJUMP/RJUMPI's immediate
+      # Valid EOF initcode trying to deploy invalid EOF code containing RJUMP with target PUSH/RJUMP/RJUMPI's immediate
       # - Jump to same RJUMP Immediate
-      # Code to be deployed: RJUMP(-1) STOP - ef0001010004005cFFFF00
-      # Initcode: PUSH1(code_length) PUSH1(data_offset) PUSH1(0) CODECOPY PUSH1(code_lenght) PUSH1(1) RETURN
-      - ':label :raw 0xef000101000c02000b00600b6016600039600b6000f3ef0001010004005cFFFF00'
+      # Code to be deployed: RJUMP(-1) - 0xef0001010004020001000303000000000000005cffff
+      - ':label valid_init_invalid_code_rjump_to_self_immediate :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000303000000000000005cffff" }'
       # - Jump to another RJUMP immediate
-      # Code to be deployed: RJUMP(3) STOP RJUMP(-7) STOP - ef0001010008005c0003005cFFF900
-      # Initcode: PUSH1(code_length) PUSH1(data_offset) PUSH1(0) CODECOPY PUSH1(code_lenght) PUSH1(1) RETURN
-      - ':label :raw 0xef000101000c02000f00600f6016600039600f6000f3ef0001010008005c0003005cFFF900'
+      # Code to be deployed: RJUMP(3) STOP RJUMP(-4) - 0xef0001010004020001000703000000000000005c0003005cfffc
+      - ':label valid_init_invalid_code_rjump_to_rjump_immediate :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000703000000000000005c0003005cfffc" }'
       # - Jump to RJUMPI immediate
-      # Code to be deployed: RJUMP(5) STOP PUSH1(1) RJUMPI(-9) STOP - ef000101000a005c00050060015dFFF700
-      # Initcode: PUSH1(code_length) PUSH1(data_offset) PUSH1(0) CODECOPY PUSH1(code_lenght) PUSH1(1) RETURN
-      - ':label :raw 0xef000101000c020011006011601660003960116000f3ef000101000a005c00050060015dFFF700'
+      # Code to be deployed: RJUMP(5) STOP PUSH1(1) RJUMPI(-6) STOP - 0xef0001010004020001000a03000000000000015c00050060015dfffa00
+      - ':label valid_init_invalid_code_rjump_to_rjumpi_immediate :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000a03000000000000015c00050060015dfffa00" }'
       # - Jump to PUSH immediate
-      # Code to be deployed: RJUMP(2) STOP PUSH1(1) PUSH1(1) SSTORE STOP - ef000101000a005c000200600160015500
-      # Initcode: PUSH1(code_length) PUSH1(data_offset) PUSH1(0) CODECOPY PUSH1(code_lenght) PUSH1(1) RETURN
-      - ':label raw 0xef000101000c020011006011601660003960116000f3ef000101000a005c000200600160015500'
+      # Code to be deployed: RJUMP(2) NOP PUSH1(1) PUSH1(1) SSTORE STOP - 0xef0001010004020001000a03000000000000025c00025b600160015500
+      - ':label valid_init_invalid_code_rjump_to_push_immediate :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000a03000000000000025c00025b600160015500" }'
+      # TODO jump to RJUMPV, CALLF immediate
 
-      # Valid EOF Initcode trying to deploy invalid EOF code containing truncated RJUMPI
-      # Code to be deployed: RJUMPI( - ef0001010001005d
-      # Initcode: PUSH1(code_length) PUSH1(data_offset) PUSH1(0) CODECOPY PUSH1(code_lenght) PUSH1(1) RETURN
-      - ':label :raw 0xef000101000c020008006008601660003960086000f3ef0001010001005d'
-      # Code to be deployed: RJUMPI(0? - ef0001010002005d00
-      # Initcode: PUSH1(code_length) PUSH1(data_offset) PUSH1(0) CODECOPY PUSH1(code_lenght) PUSH1(1) RETURN
-      - ':label :raw 0xef000101000c020009006009601660003960096000f3ef0001010002005d00'
-
-
-      # Invalid EOF Initcode containing RJUMPI with target outside of code bounds
+      # Valid EOF initcode trying to deploy invalid EOF code containing truncated RJUMPI
+      # Code to be deployed: PUSH(0) RJUMPI( - 0xef00010100040200010003030000000000000160005d
+      - ':label valid_init_invalid_code_truncated_rjumpi_a :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010003030000000000000160005d" }'
+      # Code to be deployed: PUSH(0) RJUMPI(0? - 0xef00010100040200010004030000000000000160005d00
+      - ':label valid_init_invalid_code_truncated_rjumpi_b :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010004030000000000000160005d00" }'
+      # Valid EOF initcode trying to deploy invalid EOF code containing RJUMPI with target outside of code bounds
       # - Jump into header
-      # Code to be deployed: ef000101000100FE (contained in initcode's data)
-      # Initcode: PUSH1(8) PUSH1(28) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN PUSH1(1) RJUMPI(-22) STOP
-      - ':raw 0xef0001010012020008006008601c60003960086000f360015dffea00ef000101000100FE'
+      # Code to be deployed: PUSH1(1) RJUMPI(-7) STOP - 0xef00010100040200010006030000000000000160015dfff900
+      - ':label valid_init_invalid_code_rjumpi_into_header :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010006030000000000000160015dfff900" }'
       # - Jump to before code begin
-      # Code to be deployed: ef000101000100FE (contained in initcode's data)
-      # Initcode: PUSH1(8) PUSH1(28) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN PUSH1(1) RJUMPI(-29) STOP
-      - ':raw 0xef0001010012020008006008601c60003960086000f360015dFFE300ef000101000100FE'
+      # Code to be deployed: PUSH1(1) RJUMPI(-25) STOP - 0xef00010100040200010006030000000000000160015dffe700
+      - ':label valid_init_invalid_code_rjumpi_to_before_code_begin :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010006030000000000000160015dffe700" }'
       # - Jump into data section
-      # Code to be deployed: ef000101000100FE (contained in initcode's data)
-      # Initcode: PUSH1(8) PUSH1(28) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN PUSH1(1) RJUMPI(2) STOP
-      - ':raw 0xef0001010012020008006008601c60003960086000f360015d000200ef000101000100FE'
+      # Code to be deployed: PUSH1(1) RJUMPI(2) STOP - Data aabbccdd - 0xef00010100040200010006030004000000000160015d000200aabbccdd
+      - ':label valid_init_invalid_code_rjumpi_into_data_section :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010006030004000000000160015d000200aabbccdd" }'
       # - Jump to after code end
-      # Code to be deployed: ef000101000100FE (contained in initcode's data)
-      # Initcode: PUSH1(8) PUSH1(28) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN PUSH1(1) RJUMPI(10) STOP
-      - ':raw 0xef0001010012020008006008601c60003960086000f360015d000A00ef000101000100FE'
+      # Code to be deployed: PUSH1(1) RJUMPI(2) STOP - 0xef00010100040200010006030000000000000160015d000200
+      - ':label valid_init_invalid_code_rjumpi_to_after_code_end :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010006030000000000000160015d000200" }'
       # - Jump to code end
-      # Code to be deployed: ef000101000100FE (contained in initcode's data)
-      # Initcode: PUSH1(8) PUSH1(28) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN PUSH1(1) RJUMPI(1) STOP
-      - ':raw 0xef0001010012020008006008601c60003960086000f360015d000100ef000101000100FE'
+      # Code to be deployed: PUSH1(1) RJUMPI(1) STOP - 0xef00010100040200010006030000000000000160015d000100
+      - ':label valid_init_invalid_code_rjumpi_to_code_end :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010006030000000000000160015d000100" }'
 
-      # Invalid EOF Initcode containing RJUMPI with target PUSH/RJUMP/RJUMPI immediate 
+      # Valid EOF initcode containing RJUMPI with target PUSH/RJUMP/RJUMPI immediate
       # - Jump to same RJUMPI immediate
-      # Code to be deployed: ef000101000100FE (contained in initcode's data)
-      # Initcode: PUSH1(8) PUSH1(28) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN PUSH1(1) RJUMPI(-1) STOP
-      - ':raw 0xef0001010012020008006008601c60003960086000f360015dFFFF00ef000101000100FE'
+      # Code to be deployed: PUSH1(1) RJUMPI(-1) STOP - 0xef00010100040200010006030000000000000160015dffff00
+      - ':label valid_init_invalid_code_rjumpi_to_self_immediate :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010006030000000000000160015dffff00" }'
       # - Jump to another RJUMPI immediate
-      # Code to be deployed: ef000101000100FE (contained in initcode's data)
-      # Initcode: PUSH1(8) PUSH1(34) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN PUSH1(1) RJUMPI(1) STOP PUSH1(1) RJUMPI(-7) STOP
-      - ':raw 0xef0001010018020008006008602260003960086000f360015d00010060015dFFF900ef000101000100FE'
-      # - Jump to RJUMP immediate
-      # Code to be deployed: ef000101000100FE (contained in initcode's data)
-      # Initcode: PUSH1(8) PUSH1(32) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN RJUMP(2) STOP RJUMP(1) STOP PUSH1(1) RJUMPI(-7)
-      - ':raw 0xef0001010016020008006008602060003960086000f35c00010060015cfff900ef000101000100FE'
-      # - Jump to PUSH immediate
-      # Code to be deployed: ef000101000100FE (contained in initcode's data)
-      # Initcode: PUSH1(8) PUSH1(28) PUSH1(0) CODECOPY PUSH1(8) PUSH1(0) RETURN PUSH1(1) RJUMPI(-4) STOP
-      - ':raw 0xef0001010012020008006008601c60003960086000f360015dFFFC00ef000101000100FE'
-
-
-      # Valid EOF Initcode trying to deploy invalid EOF code containing truncated RJUMPI
-      # Code to be deployed: RJUMPI( - ef0001010001005d
-      # Initcode: PUSH1(code_length) PUSH1(data_offset) PUSH1(0) CODECOPY PUSH1(code_lenght) PUSH1(1) RETURN
-      - ':label :raw 0xef000101000c020008006008601660003960086000f3ef0001010001005d'
-      # Code to be deployed: RJUMPI(0? - ef0001010002005d00
-      # Initcode: PUSH1(code_length) PUSH1(data_offset) PUSH1(0) CODECOPY PUSH1(code_lenght) PUSH1(1) RETURN
-      - ':label :raw 0xef000101000c020009006009601660003960096000f3ef0001010002005d00'
-      # Valid EOF Initcode trying to deploy invalid EOF code containing RJUMPI with target outside of code bounds
-      # - Jump into header
-      # Code to be deployed: PUSH1(1) RJUMPI(-7) STOP - ef00010100060060015dFFF900
-      # Initcode: PUSH1(code_length) PUSH1(data_offset) PUSH1(0) CODECOPY PUSH1(code_lenght) PUSH1(1) RETURN
-      - ':label :raw 0xef000101000c02000d00600d6016600039600d6000f3ef00010100060060015dFFF900'
-      # - Jump to before code begin
-      # Code to be deployed: PUSH1(1) RJUMPI(-15) STOP - ef00010100060060015dFFF100
-      # Initcode: PUSH1(code_length) PUSH1(data_offset) PUSH1(0) CODECOPY PUSH1(code_lenght) PUSH1(1) RETURN
-      - ':label :raw 0xef000101000c02000d00600d6016600039600d6000f3ef00010100060060015dFFF100'
-      # - Jump into data section
-      # Code to be deployed: PUSH1(1) RJUMPI(2) STOP - Data aabbccdd - ef00010100060200040060015d000200aabbccdd
-      # Initcode: PUSH1(code_length) PUSH1(data_offset) PUSH1(0) CODECOPY PUSH1(code_lenght) PUSH1(1) RETURN
-      - ':label :raw 0xef000101000c020014006014601660003960146000f3ef00010100060200040060015d000200aabbccdd'
-      # - Jump to after code end
-      # Code to be deployed: PUSH1(1) RJUMPI(2) STOP - ef00010100060060015d000200
-      # Initcode: PUSH1(code_length) PUSH1(data_offset) PUSH1(0) CODECOPY PUSH1(code_lenght) PUSH1(1) RETURN
-      - ':label :raw 0xef000101000c02000d00600d6016600039600d6000f3ef00010100060060015d000200'
-      # - Jump to code end
-      # Code to be deployed: PUSH1(1) RJUMPI(1) STOP - ef00010100060060015d000100
-      # Initcode: PUSH1(code_length) PUSH1(data_offset) PUSH1(0) CODECOPY PUSH1(code_lenght) PUSH1(1) RETURN
-      - ':label :raw 0xef000101000c02000d00600d6016600039600d6000f3ef00010100060060015d000100'
-
-      # Valid EOF Initcode containing RJUMPI with target PUSH/RJUMP/RJUMPI immediate
-      # - Jump to same RJUMPI immediate
-      # Code to be deployed: PUSH1(1) RJUMPI(-1) STOP - ef00010100060060015dFFFF00
-      - ':label :raw 0xef000101000c02000d00600d6016600039600d6000f3ef00010100060060015dFFFF00'
-      # - Jump to another RJUMPI immediate
-      # Code to be deployed: PUSH1(1) RJUMPI(5) STOP PUSH1(1) RJUMPI(-9) STOP - ef000101000c0060015d00050060015dFFF900
-      - ':label :raw 0xef000101000c020013006013601660003960136000f3ef000101000c0060015d00050060015dFFF900'
+      # Code to be deployed: PUSH1(1) RJUMPI(5) STOP PUSH1(1) RJUMPI(-11) STOP - 0xef0001010004020001000c030000000000000160015d00050060015dfff500
+      - ':label valid_init_invalid_code_rjumpi_to_rjumpi_immediate :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000c030000000000000160015d00050060015dfff500" }'
       # - Jump to RJUMP Immediate
-      # Code to be deployed: PUSH1(1) RJUMPI(3) STOP RJUMP(-7) STOP - ef000101000a0060015d0003005cFFF900
-      - ':label :raw 0xef000101000c020011006011601660003960116000f3ef000101000a0060015d0003005cFFF900'
+      # Code to be deployed: PUSH1(1) RJUMPI(3) STOP RJUMP(-9) - 0xef00010100040200010009030000000000000160015d0003005cfff7
+      - ':label valid_init_invalid_code_rjumpi_to_rjump_immediate :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010009030000000000000160015d0003005cfff7" }'
       # - Jump to PUSH Immediate
-      # Code to be deployed: PUSH1(1) RJUMPI(-4) STOP - ef00010100060060015dFFFC00
-      - ':label :raw 0xef000101000c02000d00600d6016600039600d6000f3ef00010100060060015dFFFC00'
+      # Code to be deployed: PUSH1(1) RJUMPI(-4) STOP - 0xef00010100040200010006030000000000000160015dfffc00
+      - ':label valid_init_invalid_code_rjumpi_to_push_immediate :yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010006030000000000000160015dfffc00" }'
+      # TODO jump to RJUMPV, CALLF immediate
 
-
+      # TODO invalid RJUMPV    
     gasLimit:
       - 15000000
     gasPrice: 10
@@ -204,7 +121,7 @@ CREATE2_EOF1Invalid_FromEOF:
   expect:
     - indexes: {}
       network:
-        - 'Merge+3540+3670+4200'
+        - 'Shanghai'
       result:
        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           nonce: 1
