@@ -16,8 +16,15 @@ EOF1_RJUMP_RJUMPI_Execution:
       storage: {}
     b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
       balance: 10000000
-      # Input data: <address>[byte] calls <address> using [byte] as calldata
-      code: ':yul { calldatacopy(0, 0, 21) sstore(0, call(100000, shr(96, mload(0)), 0, 20, 1, 32, 1)) sstore(1, shr(248, mload(32))) }'
+      # Input data: <address>[20 byte] calls <address> using [32 byte] as calldata
+      code: |
+        :yul 
+        {
+          let ret_offset := calldatasize() 
+          calldatacopy(0, 0, ret_offset) 
+          sstore(0, call(100000, shr(96, mload(0)), 0, 20, 32, ret_offset, 1)) 
+          sstore(1, shr(248, mload(ret_offset)))
+        }
       nonce: 0
       storage: {}
     1000000000000000000000000000000000000001: 
@@ -56,18 +63,56 @@ EOF1_RJUMP_RJUMPI_Execution:
       code: ':raw 0xef0001010004020001001003000000000000026000355d0000600160005360016000f3'
       nonce: 0
       storage: {}
+    1000000000000000000000000000000000000009: 
+      balance: 0
+      # PUSH1(0) CALLDATALOAD RJUMPV(10) PUSH1(2) PUSH1(0) MSTORE8 PUSH1(1) PUSH1(0) RETURN PUSH1(1) PUSH1(0) MSTORE8 PUSH1(1) PUSH1(0) RETURN 
+      code: ':raw 0xef0001010004020001001b03000000000000026000355e01000a600260005360016000f3600160005360016000f3'
+      nonce: 0
+      storage: {}
+    1000000000000000000000000000000000000010: 
+      balance: 0
+      # RJUMP(10) PUSH1(3) PUSH1(0) MSTORE8 PUSH1(1) PUSH1(0) RETURN PUSH1(0) CALLDATALOAD  RJUMPV(-21, 0, 10) PUSH1(2) PUSH1(0) MSTORE8 PUSH1(1) PUSH1(0) RETURN PUSH1(2) PUSH1(0) MSTORE8 PUSH1(1) PUSH1(0) RETURN PUSH1(1) PUSH1(0) MSTORE8 PUSH1(1) PUSH1(0) RETURN 
+      code: ':raw 0xef0001010004020001002c03000000000000025c000a600360005360016000f36000355e03ffeb0000000a600260005360016000f3600160005360016000f3'
+      nonce: 0
+      storage: {}
+    1000000000000000000000000000000000000011: 
+      balance: 0
+      # RJUMP(10) PUSH1(3) PUSH1(0) MSTORE8 PUSH1(1) PUSH1(0) RETURN PUSH1(0) CALLDATALOAD 
+      # RJUMPV(255 offsets, all 0s except:
+      #   offset3: -525
+      #   offset120: 10)
+      # RJUMP(10) PUSH1(3) PUSH1(0) MSTORE8 PUSH1(1) PUSH1(0) RETURN RJUMPV(255 offsets) PUSH1(2) PUSH1(0) MSTORE8 PUSH1(1) PUSH1(0) RETURN PUSH1(1) PUSH1(0) MSTORE8 PUSH1(1) PUSH1(0) RETURN 
+      code: ':raw 0xef0001010004020001022403000000000000025c000a600360005360016000f36000355eff000000000000fdf300000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000a00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000600260005360016000f3600160005360016000f3'
+      nonce: 0
+      storage: {}
 
   transaction:
     data:
       - ':label rjump           :raw 0x1000000000000000000000000000000000000001'
       - ':label rjump_with_data :raw 0x1000000000000000000000000000000000000002'
       - ':label rjump_zero_offset  :raw 0x1000000000000000000000000000000000000005'
-      - ':label rjumpi_condition_true  :raw 0x100000000000000000000000000000000000000601'
-      - ':label rjumpi_condition_false  :raw 0x100000000000000000000000000000000000000600'
-      - ':label rjumpi_backward_condition_true  :raw 0x100000000000000000000000000000000000000701'
-      - ':label rjumpi_backward_condition_false  :raw 0x100000000000000000000000000000000000000700'
-      - ':label rjumpi_zero_condition_true  :raw 0x100000000000000000000000000000000000000801'
-      - ':label rjumpi_zero_condition_false  :raw 0x100000000000000000000000000000000000000800'
+      - ':label rjumpi_condition_true  :raw 0x10000000000000000000000000000000000000060000000000000000000000000000000000000000000000000000000000000001'
+      - ':label rjumpi_condition_false  :raw 0x10000000000000000000000000000000000000060000000000000000000000000000000000000000000000000000000000000000'
+      - ':label rjumpi_backward_condition_true  :raw 0x10000000000000000000000000000000000000070000000000000000000000000000000000000000000000000000000000000001'
+      - ':label rjumpi_backward_condition_false  :raw 0x10000000000000000000000000000000000000070000000000000000000000000000000000000000000000000000000000000000'
+      - ':label rjumpi_zero_condition_true  :raw 0x10000000000000000000000000000000000000080000000000000000000000000000000000000000000000000000000000000001'
+      - ':label rjumpi_zero_condition_false  :raw 0x10000000000000000000000000000000000000080000000000000000000000000000000000000000000000000000000000000000'
+      - ':label rjumpv_count_1_case_0  :raw 0x10000000000000000000000000000000000000090000000000000000000000000000000000000000000000000000000000000000'
+      - ':label rjumpv_count_1_case_1  :raw 0x10000000000000000000000000000000000000090000000000000000000000000000000000000000000000000000000000000001'
+      - ':label rjumpv_count_1_case_2  :raw 0x10000000000000000000000000000000000000090000000000000000000000000000000000000000000000000000000000000002'
+      - ':label rjumpv_count_1_case_255 :raw 0x100000000000000000000000000000000000000900000000000000000000000000000000000000000000000000000000000000FF'
+      - ':label rjumpv_count_1_case_max :raw 0x1000000000000000000000000000000000000009FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF'
+      - ':label rjumpv_count_3_case_0  :raw 0x10000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000000'
+      - ':label rjumpv_count_3_case_1  :raw 0x10000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000001'
+      - ':label rjumpv_count_3_case_2  :raw 0x10000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000002'
+      - ':label rjumpv_count_3_case_3  :raw 0x10000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000003'
+      - ':label rjumpv_count_3_case_max :raw 0x1000000000000000000000000000000000000010FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF'
+      - ':label rjumpv_count_255_case_0  :raw 0x10000000000000000000000000000000000000110000000000000000000000000000000000000000000000000000000000000000'
+      - ':label rjumpv_count_255_case_3  :raw 0x10000000000000000000000000000000000000110000000000000000000000000000000000000000000000000000000000000003'
+      - ':label rjumpv_count_255_case_120  :raw 0x10000000000000000000000000000000000000110000000000000000000000000000000000000000000000000000000000000078'
+      - ':label rjumpv_count_255_case_254  :raw 0x100000000000000000000000000000000000001100000000000000000000000000000000000000000000000000000000000000FE'
+      - ':label rjumpv_count_255_case_255  :raw 0x100000000000000000000000000000000000001100000000000000000000000000000000000000000000000000000000000000FF'
+      - ':label rjumpv_count_255_case_max  :raw 0x1000000000000000000000000000000000000011FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF'      
     gasLimit:
       - 700000
     gasPrice: 10
@@ -298,3 +343,401 @@ EOF1_RJUMP_RJUMPI_Execution:
         1000000000000000000000000000000000000001:
           storage: {}
 
+    - indexes:
+       data: ':label rjumpv_count_1_case_0'
+      network:
+        - 'Merge'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage: {}
+        1000000000000000000000000000000000000001:
+          storage: {}
+    - indexes:
+       data: ':label rjumpv_count_1_case_0'
+      network:
+        - 'Shanghai'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '1'
+            '1': '1'
+        1000000000000000000000000000000000000001:
+          storage: {}
+    - indexes:
+       data: ':label rjumpv_count_1_case_1'
+      network:
+        - 'Merge'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage: {}
+        1000000000000000000000000000000000000001:
+          storage: {}
+    - indexes:
+       data: ':label rjumpv_count_1_case_1'
+      network:
+        - 'Shanghai'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '1'
+            '1': '2'
+        1000000000000000000000000000000000000001:
+          storage: {}
+
+    - indexes:
+       data: ':label rjumpv_count_1_case_2'
+      network:
+        - 'Merge'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage: {}
+        1000000000000000000000000000000000000001:
+          storage: {}
+    - indexes:
+       data: ':label rjumpv_count_1_case_2'
+      network:
+        - 'Shanghai'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '1'
+            '1': '2'
+        1000000000000000000000000000000000000001:
+          storage: {}
+
+    - indexes:
+       data: ':label rjumpv_count_1_case_255'
+      network:
+        - 'Merge'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage: {}
+        1000000000000000000000000000000000000001:
+          storage: {}
+    - indexes:
+       data: ':label rjumpv_count_1_case_255'
+      network:
+        - 'Shanghai'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '1'
+            '1': '2'
+        1000000000000000000000000000000000000001:
+          storage: {}
+
+    - indexes:
+       data: ':label rjumpv_count_1_case_max'
+      network:
+        - 'Merge'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage: {}
+        1000000000000000000000000000000000000001:
+          storage: {}
+    - indexes:
+       data: ':label rjumpv_count_1_case_max'
+      network:
+        - 'Shanghai'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '1'
+            '1': '2'
+        1000000000000000000000000000000000000001:
+          storage: {}
+
+    - indexes:
+       data: ':label rjumpv_count_3_case_0'
+      network:
+        - 'Merge'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage: {}
+        1000000000000000000000000000000000000001:
+          storage: {}
+    - indexes:
+       data: ':label rjumpv_count_3_case_0'
+      network:
+        - 'Shanghai'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '1'
+            '1': '3'
+        1000000000000000000000000000000000000001:
+          storage: {}
+
+    - indexes:
+       data: ':label rjumpv_count_3_case_1'
+      network:
+        - 'Merge'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage: {}
+        1000000000000000000000000000000000000001:
+          storage: {}
+    - indexes:
+       data: ':label rjumpv_count_3_case_1'
+      network:
+        - 'Shanghai'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '1'
+            '1': '2'
+        1000000000000000000000000000000000000001:
+          storage: {}
+
+    - indexes:
+       data: ':label rjumpv_count_3_case_2'
+      network:
+        - 'Merge'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage: {}
+        1000000000000000000000000000000000000001:
+          storage: {}
+    - indexes:
+       data: ':label rjumpv_count_3_case_2'
+      network:
+        - 'Shanghai'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '1'
+            '1': '1'
+        1000000000000000000000000000000000000001:
+          storage: {}
+
+    - indexes:
+       data: ':label rjumpv_count_3_case_3'
+      network:
+        - 'Merge'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage: {}
+        1000000000000000000000000000000000000001:
+          storage: {}
+    - indexes:
+       data: ':label rjumpv_count_3_case_3'
+      network:
+        - 'Shanghai'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '1'
+            '1': '2'
+        1000000000000000000000000000000000000001:
+          storage: {}
+
+    - indexes:
+       data: ':label rjumpv_count_3_case_max'
+      network:
+        - 'Merge'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage: {}
+        1000000000000000000000000000000000000001:
+          storage: {}
+    - indexes:
+       data: ':label rjumpv_count_3_case_max'
+      network:
+        - 'Shanghai'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '1'
+            '1': '2'
+        1000000000000000000000000000000000000001:
+          storage: {}
+
+    - indexes:
+       data: ':label rjumpv_count_255_case_0'
+      network:
+        - 'Merge'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage: {}
+        1000000000000000000000000000000000000001:
+          storage: {}
+    - indexes:
+       data: ':label rjumpv_count_255_case_0'
+      network:
+        - 'Shanghai'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '1'
+            '1': '2'
+        1000000000000000000000000000000000000001:
+          storage: {}
+
+    - indexes:
+       data: ':label rjumpv_count_255_case_3'
+      network:
+        - 'Merge'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage: {}
+        1000000000000000000000000000000000000001:
+          storage: {}
+    - indexes:
+       data: ':label rjumpv_count_255_case_3'
+      network:
+        - 'Shanghai'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '1'
+            '1': '3'
+        1000000000000000000000000000000000000001:
+          storage: {}
+
+    - indexes:
+       data: ':label rjumpv_count_255_case_120'
+      network:
+        - 'Merge'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage: {}
+        1000000000000000000000000000000000000001:
+          storage: {}
+    - indexes:
+       data: ':label rjumpv_count_255_case_120'
+      network:
+        - 'Shanghai'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '1'
+            '1': '1'
+        1000000000000000000000000000000000000001:
+          storage: {}
+
+    - indexes:
+       data: ':label rjumpv_count_255_case_254'
+      network:
+        - 'Merge'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage: {}
+        1000000000000000000000000000000000000001:
+          storage: {}
+    - indexes:
+       data: ':label rjumpv_count_255_case_254'
+      network:
+        - 'Shanghai'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '1'
+            '1': '2'
+        1000000000000000000000000000000000000001:
+          storage: {}
+
+    - indexes:
+       data: ':label rjumpv_count_255_case_255'
+      network:
+        - 'Merge'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage: {}
+        1000000000000000000000000000000000000001:
+          storage: {}
+    - indexes:
+       data: ':label rjumpv_count_255_case_255'
+      network:
+        - 'Shanghai'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '1'
+            '1': '2'
+        1000000000000000000000000000000000000001:
+          storage: {}
+
+    - indexes:
+       data: ':label rjumpv_count_255_case_max'
+      network:
+        - 'Merge'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage: {}
+        1000000000000000000000000000000000000001:
+          storage: {}
+    - indexes:
+       data: ':label rjumpv_count_255_case_max'
+      network:
+        - 'Shanghai'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          storage:
+            '0': '1'
+            '1': '2'
+        1000000000000000000000000000000000000001:
+          storage: {}
