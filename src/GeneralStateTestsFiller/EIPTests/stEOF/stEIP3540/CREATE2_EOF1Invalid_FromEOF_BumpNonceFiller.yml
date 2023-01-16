@@ -26,8 +26,19 @@ CREATE2_EOF1Invalid_FromEOF_BumpNonce:
       storage: {}
 
   transaction:
-    data: 
+    data:
       # Valid EOF initcode returning malformed code
+
+      # Deploying codes starting with 0xef
+
+      #- ':yul { mstore8(0, 0xef) return(0, 1) }'
+      - ':raw 0xef0001010004020001000a030000000000000260ef60005360016000f3'
+      #- ':yul { mstore8(0, 0xef) return(0, 2) }'
+      - ':raw 0xef0001010004020001000a030000000000000260ef60005360026000f3'
+      #- ':yul { mstore8(0, 0xef) return(0, 3) }'
+      - ':raw 0xef0001010004020001000a030000000000000260ef60005360036000f3'
+      #- ':yul { mstore8(0, 0xef) return(0, 32) }'
+      - ':raw 0xef0001010004020001000a030000000000000260ef60005360206000f3'
 
       # code section: PUSH1 23 CODEDIZE SUB DUP1 PUSH1 23 CODECOPY PUSH1 0 RETURN
       # 23 is offset of data section

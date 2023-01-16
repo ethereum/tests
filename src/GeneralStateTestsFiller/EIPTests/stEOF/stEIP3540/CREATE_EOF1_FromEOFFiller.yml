@@ -26,18 +26,7 @@ CREATE_EOF1_FromEOF:
       storage: {}
 
   transaction:
-    data: 
-      # Deploying codes starting with 0xef
-
-      #- ':yul { mstore8(0, 0xef) return(0, 1) }'
-      - ':label deploying_0xef :raw 0xef0001010004020001000a030000000000000260ef60005360016000f3'
-      #- ':yul { mstore8(0, 0xef) return(0, 2) }'
-      - ':label deploying_0xef00 :raw 0xef0001010004020001000a030000000000000260ef60005360026000f3'
-      #- ':yul { mstore8(0, 0xef) return(0, 3) }'
-      - ':label deploying_0xef0000 :raw 0xef0001010004020001000a030000000000000260ef60005360036000f3'
-      #- ':yul { mstore8(0, 0xef) return(0, 32) }'
-      - ':label deploying_0xef00..00 :raw 0xef0001010004020001000a030000000000000260ef60005360206000f3'
-
+    data:
       # Valid EOF1 initcode and code combinations (both with and without data section)
 
       # EOF initcode => EOF code
@@ -76,66 +65,6 @@ CREATE_EOF1_FromEOF:
       - 0
 
   expect:
-    - indexes:
-       data: ':label deploying_0xef'
-      network:
-        - 'Shanghai'
-      result:
-       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
-          nonce: 1
-       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
-          nonce: '1'
-          storage:
-            '0': '0'
-            '1': '1'
-       f1ecf98489fa9ed60a664fc4998db699cfa39d40:
-          shouldnotexist: 1
-
-    - indexes:
-       data: ':label deploying_0xef00'
-      network:
-        - 'Shanghai'
-      result:
-       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
-          nonce: 1
-       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
-          nonce: '1'
-          storage:
-            '0': '0'
-            '1': '1'
-       f1ecf98489fa9ed60a664fc4998db699cfa39d40:
-          shouldnotexist: 1
-
-    - indexes:
-       data: ':label deploying_0xef0000'
-      network:
-        - 'Shanghai'
-      result:
-       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
-          nonce: 1
-       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
-          nonce: '1'
-          storage:
-            '0': '0'
-            '1': '1'
-       f1ecf98489fa9ed60a664fc4998db699cfa39d40:
-          shouldnotexist: 1
-
-    - indexes:
-       data: ':label deploying_0xef00..00'
-      network:
-        - 'Shanghai'
-      result:
-       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
-          nonce: 1
-       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
-          nonce: '1'
-          storage:
-            '0': '0'
-            '1': '1'
-       f1ecf98489fa9ed60a664fc4998db699cfa39d40:
-          shouldnotexist: 1
-
     - indexes:
        data: ':label eof1_initcode_deploying_valid_eof1'
       network:
