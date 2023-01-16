@@ -47,6 +47,30 @@ CREATE2_EOF1_FromEOF:
       # Initcode: PUSH1(1) RJUMPI(0) PUSH1(20) PUSH1(36) PUSH1(0) CODECOPY PUSH1(20) PUSH1(0) RETURN
       - ':label eof1_initcode_rjumpi_zer :raw 0xef00010100040200010011030014000000000360015d00006014602460003960146000f3ef000101000402000100010300000000000000fe'
 
+      # Valid EOF initcode with RJUMPV table size 1
+      # - Positive:
+      # Initcode (data): ef000101000402000100010300000000000000fe (code to be deployed)
+      # Initcode: PUSH1(0) RJUMPV(3) NOP NOP STOP PUSH1(20) PUSH1(39) PUSH1(0) CODECOPY PUSH1(20) PUSH1(0) RETURN
+      - ':label eof1_initcode_rjumpv_1_pos :raw 0xef00010100040200010014030014000000000360015d00035b5b006014602760003960146000f3ef000101000402000100010300000000000000fe'
+      # - Negative:
+      # Initcode (data): ef000101000402000100010300000000000000fe (code to be deployed)
+      # Initcode: RJUMP(12) PUSH1(20) PUSH1(41) PUSH1(0) CODECOPY PUSH1(20) PUSH1(0) RETURN PUSH1(0) RJUMPV(-18) STOP
+      - ':label eof1_initcode_rjumpv_1_neg :raw 0xef0001010004020001001603001400000000035c000c6014602960003960146000f360005e01ffee00ef000101000402000100010300000000000000fe'
+      # - Zero:
+      # Initcode (data): ef000101000402000100010300000000000000fe (code to be deployed)
+      # Initcode: PUSH1(0) RJUMPV(0) PUSH1(20) PUSH1(37) PUSH1(0) CODECOPY PUSH1(20) PUSH1(0) RETURN
+      - ':label eof1_initcode_rjumpv_1_zer :raw 0xef00010100040200010012030014000000000360005e0100006014602560003960146000f3ef000101000402000100010300000000000000fe'
+
+      # Valid EOF initcode with RJUMPV table size 3
+      # Initcode (data): ef000101000402000100010300000000000000fe (code to be deployed)
+      # Initcode: PUSH1(0) RJUMPV(3, 0, -10) NOP NOP STOP PUSH1(20) PUSH1(44) PUSH1(0) CODECOPY PUSH1(20) PUSH1(0) RETURN
+      - ':label eof1_initcode_rjumpv_3 :raw 0xef00010100040200010019030014000000000360005e0300030000fff65b5b006014602c60003960146000f3ef000101000402000100010300000000000000fe'
+
+      # Valid EOF initcode with RJUMPV table size 255
+      # Initcode (data): ef000101000402000100010300000000000000fe (code to be deployed)
+      # Initcode: PUSH1(0) RJUMPV(random 255 offsets) NOP * 255 STOP PUSH1(20) PUSH1(802) PUSH1(0) CODECOPY PUSH1(20) PUSH1(0) RETURN
+      - ':label eof1_initcode_rjumpv_255 :raw 0xef0001010004020001030f03001400000000036101005eff006700c600690073005100ff004a00ec002900cd00ba00ab00f200fb00e30046007c00c2005400f8001b00e800e7008d0076005a002e00630033009f00c9009a00660032000d00b70031005800a3005a0025005d00050017005800e9005e00d400ab00b200cd00c6009b00b400540011000e0082007400410021003d00dc0087007000e9003e00a1004100e100fc0067003e0001007e009700ea00dc006b0096008f0038005c002a00ec00b0003b00fb003200af003c005400ec001800db005c0002001a00fe004300fb00fa00aa003a00fb002900d100e60005003c007c0094007500d800be0061008900f9005c00bb00a80099000f009500b100eb00f100b3000500ef00f7000000e900a1003a00e500ca000b00cb00d000480047006400bd001f0023001e00a8001c007b006400c500140073005a00c5005e004b00790063003b0070006400240011009e000900dc00aa00d400ac00f2001b001000af003b003300cd00e30050004800470015005c00bb006f0022001900ba009b007d00f5000b00e1001a001c007f002300f8002900f800a4001b001300b500ca004e00e800980032003800e00079004d003d003400bc005f004e007700fa00cb006c000500ac00860021002b00aa001a005500a200be007000b50073003b0004005c00d30036009400b300af00e200f000e4009e004f00320015004900fd0082004e5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b601461032260003960146000f3ef000101000402000100010300000000000000fe'
+
     gasLimit:
       - 15000000
     gasPrice: 10
@@ -134,6 +158,86 @@ CREATE2_EOF1_FromEOF:
             '0': '0xe344a12fe3c79c226a0e3b90ba07285ef85bbc3d'
             '1': '1'
        0xe344a12fe3c79c226a0e3b90ba07285ef85bbc3d:
+          nonce: 1
+          code: '0xef000101000402000100010300000000000000fe'
+          storage: {}
+    - indexes:
+       data: ':label eof1_initcode_rjumpv_1_pos'
+      network:
+        - 'Shanghai'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+          storage:
+            '0': '0x309e5e7fc29a36911a03ed7ea03e8e55e5ffdb57'
+            '1': '1'
+       0x309e5e7fc29a36911a03ed7ea03e8e55e5ffdb57:
+          nonce: 1
+          code: '0xef000101000402000100010300000000000000fe'
+          storage: {}
+    - indexes:
+       data: ':label eof1_initcode_rjumpv_1_neg'
+      network:
+        - 'Shanghai'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+          storage:
+            '0': '0xe2b9d61104b4cc971114fb4bdac4c05579722496'
+            '1': '1'
+       0xe2b9d61104b4cc971114fb4bdac4c05579722496:
+          nonce: 1
+          code: '0xef000101000402000100010300000000000000fe'
+          storage: {}
+    - indexes:
+       data: ':label eof1_initcode_rjumpv_1_zer'
+      network:
+        - 'Shanghai'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+          storage:
+            '0': '0x133f4f37e481396bb6b6b4238c470e08bbca0bbb'
+            '1': '1'
+       0x133f4f37e481396bb6b6b4238c470e08bbca0bbb:
+          nonce: 1
+          code: '0xef000101000402000100010300000000000000fe'
+          storage: {}
+    - indexes:
+       data: ':label eof1_initcode_rjumpv_3'
+      network:
+        - 'Shanghai'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+          storage:
+            '0': '0xc057fcb533b24bd92bfb20d5dc6a7f3789f098a2'
+            '1': '1'
+       0xc057fcb533b24bd92bfb20d5dc6a7f3789f098a2:
+          nonce: 1
+          code: '0xef000101000402000100010300000000000000fe'
+          storage: {}
+    - indexes:
+       data: ':label eof1_initcode_rjumpv_255'
+      network:
+        - 'Shanghai'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+          storage:
+            '0': '0xfd96f573c0f2b289705fd0e15f3a0cd0b5225898'
+            '1': '1'
+       0xfd96f573c0f2b289705fd0e15f3a0cd0b5225898:
           nonce: 1
           code: '0xef000101000402000100010300000000000000fe'
           storage: {}
