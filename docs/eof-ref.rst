@@ -5,5 +5,4 @@ Ethereum Object Format Tests
    :maxdepth: 2
 
    test_filler/eof_filler.rst
-   test_types/gstate_tests.rst
-
+   test_types/eof_tests.rst
