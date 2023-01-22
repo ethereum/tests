@@ -19,6 +19,7 @@ Ethereum Tests
    retesteth-tutorial.rst
    state-transition-tutorial.rst
    blockchain-tutorial.rst
+   eof-tutorial.rst
    eip-tutorial.rst
    ommer-tutorial.rst
    internals-tutorial.rst
@@ -41,6 +42,7 @@ Ethereum Tests
    :caption: Test Reference:
   
    blockchain-ref.rst
+   eof-ref.rst
    state-transition-ref.rst
    sample-values.rst
 
