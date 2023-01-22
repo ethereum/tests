@@ -1,0 +1,18 @@
+ymlExample:
+  _info:
+     comment: EOF example test
+
+  data:
+  # Not EOF1
+  - :raw 0x60016000F3
+
+  # EOF1 constructor returning an EOF1 contract
+  - :raw 0xEF0001010004020001000a030016000000000338600060003938601DF3EF0001010004020001000303001d0000000001385000
+    
+
+  expect:
+  - indexes:
+      data: !!int -1
+    network: 
+    - '>=Shanghai'
+    result: !!bool true
