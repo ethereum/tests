@@ -5,7 +5,7 @@ Blocktests with Ommer / Uncle Blocks
 ###########################################
 `Ori Pomerantz <mailto://qbzzt1@gmail.com>`_
 
-In this tutorial you learn hwo to write blockchain tests where the chain
+In this tutorial you learn how to write blockchain tests where the chain
 includes `ommer/uncle blocks <https://ethereum.org/en/glossary/#ommer>`_,
 blocks that are not part of the main chain but still deserve a reward.
 

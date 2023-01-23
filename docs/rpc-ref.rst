@@ -25,9 +25,9 @@ Parameters
 #. **string _blockHashOrNumber**: The hash or number of the block
 #. **int _txIndex**: Transaction index for the point in which we want the list of accounts
 #. **string _addressHash**: The hash at which to start the list
-   If **_maxResults** is equal to the the number of accounts or more than that then 
+   If **_maxResults** is equal to the number of accounts or more than that then 
    we receive all the addresses
-   and there is no problem. But if there are too many accounts to report all them, we 
+   and there is no problem. But if there are too many accounts to report them all, we 
    receive the next hash at which we can find an address. We then call this method again,
    with that value in **_addressHash**, to get the next batch of addresses.
 #. **int _maxResults**: Maximum number of results

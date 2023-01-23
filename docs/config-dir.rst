@@ -83,7 +83,7 @@ These directories can contain this information:
        #. The test is in **BlockchainTests/InvalidBlocks**.
 
        Otherwise, either
-       **retesteth** only checks that an exception occured, not which exception it 
+       **retesteth** only checks that an exception occurred, not which exception it 
        was (without **-\\-filltests**), or treats any exception as an abort (if the
        test is not for invalid blocks).  
 
@@ -102,7 +102,7 @@ These directories can contain this information:
        needs to connect to an existing client rather than run its own.
 
   - With **ipc-debug** clients the script is ignored, because it is assumed that the
-    that the client is already running in debug mode.
+    client is already running in debug mode.
 
   - With **transition-tool** clients the script is executed for every test, and the
     program it runs (**evm t8n** in the case of **geth**) communicates with the client
