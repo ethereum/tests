@@ -110,7 +110,7 @@ Custom compiler information is provided as part of the client configuration.
 
       #!/bin/sh
       # You can call a custom executable here
-      # The code src comes in argument $1 as a path to a file containg the code
+      # The code src comes in argument $1 as a path to a file containing the code
       # So if you have custom compiler installed in the system the command would look like:
       # mycompiler $1
 
