@@ -6,14 +6,16 @@
                         "genesisBlockHeader" : {
                             "baseFeePerGas" : "shouldnotexist",
                             "difficulty" : "0x020000",
-                            "mixHash" : "0x0000000000000000000000000000000000000000000000000000000000000000"
+                            "mixHash" : "0x0000000000000000000000000000000000000000000000000000000000000000",
+                            "withdrawalsRoot" : "shouldnotexist"
                         },
                         "blocks" : [
                             {
                                 "blockHeader" : {
                                     "difficulty" : "0x020000",
                                     "mixHash" : "0x0000000000000000000000000000000000000000000000000000000000000000",
-                                    "baseFeePerGas" : "shouldnotexist"
+                                    "baseFeePerGas" : "shouldnotexist",
+                                    "withdrawalsRoot" : "shouldnotexist"
                                 }
                             }
                         ]
@@ -22,14 +24,16 @@
                         "genesisBlockHeader" : {
                             "baseFeePerGas" : "0x10",
                             "difficulty" : "0x020000",
-                            "mixHash" : "0x0000000000000000000000000000000000000000000000000000000000000000"
+                            "mixHash" : "0x0000000000000000000000000000000000000000000000000000000000000000",
+                            "withdrawalsRoot" : "shouldnotexist"
                         },
                         "blocks" : [
                             {
                                 "blockHeader" : {
                                     "difficulty" : "0x020000",
                                     "mixHash" : "0x0000000000000000000000000000000000000000000000000000000000000000",
-                                    "baseFeePerGas" : "0x0e"
+                                    "baseFeePerGas" : "0x0e",
+                                    "withdrawalsRoot" : "shouldnotexist"
                                 }
                             }
                         ]
@@ -38,14 +42,34 @@
                         "genesisBlockHeader" : {
                             "baseFeePerGas" : "0x10",
                             "difficulty" : "0x00",
-                            "mixHash" : "0x0000000000000000000000000000000000000000000000000000000000020000"
+                            "mixHash" : "0x0000000000000000000000000000000000000000000000000000000000020000",
+                            "withdrawalsRoot" : "shouldnotexist"
                         },
                         "blocks" : [
                             {
                                 "blockHeader" : {
                                     "difficulty" : "0x00",
                                     "mixHash" : "0x0000000000000000000000000000000000000000000000000000000000020000",
-                                    "baseFeePerGas" : "0x0e"
+                                    "baseFeePerGas" : "0x0e",
+                                    "withdrawalsRoot" : "shouldnotexist"
+                                }
+                            }
+                        ]
+            },
+            "Shanghai" : {
+                        "genesisBlockHeader" : {
+                            "baseFeePerGas" : "0x10",
+                            "difficulty" : "0x00",
+                            "mixHash" : "0x0000000000000000000000000000000000000000000000000000000000020000",
+                            "withdrawalsRoot" : "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421"
+                        },
+                        "blocks" : [
+                            {
+                                "blockHeader" : {
+                                    "difficulty" : "0x00",
+                                    "mixHash" : "0x0000000000000000000000000000000000000000000000000000000000020000",
+                                    "baseFeePerGas" : "0x10",
+                                    "withdrawalsRoot" : "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421"
                                 }
                             }
                         ]
@@ -97,7 +121,7 @@
         ],
         "expect" : [
             {
-                "network" : ["Berlin", "London", "Merge"],
+                "network" : [">=Berlin"],
                 "result" : {
                     "0x6295ee1b4f6dd65047762f924ecd367c17eabf8f" : {
                         "code" : "0x600f60005500",
