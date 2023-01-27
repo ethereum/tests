@@ -165,7 +165,7 @@ than it was in the previous one.
 
 This transaction comes from a different address (addresses are uniquely derived
 from the private key, and this one is different from the one in the previous
-transcation). This transaction's **nonce** value is the initial value for 
+transaction). This transaction's **nonce** value is the initial value for 
 that address, zero.
 
 ::
@@ -283,7 +283,7 @@ idea to have a field that includes future forks.
    The **expectException** field is only used when **\\-\\-filltests** is specified.
    When it is not, **retesteth** just expects the processing of the block to fail,
    without ensuring the exception is the correct one. The reason for this feature 
-   is that not all clients tells us the exact exception type when they reject a
+   is that not all clients tell us the exact exception type when they reject a
    block as invalid.
 
 

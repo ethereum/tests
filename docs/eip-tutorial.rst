@@ -41,7 +41,7 @@ To be able to isolate problems, it is best if the docker container includes both
 
    * Duplicate the **geth** commands, except for these changes:
     
-      * Clone a repository that includes the modified geth (it may be a branch of the main geth repository, or a different repository alltogether).
+      * Clone a repository that includes the modified geth (it may be a branch of the main geth repository, or a different repository altogether).
       * Remove the code that installs the Go programming language.
       * Change the binaries to **evm-eip** and **geth-eip**.
 
