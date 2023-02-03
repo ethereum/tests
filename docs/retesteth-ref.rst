@@ -95,9 +95,9 @@ Option                        Meaning
                               GeneralStateTests
 -\\-vmtraceraw [<folder>]     Trace transaction execution (see note)
 -\\-vmtrace                   Trace transaction execution, simplified version
--\\-limitblocks <num>         Limit the block exectuion in blockchain tests for 
+-\\-limitblocks <num>         Limit the block execution in blockchain tests for 
                               debugging to the first <num> blocks
--\\-limitrpc                  Limit the rpc exectuion in tests for debug
+-\\-limitrpc                  Limit the rpc execution in tests for debug
 -\\-verbosity <level>         Set logs verbosity. 0 - silent, 1 - only errors, 
                               2 - informative, >2 - detailed
 -\\-exectimelog               Output execution time for each test suite
@@ -193,7 +193,7 @@ Option                          Meaning
 
 Examples
 ===================
-These examples assume you configured your enviroment `the way it was
+These examples assume you configured your environment `the way it was
 shown in the tutorial 
 <https://ethereum-tests.readthedocs.io/en/latest/retesteth-tutorial.html>`_
 and that you are in your home directory.
@@ -276,7 +276,7 @@ will be slightly different.
    .. note::
 
       Not all transitions have associated test cases. To see which test
-      cases are avaliable, run:
+      cases are available, run:
 
       ::
 
@@ -356,7 +356,7 @@ will be slightly different.
       ./dretesteth.sh -t GeneralStateTests/stExample -- \
            --testpath ~/tests --vmtrace
 
-   Proudce a more detailed, but less readable, trace:
+   Produce a more detailed, but less readable, trace:
 
    ::
 

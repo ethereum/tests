@@ -349,7 +349,7 @@ not be accurate.
    itself <https://github.com/ethereum/retesteth/wiki/RPC-Methods>`__
    and `create a new config for
    it <https://github.com/ethereum/retesteth/wiki/Add-client-configuration-to-Retesteth>`__
--  **Test with a new fork of Ethererum**. New forks usually mean new
+-  **Test with a new fork of Ethereum**. New forks usually mean new
    opcodes. Therefore, you will need a docker with a new version of
    `lllc <https://lll-docs.readthedocs.io/en/latest/lll_compiler.html>`__.
 
