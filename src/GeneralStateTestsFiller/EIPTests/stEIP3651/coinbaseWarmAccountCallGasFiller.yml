@@ -22,8 +22,9 @@ coinbaseWarmAccountCallGas:
            
            // Minimum gas spent on the measurement, which changes depending on
            // the tested opcode
-           let measureGas := 12
+           let measureGas
            let gas0, gas1
+           let retVal
 
            // We can only check the gas of one opcode per transaction,
            // because the first check adds the account to the
@@ -31,55 +32,58 @@ coinbaseWarmAccountCallGas:
            switch calldataload(4)
            case 0 {
              // EXTCODESIZE
+             measureGas := 15
              gas0 := gas()
-             pop(extcodesize(cb))
+             retVal := extcodesize(cb)
              gas1 := gas()
            }
            case 1 {
              // EXTCODECOPY
-             measureGas := add(measureGas, 7)
+             measureGas := 19
              gas0 := gas()
              extcodecopy(cb, 0, 0, 0)
              gas1 := gas()
            }
            case 2 {
              // EXTCODEHASH
+             measureGas := 15
              gas0 := gas()
-             pop(extcodehash(cb))
+             retVal := extcodehash(cb)
              gas1 := gas()
            }
            case 3 {
              // BALANCE
+             measureGas := 15
              gas0 := gas()
-             pop(balance(cb))
+             retVal := balance(cb)
              gas1 := gas()
            }
            case 4 {
              // CALL
-             measureGas := add(measureGas, 18)
+             measureGas := 33
              gas0 := gas()
-             pop(call(10000, cb, 0, 0, 0, 0, 0))
+             retVal := call(10000, cb, 0, 0, 0, 0, 0)
              gas1 := gas()
            }
            case 5 {
              // CALLCODE
-             measureGas := add(measureGas, 18)
+             measureGas := 33
              gas0 := gas()
-             pop(callcode(10000, cb, 0, 0, 0, 0, 0))
+             retVal := callcode(10000, cb, 0, 0, 0, 0, 0)
              gas1 := gas()
            }
            case 6 {
              // DELEGATECALL
-             measureGas := add(measureGas, 15)
+             measureGas := 30
              gas0 := gas()
-             pop(delegatecall(10000, cb, 0, 0, 0, 0))
+             retVal := delegatecall(10000, cb, 0, 0, 0, 0)
              gas1 := gas()
            }
            case 7 {
              // STATICCALL
-             measureGas := add(measureGas, 15)
+             measureGas := 30
              gas0 := gas()
-             pop(staticcall(10000, cb, 0, 0, 0, 0))
+             retVal := staticcall(10000, cb, 0, 0, 0, 0)
              gas1 := gas()
            }
            default {
@@ -88,7 +92,8 @@ coinbaseWarmAccountCallGas:
 
            // Save the measured gas
            sstore(0, sub(sub(gas0, gas1), measureGas)) 
-           
+           mstore(0, retVal)
+           return(0, 32)
         }
       nonce: 1
       storage: {}
