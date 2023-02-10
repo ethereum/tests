@@ -70,8 +70,12 @@ etcpatch "GeneralStateTestsFiller/stEIP2930"
 etcpatch "GeneralStateTestsFiller/stSStoreTest"
 etcpatch "GeneralStateTestsFiller/stExample"
 
-etcclean "src/GeneralStateTestsFiller/stEIP1559"
-etcclean "src/GeneralStateTestsFiller/stExpectSection"
 etcclean "GeneralStateTests/stEIP1559"
 etcclean "BlockchainTests/GeneralStateTests/stEIP1559"
+etcclean "src/GeneralStateTestsFiller/stEIP1559"
+etcclean "src/GeneralStateTestsFiller/stExpectSection"
+etcclean "src/GeneralStateTestsFiller/EIPTests"
+etcclean "src/BlockchainTestsFiller/EIPTests"
+
 etcpatch "GeneralStateTestsFiller/stEIP1559"
+
