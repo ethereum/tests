@@ -14,12 +14,7 @@
 	"expect": 
 	[
 	    {
-                "indexes" : {
-                    "data" : -1,
-                    "gas" : -1,
-                    "value" : -1
-                },
-                "network" : [">=Istanbul"],
+                "network" : ["Istanbul", "Berlin", "London", "Merge"],
                 "result" : {
                     "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
                             "code" : "",
@@ -44,6 +39,31 @@
                             "storage" : {
                                 "0x609834bf9a7e578e45609242172907dd75a925" : "0x39"
                             }
+                        }
+                }
+            },
+    	    {
+                "//comment" : "Shanghai fails to pay fo create, the test still must pass on previous nets",
+                "network" : [">=Shanghai"],
+                "result" : {
+                    "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "code" : "",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0xb1c0d37237a1f6bd6202aed4b5a7290dfcda6591" : {
+                            "shouldnotexist" : "1"
+                        },
+                        "0xc94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "code" : "",
+                            "nonce" : "0x07",
+                            "storage" : {
+                            }
+                        },
+                        "0xffffffffffffffffffffffffffffffffffffffff" : {
+                            "nonce" : "28",
+                            "storage" : {}
                         }
                 }
             }

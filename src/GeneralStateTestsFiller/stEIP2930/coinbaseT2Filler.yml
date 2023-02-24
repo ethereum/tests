@@ -102,8 +102,22 @@ coinbaseT2:
       gas: !!int -1
       value: !!int -1
     network:
-    - ">=London"
+    - "London"
+    - "Merge"
     result:
       000000000000000000000000000000000000C0DE:
         storage:
           0x00: 9300
+
+# In Shanghai with EIP3651 (https://eips.ethereum.org/EIPS/eip-3651), coinbase is included in warm accounts list
+# So no difference even if it is not in transaction access list
+  - indexes:
+      data: :label T2baseNotInList
+      gas: !!int -1
+      value: !!int -1
+    network:
+    - ">=Shanghai"
+    result:
+      000000000000000000000000000000000000C0DE:
+        storage:
+          0x00: 6800
