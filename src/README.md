@@ -101,3 +101,19 @@
 - ID: **EOF1C0017** legacy contact > CREATE[2] > legacy init code > nonsense
 - ID: **EOF1C0018** legacy contact > CREATE[2] > eof1 init code > nonsense (fail)
 - ID: **EOF1C0019** legacy contact > CREATE[2] > nonsense init code (fail)
+
+
+## Warm COINBASE EIP-3651 
+
+- ID: **WRMCB0001** check EXTCODESIZE gas cost on coinbase
+- ID: **WRMCB0002** check EXTCODECOPY gas cost on coinbase
+- ID: **WRMCB0003** check EXTCODEHASH gas cost on coinbase
+- ID: **WRMCB0004** check BALANCE gas cost on coinbase
+- ID: **WRMCB0005** check CALL gas cost on coinbase
+- ID: **WRMCB0006** check CALLCODE gas cost on coinbase
+- ID: **WRMCB0007** check DELEGATECALL gas cost on coinbase
+- ID: **WRMCB0008** check STATICCALL gas cost on coinbase
+- ID: **WRMCB0009** check OOG CALL on coinbase
+- ID: **WRMCB0010** check OOG CALLCODE on coinbase
+- ID: **WRMCB0011** check OOG DELEGATECALL on coinbase
+- ID: **WRMCB0012** check OOG STATICCALL on coinbase
