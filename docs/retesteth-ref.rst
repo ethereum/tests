@@ -69,6 +69,7 @@ Setting the Test Suite and Test
 Option                                    Meaning
 ========================================= ===================================================
 -\\-testpath <PathToTheTestRepo>          Set path to the test repo
+-\\-filloutdated                          Run only those tests that have changed fillers
 -\\-testfile <TestFile>                   Run tests from a file. Requires -t <TestSuite>
 -\\-singletest <TestName>                 Run on a single test. `Testname` is the filename 
                                           without Filler.<type> (either **json** or **yml**)
