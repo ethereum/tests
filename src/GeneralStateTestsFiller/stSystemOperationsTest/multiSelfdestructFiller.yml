@@ -50,6 +50,20 @@ multiSelfdestruct:
 
 
 
+    # Run the tests. One parameter (single byte)
+    #   01 - SUC001, does not suicide, just receive more funds via call. 
+    #        check the balance of contractA 
+    #        (must be 0, the second transfer funds erased)
+    #   02 - SUC002 does another suicide to dest1 (so dest1 now have 3 + x)
+    #   03 - SUC003 does another suicide to dest2 (so both dest1 and dest2 have 
+    #        some balance)
+    #   04 - SUC004 tries to make value transfer but fails because initial suicide
+    #          0ed the balance (answering this (check that it is immidiately 
+    #          and not by the end of tx))
+    #   05 - SUC005 receives more funds and try to transfer it 
+    #          (same as SUC004, but this time work because it received funds 
+    #          via 2nd call)
+
 
     cccccccccccccccccccccccccccccccccccccccc:
       balance: 100000000
@@ -64,84 +78,57 @@ multiSelfdestruct:
              mstore8(1, 0x10)
              mstore8(2, 0x00)
              delme := call(gas(), 0xdead, 0, 0,3, 0,0)
-             sstore(0x00, balance(0x1000))
+             sstore(0x00, delme)
+             sstore(0x01, balance(0x1000))
+             sstore(0x02, balance(0xdead))
+
+             let test := shr(248, calldataload(0))
+             switch test 
+             case 1 {
+                 // call with all zeros, so it won't do anything
+                 delme := call(gas(), 0xdead, 2, 3,3, 0,0)
+             }
+             case 2 {
+                 // Another suicide to 0x1000
+                 delme := call(gas(), 0xdead, 2, 0,3, 0,0)
+             }
+             case 3 {
+                 // Suicide to 0x1001
+                 mstore8(2, 1)
+                 delme := call(gas(), 0xdead, 2, 0,3, 0,0)
+             }
+             case 4 {
+                 // Attempt to transfer WEI you don't have to 0x1001
+                 mstore8(0,1)
+                 mstore8(2,1)
+                 delme := call(gas(), 0xdead, 0, 0,3, 0,0)
+             }
+             case 5 {
+                 // Attempt to transfer WEI you do have to 0x1001
+                 mstore8(0,1)
+                 mstore8(2,1)
+                 delme := call(gas(), 0xdead, 2, 0,3, 0,0)
+             }
+             default {
+                 revert(0,0)
+             }
+
+             // Store the results
              sstore(0x10, delme)
-
-             // Don't do anything, just receive a wei
-             // SUC001
-             mstore8(0, 0x00)
-             delme := call(gas(), 0xdead, 1, 0,3, 0,0)
-             sstore(0x01, balance(0xdead))
-             sstore(0x11, delme)
-
-             // Selfdestruct #2, send balance to 0x1000
-             // SUC002
-             mstore8(0, 0xFF)
-             mstore8(1, 0x10)
-             mstore8(2, 0x00)
-             delme := call(gas(), 0xdead, 0, 0,3, 0,0)
-             sstore(0x02, balance(0x1000))
-             sstore(0x12, delme)
-
-
-             // Selfdestruct #3, send balance to 0x1001
-             // SUC003
-             mstore8(0, 0xFF)
-             mstore8(1, 0x10)
-             mstore8(2, 0x01)
-             delme := call(gas(), 0xdead, 0, 0,3, 0,0)
-             sstore(0x03, balance(0x1001))
-             sstore(0x13, delme)
-
-             // Try to send 1 wei to 0x1001 (fail, 0xDEAD doesn't have any)
-             // SUC004
-             mstore8(0, 0x01)
-             mstore8(1, 0x10)
-             mstore8(2, 0x01)
-             delme := call(gas(), 0xdead, 0, 0,3, 0,0)
-             sstore(0x04, balance(0x1001))
-             sstore(0x14, delme)
-
-
-             // Try to send 1 wei to 0x1001 again
-             // This time it's successful, because we fund 0xDEAD to do it
-             mstore8(0, 0x01)
-             mstore8(1, 0x10)
-             mstore8(2, 0x01)
-             delme := call(gas(), 0xdead, 2, 0,3, 0,0)
-             sstore(0x05, balance(0x1001))
-             sstore(0x15, delme)
-
-
-             // Final SELFDESTRUCT
-             // Send 17 wei to 0x1002
-             //  1 from the previous call
-             // 16 from this call
-             // SUC005
-             mstore8(0, 0xFF)
-             mstore8(1, 0x10)
-             mstore8(2, 0x02)
-             delme := call(gas(), 0xdead, 16, 0,3, 0,0)
-             sstore(0x06, balance(0x1002))
-             sstore(0x16, delme)
+             sstore(0x11, balance(0x1000))
+             sstore(0x12, balance(0xdead))
+             sstore(0x13, balance(0x1001))
 
           }
       nonce: 1
       storage:
         0x00: 0x60A7
         0x01: 0x60A7
-        0x02: 0x60A7
-        0x03: 0x60A7
-        0x04: 0x60A7
-        0x05: 0x60A7
-        0x06: 0x60A7
         0x10: 0x60A7
         0x11: 0x60A7
         0x12: 0x60A7
         0x13: 0x60A7
-        0x14: 0x60A7
-        0x15: 0x60A7
-        0x16: 0x60A7
+
 
     a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
       balance: '1000000000000000000'
@@ -152,7 +139,11 @@ multiSelfdestruct:
 
   transaction:
     data: 
-    - 0x
+    - :raw 0x01
+    - :raw 0x02
+    - :raw 0x03
+    - :raw 0x04
+    - :raw 0x05
     gasLimit:
     - 10000000
     gasPrice: 1000
@@ -164,8 +155,9 @@ multiSelfdestruct:
 
 
   expect:
+    # SUC001
     - indexes:
-        data: !!int -1
+        data: !!int 0
         gas:  !!int -1
         value: !!int -1
 
@@ -174,23 +166,113 @@ multiSelfdestruct:
       result:
         cccccccccccccccccccccccccccccccccccccccc:
           storage:
-            0x00: 3    # Balance of 0x1000 after first SELFDESTRUCT
-            0x10: 1    # Call to 0xDEAD was successful
+            0x00: 1   # Call to 0xDEAD was successful
+            0x01: 3   # All wei transferred to 0x1000
+            0x02: 0   # 0xDEAD didn't keep any
+            0x10: 1   # Second call to 0xDEAD was successful
+            0x11: 3   # WEI balance of 0x1000, unchanged
+            0x12: 2   # WEI balance of 0xDEAD, not zeroed out yet
 
-            0x01: 1    # Balance of 0xDEAD after it receives 1 wei
-            0x11: 1    # Call to 0xDEAD was successful
+        # Now (post tx) 0xDEAD no longer exists, so balance=0
+        000000000000000000000000000000000000dead:
+          shouldnotexist: 1
 
-            0x02: 4    # Balance of 0x1000 after 2nd SELFDESTRUCT 
-            0x12: 1    # Call to 0xDEAD was successful
 
-            0x03: 0    # Balance of 0x1001 after 3rd SELFDESTURCT, which transferred 0 wei
-            0x13: 1    # Call to 0xDEAD was successful
 
-            0x04: 0    # Balance of 0x1001, after 0xDEAD attempted to transfer 1 wei
-            0x14: 0    # Call to 0xDEAD failed (because the transfer call in 0xDEAD failed)
+    # SUC002
+    - indexes:
+        data: !!int 1
+        gas:  !!int -1
+        value: !!int -1
 
-            0x05: 1    # Balance of 0x1001, after 0xDEAD transfered 1 wei
-            0x15: 1    # Call to 0xDEAD was successful
+      network:
+        - '>=London'
+      result:
+        cccccccccccccccccccccccccccccccccccccccc:
+          storage:
+            0x00: 1   # Call to 0xDEAD was successful
+            0x01: 3   # All wei transferred to 0x1000
+            0x02: 0   # 0xDEAD didn't keep any
+            0x10: 1   # Second call to 0xDEAD was successful
+            0x11: 5   # WEI balance of 0x1000, two more WEI transferred
+            0x12: 0   # WEI balance of 0xDEAD, zeroed by second selfdestruct
 
-            0x06: 0x11 # Balance 0f 0x1002 after the last SELFDESTRUCT
-            0x16: 1    # Call to 0xDEAD was successful
+        # Now (post tx) 0xDEAD no longer exists, so balance=0
+        000000000000000000000000000000000000dead:
+          shouldnotexist: 1
+
+
+
+
+    # SUC003
+    - indexes:
+        data: !!int 2
+        gas:  !!int -1
+        value: !!int -1
+
+      network:
+        - '>=London'
+      result:
+        cccccccccccccccccccccccccccccccccccccccc:
+          storage:
+            0x00: 1   # Call to 0xDEAD was successful
+            0x01: 3   # All wei transferred to 0x1000
+            0x02: 0   # 0xDEAD didn't keep any
+            0x10: 1   # Second call to 0xDEAD was successful
+            0x11: 3   # WEI balance of 0x1000
+            0x12: 0   # WEI balance of 0xDEAD, zeroed by second selfdestruct
+            0x13: 2   # WEI balance of 0x1001
+
+        # Now (post tx) 0xDEAD no longer exists, so balance=0
+        000000000000000000000000000000000000dead:
+          shouldnotexist: 1
+
+
+
+    # SUC004
+    - indexes:
+        data: !!int 3
+        gas:  !!int -1
+        value: !!int -1
+
+      network:
+        - '>=London'
+      result:
+        cccccccccccccccccccccccccccccccccccccccc:
+          storage:
+            0x00: 1   # Call to 0xDEAD was successful
+            0x01: 3   # All wei transferred to 0x1000
+            0x02: 0   # 0xDEAD didn't keep any
+            0x10: 0   # Second call to 0xDEAD failed
+            0x11: 3   # WEI balance of 0x1000
+            0x12: 0   # WEI balance of 0xDEAD, still zero
+            0x13: 0   # WEI balance of 0x1001, zero because the transfer failed
+
+        # Now (post tx) 0xDEAD no longer exists, so balance=0
+        000000000000000000000000000000000000dead:
+          shouldnotexist: 1
+
+
+
+    # SUC005
+    - indexes:
+        data: !!int 4
+        gas:  !!int -1
+        value: !!int -1
+
+      network:
+        - '>=London'
+      result:
+        cccccccccccccccccccccccccccccccccccccccc:
+          storage:
+            0x00: 1   # Call to 0xDEAD was successful
+            0x01: 3   # All wei transferred to 0x1000
+            0x02: 0   # 0xDEAD didn't keep any
+            0x10: 1   # Second call to 0xDEAD successful
+            0x11: 3   # WEI balance of 0x1000
+            0x12: 1   # WEI balance of 0xDEAD, one (2-1)
+            0x13: 1   # WEI balance of 0x1001, one (because that's how much we transfer)
+
+        # Now (post tx) 0xDEAD no longer exists, so balance=0
+        000000000000000000000000000000000000dead:
+          shouldnotexist: 1
