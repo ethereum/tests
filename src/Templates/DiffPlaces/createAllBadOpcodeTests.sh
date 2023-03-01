@@ -4,16 +4,6 @@
 # (just run it, run it in a called account, etc. - the full list is
 # in templateGen.js
 
-stateTestDir=../../GeneralStateTestsFiller
-
-./templateGen.js diffPlaces selfBalance.yul 1000000000000000000 \
-          > $stateTestDir/stSelfBalance/diffPlacesFiller.yml
-./templateGen.js invalidDiffPlaces invalid.yul 0x60A7 \
-          > $stateTestDir/stBadOpcode/invalidDiffPlacesFiller.yml
-./templateGen.js gasPriceDiffPlaces gasPrice.yul 2000 \
-          > $stateTestDir/stEIP1559/gasPriceDiffPlacesFiller.yml
-./templateGen.js baseFeeDiffPlaces baseFee.yul 10 \
-          > $stateTestDir/stEIP1559/baseFeeDiffPlacesFiller.yml
 
 
 
@@ -48,7 +38,8 @@ stateTestDir=../../GeneralStateTestsFiller
 ./createBadOpcodeTest.sh 5C
 ./createBadOpcodeTest.sh 5D
 ./createBadOpcodeTest.sh 5E
-./createBadOpcodeTest.sh 5F
+# As of Shanghai 5F is no longer an invalid opcode
+# ./createBadOpcodeTest.sh 5F
 ./createBadOpcodeTest.sh A5
 ./createBadOpcodeTest.sh A6
 ./createBadOpcodeTest.sh A7
@@ -127,7 +118,8 @@ stateTestDir=../../GeneralStateTestsFiller
 ./createBadOpcodeTest.sh EC
 ./createBadOpcodeTest.sh ED
 ./createBadOpcodeTest.sh EE
-./createBadOpcodeTest.sh EF
+# Special case, because it's also the magic value for EOF1
+# ./createBadOpcodeTest.sh EF
 
 ./createBadOpcodeTest.sh F6
 ./createBadOpcodeTest.sh F7
