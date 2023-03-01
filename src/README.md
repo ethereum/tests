@@ -127,4 +127,12 @@
 - ID: **SUC004** tries to make value transfer but fails because initial suicide 0ed the balance (answering this (check that it is immidiately and not by the end of tx))
 - ID: **SUC005** receives more funds and try to transder it (same as SUC004, but this time work because it received funds via 2nd call)
 - ID: **SUC006** receive funds post-transaction, create a mostly empty address
+- ID: **SUC007.0** Same txn, same addr, different frames. Frame1 CALLs frame2, frame2 SELFDESTRUCTs into an address, and then frame1 SELFDESTRUCTs into another address. Balance ends up where frame2 sent it.
+- ID: **SUC007.1** Same txn, same addr, different frames. Frame1 CALLCODEs frame2, frame2 SELFDESTRUCTs into an address, and then frame1 SELFDESTRUCTs into another address. Balance ends up where frame2 sent it.
+- ID: **SUC007.2** Same txn, same addr, different frames. Frame1 DELEGATECALLs frame2, frame2 SELFDESTRUCTs into an address, and then frame1 SELFDESTRUCTs into another address. Balance ends up where frame2 sent it.
+- ID: **SUC007.3** Same txn, same addr, different frames. Frame1 STATICCALLs frame2, frame2 SELFDESTRUCTs into an address, and then frame1 SELFDESTRUCTs into another address. Balance ends up where frame1 sent it (static frames can't SELFDESTRUCT).
+- ID: **SUC008.0** Same txn, same addr, different frames. Frame1 CALLs frame2, frame2 SELFDESTRUCTs into contract's own ADDR, and then frame1 SELFDESTRUCTs into another address. Balance disappears.
+- ID: **SUC008.1** Same txn, same addr, different frames. Frame1 CALLCODEs frame2, frame2 SELFDESTRUCTs into contract's own ADDR, and then frame1 SELFDESTRUCTs into another address. Balance disappears.
+- ID: **SUC008.2** Same txn, same addr, different frames. Frame1 DELEGATECALLs frame2, frame2 SELFDESTRUCTs into contract's own ADDR, and then frame1 SELFDESTRUCTs into another address. Balance disappears.
+- ID: **SUC008.3** Same txn, same addr, different frames. Frame1 STATICCALLs frame2, frame2 SELFDESTRUCTs into contract's own ADDR, and then frame1 SELFDESTRUCTs into the same address. Balance ends up where frame1 sent it (static frames can't SELFDESTRUCT).
 
