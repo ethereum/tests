@@ -82,7 +82,11 @@ selfdestructBalance:
           // Our balance, should be lower
           sstore(7, balance(0xccccccccccccccccccccccccccccccccccccccc0))
 
-          
+          // The code should still be there
+          sstore(8,extcodesize(0xDEAD))
+
+          // The balance goes to 0x1000
+          sstore(9,balance(0x1000))
        }        
       nonce: 1
       storage:
@@ -94,6 +98,8 @@ selfdestructBalance:
         5: 0x60A7
         6: 0x60A7
         7: 0x60A7
+        8: 0x60A7
+        9: 0x60A7
 
 
     ccccccccccccccccccccccccccccccccccccccc1:
@@ -111,13 +117,16 @@ selfdestructBalance:
 
           // Balance of 0xDEAD, should be one
           sstore(2, balance(0xDEAD))
+
+          // Code size of 0xDEAD, should be zero
+          sstore(3, extcodesize(0xDEAD))
        }        
       nonce: 1
       storage:
         0: 0x60A7
         1: 0x60A7
         2: 0x60A7
-
+        3: 0x60A7
 
 
   blocks:
@@ -155,13 +164,13 @@ selfdestructBalance:
           2: 0    # 0xDEAD balance
           3: 11   # 0x1000 balance
 
-          # After second call (0xDEAD gets WEI)
+          # After second call (0xDEAD gets WEI), sends it to 0x1000
           4: 9    # 0xcc...c0 balance before call
           5: 1    # call return value
           6: 0    # 0xDEAD balance
           7: 8    # 0xcc...c0 balance after call
-
-
+          8: 4    # EXTCODESIZE(0xDEAD)
+          9: 12   # BALANCE(0x1000)
 
       0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC1:
         storage:
@@ -169,13 +178,24 @@ selfdestructBalance:
           0: 0    # Initial 0xDEAD balance
           1: 1    # call return value
           2: 1    # Final 0xDEAD balance
+          3: 0    # EXTCODESIZE(0xDEAD)
 
 
 
 
       # At this point 0xDEAD exists because it has been sent 1 WEI
-      # post suicide
+      # post suicide. But there is nearly nothing there
       0x000000000000000000000000000000000000dead:
          balance: 1
+         nonce: 0
+         code: 0x
+         storage: {}
 
+      # 0x1000 isn't getting anything more, because 0xDEAD is not going
+      # do SELFDESTRUCT after it has no more code
+      0x0000000000000000000000000000000000001000:
+         balance: 12
+         nonce: 0
+         code: 0x
+         storage: {}
 
