@@ -62,6 +62,7 @@ selfdestructBalance:
           // Call result
           sstore(1, delme)
 
+          // Test case: SUC000
           // Balance of 0xDEAD, should be zero
           sstore(2, balance(0xDEAD))
           
@@ -72,13 +73,14 @@ selfdestructBalance:
           // Our balance
           sstore(4, balance(0xccccccccccccccccccccccccccccccccccccccc0))
 
-          // Call 0xDEAD. No code, this just transfers 1 wei
+          // Call 0xDEAD and give it 1 wei
           delme := call(gas(), 0xDEAD, 1, 0,0, 0,0)
 
           // Call result
           sstore(5, delme)
 
-          // Balance of 0xDEAD, should be 1
+          // Balance of 0xDEAD, should be zero
+          // SUC002
           sstore(6, balance(0xDEAD))
 
           // Our balance, should be lower
@@ -87,6 +89,7 @@ selfdestructBalance:
           // The code should still be there
           sstore(8,extcodesize(0xDEAD))
 
+          // SUC002
           // The balance goes to 0x1000
           sstore(9,balance(0x1000))
        }        
@@ -108,6 +111,7 @@ selfdestructBalance:
       balance: 10
       code: |
        :yul {
+          // SUC006
           // Should be zero
           sstore(0, balance(0xdead))
           // 0xDEAD is already dead, but this call will give it 1 wei and
@@ -164,7 +168,7 @@ selfdestructBalance:
           # After first call (0xDEAD self destructs)
           1: 1    # call return value
           2: 0    # 0xDEAD balance
-          3: 11   # 0x1000 balance
+          3: 11   # 0x1000 balance   # SUC000
 
           # After second call (0xDEAD gets WEI), sends it to 0x1000
           4: 9    # 0xcc...c0 balance before call
@@ -172,7 +176,7 @@ selfdestructBalance:
           6: 0    # 0xDEAD balance
           7: 8    # 0xcc...c0 balance after call
           8: 4    # EXTCODESIZE(0xDEAD)
-          9: 12   # BALANCE(0x1000)
+          9: 12   # BALANCE(0x1000)    # SUC002
 
       0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC1:
         storage:
@@ -187,6 +191,7 @@ selfdestructBalance:
 
       # At this point 0xDEAD exists because it has been sent 1 WEI
       # post suicide. But there is nearly nothing there
+      # SUC006
       0x000000000000000000000000000000000000dead:
          balance: 1
          nonce: 0
