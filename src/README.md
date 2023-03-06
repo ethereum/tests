@@ -120,7 +120,7 @@
 
 
 ## SELFDESTRUCT and how it affects balances
-- ID: **SUC000** contractA is called to perform suicide to dest1 (3 must immidiately(check that it is immidiately and not by the end of tx) go to dest1)
+- ID: **SUC000** contractA is called to perform suicide to dest1 (contractA balance must immediately go to dest1 (without waiting for end of txn)
 - ID: **SUC001** does not suicide, just receive more funds via call. check the balance of contractA (must be 0, the second transfer funds erased)
 - ID: **SUC002** does another suicide to dest1 (so dest1 now have 3 + x)
 - ID: **SUC003** does another suicide to dest2 (so both dest1 and dest2 has some balance)
