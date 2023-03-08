@@ -232,11 +232,28 @@ measureGas:
         gas:  !!int -1
         value: !!int -1
       network:
-        - '>=London'
+        - London
+        - Merge
       result:
         cccccccccccccccccccccccccccccccccccccccc:
           storage:
             0: 32059
+
+
+    # CREATE
+    # Starting the Shanghai the cost of a CREATE[2] transaction 
+    # includes a cost of 2 gas per initcode word (32 byte chunk)
+    - indexes:
+        data: 
+        - :label CREATE
+        gas:  !!int -1
+        value: !!int -1
+      network:
+        - '>=Shanghai'
+      result:
+        cccccccccccccccccccccccccccccccccccccccc:
+          storage:
+            0: 32091
 
 
     # CREATE2
@@ -246,11 +263,26 @@ measureGas:
         gas:  !!int -1
         value: !!int -1
       network:
-        - '>=London'
+        - London
+        - Merge
       result:
         cccccccccccccccccccccccccccccccccccccccc:
           storage:
             0: 32163
+
+
+    # CREATE2
+    - indexes:
+        data: 
+        - :label CREATE2
+        gas:  !!int -1
+        value: !!int -1
+      network:
+        - '>=Shanghai'
+      result:
+        cccccccccccccccccccccccccccccccccccccccc:
+          storage:
+            0: 32195
 
 
     - indexes:
