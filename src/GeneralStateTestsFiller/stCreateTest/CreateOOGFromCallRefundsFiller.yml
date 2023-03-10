@@ -306,8 +306,13 @@ CreateOOGFromCallRefunds:
           sstore(1, 1)
           sstore(1, 0)
           let initcodeaddr := 0x00000000000000000000000000000000000c0de1
-          let initcodelength := extcodesize(initcodeaddr)
-          extcodecopy(initcodeaddr, 0, 0, initcodelength)
+          //let initcodelength := extcodesize(initcodeaddr)
+          //extcodecopy(initcodeaddr, 0, 0, initcodelength)
+
+          // protection from solc version changing init code            
+          let initcodelength := 15
+          mstore(0, 0x6001600055600060005560016000f30000000000000000000000000000000000)
+
           pop(create2(0, 0, initcodelength, 0))
           return(add(initcodelength, 1), 1)
         }

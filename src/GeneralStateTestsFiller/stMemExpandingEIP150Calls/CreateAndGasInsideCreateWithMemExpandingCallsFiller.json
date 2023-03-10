@@ -10,11 +10,6 @@
         },
         "expect" : [
             {
-                "indexes" : {
-                    "data" : -1,
-                    "gas" : -1,
-                    "value" : -1
-                },
                 "network" : [ "Istanbul"],
                 "result" : {
 		            "a94f5374fce5edbc8e2a8697c15331677e6ebf0b": {
@@ -36,12 +31,7 @@
                 }
             },
             {
-                "indexes" : {
-                    "data" : -1,
-                    "gas" : -1,
-                    "value" : -1
-                },
-                "network" : [ ">=Berlin"],
+                "network" : [ "Berlin", "London", "Merge"],
                 "result" : {
 		            "a94f5374fce5edbc8e2a8697c15331677e6ebf0b": {
 		                "nonce": "1"
@@ -57,6 +47,29 @@
 		            "f1ecf98489fa9ed60a664fc4998db699cfa39d40": {
 		                "storage": {
 		                    "0xfd": "0x07e23f"
+		                }
+		            }
+                }
+            },
+            {
+                "network" : [ ">=Shanghai"],
+                "result" : {
+		            "a94f5374fce5edbc8e2a8697c15331677e6ebf0b": {
+		                "nonce": "1"
+		            },
+		            "b94f5374fce5edbc8e2a8697c15331677e6ebf0b": {
+		                "nonce": "1",
+                        "//comment" : "CREATE price changed in Shanghai",
+                        "//comment" : "Due to eip-3860 (https://eips.ethereum.org/EIPS/eip-3860) pay extra 2 gas for each 32 bytes of initcode",
+		                "storage": {
+		                    "0x0b": "0xf1ecf98489fa9ed60a664fc4998db699cfa39d40",
+		                    "0x09": "0x075596",
+		                    "0x0a": "0x08d5b6"
+		                }
+		            },
+		            "f1ecf98489fa9ed60a664fc4998db699cfa39d40": {
+		                "storage": {
+		                    "0xfd": "0x07e23d"
 		                }
 		            }
                 }

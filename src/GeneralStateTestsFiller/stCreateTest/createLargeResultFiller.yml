@@ -40,6 +40,8 @@ createLargeResult:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
        :yul {
+         sstore(1, gas())
+
          // The operation to run
          // F0 - CREATE
          // F5 - CREATE2
@@ -71,7 +73,7 @@ createLargeResult:
 
          // Write the results
          sstore(0, newAddr)
-         sstore(1, gas())
+         sstore(1, sub(sload(1), gas()))
          sstore(2, extcodehash(newAddr))
          
        }        
@@ -133,17 +135,30 @@ createLargeResult:
     - indexes:
         data: 
         - :label CREATE-RETURN
-        gas:  !!int -1
-        value: !!int -1
       network:
-        - '>=London'
+        - 'London'
+        - 'Merge'
       result:
         cccccccccccccccccccccccccccccccccccccccc:
           storage:
             # Address
             0: 0x553e6c30af61e7a3576f31311ea8a620f80d047e 
             # Remaining gas
-            1: 0x04c2fc29
+            1: 0x017776
+            # Hash of new contract code
+            2: 0xd956c0abd597440481902014a37b733358ee7685461eb1b5916eefd83381e6d9
+    - indexes:
+        data: 
+        - :label CREATE-RETURN
+      network:
+        - '>=Shanghai'
+      result:
+        cccccccccccccccccccccccccccccccccccccccc:
+          storage:
+            # Address
+            0: 0x553e6c30af61e7a3576f31311ea8a620f80d047e 
+            # Remaining gas
+            1: 0x017788
             # Hash of new contract code
             2: 0xd956c0abd597440481902014a37b733358ee7685461eb1b5916eefd83381e6d9
 
@@ -151,17 +166,30 @@ createLargeResult:
     - indexes:
         data: 
         - :label CREATE2-RETURN
-        gas:  !!int -1
-        value: !!int -1
       network:
-        - '>=London'
+        - 'London'
+        - 'Merge'
       result:
         cccccccccccccccccccccccccccccccccccccccc:
           storage:
             # Address
-            0: 0x06a02e9bcda5724b9619cc8fd0b9503853bc634d
-            # Remaining gas
-            1: 0x04c2fbe5
+            0: 0x0595c5d0c272757cff0b3dca4ed60d60cd6e9f58
+            # Remaining gas //why check remaining gas it will affect the test on all future forks?
+            1: 0x0177ba
+            # Hash of new contract code
+            2: 0xd956c0abd597440481902014a37b733358ee7685461eb1b5916eefd83381e6d9
+    - indexes:
+        data: 
+        - :label CREATE2-RETURN
+      network:
+        - '>=Shanghai'
+      result:
+        cccccccccccccccccccccccccccccccccccccccc:
+          storage:
+            # Address
+            0: 0x0595c5d0c272757cff0b3dca4ed60d60cd6e9f58
+            # Remaining gas //why check remaining gas it will affect the test on all future forks?
+            1: 0x0177cc
             # Hash of new contract code
             2: 0xd956c0abd597440481902014a37b733358ee7685461eb1b5916eefd83381e6d9
 
@@ -169,17 +197,30 @@ createLargeResult:
     - indexes:
         data: 
         - :label CREATE-REVERT
-        gas:  !!int -1
-        value: !!int -1
       network:
-        - '>=London'
+        - 'London'
+        - 'Merge'
       result:
         cccccccccccccccccccccccccccccccccccccccc:
           storage:
             # Address
             0: 0x00
             # Remaining gas
-            1: 0x04c3c429
+            1: 0xaf76
+            # Hash of non existent contract
+            2: 0
+    - indexes:
+        data: 
+        - :label CREATE-REVERT
+      network:
+        - '>=Shanghai'
+      result:
+        cccccccccccccccccccccccccccccccccccccccc:
+          storage:
+            # Address
+            0: 0x00
+            # Remaining gas
+            1: 0xaf88
             # Hash of non existent contract
             2: 0
 
@@ -187,17 +228,30 @@ createLargeResult:
     - indexes:
         data: 
         - :label CREATE2-REVERT
-        gas:  !!int -1
-        value: !!int -1
       network:
-        - '>=London'
+        - 'London'
+        - 'Merge'
       result:
         cccccccccccccccccccccccccccccccccccccccc:
           storage:
             # Address
             0: 0x00
             # Remaining gas
-            1: 0x04c3c3e5
+            1: 0xafba
+            # Hash of non existent contract
+            2: 0
+    - indexes:
+        data: 
+        - :label CREATE2-REVERT
+      network:
+        - '>=Shanghai'
+      result:
+        cccccccccccccccccccccccccccccccccccccccc:
+          storage:
+            # Address
+            0: 0x00
+            # Remaining gas
+            1: 0xafcc
             # Hash of non existent contract
             2: 0
 
@@ -207,17 +261,30 @@ createLargeResult:
     - indexes:
         data: 
         - :label CREATE-RETURN-MAX
-        gas:  !!int -1
-        value: !!int -1
       network:
-        - '>=London'
+        - 'London'
+        - 'Merge'
       result:
         cccccccccccccccccccccccccccccccccccccccc:
           storage:
             # Address
             0: 0x553e6c30af61e7a3576f31311ea8a620f80d047e 
             # Remaining gas
-            1: 0x0478b6c4
+            1: 0x4bbcdb
+            # Hash of new contract code
+            2: 0xdcbcc213f0c91b71d38dedd06c95ccb99467b9b05f275bed536de1044f5f18fa
+    - indexes:
+        data: 
+        - :label CREATE-RETURN-MAX
+      network:
+        - '>=Shanghai'
+      result:
+        cccccccccccccccccccccccccccccccccccccccc:
+          storage:
+            # Address
+            0: 0x553e6c30af61e7a3576f31311ea8a620f80d047e 
+            # Remaining gas
+            1: 0x4bbced
             # Hash of new contract code
             2: 0xdcbcc213f0c91b71d38dedd06c95ccb99467b9b05f275bed536de1044f5f18fa
 
@@ -225,17 +292,30 @@ createLargeResult:
     - indexes:
         data: 
         - :label CREATE2-RETURN-MAX
-        gas:  !!int -1
-        value: !!int -1
       network:
-        - '>=London'
+        - 'London'
+        - 'Merge'
       result:
         cccccccccccccccccccccccccccccccccccccccc:
           storage:
             # Address
-            0: 0x6e459c2118d970998f0d539368a3b426e232ea20
+            0: 0xa5dc71d47d0d8dcf5990e81c74e981baf24a8fa2
             # Remaining gas
-            1: 0x0478b680
+            1: 0x4bbd1f
+            # Hash of new contract code
+            2: 0xdcbcc213f0c91b71d38dedd06c95ccb99467b9b05f275bed536de1044f5f18fa
+    - indexes:
+        data: 
+        - :label CREATE2-RETURN-MAX
+      network:
+        - '>=Shanghai'
+      result:
+        cccccccccccccccccccccccccccccccccccccccc:
+          storage:
+            # Address
+            0: 0xa5dc71d47d0d8dcf5990e81c74e981baf24a8fa2
+            # Remaining gas
+            1: 0x4bbd31
             # Hash of new contract code
             2: 0xdcbcc213f0c91b71d38dedd06c95ccb99467b9b05f275bed536de1044f5f18fa
 
@@ -243,17 +323,30 @@ createLargeResult:
     - indexes:
         data: 
         - :label CREATE-REVERT-MAX
-        gas:  !!int -1
-        value: !!int -1
       network:
-        - '>=London'
+        - 'London'
+        - 'Merge'
       result:
         cccccccccccccccccccccccccccccccccccccccc:
           storage:
             # Address
             0: 0x00
             # Remaining gas
-            1: 0x04c3b6c4
+            1: 0xbcdb
+            # Hash of non existent contract
+            2: 0
+    - indexes:
+        data: 
+        - :label CREATE-REVERT-MAX
+      network:
+        - '>=Shanghai'
+      result:
+        cccccccccccccccccccccccccccccccccccccccc:
+          storage:
+            # Address
+            0: 0x00
+            # Remaining gas
+            1: 0xbced
             # Hash of non existent contract
             2: 0
 
@@ -261,30 +354,38 @@ createLargeResult:
     - indexes:
         data: 
         - :label CREATE2-REVERT-MAX
-        gas:  !!int -1
-        value: !!int -1
       network:
-        - '>=London'
+        - 'London'
+        - 'Merge'
       result:
         cccccccccccccccccccccccccccccccccccccccc:
           storage:
             # Address
             0: 0x00
             # Remaining gas
-            1: 0x04c3b680
+            1: 0xbd1f
             # Hash of non existent contract
             2: 0
-
-
-
+    - indexes:
+        data: 
+        - :label CREATE2-REVERT-MAX
+      network:
+        - '>=Shanghai'
+      result:
+        cccccccccccccccccccccccccccccccccccccccc:
+          storage:
+            # Address
+            0: 0x00
+            # Remaining gas
+            1: 0xbd31
+            # Hash of non existent contract
+            2: 0
 
 
 
     - indexes:
         data: 
         - :label CREATE-RETURN-TOOBIG
-        gas:  !!int -1
-        value: !!int -1
       network:
         - '>=London'
       result:
@@ -293,7 +394,7 @@ createLargeResult:
             # Address (REVERT, so nothing)
             0: 0
             # Remaining gas
-            1: 0x12fbbc
+            1: 0x04b16498
             # Hash when there is no contract
             2: 0
 
@@ -302,8 +403,6 @@ createLargeResult:
     - indexes:
         data: 
         - :label CREATE2-RETURN-TOOBIG
-        gas:  !!int -1
-        value: !!int -1
       network:
         - '>=London'
       result:
@@ -312,7 +411,7 @@ createLargeResult:
             # Address (REVERT, so nothing)
             0: 0
             # Remaining gas
-            1: 0x12fbc6
+            1: 0x04b1648e
             # Hash when there is no contract
             2: 0
 
@@ -320,17 +419,30 @@ createLargeResult:
     - indexes:
         data: 
         - :label CREATE-REVERT-TOOBIG
-        gas:  !!int -1
-        value: !!int -1
       network:
-        - '>=London'
+        - 'London'
+        - 'Merge'
       result:
         cccccccccccccccccccccccccccccccccccccccc:
           storage:
             # Address (REVERT, so nothing)
             0: 0
             # Remaining gas
-            1: 0x04c3b6b2
+            1: 0xbce1
+            # Hash when there is no contract
+            2: 0
+    - indexes:
+        data: 
+        - :label CREATE-REVERT-TOOBIG
+      network:
+        - '>=Shanghai'
+      result:
+        cccccccccccccccccccccccccccccccccccccccc:
+          storage:
+            # Address (REVERT, so nothing)
+            0: 0
+            # Remaining gas
+            1: 0xbcf3
             # Hash when there is no contract
             2: 0
 
@@ -339,17 +451,30 @@ createLargeResult:
     - indexes:
         data: 
         - :label CREATE2-REVERT-TOOBIG
-        gas:  !!int -1
-        value: !!int -1
       network:
-        - '>=London'
+        - 'London'
+        - 'Merge'
       result:
         cccccccccccccccccccccccccccccccccccccccc:
           storage:
             # Address (REVERT, so nothing)
             0: 0
             # Remaining gas
-            1: 0x04c3b66e
+            1: 0xbd25
+            # Hash when there is no contract
+            2: 0
+    - indexes:
+        data: 
+        - :label CREATE2-REVERT-TOOBIG
+      network:
+        - '>=Shanghai'
+      result:
+        cccccccccccccccccccccccccccccccccccccccc:
+          storage:
+            # Address (REVERT, so nothing)
+            0: 0
+            # Remaining gas
+            1: 0xbd37
             # Hash when there is no contract
             2: 0
 
@@ -358,8 +483,6 @@ createLargeResult:
     - indexes:
         data: 
         - :label CREATE-RETURN-HUGE
-        gas:  !!int -1
-        value: !!int -1
       network:
         - '>=London'
       result:
@@ -368,7 +491,7 @@ createLargeResult:
             # Address (REVERT, so nothing)
             0: 0
             # Remaining gas
-            1: 0x12fbbd
+            1: 0x04b164a4
             # Hash when there is no contract
             2: 0
 
@@ -377,8 +500,6 @@ createLargeResult:
     - indexes:
         data: 
         - :label CREATE2-RETURN-HUGE
-        gas:  !!int -1
-        value: !!int -1
       network:
         - '>=London'
       result:
@@ -387,7 +508,7 @@ createLargeResult:
             # Address (REVERT, so nothing)
             0: 0
             # Remaining gas
-            1: 0x12fbc6
+            1: 0x04b1649a
             # Hash when there is no contract
             2: 0
 
@@ -397,17 +518,30 @@ createLargeResult:
     - indexes:
         data: 
         - :label CREATE-REVERT-HUGE
-        gas:  !!int -1
-        value: !!int -1
       network:
-        - '>=London'
+        - 'London'
+        - 'Merge'
       result:
         cccccccccccccccccccccccccccccccccccccccc:
           storage:
             # Address (REVERT, so nothing)
             0: 0
             # Remaining gas
-            1: 0x04c3a044
+            1: 0xd35b
+            # Hash when there is no contract
+            2: 0
+    - indexes:
+        data: 
+        - :label CREATE-REVERT-HUGE
+      network:
+        - '>=Shanghai'
+      result:
+        cccccccccccccccccccccccccccccccccccccccc:
+          storage:
+            # Address (REVERT, so nothing)
+            0: 0
+            # Remaining gas
+            1: 0xd36d
             # Hash when there is no contract
             2: 0
 
@@ -416,16 +550,30 @@ createLargeResult:
     - indexes:
         data: 
         - :label CREATE2-REVERT-HUGE
-        gas:  !!int -1
-        value: !!int -1
       network:
-        - '>=London'
+        - 'London'
+        - 'Merge'
       result:
         cccccccccccccccccccccccccccccccccccccccc:
           storage:
             # Address (REVERT, so nothing)
             0: 0
             # Remaining gas
-            1: 0x04c3a000
+            1: 0xd39f
             # Hash when there is no contract
             2: 0
+    - indexes:
+        data: 
+        - :label CREATE2-REVERT-HUGE
+      network:
+        - '>=Shanghai'
+      result:
+        cccccccccccccccccccccccccccccccccccccccc:
+          storage:
+            # Address (REVERT, so nothing)
+            0: 0
+            # Remaining gas
+            1: 0xd3b1
+            # Hash when there is no contract
+            2: 0
+

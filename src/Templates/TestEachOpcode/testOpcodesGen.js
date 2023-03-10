@@ -28,9 +28,8 @@ const gasLimit = 'F00000000000'
 // "User"'s gas balance
 const userBalance = 'F000000000000000'
 
-// The forks supported by the test in order. At writing, there is no need
-// to QA forks prior to Istanbul.
-const forks = ["Berlin", "London"]
+// The forks supported by the test in order.
+const forks = ["Merge", "Shanghai"]
 
 
 
@@ -381,11 +380,11 @@ var opcodes = {
    0x3A: { test: aOPb_to_ml(2, 6, 0x3A, gasPrice) },     // GASPRICE
    0x43: { test: aOPb_to_ml(2, 6, 0x43, 1) },            // NUMBER
    0x46: { test: aOPb_to_ml(2, 6, 0x46, 1) },            // CHAINID
-   0x48: { test: aOPb_to_ml(2, 6, 0x48, 9),              // BASEFEE
-           fromFork: 'London' },
+   0x48: { test: aOPb_to_ml(2, 6, 0x48, 9) },            // BASEFEE
    0x50: { test: aOPb_to_ml(2, 6, 0x50, 6) },            // POP
    0x58: { test: aOPb_to_ml(2, 6, 0x58, 4) },            // PC
-
+   0x5F: { test: aOPb_to_ml(2, 6, 0x5F, 0),              // PUSH0
+           fromFork: "Shanghai"  },
 
    // Opcodes that can be tested against an eight byte value
    0x44: { test: compare_op_8byte_ml(0x44, difficulty)    }, // DIFFICULTY
