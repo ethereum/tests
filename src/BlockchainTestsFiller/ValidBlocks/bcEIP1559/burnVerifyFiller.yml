@@ -417,7 +417,7 @@ burnVerify:
 
   expect:
   - network:
-    - ">=Merge"
+    - Merge
     result:
       # Number of wei "missing" because they were burned
       0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC:
@@ -447,6 +447,57 @@ burnVerify:
           # rather than maxPriorityFeePerGas
           0x0006: 649495812   # Wei burned in this block: 118419070
           0x1006:    262570   # 118419070 / 451
+
+          # Temporary value is it easiest not to erase
+          0xffffff: 0x018b
+
+
+      # The base fees at the different blocks
+      0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCD:
+        storage:
+          0x01: 875
+          0x02: 766
+          0x03: 671
+          0x04: 588
+          0x05: 515
+          0x06: 451
+
+
+
+
+
+
+  - network:
+    - '>=Shanghai'
+    result:
+      # Number of wei "missing" because they were burned
+      0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC:
+        storage:
+          # Block one
+          0x0001:  66028375   # Wei burned (in all blocks so far)
+          0x1001:     75461   # Gas used (<wei burned> / <baseFee, 875>)
+
+          # Block two
+          0x0002: 156463101   # Wei burned in this block: 90434726
+          0x1002:    118061   # 90434726 / 766
+ 
+          # Block three (same transactions as block two, lower baseFee)          
+          0x0003: 235682032   # Wei burned in this block: 79218931 
+          0x1003:    118061   # 79218931 / 671
+          
+          # Block four (new transactions)
+          0x0004: 388603192   # Wei burned in this block: 152921160
+          0x1004:    260070   # 152921160 / 588
+
+          # Block five (same transactions as block four, but with tips)
+          0x0005: 522539242   # Wei burned in this block: 133936050
+          0x1005:    260070   #  / 515
+
+          # Block six (still the same transactions as block four, but
+          # tips calculated based on maxFeePerGas 
+          # rather than maxPriorityFeePerGas
+          0x0006: 639830812   # Wei burned in this block: 117291570
+          0x1006:    260070   # 117291570 / 451
 
           # Temporary value is it easiest not to erase
           0xffffff: 0x018b
