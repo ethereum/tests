@@ -79,6 +79,10 @@ precompsEIP2929:
           let action     := calldataload(0x24)
           let gas0, gas1, gas2
 
+          // Not really needed, but otherwise Yul optimizes and 
+          // skips operations we need
+          let useless0, useless1
+
           // Touch the first word of memory here, so it
           // won't confuse the gas measurement
           mstore(0x100, 0xDEADBEEF)
@@ -219,16 +223,16 @@ precompsEIP2929:
 
           case 0x31 {
               gas0 := gas()
-              pop(balance(addrTest))
+              useless0 := balance(addrTest)
               gas1 := gas()
-              pop(balance(addrTest))
+              useless1 := balance(addrTest)
               gas2 := gas()
           }
           case 0x3B {
               gas0 := gas()
-              pop(extcodesize(addrTest))
+              useless0 := extcodesize(addrTest)
               gas1 := gas()
-              pop(extcodesize(addrTest))
+              useless1 := extcodesize(addrTest)
               gas2 := gas()
           }
           case 0x3C {
@@ -240,9 +244,9 @@ precompsEIP2929:
           }
           case 0x3F {
               gas0 := gas()
-              pop(extcodehash(addrTest))
+              useless0 := extcodehash(addrTest)
               gas1 := gas()
-              pop(extcodehash(addrTest))
+              useless1 := extcodehash(addrTest)
               gas2 := gas()
           }
 
