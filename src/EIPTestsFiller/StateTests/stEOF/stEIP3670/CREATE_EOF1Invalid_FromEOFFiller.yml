@@ -16,16 +16,12 @@ CREATE_EOF1Invalid_FromEOF:
       storage: {}
     b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
       balance: 0
-      # code: ":yul { calldatacopy(0, 0, calldatasize()) sstore(0, create(0, 0, calldatasize())) sstore(1, 1) stop() }"
-      code: ':raw 0xef0001010004020001001503000000000000033660006000373660006000f0600055600160015500'
+      code: ":yul-eof { calldatacopy(0, 0, calldatasize()) sstore(0, create(0, 0, calldatasize())) sstore(1, 1) stop() }"
       nonce: 0
       storage: {}
 
   transaction:
     data: 
-     # Valid Legacy initcode returning valid EOF code (CREATE2 in EOF contract cannot use legacy initcode)
-     - ':yul { mstore(0, 0xef000101000402000100010300000000000000fe000000000000000000000000) return(0, 20) }'
-
      # Valid EOF initcode returning invalid EOF code - Truncated PUSH data at the end
      # Init code: { mstore(0, 0xef00010100040200010009030000000000000060018055600280556000000000) return(0, 28) }
      # Returns EOF code: { sstore(1, 1) sstore(2, 2) push1(
@@ -234,7 +230,7 @@ CREATE_EOF1Invalid_FromEOF:
   expect:
     - indexes: {}
       network:
-        - 'Shanghai'
+        - 'Cancun'
       result:
        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           nonce: 1
