@@ -30,14 +30,10 @@ CREATE2_EOF1_FromEOF:
     data: 
       # Deploying codes starting with 0xef
 
-      #- ':yul { mstore8(0, 0xef) return(0, 1) }'
-      - ':label deploying_0xef :raw 0x60ef60005360016000f3'
-      #- ':yul { mstore8(0, 0xef) return(0, 2) }'
-      - ':label deploying_0xef00 :raw 0x60ef60005360026000f3'
-      #- ':yul { mstore8(0, 0xef) return(0, 3) }'
-      - ':label deploying_0xef0000 :raw 0x60ef60005360036000f3'
-      #- ':yul { mstore8(0, 0xef) return(0, 32) }'
-      - ':label deploying_0xef00..00 :raw 0x60ef60005360206000f3'
+      - ':label deploying_0xef :yul-eof { mstore8(0, 0xef) return(0, 1) }'
+      - ':label deploying_0xef00 :yul-eof { mstore8(0, 0xef) return(0, 2) }'
+      - ':label deploying_0xef0000 :yul-eof { mstore8(0, 0xef) return(0, 3) }'
+      - ':label deploying_0xef00..00 :yul-eof { mstore8(0, 0xef) return(0, 32) }'
 
       # Valid EOF1 initcode and code combinations (both with and without data section)
 
@@ -80,7 +76,7 @@ CREATE2_EOF1_FromEOF:
     - indexes:
        data: ':label deploying_0xef'
       network:
-        - 'Shanghai'
+        - 'Cancun'
       result:
        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           nonce: 1
@@ -95,7 +91,7 @@ CREATE2_EOF1_FromEOF:
     - indexes:
        data: ':label deploying_0xef00'
       network:
-        - 'Shanghai'
+        - 'Cancun'
       result:
        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           nonce: 1
@@ -110,7 +106,7 @@ CREATE2_EOF1_FromEOF:
     - indexes:
        data: ':label deploying_0xef0000'
       network:
-        - 'Shanghai'
+        - 'Cancun'
       result:
        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           nonce: 1
@@ -125,7 +121,7 @@ CREATE2_EOF1_FromEOF:
     - indexes:
        data: ':label deploying_0xef00..00'
       network:
-        - 'Shanghai'
+        - 'Cancun'
       result:
        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           nonce: 1
@@ -140,7 +136,7 @@ CREATE2_EOF1_FromEOF:
     - indexes:
        data: ':label eof1_initcode_deploying_valid_eof1'
       network:
-        - 'Shanghai'
+        - 'Cancun'
       result:
        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           nonce: 1
@@ -157,7 +153,7 @@ CREATE2_EOF1_FromEOF:
     - indexes:
        data: ':label eof1_initcode_deploying_valid_eof1_with_data'
       network:
-        - 'Shanghai'
+        - 'Cancun'
       result:
        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           nonce: 1
@@ -174,7 +170,7 @@ CREATE2_EOF1_FromEOF:
     - indexes:
        data: ':label eof1_initcode_with_data_deploying_valid_eof1'
       network:
-        - 'Shanghai'
+        - 'Cancun'
       result:
        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           nonce: 1
@@ -191,7 +187,7 @@ CREATE2_EOF1_FromEOF:
     - indexes:
        data: ':label eof1_initcode_with_data_deploying_valid_eof1_with_data'
       network:
-        - 'Shanghai'
+        - 'Cancun'
       result:
        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           nonce: 1
