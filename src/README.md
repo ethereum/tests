@@ -27,7 +27,12 @@
 - ID: **BSHB0016** different validators withdraw to the same address
 - ID: **BSHB0017** withdrawal amount is 0 (WARNING: touch empty account)
 - ID: **BSHB0018** withdrawal amount is 0, plus transaction
-
+- ID: **BSHB0019** withdrawal happens to account that suicide in the same block
+- ID: **BSHB0020** withdrawal happens to account that receive funds in the same block
+- ID: **BSHB0021** check the balance instruction on withdrawal received account before block fin
+- ID: **BSHB0022** withdrawal receiving account trys to send value before block fin
+- ID: **BSHB0023,b** account suicide, then receive funds, then receive withdrawal
+- ID: **BSHB0024,b** account created, then reverted, then receive withdrawals
 
 
 ## EOF1 contracts
