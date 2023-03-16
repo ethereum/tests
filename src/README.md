@@ -33,6 +33,8 @@
 - ID: **BSHB0022** withdrawal receiving account trys to send value before block fin
 - ID: **BSHB0023,b** account suicide, then receive funds, then receive withdrawal
 - ID: **BSHB0024,b** account created, then reverted, then receive withdrawals
+- ID: **BSHB0025** check staticcall is fine with withdrawals
+- ID: **BSHB0026** check operations gasprice with withdrawals context
 
 
 ## EOF1 contracts
