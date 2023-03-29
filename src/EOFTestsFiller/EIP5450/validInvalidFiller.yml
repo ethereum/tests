@@ -3,214 +3,211 @@ validInvalid:
      comment: |
        Test various examples to see if they are valid or invalid.
        Implements
-       # >@f1
-       EOF1V0001 (Valid) Code with branches having the same stack height
-       EOF1V0002 (Valid) Jump table
-       EOF1V0003 (Valid) Infinite loop
-       EOF1V0004 (Valid) CALLF branches with the same total of outputs
-       EOF1V0005 (Valid) CALLF inputs
-       EOF1V0006 (Valid) Validate input for ADD opcode
-       EOF1V0007 (Valid) Validate input for MUL opcode
-       EOF1V0008 (Valid) Validate input for SUB opcode
-       EOF1V0009 (Valid) Validate input for DIV opcode
-       EOF1V0010 (Valid) Validate input for SDIV opcode
-       EOF1V0011 (Valid) Validate input for MOD opcode
-       EOF1V0012 (Valid) Validate input for SMOD opcode
-       EOF1V0013 (Valid) Validate input for ADDMOD opcode
-       EOF1V0014 (Valid) Validate input for MULMOD opcode
-       EOF1V0015 (Valid) Validate input for EXP opcode
-       EOF1V0016 (Valid) Validate input for SIGNEXTEND opcode
-       EOF1V0017 (Valid) Validate input for LT opcode
-       EOF1V0018 (Valid) Validate input for GT opcode
-       EOF1V0019 (Valid) Validate input for SLT opcode
-       EOF1V0020 (Valid) Validate input for SGT opcode
-       EOF1V0021 (Valid) Validate input for EQ opcode
-       EOF1V0022 (Valid) Validate input for ISZERO opcode
-       EOF1V0023 (Valid) Validate input for AND opcode
-       EOF1V0024 (Valid) Validate input for OR opcode
-       EOF1V0025 (Valid) Validate input for XOR opcode
-       EOF1V0026 (Valid) Validate input for NOT opcode
-       EOF1V0027 (Valid) Validate input for BYTE opcode
-       EOF1V0028 (Valid) Validate input for SHL opcode
-       EOF1V0029 (Valid) Validate input for SHR opcode
-       EOF1V0030 (Valid) Validate input for SAR opcode
-       EOF1V0031 (Valid) Validate input for SHA3 opcode
-       EOF1V0032 (Valid) Validate input for BALANCE opcode
-       EOF1V0033 (Valid) Validate input for CALLDATALOAD opcode
-       EOF1V0034 (Valid) Validate input for CALLDATACOPY opcode
-       EOF1V0035 (Valid) Validate input for CODECOPY opcode
-       EOF1V0036 (Valid) Validate input for EXTCODESIZE opcode
-       EOF1V0037 (Valid) Validate input for EXTCODECOPY opcode
-       EOF1V0038 (Valid) Validate input for RETURNDATACOPY opcode
-       EOF1V0039 (Valid) Validate input for EXTCODEHASH opcode
-       EOF1V0040 (Valid) Validate input for BLOCKHASH opcode
-       EOF1V0041 (Valid) Validate input for POP opcode
-       EOF1V0042 (Valid) Validate input for MLOAD opcode
-       EOF1V0043 (Valid) Validate input for MSTORE opcode
-       EOF1V0044 (Valid) Validate input for MSTORE8 opcode
-       EOF1V0045 (Valid) Validate input for SLOAD opcode
-       EOF1V0046 (Valid) Validate input for SSTORE opcode
-       EOF1V0047 (Valid) Validate input for DUP1 opcode
-       EOF1V0048 (Valid) Validate input for DUP2 opcode
-       EOF1V0049 (Valid) Validate input for DUP3 opcode
-       EOF1V0050 (Valid) Validate input for DUP4 opcode
-       EOF1V0051 (Valid) Validate input for DUP5 opcode
-       EOF1V0052 (Valid) Validate input for DUP6 opcode
-       EOF1V0053 (Valid) Validate input for DUP7 opcode
-       EOF1V0054 (Valid) Validate input for DUP8 opcode
-       EOF1V0055 (Valid) Validate input for DUP9 opcode
-       EOF1V0056 (Valid) Validate input for DUP10 opcode
-       EOF1V0057 (Valid) Validate input for DUP11 opcode
-       EOF1V0058 (Valid) Validate input for DUP12 opcode
-       EOF1V0059 (Valid) Validate input for DUP13 opcode
-       EOF1V0060 (Valid) Validate input for DUP14 opcode
-       EOF1V0061 (Valid) Validate input for DUP15 opcode
-       EOF1V0062 (Valid) Validate input for DUP16 opcode
-       EOF1V0063 (Valid) Validate input for SWAP1 opcode
-       EOF1V0064 (Valid) Validate input for SWAP2 opcode
-       EOF1V0065 (Valid) Validate input for SWAP3 opcode
-       EOF1V0066 (Valid) Validate input for SWAP4 opcode
-       EOF1V0067 (Valid) Validate input for SWAP5 opcode
-       EOF1V0068 (Valid) Validate input for SWAP6 opcode
-       EOF1V0069 (Valid) Validate input for SWAP7 opcode
-       EOF1V0070 (Valid) Validate input for SWAP8 opcode
-       EOF1V0071 (Valid) Validate input for SWAP9 opcode
-       EOF1V0072 (Valid) Validate input for SWAP10 opcode
-       EOF1V0073 (Valid) Validate input for SWAP11 opcode
-       EOF1V0074 (Valid) Validate input for SWAP12 opcode
-       EOF1V0075 (Valid) Validate input for SWAP13 opcode
-       EOF1V0076 (Valid) Validate input for SWAP14 opcode
-       EOF1V0077 (Valid) Validate input for SWAP15 opcode
-       EOF1V0078 (Valid) Validate input for SWAP16 opcode
-       EOF1V0079 (Valid) Validate input for LOG0 opcode
-       EOF1V0080 (Valid) Validate input for LOG1 opcode
-       EOF1V0081 (Valid) Validate input for LOG2 opcode
-       EOF1V0082 (Valid) Validate input for LOG3 opcode
-       EOF1V0083 (Valid) Validate input for LOG4 opcode
-       EOF1V0084 (Valid) Validate input for CREATE opcode
-       EOF1V0085 (Valid) Validate input for CALL opcode
-       EOF1V0086 (Valid) Validate input for RETURN opcode
-       EOF1V0087 (Valid) Validate input for DELEGATECALL opcode
-       EOF1V0088 (Valid) Validate input for CREATE2 opcode
-       EOF1V0089 (Valid) Validate input for STATICCALL opcode
-       EOF1V0090 (Valid) Validate input for REVERT opcode
-       EOF1V0091 (Valid) Containing terminating opcode RETURN at the end
-       EOF1V0092 (Valid) Containing terminating opcode REVERT at the end
-       EOF1V0093 (Valid) Loop ending with unconditional RJUMP (a)
-       EOF1V0094 (Valid) Loop ending with unconditional RJUMP (b)
-       EOF1V0095 (Valid) Functions ending with RETF
-       EOF1V0096 (Valid) Stack is not required to be empty on terminating instruction RETURN
-       EOF1V0097 (Valid) Stack is not required to be empty on terminating instruction REVERT
-       EOF1V0098 (Valid) RETF returning maximum number of outputs (127)
-       EOF1V0099 (Invalid) Stack height mismatch for different paths (a)
-       EOF1V0100 (Invalid) Stack height mismatch for different paths (b)
-       EOF1V0101 (Invalid) Calls returning different number of outputs
-       EOF1V0102 (Invalid) Pushing loop
-       EOF1V0103 (Invalid) Popping loop
-       EOF1V0104 (Invalid) Jump table with different stack heights
-       EOF1V0105 (Invalid) Stack underflow for opcode ADD
-       EOF1V0106 (Invalid) Stack underflow for opcode MUL
-       EOF1V0107 (Invalid) Stack underflow for opcode SUB
-       EOF1V0108 (Invalid) Stack underflow for opcode DIV
-       EOF1V0109 (Invalid) Stack underflow for opcode SDIV
-       EOF1V0110 (Invalid) Stack underflow for opcode MOD
-       EOF1V0111 (Invalid) Stack underflow for opcode SMOD
-       EOF1V0112 (Invalid) Stack underflow for opcode ADDMOD
-       EOF1V0113 (Invalid) Stack underflow for opcode MULMOD
-       EOF1V0114 (Invalid) Stack underflow for opcode EXP
-       EOF1V0115 (Invalid) Stack underflow for opcode SIGNEXTEND
-       EOF1V0116 (Invalid) Stack underflow for opcode LT
-       EOF1V0117 (Invalid) Stack underflow for opcode GT
-       EOF1V0118 (Invalid) Stack underflow for opcode SLT
-       EOF1V0119 (Invalid) Stack underflow for opcode SGT
-       EOF1V0120 (Invalid) Stack underflow for opcode EQ
-       EOF1V0121 (Invalid) Stack underflow for opcode ISZERO
-       EOF1V0122 (Invalid) Stack underflow for opcode AND
-       EOF1V0123 (Invalid) Stack underflow for opcode OR
-       EOF1V0124 (Invalid) Stack underflow for opcode XOR
-       EOF1V0125 (Invalid) Stack underflow for opcode NOT
-       EOF1V0126 (Invalid) Stack underflow for opcode BYTE
-       EOF1V0127 (Invalid) Stack underflow for opcode SHL
-       EOF1V0128 (Invalid) Stack underflow for opcode SHR
-       EOF1V0129 (Invalid) Stack underflow for opcode SAR
-       EOF1V0130 (Invalid) Stack underflow for opcode SHA3
-       EOF1V0131 (Invalid) Stack underflow for opcode BALANCE
-       EOF1V0132 (Invalid) Stack underflow for opcode CALLDATALOAD
-       EOF1V0133 (Invalid) Stack underflow for opcode CALLDATACOPY
-       EOF1V0134 (Invalid) Stack underflow for opcode CODECOPY
-       EOF1V0135 (Invalid) Stack underflow for opcode EXTCODESIZE
-       EOF1V0136 (Invalid) Stack underflow for opcode EXTCODECOPY
-       EOF1V0137 (Invalid) Stack underflow for opcode RETURNDATACOPY
-       EOF1V0138 (Invalid) Stack underflow for opcode EXTCODEHASH
-       EOF1V0139 (Invalid) Stack underflow for opcode BLOCKHASH
-       EOF1V0140 (Invalid) Stack underflow for opcode POP
-       EOF1V0141 (Invalid) Stack underflow for opcode MLOAD
-       EOF1V0142 (Invalid) Stack underflow for opcode MSTORE
-       EOF1V0143 (Invalid) Stack underflow for opcode MSTORE8
-       EOF1V0144 (Invalid) Stack underflow for opcode SLOAD
-       EOF1V0145 (Invalid) Stack underflow for opcode SSTORE
-       EOF1V0146 (Invalid) Stack underflow for opcode DUP1
-       EOF1V0147 (Invalid) Stack underflow for opcode DUP2
-       EOF1V0148 (Invalid) Stack underflow for opcode DUP3
-       EOF1V0149 (Invalid) Stack underflow for opcode DUP4
-       EOF1V0150 (Invalid) Stack underflow for opcode DUP5
-       EOF1V0151 (Invalid) Stack underflow for opcode DUP6
-       EOF1V0152 (Invalid) Stack underflow for opcode DUP7
-       EOF1V0153 (Invalid) Stack underflow for opcode DUP8
-       EOF1V0154 (Invalid) Stack underflow for opcode DUP9
-       EOF1V0155 (Invalid) Stack underflow for opcode DUP10
-       EOF1V0156 (Invalid) Stack underflow for opcode DUP11
-       EOF1V0157 (Invalid) Stack underflow for opcode DUP12
-       EOF1V0158 (Invalid) Stack underflow for opcode DUP13
-       EOF1V0159 (Invalid) Stack underflow for opcode DUP14
-       EOF1V0160 (Invalid) Stack underflow for opcode DUP15
-       EOF1V0161 (Invalid) Stack underflow for opcode DUP16
-       EOF1V0162 (Invalid) Stack underflow for opcode SWAP1
-       EOF1V0163 (Invalid) Stack underflow for opcode SWAP2
-       EOF1V0164 (Invalid) Stack underflow for opcode SWAP3
-       EOF1V0165 (Invalid) Stack underflow for opcode SWAP4
-       EOF1V0166 (Invalid) Stack underflow for opcode SWAP5
-       EOF1V0167 (Invalid) Stack underflow for opcode SWAP6
-       EOF1V0168 (Invalid) Stack underflow for opcode SWAP7
-       EOF1V0169 (Invalid) Stack underflow for opcode SWAP8
-       EOF1V0170 (Invalid) Stack underflow for opcode SWAP9
-       EOF1V0171 (Invalid) Stack underflow for opcode SWAP10
-       EOF1V0172 (Invalid) Stack underflow for opcode SWAP11
-       EOF1V0173 (Invalid) Stack underflow for opcode SWAP12
-       EOF1V0174 (Invalid) Stack underflow for opcode SWAP13
-       EOF1V0175 (Invalid) Stack underflow for opcode SWAP14
-       EOF1V0176 (Invalid) Stack underflow for opcode SWAP15
-       EOF1V0177 (Invalid) Stack underflow for opcode SWAP16
-       EOF1V0178 (Invalid) Stack underflow for opcode LOG0
-       EOF1V0179 (Invalid) Stack underflow for opcode LOG1
-       EOF1V0180 (Invalid) Stack underflow for opcode LOG2
-       EOF1V0181 (Invalid) Stack underflow for opcode LOG3
-       EOF1V0182 (Invalid) Stack underflow for opcode LOG4
-       EOF1V0183 (Invalid) Stack underflow for opcode CREATE
-       EOF1V0184 (Invalid) Stack underflow for opcode CALL
-       EOF1V0185 (Invalid) Stack underflow for opcode RETURN
-       EOF1V0186 (Invalid) Stack underflow for opcode DELEGATECALL
-       EOF1V0187 (Invalid) Stack underflow for opcode CREATE2
-       EOF1V0188 (Invalid) Stack underflow for opcode STATICCALL
-       EOF1V0189 (Invalid) Stack underflow for opcode REVERT
-       EOF1V0190 (Invalid) Calling function without enough stack items: Function 0 calls Function 1 without enough parameters
-       EOF1V0191 (Invalid) Calling function without enough stack items: Function 1 calls Function 2 with enough parameters
-       EOF1V0192 (Invalid) Calling function without enough stack items: Function 0 calls Function 1 without enought parameters, Function 1 calls Function 2 without enough parameers
-       EOF1V0193 (Invalid) Stack Overflow: Function pushing more than 1024 items to the stack
-       EOF1V0194 (Invalid) Stack Overflow: Function 1 when called by Function 0 pushes more than 1024 items to the stack
-       EOF1V0195 (Invalid) Function ending with non-terminating instruction (a)
-       EOF1V0196 (Invalid) Function ending with non-terminating instruction (b)
-       EOF1V0197 (Invalid) Function ending with non-terminating instruction (c)
-       EOF1V0198 (Invalid) Function containing unreachable code after RETURN
-       EOF1V0199 (Invalid) Function containing unreachable code after REVERT
-       EOF1V0200 (Invalid) Unreachable code after RJUMP
-       EOF1V0201 (Invalid) Unreachable code after infinite loop
-       # <@f1
+       EOF1V5450_0001 (Valid) Code with branches having the same stack height
+       EOF1V5450_0002 (Valid) Jump table
+       EOF1V5450_0003 (Valid) Infinite loop
+       EOF1V5450_0004 (Valid) CALLF branches with the same total of outputs
+       EOF1V5450_0005 (Valid) CALLF inputs
+       EOF1V5450_0006 (Valid) Validate input for ADD opcode
+       EOF1V5450_0007 (Valid) Validate input for MUL opcode
+       EOF1V5450_0008 (Valid) Validate input for SUB opcode
+       EOF1V5450_0009 (Valid) Validate input for DIV opcode
+       EOF1V5450_0010 (Valid) Validate input for SDIV opcode
+       EOF1V5450_0011 (Valid) Validate input for MOD opcode
+       EOF1V5450_0012 (Valid) Validate input for SMOD opcode
+       EOF1V5450_0013 (Valid) Validate input for ADDMOD opcode
+       EOF1V5450_0014 (Valid) Validate input for MULMOD opcode
+       EOF1V5450_0015 (Valid) Validate input for EXP opcode
+       EOF1V5450_0016 (Valid) Validate input for SIGNEXTEND opcode
+       EOF1V5450_0017 (Valid) Validate input for LT opcode
+       EOF1V5450_0018 (Valid) Validate input for GT opcode
+       EOF1V5450_0019 (Valid) Validate input for SLT opcode
+       EOF1V5450_0020 (Valid) Validate input for SGT opcode
+       EOF1V5450_0021 (Valid) Validate input for EQ opcode
+       EOF1V5450_0022 (Valid) Validate input for ISZERO opcode
+       EOF1V5450_0023 (Valid) Validate input for AND opcode
+       EOF1V5450_0024 (Valid) Validate input for OR opcode
+       EOF1V5450_0025 (Valid) Validate input for XOR opcode
+       EOF1V5450_0026 (Valid) Validate input for NOT opcode
+       EOF1V5450_0027 (Valid) Validate input for BYTE opcode
+       EOF1V5450_0028 (Valid) Validate input for SHL opcode
+       EOF1V5450_0029 (Valid) Validate input for SHR opcode
+       EOF1V5450_0030 (Valid) Validate input for SAR opcode
+       EOF1V5450_0031 (Valid) Validate input for SHA3 opcode
+       EOF1V5450_0032 (Valid) Validate input for BALANCE opcode
+       EOF1V5450_0033 (Valid) Validate input for CALLDATALOAD opcode
+       EOF1V5450_0034 (Valid) Validate input for CALLDATACOPY opcode
+       EOF1V5450_0035 (Valid) Validate input for CODECOPY opcode
+       EOF1V5450_0036 (Valid) Validate input for EXTCODESIZE opcode
+       EOF1V5450_0037 (Valid) Validate input for EXTCODECOPY opcode
+       EOF1V5450_0038 (Valid) Validate input for RETURNDATACOPY opcode
+       EOF1V5450_0039 (Valid) Validate input for EXTCODEHASH opcode
+       EOF1V5450_0040 (Valid) Validate input for BLOCKHASH opcode
+       EOF1V5450_0041 (Valid) Validate input for POP opcode
+       EOF1V5450_0042 (Valid) Validate input for MLOAD opcode
+       EOF1V5450_0043 (Valid) Validate input for MSTORE opcode
+       EOF1V5450_0044 (Valid) Validate input for MSTORE8 opcode
+       EOF1V5450_0045 (Valid) Validate input for SLOAD opcode
+       EOF1V5450_0046 (Valid) Validate input for SSTORE opcode
+       EOF1V5450_0047 (Valid) Validate input for DUP1 opcode
+       EOF1V5450_0048 (Valid) Validate input for DUP2 opcode
+       EOF1V5450_0049 (Valid) Validate input for DUP3 opcode
+       EOF1V5450_0050 (Valid) Validate input for DUP4 opcode
+       EOF1V5450_0051 (Valid) Validate input for DUP5 opcode
+       EOF1V5450_0052 (Valid) Validate input for DUP6 opcode
+       EOF1V5450_0053 (Valid) Validate input for DUP7 opcode
+       EOF1V5450_0054 (Valid) Validate input for DUP8 opcode
+       EOF1V5450_0055 (Valid) Validate input for DUP9 opcode
+       EOF1V5450_0056 (Valid) Validate input for DUP10 opcode
+       EOF1V5450_0057 (Valid) Validate input for DUP11 opcode
+       EOF1V5450_0058 (Valid) Validate input for DUP12 opcode
+       EOF1V5450_0059 (Valid) Validate input for DUP13 opcode
+       EOF1V5450_0060 (Valid) Validate input for DUP14 opcode
+       EOF1V5450_0061 (Valid) Validate input for DUP15 opcode
+       EOF1V5450_0062 (Valid) Validate input for DUP16 opcode
+       EOF1V5450_0063 (Valid) Validate input for SWAP1 opcode
+       EOF1V5450_0064 (Valid) Validate input for SWAP2 opcode
+       EOF1V5450_0065 (Valid) Validate input for SWAP3 opcode
+       EOF1V5450_0066 (Valid) Validate input for SWAP4 opcode
+       EOF1V5450_0067 (Valid) Validate input for SWAP5 opcode
+       EOF1V5450_0068 (Valid) Validate input for SWAP6 opcode
+       EOF1V5450_0069 (Valid) Validate input for SWAP7 opcode
+       EOF1V5450_0070 (Valid) Validate input for SWAP8 opcode
+       EOF1V5450_0071 (Valid) Validate input for SWAP9 opcode
+       EOF1V5450_0072 (Valid) Validate input for SWAP10 opcode
+       EOF1V5450_0073 (Valid) Validate input for SWAP11 opcode
+       EOF1V5450_0074 (Valid) Validate input for SWAP12 opcode
+       EOF1V5450_0075 (Valid) Validate input for SWAP13 opcode
+       EOF1V5450_0076 (Valid) Validate input for SWAP14 opcode
+       EOF1V5450_0077 (Valid) Validate input for SWAP15 opcode
+       EOF1V5450_0078 (Valid) Validate input for SWAP16 opcode
+       EOF1V5450_0079 (Valid) Validate input for LOG0 opcode
+       EOF1V5450_0080 (Valid) Validate input for LOG1 opcode
+       EOF1V5450_0081 (Valid) Validate input for LOG2 opcode
+       EOF1V5450_0082 (Valid) Validate input for LOG3 opcode
+       EOF1V5450_0083 (Valid) Validate input for LOG4 opcode
+       EOF1V5450_0084 (Valid) Validate input for CREATE opcode
+       EOF1V5450_0085 (Valid) Validate input for CALL opcode
+       EOF1V5450_0086 (Valid) Validate input for RETURN opcode
+       EOF1V5450_0087 (Valid) Validate input for DELEGATECALL opcode
+       EOF1V5450_0088 (Valid) Validate input for CREATE2 opcode
+       EOF1V5450_0089 (Valid) Validate input for STATICCALL opcode
+       EOF1V5450_0090 (Valid) Validate input for REVERT opcode
+       EOF1V5450_0091 (Valid) Containing terminating opcode RETURN at the end
+       EOF1V5450_0092 (Valid) Containing terminating opcode REVERT at the end
+       EOF1V5450_0093 (Valid) Loop ending with unconditional RJUMP (a)
+       EOF1V5450_0094 (Valid) Loop ending with unconditional RJUMP (b)
+       EOF1V5450_0095 (Valid) Functions ending with RETF
+       EOF1V5450_0096 (Valid) Stack is not required to be empty on terminating instruction RETURN
+       EOF1V5450_0097 (Valid) Stack is not required to be empty on terminating instruction REVERT
+       EOF1V5450_0098 (Valid) RETF returning maximum number of outputs (127)
+       EOF1I5450_0001 (Invalid) Stack height mismatch for different paths (a)
+       EOF1I5450_0002 (Invalid) Stack height mismatch for different paths (b)
+       EOF1I5450_0003 (Invalid) Calls returning different number of outputs
+       EOF1I5450_0004 (Invalid) Pushing loop
+       EOF1I5450_0005 (Invalid) Popping loop
+       EOF1I5450_0006 (Invalid) Jump table with different stack heights
+       EOF1I5450_0007 (Invalid) Stack underflow for opcode ADD
+       EOF1I5450_0008 (Invalid) Stack underflow for opcode MUL
+       EOF1I5450_0009 (Invalid) Stack underflow for opcode SUB
+       EOF1I5450_0010 (Invalid) Stack underflow for opcode DIV
+       EOF1I5450_0011 (Invalid) Stack underflow for opcode SDIV
+       EOF1I5450_0012 (Invalid) Stack underflow for opcode MOD
+       EOF1I5450_0013 (Invalid) Stack underflow for opcode SMOD
+       EOF1I5450_0014 (Invalid) Stack underflow for opcode ADDMOD
+       EOF1I5450_0015 (Invalid) Stack underflow for opcode MULMOD
+       EOF1I5450_0016 (Invalid) Stack underflow for opcode EXP
+       EOF1I5450_0017 (Invalid) Stack underflow for opcode SIGNEXTEND
+       EOF1I5450_0018 (Invalid) Stack underflow for opcode LT
+       EOF1I5450_0019 (Invalid) Stack underflow for opcode GT
+       EOF1I5450_0020 (Invalid) Stack underflow for opcode SLT
+       EOF1I5450_0021 (Invalid) Stack underflow for opcode SGT
+       EOF1I5450_0022 (Invalid) Stack underflow for opcode EQ
+       EOF1I5450_0023 (Invalid) Stack underflow for opcode ISZERO
+       EOF1I5450_0024 (Invalid) Stack underflow for opcode AND
+       EOF1I5450_0025 (Invalid) Stack underflow for opcode OR
+       EOF1I5450_0026 (Invalid) Stack underflow for opcode XOR
+       EOF1I5450_0027 (Invalid) Stack underflow for opcode NOT
+       EOF1I5450_0028 (Invalid) Stack underflow for opcode BYTE
+       EOF1I5450_0029 (Invalid) Stack underflow for opcode SHL
+       EOF1I5450_0030 (Invalid) Stack underflow for opcode SHR
+       EOF1I5450_0031 (Invalid) Stack underflow for opcode SAR
+       EOF1I5450_0032 (Invalid) Stack underflow for opcode SHA3
+       EOF1I5450_0033 (Invalid) Stack underflow for opcode BALANCE
+       EOF1I5450_0034 (Invalid) Stack underflow for opcode CALLDATALOAD
+       EOF1I5450_0035 (Invalid) Stack underflow for opcode CALLDATACOPY
+       EOF1I5450_0036 (Invalid) Stack underflow for opcode CODECOPY
+       EOF1I5450_0037 (Invalid) Stack underflow for opcode EXTCODESIZE
+       EOF1I5450_0038 (Invalid) Stack underflow for opcode EXTCODECOPY
+       EOF1I5450_0039 (Invalid) Stack underflow for opcode RETURNDATACOPY
+       EOF1I5450_0040 (Invalid) Stack underflow for opcode EXTCODEHASH
+       EOF1I5450_0041 (Invalid) Stack underflow for opcode BLOCKHASH
+       EOF1I5450_0042 (Invalid) Stack underflow for opcode POP
+       EOF1I5450_0043 (Invalid) Stack underflow for opcode MLOAD
+       EOF1I5450_0044 (Invalid) Stack underflow for opcode MSTORE
+       EOF1I5450_0045 (Invalid) Stack underflow for opcode MSTORE8
+       EOF1I5450_0046 (Invalid) Stack underflow for opcode SLOAD
+       EOF1I5450_0047 (Invalid) Stack underflow for opcode SSTORE
+       EOF1I5450_0048 (Invalid) Stack underflow for opcode DUP1
+       EOF1I5450_0049 (Invalid) Stack underflow for opcode DUP2
+       EOF1I5450_0050 (Invalid) Stack underflow for opcode DUP3
+       EOF1I5450_0051 (Invalid) Stack underflow for opcode DUP4
+       EOF1I5450_0052 (Invalid) Stack underflow for opcode DUP5
+       EOF1I5450_0053 (Invalid) Stack underflow for opcode DUP6
+       EOF1I5450_0054 (Invalid) Stack underflow for opcode DUP7
+       EOF1I5450_0055 (Invalid) Stack underflow for opcode DUP8
+       EOF1I5450_0056 (Invalid) Stack underflow for opcode DUP9
+       EOF1I5450_0057 (Invalid) Stack underflow for opcode DUP10
+       EOF1I5450_0058 (Invalid) Stack underflow for opcode DUP11
+       EOF1I5450_0059 (Invalid) Stack underflow for opcode DUP12
+       EOF1I5450_0060 (Invalid) Stack underflow for opcode DUP13
+       EOF1I5450_0061 (Invalid) Stack underflow for opcode DUP14
+       EOF1I5450_0062 (Invalid) Stack underflow for opcode DUP15
+       EOF1I5450_0063 (Invalid) Stack underflow for opcode DUP16
+       EOF1I5450_0064 (Invalid) Stack underflow for opcode SWAP1
+       EOF1I5450_0065 (Invalid) Stack underflow for opcode SWAP2
+       EOF1I5450_0066 (Invalid) Stack underflow for opcode SWAP3
+       EOF1I5450_0067 (Invalid) Stack underflow for opcode SWAP4
+       EOF1I5450_0068 (Invalid) Stack underflow for opcode SWAP5
+       EOF1I5450_0069 (Invalid) Stack underflow for opcode SWAP6
+       EOF1I5450_0070 (Invalid) Stack underflow for opcode SWAP7
+       EOF1I5450_0071 (Invalid) Stack underflow for opcode SWAP8
+       EOF1I5450_0072 (Invalid) Stack underflow for opcode SWAP9
+       EOF1I5450_0073 (Invalid) Stack underflow for opcode SWAP10
+       EOF1I5450_0074 (Invalid) Stack underflow for opcode SWAP11
+       EOF1I5450_0075 (Invalid) Stack underflow for opcode SWAP12
+       EOF1I5450_0076 (Invalid) Stack underflow for opcode SWAP13
+       EOF1I5450_0077 (Invalid) Stack underflow for opcode SWAP14
+       EOF1I5450_0078 (Invalid) Stack underflow for opcode SWAP15
+       EOF1I5450_0079 (Invalid) Stack underflow for opcode SWAP16
+       EOF1I5450_0080 (Invalid) Stack underflow for opcode LOG0
+       EOF1I5450_0081 (Invalid) Stack underflow for opcode LOG1
+       EOF1I5450_0082 (Invalid) Stack underflow for opcode LOG2
+       EOF1I5450_0083 (Invalid) Stack underflow for opcode LOG3
+       EOF1I5450_0084 (Invalid) Stack underflow for opcode LOG4
+       EOF1I5450_0085 (Invalid) Stack underflow for opcode CREATE
+       EOF1I5450_0086 (Invalid) Stack underflow for opcode CALL
+       EOF1I5450_0087 (Invalid) Stack underflow for opcode RETURN
+       EOF1I5450_0088 (Invalid) Stack underflow for opcode DELEGATECALL
+       EOF1I5450_0089 (Invalid) Stack underflow for opcode CREATE2
+       EOF1I5450_0090 (Invalid) Stack underflow for opcode STATICCALL
+       EOF1I5450_0091 (Invalid) Stack underflow for opcode REVERT
+       EOF1I5450_0092 (Invalid) Calling function without enough stack items: Function 0 calls Function 1 without enough parameters
+       EOF1I5450_0093 (Invalid) Calling function without enough stack items: Function 1 calls Function 2 with enough parameters
+       EOF1I5450_0094 (Invalid) Calling function without enough stack items: Function 0 calls Function 1 without enought parameters, Function 1 calls Function 2 without enough parameers
+       EOF1I5450_0095 (Invalid) Stack Overflow: Function pushing more than 1024 items to the stack
+       EOF1I5450_0096 (Invalid) Stack Overflow: Function 1 when called by Function 0 pushes more than 1024 items to the stack
+       EOF1I5450_0097 (Invalid) Function ending with non-terminating instruction (a)
+       EOF1I5450_0098 (Invalid) Function ending with non-terminating instruction (b)
+       EOF1I5450_0099 (Invalid) Function ending with non-terminating instruction (c)
+       EOF1I5450_0100 (Invalid) Function containing unreachable code after RETURN
+       EOF1I5450_0101 (Invalid) Function containing unreachable code after REVERT
+       EOF1I5450_0102 (Invalid) Unreachable code after RJUMP
+       EOF1I5450_0103 (Invalid) Unreachable code after infinite loop
 
   data:
-      # >@f2
       # Data: 0
-      # EOF1V0001 (Valid) Code with branches having the same stack height
+      # EOF1V5450_0001 (Valid) Code with branches having the same stack height
       # Code: PUSH1(0) RJUMPI(label_true) PUSH1(1) PUSH1(2) RJUMP(exit) label_true: PUSH1(3) PUSH1(4) exit: STOP
       - |
         :label valid :raw 0x
@@ -255,7 +252,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 1
-      # EOF1V0002 (Valid) Jump table
+      # EOF1V5450_0002 (Valid) Jump table
       # Code: PUSH1(0) RJUMPV(case1,case2) PUSH1(1) PUSH1(2) RJUMP(exit) case1: PUSH1(3) PUSH1(4) RJUMP(exit) case2: PUSH1(5) PUSH1(6) exit: STOP
       - |
         :label valid :raw 0x
@@ -303,7 +300,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 2
-      # EOF1V0003 (Valid) Infinite loop
+      # EOF1V5450_0003 (Valid) Infinite loop
       # Code: start: PUSH1(0) PUSH1(1) POP POP RJUMP(start)
       - |
         :label valid :raw 0x
@@ -345,7 +342,7 @@ validInvalid:
           5cfff7 # RJUMP(-9) 
                  # Data section (empty)
       # Data: 3
-      # EOF1V0004 (Valid) CALLF branches with the same total of outputs
+      # EOF1V5450_0004 (Valid) CALLF branches with the same total of outputs
       # Code[0](Types: 0:0): PUSH1(0) RJUMPI(label_true) label_false: CALLF(1) RJUMP(exit) label_true: CALLF(2) exit: STOP
       # Code[1](Types: 0:1): ADDRESS STOP
       # Code[2](Types: 0:1): CODESIZE STOP
@@ -406,7 +403,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 4
-      # EOF1V0005 (Valid) CALLF inputs
+      # EOF1V5450_0005 (Valid) CALLF inputs
       # Code[0](Types: 0:0): CALLF(0) STOP
       # Code[1](Types: 1:0): PUSH1(0) CALLF(1) STOP
       # Code[2](Types: 2:0): PUSH1(0) PUSH1(0) CALLF(2) STOP
@@ -601,7 +598,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 5
-      # EOF1V0006 (Valid) Validate input for ADD opcode
+      # EOF1V5450_0006 (Valid) Validate input for ADD opcode
       # Code: PUSH1(1) DUP1 ADD STOP
       - |
         :label valid :raw 0x
@@ -642,7 +639,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 6
-      # EOF1V0007 (Valid) Validate input for MUL opcode
+      # EOF1V5450_0007 (Valid) Validate input for MUL opcode
       # Code: PUSH1(1) DUP1 MUL STOP
       - |
         :label valid :raw 0x
@@ -683,7 +680,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 7
-      # EOF1V0008 (Valid) Validate input for SUB opcode
+      # EOF1V5450_0008 (Valid) Validate input for SUB opcode
       # Code: PUSH1(1) DUP1 SUB STOP
       - |
         :label valid :raw 0x
@@ -724,7 +721,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 8
-      # EOF1V0009 (Valid) Validate input for DIV opcode
+      # EOF1V5450_0009 (Valid) Validate input for DIV opcode
       # Code: PUSH1(1) DUP1 DIV STOP
       - |
         :label valid :raw 0x
@@ -765,7 +762,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 9
-      # EOF1V0010 (Valid) Validate input for SDIV opcode
+      # EOF1V5450_0010 (Valid) Validate input for SDIV opcode
       # Code: PUSH1(1) DUP1 SDIV STOP
       - |
         :label valid :raw 0x
@@ -806,7 +803,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 10
-      # EOF1V0011 (Valid) Validate input for MOD opcode
+      # EOF1V5450_0011 (Valid) Validate input for MOD opcode
       # Code: PUSH1(1) DUP1 MOD STOP
       - |
         :label valid :raw 0x
@@ -847,7 +844,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 11
-      # EOF1V0012 (Valid) Validate input for SMOD opcode
+      # EOF1V5450_0012 (Valid) Validate input for SMOD opcode
       # Code: PUSH1(1) DUP1 SMOD STOP
       - |
         :label valid :raw 0x
@@ -888,7 +885,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 12
-      # EOF1V0013 (Valid) Validate input for ADDMOD opcode
+      # EOF1V5450_0013 (Valid) Validate input for ADDMOD opcode
       # Code: PUSH1(1) DUP1 DUP1 ADDMOD STOP
       - |
         :label valid :raw 0x
@@ -930,7 +927,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 13
-      # EOF1V0014 (Valid) Validate input for MULMOD opcode
+      # EOF1V5450_0014 (Valid) Validate input for MULMOD opcode
       # Code: PUSH1(1) DUP1 DUP1 MULMOD STOP
       - |
         :label valid :raw 0x
@@ -972,7 +969,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 14
-      # EOF1V0015 (Valid) Validate input for EXP opcode
+      # EOF1V5450_0015 (Valid) Validate input for EXP opcode
       # Code: PUSH1(1) DUP1 EXP STOP
       - |
         :label valid :raw 0x
@@ -1013,7 +1010,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 15
-      # EOF1V0016 (Valid) Validate input for SIGNEXTEND opcode
+      # EOF1V5450_0016 (Valid) Validate input for SIGNEXTEND opcode
       # Code: PUSH1(1) DUP1 SIGNEXTEND STOP
       - |
         :label valid :raw 0x
@@ -1054,7 +1051,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 16
-      # EOF1V0017 (Valid) Validate input for LT opcode
+      # EOF1V5450_0017 (Valid) Validate input for LT opcode
       # Code: PUSH1(1) DUP1 LT STOP
       - |
         :label valid :raw 0x
@@ -1095,7 +1092,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 17
-      # EOF1V0018 (Valid) Validate input for GT opcode
+      # EOF1V5450_0018 (Valid) Validate input for GT opcode
       # Code: PUSH1(1) DUP1 GT STOP
       - |
         :label valid :raw 0x
@@ -1136,7 +1133,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 18
-      # EOF1V0019 (Valid) Validate input for SLT opcode
+      # EOF1V5450_0019 (Valid) Validate input for SLT opcode
       # Code: PUSH1(1) DUP1 SLT STOP
       - |
         :label valid :raw 0x
@@ -1177,7 +1174,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 19
-      # EOF1V0020 (Valid) Validate input for SGT opcode
+      # EOF1V5450_0020 (Valid) Validate input for SGT opcode
       # Code: PUSH1(1) DUP1 SGT STOP
       - |
         :label valid :raw 0x
@@ -1218,7 +1215,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 20
-      # EOF1V0021 (Valid) Validate input for EQ opcode
+      # EOF1V5450_0021 (Valid) Validate input for EQ opcode
       # Code: PUSH1(1) DUP1 EQ STOP
       - |
         :label valid :raw 0x
@@ -1259,7 +1256,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 21
-      # EOF1V0022 (Valid) Validate input for ISZERO opcode
+      # EOF1V5450_0022 (Valid) Validate input for ISZERO opcode
       # Code: PUSH1(1) ISZERO STOP
       - |
         :label valid :raw 0x
@@ -1299,7 +1296,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 22
-      # EOF1V0023 (Valid) Validate input for AND opcode
+      # EOF1V5450_0023 (Valid) Validate input for AND opcode
       # Code: PUSH1(1) DUP1 AND STOP
       - |
         :label valid :raw 0x
@@ -1340,7 +1337,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 23
-      # EOF1V0024 (Valid) Validate input for OR opcode
+      # EOF1V5450_0024 (Valid) Validate input for OR opcode
       # Code: PUSH1(1) DUP1 OR STOP
       - |
         :label valid :raw 0x
@@ -1381,7 +1378,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 24
-      # EOF1V0025 (Valid) Validate input for XOR opcode
+      # EOF1V5450_0025 (Valid) Validate input for XOR opcode
       # Code: PUSH1(1) DUP1 XOR STOP
       - |
         :label valid :raw 0x
@@ -1422,7 +1419,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 25
-      # EOF1V0026 (Valid) Validate input for NOT opcode
+      # EOF1V5450_0026 (Valid) Validate input for NOT opcode
       # Code: PUSH1(1) NOT STOP
       - |
         :label valid :raw 0x
@@ -1462,7 +1459,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 26
-      # EOF1V0027 (Valid) Validate input for BYTE opcode
+      # EOF1V5450_0027 (Valid) Validate input for BYTE opcode
       # Code: PUSH1(1) DUP1 BYTE STOP
       - |
         :label valid :raw 0x
@@ -1503,7 +1500,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 27
-      # EOF1V0028 (Valid) Validate input for SHL opcode
+      # EOF1V5450_0028 (Valid) Validate input for SHL opcode
       # Code: PUSH1(1) DUP1 SHL STOP
       - |
         :label valid :raw 0x
@@ -1544,7 +1541,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 28
-      # EOF1V0029 (Valid) Validate input for SHR opcode
+      # EOF1V5450_0029 (Valid) Validate input for SHR opcode
       # Code: PUSH1(1) DUP1 SHR STOP
       - |
         :label valid :raw 0x
@@ -1585,7 +1582,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 29
-      # EOF1V0030 (Valid) Validate input for SAR opcode
+      # EOF1V5450_0030 (Valid) Validate input for SAR opcode
       # Code: PUSH1(1) DUP1 SAR STOP
       - |
         :label valid :raw 0x
@@ -1626,7 +1623,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 30
-      # EOF1V0031 (Valid) Validate input for SHA3 opcode
+      # EOF1V5450_0031 (Valid) Validate input for SHA3 opcode
       # Code: PUSH1(1) DUP1 SHA3 STOP
       - |
         :label valid :raw 0x
@@ -1667,7 +1664,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 31
-      # EOF1V0032 (Valid) Validate input for BALANCE opcode
+      # EOF1V5450_0032 (Valid) Validate input for BALANCE opcode
       # Code: PUSH1(1) BALANCE STOP
       - |
         :label valid :raw 0x
@@ -1707,7 +1704,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 32
-      # EOF1V0033 (Valid) Validate input for CALLDATALOAD opcode
+      # EOF1V5450_0033 (Valid) Validate input for CALLDATALOAD opcode
       # Code: PUSH1(1) CALLDATALOAD STOP
       - |
         :label valid :raw 0x
@@ -1747,7 +1744,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 33
-      # EOF1V0034 (Valid) Validate input for CALLDATACOPY opcode
+      # EOF1V5450_0034 (Valid) Validate input for CALLDATACOPY opcode
       # Code: PUSH1(1) DUP1 DUP1 CALLDATACOPY STOP
       - |
         :label valid :raw 0x
@@ -1789,7 +1786,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 34
-      # EOF1V0035 (Valid) Validate input for CODECOPY opcode
+      # EOF1V5450_0035 (Valid) Validate input for CODECOPY opcode
       # Code: PUSH1(1) DUP1 DUP1 CODECOPY STOP
       - |
         :label valid :raw 0x
@@ -1831,7 +1828,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 35
-      # EOF1V0036 (Valid) Validate input for EXTCODESIZE opcode
+      # EOF1V5450_0036 (Valid) Validate input for EXTCODESIZE opcode
       # Code: PUSH1(1) EXTCODESIZE STOP
       - |
         :label valid :raw 0x
@@ -1871,7 +1868,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 36
-      # EOF1V0037 (Valid) Validate input for EXTCODECOPY opcode
+      # EOF1V5450_0037 (Valid) Validate input for EXTCODECOPY opcode
       # Code: PUSH1(1) DUP1 DUP1 DUP1 EXTCODECOPY STOP
       - |
         :label valid :raw 0x
@@ -1914,7 +1911,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 37
-      # EOF1V0038 (Valid) Validate input for RETURNDATACOPY opcode
+      # EOF1V5450_0038 (Valid) Validate input for RETURNDATACOPY opcode
       # Code: PUSH1(1) DUP1 DUP1 RETURNDATACOPY STOP
       - |
         :label valid :raw 0x
@@ -1956,7 +1953,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 38
-      # EOF1V0039 (Valid) Validate input for EXTCODEHASH opcode
+      # EOF1V5450_0039 (Valid) Validate input for EXTCODEHASH opcode
       # Code: PUSH1(1) EXTCODEHASH STOP
       - |
         :label valid :raw 0x
@@ -1996,7 +1993,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 39
-      # EOF1V0040 (Valid) Validate input for BLOCKHASH opcode
+      # EOF1V5450_0040 (Valid) Validate input for BLOCKHASH opcode
       # Code: PUSH1(1) BLOCKHASH STOP
       - |
         :label valid :raw 0x
@@ -2036,7 +2033,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 40
-      # EOF1V0041 (Valid) Validate input for POP opcode
+      # EOF1V5450_0041 (Valid) Validate input for POP opcode
       # Code: PUSH1(1) POP STOP
       - |
         :label valid :raw 0x
@@ -2076,7 +2073,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 41
-      # EOF1V0042 (Valid) Validate input for MLOAD opcode
+      # EOF1V5450_0042 (Valid) Validate input for MLOAD opcode
       # Code: PUSH1(1) MLOAD STOP
       - |
         :label valid :raw 0x
@@ -2116,7 +2113,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 42
-      # EOF1V0043 (Valid) Validate input for MSTORE opcode
+      # EOF1V5450_0043 (Valid) Validate input for MSTORE opcode
       # Code: PUSH1(1) DUP1 MSTORE STOP
       - |
         :label valid :raw 0x
@@ -2157,7 +2154,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 43
-      # EOF1V0044 (Valid) Validate input for MSTORE8 opcode
+      # EOF1V5450_0044 (Valid) Validate input for MSTORE8 opcode
       # Code: PUSH1(1) DUP1 MSTORE8 STOP
       - |
         :label valid :raw 0x
@@ -2198,7 +2195,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 44
-      # EOF1V0045 (Valid) Validate input for SLOAD opcode
+      # EOF1V5450_0045 (Valid) Validate input for SLOAD opcode
       # Code: PUSH1(1) SLOAD STOP
       - |
         :label valid :raw 0x
@@ -2238,7 +2235,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 45
-      # EOF1V0046 (Valid) Validate input for SSTORE opcode
+      # EOF1V5450_0046 (Valid) Validate input for SSTORE opcode
       # Code: PUSH1(1) DUP1 SSTORE STOP
       - |
         :label valid :raw 0x
@@ -2279,7 +2276,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 46
-      # EOF1V0047 (Valid) Validate input for DUP1 opcode
+      # EOF1V5450_0047 (Valid) Validate input for DUP1 opcode
       # Code: PUSH1(1) DUP1 STOP
       - |
         :label valid :raw 0x
@@ -2319,7 +2316,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 47
-      # EOF1V0048 (Valid) Validate input for DUP2 opcode
+      # EOF1V5450_0048 (Valid) Validate input for DUP2 opcode
       # Code: PUSH1(1) DUP1 DUP2 STOP
       - |
         :label valid :raw 0x
@@ -2360,7 +2357,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 48
-      # EOF1V0049 (Valid) Validate input for DUP3 opcode
+      # EOF1V5450_0049 (Valid) Validate input for DUP3 opcode
       # Code: PUSH1(1) DUP1 DUP1 DUP3 STOP
       - |
         :label valid :raw 0x
@@ -2402,7 +2399,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 49
-      # EOF1V0050 (Valid) Validate input for DUP4 opcode
+      # EOF1V5450_0050 (Valid) Validate input for DUP4 opcode
       # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP4 STOP
       - |
         :label valid :raw 0x
@@ -2445,7 +2442,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 50
-      # EOF1V0051 (Valid) Validate input for DUP5 opcode
+      # EOF1V5450_0051 (Valid) Validate input for DUP5 opcode
       # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP5 STOP
       - |
         :label valid :raw 0x
@@ -2489,7 +2486,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 51
-      # EOF1V0052 (Valid) Validate input for DUP6 opcode
+      # EOF1V5450_0052 (Valid) Validate input for DUP6 opcode
       # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP6 STOP
       - |
         :label valid :raw 0x
@@ -2534,7 +2531,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 52
-      # EOF1V0053 (Valid) Validate input for DUP7 opcode
+      # EOF1V5450_0053 (Valid) Validate input for DUP7 opcode
       # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP7 STOP
       - |
         :label valid :raw 0x
@@ -2580,7 +2577,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 53
-      # EOF1V0054 (Valid) Validate input for DUP8 opcode
+      # EOF1V5450_0054 (Valid) Validate input for DUP8 opcode
       # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP8 STOP
       - |
         :label valid :raw 0x
@@ -2627,7 +2624,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 54
-      # EOF1V0055 (Valid) Validate input for DUP9 opcode
+      # EOF1V5450_0055 (Valid) Validate input for DUP9 opcode
       # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP9 STOP
       - |
         :label valid :raw 0x
@@ -2675,7 +2672,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 55
-      # EOF1V0056 (Valid) Validate input for DUP10 opcode
+      # EOF1V5450_0056 (Valid) Validate input for DUP10 opcode
       # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP10 STOP
       - |
         :label valid :raw 0x
@@ -2724,7 +2721,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 56
-      # EOF1V0057 (Valid) Validate input for DUP11 opcode
+      # EOF1V5450_0057 (Valid) Validate input for DUP11 opcode
       # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP11 STOP
       - |
         :label valid :raw 0x
@@ -2774,7 +2771,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 57
-      # EOF1V0058 (Valid) Validate input for DUP12 opcode
+      # EOF1V5450_0058 (Valid) Validate input for DUP12 opcode
       # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP12 STOP
       - |
         :label valid :raw 0x
@@ -2825,7 +2822,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 58
-      # EOF1V0059 (Valid) Validate input for DUP13 opcode
+      # EOF1V5450_0059 (Valid) Validate input for DUP13 opcode
       # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP13 STOP
       - |
         :label valid :raw 0x
@@ -2877,7 +2874,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 59
-      # EOF1V0060 (Valid) Validate input for DUP14 opcode
+      # EOF1V5450_0060 (Valid) Validate input for DUP14 opcode
       # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP14 STOP
       - |
         :label valid :raw 0x
@@ -2930,7 +2927,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 60
-      # EOF1V0061 (Valid) Validate input for DUP15 opcode
+      # EOF1V5450_0061 (Valid) Validate input for DUP15 opcode
       # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP15 STOP
       - |
         :label valid :raw 0x
@@ -2984,7 +2981,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 61
-      # EOF1V0062 (Valid) Validate input for DUP16 opcode
+      # EOF1V5450_0062 (Valid) Validate input for DUP16 opcode
       # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP16 STOP
       - |
         :label valid :raw 0x
@@ -3039,7 +3036,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 62
-      # EOF1V0063 (Valid) Validate input for SWAP1 opcode
+      # EOF1V5450_0063 (Valid) Validate input for SWAP1 opcode
       # Code: PUSH1(1) DUP1 SWAP1 STOP
       - |
         :label valid :raw 0x
@@ -3080,7 +3077,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 63
-      # EOF1V0064 (Valid) Validate input for SWAP2 opcode
+      # EOF1V5450_0064 (Valid) Validate input for SWAP2 opcode
       # Code: PUSH1(1) DUP1 DUP1 SWAP2 STOP
       - |
         :label valid :raw 0x
@@ -3122,7 +3119,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 64
-      # EOF1V0065 (Valid) Validate input for SWAP3 opcode
+      # EOF1V5450_0065 (Valid) Validate input for SWAP3 opcode
       # Code: PUSH1(1) DUP1 DUP1 DUP1 SWAP3 STOP
       - |
         :label valid :raw 0x
@@ -3165,7 +3162,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 65
-      # EOF1V0066 (Valid) Validate input for SWAP4 opcode
+      # EOF1V5450_0066 (Valid) Validate input for SWAP4 opcode
       # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 SWAP4 STOP
       - |
         :label valid :raw 0x
@@ -3209,7 +3206,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 66
-      # EOF1V0067 (Valid) Validate input for SWAP5 opcode
+      # EOF1V5450_0067 (Valid) Validate input for SWAP5 opcode
       # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 SWAP5 STOP
       - |
         :label valid :raw 0x
@@ -3254,7 +3251,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 67
-      # EOF1V0068 (Valid) Validate input for SWAP6 opcode
+      # EOF1V5450_0068 (Valid) Validate input for SWAP6 opcode
       # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 SWAP6 STOP
       - |
         :label valid :raw 0x
@@ -3300,7 +3297,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 68
-      # EOF1V0069 (Valid) Validate input for SWAP7 opcode
+      # EOF1V5450_0069 (Valid) Validate input for SWAP7 opcode
       # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 SWAP7 STOP
       - |
         :label valid :raw 0x
@@ -3347,7 +3344,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 69
-      # EOF1V0070 (Valid) Validate input for SWAP8 opcode
+      # EOF1V5450_0070 (Valid) Validate input for SWAP8 opcode
       # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 SWAP8 STOP
       - |
         :label valid :raw 0x
@@ -3395,7 +3392,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 70
-      # EOF1V0071 (Valid) Validate input for SWAP9 opcode
+      # EOF1V5450_0071 (Valid) Validate input for SWAP9 opcode
       # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 SWAP9 STOP
       - |
         :label valid :raw 0x
@@ -3444,7 +3441,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 71
-      # EOF1V0072 (Valid) Validate input for SWAP10 opcode
+      # EOF1V5450_0072 (Valid) Validate input for SWAP10 opcode
       # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 SWAP10 STOP
       - |
         :label valid :raw 0x
@@ -3494,7 +3491,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 72
-      # EOF1V0073 (Valid) Validate input for SWAP11 opcode
+      # EOF1V5450_0073 (Valid) Validate input for SWAP11 opcode
       # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 SWAP11 STOP
       - |
         :label valid :raw 0x
@@ -3545,7 +3542,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 73
-      # EOF1V0074 (Valid) Validate input for SWAP12 opcode
+      # EOF1V5450_0074 (Valid) Validate input for SWAP12 opcode
       # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 SWAP12 STOP
       - |
         :label valid :raw 0x
@@ -3597,7 +3594,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 74
-      # EOF1V0075 (Valid) Validate input for SWAP13 opcode
+      # EOF1V5450_0075 (Valid) Validate input for SWAP13 opcode
       # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 SWAP13 STOP
       - |
         :label valid :raw 0x
@@ -3650,7 +3647,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 75
-      # EOF1V0076 (Valid) Validate input for SWAP14 opcode
+      # EOF1V5450_0076 (Valid) Validate input for SWAP14 opcode
       # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 SWAP14 STOP
       - |
         :label valid :raw 0x
@@ -3704,7 +3701,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 76
-      # EOF1V0077 (Valid) Validate input for SWAP15 opcode
+      # EOF1V5450_0077 (Valid) Validate input for SWAP15 opcode
       # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 SWAP15 STOP
       - |
         :label valid :raw 0x
@@ -3759,7 +3756,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 77
-      # EOF1V0078 (Valid) Validate input for SWAP16 opcode
+      # EOF1V5450_0078 (Valid) Validate input for SWAP16 opcode
       # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 SWAP16 STOP
       - |
         :label valid :raw 0x
@@ -3815,7 +3812,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 78
-      # EOF1V0079 (Valid) Validate input for LOG0 opcode
+      # EOF1V5450_0079 (Valid) Validate input for LOG0 opcode
       # Code: PUSH1(1) DUP1 LOG0 STOP
       - |
         :label valid :raw 0x
@@ -3856,7 +3853,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 79
-      # EOF1V0080 (Valid) Validate input for LOG1 opcode
+      # EOF1V5450_0080 (Valid) Validate input for LOG1 opcode
       # Code: PUSH1(1) DUP1 DUP1 LOG1 STOP
       - |
         :label valid :raw 0x
@@ -3898,7 +3895,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 80
-      # EOF1V0081 (Valid) Validate input for LOG2 opcode
+      # EOF1V5450_0081 (Valid) Validate input for LOG2 opcode
       # Code: PUSH1(1) DUP1 DUP1 DUP1 LOG2 STOP
       - |
         :label valid :raw 0x
@@ -3941,7 +3938,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 81
-      # EOF1V0082 (Valid) Validate input for LOG3 opcode
+      # EOF1V5450_0082 (Valid) Validate input for LOG3 opcode
       # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 LOG3 STOP
       - |
         :label valid :raw 0x
@@ -3985,7 +3982,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 82
-      # EOF1V0083 (Valid) Validate input for LOG4 opcode
+      # EOF1V5450_0083 (Valid) Validate input for LOG4 opcode
       # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 LOG4 STOP
       - |
         :label valid :raw 0x
@@ -4030,7 +4027,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 83
-      # EOF1V0084 (Valid) Validate input for CREATE opcode
+      # EOF1V5450_0084 (Valid) Validate input for CREATE opcode
       # Code: PUSH1(1) DUP1 DUP1 CREATE STOP
       - |
         :label valid :raw 0x
@@ -4072,7 +4069,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 84
-      # EOF1V0085 (Valid) Validate input for CALL opcode
+      # EOF1V5450_0085 (Valid) Validate input for CALL opcode
       # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 CALL STOP
       - |
         :label valid :raw 0x
@@ -4118,7 +4115,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 85
-      # EOF1V0086 (Valid) Validate input for RETURN opcode
+      # EOF1V5450_0086 (Valid) Validate input for RETURN opcode
       # Code: PUSH1(1) DUP1 RETURN
       - |
         :label valid :raw 0x
@@ -4158,7 +4155,7 @@ validInvalid:
               f3 # RETURN 
                  # Data section (empty)
       # Data: 86
-      # EOF1V0087 (Valid) Validate input for DELEGATECALL opcode
+      # EOF1V5450_0087 (Valid) Validate input for DELEGATECALL opcode
       # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DELEGATECALL STOP
       - |
         :label valid :raw 0x
@@ -4203,7 +4200,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 87
-      # EOF1V0088 (Valid) Validate input for CREATE2 opcode
+      # EOF1V5450_0088 (Valid) Validate input for CREATE2 opcode
       # Code: PUSH1(1) DUP1 DUP1 DUP1 CREATE2 STOP
       - |
         :label valid :raw 0x
@@ -4246,7 +4243,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 88
-      # EOF1V0089 (Valid) Validate input for STATICCALL opcode
+      # EOF1V5450_0089 (Valid) Validate input for STATICCALL opcode
       # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 STATICCALL STOP
       - |
         :label valid :raw 0x
@@ -4291,7 +4288,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 89
-      # EOF1V0090 (Valid) Validate input for REVERT opcode
+      # EOF1V5450_0090 (Valid) Validate input for REVERT opcode
       # Code: PUSH1(1) DUP1 REVERT
       - |
         :label valid :raw 0x
@@ -4331,7 +4328,7 @@ validInvalid:
               fd # REVERT 
                  # Data section (empty)
       # Data: 90
-      # EOF1V0091 (Valid) Containing terminating opcode RETURN at the end
+      # EOF1V5450_0091 (Valid) Containing terminating opcode RETURN at the end
       # Code: PUSH1(1) POP PUSH1(0) DUP1 RETURN
       - |
         :label valid :raw 0x
@@ -4373,7 +4370,7 @@ validInvalid:
               f3 # RETURN 
                  # Data section (empty)
       # Data: 91
-      # EOF1V0092 (Valid) Containing terminating opcode REVERT at the end
+      # EOF1V5450_0092 (Valid) Containing terminating opcode REVERT at the end
       # Code: PUSH1(1) POP PUSH1(0) DUP1 REVERT
       - |
         :label valid :raw 0x
@@ -4415,7 +4412,7 @@ validInvalid:
               fd # REVERT 
                  # Data section (empty)
       # Data: 92
-      # EOF1V0093 (Valid) Loop ending with unconditional RJUMP (a)
+      # EOF1V5450_0093 (Valid) Loop ending with unconditional RJUMP (a)
       # Code: start: RJUMP(start)
       - |
         :label valid :raw 0x
@@ -4453,7 +4450,7 @@ validInvalid:
           5cfffd # RJUMP(-3) 
                  # Data section (empty)
       # Data: 93
-      # EOF1V0094 (Valid) Loop ending with unconditional RJUMP (b)
+      # EOF1V5450_0094 (Valid) Loop ending with unconditional RJUMP (b)
       # Code: PUSH1(10) start: PUSH1(1) SWAP1 SUB DUP1 RJUMPI(end) STOP end: RJUMP(start)
       - |
         :label valid :raw 0x
@@ -4498,7 +4495,7 @@ validInvalid:
           5cfff4 # RJUMP(-12) 
                  # Data section (empty)
       # Data: 94
-      # EOF1V0095 (Valid) Functions ending with RETF
+      # EOF1V5450_0095 (Valid) Functions ending with RETF
       # Code[0](Types: 0:0): PUSH1(0) CALLF(1) STOP
       # Code[1](Types: 1:1): RETF
       # Code[2](Types: 0:2): PUSH1(0) PUSH2(0x0000) RETF
@@ -4556,7 +4553,7 @@ validInvalid:
               b1 # RETF 
                  # Data section (empty)
       # Data: 95
-      # EOF1V0096 (Valid) Stack is not required to be empty on terminating instruction RETURN
+      # EOF1V5450_0096 (Valid) Stack is not required to be empty on terminating instruction RETURN
       # Code: PUSH1(0) DUP1 DUP1 DUP1 DUP1 RETURN
       - |
         :label valid :raw 0x
@@ -4599,7 +4596,7 @@ validInvalid:
               f3 # RETURN 
                  # Data section (empty)
       # Data: 96
-      # EOF1V0097 (Valid) Stack is not required to be empty on terminating instruction REVERT
+      # EOF1V5450_0097 (Valid) Stack is not required to be empty on terminating instruction REVERT
       # Code: PUSH1(0) DUP1 DUP1 DUP1 DUP1 REVERT
       - |
         :label valid :raw 0x
@@ -4642,7 +4639,7 @@ validInvalid:
               fd # REVERT 
                  # Data section (empty)
       # Data: 97
-      # EOF1V0098 (Valid) RETF returning maximum number of outputs (127)
+      # EOF1V5450_0098 (Valid) RETF returning maximum number of outputs (127)
       # Code[0](Types: 0:0): CALLF(1) STOP
       # Code[1](Types: 0:127): PUSH1(0) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 RETF
       - |
@@ -4816,7 +4813,7 @@ validInvalid:
               b1 # RETF 
                  # Data section (empty)
       # Data: 98
-      # EOF1V0099 (Invalid) Stack height mismatch for different paths (a)
+      # EOF1I5450_0001 (Invalid) Stack height mismatch for different paths (a)
       # Code: PUSH1(0) RJUMPI(label_true) PUSH1(1) label_true: PUSH1(2) STOP
       - |
         :label invalid :raw 0x
@@ -4858,7 +4855,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 99
-      # EOF1V0100 (Invalid) Stack height mismatch for different paths (b)
+      # EOF1I5450_0002 (Invalid) Stack height mismatch for different paths (b)
       # Code: PUSH1(0) RJUMPI(label_true) label_false: PUSH1(1) RJUMP(exit) label_true: PUSH1(2) PUSH1(3) exit: STOP
       - |
         :label invalid :raw 0x
@@ -4902,7 +4899,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 100
-      # EOF1V0101 (Invalid) Calls returning different number of outputs
+      # EOF1I5450_0003 (Invalid) Calls returning different number of outputs
       # Code[0](Types: 0:0): PUSH1(0) RJUMPI(label_true) label_false: CALLF(1) RJUMP(exit) label_true: CALLF(2) exit: STOP
       # Code[1](Types: 0:1): PUSH1(1) RETF
       # Code[2](Types: 0:2): PUSH1(1) DUP1 RETF
@@ -4964,7 +4961,7 @@ validInvalid:
               b1 # RETF 
                  # Data section (empty)
       # Data: 101
-      # EOF1V0102 (Invalid) Pushing loop
+      # EOF1I5450_0004 (Invalid) Pushing loop
       # Code: start: PUSH1(0) RJUMP(start)
       - |
         :label invalid :raw 0x
@@ -5003,7 +5000,7 @@ validInvalid:
           5cfffb # RJUMP(-5) 
                  # Data section (empty)
       # Data: 102
-      # EOF1V0103 (Invalid) Popping loop
+      # EOF1I5450_0005 (Invalid) Popping loop
       # Code: PUSH1(0) DUP1 DUP1 start: POP RJUMP(start)
       - |
         :label invalid :raw 0x
@@ -5045,7 +5042,7 @@ validInvalid:
           5cfffc # RJUMP(-4) 
                  # Data section (empty)
       # Data: 103
-      # EOF1V0104 (Invalid) Jump table with different stack heights
+      # EOF1I5450_0006 (Invalid) Jump table with different stack heights
       # Code: PUSH1(0) RJUMPV(case1,case2) PUSH1(1) RJUMP(exit) case1: PUSH1(2) PUSH1(3) RJUMP(exit) case2: PUSH1(3) PUSH1(4) PUSH1(5) exit: STOP
       - |
         :label invalid :raw 0x
@@ -5093,7 +5090,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 104
-      # EOF1V0105 (Invalid) Stack underflow for opcode ADD
+      # EOF1I5450_0007 (Invalid) Stack underflow for opcode ADD
       # Code: PUSH1(1) ADD STOP
       - |
         :label invalid :raw 0x
@@ -5133,7 +5130,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 105
-      # EOF1V0106 (Invalid) Stack underflow for opcode MUL
+      # EOF1I5450_0008 (Invalid) Stack underflow for opcode MUL
       # Code: PUSH1(1) MUL STOP
       - |
         :label invalid :raw 0x
@@ -5173,7 +5170,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 106
-      # EOF1V0107 (Invalid) Stack underflow for opcode SUB
+      # EOF1I5450_0009 (Invalid) Stack underflow for opcode SUB
       # Code: PUSH1(1) SUB STOP
       - |
         :label invalid :raw 0x
@@ -5213,7 +5210,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 107
-      # EOF1V0108 (Invalid) Stack underflow for opcode DIV
+      # EOF1I5450_0010 (Invalid) Stack underflow for opcode DIV
       # Code: PUSH1(1) DIV STOP
       - |
         :label invalid :raw 0x
@@ -5253,7 +5250,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 108
-      # EOF1V0109 (Invalid) Stack underflow for opcode SDIV
+      # EOF1I5450_0011 (Invalid) Stack underflow for opcode SDIV
       # Code: PUSH1(1) SDIV STOP
       - |
         :label invalid :raw 0x
@@ -5293,7 +5290,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 109
-      # EOF1V0110 (Invalid) Stack underflow for opcode MOD
+      # EOF1I5450_0012 (Invalid) Stack underflow for opcode MOD
       # Code: PUSH1(1) MOD STOP
       - |
         :label invalid :raw 0x
@@ -5333,7 +5330,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 110
-      # EOF1V0111 (Invalid) Stack underflow for opcode SMOD
+      # EOF1I5450_0013 (Invalid) Stack underflow for opcode SMOD
       # Code: PUSH1(1) SMOD STOP
       - |
         :label invalid :raw 0x
@@ -5373,7 +5370,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 111
-      # EOF1V0112 (Invalid) Stack underflow for opcode ADDMOD
+      # EOF1I5450_0014 (Invalid) Stack underflow for opcode ADDMOD
       # Code: PUSH1(1) PUSH1(1) ADDMOD STOP
       - |
         :label invalid :raw 0x
@@ -5414,7 +5411,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 112
-      # EOF1V0113 (Invalid) Stack underflow for opcode MULMOD
+      # EOF1I5450_0015 (Invalid) Stack underflow for opcode MULMOD
       # Code: PUSH1(1) PUSH1(1) MULMOD STOP
       - |
         :label invalid :raw 0x
@@ -5455,7 +5452,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 113
-      # EOF1V0114 (Invalid) Stack underflow for opcode EXP
+      # EOF1I5450_0016 (Invalid) Stack underflow for opcode EXP
       # Code: PUSH1(1) EXP STOP
       - |
         :label invalid :raw 0x
@@ -5495,7 +5492,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 114
-      # EOF1V0115 (Invalid) Stack underflow for opcode SIGNEXTEND
+      # EOF1I5450_0017 (Invalid) Stack underflow for opcode SIGNEXTEND
       # Code: PUSH1(1) SIGNEXTEND STOP
       - |
         :label invalid :raw 0x
@@ -5535,7 +5532,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 115
-      # EOF1V0116 (Invalid) Stack underflow for opcode LT
+      # EOF1I5450_0018 (Invalid) Stack underflow for opcode LT
       # Code: PUSH1(1) LT STOP
       - |
         :label invalid :raw 0x
@@ -5575,7 +5572,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 116
-      # EOF1V0117 (Invalid) Stack underflow for opcode GT
+      # EOF1I5450_0019 (Invalid) Stack underflow for opcode GT
       # Code: PUSH1(1) GT STOP
       - |
         :label invalid :raw 0x
@@ -5615,7 +5612,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 117
-      # EOF1V0118 (Invalid) Stack underflow for opcode SLT
+      # EOF1I5450_0020 (Invalid) Stack underflow for opcode SLT
       # Code: PUSH1(1) SLT STOP
       - |
         :label invalid :raw 0x
@@ -5655,7 +5652,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 118
-      # EOF1V0119 (Invalid) Stack underflow for opcode SGT
+      # EOF1I5450_0021 (Invalid) Stack underflow for opcode SGT
       # Code: PUSH1(1) SGT STOP
       - |
         :label invalid :raw 0x
@@ -5695,7 +5692,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 119
-      # EOF1V0120 (Invalid) Stack underflow for opcode EQ
+      # EOF1I5450_0022 (Invalid) Stack underflow for opcode EQ
       # Code: PUSH1(1) EQ STOP
       - |
         :label invalid :raw 0x
@@ -5735,7 +5732,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 120
-      # EOF1V0121 (Invalid) Stack underflow for opcode ISZERO
+      # EOF1I5450_0023 (Invalid) Stack underflow for opcode ISZERO
       # Code: ISZERO STOP
       - |
         :label invalid :raw 0x
@@ -5774,7 +5771,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 121
-      # EOF1V0122 (Invalid) Stack underflow for opcode AND
+      # EOF1I5450_0024 (Invalid) Stack underflow for opcode AND
       # Code: PUSH1(1) AND STOP
       - |
         :label invalid :raw 0x
@@ -5814,7 +5811,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 122
-      # EOF1V0123 (Invalid) Stack underflow for opcode OR
+      # EOF1I5450_0025 (Invalid) Stack underflow for opcode OR
       # Code: PUSH1(1) OR STOP
       - |
         :label invalid :raw 0x
@@ -5854,7 +5851,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 123
-      # EOF1V0124 (Invalid) Stack underflow for opcode XOR
+      # EOF1I5450_0026 (Invalid) Stack underflow for opcode XOR
       # Code: PUSH1(1) XOR STOP
       - |
         :label invalid :raw 0x
@@ -5894,7 +5891,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 124
-      # EOF1V0125 (Invalid) Stack underflow for opcode NOT
+      # EOF1I5450_0027 (Invalid) Stack underflow for opcode NOT
       # Code: NOT STOP
       - |
         :label invalid :raw 0x
@@ -5933,7 +5930,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 125
-      # EOF1V0126 (Invalid) Stack underflow for opcode BYTE
+      # EOF1I5450_0028 (Invalid) Stack underflow for opcode BYTE
       # Code: PUSH1(1) BYTE STOP
       - |
         :label invalid :raw 0x
@@ -5973,7 +5970,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 126
-      # EOF1V0127 (Invalid) Stack underflow for opcode SHL
+      # EOF1I5450_0029 (Invalid) Stack underflow for opcode SHL
       # Code: PUSH1(1) SHL STOP
       - |
         :label invalid :raw 0x
@@ -6013,7 +6010,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 127
-      # EOF1V0128 (Invalid) Stack underflow for opcode SHR
+      # EOF1I5450_0030 (Invalid) Stack underflow for opcode SHR
       # Code: PUSH1(1) SHR STOP
       - |
         :label invalid :raw 0x
@@ -6053,7 +6050,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 128
-      # EOF1V0129 (Invalid) Stack underflow for opcode SAR
+      # EOF1I5450_0031 (Invalid) Stack underflow for opcode SAR
       # Code: PUSH1(1) SAR STOP
       - |
         :label invalid :raw 0x
@@ -6093,7 +6090,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 129
-      # EOF1V0130 (Invalid) Stack underflow for opcode SHA3
+      # EOF1I5450_0032 (Invalid) Stack underflow for opcode SHA3
       # Code: PUSH1(1) SHA3 STOP
       - |
         :label invalid :raw 0x
@@ -6133,7 +6130,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 130
-      # EOF1V0131 (Invalid) Stack underflow for opcode BALANCE
+      # EOF1I5450_0033 (Invalid) Stack underflow for opcode BALANCE
       # Code: BALANCE STOP
       - |
         :label invalid :raw 0x
@@ -6172,7 +6169,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 131
-      # EOF1V0132 (Invalid) Stack underflow for opcode CALLDATALOAD
+      # EOF1I5450_0034 (Invalid) Stack underflow for opcode CALLDATALOAD
       # Code: CALLDATALOAD STOP
       - |
         :label invalid :raw 0x
@@ -6211,7 +6208,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 132
-      # EOF1V0133 (Invalid) Stack underflow for opcode CALLDATACOPY
+      # EOF1I5450_0035 (Invalid) Stack underflow for opcode CALLDATACOPY
       # Code: PUSH1(1) PUSH1(1) CALLDATACOPY STOP
       - |
         :label invalid :raw 0x
@@ -6252,7 +6249,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 133
-      # EOF1V0134 (Invalid) Stack underflow for opcode CODECOPY
+      # EOF1I5450_0036 (Invalid) Stack underflow for opcode CODECOPY
       # Code: PUSH1(1) PUSH1(1) CODECOPY STOP
       - |
         :label invalid :raw 0x
@@ -6293,7 +6290,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 134
-      # EOF1V0135 (Invalid) Stack underflow for opcode EXTCODESIZE
+      # EOF1I5450_0037 (Invalid) Stack underflow for opcode EXTCODESIZE
       # Code: EXTCODESIZE STOP
       - |
         :label invalid :raw 0x
@@ -6332,7 +6329,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 135
-      # EOF1V0136 (Invalid) Stack underflow for opcode EXTCODECOPY
+      # EOF1I5450_0038 (Invalid) Stack underflow for opcode EXTCODECOPY
       # Code: PUSH1(1) PUSH1(1) PUSH1(1) EXTCODECOPY STOP
       - |
         :label invalid :raw 0x
@@ -6374,7 +6371,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 136
-      # EOF1V0137 (Invalid) Stack underflow for opcode RETURNDATACOPY
+      # EOF1I5450_0039 (Invalid) Stack underflow for opcode RETURNDATACOPY
       # Code: PUSH1(1) PUSH1(1) RETURNDATACOPY STOP
       - |
         :label invalid :raw 0x
@@ -6415,7 +6412,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 137
-      # EOF1V0138 (Invalid) Stack underflow for opcode EXTCODEHASH
+      # EOF1I5450_0040 (Invalid) Stack underflow for opcode EXTCODEHASH
       # Code: EXTCODEHASH STOP
       - |
         :label invalid :raw 0x
@@ -6454,7 +6451,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 138
-      # EOF1V0139 (Invalid) Stack underflow for opcode BLOCKHASH
+      # EOF1I5450_0041 (Invalid) Stack underflow for opcode BLOCKHASH
       # Code: BLOCKHASH STOP
       - |
         :label invalid :raw 0x
@@ -6493,7 +6490,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 139
-      # EOF1V0140 (Invalid) Stack underflow for opcode POP
+      # EOF1I5450_0042 (Invalid) Stack underflow for opcode POP
       # Code: POP STOP
       - |
         :label invalid :raw 0x
@@ -6532,7 +6529,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 140
-      # EOF1V0141 (Invalid) Stack underflow for opcode MLOAD
+      # EOF1I5450_0043 (Invalid) Stack underflow for opcode MLOAD
       # Code: MLOAD STOP
       - |
         :label invalid :raw 0x
@@ -6571,7 +6568,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 141
-      # EOF1V0142 (Invalid) Stack underflow for opcode MSTORE
+      # EOF1I5450_0044 (Invalid) Stack underflow for opcode MSTORE
       # Code: PUSH1(1) MSTORE STOP
       - |
         :label invalid :raw 0x
@@ -6611,7 +6608,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 142
-      # EOF1V0143 (Invalid) Stack underflow for opcode MSTORE8
+      # EOF1I5450_0045 (Invalid) Stack underflow for opcode MSTORE8
       # Code: PUSH1(1) MSTORE8 STOP
       - |
         :label invalid :raw 0x
@@ -6651,7 +6648,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 143
-      # EOF1V0144 (Invalid) Stack underflow for opcode SLOAD
+      # EOF1I5450_0046 (Invalid) Stack underflow for opcode SLOAD
       # Code: SLOAD STOP
       - |
         :label invalid :raw 0x
@@ -6690,7 +6687,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 144
-      # EOF1V0145 (Invalid) Stack underflow for opcode SSTORE
+      # EOF1I5450_0047 (Invalid) Stack underflow for opcode SSTORE
       # Code: PUSH1(1) SSTORE STOP
       - |
         :label invalid :raw 0x
@@ -6730,7 +6727,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 145
-      # EOF1V0146 (Invalid) Stack underflow for opcode DUP1
+      # EOF1I5450_0048 (Invalid) Stack underflow for opcode DUP1
       # Code: DUP1 STOP
       - |
         :label invalid :raw 0x
@@ -6769,7 +6766,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 146
-      # EOF1V0147 (Invalid) Stack underflow for opcode DUP2
+      # EOF1I5450_0049 (Invalid) Stack underflow for opcode DUP2
       # Code: PUSH1(1) DUP2 STOP
       - |
         :label invalid :raw 0x
@@ -6809,7 +6806,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 147
-      # EOF1V0148 (Invalid) Stack underflow for opcode DUP3
+      # EOF1I5450_0050 (Invalid) Stack underflow for opcode DUP3
       # Code: PUSH1(1) PUSH1(1) DUP3 STOP
       - |
         :label invalid :raw 0x
@@ -6850,7 +6847,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 148
-      # EOF1V0149 (Invalid) Stack underflow for opcode DUP4
+      # EOF1I5450_0051 (Invalid) Stack underflow for opcode DUP4
       # Code: PUSH1(1) PUSH1(1) PUSH1(1) DUP4 STOP
       - |
         :label invalid :raw 0x
@@ -6892,7 +6889,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 149
-      # EOF1V0150 (Invalid) Stack underflow for opcode DUP5
+      # EOF1I5450_0052 (Invalid) Stack underflow for opcode DUP5
       # Code: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) DUP5 STOP
       - |
         :label invalid :raw 0x
@@ -6935,7 +6932,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 150
-      # EOF1V0151 (Invalid) Stack underflow for opcode DUP6
+      # EOF1I5450_0053 (Invalid) Stack underflow for opcode DUP6
       # Code: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) DUP6 STOP
       - |
         :label invalid :raw 0x
@@ -6979,7 +6976,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 151
-      # EOF1V0152 (Invalid) Stack underflow for opcode DUP7
+      # EOF1I5450_0054 (Invalid) Stack underflow for opcode DUP7
       # Code: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) DUP7 STOP
       - |
         :label invalid :raw 0x
@@ -7024,7 +7021,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 152
-      # EOF1V0153 (Invalid) Stack underflow for opcode DUP8
+      # EOF1I5450_0055 (Invalid) Stack underflow for opcode DUP8
       # Code: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) DUP8 STOP
       - |
         :label invalid :raw 0x
@@ -7070,7 +7067,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 153
-      # EOF1V0154 (Invalid) Stack underflow for opcode DUP9
+      # EOF1I5450_0056 (Invalid) Stack underflow for opcode DUP9
       # Code: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) DUP9 STOP
       - |
         :label invalid :raw 0x
@@ -7117,7 +7114,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 154
-      # EOF1V0155 (Invalid) Stack underflow for opcode DUP10
+      # EOF1I5450_0057 (Invalid) Stack underflow for opcode DUP10
       # Code: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) DUP10 STOP
       - |
         :label invalid :raw 0x
@@ -7165,7 +7162,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 155
-      # EOF1V0156 (Invalid) Stack underflow for opcode DUP11
+      # EOF1I5450_0058 (Invalid) Stack underflow for opcode DUP11
       # Code: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) DUP11 STOP
       - |
         :label invalid :raw 0x
@@ -7214,7 +7211,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 156
-      # EOF1V0157 (Invalid) Stack underflow for opcode DUP12
+      # EOF1I5450_0059 (Invalid) Stack underflow for opcode DUP12
       # Code: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) DUP12 STOP
       - |
         :label invalid :raw 0x
@@ -7264,7 +7261,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 157
-      # EOF1V0158 (Invalid) Stack underflow for opcode DUP13
+      # EOF1I5450_0060 (Invalid) Stack underflow for opcode DUP13
       # Code: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) DUP13 STOP
       - |
         :label invalid :raw 0x
@@ -7315,7 +7312,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 158
-      # EOF1V0159 (Invalid) Stack underflow for opcode DUP14
+      # EOF1I5450_0061 (Invalid) Stack underflow for opcode DUP14
       # Code: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) DUP14 STOP
       - |
         :label invalid :raw 0x
@@ -7367,7 +7364,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 159
-      # EOF1V0160 (Invalid) Stack underflow for opcode DUP15
+      # EOF1I5450_0062 (Invalid) Stack underflow for opcode DUP15
       # Code: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) DUP15 STOP
       - |
         :label invalid :raw 0x
@@ -7420,7 +7417,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 160
-      # EOF1V0161 (Invalid) Stack underflow for opcode DUP16
+      # EOF1I5450_0063 (Invalid) Stack underflow for opcode DUP16
       # Code: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) DUP16 STOP
       - |
         :label invalid :raw 0x
@@ -7474,7 +7471,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 161
-      # EOF1V0162 (Invalid) Stack underflow for opcode SWAP1
+      # EOF1I5450_0064 (Invalid) Stack underflow for opcode SWAP1
       # Code: PUSH1(1) SWAP1 STOP
       - |
         :label invalid :raw 0x
@@ -7514,7 +7511,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 162
-      # EOF1V0163 (Invalid) Stack underflow for opcode SWAP2
+      # EOF1I5450_0065 (Invalid) Stack underflow for opcode SWAP2
       # Code: PUSH1(1) PUSH1(1) SWAP2 STOP
       - |
         :label invalid :raw 0x
@@ -7555,7 +7552,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 163
-      # EOF1V0164 (Invalid) Stack underflow for opcode SWAP3
+      # EOF1I5450_0066 (Invalid) Stack underflow for opcode SWAP3
       # Code: PUSH1(1) PUSH1(1) PUSH1(1) SWAP3 STOP
       - |
         :label invalid :raw 0x
@@ -7597,7 +7594,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 164
-      # EOF1V0165 (Invalid) Stack underflow for opcode SWAP4
+      # EOF1I5450_0067 (Invalid) Stack underflow for opcode SWAP4
       # Code: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) SWAP4 STOP
       - |
         :label invalid :raw 0x
@@ -7640,7 +7637,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 165
-      # EOF1V0166 (Invalid) Stack underflow for opcode SWAP5
+      # EOF1I5450_0068 (Invalid) Stack underflow for opcode SWAP5
       # Code: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) SWAP5 STOP
       - |
         :label invalid :raw 0x
@@ -7684,7 +7681,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 166
-      # EOF1V0167 (Invalid) Stack underflow for opcode SWAP6
+      # EOF1I5450_0069 (Invalid) Stack underflow for opcode SWAP6
       # Code: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) SWAP6 STOP
       - |
         :label invalid :raw 0x
@@ -7729,7 +7726,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 167
-      # EOF1V0168 (Invalid) Stack underflow for opcode SWAP7
+      # EOF1I5450_0070 (Invalid) Stack underflow for opcode SWAP7
       # Code: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) SWAP7 STOP
       - |
         :label invalid :raw 0x
@@ -7775,7 +7772,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 168
-      # EOF1V0169 (Invalid) Stack underflow for opcode SWAP8
+      # EOF1I5450_0071 (Invalid) Stack underflow for opcode SWAP8
       # Code: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) SWAP8 STOP
       - |
         :label invalid :raw 0x
@@ -7822,7 +7819,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 169
-      # EOF1V0170 (Invalid) Stack underflow for opcode SWAP9
+      # EOF1I5450_0072 (Invalid) Stack underflow for opcode SWAP9
       # Code: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) SWAP9 STOP
       - |
         :label invalid :raw 0x
@@ -7870,7 +7867,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 170
-      # EOF1V0171 (Invalid) Stack underflow for opcode SWAP10
+      # EOF1I5450_0073 (Invalid) Stack underflow for opcode SWAP10
       # Code: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) SWAP10 STOP
       - |
         :label invalid :raw 0x
@@ -7919,7 +7916,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 171
-      # EOF1V0172 (Invalid) Stack underflow for opcode SWAP11
+      # EOF1I5450_0074 (Invalid) Stack underflow for opcode SWAP11
       # Code: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) SWAP11 STOP
       - |
         :label invalid :raw 0x
@@ -7969,7 +7966,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 172
-      # EOF1V0173 (Invalid) Stack underflow for opcode SWAP12
+      # EOF1I5450_0075 (Invalid) Stack underflow for opcode SWAP12
       # Code: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) SWAP12 STOP
       - |
         :label invalid :raw 0x
@@ -8020,7 +8017,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 173
-      # EOF1V0174 (Invalid) Stack underflow for opcode SWAP13
+      # EOF1I5450_0076 (Invalid) Stack underflow for opcode SWAP13
       # Code: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) SWAP13 STOP
       - |
         :label invalid :raw 0x
@@ -8072,7 +8069,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 174
-      # EOF1V0175 (Invalid) Stack underflow for opcode SWAP14
+      # EOF1I5450_0077 (Invalid) Stack underflow for opcode SWAP14
       # Code: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) SWAP14 STOP
       - |
         :label invalid :raw 0x
@@ -8125,7 +8122,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 175
-      # EOF1V0176 (Invalid) Stack underflow for opcode SWAP15
+      # EOF1I5450_0078 (Invalid) Stack underflow for opcode SWAP15
       # Code: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) SWAP15 STOP
       - |
         :label invalid :raw 0x
@@ -8179,7 +8176,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 176
-      # EOF1V0177 (Invalid) Stack underflow for opcode SWAP16
+      # EOF1I5450_0079 (Invalid) Stack underflow for opcode SWAP16
       # Code: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) SWAP16 STOP
       - |
         :label invalid :raw 0x
@@ -8234,7 +8231,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 177
-      # EOF1V0178 (Invalid) Stack underflow for opcode LOG0
+      # EOF1I5450_0080 (Invalid) Stack underflow for opcode LOG0
       # Code: PUSH1(1) LOG0 STOP
       - |
         :label invalid :raw 0x
@@ -8274,7 +8271,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 178
-      # EOF1V0179 (Invalid) Stack underflow for opcode LOG1
+      # EOF1I5450_0081 (Invalid) Stack underflow for opcode LOG1
       # Code: PUSH1(1) PUSH1(1) LOG1 STOP
       - |
         :label invalid :raw 0x
@@ -8315,7 +8312,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 179
-      # EOF1V0180 (Invalid) Stack underflow for opcode LOG2
+      # EOF1I5450_0082 (Invalid) Stack underflow for opcode LOG2
       # Code: PUSH1(1) PUSH1(1) PUSH1(1) LOG2 STOP
       - |
         :label invalid :raw 0x
@@ -8357,7 +8354,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 180
-      # EOF1V0181 (Invalid) Stack underflow for opcode LOG3
+      # EOF1I5450_0083 (Invalid) Stack underflow for opcode LOG3
       # Code: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) LOG3 STOP
       - |
         :label invalid :raw 0x
@@ -8400,7 +8397,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 181
-      # EOF1V0182 (Invalid) Stack underflow for opcode LOG4
+      # EOF1I5450_0084 (Invalid) Stack underflow for opcode LOG4
       # Code: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) LOG4 STOP
       - |
         :label invalid :raw 0x
@@ -8444,7 +8441,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 182
-      # EOF1V0183 (Invalid) Stack underflow for opcode CREATE
+      # EOF1I5450_0085 (Invalid) Stack underflow for opcode CREATE
       # Code: PUSH1(1) PUSH1(1) CREATE STOP
       - |
         :label invalid :raw 0x
@@ -8485,7 +8482,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 183
-      # EOF1V0184 (Invalid) Stack underflow for opcode CALL
+      # EOF1I5450_0086 (Invalid) Stack underflow for opcode CALL
       # Code: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) CALL STOP
       - |
         :label invalid :raw 0x
@@ -8530,7 +8527,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 184
-      # EOF1V0185 (Invalid) Stack underflow for opcode RETURN
+      # EOF1I5450_0087 (Invalid) Stack underflow for opcode RETURN
       # Code: PUSH1(1) RETURN
       - |
         :label invalid :raw 0x
@@ -8569,7 +8566,7 @@ validInvalid:
               f3 # RETURN 
                  # Data section (empty)
       # Data: 185
-      # EOF1V0186 (Invalid) Stack underflow for opcode DELEGATECALL
+      # EOF1I5450_0088 (Invalid) Stack underflow for opcode DELEGATECALL
       # Code: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) DELEGATECALL STOP
       - |
         :label invalid :raw 0x
@@ -8613,7 +8610,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 186
-      # EOF1V0187 (Invalid) Stack underflow for opcode CREATE2
+      # EOF1I5450_0089 (Invalid) Stack underflow for opcode CREATE2
       # Code: PUSH1(1) PUSH1(1) PUSH1(1) CREATE2 STOP
       - |
         :label invalid :raw 0x
@@ -8655,7 +8652,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 187
-      # EOF1V0188 (Invalid) Stack underflow for opcode STATICCALL
+      # EOF1I5450_0090 (Invalid) Stack underflow for opcode STATICCALL
       # Code: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) STATICCALL STOP
       - |
         :label invalid :raw 0x
@@ -8699,7 +8696,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 188
-      # EOF1V0189 (Invalid) Stack underflow for opcode REVERT
+      # EOF1I5450_0091 (Invalid) Stack underflow for opcode REVERT
       # Code: PUSH1(1) REVERT
       - |
         :label invalid :raw 0x
@@ -8738,7 +8735,7 @@ validInvalid:
               fd # REVERT 
                  # Data section (empty)
       # Data: 189
-      # EOF1V0190 (Invalid) Calling function without enough stack items: Function 0 calls Function 1 without enough parameters
+      # EOF1I5450_0092 (Invalid) Calling function without enough stack items: Function 0 calls Function 1 without enough parameters
       # Code[0](Types: 0:0): CALLF(1) STOP
       # Code[1](Types: 1:0): PUSH1(0) DUP1 CALLF(2)
       # Code[2](Types: 2:0): POP POP RETF
@@ -8797,7 +8794,7 @@ validInvalid:
               b1 # RETF 
                  # Data section (empty)
       # Data: 190
-      # EOF1V0191 (Invalid) Calling function without enough stack items: Function 1 calls Function 2 with enough parameters
+      # EOF1I5450_0093 (Invalid) Calling function without enough stack items: Function 1 calls Function 2 with enough parameters
       # Code[0](Types: 0:0): PUSH1(0) CALLF(1) STOP
       # Code[1](Types: 1:0): PUSH1(0) CALLF(2)
       # Code[2](Types: 2:0): POP POP RETF
@@ -8856,7 +8853,7 @@ validInvalid:
               b1 # RETF 
                  # Data section (empty)
       # Data: 191
-      # EOF1V0192 (Invalid) Calling function without enough stack items: Function 0 calls Function 1 without enought parameters, Function 1 calls Function 2 without enough parameers
+      # EOF1I5450_0094 (Invalid) Calling function without enough stack items: Function 0 calls Function 1 without enought parameters, Function 1 calls Function 2 without enough parameers
       # Code[0](Types: 0:0): CALLF(1) STOP
       # Code[1](Types: 1:0): PUSH1(0) CALLF(2)
       # Code[2](Types: 2:0): POP POP CALLF(3)
@@ -8914,16 +8911,16 @@ validInvalid:
           b00003 # CALLF(3) 
                  # Data section (empty)
       # Data: 192
-      # EOF1V0193 (Invalid) Stack Overflow: Function pushing more than 1024 items to the stack
+      # EOF1I5450_0095 (Invalid) Stack Overflow: Function pushing more than 1024 items to the stack
       # Code: PUSH1(0) (1024 Times)
       - ':label invalid :raw 0xef0001010004020001000f03081300000000036108136100226000396108136000f3ef0001010004020001080003000000000004006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000'
       # Data: 193
-      # EOF1V0194 (Invalid) Stack Overflow: Function 1 when called by Function 0 pushes more than 1024 items to the stack
+      # EOF1I5450_0096 (Invalid) Stack Overflow: Function 1 when called by Function 0 pushes more than 1024 items to the stack
       # Code[0](Types: 0:0): PUSH1(0) (1020 Times) CALLF(1)
       # Code[1](Types: 0:5): PUSH1(0) (5 Times) RETF
       - ':label invalid :raw 0xef0001010004020001000f03081f000000000361081f61002260003961081f6000f3ef000101000802000207fb000b030000000000040100050005600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000b0000160006000600060006000b1'
       # Data: 194
-      # EOF1V0195 (Invalid) Function ending with non-terminating instruction (a)
+      # EOF1I5450_0097 (Invalid) Function ending with non-terminating instruction (a)
       # Code: PUSH1(0)
       - |
         :label invalid :raw 0x
@@ -8961,7 +8958,7 @@ validInvalid:
             6000 # PUSH1(0) 
                  # Data section (empty)
       # Data: 195
-      # EOF1V0196 (Invalid) Function ending with non-terminating instruction (b)
+      # EOF1I5450_0098 (Invalid) Function ending with non-terminating instruction (b)
       # Code: PUSH1(0) RJUMPI(exit) STOP exit: NOP
       - |
         :label invalid :raw 0x
@@ -9002,7 +8999,7 @@ validInvalid:
               5b # NOP 
                  # Data section (empty)
       # Data: 196
-      # EOF1V0197 (Invalid) Function ending with non-terminating instruction (c)
+      # EOF1I5450_0099 (Invalid) Function ending with non-terminating instruction (c)
       # Code: PUSH1(0) RJUMPV(case1,case2) INVALID case1: STOP case2: NOP
       - |
         :label invalid :raw 0x
@@ -9044,7 +9041,7 @@ validInvalid:
               5b # NOP 
                  # Data section (empty)
       # Data: 197
-      # EOF1V0198 (Invalid) Function containing unreachable code after RETURN
+      # EOF1I5450_0100 (Invalid) Function containing unreachable code after RETURN
       # Code: PUSH1(0) PUSH1(0) RETURN STOP
       - |
         :label invalid :raw 0x
@@ -9085,7 +9082,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 198
-      # EOF1V0199 (Invalid) Function containing unreachable code after REVERT
+      # EOF1I5450_0101 (Invalid) Function containing unreachable code after REVERT
       # Code: PUSH1(0) PUSH1(0) REVERT STOP
       - |
         :label invalid :raw 0x
@@ -9126,7 +9123,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 199
-      # EOF1V0200 (Invalid) Unreachable code after RJUMP
+      # EOF1I5450_0102 (Invalid) Unreachable code after RJUMP
       # Code: RJUMP(start) PUSH1(0) start: PUSH1(0) STOP
       - |
         :label invalid :raw 0x
@@ -9167,7 +9164,7 @@ validInvalid:
               00 # STOP 
                  # Data section (empty)
       # Data: 200
-      # EOF1V0201 (Invalid) Unreachable code after infinite loop
+      # EOF1I5450_0103 (Invalid) Unreachable code after infinite loop
       # Code: RJUMP(start) PUSH1(0) start: PUSH1(0) POP RJUMP(start) STOP
       - |
         :label invalid :raw 0x
@@ -9209,7 +9206,6 @@ validInvalid:
           5cfffa # RJUMP(-6) 
               00 # STOP 
                  # Data section (empty)
-      # <@f2
   expect:
   - indexes:
       data:
