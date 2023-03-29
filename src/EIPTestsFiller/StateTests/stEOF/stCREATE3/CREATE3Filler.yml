@@ -1,0 +1,76 @@
+CREATE3:
+  env:
+    currentCoinbase: 2adc25665018aa1fe0e6bc666dac8fc2697ff9ba
+    currentDifficulty: '0x020000'
+    currentGasLimit: '89128960'
+    currentBaseFee: '10'
+    currentNumber: '1'
+    currentTimestamp: '1000'
+    previousHash: 5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6
+
+  pre:
+    a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: 200000000
+      code: ''
+      nonce: 0
+      storage: {}
+    b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: 0
+      code: |
+        :yul 
+        {
+          let aux_data_size := calldatasize()
+          calldatacopy(0, 0, aux_data_size)
+          sstore(0, call(gas(), 0xc94f5374fce5edbc8e2a8697c15331677e6ebf0b, 0, 0, aux_data_size, aux_data_size, 32))
+          sstore(1, mload(aux_data_size))
+          sstore(2, 1)
+        }
+      nonce: 0
+      storage: {}
+    c94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: 0
+      # Outer container code: 
+      #   calldatacopy(0, 0, calldatasize())
+      #   create3{0}(0, 0, calldatasize(), 0xff)
+      #   mstore(0)
+      #   return(0, 32)
+      #
+      #   Embedded container 0 (inticontainer) code:
+      #     calldatacopy(0, 0, calldatasize())
+      #     returncontract{0}(0, calldatasize())
+      #
+      #     Embedded container 0 (deployed container):
+      #       code: "0xfe"
+      #       data: "0xabcdef"
+      code: '0xef00010100040200010017030000040001003a000000000436600060003760ff3660006000f60060005260206000f3ef0001010004020001000b03000004000100170000000003366000600037366000f700ef000101000402000100010300030000000000feabcdef'
+      nonce: 0
+      storage: {}
+
+  transaction:
+    data: 
+      - ':label append :raw 0xaabbccddeeff'
+    gasLimit:
+      - 15000000
+    gasPrice: 10
+    nonce: 0
+    secretKey: 45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8
+    to: 'b94f5374fce5edbc8e2a8697c15331677e6ebf0b'
+    value:
+      - 0
+
+  expect:
+    - indexes:
+       data: ':label append'
+      network:
+        - 'Prague'
+      result:
+       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: '0' # should be 1 ??
+          storage:
+            '0': '1'
+            '1': '0x2b449a37c343b7fd456c693472b0d7ea8b0f7501'
+            '2': '1'
+       2b449a37c343b7fd456c693472b0d7ea8b0f7501:
+          code: '0xef000101000402000100010300090000000000feabcdefaabbccddeeff'
