@@ -191,101 +191,102 @@
 - ID: **EOF1V5450_0001** Code with branches having the same stack height
 - ID: **EOF1V5450_0002** Jump table
 - ID: **EOF1V5450_0003** Infinite loop
-- ID: **EOF1V5450_0004** CALLF branches with the same total of outputs
-- ID: **EOF1V5450_0005** CALLF inputs
-- ID: **EOF1V5450_0006** Validate input for ADD opcode
-- ID: **EOF1V5450_0007** Validate input for MUL opcode
-- ID: **EOF1V5450_0008** Validate input for SUB opcode
-- ID: **EOF1V5450_0009** Validate input for DIV opcode
-- ID: **EOF1V5450_0010** Validate input for SDIV opcode
-- ID: **EOF1V5450_0011** Validate input for MOD opcode
-- ID: **EOF1V5450_0012** Validate input for SMOD opcode
-- ID: **EOF1V5450_0013** Validate input for ADDMOD opcode
-- ID: **EOF1V5450_0014** Validate input for MULMOD opcode
-- ID: **EOF1V5450_0015** Validate input for EXP opcode
-- ID: **EOF1V5450_0016** Validate input for SIGNEXTEND opcode
-- ID: **EOF1V5450_0017** Validate input for LT opcode
-- ID: **EOF1V5450_0018** Validate input for GT opcode
-- ID: **EOF1V5450_0019** Validate input for SLT opcode
-- ID: **EOF1V5450_0020** Validate input for SGT opcode
-- ID: **EOF1V5450_0021** Validate input for EQ opcode
-- ID: **EOF1V5450_0022** Validate input for ISZERO opcode
-- ID: **EOF1V5450_0023** Validate input for AND opcode
-- ID: **EOF1V5450_0024** Validate input for OR opcode
-- ID: **EOF1V5450_0025** Validate input for XOR opcode
-- ID: **EOF1V5450_0026** Validate input for NOT opcode
-- ID: **EOF1V5450_0027** Validate input for BYTE opcode
-- ID: **EOF1V5450_0028** Validate input for SHL opcode
-- ID: **EOF1V5450_0029** Validate input for SHR opcode
-- ID: **EOF1V5450_0030** Validate input for SAR opcode
-- ID: **EOF1V5450_0031** Validate input for SHA3 opcode
-- ID: **EOF1V5450_0032** Validate input for BALANCE opcode
-- ID: **EOF1V5450_0033** Validate input for CALLDATALOAD opcode
-- ID: **EOF1V5450_0034** Validate input for CALLDATACOPY opcode
-- ID: **EOF1V5450_0035** Validate input for CODECOPY opcode
-- ID: **EOF1V5450_0036** Validate input for EXTCODESIZE opcode
-- ID: **EOF1V5450_0037** Validate input for EXTCODECOPY opcode
-- ID: **EOF1V5450_0038** Validate input for RETURNDATACOPY opcode
-- ID: **EOF1V5450_0039** Validate input for EXTCODEHASH opcode
-- ID: **EOF1V5450_0040** Validate input for BLOCKHASH opcode
-- ID: **EOF1V5450_0041** Validate input for POP opcode
-- ID: **EOF1V5450_0042** Validate input for MLOAD opcode
-- ID: **EOF1V5450_0043** Validate input for MSTORE opcode
-- ID: **EOF1V5450_0044** Validate input for MSTORE8 opcode
-- ID: **EOF1V5450_0045** Validate input for SLOAD opcode
-- ID: **EOF1V5450_0046** Validate input for SSTORE opcode
-- ID: **EOF1V5450_0047** Validate input for DUP1 opcode
-- ID: **EOF1V5450_0048** Validate input for DUP2 opcode
-- ID: **EOF1V5450_0049** Validate input for DUP3 opcode
-- ID: **EOF1V5450_0050** Validate input for DUP4 opcode
-- ID: **EOF1V5450_0051** Validate input for DUP5 opcode
-- ID: **EOF1V5450_0052** Validate input for DUP6 opcode
-- ID: **EOF1V5450_0053** Validate input for DUP7 opcode
-- ID: **EOF1V5450_0054** Validate input for DUP8 opcode
-- ID: **EOF1V5450_0055** Validate input for DUP9 opcode
-- ID: **EOF1V5450_0056** Validate input for DUP10 opcode
-- ID: **EOF1V5450_0057** Validate input for DUP11 opcode
-- ID: **EOF1V5450_0058** Validate input for DUP12 opcode
-- ID: **EOF1V5450_0059** Validate input for DUP13 opcode
-- ID: **EOF1V5450_0060** Validate input for DUP14 opcode
-- ID: **EOF1V5450_0061** Validate input for DUP15 opcode
-- ID: **EOF1V5450_0062** Validate input for DUP16 opcode
-- ID: **EOF1V5450_0063** Validate input for SWAP1 opcode
-- ID: **EOF1V5450_0064** Validate input for SWAP2 opcode
-- ID: **EOF1V5450_0065** Validate input for SWAP3 opcode
-- ID: **EOF1V5450_0066** Validate input for SWAP4 opcode
-- ID: **EOF1V5450_0067** Validate input for SWAP5 opcode
-- ID: **EOF1V5450_0068** Validate input for SWAP6 opcode
-- ID: **EOF1V5450_0069** Validate input for SWAP7 opcode
-- ID: **EOF1V5450_0070** Validate input for SWAP8 opcode
-- ID: **EOF1V5450_0071** Validate input for SWAP9 opcode
-- ID: **EOF1V5450_0072** Validate input for SWAP10 opcode
-- ID: **EOF1V5450_0073** Validate input for SWAP11 opcode
-- ID: **EOF1V5450_0074** Validate input for SWAP12 opcode
-- ID: **EOF1V5450_0075** Validate input for SWAP13 opcode
-- ID: **EOF1V5450_0076** Validate input for SWAP14 opcode
-- ID: **EOF1V5450_0077** Validate input for SWAP15 opcode
-- ID: **EOF1V5450_0078** Validate input for SWAP16 opcode
-- ID: **EOF1V5450_0079** Validate input for LOG0 opcode
-- ID: **EOF1V5450_0080** Validate input for LOG1 opcode
-- ID: **EOF1V5450_0081** Validate input for LOG2 opcode
-- ID: **EOF1V5450_0082** Validate input for LOG3 opcode
-- ID: **EOF1V5450_0083** Validate input for LOG4 opcode
-- ID: **EOF1V5450_0084** Validate input for CREATE opcode
-- ID: **EOF1V5450_0085** Validate input for CALL opcode
-- ID: **EOF1V5450_0086** Validate input for RETURN opcode
-- ID: **EOF1V5450_0087** Validate input for DELEGATECALL opcode
-- ID: **EOF1V5450_0088** Validate input for CREATE2 opcode
-- ID: **EOF1V5450_0089** Validate input for STATICCALL opcode
-- ID: **EOF1V5450_0090** Validate input for REVERT opcode
-- ID: **EOF1V5450_0091** Containing terminating opcode RETURN at the end
-- ID: **EOF1V5450_0092** Containing terminating opcode REVERT at the end
-- ID: **EOF1V5450_0093** Loop ending with unconditional RJUMP (a)
-- ID: **EOF1V5450_0094** Loop ending with unconditional RJUMP (b)
-- ID: **EOF1V5450_0095** Functions ending with RETF
-- ID: **EOF1V5450_0096** Stack is not required to be empty on terminating instruction RETURN
-- ID: **EOF1V5450_0097** Stack is not required to be empty on terminating instruction REVERT
-- ID: **EOF1V5450_0098** RETF returning maximum number of outputs (127)
+- ID: **EOF1V5450_0004** Infinite loop using RJUMPV
+- ID: **EOF1V5450_0005** CALLF branches with the same total of outputs
+- ID: **EOF1V5450_0006** CALLF inputs
+- ID: **EOF1V5450_0007** Validate input for ADD opcode
+- ID: **EOF1V5450_0008** Validate input for MUL opcode
+- ID: **EOF1V5450_0009** Validate input for SUB opcode
+- ID: **EOF1V5450_0010** Validate input for DIV opcode
+- ID: **EOF1V5450_0011** Validate input for SDIV opcode
+- ID: **EOF1V5450_0012** Validate input for MOD opcode
+- ID: **EOF1V5450_0013** Validate input for SMOD opcode
+- ID: **EOF1V5450_0014** Validate input for ADDMOD opcode
+- ID: **EOF1V5450_0015** Validate input for MULMOD opcode
+- ID: **EOF1V5450_0016** Validate input for EXP opcode
+- ID: **EOF1V5450_0017** Validate input for SIGNEXTEND opcode
+- ID: **EOF1V5450_0018** Validate input for LT opcode
+- ID: **EOF1V5450_0019** Validate input for GT opcode
+- ID: **EOF1V5450_0020** Validate input for SLT opcode
+- ID: **EOF1V5450_0021** Validate input for SGT opcode
+- ID: **EOF1V5450_0022** Validate input for EQ opcode
+- ID: **EOF1V5450_0023** Validate input for ISZERO opcode
+- ID: **EOF1V5450_0024** Validate input for AND opcode
+- ID: **EOF1V5450_0025** Validate input for OR opcode
+- ID: **EOF1V5450_0026** Validate input for XOR opcode
+- ID: **EOF1V5450_0027** Validate input for NOT opcode
+- ID: **EOF1V5450_0028** Validate input for BYTE opcode
+- ID: **EOF1V5450_0029** Validate input for SHL opcode
+- ID: **EOF1V5450_0030** Validate input for SHR opcode
+- ID: **EOF1V5450_0031** Validate input for SAR opcode
+- ID: **EOF1V5450_0032** Validate input for SHA3 opcode
+- ID: **EOF1V5450_0033** Validate input for BALANCE opcode
+- ID: **EOF1V5450_0034** Validate input for CALLDATALOAD opcode
+- ID: **EOF1V5450_0035** Validate input for CALLDATACOPY opcode
+- ID: **EOF1V5450_0036** Validate input for CODECOPY opcode
+- ID: **EOF1V5450_0037** Validate input for EXTCODESIZE opcode
+- ID: **EOF1V5450_0038** Validate input for EXTCODECOPY opcode
+- ID: **EOF1V5450_0039** Validate input for RETURNDATACOPY opcode
+- ID: **EOF1V5450_0040** Validate input for EXTCODEHASH opcode
+- ID: **EOF1V5450_0041** Validate input for BLOCKHASH opcode
+- ID: **EOF1V5450_0042** Validate input for POP opcode
+- ID: **EOF1V5450_0043** Validate input for MLOAD opcode
+- ID: **EOF1V5450_0044** Validate input for MSTORE opcode
+- ID: **EOF1V5450_0045** Validate input for MSTORE8 opcode
+- ID: **EOF1V5450_0046** Validate input for SLOAD opcode
+- ID: **EOF1V5450_0047** Validate input for SSTORE opcode
+- ID: **EOF1V5450_0048** Validate input for DUP1 opcode
+- ID: **EOF1V5450_0049** Validate input for DUP2 opcode
+- ID: **EOF1V5450_0050** Validate input for DUP3 opcode
+- ID: **EOF1V5450_0051** Validate input for DUP4 opcode
+- ID: **EOF1V5450_0052** Validate input for DUP5 opcode
+- ID: **EOF1V5450_0053** Validate input for DUP6 opcode
+- ID: **EOF1V5450_0054** Validate input for DUP7 opcode
+- ID: **EOF1V5450_0055** Validate input for DUP8 opcode
+- ID: **EOF1V5450_0056** Validate input for DUP9 opcode
+- ID: **EOF1V5450_0057** Validate input for DUP10 opcode
+- ID: **EOF1V5450_0058** Validate input for DUP11 opcode
+- ID: **EOF1V5450_0059** Validate input for DUP12 opcode
+- ID: **EOF1V5450_0060** Validate input for DUP13 opcode
+- ID: **EOF1V5450_0061** Validate input for DUP14 opcode
+- ID: **EOF1V5450_0062** Validate input for DUP15 opcode
+- ID: **EOF1V5450_0063** Validate input for DUP16 opcode
+- ID: **EOF1V5450_0064** Validate input for SWAP1 opcode
+- ID: **EOF1V5450_0065** Validate input for SWAP2 opcode
+- ID: **EOF1V5450_0066** Validate input for SWAP3 opcode
+- ID: **EOF1V5450_0067** Validate input for SWAP4 opcode
+- ID: **EOF1V5450_0068** Validate input for SWAP5 opcode
+- ID: **EOF1V5450_0069** Validate input for SWAP6 opcode
+- ID: **EOF1V5450_0070** Validate input for SWAP7 opcode
+- ID: **EOF1V5450_0071** Validate input for SWAP8 opcode
+- ID: **EOF1V5450_0072** Validate input for SWAP9 opcode
+- ID: **EOF1V5450_0073** Validate input for SWAP10 opcode
+- ID: **EOF1V5450_0074** Validate input for SWAP11 opcode
+- ID: **EOF1V5450_0075** Validate input for SWAP12 opcode
+- ID: **EOF1V5450_0076** Validate input for SWAP13 opcode
+- ID: **EOF1V5450_0077** Validate input for SWAP14 opcode
+- ID: **EOF1V5450_0078** Validate input for SWAP15 opcode
+- ID: **EOF1V5450_0079** Validate input for SWAP16 opcode
+- ID: **EOF1V5450_0080** Validate input for LOG0 opcode
+- ID: **EOF1V5450_0081** Validate input for LOG1 opcode
+- ID: **EOF1V5450_0082** Validate input for LOG2 opcode
+- ID: **EOF1V5450_0083** Validate input for LOG3 opcode
+- ID: **EOF1V5450_0084** Validate input for LOG4 opcode
+- ID: **EOF1V5450_0085** Validate input for CREATE opcode
+- ID: **EOF1V5450_0086** Validate input for CALL opcode
+- ID: **EOF1V5450_0087** Validate input for RETURN opcode
+- ID: **EOF1V5450_0088** Validate input for DELEGATECALL opcode
+- ID: **EOF1V5450_0089** Validate input for CREATE2 opcode
+- ID: **EOF1V5450_0090** Validate input for STATICCALL opcode
+- ID: **EOF1V5450_0091** Validate input for REVERT opcode
+- ID: **EOF1V5450_0092** Containing terminating opcode RETURN at the end
+- ID: **EOF1V5450_0093** Containing terminating opcode REVERT at the end
+- ID: **EOF1V5450_0094** Loop ending with unconditional RJUMP (a)
+- ID: **EOF1V5450_0095** Loop ending with unconditional RJUMP (b)
+- ID: **EOF1V5450_0096** Functions ending with RETF
+- ID: **EOF1V5450_0097** Stack is not required to be empty on terminating instruction RETURN
+- ID: **EOF1V5450_0098** Stack is not required to be empty on terminating instruction REVERT
+- ID: **EOF1V5450_0099** RETF returning maximum number of outputs (127)
 
 
 ### Contract creation tests
