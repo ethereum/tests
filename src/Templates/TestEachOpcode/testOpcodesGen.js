@@ -1030,7 +1030,6 @@ const transaction = `
       gasPrice: ${gasPrice}
       nonce: auto
       gasLimit: ${gasLimit}
-      nonce: 0
       to: ${bigTestContractAddr}
       value: ${transactWei}
 

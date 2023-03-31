@@ -11,9 +11,9 @@
 ./testOpcodesGen.js 0x70 0x7F > ../../BlockchainTestsFiller/ValidBlocks/bcStateTests/testOpcode_70Filler.yml
 ./testOpcodesGen.js 0x80 0x8F > ../../BlockchainTestsFiller/ValidBlocks/bcStateTests/testOpcode_80Filler.yml
 ./testOpcodesGen.js 0x90 0x9F > ../../BlockchainTestsFiller/ValidBlocks/bcStateTests/testOpcode_90Filler.yml
-./testOpcodesGen.js 0xa0 0xaF > ../../BlockchainTestsFiller/ValidBlocks/bcStateTests/testOpcode_A0Filler.yml
-./testOpcodesGen.js 0xb0 0xbF > ../../BlockchainTestsFiller/ValidBlocks/bcStateTests/testOpcode_B0Filler.yml
-./testOpcodesGen.js 0xc0 0xcF > ../../BlockchainTestsFiller/ValidBlocks/bcStateTests/testOpcode_C0Filler.yml
-./testOpcodesGen.js 0xd0 0xdF > ../../BlockchainTestsFiller/ValidBlocks/bcStateTests/testOpcode_D0Filler.yml
-./testOpcodesGen.js 0xe0 0xeF > ../../BlockchainTestsFiller/ValidBlocks/bcStateTests/testOpcode_E0Filler.yml
-./testOpcodesGen.js 0xf0 0xfF > ../../BlockchainTestsFiller/ValidBlocks/bcStateTests/testOpcode_F0Filler.yml
+./testOpcodesGen.js 0xa0 0xaF > ../../BlockchainTestsFiller/ValidBlocks/bcStateTests/testOpcode_a0Filler.yml
+./testOpcodesGen.js 0xb0 0xbF > ../../BlockchainTestsFiller/ValidBlocks/bcStateTests/testOpcode_b0Filler.yml
+./testOpcodesGen.js 0xc0 0xcF > ../../BlockchainTestsFiller/ValidBlocks/bcStateTests/testOpcode_c0Filler.yml
+./testOpcodesGen.js 0xd0 0xdF > ../../BlockchainTestsFiller/ValidBlocks/bcStateTests/testOpcode_d0Filler.yml
+./testOpcodesGen.js 0xe0 0xeF > ../../BlockchainTestsFiller/ValidBlocks/bcStateTests/testOpcode_e0Filler.yml
+./testOpcodesGen.js 0xf0 0xfF > ../../BlockchainTestsFiller/ValidBlocks/bcStateTests/testOpcode_f0Filler.yml
