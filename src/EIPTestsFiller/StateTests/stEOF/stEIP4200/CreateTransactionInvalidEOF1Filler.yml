@@ -113,9 +113,11 @@ CreateTransactionInvalidEOF1:
       # Code to be deployed: PUSH1(1) RJUMPI( - 0xef0001010008020002000d000603000000000000010000000260015d00050060015e010000006001600155b1
       - ':yul object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010008020002000d000603000000000000010000000260015d00050060015e010000006001600155b1" }'
       # Legacy Initcode trying to deploy invalid EOF code containing truncated RJUMPV
-      # Code to be deployed: PUSH1(1) RJUMPI( - 0xef00010100040200010004030000000000000160015e01
+      # Code to be deployed: PUSH1(1) RJUMP - 0xef00010100040200010003030000000000000160015e
+      - ':yul object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010003030000000000000160015e" }'
+      # Code to be deployed: PUSH1(1) RJUMPV( - 0xef00010100040200010004030000000000000160015e01
       - ':yul object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010004030000000000000160015e01" }'
-      # Code to be deployed: RJUMPI(0? - 0xef00010100040200010005030000000000000160015e0100
+      # Code to be deployed: PUSH1(1) RJUMPV(0? - 0xef00010100040200010005030000000000000160015e0100
       - ':yul object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010005030000000000000160015e0100" }'
       # Legacy Initcode trying to deploy invalid EOF code containing RJUMPV with target outside of code bounds
       # - Jump into header
@@ -164,21 +166,20 @@ CreateTransactionInvalidEOF1:
       - 0
 
   expect:
-    - indexes: {}
-      network:
-        - 'Shanghai'
-      result:
-       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
-         nonce: 1
-       6295ee1b4f6dd65047762f924ecd367c17eabf8f:
-         shouldnotexist: 1    
-
-    # Same expectation, but for Shanghai execution fails on EF byte, for >=Cancun it fails because EOF code is invalid
-    - indexes: {}
-      network:
-        - '>=Cancun'
-      result:
-       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
-         nonce: 1
-       6295ee1b4f6dd65047762f924ecd367c17eabf8f:
-         shouldnotexist: 1
+      - indexes: {}
+        network:
+          - 'Shanghai'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         6295ee1b4f6dd65047762f924ecd367c17eabf8f:
+            shouldnotexist: 1
+      # Same expectation, but for Shanghai expectation fails on the EF byte, for Cancun it fails because EOF code is not valid
+      - indexes: {}
+        network:
+          - '>=Cancun'
+        result:
+         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+            nonce: 1
+         6295ee1b4f6dd65047762f924ecd367c17eabf8f:
+            shouldnotexist: 1
