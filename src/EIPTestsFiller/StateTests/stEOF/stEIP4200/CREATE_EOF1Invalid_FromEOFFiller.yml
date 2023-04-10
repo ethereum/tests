@@ -124,9 +124,11 @@ CREATE_EOF1Invalid_FromEOF:
       # Code to be deployed: PUSH1(1) RJUMPI( - 0xef0001010008020002000d000603000000000000010000000260015d00050060015e010000006001600155b1
       - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010008020002000d000603000000000000010000000260015d00050060015e010000006001600155b1" }'
       # Valid EOF Initcode trying to deploy invalid EOF code containing truncated RJUMPV
-      # Code to be deployed: PUSH1(1) RJUMPI( - 0xef00010100040200010004030000000000000160015e01
+      # Code to be deployed: PUSH1(1) RJUMP - 0xef00010100040200010003030000000000000160015e
+      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010003030000000000000160015e" }'
+      # Code to be deployed: PUSH1(1) RJUMPV( - 0xef00010100040200010004030000000000000160015e01
       - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010004030000000000000160015e01" }'
-      # Code to be deployed: RJUMPI(0? - 0xef00010100040200010005030000000000000160015e0100
+      # Code to be deployed: PUSH1(1) RJUMPV(0? - 0xef00010100040200010005030000000000000160015e0100
       - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010005030000000000000160015e0100" }'
       # Valid EOF Initcode trying to deploy invalid EOF code containing RJUMPV with target outside of code bounds
       # - Jump into header
