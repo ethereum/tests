@@ -44,21 +44,15 @@ validInvalid:
          EOF1V0014 sections that end with a legit terminating opcode are OK
          EOF1V0015 data stack height of 1023 is valid
 
-  data:
+  forks:
+    - ">=Shanghai"
+
+  vectors:
+
   # Data 0
   # EOF1V0001 check that simple EOF1 deploys
-  - |
-    :label good :raw 0x
-      # Legacy constructor
-        38    #  0 CODESIZE     <size>
-        6000  #  1 PUSH1 0      0, <size>
-        6000  #  3 PUSH1 0      0, 0, <size>
-        39    #  5 COPYCODE 
-        600D  #  6 PUSH1 0x0D   13
-        38    #  8 CODESIZE     <size>, 13 
-        03    # 10 SUB          <size>-13
-        600D  # 11 PUSH1 0x0D   13
-        F3    # 12 RETURN
+  - data: |
+     :label EOF1V0001 :raw 0x
       # EOF deployed code 
       ef0001  # Magic followed by version
       010004  # One code segment
@@ -76,22 +70,14 @@ validInvalid:
            00 #  3 STOP
               # Data segment
            ef
+    expectException:
+      "Shanghai" : "Invalid Code"
 
 
   # Data 1
   # EOF1I0006 check that EOF1 with too many or too few bytes fails
-  - |
-    :label bad :raw 0x
-      # Legacy constructor
-        38    #  0 CODESIZE     <size>
-        6000  #  1 PUSH1 0      0, <size>
-        6000  #  3 PUSH1 0      0, 0, <size>
-        39    #  5 COPYCODE 
-        600D  #  6 PUSH1 0x0D   13
-        38    #  8 CODESIZE     <size>, 13 
-        03    # 10 SUB          <size>-13
-        600D  # 11 PUSH1 0x0D   13
-        F3    # 12 RETURN
+  - data: |
+     :label EOF1I0006 :raw 0x
       # EOF deployed code 
       ef0001  # Magic followed by version
       010004  # One code segment
@@ -109,21 +95,15 @@ validInvalid:
            00 #  3 STOP
               # Data segment
            0bad  # 2 bytes instead of four
+    expectException:
+      "Shanghai" : "Invalid Code"
+      ">=Cancun" : "invalid container size"
+
 
   # Data 2
   # EOF1I0006 check that EOF1 with too many or too few bytes fails
-  - |
-    :label bad :raw 0x
-      # Legacy constructor
-        38    #  0 CODESIZE     <size>
-        6000  #  1 PUSH1 0      0, <size>
-        6000  #  3 PUSH1 0      0, 0, <size>
-        39    #  5 COPYCODE 
-        600D  #  6 PUSH1 0x0D   13
-        38    #  8 CODESIZE     <size>, 13 
-        03    # 10 SUB          <size>-13
-        600D  # 11 PUSH1 0x0D   13
-        F3    # 12 RETURN
+  - data: |
+     :label EOF1I0006 :raw 0x
       # EOF deployed code 
       ef0001  # Magic followed by version
       010004  # One code segment
@@ -141,22 +121,14 @@ validInvalid:
            00 #  3 STOP
               # Data segment
            0bad60A70BAD  # 6 bytes instead of four
-
+    expectException:
+      "Shanghai" : "Invalid Code"
+      ">=Cancun" : "invalid container size"
 
   # Data 3
   # EOF1V0001 Valid
-  - |
-    :label good :raw 0x
-      # Legacy constructor
-        38    #  0 CODESIZE     <size>
-        6000  #  1 PUSH1 0      0, <size>
-        6000  #  3 PUSH1 0      0, 0, <size>
-        39    #  5 COPYCODE 
-        600D  #  6 PUSH1 0x0D   13
-        38    #  8 CODESIZE     <size>, 13 
-        03    # 10 SUB          <size>-13
-        600D  # 11 PUSH1 0x0D   13
-        F3    # 12 RETURN
+  - data: |
+     :label EOF1V0001 :raw 0x
       # EOF deployed code 
       ef0001  # Magic followed by version
       010004  # One code segment
@@ -174,22 +146,14 @@ validInvalid:
            00 #  3 STOP
               # Data segment
            0bad60A7  # 4 bytes (valid)
+    expectException:
+      "Shanghai" : "Invalid Code"
 
 
   # Data 4
   # EOF1I0008 check that EOF1 with an illegal opcode fails
-  - |
-    :label bad :raw 0x
-      # Legacy constructor
-        38    #  0 CODESIZE     <size>
-        6000  #  1 PUSH1 0      0, <size>
-        6000  #  3 PUSH1 0      0, 0, <size>
-        39    #  5 COPYCODE 
-        600D  #  6 PUSH1 0x0D   13
-        38    #  8 CODESIZE     <size>, 13 
-        03    # 10 SUB          <size>-13
-        600D  # 11 PUSH1 0x0D   13
-        F3    # 12 RETURN
+  - data: |
+     :label EOF1I0008 :raw 0x
       # EOF deployed code 
       ef0001  # Magic followed by version
       010004  # One code segment
@@ -207,21 +171,15 @@ validInvalid:
            00 #  3 STOP
               # Data segment
            0bad60A7  # 4 bytes (valid)
+    expectException:
+      "Shanghai" : "Invalid Code"
+      ">=Cancun" : "undefined instrustion"
+
 
   # Data 5
   # EOF1V0004 check that valid EOF1 can include 0xFE, the designated invalid opcode
-  - |
-    :label good :raw 0x
-      # Legacy constructor
-        38    #  0 CODESIZE     <size>
-        6000  #  1 PUSH1 0      0, <size>
-        6000  #  3 PUSH1 0      0, 0, <size>
-        39    #  5 COPYCODE 
-        600D  #  6 PUSH1 0x0D   13
-        38    #  8 CODESIZE     <size>, 13 
-        03    # 10 SUB          <size>-13
-        600D  # 11 PUSH1 0x0D   13
-        F3    # 12 RETURN
+  - data: |
+     :label EOF1V0004 :raw 0x
       # EOF deployed code 
       ef0001  # Magic followed by version
       010004  # One code segment
@@ -239,20 +197,13 @@ validInvalid:
            FE #  3 Designated invalid opcode
               # Data segment
            0bad60A7  # 4 bytes (valid)
+    expectException:
+      "Shanghai" : "Invalid Code"
+
 
   # EOF1I0005 check that EOF1 with a bad end of sections number fails
-  - |
-    :label bad :raw 0x
-      # Legacy constructor
-        38    #  0 CODESIZE     <size>
-        6000  #  1 PUSH1 0      0, <size>
-        6000  #  3 PUSH1 0      0, 0, <size>
-        39    #  5 COPYCODE 
-        600D  #  6 PUSH1 0x0D   13
-        38    #  8 CODESIZE     <size>, 13 
-        03    # 10 SUB          <size>-13
-        600D  # 11 PUSH1 0x0D   13
-        F3    # 12 RETURN
+  - data: |
+     :label EOF1I0005 :raw 0x
       # EOF deployed code 
       ef0001  # Magic followed by version
       010004  # One code segment
@@ -270,23 +221,14 @@ validInvalid:
            00 #  3 STOP
               # Data segment
            ef
-
-
+    expectException:
+      "Shanghai" : "Invalid Code"
+      ">=Cancun" : "missing header terminator"
 
 
   # EOF1V0008 check that code that uses a new style relative jump (5C) succeeds
-  - |
-    :label good :raw 0x
-      # Legacy constructor
-        38    #  0 CODESIZE     <size>
-        6000  #  1 PUSH1 0      0, <size>
-        6000  #  3 PUSH1 0      0, 0, <size>
-        39    #  5 COPYCODE 
-        600D  #  6 PUSH1 0x0D   13
-        38    #  8 CODESIZE     <size>, 13 
-        03    # 10 SUB          <size>-13
-        600D  # 11 PUSH1 0x0D   13
-        F3    # 12 RETURN
+  - data: |
+     :label EOF1V0008 :raw 0x
       # EOF deployed code 
       ef0001  # Magic followed by version
       010004  # One code segment
@@ -305,21 +247,12 @@ validInvalid:
           00  #  9   STOP
               # Data segment
            0bad60A7  # 4 bytes (valid)
-
+    expectException:
+      "Shanghai" : "Invalid Code"
 
   # EOF1I0023 sections with unreachable code fail
-  - |
-    :label bad :raw 0x
-      # Legacy constructor
-        38    #  0 CODESIZE     <size>
-        6000  #  1 PUSH1 0      0, <size>
-        6000  #  3 PUSH1 0      0, 0, <size>
-        39    #  5 COPYCODE 
-        600D  #  6 PUSH1 0x0D   13
-        38    #  8 CODESIZE     <size>, 13 
-        03    # 10 SUB          <size>-13
-        600D  # 11 PUSH1 0x0D   13
-        F3    # 12 RETURN
+  - data: |
+     :label EOF1I0023 :raw 0x
       # EOF deployed code 
       ef0001  # Magic followed by version
       010004  # One code segment
@@ -337,21 +270,13 @@ validInvalid:
           00  #  9   STOP
               # Data segment
            0bad60A7  # 4 bytes (valid)
-
+    expectException:
+      "Shanghai" : "Invalid Code"
+      ">=Cancun" : "unreachable code"
 
   # EOF1V0011 check that code that uses a new style conditional jump (5D) succeeds
-  - |
-    :label good :raw 0x
-      # Legacy constructor
-        38    #  0 CODESIZE     <size>
-        6000  #  1 PUSH1 0      0, <size>
-        6000  #  3 PUSH1 0      0, 0, <size>
-        39    #  5 COPYCODE 
-        600D  #  6 PUSH1 0x0D   13
-        38    #  8 CODESIZE     <size>, 13 
-        03    # 10 SUB          <size>-13
-        600D  # 11 PUSH1 0x0D   13
-        F3    # 12 RETURN
+  - data: |
+     :label EOF1V0011 :raw 0x
       # EOF deployed code 
       ef0001  # Magic followed by version
       010004  # One code segment
@@ -370,22 +295,13 @@ validInvalid:
           00  #  6   STOP
               # Data segment
            0bad60A7  # 4 bytes (valid)
-
+    expectException:
+      "Shanghai" : "Invalid Code"
 
 
   # EOF1V0014 sections that end with a legit terminating opcode are OK
-  - |
-    :label good :raw 0x
-      # Legacy constructor
-        38    #  0 CODESIZE     <size>
-        6000  #  1 PUSH1 0      0, <size>
-        6000  #  3 PUSH1 0      0, 0, <size>
-        39    #  5 COPYCODE 
-        600D  #  6 PUSH1 0x0D   13
-        38    #  8 CODESIZE     <size>, 13 
-        03    # 10 SUB          <size>-13
-        600D  # 11 PUSH1 0x0D   13
-        F3    # 12 RETURN
+  - data: |
+     :label EOF1V0014 :raw 0x
       # EOF deployed code 
       ef0001  # Magic followed by version
       010014  # Four code segments
@@ -433,22 +349,13 @@ validInvalid:
           B1  # RETF
               # Data segment
            0bad60A7  # 4 bytes (valid)
-
+    expectException:
+      "Shanghai" : "Invalid Code"
 
 
   # EOF1V0013 jump tables work
-  - |
-    :label good :raw 0x
-      # Legacy constructor
-        38    #  0 CODESIZE     <size>
-        6000  #  1 PUSH1 0      0, <size>
-        6000  #  3 PUSH1 0      0, 0, <size>
-        39    #  5 COPYCODE 
-        600D  #  6 PUSH1 0x0D   13
-        38    #  8 CODESIZE     <size>, 13 
-        03    # 10 SUB          <size>-13
-        600D  # 11 PUSH1 0x0D   13
-        F3    # 12 RETURN
+  - data: |
+     :label EOF1V0013 :raw 0x
       # EOF deployed code 
       ef0001  # Magic followed by version
       010004  # One code segment
@@ -470,23 +377,14 @@ validInvalid:
           00  # 12   STOP
               # Data segment
            0bad60A7  # 4 bytes (valid)
-
+    expectException:
+      "Shanghai" : "Invalid Code"
 
 
 
   # EOF1I0021 empty jump table
-  - |
-    :label bad :raw 0x
-      # Legacy constructor
-        38    #  0 CODESIZE     <size>
-        6000  #  1 PUSH1 0      0, <size>
-        6000  #  3 PUSH1 0      0, 0, <size>
-        39    #  5 COPYCODE 
-        600D  #  6 PUSH1 0x0D   13
-        38    #  8 CODESIZE     <size>, 13 
-        03    # 10 SUB          <size>-13
-        600D  # 11 PUSH1 0x0D   13
-        F3    # 12 RETURN
+  - data: |
+     :label EOF1I0021 :raw 0x
       # EOF deployed code 
       ef0001  # Magic followed by version
       010004  # One code segment
@@ -506,22 +404,14 @@ validInvalid:
           00  #  8   STOP
               # Data segment
            0bad60A7  # 4 bytes (valid)
-
+    expectException:
+      "Shanghai" : "Invalid Code"
+      ">=Cancun" : "invalid number of branches in jump table"
 
 
   # EOF1I0019 check that jumps into the middle on an opcode are not allowed
-  - |
-    :label bad :raw 0x
-      # Legacy constructor
-        38    #  0 CODESIZE     <size>
-        6000  #  1 PUSH1 0      0, <size>
-        6000  #  3 PUSH1 0      0, 0, <size>
-        39    #  5 COPYCODE 
-        600D  #  6 PUSH1 0x0D   13
-        38    #  8 CODESIZE     <size>, 13 
-        03    # 10 SUB          <size>-13
-        600D  # 11 PUSH1 0x0D   13
-        F3    # 12 RETURN
+  - data: |
+     :label EOF1I0019 :raw 0x
       # EOF deployed code 
       ef0001  # Magic followed by version
       010004  # One code segment
@@ -543,24 +433,16 @@ validInvalid:
           00  # 12   STOP
               # Data segment
            0bad60A7  # 4 bytes (valid)
-
+    expectException:
+      "Shanghai" : "Invalid Code"
+      ">=Cancun" : "invalid jump destination"
 
 
 
 
   # EOF1I0020 check that you can't get to the same opcode with two different stack heights
-  - |
-    :label bad :raw 0x
-      # Legacy constructor
-        38    #  0 CODESIZE     <size>
-        6000  #  1 PUSH1 0      0, <size>
-        6000  #  3 PUSH1 0      0, 0, <size>
-        39    #  5 COPYCODE 
-        600D  #  6 PUSH1 0x0D   13
-        38    #  8 CODESIZE     <size>, 13 
-        03    # 10 SUB          <size>-13
-        600D  # 11 PUSH1 0x0D   13
-        F3    # 12 RETURN
+  - data: |
+     :label EOF1I0020 :raw 0x
       # EOF deployed code 
       ef0001  # Magic followed by version
       010004  # One code segment
@@ -580,22 +462,15 @@ validInvalid:
           00  #  7   STOP
               # Data segment
            0bad60A7  # 4 bytes (valid)
+    expectException:
+      "Shanghai" : "Invalid Code"
+      ">=Cancun" : "conflicting stack height"
 
 
 
   # EOF1I0019 check that jumps into the middle on an opcode are not allowed
-  - |
-    :label bad :raw 0x
-      # Legacy constructor
-        38    #  0 CODESIZE     <size>
-        6000  #  1 PUSH1 0      0, <size>
-        6000  #  3 PUSH1 0      0, 0, <size>
-        39    #  5 COPYCODE 
-        600D  #  6 PUSH1 0x0D   13
-        38    #  8 CODESIZE     <size>, 13 
-        03    # 10 SUB          <size>-13
-        600D  # 11 PUSH1 0x0D   13
-        F3    # 12 RETURN
+  - data: |
+     :label EOF1I0019 :raw 0x
       # EOF deployed code 
       ef0001  # Magic followed by version
       010004  # One code segment
@@ -614,21 +489,13 @@ validInvalid:
           00  #  9   STOP
               # Data segment
            0bad60A7  # 4 bytes (valid)
-
+    expectException:
+      "Shanghai" : "Invalid Code"
+      ">=Cancun" : "invalid jump destination"
 
   # EOF1I0019 check that jumps into the middle on an opcode are not allowed
-  - |
-    :label bad :raw 0x
-      # Legacy constructor
-        38    #  0 CODESIZE     <size>
-        6000  #  1 PUSH1 0      0, <size>
-        6000  #  3 PUSH1 0      0, 0, <size>
-        39    #  5 COPYCODE 
-        600D  #  6 PUSH1 0x0D   13
-        38    #  8 CODESIZE     <size>, 13 
-        03    # 10 SUB          <size>-13
-        600D  # 11 PUSH1 0x0D   13
-        F3    # 12 RETURN
+  - data: |
+     :label EOF1I0019 :raw 0x
       # EOF deployed code 
       ef0001  # Magic followed by version
       010004  # One code segment
@@ -650,25 +517,15 @@ validInvalid:
           00  # 15   STOP
               # Data segment
            0bad60A7  # 4 bytes (valid)
-
-
-
+    expectException:
+      "Shanghai" : "Invalid Code"
+      ">=Cancun" : "invalid jump destination"
 
 
 
   # EOF1I0018 inconsistent number of code sections (between types and code)
-  - |
-    :label bad :raw 0x
-      # Legacy constructor
-        38    #  0 CODESIZE     <size>
-        6000  #  1 PUSH1 0      0, <size>
-        6000  #  3 PUSH1 0      0, 0, <size>
-        39    #  5 COPYCODE 
-        600D  #  6 PUSH1 0x0D   13
-        38    #  8 CODESIZE     <size>, 13 
-        03    # 10 SUB          <size>-13
-        600D  # 11 PUSH1 0x0D   13
-        F3    # 12 RETURN
+  - data: |
+     :label EOF1I0018 :raw 0x
       # EOF deployed code 
       ef0001  # Magic followed by version
       010008  # Two code segments
@@ -686,21 +543,13 @@ validInvalid:
            00 #  3 STOP
               # Data segment
            0bad60A7  # 4 bytes (valid)
-
+    expectException:
+      "Shanghai" : "Invalid Code"
+      ">=Cancun" : "invalid code size"
 
   # EOF1I0015 check that code that uses removed opcodes fails
-  - |
-    :label bad :raw 0x
-      # Legacy constructor
-        38    #  0 CODESIZE     <size>
-        6000  #  1 PUSH1 0      0, <size>
-        6000  #  3 PUSH1 0      0, 0, <size>
-        39    #  5 COPYCODE 
-        600D  #  6 PUSH1 0x0D   13
-        38    #  8 CODESIZE     <size>, 13 
-        03    # 10 SUB          <size>-13
-        600D  # 11 PUSH1 0x0D   13
-        F3    # 12 RETURN
+  - data: |
+     :label EOF1I0015 :raw 0x
       # EOF deployed code 
       ef0001  # Magic followed by version
       010004  # One code segment
@@ -719,21 +568,13 @@ validInvalid:
            00 #  4 STOP
               # Data segment
            ef
-
+    expectException:
+      "Shanghai" : "Invalid Code"
+      ">=Cancun" : "undefined instrustion"
 
   # EOF1I0015 check that code that uses removed opcodes fails
-  - |
-    :label bad :raw 0x
-      # Legacy constructor
-        38    #  0 CODESIZE     <size>
-        6000  #  1 PUSH1 0      0, <size>
-        6000  #  3 PUSH1 0      0, 0, <size>
-        39    #  5 COPYCODE 
-        600D  #  6 PUSH1 0x0D   13
-        38    #  8 CODESIZE     <size>, 13 
-        03    # 10 SUB          <size>-13
-        600D  # 11 PUSH1 0x0D   13
-        F3    # 12 RETURN
+  - data: |
+     :label EOF1I0015 :raw 0x
       # EOF deployed code 
       ef0001  # Magic followed by version
       010004  # One code segment
@@ -753,21 +594,13 @@ validInvalid:
            00 #  6 STOP
               # Data segment
            ef
-
+    expectException:
+      "Shanghai" : "Invalid Code"
+      ">=Cancun" : "undefined instrustion"
 
   # EOF1I0015 check that code that uses removed opcodes fails
-  - |
-    :label bad :raw 0x
-      # Legacy constructor
-        38    #  0 CODESIZE     <size>
-        6000  #  1 PUSH1 0      0, <size>
-        6000  #  3 PUSH1 0      0, 0, <size>
-        39    #  5 COPYCODE 
-        600D  #  6 PUSH1 0x0D   13
-        38    #  8 CODESIZE     <size>, 13 
-        03    # 10 SUB          <size>-13
-        600D  # 11 PUSH1 0x0D   13
-        F3    # 12 RETURN
+  - data: |
+     :label EOF1I0015 :raw 0x
       # EOF deployed code 
       ef0001  # Magic followed by version
       010004  # One code segment
@@ -785,21 +618,13 @@ validInvalid:
            00 #  3 STOP
               # Data segment
            ef
-
+    expectException:
+      "Shanghai" : "Invalid Code"
+      ">=Cancun" : "undefined instrustion"
 
   # EOF1I0015 check that code that uses removed opcodes fails
-  - |
-    :label bad :raw 0x
-      # Legacy constructor
-        38    #  0 CODESIZE     <size>
-        6000  #  1 PUSH1 0      0, <size>
-        6000  #  3 PUSH1 0      0, 0, <size>
-        39    #  5 COPYCODE 
-        600D  #  6 PUSH1 0x0D   13
-        38    #  8 CODESIZE     <size>, 13 
-        03    # 10 SUB          <size>-13
-        600D  # 11 PUSH1 0x0D   13
-        F3    # 12 RETURN
+  - data: |
+     :label EOF1I0015 :raw 0x
       # EOF deployed code 
       ef0001  # Magic followed by version
       010004  # One code segment
@@ -812,19 +637,13 @@ validInvalid:
           00  # Zero outputs
         0007  # Max stack height 1
               # Code segment 0 code
+    expectException:
+      "Shanghai" : "Invalid Code"
+      ">=Cancun" : "invalid container size"
+
   # EOF1I0015 check that code that uses removed opcodes fails
-  - |
-    :label bad :raw 0x
-      # Legacy constructor
-        38    #  0 CODESIZE     <size>
-        6000  #  1 PUSH1 0      0, <size>
-        6000  #  3 PUSH1 0      0, 0, <size>
-        39    #  5 COPYCODE 
-        600D  #  6 PUSH1 0x0D   13
-        38    #  8 CODESIZE     <size>, 13 
-        03    # 10 SUB          <size>-13
-        600D  # 11 PUSH1 0x0D   13
-        F3    # 12 RETURN
+  - data: |
+     :label EOF1I0015 :raw 0x
       # EOF deployed code 
       ef0001  # Magic followed by version
       010004  # One code segment
@@ -848,23 +667,13 @@ validInvalid:
           00  # STOP
               # Data segment
            ef
-
-
-
+    expectException:
+      "Shanghai" : "Invalid Code"
+      ">=Cancun" : "undefined instrustion"
 
   # EOF1I0016 check that code that uses new relative jumps to outside the section fails
-  - |
-    :label bad :raw 0x
-      # Legacy constructor
-        38    #  0 CODESIZE     <size>
-        6000  #  1 PUSH1 0      0, <size>
-        6000  #  3 PUSH1 0      0, 0, <size>
-        39    #  5 COPYCODE 
-        600D  #  6 PUSH1 0x0D   13
-        38    #  8 CODESIZE     <size>, 13 
-        03    # 10 SUB          <size>-13
-        600D  # 11 PUSH1 0x0D   13
-        F3    # 12 RETURN
+  - data: |
+     :label EOF1I0016 :raw 0x
       # EOF deployed code 
       ef0001  # Magic followed by version
       010004  # One code segment
@@ -883,24 +692,15 @@ validInvalid:
            00 #  4 STOP
               # Data segment
            ef
-
-
+    expectException:
+      "Shanghai" : "Invalid Code"
+      ">=Cancun" : "undefined instrustion"
 
 
   # EOF1V0002 check that valid EOF1 with two code sections deploys
   # EOF1V0006 check that return values are allowed on code sections that aren't zero
-  - |
-    :label good :raw 0x
-      # Legacy constructor
-        38    #  0 CODESIZE     <size>
-        6000  #  1 PUSH1 0      0, <size>
-        6000  #  3 PUSH1 0      0, 0, <size>
-        39    #  5 COPYCODE 
-        600D  #  6 PUSH1 0x0D   13
-        38    #  8 CODESIZE     <size>, 13 
-        03    # 10 SUB          <size>-13
-        600D  # 11 PUSH1 0x0D   13
-        F3    # 12 RETURN
+  - data: |
+     :label EOF1V0002 :raw 0x
       # EOF deployed code 
       ef0001  # Magic followed by version
       010008  # Two code segments
@@ -927,21 +727,12 @@ validInvalid:
            00 #  3 STOP
               # Data segment
            0bad60A7  # 4 bytes (valid)
-
+    expectException:
+      "Shanghai" : "Invalid Code"
 
   # EOF1V0012 return values on code sections affect maxStackHeight of the caller
-  - |
-    :label good :raw 0x
-      # Legacy constructor
-        38    #  0 CODESIZE     <size>
-        6000  #  1 PUSH1 0      0, <size>
-        6000  #  3 PUSH1 0      0, 0, <size>
-        39    #  5 COPYCODE 
-        600D  #  6 PUSH1 0x0D   13
-        38    #  8 CODESIZE     <size>, 13 
-        03    # 10 SUB          <size>-13
-        600D  # 11 PUSH1 0x0D   13
-        F3    # 12 RETURN
+  - data: |
+     :label EOF1V0012 :raw 0x
       # EOF deployed code 
       ef0001  # Magic followed by version
       010008  # Two code segments
@@ -966,20 +757,12 @@ validInvalid:
           B1  #  1 RETF
               # Data segment
            0bad60A7  # 4 bytes (valid)
+    expectException:
+      "Shanghai" : "Invalid Code"
 
   # EOF1I0024 sections that end with a non-terminator opcode fail
-  - |
-    :label bad :raw 0x
-      # Legacy constructor
-        38    #  0 CODESIZE     <size>
-        6000  #  1 PUSH1 0      0, <size>
-        6000  #  3 PUSH1 0      0, 0, <size>
-        39    #  5 COPYCODE 
-        600D  #  6 PUSH1 0x0D   13
-        38    #  8 CODESIZE     <size>, 13 
-        03    # 10 SUB          <size>-13
-        600D  # 11 PUSH1 0x0D   13
-        F3    # 12 RETURN
+  - data: |
+     :label EOF1I0024 :raw 0x
       # EOF deployed code 
       ef0001  # Magic followed by version
       010008  # Two code segments
@@ -1002,22 +785,14 @@ validInvalid:
           30  #  0 ADDRESS
               # Data segment
            0bad60A7  # 4 bytes (valid)
-
+    expectException:
+      "Shanghai" : "Invalid Code"
+      ">=Cancun" : "invalid code termination"
 
 
   # EOF1I0022 stack underflow caused by a function call
-  - |
-    :label bad :raw 0x
-      # Legacy constructor
-        38    #  0 CODESIZE     <size>
-        6000  #  1 PUSH1 0      0, <size>
-        6000  #  3 PUSH1 0      0, 0, <size>
-        39    #  5 COPYCODE 
-        600D  #  6 PUSH1 0x0D   13
-        38    #  8 CODESIZE     <size>, 13 
-        03    # 10 SUB          <size>-13
-        600D  # 11 PUSH1 0x0D   13
-        F3    # 12 RETURN
+  - data: |
+     :label EOF1I0022 :raw 0x
       # EOF deployed code 
       ef0001  # Magic followed by version
       010008  # Two code segments
@@ -1042,23 +817,14 @@ validInvalid:
           B1  #  1 RETF
               # Data segment
            0bad60A7  # 4 bytes (valid)
-
-
+    expectException:
+      "Shanghai" : "Invalid Code"
+      ">=Cancun" : "stack underflow"
 
 
   # EOF1V0015 data stack height of 1023 is valid
-  - |
-    :label good :raw 0x
-      # Legacy constructor
-        38    #  0 CODESIZE     <size>
-        6000  #  1 PUSH1 0      0, <size>
-        6000  #  3 PUSH1 0      0, 0, <size>
-        39    #  5 COPYCODE 
-        600D  #  6 PUSH1 0x0D   13
-        38    #  8 CODESIZE     <size>, 13 
-        03    # 10 SUB          <size>-13
-        600D  # 11 PUSH1 0x0D   13
-        F3    # 12 RETURN
+  - data: |
+     :label EOF1V0015 :raw 0x
       # EOF deployed code 
       ef0001  # Magic followed by version
       01000C  # Three code segments
@@ -1123,21 +889,12 @@ validInvalid:
           B1      # 1E RETF
               # Data segment
            0bad60A7  # 4 bytes (valid)
-
+    expectException:
+      "Shanghai" : "Invalid Code"
 
   # EOF1I0025 data stack height of 1024 is invalid
-  - |
-    :label bad :raw 0x
-      # Legacy constructor
-        38    #  0 CODESIZE     <size>
-        6000  #  1 PUSH1 0      0, <size>
-        6000  #  3 PUSH1 0      0, 0, <size>
-        39    #  5 COPYCODE 
-        600D  #  6 PUSH1 0x0D   13
-        38    #  8 CODESIZE     <size>, 13 
-        03    # 10 SUB          <size>-13
-        600D  # 11 PUSH1 0x0D   13
-        F3    # 12 RETURN
+  - data: |
+     :label EOF1I0025 :raw 0x
       # EOF deployed code 
       ef0001  # Magic followed by version
       01000C  # Three code segments
@@ -1203,21 +960,13 @@ validInvalid:
           B1      # 1E RETF
               # Data segment
            0bad60A7  # 4 bytes (valid)
-
+    expectException:
+      "Shanghai" : "Invalid Code"
+      ">=Cancun" : "invalid type content, max stack height exceeds limit"
 
   # EOF1V0003 check that valid EOF1 with four code sections deploys
-  - |
-    :label good :raw 0x
-      # Legacy constructor
-        38    #  0 CODESIZE     <size>
-        6000  #  1 PUSH1 0      0, <size>
-        6000  #  3 PUSH1 0      0, 0, <size>
-        39    #  5 COPYCODE 
-        600D  #  6 PUSH1 0x0D   13
-        38    #  8 CODESIZE     <size>, 13 
-        03    # 10 SUB          <size>-13
-        600D  # 11 PUSH1 0x0D   13
-        F3    # 12 RETURN
+  - data: |
+     :label EOF1V0003 :raw 0x
       # EOF deployed code 
       ef0001  # Magic followed by version
       010010  # Two code segments
@@ -1262,22 +1011,14 @@ validInvalid:
            00 #  3 STOP
               # Data segment
            0bad60A7  # 4 bytes (valid)
+    expectException:
+      "Shanghai" : "Invalid Code"
 
 
 
   # EOF1V0005 check that EOF1 with the right maxStackDepth deploys
-  - |
-    :label good :raw 0x
-      # Legacy constructor
-        38    #  0 CODESIZE     <size>
-        6000  #  1 PUSH1 0      0, <size>
-        6000  #  3 PUSH1 0      0, 0, <size>
-        39    #  5 COPYCODE 
-        600D  #  6 PUSH1 0x0D   13
-        38    #  8 CODESIZE     <size>, 13 
-        03    # 10 SUB          <size>-13
-        600D  # 11 PUSH1 0x0D   13
-        F3    # 12 RETURN
+  - data: |
+     :label EOF1V0005 :raw 0x
       # EOF deployed code 
       ef0001  # Magic followed by version
       010010  # Four code segments
@@ -1332,22 +1073,13 @@ validInvalid:
            00 #  7 STOP
               # Data segment
            0bad60A7  # 4 bytes (valid)
+    expectException:
+      "Shanghai" : "Invalid Code"
 
 
   # EOF1V0007 check that function calls to code sections that exist are allowed
-  - |
-    :label good :raw 0x
-      # Legacy constructor
-        610bad
-        38    #  0 CODESIZE     <size>
-        6000  #  1 PUSH1 0      0, <size>
-        6000  #  3 PUSH1 0      0, 0, <size>
-        39    #  5 COPYCODE 
-        600D  #  6 PUSH1 0x0D   13
-        38    #  8 CODESIZE     <size>, 13 
-        03    # 10 SUB          <size>-13
-        600D  # 11 PUSH1 0x0D   13
-        F3    # 12 RETURN
+  - data: |
+     :label EOF1V0007 :raw 0x
       # EOF deployed code 
       ef0001  # Magic followed by version
       010010  # Four code segments
@@ -1399,22 +1131,14 @@ validInvalid:
            00 #  6 STOP
               # Data segment
            0bad60A7  # 4 bytes (valid)
-
+    expectException:
+      "Shanghai" : "Invalid Code"
+      ">=Cancun" : "invalid container size"
 
 
   # EOF1I0011 check that function calls to code sections that don't exist fail
-  - |
-    :label bad :raw 0x
-      # Legacy constructor
-        38    #  0 CODESIZE     <size>
-        6000  #  1 PUSH1 0      0, <size>
-        6000  #  3 PUSH1 0      0, 0, <size>
-        39    #  5 COPYCODE 
-        600D  #  6 PUSH1 0x0D   13
-        38    #  8 CODESIZE     <size>, 13 
-        03    # 10 SUB          <size>-13
-        600D  # 11 PUSH1 0x0D   13
-        F3    # 12 RETURN
+  - data: |
+     :label EOF1I0011 :raw 0x
       # EOF deployed code 
       ef0001  # Magic followed by version
       010010  # Four code segments
@@ -1466,24 +1190,14 @@ validInvalid:
            00 #  6 STOP
               # Data segment
            0bad60A7  # 4 bytes (valid)
-
-
-
+    expectException:
+      "Shanghai" : "Invalid Code"
+      ">=Cancun" : "invalid container size"
 
 
   # EOF1I0012 check that code sections that cause stack underflow fail
-  - |
-    :label bad :raw 0x
-      # Legacy constructor
-        38    #  0 CODESIZE     <size>
-        6000  #  1 PUSH1 0      0, <size>
-        6000  #  3 PUSH1 0      0, 0, <size>
-        39    #  5 COPYCODE 
-        600D  #  6 PUSH1 0x0D   13
-        38    #  8 CODESIZE     <size>, 13 
-        03    # 10 SUB          <size>-13
-        600D  # 11 PUSH1 0x0D   13
-        F3    # 12 RETURN
+  - data: |
+     :label EOF1I0012 :raw 0x
       # EOF deployed code 
       ef0001  # Magic followed by version
       010008  # Two code segments
@@ -1510,22 +1224,14 @@ validInvalid:
            00 #  3 STOP
               # Data segment
            0bad60A7  # 4 bytes (valid)
-
+    expectException:
+      "Shanghai" : "Invalid Code"
+      ">=Cancun" : "stack underflow"
 
 
   # EOF1I0013 check that we can't return more values than we declare
-  - |
-    :label bad :raw 0x
-      # Legacy constructor
-        38    #  0 CODESIZE     <size>
-        6000  #  1 PUSH1 0      0, <size>
-        6000  #  3 PUSH1 0      0, 0, <size>
-        39    #  5 COPYCODE 
-        600D  #  6 PUSH1 0x0D   13
-        38    #  8 CODESIZE     <size>, 13 
-        03    # 10 SUB          <size>-13
-        600D  # 11 PUSH1 0x0D   13
-        F3    # 12 RETURN
+  - data: |
+     :label EOF1I0013 :raw 0x
       # EOF deployed code 
       ef0001  # Magic followed by version
       010008  # Two code segments
@@ -1552,21 +1258,13 @@ validInvalid:
            00 #  3 STOP
               # Data segment
            0bad60A7  # 4 bytes (valid)
-
+    expectException:
+      "Shanghai" : "Invalid Code"
+      ">=Cancun" : "invalid max stack height"
 
   # EOF1I0014 check that code that looks deeper in the stack than the parameters fails
-  - |
-    :label bad :raw 0x
-      # Legacy constructor
-        38    #  0 CODESIZE     <size>
-        6000  #  1 PUSH1 0      0, <size>
-        6000  #  3 PUSH1 0      0, 0, <size>
-        39    #  5 COPYCODE 
-        600D  #  6 PUSH1 0x0D   13
-        38    #  8 CODESIZE     <size>, 13 
-        03    # 10 SUB          <size>-13
-        600D  # 11 PUSH1 0x0D   13
-        F3    # 12 RETURN
+  - data: |
+     :label EOF1I0014 :raw 0x
       # EOF deployed code 
       ef0001  # Magic followed by version
       010008  # Two code segments
@@ -1593,21 +1291,13 @@ validInvalid:
            00 #  3 STOP
               # Data segment
            0bad60A7  # 4 bytes (valid)
-
+    expectException:
+      "Shanghai" : "Invalid Code"
+      ">=Cancun" : "stack underflow"
 
   # EOF1I0010 check that return values are not allowed on section 0
-  - |
-    :label bad :raw 0x
-      # Legacy constructor
-        38    #  0 CODESIZE     <size>
-        6000  #  1 PUSH1 0      0, <size>
-        6000  #  3 PUSH1 0      0, 0, <size>
-        39    #  5 COPYCODE 
-        600D  #  6 PUSH1 0x0D   13
-        38    #  8 CODESIZE     <size>, 13 
-        03    # 10 SUB          <size>-13
-        600D  # 11 PUSH1 0x0D   13
-        F3    # 12 RETURN
+  - data: |
+     :label EOF1I0010 :raw 0x
       # EOF deployed code 
       ef0001  # Magic followed by version
       010004  # One code segment
@@ -1625,22 +1315,14 @@ validInvalid:
            FE #  3 Designated invalid opcode
               # Data segment
            0bad60A7  # 4 bytes (valid)
-
+    expectException:
+      "Shanghai" : "Invalid Code"
+      ">=Cancun" : "invalid section 0 type"
 
   # EOF1V0009 check that parameters are allowed on code sections that aren't zero
   # EOF1V0010 parameters are part of the max stack height
-  - |
-    :label good :raw 0x
-      # Legacy constructor
-        38    #  0 CODESIZE     <size>
-        6000  #  1 PUSH1 0      0, <size>
-        6000  #  3 PUSH1 0      0, 0, <size>
-        39    #  5 COPYCODE 
-        600D  #  6 PUSH1 0x0D   13
-        38    #  8 CODESIZE     <size>, 13 
-        03    # 10 SUB          <size>-13
-        600D  # 11 PUSH1 0x0D   13
-        F3    # 12 RETURN
+  - data: |
+     :label EOF1V0010 :raw 0x
       # EOF deployed code 
       ef0001  # Magic followed by version
       010008  # Two code segments
@@ -1667,21 +1349,12 @@ validInvalid:
            00 #  3 STOP
               # Data segment
            0bad60A7  # 4 bytes (valid)
-
+    expectException:
+      "Shanghai" : "Invalid Code"
 
   # EOF1I0017 check that parameters are not allowed on section 0
-  - |
-    :label bad :raw 0x
-      # Legacy constructor
-        38    #  0 CODESIZE     <size>
-        6000  #  1 PUSH1 0      0, <size>
-        6000  #  3 PUSH1 0      0, 0, <size>
-        39    #  5 COPYCODE 
-        600D  #  6 PUSH1 0x0D   13
-        38    #  8 CODESIZE     <size>, 13 
-        03    # 10 SUB          <size>-13
-        600D  # 11 PUSH1 0x0D   13
-        F3    # 12 RETURN
+  - data: |
+     :label EOF1I0017 :raw 0x
       # EOF deployed code 
       ef0001  # Magic followed by version
       010004  # One code segment
@@ -1699,22 +1372,14 @@ validInvalid:
            FE #  3 Designated invalid opcode
               # Data segment
            0bad60A7  # 4 bytes (valid)
-
+    expectException:
+      "Shanghai" : "Invalid Code"
+      ">=Cancun" : "invalid section 0 type"
 
 
   # EOF1I0009 check that EOF1 with the wrong maxStackDepth fails
-  - |
-    :label bad :raw 0x
-      # Legacy constructor
-        38    #  0 CODESIZE     <size>
-        6000  #  1 PUSH1 0      0, <size>
-        6000  #  3 PUSH1 0      0, 0, <size>
-        39    #  5 COPYCODE 
-        600D  #  6 PUSH1 0x0D   13
-        38    #  8 CODESIZE     <size>, 13 
-        03    # 10 SUB          <size>-13
-        600D  # 11 PUSH1 0x0D   13
-        F3    # 12 RETURN
+  - data: |
+     :label EOF1I0009 :raw 0x
       # EOF deployed code 
       ef0001  # Magic followed by version
       010004  # One code segment
@@ -1732,21 +1397,13 @@ validInvalid:
            00 #  3 STOP
               # Data segment
            0bad60A7  # 4 bytes (valid)
-
+    expectException:
+      "Shanghai" : "Invalid Code"
+      ">=Cancun" : "invalid max stack height"
 
   # EOF1I0009 check that EOF1 with the wrong maxStackDepth fails
-  - |
-    :label bad :raw 0x
-      # Legacy constructor
-        38    #  0 CODESIZE     <size>
-        6000  #  1 PUSH1 0      0, <size>
-        6000  #  3 PUSH1 0      0, 0, <size>
-        39    #  5 COPYCODE 
-        600D  #  6 PUSH1 0x0D   13
-        38    #  8 CODESIZE     <size>, 13 
-        03    # 10 SUB          <size>-13
-        600D  # 11 PUSH1 0x0D   13
-        F3    # 12 RETURN
+  - data: |
+     :label EOF1I0009 :raw 0x
       # EOF deployed code 
       ef0001  # Magic followed by version
       010004  # One code segment
@@ -1766,21 +1423,13 @@ validInvalid:
            00 #  5 STOP
               # Data segment
            0bad60A7  # 4 bytes (valid)
-
+    expectException:
+      "Shanghai" : "Invalid Code"
+      ">=Cancun" : "invalid container size"
 
   # EOF1I0007 check that EOF1 with a malformed code section fails
-  - |
-    :label bad :raw 0x
-      # Legacy constructor
-        38    #  0 CODESIZE     <size>
-        6000  #  1 PUSH1 0      0, <size>
-        6000  #  3 PUSH1 0      0, 0, <size>
-        39    #  5 COPYCODE 
-        600D  #  6 PUSH1 0x0D   13
-        38    #  8 CODESIZE     <size>, 13 
-        03    # 10 SUB          <size>-13
-        600D  # 11 PUSH1 0x0D   13
-        F3    # 12 RETURN
+  - data: |
+     :label EOF1I0007 :raw 0x
       # EOF deployed code 
       ef0001  # Magic followed by version
       010004  # One code segment
@@ -1798,22 +1447,14 @@ validInvalid:
            62 #  3 PUSH3 (without a value)
               # Data segment
            0bad60A7  # 4 bytes (valid)
-
+    expectException:
+      "Shanghai" : "Invalid Code"
+      ">=Cancun" : "truncated immediate"
 
 
   # check that EOF1 with a bad end of sections number fails
-  - |
-    :label bad :raw 0x
-      # Legacy constructor
-        38    #  0 CODESIZE     <size>
-        6000  #  1 PUSH1 0      0, <size>
-        6000  #  3 PUSH1 0      0, 0, <size>
-        39    #  5 COPYCODE 
-        600D  #  6 PUSH1 0x0D   13
-        38    #  8 CODESIZE     <size>, 13 
-        03    # 10 SUB          <size>-13
-        600D  # 11 PUSH1 0x0D   13
-        F3    # 12 RETURN
+  - data: |
+     :label badsectionnumber :raw 0x
       # EOF deployed code 
       ef0001  # Magic followed by version
       010004  # One code segment
@@ -1831,22 +1472,14 @@ validInvalid:
            00 #  3 STOP
               # Data segment
            ef
-
+    expectException:
+      "Shanghai" : "Invalid Code"
+      ">=Cancun" : "missing header terminator"
 
 
   # EOF1I0001 check that EOF1 with a bad magic number fails
-  - |
-      :label bad :raw 0x
-      # Legacy constructor
-        38    #  0 CODESIZE     <size>
-        6000  #  1 PUSH1 0      0, <size>
-        6000  #  3 PUSH1 0      0, 0, <size>
-        39    #  5 COPYCODE 
-        600D  #  6 PUSH1 0x0D   13
-        38    #  8 CODESIZE     <size>, 13 
-        03    # 10 SUB          <size>-13
-        600D  # 11 PUSH1 0x0D   13
-        F3    # 12 RETURN
+  - data: |
+      :label EOF1I0001 :raw 0x
       # EOF deployed code 
       ef0201  # Bad magic followed by version
       010004  # One code segment
@@ -1864,20 +1497,13 @@ validInvalid:
            00 #  3 STOP
               # Data segment
            ef
+    expectException:
+      "Shanghai" : "Invalid Code"
+      ">=Cancun" : "invalid magic"
 
   # EOF1I0002 check that EOF1 with a bad version number fails (ver 0)
-  - |
-    :label bad :raw 0x
-      # Legacy constructor
-        38    #  0 CODESIZE     <size>
-        6000  #  1 PUSH1 0      0, <size>
-        6000  #  3 PUSH1 0      0, 0, <size>
-        39    #  5 COPYCODE 
-        600D  #  6 PUSH1 0x0D   13
-        38    #  8 CODESIZE     <size>, 13 
-        03    # 10 SUB          <size>-13
-        600D  # 11 PUSH1 0x0D   13
-        F3    # 12 RETURN
+  - data: |
+     :label EOF1I0002 :raw 0x
       # EOF deployed code 
       ef0000  # Magic followed by bad version
       010004  # One code segment
@@ -1895,21 +1521,13 @@ validInvalid:
            00 #  3 STOP
               # Data segment
            ef
-
+    expectException:
+      "Shanghai" : "Invalid Code"
+      ">=Cancun" : "invalid version"
 
   # EOF1I0002 check that EOF1 with a bad version number fails (ver 2)
-  - |
-    :label bad :raw 0x
-      # Legacy constructor
-        38    #  0 CODESIZE     <size>
-        6000  #  1 PUSH1 0      0, <size>
-        6000  #  3 PUSH1 0      0, 0, <size>
-        39    #  5 COPYCODE 
-        600D  #  6 PUSH1 0x0D   13
-        38    #  8 CODESIZE     <size>, 13 
-        03    # 10 SUB          <size>-13
-        600D  # 11 PUSH1 0x0D   13
-        F3    # 12 RETURN
+  - data: |
+     :label EOF1I0002 :raw 0x
       # EOF deployed code 
       ef0002  # Magic followed by bad version
       010004  # One code segment
@@ -1927,53 +1545,37 @@ validInvalid:
            00 #  3 STOP
               # Data segment
            ef
-
-
-  # EOF1I0003 check that EOF1 with a bad section order fails
-  - |
-    :label bad :raw 0x
-      # Legacy constructor
-        38    #  0 CODESIZE     <size>
-        6000  #  1 PUSH1 0      0, <size>
-        6000  #  3 PUSH1 0      0, 0, <size>
-        39    #  5 COPYCODE 
-        600D  #  6 PUSH1 0x0D   13
-        38    #  8 CODESIZE     <size>, 13 
-        03    # 10 SUB          <size>-13
-        600D  # 11 PUSH1 0x0D   13
-        F3    # 12 RETURN
-      # EOF deployed code 
-      ef0001  # Magic followed by bad version
-      020001  # One code segment
-        0003  #   code seg 0: 3 bytes
-      010004  # One code segment
-      030001  # One byte data segment
-      00      # End of header
-              # Code segment 0 header
-          00  # Zero inputs
-          00  # Zero outputs
-        0001  # Max stack height 1
-              # Code segment 0 code
-           30 #  1 ADDRESS 
-           50 #  2 POP
-           00 #  3 STOP
-              # Data segment
-           ef
-
+    expectException:
+      "Shanghai" : "Invalid Code"
+      ">=Cancun" : "invalid version"
 
   # EOF1I0003 check that EOF1 with a bad section order fails
-  - |
-    :label bad :raw 0x
-      # Legacy constructor
-        38    #  0 CODESIZE     <size>
-        6000  #  1 PUSH1 0      0, <size>
-        6000  #  3 PUSH1 0      0, 0, <size>
-        39    #  5 COPYCODE 
-        600D  #  6 PUSH1 0x0D   13
-        38    #  8 CODESIZE     <size>, 13 
-        03    # 10 SUB          <size>-13
-        600D  # 11 PUSH1 0x0D   13
-        F3    # 12 RETURN
+  - data: |
+     :label EOF1I0003 :raw 0x
+      # EOF deployed code 
+      ef0001  # Magic followed by bad version
+      020001  # One code segment
+        0003  #   code seg 0: 3 bytes
+      010004  # One code segment
+      030001  # One byte data segment
+      00      # End of header
+              # Code segment 0 header
+          00  # Zero inputs
+          00  # Zero outputs
+        0001  # Max stack height 1
+              # Code segment 0 code
+           30 #  1 ADDRESS 
+           50 #  2 POP
+           00 #  3 STOP
+              # Data segment
+           ef
+    expectException:
+      "Shanghai" : "Invalid Code"
+      ">=Cancun" : "missing type header"
+
+  # EOF1I0003 check that EOF1 with a bad section order fails
+  - data: |
+     :label EOF1I0003 :raw 0x
       # EOF deployed code 
       ef0001  # Magic followed by bad version
       020001  # One code segment
@@ -1991,22 +1593,14 @@ validInvalid:
            00 #  3 STOP
               # Data segment
            ef
-
+    expectException:
+      "Shanghai" : "Invalid Code"
+      ">=Cancun" : "missing type header"
 
 
   # EOF1I0004 check that EOF1 missing a section fails
-  - |
-    :label bad :raw 0x
-      # Legacy constructor
-        38    #  0 CODESIZE     <size>
-        6000  #  1 PUSH1 0      0, <size>
-        6000  #  3 PUSH1 0      0, 0, <size>
-        39    #  5 COPYCODE 
-        600D  #  6 PUSH1 0x0D   13
-        38    #  8 CODESIZE     <size>, 13 
-        03    # 10 SUB          <size>-13
-        600D  # 11 PUSH1 0x0D   13
-        F3    # 12 RETURN
+  - data: |
+     :label EOF1I0004 :raw 0x
       # EOF deployed code 
       ef0001  # Magic followed by bad version
       020001  # One code segment
@@ -2023,20 +1617,13 @@ validInvalid:
            00 #  3 STOP
               # Data segment
            ef
+    expectException:
+      "Shanghai" : "Invalid Code"
+      ">=Cancun" : "missing type header"
 
   # EOF1I0004 check that EOF1 missing a section fails
-  - |
-    :label bad :raw 0x
-      # Legacy constructor
-        38    #  0 CODESIZE     <size>
-        6000  #  1 PUSH1 0      0, <size>
-        6000  #  3 PUSH1 0      0, 0, <size>
-        39    #  5 COPYCODE 
-        600D  #  6 PUSH1 0x0D   13
-        38    #  8 CODESIZE     <size>, 13 
-        03    # 10 SUB          <size>-13
-        600D  # 11 PUSH1 0x0D   13
-        F3    # 12 RETURN
+  - data: |
+     :label EOF1I0004 :raw 0x
       # EOF deployed code 
       ef0001  # Magic followed by bad version
       010004  # One code segment
@@ -2052,21 +1639,13 @@ validInvalid:
            00 #  3 STOP
               # Data segment
            ef
-
+    expectException:
+      "Shanghai" : "Invalid Code"
+      ">=Cancun" : "missing code header"
 
   # EOF1I0004 check that EOF1 missing a section fails
-  - |
-    :label bad :raw 0x
-      # Legacy constructor
-        38    #  0 CODESIZE     <size>
-        6000  #  1 PUSH1 0      0, <size>
-        6000  #  3 PUSH1 0      0, 0, <size>
-        39    #  5 COPYCODE 
-        600D  #  6 PUSH1 0x0D   13
-        38    #  8 CODESIZE     <size>, 13 
-        03    # 10 SUB          <size>-13
-        600D  # 11 PUSH1 0x0D   13
-        F3    # 12 RETURN
+  - data: |
+     :label EOF1I0004 :raw 0x
       # EOF deployed code 
       ef0001  # Magic followed by bad version
       010004  # One code segment
@@ -2083,14 +1662,14 @@ validInvalid:
            00 #  3 STOP
               # Data segment
            ef
-
-
-
+    expectException:
+      "Shanghai" : "Invalid Code"
+      ">=Cancun" : "missing data header"
 
 
   # EOF1 constructor returning an EOF1 contract
-  - |
-      :label good :raw 
+  - data: |
+      :label eofreof1 :raw 
       0xEF0001  # Magic and version
         010004  # One code segment
         020001  # One code segment
@@ -2130,25 +1709,12 @@ validInvalid:
             38 # CODESIZE
             50 # POP
             00 # STOP
+    expectException:
+      "Shanghai" : "Invalid Code"
 
   # Init code which doesn't create a contract
-  - :label bad :raw 0x610BADFE
-
-    
-
-  expect:
-  - indexes:
-      data:
-      - :label good
-    network: 
-    - '>=Shanghai'
-    result: !!bool true
-
-
-  - indexes:
-      data:
-      - :label bad
-    network: 
-    - '>=Shanghai'
-    result: !!bool false
+  - data: :label bad :raw 0x610BADFE
+    expectException:
+      "Shanghai" : "Invalid Code"
+      ">=Cancun" : "invalid magic"
 
