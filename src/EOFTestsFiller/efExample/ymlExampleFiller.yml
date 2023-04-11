@@ -2,12 +2,20 @@ ymlExample:
   _info:
      comment: EOF example test
 
-  data:
+  forks:
+    - ">=Shanghai"
+
+  vectors:
+
   # Not EOF1
-  - :raw 0x60016000F3
+  - data: |
+     :raw 0x60016000F3
+    expectException:
+      "Shanghai" : "Invalid Code"
+      ">=Cancun" : "invalid magic"
 
   # EOF1 constructor returning an EOF1 contract
-  - | 
+  - data: |
       :raw 
       0xEF0001  # Magic and version
         010004  # One code segment
@@ -48,28 +56,24 @@ ymlExample:
             38 # CODESIZE
             50 # POP
             00 # STOP
+    expectException:
+      "Shanghai" : "Invalid Code"
 
-  # Invalid init code
-  - :raw 0xEFFFFF
-
-  # Init code which doesn't create a contract
-  - :raw 0x610BADFE
-
-    
-
-  expect:
-  - indexes:
-      data:
-      - 0-1
-    network: 
-    - '>=Shanghai'
-    result: !!bool true
+    # Invalid init code
+  # Not EOF1
+  - data: |
+     :raw 0xEFFFFF
+    expectException:
+      "Shanghai" : "Invalid Code"
+      ">=Cancun" : "invalid magic"
 
 
-  - indexes:
-      data:
-      - 2-3
-    network: 
-    - '>=Shanghai'
-    result: !!bool false
+
+    # Init code which doesn't create a contract
+  - data: |
+     :raw 0x610BADFE
+    expectException:
+      "Shanghai" : "Invalid Code"
+      ">=Cancun" : "invalid magic"
+
 
