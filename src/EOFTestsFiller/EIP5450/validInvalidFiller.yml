@@ -210,8 +210,6 @@ validInvalid:
     - ">=Shanghai"
 
   vectors:
-
-    # Data: 0
     # EOF1V5450_0001 (Valid) Code with branches having the same stack height
     # Code: PUSH1(0) RJUMPI(label_true) PUSH1(1) PUSH1(2) RJUMP(exit) label_true: PUSH1(3) PUSH1(4) exit: STOP
     - data: |
@@ -240,7 +238,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 1
     # EOF1V5450_0002 (Valid) Jump table
     # Code: PUSH1(0) RJUMPV(case1,case2) PUSH1(1) PUSH1(2) RJUMP(exit) case1: PUSH1(3) PUSH1(4) RJUMP(exit) case2: PUSH1(5) PUSH1(6) exit: STOP
     - data: |
@@ -272,7 +269,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 2
     # EOF1V5450_0003 (Valid) Infinite loop
     # Code: start: PUSH1(0) PUSH1(1) POP POP RJUMP(start)
     - data: |
@@ -298,7 +294,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 3
     # EOF1V5450_0004 (Valid) Infinite loop using RJUMPV
     # Code: start: PUSH1(201) RJUMPV(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,start) STOP
     - data: |
@@ -322,7 +317,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 4
     # EOF1V5450_0005 (Valid) CALLF branches with the same total of outputs
       # Code[0](Types: 0:0): PUSH1(0) RJUMPI(label_true) label_false: CALLF(1) RJUMP(exit) label_true: CALLF(2) exit: STOP
       # Code[1](Types: 0:1): ADDRESS STOP
@@ -367,7 +361,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 5
     # EOF1V5450_0006 (Valid) CALLF inputs
       # Code[0](Types: 0:0): CALLF(0) STOP
       # Code[1](Types: 1:0): PUSH1(0) CALLF(1) STOP
@@ -546,7 +539,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 6
     # EOF1V5450_0007 (Valid) Validate input for ADD opcode
     # Code: PUSH1(1) DUP1 ADD STOP
     - data: |
@@ -571,7 +563,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 7
     # EOF1V5450_0008 (Valid) Validate input for MUL opcode
     # Code: PUSH1(1) DUP1 MUL STOP
     - data: |
@@ -596,7 +587,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 8
     # EOF1V5450_0009 (Valid) Validate input for SUB opcode
     # Code: PUSH1(1) DUP1 SUB STOP
     - data: |
@@ -621,7 +611,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 9
     # EOF1V5450_0010 (Valid) Validate input for DIV opcode
     # Code: PUSH1(1) DUP1 DIV STOP
     - data: |
@@ -646,7 +635,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 10
     # EOF1V5450_0011 (Valid) Validate input for SDIV opcode
     # Code: PUSH1(1) DUP1 SDIV STOP
     - data: |
@@ -671,7 +659,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 11
     # EOF1V5450_0012 (Valid) Validate input for MOD opcode
     # Code: PUSH1(1) DUP1 MOD STOP
     - data: |
@@ -696,7 +683,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 12
     # EOF1V5450_0013 (Valid) Validate input for SMOD opcode
     # Code: PUSH1(1) DUP1 SMOD STOP
     - data: |
@@ -721,7 +707,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 13
     # EOF1V5450_0014 (Valid) Validate input for ADDMOD opcode
     # Code: PUSH1(1) DUP1 DUP1 ADDMOD STOP
     - data: |
@@ -747,7 +732,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 14
     # EOF1V5450_0015 (Valid) Validate input for MULMOD opcode
     # Code: PUSH1(1) DUP1 DUP1 MULMOD STOP
     - data: |
@@ -773,7 +757,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 15
     # EOF1V5450_0016 (Valid) Validate input for EXP opcode
     # Code: PUSH1(1) DUP1 EXP STOP
     - data: |
@@ -798,7 +781,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 16
     # EOF1V5450_0017 (Valid) Validate input for SIGNEXTEND opcode
     # Code: PUSH1(1) DUP1 SIGNEXTEND STOP
     - data: |
@@ -823,7 +805,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 17
     # EOF1V5450_0018 (Valid) Validate input for LT opcode
     # Code: PUSH1(1) DUP1 LT STOP
     - data: |
@@ -848,7 +829,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 18
     # EOF1V5450_0019 (Valid) Validate input for GT opcode
     # Code: PUSH1(1) DUP1 GT STOP
     - data: |
@@ -873,7 +853,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 19
     # EOF1V5450_0020 (Valid) Validate input for SLT opcode
     # Code: PUSH1(1) DUP1 SLT STOP
     - data: |
@@ -898,7 +877,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 20
     # EOF1V5450_0021 (Valid) Validate input for SGT opcode
     # Code: PUSH1(1) DUP1 SGT STOP
     - data: |
@@ -923,7 +901,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 21
     # EOF1V5450_0022 (Valid) Validate input for EQ opcode
     # Code: PUSH1(1) DUP1 EQ STOP
     - data: |
@@ -948,7 +925,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 22
     # EOF1V5450_0023 (Valid) Validate input for ISZERO opcode
     # Code: PUSH1(1) ISZERO STOP
     - data: |
@@ -972,7 +948,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 23
     # EOF1V5450_0024 (Valid) Validate input for AND opcode
     # Code: PUSH1(1) DUP1 AND STOP
     - data: |
@@ -997,7 +972,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 24
     # EOF1V5450_0025 (Valid) Validate input for OR opcode
     # Code: PUSH1(1) DUP1 OR STOP
     - data: |
@@ -1022,7 +996,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 25
     # EOF1V5450_0026 (Valid) Validate input for XOR opcode
     # Code: PUSH1(1) DUP1 XOR STOP
     - data: |
@@ -1047,7 +1020,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 26
     # EOF1V5450_0027 (Valid) Validate input for NOT opcode
     # Code: PUSH1(1) NOT STOP
     - data: |
@@ -1071,7 +1043,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 27
     # EOF1V5450_0028 (Valid) Validate input for BYTE opcode
     # Code: PUSH1(1) DUP1 BYTE STOP
     - data: |
@@ -1096,7 +1067,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 28
     # EOF1V5450_0029 (Valid) Validate input for SHL opcode
     # Code: PUSH1(1) DUP1 SHL STOP
     - data: |
@@ -1121,7 +1091,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 29
     # EOF1V5450_0030 (Valid) Validate input for SHR opcode
     # Code: PUSH1(1) DUP1 SHR STOP
     - data: |
@@ -1146,7 +1115,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 30
     # EOF1V5450_0031 (Valid) Validate input for SAR opcode
     # Code: PUSH1(1) DUP1 SAR STOP
     - data: |
@@ -1171,7 +1139,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 31
     # EOF1V5450_0032 (Valid) Validate input for SHA3 opcode
     # Code: PUSH1(1) DUP1 SHA3 STOP
     - data: |
@@ -1196,7 +1163,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 32
     # EOF1V5450_0033 (Valid) Validate input for BALANCE opcode
     # Code: PUSH1(1) BALANCE STOP
     - data: |
@@ -1220,7 +1186,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 33
     # EOF1V5450_0034 (Valid) Validate input for CALLDATALOAD opcode
     # Code: PUSH1(1) CALLDATALOAD STOP
     - data: |
@@ -1244,7 +1209,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 34
     # EOF1V5450_0035 (Valid) Validate input for CALLDATACOPY opcode
     # Code: PUSH1(1) DUP1 DUP1 CALLDATACOPY STOP
     - data: |
@@ -1270,7 +1234,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 35
     # EOF1V5450_0036 (Valid) Validate input for CODECOPY opcode
     # Code: PUSH1(1) DUP1 DUP1 CODECOPY STOP
     - data: |
@@ -1296,7 +1259,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 36
     # EOF1V5450_0037 (Valid) Validate input for EXTCODESIZE opcode
     # Code: PUSH1(1) EXTCODESIZE STOP
     - data: |
@@ -1320,7 +1282,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 37
     # EOF1V5450_0038 (Valid) Validate input for EXTCODECOPY opcode
     # Code: PUSH1(1) DUP1 DUP1 DUP1 EXTCODECOPY STOP
     - data: |
@@ -1347,7 +1308,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 38
     # EOF1V5450_0039 (Valid) Validate input for RETURNDATACOPY opcode
     # Code: PUSH1(1) DUP1 DUP1 RETURNDATACOPY STOP
     - data: |
@@ -1373,7 +1333,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 39
     # EOF1V5450_0040 (Valid) Validate input for EXTCODEHASH opcode
     # Code: PUSH1(1) EXTCODEHASH STOP
     - data: |
@@ -1397,7 +1356,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 40
     # EOF1V5450_0041 (Valid) Validate input for BLOCKHASH opcode
     # Code: PUSH1(1) BLOCKHASH STOP
     - data: |
@@ -1421,7 +1379,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 41
     # EOF1V5450_0042 (Valid) Validate input for POP opcode
     # Code: PUSH1(1) POP STOP
     - data: |
@@ -1445,7 +1402,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 42
     # EOF1V5450_0043 (Valid) Validate input for MLOAD opcode
     # Code: PUSH1(1) MLOAD STOP
     - data: |
@@ -1469,7 +1425,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 43
     # EOF1V5450_0044 (Valid) Validate input for MSTORE opcode
     # Code: PUSH1(1) DUP1 MSTORE STOP
     - data: |
@@ -1494,7 +1449,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 44
     # EOF1V5450_0045 (Valid) Validate input for MSTORE8 opcode
     # Code: PUSH1(1) DUP1 MSTORE8 STOP
     - data: |
@@ -1519,7 +1473,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 45
     # EOF1V5450_0046 (Valid) Validate input for SLOAD opcode
     # Code: PUSH1(1) SLOAD STOP
     - data: |
@@ -1543,7 +1496,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 46
     # EOF1V5450_0047 (Valid) Validate input for SSTORE opcode
     # Code: PUSH1(1) DUP1 SSTORE STOP
     - data: |
@@ -1568,7 +1520,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 47
     # EOF1V5450_0048 (Valid) Validate input for DUP1 opcode
     # Code: PUSH1(1) DUP1 STOP
     - data: |
@@ -1592,7 +1543,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 48
     # EOF1V5450_0049 (Valid) Validate input for DUP2 opcode
     # Code: PUSH1(1) DUP1 DUP2 STOP
     - data: |
@@ -1617,7 +1567,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 49
     # EOF1V5450_0050 (Valid) Validate input for DUP3 opcode
     # Code: PUSH1(1) DUP1 DUP1 DUP3 STOP
     - data: |
@@ -1643,7 +1592,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 50
     # EOF1V5450_0051 (Valid) Validate input for DUP4 opcode
     # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP4 STOP
     - data: |
@@ -1670,7 +1618,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 51
     # EOF1V5450_0052 (Valid) Validate input for DUP5 opcode
     # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP5 STOP
     - data: |
@@ -1698,7 +1645,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 52
     # EOF1V5450_0053 (Valid) Validate input for DUP6 opcode
     # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP6 STOP
     - data: |
@@ -1727,7 +1673,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 53
     # EOF1V5450_0054 (Valid) Validate input for DUP7 opcode
     # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP7 STOP
     - data: |
@@ -1757,7 +1702,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 54
     # EOF1V5450_0055 (Valid) Validate input for DUP8 opcode
     # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP8 STOP
     - data: |
@@ -1788,7 +1732,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 55
     # EOF1V5450_0056 (Valid) Validate input for DUP9 opcode
     # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP9 STOP
     - data: |
@@ -1820,7 +1763,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 56
     # EOF1V5450_0057 (Valid) Validate input for DUP10 opcode
     # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP10 STOP
     - data: |
@@ -1853,7 +1795,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 57
     # EOF1V5450_0058 (Valid) Validate input for DUP11 opcode
     # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP11 STOP
     - data: |
@@ -1887,7 +1828,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 58
     # EOF1V5450_0059 (Valid) Validate input for DUP12 opcode
     # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP12 STOP
     - data: |
@@ -1922,7 +1862,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 59
     # EOF1V5450_0060 (Valid) Validate input for DUP13 opcode
     # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP13 STOP
     - data: |
@@ -1958,7 +1897,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 60
     # EOF1V5450_0061 (Valid) Validate input for DUP14 opcode
     # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP14 STOP
     - data: |
@@ -1995,7 +1933,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 61
     # EOF1V5450_0062 (Valid) Validate input for DUP15 opcode
     # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP15 STOP
     - data: |
@@ -2033,7 +1970,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 62
     # EOF1V5450_0063 (Valid) Validate input for DUP16 opcode
     # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP16 STOP
     - data: |
@@ -2072,7 +2008,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 63
     # EOF1V5450_0064 (Valid) Validate input for SWAP1 opcode
     # Code: PUSH1(1) DUP1 SWAP1 STOP
     - data: |
@@ -2097,7 +2032,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 64
     # EOF1V5450_0065 (Valid) Validate input for SWAP2 opcode
     # Code: PUSH1(1) DUP1 DUP1 SWAP2 STOP
     - data: |
@@ -2123,7 +2057,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 65
     # EOF1V5450_0066 (Valid) Validate input for SWAP3 opcode
     # Code: PUSH1(1) DUP1 DUP1 DUP1 SWAP3 STOP
     - data: |
@@ -2150,7 +2083,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 66
     # EOF1V5450_0067 (Valid) Validate input for SWAP4 opcode
     # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 SWAP4 STOP
     - data: |
@@ -2178,7 +2110,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 67
     # EOF1V5450_0068 (Valid) Validate input for SWAP5 opcode
     # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 SWAP5 STOP
     - data: |
@@ -2207,7 +2138,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 68
     # EOF1V5450_0069 (Valid) Validate input for SWAP6 opcode
     # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 SWAP6 STOP
     - data: |
@@ -2237,7 +2167,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 69
     # EOF1V5450_0070 (Valid) Validate input for SWAP7 opcode
     # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 SWAP7 STOP
     - data: |
@@ -2268,7 +2197,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 70
     # EOF1V5450_0071 (Valid) Validate input for SWAP8 opcode
     # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 SWAP8 STOP
     - data: |
@@ -2300,7 +2228,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 71
     # EOF1V5450_0072 (Valid) Validate input for SWAP9 opcode
     # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 SWAP9 STOP
     - data: |
@@ -2333,7 +2260,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 72
     # EOF1V5450_0073 (Valid) Validate input for SWAP10 opcode
     # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 SWAP10 STOP
     - data: |
@@ -2367,7 +2293,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 73
     # EOF1V5450_0074 (Valid) Validate input for SWAP11 opcode
     # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 SWAP11 STOP
     - data: |
@@ -2402,7 +2327,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 74
     # EOF1V5450_0075 (Valid) Validate input for SWAP12 opcode
     # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 SWAP12 STOP
     - data: |
@@ -2438,7 +2362,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 75
     # EOF1V5450_0076 (Valid) Validate input for SWAP13 opcode
     # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 SWAP13 STOP
     - data: |
@@ -2475,7 +2398,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 76
     # EOF1V5450_0077 (Valid) Validate input for SWAP14 opcode
     # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 SWAP14 STOP
     - data: |
@@ -2513,7 +2435,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 77
     # EOF1V5450_0078 (Valid) Validate input for SWAP15 opcode
     # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 SWAP15 STOP
     - data: |
@@ -2552,7 +2473,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 78
     # EOF1V5450_0079 (Valid) Validate input for SWAP16 opcode
     # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 SWAP16 STOP
     - data: |
@@ -2592,7 +2512,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 79
     # EOF1V5450_0080 (Valid) Validate input for LOG0 opcode
     # Code: PUSH1(1) DUP1 LOG0 STOP
     - data: |
@@ -2617,7 +2536,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 80
     # EOF1V5450_0081 (Valid) Validate input for LOG1 opcode
     # Code: PUSH1(1) DUP1 DUP1 LOG1 STOP
     - data: |
@@ -2643,7 +2561,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 81
     # EOF1V5450_0082 (Valid) Validate input for LOG2 opcode
     # Code: PUSH1(1) DUP1 DUP1 DUP1 LOG2 STOP
     - data: |
@@ -2670,7 +2587,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 82
     # EOF1V5450_0083 (Valid) Validate input for LOG3 opcode
     # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 LOG3 STOP
     - data: |
@@ -2698,7 +2614,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 83
     # EOF1V5450_0084 (Valid) Validate input for LOG4 opcode
     # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 LOG4 STOP
     - data: |
@@ -2727,7 +2642,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 84
     # EOF1V5450_0085 (Valid) Validate input for CREATE opcode
     # Code: PUSH1(1) DUP1 DUP1 CREATE STOP
     - data: |
@@ -2753,7 +2667,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 85
     # EOF1V5450_0086 (Valid) Validate input for CALL opcode
     # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 CALL STOP
     - data: |
@@ -2783,7 +2696,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 86
     # EOF1V5450_0087 (Valid) Validate input for RETURN opcode
     # Code: PUSH1(1) DUP1 RETURN
     - data: |
@@ -2807,7 +2719,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 87
     # EOF1V5450_0088 (Valid) Validate input for DELEGATECALL opcode
     # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DELEGATECALL STOP
     - data: |
@@ -2836,7 +2747,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 88
     # EOF1V5450_0089 (Valid) Validate input for CREATE2 opcode
     # Code: PUSH1(1) DUP1 DUP1 DUP1 CREATE2 STOP
     - data: |
@@ -2863,7 +2773,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 89
     # EOF1V5450_0090 (Valid) Validate input for STATICCALL opcode
     # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 STATICCALL STOP
     - data: |
@@ -2892,7 +2801,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 90
     # EOF1V5450_0091 (Valid) Validate input for REVERT opcode
     # Code: PUSH1(1) DUP1 REVERT
     - data: |
@@ -2916,7 +2824,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 91
     # EOF1V5450_0092 (Valid) Containing terminating opcode RETURN at the end
     # Code: PUSH1(1) POP PUSH1(0) DUP1 RETURN
     - data: |
@@ -2942,7 +2849,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 92
     # EOF1V5450_0093 (Valid) Containing terminating opcode REVERT at the end
     # Code: PUSH1(1) POP PUSH1(0) DUP1 REVERT
     - data: |
@@ -2968,7 +2874,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 93
     # EOF1V5450_0094 (Valid) Loop ending with unconditional RJUMP (a)
     # Code: start: RJUMP(start)
     - data: |
@@ -2990,7 +2895,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 94
     # EOF1V5450_0095 (Valid) Loop ending with unconditional RJUMP (b)
     # Code: PUSH1(10) start: PUSH1(1) SWAP1 SUB DUP1 RJUMPI(end) STOP end: RJUMP(start)
     - data: |
@@ -3019,7 +2923,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 95
     # EOF1V5450_0096 (Valid) Functions ending with RETF
       # Code[0](Types: 0:0): PUSH1(0) CALLF(1) STOP
       # Code[1](Types: 1:1): RETF
@@ -3061,7 +2964,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 96
     # EOF1V5450_0097 (Valid) Stack is not required to be empty on terminating instruction RETURN
     # Code: PUSH1(0) DUP1 DUP1 DUP1 DUP1 RETURN
     - data: |
@@ -3088,7 +2990,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 97
     # EOF1V5450_0098 (Valid) Stack is not required to be empty on terminating instruction REVERT
     # Code: PUSH1(0) DUP1 DUP1 DUP1 DUP1 REVERT
     - data: |
@@ -3115,7 +3016,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 98
     # EOF1V5450_0099 (Valid) RETF returning maximum number of outputs (127)
       # Code[0](Types: 0:0): CALLF(1) STOP
       # Code[1](Types: 0:127): PUSH1(0) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 RETF
@@ -3273,7 +3173,6 @@ validInvalid:
       expectException:
         "Shanghai" : "Invalid Code"
 
-    # Data: 99
     # EOF1I5450_0001 (Invalid) Stack height mismatch for different paths (a)
     # Code: PUSH1(0) RJUMPI(label_true) PUSH1(1) label_true: PUSH1(2) STOP
     - data: |
@@ -3298,9 +3197,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "conflicting stack height"
+        ">=Cancun" : "conflicting stack height"
 
-    # Data: 100
     # EOF1I5450_0002 (Invalid) Stack height mismatch for different paths (b)
     # Code: PUSH1(0) RJUMPI(label_true) label_false: PUSH1(1) RJUMP(exit) label_true: PUSH1(2) PUSH1(3) exit: STOP
     - data: |
@@ -3327,9 +3225,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "conflicting stack height"
+        ">=Cancun" : "conflicting stack height"
 
-    # Data: 101
     # EOF1I5450_0003 (Invalid) Calls returning different number of outputs
       # Code[0](Types: 0:0): PUSH1(0) RJUMPI(label_true) label_false: CALLF(1) RJUMP(exit) label_true: CALLF(2) exit: STOP
       # Code[1](Types: 0:1): PUSH1(1) RETF
@@ -3374,9 +3271,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "conflicting stack height"
+        ">=Cancun" : "conflicting stack height"
 
-    # Data: 102
     # EOF1I5450_0004 (Invalid) Pushing loop
     # Code: start: PUSH1(0) RJUMP(start)
     - data: |
@@ -3398,9 +3294,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "conflicting stack height"
+        ">=Cancun" : "conflicting stack height"
 
-    # Data: 103
     # EOF1I5450_0005 (Invalid) Popping loop
     # Code: PUSH1(0) DUP1 DUP1 start: POP RJUMP(start)
     - data: |
@@ -3425,9 +3320,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "conflicting stack height"
+        ">=Cancun" : "conflicting stack height"
 
-    # Data: 104
     # EOF1I5450_0006 (Invalid) Jump table with different stack heights
     # Code: PUSH1(0) RJUMPV(case1,case2) PUSH1(1) RJUMP(exit) case1: PUSH1(2) PUSH1(3) RJUMP(exit) case2: PUSH1(3) PUSH1(4) PUSH1(5) exit: STOP
     - data: |
@@ -3458,9 +3352,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "conflicting stack height"
+        ">=Cancun" : "conflicting stack height"
 
-    # Data: 105
     # EOF1I5450_0007 (Invalid) Stack underflow for opcode ADD
     # Code: PUSH1(1) ADD STOP
     - data: |
@@ -3483,9 +3376,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (1 <=> 2)"
+        ">=Cancun" : "stack underflow (1 <=> 2)"
 
-    # Data: 106
     # EOF1I5450_0008 (Invalid) Stack underflow for opcode MUL
     # Code: PUSH1(1) MUL STOP
     - data: |
@@ -3508,9 +3400,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (1 <=> 2)"
+        ">=Cancun" : "stack underflow (1 <=> 2)"
 
-    # Data: 107
     # EOF1I5450_0009 (Invalid) Stack underflow for opcode SUB
     # Code: PUSH1(1) SUB STOP
     - data: |
@@ -3533,9 +3424,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (1 <=> 2)"
+        ">=Cancun" : "stack underflow (1 <=> 2)"
 
-    # Data: 108
     # EOF1I5450_0010 (Invalid) Stack underflow for opcode DIV
     # Code: PUSH1(1) DIV STOP
     - data: |
@@ -3558,9 +3448,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (1 <=> 2)"
+        ">=Cancun" : "stack underflow (1 <=> 2)"
 
-    # Data: 109
     # EOF1I5450_0011 (Invalid) Stack underflow for opcode SDIV
     # Code: PUSH1(1) SDIV STOP
     - data: |
@@ -3583,9 +3472,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (1 <=> 2)"
+        ">=Cancun" : "stack underflow (1 <=> 2)"
 
-    # Data: 110
     # EOF1I5450_0012 (Invalid) Stack underflow for opcode MOD
     # Code: PUSH1(1) MOD STOP
     - data: |
@@ -3608,9 +3496,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (1 <=> 2)"
+        ">=Cancun" : "stack underflow (1 <=> 2)"
 
-    # Data: 111
     # EOF1I5450_0013 (Invalid) Stack underflow for opcode SMOD
     # Code: PUSH1(1) SMOD STOP
     - data: |
@@ -3633,9 +3520,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (1 <=> 2)"
+        ">=Cancun" : "stack underflow (1 <=> 2)"
 
-    # Data: 112
     # EOF1I5450_0014 (Invalid) Stack underflow for opcode ADDMOD
     # Code: PUSH1(1) PUSH1(1) ADDMOD STOP
     - data: |
@@ -3659,9 +3545,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (2 <=> 3)"
+        ">=Cancun" : "stack underflow (2 <=> 3)"
 
-    # Data: 113
     # EOF1I5450_0015 (Invalid) Stack underflow for opcode MULMOD
     # Code: PUSH1(1) PUSH1(1) MULMOD STOP
     - data: |
@@ -3685,9 +3570,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (2 <=> 3)"
+        ">=Cancun" : "stack underflow (2 <=> 3)"
 
-    # Data: 114
     # EOF1I5450_0016 (Invalid) Stack underflow for opcode EXP
     # Code: PUSH1(1) EXP STOP
     - data: |
@@ -3710,9 +3594,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (1 <=> 2)"
+        ">=Cancun" : "stack underflow (1 <=> 2)"
 
-    # Data: 115
     # EOF1I5450_0017 (Invalid) Stack underflow for opcode SIGNEXTEND
     # Code: PUSH1(1) SIGNEXTEND STOP
     - data: |
@@ -3735,9 +3618,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (1 <=> 2)"
+        ">=Cancun" : "stack underflow (1 <=> 2)"
 
-    # Data: 116
     # EOF1I5450_0018 (Invalid) Stack underflow for opcode LT
     # Code: PUSH1(1) LT STOP
     - data: |
@@ -3760,9 +3642,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (1 <=> 2)"
+        ">=Cancun" : "stack underflow (1 <=> 2)"
 
-    # Data: 117
     # EOF1I5450_0019 (Invalid) Stack underflow for opcode GT
     # Code: PUSH1(1) GT STOP
     - data: |
@@ -3785,9 +3666,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (1 <=> 2)"
+        ">=Cancun" : "stack underflow (1 <=> 2)"
 
-    # Data: 118
     # EOF1I5450_0020 (Invalid) Stack underflow for opcode SLT
     # Code: PUSH1(1) SLT STOP
     - data: |
@@ -3810,9 +3690,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (1 <=> 2)"
+        ">=Cancun" : "stack underflow (1 <=> 2)"
 
-    # Data: 119
     # EOF1I5450_0021 (Invalid) Stack underflow for opcode SGT
     # Code: PUSH1(1) SGT STOP
     - data: |
@@ -3835,9 +3714,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (1 <=> 2)"
+        ">=Cancun" : "stack underflow (1 <=> 2)"
 
-    # Data: 120
     # EOF1I5450_0022 (Invalid) Stack underflow for opcode EQ
     # Code: PUSH1(1) EQ STOP
     - data: |
@@ -3860,9 +3738,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (1 <=> 2)"
+        ">=Cancun" : "stack underflow (1 <=> 2)"
 
-    # Data: 121
     # EOF1I5450_0023 (Invalid) Stack underflow for opcode ISZERO
     # Code: ISZERO STOP
     - data: |
@@ -3884,9 +3761,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (0 <=> 1)"
+        ">=Cancun" : "stack underflow (0 <=> 1)"
 
-    # Data: 122
     # EOF1I5450_0024 (Invalid) Stack underflow for opcode AND
     # Code: PUSH1(1) AND STOP
     - data: |
@@ -3909,9 +3785,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (1 <=> 2)"
+        ">=Cancun" : "stack underflow (1 <=> 2)"
 
-    # Data: 123
     # EOF1I5450_0025 (Invalid) Stack underflow for opcode OR
     # Code: PUSH1(1) OR STOP
     - data: |
@@ -3934,9 +3809,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (1 <=> 2)"
+        ">=Cancun" : "stack underflow (1 <=> 2)"
 
-    # Data: 124
     # EOF1I5450_0026 (Invalid) Stack underflow for opcode XOR
     # Code: PUSH1(1) XOR STOP
     - data: |
@@ -3959,9 +3833,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (1 <=> 2)"
+        ">=Cancun" : "stack underflow (1 <=> 2)"
 
-    # Data: 125
     # EOF1I5450_0027 (Invalid) Stack underflow for opcode NOT
     # Code: NOT STOP
     - data: |
@@ -3983,9 +3856,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (0 <=> 1)"
+        ">=Cancun" : "stack underflow (0 <=> 1)"
 
-    # Data: 126
     # EOF1I5450_0028 (Invalid) Stack underflow for opcode BYTE
     # Code: PUSH1(1) BYTE STOP
     - data: |
@@ -4008,9 +3880,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (1 <=> 2)"
+        ">=Cancun" : "stack underflow (1 <=> 2)"
 
-    # Data: 127
     # EOF1I5450_0029 (Invalid) Stack underflow for opcode SHL
     # Code: PUSH1(1) SHL STOP
     - data: |
@@ -4033,9 +3904,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (1 <=> 2)"
+        ">=Cancun" : "stack underflow (1 <=> 2)"
 
-    # Data: 128
     # EOF1I5450_0030 (Invalid) Stack underflow for opcode SHR
     # Code: PUSH1(1) SHR STOP
     - data: |
@@ -4058,9 +3928,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (1 <=> 2)"
+        ">=Cancun" : "stack underflow (1 <=> 2)"
 
-    # Data: 129
     # EOF1I5450_0031 (Invalid) Stack underflow for opcode SAR
     # Code: PUSH1(1) SAR STOP
     - data: |
@@ -4083,9 +3952,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (1 <=> 2)"
+        ">=Cancun" : "stack underflow (1 <=> 2)"
 
-    # Data: 130
     # EOF1I5450_0032 (Invalid) Stack underflow for opcode SHA3
     # Code: PUSH1(1) SHA3 STOP
     - data: |
@@ -4108,9 +3976,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (1 <=> 2)"
+        ">=Cancun" : "stack underflow (1 <=> 2)"
 
-    # Data: 131
     # EOF1I5450_0033 (Invalid) Stack underflow for opcode BALANCE
     # Code: BALANCE STOP
     - data: |
@@ -4132,9 +3999,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (0 <=> 1)"
+        ">=Cancun" : "stack underflow (0 <=> 1)"
 
-    # Data: 132
     # EOF1I5450_0034 (Invalid) Stack underflow for opcode CALLDATALOAD
     # Code: CALLDATALOAD STOP
     - data: |
@@ -4156,9 +4022,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (0 <=> 1)"
+        ">=Cancun" : "stack underflow (0 <=> 1)"
 
-    # Data: 133
     # EOF1I5450_0035 (Invalid) Stack underflow for opcode CALLDATACOPY
     # Code: PUSH1(1) PUSH1(1) CALLDATACOPY STOP
     - data: |
@@ -4182,9 +4047,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (2 <=> 3)"
+        ">=Cancun" : "stack underflow (2 <=> 3)"
 
-    # Data: 134
     # EOF1I5450_0036 (Invalid) Stack underflow for opcode CODECOPY
     # Code: PUSH1(1) PUSH1(1) CODECOPY STOP
     - data: |
@@ -4208,9 +4072,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (2 <=> 3)"
+        ">=Cancun" : "stack underflow (2 <=> 3)"
 
-    # Data: 135
     # EOF1I5450_0037 (Invalid) Stack underflow for opcode EXTCODESIZE
     # Code: EXTCODESIZE STOP
     - data: |
@@ -4232,9 +4095,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (0 <=> 1)"
+        ">=Cancun" : "stack underflow (0 <=> 1)"
 
-    # Data: 136
     # EOF1I5450_0038 (Invalid) Stack underflow for opcode EXTCODECOPY
     # Code: PUSH1(1) PUSH1(1) PUSH1(1) EXTCODECOPY STOP
     - data: |
@@ -4259,9 +4121,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (3 <=> 4)"
+        ">=Cancun" : "stack underflow (3 <=> 4)"
 
-    # Data: 137
     # EOF1I5450_0039 (Invalid) Stack underflow for opcode RETURNDATACOPY
     # Code: PUSH1(1) PUSH1(1) RETURNDATACOPY STOP
     - data: |
@@ -4285,9 +4146,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (2 <=> 3)"
+        ">=Cancun" : "stack underflow (2 <=> 3)"
 
-    # Data: 138
     # EOF1I5450_0040 (Invalid) Stack underflow for opcode EXTCODEHASH
     # Code: EXTCODEHASH STOP
     - data: |
@@ -4309,9 +4169,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (0 <=> 1)"
+        ">=Cancun" : "stack underflow (0 <=> 1)"
 
-    # Data: 139
     # EOF1I5450_0041 (Invalid) Stack underflow for opcode BLOCKHASH
     # Code: BLOCKHASH STOP
     - data: |
@@ -4333,9 +4192,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (0 <=> 1)"
+        ">=Cancun" : "stack underflow (0 <=> 1)"
 
-    # Data: 140
     # EOF1I5450_0042 (Invalid) Stack underflow for opcode POP
     # Code: POP STOP
     - data: |
@@ -4357,9 +4215,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (0 <=> 1)"
+        ">=Cancun" : "stack underflow (0 <=> 1)"
 
-    # Data: 141
     # EOF1I5450_0043 (Invalid) Stack underflow for opcode MLOAD
     # Code: MLOAD STOP
     - data: |
@@ -4381,9 +4238,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (0 <=> 1)"
+        ">=Cancun" : "stack underflow (0 <=> 1)"
 
-    # Data: 142
     # EOF1I5450_0044 (Invalid) Stack underflow for opcode MSTORE
     # Code: PUSH1(1) MSTORE STOP
     - data: |
@@ -4406,9 +4262,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (1 <=> 2)"
+        ">=Cancun" : "stack underflow (1 <=> 2)"
 
-    # Data: 143
     # EOF1I5450_0045 (Invalid) Stack underflow for opcode MSTORE8
     # Code: PUSH1(1) MSTORE8 STOP
     - data: |
@@ -4431,9 +4286,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (1 <=> 2)"
+        ">=Cancun" : "stack underflow (1 <=> 2)"
 
-    # Data: 144
     # EOF1I5450_0046 (Invalid) Stack underflow for opcode SLOAD
     # Code: SLOAD STOP
     - data: |
@@ -4455,9 +4309,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (0 <=> 1)"
+        ">=Cancun" : "stack underflow (0 <=> 1)"
 
-    # Data: 145
     # EOF1I5450_0047 (Invalid) Stack underflow for opcode SSTORE
     # Code: PUSH1(1) SSTORE STOP
     - data: |
@@ -4480,9 +4333,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (1 <=> 2)"
+        ">=Cancun" : "stack underflow (1 <=> 2)"
 
-    # Data: 146
     # EOF1I5450_0048 (Invalid) Stack underflow for opcode DUP1
     # Code: DUP1 STOP
     - data: |
@@ -4504,9 +4356,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (0 <=> 1)"
+        ">=Cancun" : "stack underflow (0 <=> 1)"
 
-    # Data: 147
     # EOF1I5450_0049 (Invalid) Stack underflow for opcode DUP2
     # Code: PUSH1(1) DUP2 STOP
     - data: |
@@ -4529,9 +4380,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (1 <=> 2)"
+        ">=Cancun" : "stack underflow (1 <=> 2)"
 
-    # Data: 148
     # EOF1I5450_0050 (Invalid) Stack underflow for opcode DUP3
     # Code: PUSH1(1) PUSH1(1) DUP3 STOP
     - data: |
@@ -4555,9 +4405,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (2 <=> 3)"
+        ">=Cancun" : "stack underflow (2 <=> 3)"
 
-    # Data: 149
     # EOF1I5450_0051 (Invalid) Stack underflow for opcode DUP4
     # Code: PUSH1(1) PUSH1(1) PUSH1(1) DUP4 STOP
     - data: |
@@ -4582,9 +4431,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (3 <=> 4)"
+        ">=Cancun" : "stack underflow (3 <=> 4)"
 
-    # Data: 150
     # EOF1I5450_0052 (Invalid) Stack underflow for opcode DUP5
     # Code: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) DUP5 STOP
     - data: |
@@ -4610,9 +4458,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (4 <=> 5)"
+        ">=Cancun" : "stack underflow (4 <=> 5)"
 
-    # Data: 151
     # EOF1I5450_0053 (Invalid) Stack underflow for opcode DUP6
     # Code: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) DUP6 STOP
     - data: |
@@ -4639,9 +4486,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (5 <=> 6)"
+        ">=Cancun" : "stack underflow (5 <=> 6)"
 
-    # Data: 152
     # EOF1I5450_0054 (Invalid) Stack underflow for opcode DUP7
     # Code: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) DUP7 STOP
     - data: |
@@ -4669,9 +4515,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (6 <=> 7)"
+        ">=Cancun" : "stack underflow (6 <=> 7)"
 
-    # Data: 153
     # EOF1I5450_0055 (Invalid) Stack underflow for opcode DUP8
     # Code: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) DUP8 STOP
     - data: |
@@ -4700,9 +4545,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (7 <=> 8)"
+        ">=Cancun" : "stack underflow (7 <=> 8)"
 
-    # Data: 154
     # EOF1I5450_0056 (Invalid) Stack underflow for opcode DUP9
     # Code: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) DUP9 STOP
     - data: |
@@ -4732,9 +4576,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (8 <=> 9)"
+        ">=Cancun" : "stack underflow (8 <=> 9)"
 
-    # Data: 155
     # EOF1I5450_0057 (Invalid) Stack underflow for opcode DUP10
     # Code: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) DUP10 STOP
     - data: |
@@ -4765,9 +4608,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (9 <=> 10)"
+        ">=Cancun" : "stack underflow (9 <=> 10)"
 
-    # Data: 156
     # EOF1I5450_0058 (Invalid) Stack underflow for opcode DUP11
     # Code: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) DUP11 STOP
     - data: |
@@ -4799,9 +4641,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (10 <=> 11)"
+        ">=Cancun" : "stack underflow (10 <=> 11)"
 
-    # Data: 157
     # EOF1I5450_0059 (Invalid) Stack underflow for opcode DUP12
     # Code: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) DUP12 STOP
     - data: |
@@ -4834,9 +4675,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (11 <=> 12)"
+        ">=Cancun" : "stack underflow (11 <=> 12)"
 
-    # Data: 158
     # EOF1I5450_0060 (Invalid) Stack underflow for opcode DUP13
     # Code: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) DUP13 STOP
     - data: |
@@ -4870,9 +4710,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (12 <=> 13)"
+        ">=Cancun" : "stack underflow (12 <=> 13)"
 
-    # Data: 159
     # EOF1I5450_0061 (Invalid) Stack underflow for opcode DUP14
     # Code: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) DUP14 STOP
     - data: |
@@ -4907,9 +4746,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (13 <=> 14)"
+        ">=Cancun" : "stack underflow (13 <=> 14)"
 
-    # Data: 160
     # EOF1I5450_0062 (Invalid) Stack underflow for opcode DUP15
     # Code: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) DUP15 STOP
     - data: |
@@ -4945,9 +4783,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (14 <=> 15)"
+        ">=Cancun" : "stack underflow (14 <=> 15)"
 
-    # Data: 161
     # EOF1I5450_0063 (Invalid) Stack underflow for opcode DUP16
     # Code: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) DUP16 STOP
     - data: |
@@ -4984,9 +4821,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (15 <=> 16)"
+        ">=Cancun" : "stack underflow (15 <=> 16)"
 
-    # Data: 162
     # EOF1I5450_0064 (Invalid) Stack underflow for opcode SWAP1
     # Code: PUSH1(1) SWAP1 STOP
     - data: |
@@ -5009,9 +4845,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (1 <=> 2)"
+        ">=Cancun" : "stack underflow (1 <=> 2)"
 
-    # Data: 163
     # EOF1I5450_0065 (Invalid) Stack underflow for opcode SWAP2
     # Code: PUSH1(1) PUSH1(1) SWAP2 STOP
     - data: |
@@ -5035,9 +4870,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (2 <=> 3)"
+        ">=Cancun" : "stack underflow (2 <=> 3)"
 
-    # Data: 164
     # EOF1I5450_0066 (Invalid) Stack underflow for opcode SWAP3
     # Code: PUSH1(1) PUSH1(1) PUSH1(1) SWAP3 STOP
     - data: |
@@ -5062,9 +4896,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (3 <=> 4)"
+        ">=Cancun" : "stack underflow (3 <=> 4)"
 
-    # Data: 165
     # EOF1I5450_0067 (Invalid) Stack underflow for opcode SWAP4
     # Code: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) SWAP4 STOP
     - data: |
@@ -5090,9 +4923,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (4 <=> 5)"
+        ">=Cancun" : "stack underflow (4 <=> 5)"
 
-    # Data: 166
     # EOF1I5450_0068 (Invalid) Stack underflow for opcode SWAP5
     # Code: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) SWAP5 STOP
     - data: |
@@ -5119,9 +4951,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (5 <=> 6)"
+        ">=Cancun" : "stack underflow (5 <=> 6)"
 
-    # Data: 167
     # EOF1I5450_0069 (Invalid) Stack underflow for opcode SWAP6
     # Code: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) SWAP6 STOP
     - data: |
@@ -5149,9 +4980,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (6 <=> 7)"
+        ">=Cancun" : "stack underflow (6 <=> 7)"
 
-    # Data: 168
     # EOF1I5450_0070 (Invalid) Stack underflow for opcode SWAP7
     # Code: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) SWAP7 STOP
     - data: |
@@ -5180,9 +5010,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (7 <=> 8)"
+        ">=Cancun" : "stack underflow (7 <=> 8)"
 
-    # Data: 169
     # EOF1I5450_0071 (Invalid) Stack underflow for opcode SWAP8
     # Code: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) SWAP8 STOP
     - data: |
@@ -5212,9 +5041,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (8 <=> 9)"
+        ">=Cancun" : "stack underflow (8 <=> 9)"
 
-    # Data: 170
     # EOF1I5450_0072 (Invalid) Stack underflow for opcode SWAP9
     # Code: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) SWAP9 STOP
     - data: |
@@ -5245,9 +5073,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (9 <=> 10)"
+        ">=Cancun" : "stack underflow (9 <=> 10)"
 
-    # Data: 171
     # EOF1I5450_0073 (Invalid) Stack underflow for opcode SWAP10
     # Code: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) SWAP10 STOP
     - data: |
@@ -5279,9 +5106,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (10 <=> 11)"
+        ">=Cancun" : "stack underflow (10 <=> 11)"
 
-    # Data: 172
     # EOF1I5450_0074 (Invalid) Stack underflow for opcode SWAP11
     # Code: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) SWAP11 STOP
     - data: |
@@ -5314,9 +5140,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (11 <=> 12)"
+        ">=Cancun" : "stack underflow (11 <=> 12)"
 
-    # Data: 173
     # EOF1I5450_0075 (Invalid) Stack underflow for opcode SWAP12
     # Code: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) SWAP12 STOP
     - data: |
@@ -5350,9 +5175,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (12 <=> 13)"
+        ">=Cancun" : "stack underflow (12 <=> 13)"
 
-    # Data: 174
     # EOF1I5450_0076 (Invalid) Stack underflow for opcode SWAP13
     # Code: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) SWAP13 STOP
     - data: |
@@ -5387,9 +5211,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (13 <=> 14)"
+        ">=Cancun" : "stack underflow (13 <=> 14)"
 
-    # Data: 175
     # EOF1I5450_0077 (Invalid) Stack underflow for opcode SWAP14
     # Code: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) SWAP14 STOP
     - data: |
@@ -5425,9 +5248,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (14 <=> 15)"
+        ">=Cancun" : "stack underflow (14 <=> 15)"
 
-    # Data: 176
     # EOF1I5450_0078 (Invalid) Stack underflow for opcode SWAP15
     # Code: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) SWAP15 STOP
     - data: |
@@ -5464,9 +5286,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (15 <=> 16)"
+        ">=Cancun" : "stack underflow (15 <=> 16)"
 
-    # Data: 177
     # EOF1I5450_0079 (Invalid) Stack underflow for opcode SWAP16
     # Code: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) SWAP16 STOP
     - data: |
@@ -5504,9 +5325,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (16 <=> 17)"
+        ">=Cancun" : "stack underflow (16 <=> 17)"
 
-    # Data: 178
     # EOF1I5450_0080 (Invalid) Stack underflow for opcode LOG0
     # Code: PUSH1(1) LOG0 STOP
     - data: |
@@ -5529,9 +5349,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (1 <=> 2)"
+        ">=Cancun" : "stack underflow (1 <=> 2)"
 
-    # Data: 179
     # EOF1I5450_0081 (Invalid) Stack underflow for opcode LOG1
     # Code: PUSH1(1) PUSH1(1) LOG1 STOP
     - data: |
@@ -5555,9 +5374,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (2 <=> 3)"
+        ">=Cancun" : "stack underflow (2 <=> 3)"
 
-    # Data: 180
     # EOF1I5450_0082 (Invalid) Stack underflow for opcode LOG2
     # Code: PUSH1(1) PUSH1(1) PUSH1(1) LOG2 STOP
     - data: |
@@ -5582,9 +5400,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (3 <=> 4)"
+        ">=Cancun" : "stack underflow (3 <=> 4)"
 
-    # Data: 181
     # EOF1I5450_0083 (Invalid) Stack underflow for opcode LOG3
     # Code: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) LOG3 STOP
     - data: |
@@ -5610,9 +5427,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (4 <=> 5)"
+        ">=Cancun" : "stack underflow (4 <=> 5)"
 
-    # Data: 182
     # EOF1I5450_0084 (Invalid) Stack underflow for opcode LOG4
     # Code: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) LOG4 STOP
     - data: |
@@ -5639,9 +5455,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (5 <=> 6)"
+        ">=Cancun" : "stack underflow (5 <=> 6)"
 
-    # Data: 183
     # EOF1I5450_0085 (Invalid) Stack underflow for opcode CREATE
     # Code: PUSH1(1) PUSH1(1) CREATE STOP
     - data: |
@@ -5665,9 +5480,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (2 <=> 3)"
+        ">=Cancun" : "stack underflow (2 <=> 3)"
 
-    # Data: 184
     # EOF1I5450_0086 (Invalid) Stack underflow for opcode CALL
     # Code: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) CALL STOP
     - data: |
@@ -5695,9 +5509,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (6 <=> 7)"
+        ">=Cancun" : "stack underflow (6 <=> 7)"
 
-    # Data: 185
     # EOF1I5450_0087 (Invalid) Stack underflow for opcode RETURN
     # Code: PUSH1(1) RETURN
     - data: |
@@ -5719,9 +5532,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (1 <=> 2)"
+        ">=Cancun" : "stack underflow (1 <=> 2)"
 
-    # Data: 186
     # EOF1I5450_0088 (Invalid) Stack underflow for opcode DELEGATECALL
     # Code: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) DELEGATECALL STOP
     - data: |
@@ -5748,9 +5560,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (5 <=> 6)"
+        ">=Cancun" : "stack underflow (5 <=> 6)"
 
-    # Data: 187
     # EOF1I5450_0089 (Invalid) Stack underflow for opcode CREATE2
     # Code: PUSH1(1) PUSH1(1) PUSH1(1) CREATE2 STOP
     - data: |
@@ -5775,9 +5586,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (3 <=> 4)"
+        ">=Cancun" : "stack underflow (3 <=> 4)"
 
-    # Data: 188
     # EOF1I5450_0090 (Invalid) Stack underflow for opcode STATICCALL
     # Code: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) STATICCALL STOP
     - data: |
@@ -5804,9 +5614,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (5 <=> 6)"
+        ">=Cancun" : "stack underflow (5 <=> 6)"
 
-    # Data: 189
     # EOF1I5450_0091 (Invalid) Stack underflow for opcode REVERT
     # Code: PUSH1(1) REVERT
     - data: |
@@ -5828,9 +5637,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (1 <=> 2)"
+        ">=Cancun" : "stack underflow (1 <=> 2)"
 
-    # Data: 190
     # EOF1I5450_0092 (Invalid) Calling function without enough stack items: Function 0 calls Function 1 without enough parameters
       # Code[0](Types: 0:0): CALLF(1) STOP
       # Code[1](Types: 1:0): PUSH1(0) DUP1 CALLF(2)
@@ -5872,9 +5680,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (0 <=> 1)"
+        ">=Cancun" : "stack underflow (0 <=> 1)"
 
-    # Data: 191
     # EOF1I5450_0093 (Invalid) Calling function without enough stack items: Function 1 calls Function 2 with enough parameters
       # Code[0](Types: 0:0): PUSH1(0) CALLF(1) STOP
       # Code[1](Types: 1:0): PUSH1(0) CALLF(2)
@@ -5916,9 +5723,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "invalid code termination"
+        ">=Cancun" : "invalid code termination"
 
-    # Data: 192
     # EOF1I5450_0094 (Invalid) Calling function without enough stack items: Function 0 calls Function 1 without enought parameters, Function 1 calls Function 2 without enough parameers
       # Code[0](Types: 0:0): CALLF(1) STOP
       # Code[1](Types: 1:0): PUSH1(0) CALLF(2)
@@ -5959,18 +5765,16 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "stack underflow (0 <=> 1)"
+        ">=Cancun" : "stack underflow (0 <=> 1)"
 
-    # Data: 193
     # EOF1I5450_0095 (Invalid) Stack Overflow: Function pushing more than 1024 items to the stack
     # Code: PUSH1(0) (1024 Times)
     - data: |
        :label EOF1I5450_0095 :raw 0xef0001010004020001080003000000000004006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "invalid type content, max stack height exceeds limit"
+        ">=Cancun" : "invalid type content, max stack height exceeds limit"
 
-    # Data: 194
     # EOF1I5450_0096 (Invalid) Stack Overflow: Function 1 when called by Function 0 pushes more than 1024 items to the stack
       # Code[0](Types: 0:0): PUSH1(0) (1020 Times) CALLF(1)
       # Code[1](Types: 0:5): PUSH1(0) (5 Times) RETF
@@ -5978,9 +5782,8 @@ validInvalid:
        :label EOF1I5450_0096 :raw 0xef000101000802000207fb000b030000000000040100050005600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000b0000160006000600060006000b1
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "invalid type content, max stack height exceeds limit"
+        ">=Cancun" : "invalid type content, max stack height exceeds limit"
 
-    # Data: 195
     # EOF1I5450_0097 (Invalid) Function ending with non-terminating instruction (a)
     # Code: PUSH1(0)
     - data: |
@@ -6001,9 +5804,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "invalid code termination"
+        ">=Cancun" : "invalid code termination"
 
-    # Data: 196
     # EOF1I5450_0098 (Invalid) Function ending with non-terminating instruction (b)
     # Code: PUSH1(0) RJUMPI(exit) STOP exit: NOP
     - data: |
@@ -6027,9 +5829,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "invalid code termination"
+        ">=Cancun" : "invalid code termination"
 
-    # Data: 197
     # EOF1I5450_0099 (Invalid) Function ending with non-terminating instruction (c)
     # Code: PUSH1(0) RJUMPV(case1,case2) INVALID case1: STOP case2: NOP
     - data: |
@@ -6054,9 +5855,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "invalid code termination"
+        ">=Cancun" : "invalid code termination"
 
-    # Data: 198
     # EOF1I5450_0100 (Invalid) Function containing unreachable code after RETURN
     # Code: PUSH1(0) PUSH1(0) RETURN STOP
     - data: |
@@ -6080,9 +5880,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "unreachable code"
+        ">=Cancun" : "unreachable code"
 
-    # Data: 199
     # EOF1I5450_0101 (Invalid) Function containing unreachable code after REVERT
     # Code: PUSH1(0) PUSH1(0) REVERT STOP
     - data: |
@@ -6106,9 +5905,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "unreachable code"
+        ">=Cancun" : "unreachable code"
 
-    # Data: 200
     # EOF1I5450_0102 (Invalid) Unreachable code after RJUMP
     # Code: RJUMP(start) PUSH1(0) start: PUSH1(0) STOP
     - data: |
@@ -6132,9 +5930,8 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "unreachable code"
+        ">=Cancun" : "unreachable code"
 
-    # Data: 201
     # EOF1I5450_0103 (Invalid) Unreachable code after infinite loop
     # Code: RJUMP(start) PUSH1(0) start: PUSH1(0) POP RJUMP(start) STOP
     - data: |
@@ -6160,5 +5957,5 @@ validInvalid:
                # Data section (empty)
       expectException:
         "Shanghai" : "Invalid Code"
-        "Cancun" : "unreachable code"
+        ">=Cancun" : "unreachable code"
 
