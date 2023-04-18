@@ -66,6 +66,48 @@
 - ID: **EOF1I0023** sections with unreachable code fail
 - ID: **EOF1I0024** sections that end with a non-terminator opcode fail
 - ID: **EOF1I0025** data stack height of 1024 is invalid
+- ID: **EOF1I4200_0001**: EOF code containing truncated RJUMP
+- ID: **EOF1I4200_0002**: EOF code containing truncated RJUMP
+- ID: **EOF1I4200_0003**: EOF code containing RJUMP with target outside code bounds (Jumping into header)
+- ID: **EOF1I4200_0004**: EOF code containing RJUMP with target outside code bounds (Jumping before code begin)
+- ID: **EOF1I4200_0005**: EOF code containing RJUMP with target outside code bounds (Jumping into data section)
+- ID: **EOF1I4200_0006**: EOF code containing RJUMP with target outside code bounds (Jumping after code end)
+- ID: **EOF1I4200_0007**: EOF code containing RJUMP with target outside code bounds (Jumping to code end)
+- ID: **EOF1I4200_0008**: EOF code containing RJUMP with target self RJUMP immediate
+- ID: **EOF1I4200_0009**: EOF code containing RJUMP with target other RJUMP immediate
+- ID: **EOF1I4200_0010**: EOF code containing RJUMP with target RJUMPI immediate
+- ID: **EOF1I4200_0011**: EOF code containing RJUMP with target PUSH immediate
+- ID: **EOF1I4200_0012**: EOF code containing RJUMP with target RJUMPV immediate
+- ID: **EOF1I4200_0013**: EOF code containing RJUMP with target CALLF immediate
+- ID: **EOF1I4200_0014**: EOF code containing truncated RJUMPI
+- ID: **EOF1I4200_0015**: EOF code containing truncated RJUMPI
+- ID: **EOF1I4200_0016**: EOF code containing RJUMPI with target outside code bounds (Jumping into header)
+- ID: **EOF1I4200_0017**: EOF code containing RJUMPI with target outside code bounds (Jumping to before code begin)
+- ID: **EOF1I4200_0018**: EOF code containing RJUMPI with target outside code bounds (Jumping into data section)
+- ID: **EOF1I4200_0019**: EOF code containing RJUMPI with target outside code bounds (Jumping to after code end)
+- ID: **EOF1I4200_0020**: EOF code containing RJUMPI with target outside code bounds (Jumping to code end)
+- ID: **EOF1I4200_0021**: EOF code containing RJUMPI with target same RJUMPI immediate
+- ID: **EOF1I4200_0022**: EOF code containing RJUMPI with target other RJUMPI immediate
+- ID: **EOF1I4200_0023**: EOF code containing RJUMPI with target RJUMP immediate
+- ID: **EOF1I4200_0024**: EOF code containing RJUMPI with target PUSH immediate
+- ID: **EOF1I4200_0025**: EOF code containing RJUMPI with target RJUMPV immediate
+- ID: **EOF1I4200_0026**: EOF code containing RJUMPI with target CALLF immediate
+- ID: **EOF1I4200_0027**: EOF code containing RJUMPV with count 0 and zero immediates
+- ID: **EOF1I4200_0028**: EOF code containing RJUMPV with count 0 and one immediates
+- ID: **EOF1I4200_0029**: EOF code containing truncated RJUMPV
+- ID: **EOF1I4200_0030**: EOF code containing truncated RJUMPV
+- ID: **EOF1I4200_0031**: EOF code containing truncated RJUMPV
+- ID: **EOF1I4200_0032**: EOF code containing RJUMPV with target outside code bounds (Jumping into header)
+- ID: **EOF1I4200_0033**: EOF code containing RJUMPV with target outside code bounds (Jumping to before code begin)
+- ID: **EOF1I4200_0034**: EOF code containing RJUMPV with target outside code bounds (Jumping into data section)
+- ID: **EOF1I4200_0035**: EOF code containing RJUMPV with target outside code bounds (Jumping to after code end)
+- ID: **EOF1I4200_0036**: EOF code containing RJUMPV with target outside code bounds (Jumping to code end)
+- ID: **EOF1I4200_0037**: EOF code containing RJUMPV with target same RJUMPV immediate
+- ID: **EOF1I4200_0038**: EOF code containing RJUMPV with target RJUMP immediate
+- ID: **EOF1I4200_0039**: EOF code containing RJUMPV with target RJUMPI immediate
+- ID: **EOF1I4200_0040**: EOF code containing RJUMPV with target PUSH immediate
+- ID: **EOF1I4200_0041**: EOF code containing RJUMPV with target other RJUMPV immediate
+- ID: **EOF1I4200_0042**: EOF code containing RJUMPV with target CALLF immediate
 - ID: **EOF1I4750_0001**: EOF code missing mandatory type section
 - ID: **EOF1I4750_0002**: EOF code containing multiple type headers
 - ID: **EOF1I4750_0003**: EOF code containing type section size (Size 1)
@@ -206,6 +248,19 @@
 - ID: **EOF1V0013** jump tables work
 - ID: **EOF1V0014** sections that end with a legit terminating opcode are OK
 - ID: **EOF1V0015** data stack height of 1023 is valid
+- ID: **EOF1V4200_0001**: EOF code containing RJUMP (Positive, Negative)
+- ID: **EOF1V4200_0002**: EOF code containing RJUMP (Zero)
+- ID: **EOF1V4200_0003**: EOF code containing RJUMPI (Positive)
+- ID: **EOF1V4200_0004**: EOF code containing RJUMPI (Negative)
+- ID: **EOF1V4200_0005**: EOF code containing RJUMPI (Zero)
+- ID: **EOF1V4200_0006**: EOF with RJUMPV table size 1 (Positive)
+- ID: **EOF1V4200_0007**: EOF with RJUMPV table size 1 (Negative)
+- ID: **EOF1V4200_0008**: EOF with RJUMPV table size 1 (Zero)
+- ID: **EOF1V4200_0009**: EOF with RJUMPV table size 3
+- ID: **EOF1V4200_0010**: EOF with RJUMPV table size 255 (Target 0)
+- ID: **EOF1V4200_0011**: EOF with RJUMPV table size 255 (Target 100)
+- ID: **EOF1V4200_0012**: EOF with RJUMPV table size 255 (Target 254)
+- ID: **EOF1V4200_0013**: EOF with RJUMPV table size 255 (Target 256)
 - ID: **EOF1V4750_0001**: EOF code containing single type section
 - ID: **EOF1V4750_0002**: EOF code containing single type section and data section
 - ID: **EOF1V4750_0003**: EOF code containing multiple type/code sections
