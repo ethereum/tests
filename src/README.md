@@ -66,6 +66,24 @@
 - ID: **EOF1I0023** sections with unreachable code fail
 - ID: **EOF1I0024** sections that end with a non-terminator opcode fail
 - ID: **EOF1I0025** data stack height of 1024 is invalid
+- ID: **EOF1I4750_0001**: EOF code missing mandatory type section
+- ID: **EOF1I4750_0002**: EOF code containing multiple type headers
+- ID: **EOF1I4750_0003**: EOF code containing type section size (Size 1)
+- ID: **EOF1I4750_0004**: EOF code containing type section size (Size 8 - 1 Code section)
+- ID: **EOF1I4750_0005**: EOF code containing type section size (Size 8 - 3 Code sections)
+- ID: **EOF1I4750_0006**: EOF code containing invalid section type (1,0) (First section having a type different than (0,0))
+- ID: **EOF1I4750_0007**: EOF code containing invalid section type (0,1) (First section having a type different than (0,0))
+- ID: **EOF1I4750_0008**: EOF code containing invalid section type (2,3) (First section having a type different than (0,0))
+- ID: **EOF1V4750_0011**: EOF code containing too many code sections
+- ID: **EOF1I4750_0009**: EOF code containing CALLF to a non existing code section
+- ID: **EOF1I4750_0010**: EOF code containing truncated CALLF
+- ID: **EOF1I4750_0011**: EOF code containing deprecated instruction (JUMP)
+- ID: **EOF1I4750_0012**: EOF code containing deprecated instruction (JUMPI)
+- ID: **EOF1I4750_0013**: EOF code containing deprecated instruction (PC)
+- ID: **EOF1I4750_0014**: EOF code containing call to functions without required stack specified in type section
+- ID: **EOF1I4750_0015**: EOF code containing call to functions without required stack NOT specified in type section
+- ID: **EOF1I4750_0016**: EOF code containing function trying to return more items than specified in type section
+- ID: **EOF1I4750_0017**: EOF code containing function exceeding max stack items
 - ID: **EOF1I5450_0001** Stack height mismatch for different paths (a)
 - ID: **EOF1I5450_0002** Stack height mismatch for different paths (b)
 - ID: **EOF1I5450_0003** Calls returning different number of outputs
@@ -188,6 +206,16 @@
 - ID: **EOF1V0013** jump tables work
 - ID: **EOF1V0014** sections that end with a legit terminating opcode are OK
 - ID: **EOF1V0015** data stack height of 1023 is valid
+- ID: **EOF1V4750_0001**: EOF code containing single type section
+- ID: **EOF1V4750_0002**: EOF code containing single type section and data section
+- ID: **EOF1V4750_0003**: EOF code containing multiple type/code sections
+- ID: **EOF1V4750_0004**: EOF code containing multiple type/code sections and data section
+- ID: **EOF1V4750_0005**: EOF code containing multiple type/code sections, no void I/O types
+- ID: **EOF1V4750_0006**: EOF code containing multiple type/code sections, no void I/O types, containing data section
+- ID: **EOF1V4750_0007**: EOF code containing RETF as terminating instruction
+- ID: **EOF1V4750_0008**: EOF code containing RETF as terminating instruction, containing data section
+- ID: **EOF1V4750_0009**: EOF code containing the maximum number of code sections
+- ID: **EOF1V4750_0010**: EOF code containing the maximum number of code sections and data section
 - ID: **EOF1V5450_0001** Code with branches having the same stack height
 - ID: **EOF1V5450_0002** Jump table
 - ID: **EOF1V5450_0003** Infinite loop
