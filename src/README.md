@@ -126,6 +126,7 @@
 - ID: **EOF1I4750_0015**: EOF code containing call to functions without required stack NOT specified in type section
 - ID: **EOF1I4750_0016**: EOF code containing function trying to return more items than specified in type section
 - ID: **EOF1I4750_0017**: EOF code containing function exceeding max stack items
+- ID: **EOF1I4750_0018**: EOF code containing function which max stack height causes to exceed max stack items (stack overflow)
 - ID: **EOF1I5450_0001** Stack height mismatch for different paths (a)
 - ID: **EOF1I5450_0002** Stack height mismatch for different paths (b)
 - ID: **EOF1I5450_0003** Calls returning different number of outputs
