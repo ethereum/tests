@@ -1,0 +1,51 @@
+EXAMPLE ENCODING
+aggregation_bits: '0xd203'
+data:
+  slot: 16190417324762968195
+  index: 11925472494053767852
+  beacon_block_root: '0x6fdd48270188c7abda9c27cca8e670b7fbf2b2bbd3ad44c6ae07243d64b01bae'
+  source: {epoch: 11830679453202619032, root: '0x314da949cc563740f2316a5ab49867d4f8766cee4608ea29e3a4ab99ff0d9250'}
+  target: {epoch: 8155824741468644389, root: '0xecf4804a437264413f838299b81b2d9dc7b92e71e7743eda04389641224f8c98'}
+signature: '0x63f34097da24274a0afeeab5415d301abfe395d9a38aab73e0e1a57510bdfa694a7205c6b181079b3a45618b1cd78622e4ff059b3c3b4793e2dec50f52c0099d02c71d0c58b29173c9eff94fd558edc2bceafa48b395abaacaca18663c7d3308'
+
+
+
+SSZ:
+e4000000 (must be ssz header 228 dec in uint32)
+
+data:
+    slot: 83b0d3bfc6eaafe0 (little endian reverse)
+    index: ac3ac4aa0cca7fa5 (little endian reverse)
+    beacon root: 6fdd48270188c7abda9c27cca8e670b7fbf2b2bbd3ad44c6ae07243d64b01bae
+    source:
+        epoch: 989aa7f347042fa4 (little endian reverse)
+        root: 314da949cc563740f2316a5ab49867d4f8766cee4608ea29e3a4ab99ff0d9250
+    target:
+        epoch: 25a49415644f2f71 (little endian reverse)
+        root: ecf4804a437264413f838299b81b2d9dc7b92e71e7743eda04389641224f8c98
+
+signature: 63f34097da24274a0afeeab5415d301abfe395d9a38aab73e0e1a57510bdfa694a7205c6b181079b3a45618b1cd78622e4ff059b3c3b4793e2dec50f52c0099d02c71d0c58b29173c9eff94fd558edc2bceafa48b395abaacaca18663c7d3308
+aggregation_bits: d203 (why not reversed?)
+
+
+SIZE: 
+e4000000 (must be ssz header 228 dec in uint32) the bytes length below size is 226
+
+8   slot:  83b0d3bfc6eaafe0 (little endian reverse)
+8   index: ac3ac4aa0cca7fa5 (little endian reverse)
+32  beacon root: 6fdd48270188c7abda9c27cca8e670b7fbf2b2bbd3ad44c6ae07243d64b01bae
+    source:    
+8         epoch: 989aa7f347042fa4 (little endian reverse)
+32        root: 314da949cc563740f2316a5ab49867d4f8766cee4608ea29e3a4ab99ff0d9250
+    target:
+8         epoch: 25a49415644f2f71 (little endian reverse)
+32        root: ecf4804a437264413f838299b81b2d9dc7b92e71e7743eda04389641224f8c98
+96             112233445566778899101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596
+  signature: 63f34097da24274a0afeeab5415d301abfe395d9a38aab73e0e1a57510bdfa694a7205c6b181079b3a45618b1cd78622e4ff059b3c3b4793e2dec50f52c0099d02c71d0c58b29173c9eff94fd558edc2bceafa48b395abaacaca18663c7d3308
+2 aggregation_bits: d203 (why not reversed?)
+
+314da949cc563740f2316a5ab49867d4f8766cee4608ea29e3a4ab99ff0d9250
+
+
+
+
