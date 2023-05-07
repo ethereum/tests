@@ -1,0 +1,353 @@
+# Test successful uses of TLOAD and TSTORE
+transStorageOK:
+  _info:
+    comment: Ori Pomerantz qbzzt1@gmail.com
+
+  env:
+    currentCoinbase: 2adc25665018aa1fe0e6bc666dac8fc2697ff9ba
+    currentDifficulty: '0x20000'
+    currentGasLimit: "100000000"
+    currentNumber: "1"
+    currentTimestamp: "1000"
+    previousHash: 5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6
+
+  pre:
+
+    # sumTo(uint)
+    # 
+    # Add ints, 0+1+...+depth
+    # If called by itself, get depth from trans[0]
+    # If called by anybody else, get depth from calldata 
+    #
+    # This checks two things:
+    # 1. Forward availability of transient storage. 
+    #    The counter is changed and then the contract is called again, with the
+    #    new value in transient storage
+    # 2. Backward availability of transient storeage.
+    #    The sum is updated and then the contract returns, and the new 
+    #    value is available to the caller frame.
+    00000000000000000000000000000000ebd141d5:
+      balance: 0
+      nonce: 1
+      code: |
+        :yul {
+            function tload_temp(loc) -> val {
+              val := verbatim_1i_1o(hex"B3", loc)
+            }
+          
+            function tstore_temp(loc, val) {
+              verbatim_2i_0o(hex"B4", loc, val)
+            }
+
+            if eq(caller(), address()) {
+              let counter := tload_temp(0)
+              if eq(counter,0) {
+                return(0,0)
+              }
+              // If counter isn't zero, add counter to trans[1] and do recursion
+              tstore_temp(1, add(tload_temp(1), counter))
+              tstore_temp(0, sub(counter, 1))
+              let res := call(gas(), address(), 0, 0,0, 0,0)
+              if iszero(res) { // If the call failed, fail too
+                 revert(0,0)
+              }
+            }
+            if iszero(eq(caller(), address())) { 
+              let data := calldataload(0)
+              sstore(1, data)
+              tstore_temp(0, data)
+              sstore(2, call(gas(), address(), 0, 0,0,0,0))
+              sstore(3, tload_temp(1))
+            }
+        }
+      storage: {}
+
+
+
+
+    # Call back the contract that called you.
+    # This shows that a contract between two frames
+    # of the same contract doesn't have access to the transient storage
+    00000000000000000000000000000000ca11bacc:
+      balance: 0
+      nonce: 1
+      code: |
+        :yul {
+            function tload_temp(loc) -> val {
+              val := verbatim_1i_1o(hex"B3", loc)
+            }
+          
+            function tstore_temp(loc, val) {
+              verbatim_2i_0o(hex"B4", loc, val)
+            }
+
+            sstore(0, tload_temp(0))
+            sstore(1, tload_temp(1))
+            pop(call(gas(), caller(), 0, 0,0, 0,0))
+        }
+      storage:
+        0: 0x60A7
+        1: 0x60A7
+
+
+    # callbackSum(uint)
+    # 
+    # Add ints, 0+1+...+depth
+    # If called by itself, get depth from trans[0]
+    # If called by anybody else, get depth from calldata 
+    #
+    # When doing the recursion, go through 0xca11bacc. This 
+    # verifies that changes propagate through a different contract
+    # without affecting that contract's transient storage
+    000000000000000000000000000000005114e2c8:
+      balance: 0
+      nonce: 1
+      code: |
+        :yul {
+            function tload_temp(loc) -> val {
+              val := verbatim_1i_1o(hex"B3", loc)
+            }
+          
+            function tstore_temp(loc, val) {
+              verbatim_2i_0o(hex"B4", loc, val)
+            }
+
+            if eq(caller(), 0xca11bacc) {
+              let counter := tload_temp(0)
+              if eq(counter,0) {
+                return(0,0)
+              }
+              // If counter isn't zero, add counter to trans[1] and do recursion
+              tstore_temp(1, add(tload_temp(1), counter))
+              tstore_temp(0, sub(counter, 1))
+              let res := call(gas(), 0xca11bacc, 0, 0,0, 0,0)
+              if iszero(res) { // If the call failed, fail too
+                 revert(0,0)
+              }
+            }
+            if iszero(eq(caller(), 0xca11bacc)) { 
+              let data := calldataload(0)
+              sstore(1, data)
+              tstore_temp(0, data)
+              sstore(2, call(gas(), 0xca11bacc, 0, 0,0,0,0))
+              sstore(3, tload_temp(1))
+            }
+        }
+      storage: {}
+
+
+    # binTree(uint)
+    #
+    # Calculate 2^depth
+    # 
+    # If called by itself, get depth from trans[0]
+    # If called by anybody else, get depth from calldata 
+    #
+    # Check that even if we call the contract twice, transient storage works
+    00000000000000000000000000000000264bb86a:
+      balance: 0
+      nonce: 1
+      code: |
+        :yul {
+            function tload_temp(loc) -> val {
+              val := verbatim_1i_1o(hex"B3", loc)
+            }
+          
+            function tstore_temp(loc, val) {
+              verbatim_2i_0o(hex"B4", loc, val)
+            }
+
+            if eq(caller(), address()) {
+              let counter := tload_temp(0)
+              if eq(counter,0) {
+                return(0,0)
+              }
+              // If counter isn't zero
+              // Call yourself with counter-1 twice then add 1 to counter
+              tstore_temp(0, sub(counter, 1))
+              let res := call(gas(), address(), 0, 0,0, 0,0)
+              if iszero(res) { // If the call failed, fail too
+                 revert(0,0)
+              }
+              // We need to repair trans[0] because it got overwritten in
+              // the previous call
+              tstore_temp(0, sub(counter, 1))
+              res := call(gas(), address(), 0, 0,0, 0,0)
+              if iszero(res) { // If the call failed, fail too
+                 revert(0,0)
+              }
+              tstore_temp(1, add(tload_temp(1), 1))
+            }
+            if iszero(eq(caller(), address())) { 
+              let data := calldataload(0)
+              sstore(1, data)
+              tstore_temp(0, data)
+              sstore(2, call(gas(), address(), 0, 0,0,0,0))
+              sstore(3, tload_temp(1))
+            }
+        }
+      storage: {}
+
+
+
+    # The contract called by the transaction
+    # Receives ABI calldata
+    # Bytes 0x00-0x03 (the function hash) is the address of the contract to call
+    # Bytes 0x04-0x23 are the first parameter
+    cccccccccccccccccccccccccccccccccccccccc:
+      balance: 0
+      code: |
+        :yul {
+          let func := shr(224, calldataload(0))
+          let depth := calldataload(4)
+          sstore(0, func)
+          mstore(0, depth)
+          sstore(1, call(gas(), func, 0, 0,32, 0,0))
+        }
+      nonce: 1
+      storage: {}
+
+    a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: '0x0ba1a9ce0ba1a9ce'
+      code: '0x'
+      nonce: 1
+      storage: {}
+
+
+  transaction:
+    data:
+    - :label sum_16 :abi sumTo(uint) 16
+    - :label sum_256 :abi sumTo(uint) 256
+    - :label callback_sum_10 :abi callbackSum(uint) 10
+    - :label callback_sum_50 :abi callbackSum(uint) 50
+    - :label binTree_6 :abi binTree(uint) 6
+    gasLimit:
+    - 80000000
+    gasPrice: 10
+    nonce: 1
+    to: cccccccccccccccccccccccccccccccccccccccc
+    value:
+    - '0'
+    secretKey: '45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8'
+
+
+
+  expect:
+    - indexes:
+        data: :label sum_16
+        gas:  !!int -1
+        value: !!int -1
+
+      network:
+        - Merge+1153
+      result:
+        cccccccccccccccccccccccccccccccccccccccc:
+          storage:
+            0: 0xebd141d5  # Call to sumTo(uint)
+            1: 1    # Call was successful
+        00000000000000000000000000000000ebd141d5:
+          storage:
+            1: 16    # Sum 1+2+3+...+16
+            2: 1     # Call successful
+            3: 136   # Resulting sum
+
+
+    - indexes:
+        data: :label sum_256
+        gas:  !!int -1
+        value: !!int -1
+
+      network:
+        - Merge+1153
+      result:
+        cccccccccccccccccccccccccccccccccccccccc:
+          storage:
+            0: 0xebd141d5  # Call to sumTo(uint)
+            1: 1    # Call was successful
+        00000000000000000000000000000000ebd141d5:
+          storage:
+            1: 256    # Sum 1+2+3+...+256
+            2: 1      # Call successful
+            3: 32896  # Resulting sum
+
+
+
+
+    - indexes:
+        data: :label callback_sum_10
+        gas:  !!int -1
+        value: !!int -1
+
+      network:
+        - Merge+1153
+      result:
+        cccccccccccccccccccccccccccccccccccccccc:
+          storage:
+            0: 0x5114e2c8  # Call to callbackSum(uint)
+            1: 1    # Call was successful
+
+        # Sum where there's an intervening contract
+        000000000000000000000000000000005114e2c8:
+          storage:
+            1: 10     # Sum 1+2+3+...+10
+            2: 1      # Call successful
+            3: 55     # Resulting sum
+
+        # The transient storage of the contract in the middle is untouched
+        00000000000000000000000000000000ca11bacc:
+          storage:
+            0: 0
+            1: 0
+
+
+
+    - indexes:
+        data: :label callback_sum_50
+        gas:  !!int -1
+        value: !!int -1
+
+      network:
+        - Merge+1153
+      result:
+        cccccccccccccccccccccccccccccccccccccccc:
+          storage:
+            0: 0x5114e2c8  # Call to callbackSum(uint)
+            1: 1    # Call was successful
+
+        # Sum where there's an intervening contract
+        000000000000000000000000000000005114e2c8:
+          storage:
+            1: 50     # Sum 1+2+3+...+50
+            2: 1      # Call successful
+            3: 1275   # Resulting sum
+
+        # The transient storage of the contract in the middle is untouched
+        00000000000000000000000000000000ca11bacc:
+          storage:
+            0: 0
+            1: 0
+
+
+
+    - indexes:
+        data: :label binTree_6
+        gas:  !!int -1
+        value: !!int -1
+
+      network:
+        - Merge+1153
+      result:
+        cccccccccccccccccccccccccccccccccccccccc:
+          storage:
+            0: 0x264bb86a  # Call to binTree(uint)
+            1: 1    # Call was successful
+
+
+        # Binary tree, showing that transients work correctly when there are two
+        # calls to the contract
+        00000000000000000000000000000000264bb86a:
+          storage:
+            1: 6      # Get 2^6
+            2: 1      # Call successful
+            3: 63     # Resulting power
+
