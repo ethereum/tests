@@ -111,7 +111,8 @@ specifications uses any of these options:
  
      - !!int -1
   
-     - All the (**data**, **gas**, or **value**) values in the transaction
+     - All the (**data**, **gas**, or **value**) values in the transaction.
+       Note that this line can be omitted, **-1** is the default value.
 
    * - <n>
 
