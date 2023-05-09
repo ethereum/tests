@@ -522,15 +522,40 @@ Multiple Tests, Same Result
 ---------------------------
 When you have multiple tests that produce the same results,
 you do not have to list them individually in the **expect:**
-section.
+section. There are three other options:
 
-**Range**. You can specify a range, such as **4-6**, inside
-the **expect.data:** list. Remember *not* to specify !!int, the range
-is a string, not an integer.
+- **Range**. You can specify a range, such as **4-6**, inside
+  the **expect.data:** list. Remember *not* to specify **!!int**, the range
+  is a string, not an integer.
 
-**Label**. You can preface the value with **:label <word> <value>**:
+- **Wildcard**. If the value is **-1** it means "any". Alternatively, you can
+  just not specify values in the **indexes:** section. For example, these sections 
+  are equivalent. Each specifies that the result is expected for **data** value #1 (the 
+  second in the list), with any value for **gas** and **value**.
 
-::
+  .. list-table::
+   :header-rows: 0
+
+   * -
+       ::
+
+         expect:
+            - indexes:
+              data: !!int 1
+              gas: !!int -1
+              value: !!int -1
+
+     -
+       ::
+
+         expect:
+            - indexes:
+              data: !!int 1
+
+
+- **Label**. You can preface the value with **:label <word> <value>**:
+
+  ::
 
     transaction:
       data:
