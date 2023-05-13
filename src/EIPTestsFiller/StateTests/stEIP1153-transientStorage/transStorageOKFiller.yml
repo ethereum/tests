@@ -320,11 +320,64 @@ transStorageOK:
         }
       storage: {}
 
+    # Increment trans[0], showing when it is inherited (CALLCODE and
+    # DELEGATECALL) and when it isn't (CALL)
+    000000000000000000000000000000000000add1:
+      balance: 0
+      nonce: 1
+      code: |
+        :yul {
+            function tload_temp(loc) -> val {
+              val := verbatim_1i_1o(hex"B3", loc)
+            }
+
+            function tstore_temp(loc, val) {
+              verbatim_2i_0o(hex"B4", loc, val)
+            }
+
+            tstore_temp(0, add(tload_temp(0), 1))
+        }
+      storage: {}
+
 
     # inheritTrans()
     # 
     # Show that CALL doesn't inherit our transient storage, but CALLCODE and
     # DELEGATECALL do
+    000000000000000000000000000000007f9317bd:
+      balance: 0
+      nonce: 1
+      code: |
+        :yul {
+            function tload_temp(loc) -> val {
+              val := verbatim_1i_1o(hex"B3", loc)
+            }
+          
+            function tstore_temp(loc, val) {
+              verbatim_2i_0o(hex"B4", loc, val)
+            }
+
+
+            // The initial value of the counter is zero
+            sstore(0, tload_temp(0))
+
+            // CALLCODE increments
+            sstore(0x11, callcode(gas(), 0xadd1, 0, 0,0, 0,0))
+            sstore(1, tload_temp(0))
+
+            // DELEGATECALL increments
+            sstore(0x12, delegatecall(gas(), 0xadd1, 0,0, 0,0))
+            sstore(2, tload_temp(0))
+
+            // CALL does not increment
+            sstore(0x13, call(gas(), 0xadd1, 0, 0,0, 0,0))
+            sstore(3, tload_temp(0))
+        }
+      storage:
+        0: 0x60A7
+
+
+
 
 
     # The contract called by the transaction
@@ -363,6 +416,7 @@ transStorageOK:
     # Both DELEGATECALL and CODECALL here
     - :label delegate_bin_tree_6 :abi delegateBinTree(uint) 6
     - :label inherit_trans :abi inheritTrans()
+    
 
 
     gasLimit:
@@ -564,7 +618,8 @@ transStorageOK:
             0x01: 1    # CALLCODE increments
             0x02: 2    # DELEGATECODE increments
             0x03: 2    # CALL does not increment (or rather, it increments its own storage)
-            0x04: 3    # Multiple CALLCODEs increment
-            0x05: 4    # Multiple DELEGATECODE increment
-            0x06: 5    # A mix of DELEGATECODE and CALLCODEs increment
+            0x11: 1    # CALLCODE success
+            0x12: 1    # DELEGATECALL success
+            0x13: 1    # CALL success
+
 
