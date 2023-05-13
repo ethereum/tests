@@ -321,6 +321,11 @@ transStorageOK:
       storage: {}
 
 
+    # inheritTrans()
+    # 
+    # Show that CALL doesn't inherit our transient storage, but CALLCODE and
+    # DELEGATECALL do
+
 
     # The contract called by the transaction
     # Receives ABI calldata
@@ -354,10 +359,12 @@ transStorageOK:
     - :label sum_256 :abi sumTo(uint) 256
     - :label callback_sum_10 :abi callbackSum(uint) 10
     - :label callback_sum_50 :abi callbackSum(uint) 50
-    - :label binTree_6 :abi binTree(uint) 6
-
+    - :label bin_tree_6 :abi binTree(uint) 6
     # Both DELEGATECALL and CODECALL here
-    - :label delegateBinTree_6 :abi delegateBinTree(uint) 6
+    - :label delegate_bin_tree_6 :abi delegateBinTree(uint) 6
+    - :label inherit_trans :abi inheritTrans()
+
+
     gasLimit:
     - 80000000
     gasPrice: 10
@@ -494,7 +501,7 @@ transStorageOK:
 
 
     - indexes:
-        data: :label binTree_6
+        data: :label bin_tree_6
 
       network:
         - Merge+1153
@@ -517,7 +524,7 @@ transStorageOK:
 
 
     - indexes:
-        data: :label delegateBinTree_6
+        data: :label delegate_bin_tree_6
 
       network:
         - Merge+1153
@@ -535,4 +542,29 @@ transStorageOK:
             1: 6      # Get 2^6
             2: 1      # Call successful
             3: 63     # Resulting power
+
+
+
+
+    - indexes:
+        data: :label inherit_trans
+
+      network:
+        - Merge+1153
+      result:
+        cccccccccccccccccccccccccccccccccccccccc:
+          storage:
+            0: 0x7f9317bd  # Call to inheritTrans()
+            1: 1    # Call was successful
+
+        # Show when transients are inherited and then they aren't
+        000000000000000000000000000000007f9317bd:
+          storage:
+            0x00: 0    # Initial value
+            0x01: 1    # CALLCODE increments
+            0x02: 2    # DELEGATECODE increments
+            0x03: 2    # CALL does not increment (or rather, it increments its own storage)
+            0x04: 3    # Multiple CALLCODEs increment
+            0x05: 4    # Multiple DELEGATECODE increment
+            0x06: 5    # A mix of DELEGATECODE and CALLCODEs increment
 
