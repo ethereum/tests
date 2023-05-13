@@ -65,6 +65,89 @@ transStorageOK:
 
 
 
+    # callcodeSumTo(uint)
+    #
+    # Similar to sumTo, but uses callcode instead of call
+    000000000000000000000000000000006e3a7204:
+      balance: 0
+      nonce: 1
+      code: |
+        :yul {
+            function tload_temp(loc) -> val {
+              val := verbatim_1i_1o(hex"B3", loc)
+            }
+          
+            function tstore_temp(loc, val) {
+              verbatim_2i_0o(hex"B4", loc, val)
+            }
+
+            if eq(caller(), address()) {
+              let counter := tload_temp(0)
+              if eq(counter,0) {
+                return(0,0)
+              }
+              // If counter isn't zero, add counter to trans[1] and do recursion
+              tstore_temp(1, add(tload_temp(1), counter))
+              tstore_temp(0, sub(counter, 1))
+              let res := callcode(gas(), address(), 0, 0,0, 0,0)
+              if iszero(res) { // If the call failed, fail too
+                 revert(0,0)
+              }
+            }
+            if iszero(eq(caller(), address())) { 
+              let data := calldataload(0)
+              sstore(1, data)
+              tstore_temp(0, data)
+              sstore(2, call(gas(), address(), 0, 0,0,0,0))
+              sstore(3, tload_temp(1))
+            }
+        }
+      storage: {}
+
+
+
+    # delegateSumTo(uint)
+    #
+    # Similar to sumTo, but uses delegatecall instead of call
+    00000000000000000000000000000000c1c922f1:
+      balance: 0
+      nonce: 1
+      code: |
+        :yul {
+            function tload_temp(loc) -> val {
+              val := verbatim_1i_1o(hex"B3", loc)
+            }
+          
+            function tstore_temp(loc, val) {
+              verbatim_2i_0o(hex"B4", loc, val)
+            }
+
+            if eq(caller(), address()) {
+              let counter := tload_temp(0)
+              if eq(counter,0) {
+                return(0,0)
+              }
+              // If counter isn't zero, add counter to trans[1] and do recursion
+              tstore_temp(1, add(tload_temp(1), counter))
+              tstore_temp(0, sub(counter, 1))
+              let res := delegatecall(gas(), address(), 0,0, 0,0)
+              if iszero(res) { // If the call failed, fail too
+                 revert(0,0)
+              }
+            }
+            if iszero(eq(caller(), address())) { 
+              let data := calldataload(0)
+              sstore(1, data)
+              tstore_temp(0, data)
+              sstore(2, call(gas(), address(), 0, 0,0,0,0))
+              sstore(3, tload_temp(1))
+            }
+        }
+      storage: {}
+
+
+
+
     # Call back the contract that called you.
     # This shows that a contract between two frames
     # of the same contract doesn't have access to the transient storage
@@ -138,7 +221,7 @@ transStorageOK:
 
     # binTree(uint)
     #
-    # Calculate 2^depth
+    # Calculate 2^depth-1
     # 
     # If called by itself, get depth from trans[0]
     # If called by anybody else, get depth from calldata 
@@ -190,6 +273,55 @@ transStorageOK:
 
 
 
+    # delegateBinTree(uint)
+    #
+    # Similar to binTree, but uses callcode and delegatecall instead of call
+    000000000000000000000000000000007074a486:
+      balance: 0
+      nonce: 1
+      code: |
+        :yul {
+            function tload_temp(loc) -> val {
+              val := verbatim_1i_1o(hex"B3", loc)
+            }
+          
+            function tstore_temp(loc, val) {
+              verbatim_2i_0o(hex"B4", loc, val)
+            }
+
+            if eq(caller(), address()) {
+              let counter := tload_temp(0)
+              if eq(counter,0) {
+                return(0,0)
+              }
+              // If counter isn't zero
+              // Call yourself with counter-1 twice then add 1 to counter
+              tstore_temp(0, sub(counter, 1))
+              let res := callcode(gas(), address(), 0, 0,0, 0,0)
+              if iszero(res) { // If the call failed, fail too
+                 revert(0,0)
+              }
+              // We need to repair trans[0] because it got overwritten in
+              // the previous call
+              tstore_temp(0, sub(counter, 1))
+              res := delegatecall(gas(), address(), 0,0, 0,0)
+              if iszero(res) { // If the call failed, fail too
+                 revert(0,0)
+              }
+              tstore_temp(1, add(tload_temp(1), 1))
+            }
+            if iszero(eq(caller(), address())) { 
+              let data := calldataload(0)
+              sstore(1, data)
+              tstore_temp(0, data)
+              sstore(2, call(gas(), address(), 0, 0,0,0,0))
+              sstore(3, tload_temp(1))
+            }
+        }
+      storage: {}
+
+
+
     # The contract called by the transaction
     # Receives ABI calldata
     # Bytes 0x00-0x03 (the function hash) is the address of the contract to call
@@ -217,10 +349,15 @@ transStorageOK:
   transaction:
     data:
     - :label sum_16 :abi sumTo(uint) 16
+    - :label callcode_sum_16 :abi callcodeSumTo(uint) 16
+    - :label delegate_sum_16 :abi delegateSumTo(uint) 16
     - :label sum_256 :abi sumTo(uint) 256
     - :label callback_sum_10 :abi callbackSum(uint) 10
     - :label callback_sum_50 :abi callbackSum(uint) 50
     - :label binTree_6 :abi binTree(uint) 6
+
+    # Both DELEGATECALL and CODECALL here
+    - :label delegateBinTree_6 :abi delegateBinTree(uint) 6
     gasLimit:
     - 80000000
     gasPrice: 10
@@ -244,6 +381,41 @@ transStorageOK:
             0: 0xebd141d5  # Call to sumTo(uint)
             1: 1    # Call was successful
         00000000000000000000000000000000ebd141d5:
+          storage:
+            1: 16    # Sum 1+2+3+...+16
+            2: 1     # Call successful
+            3: 136   # Resulting sum
+
+
+    - indexes:
+        data: :label callcode_sum_16
+
+      network:
+        - Merge+1153
+      result:
+        cccccccccccccccccccccccccccccccccccccccc:
+          storage:
+            0: 0x6e3a7204  # Call to callcodeSumTo(uint)
+            1: 1    # Call was successful
+        000000000000000000000000000000006e3a7204:
+          storage:
+            1: 16    # Sum 1+2+3+...+16
+            2: 1     # Call successful
+            3: 136   # Resulting sum
+
+
+
+    - indexes:
+        data: :label delegate_sum_16
+
+      network:
+        - Merge+1153
+      result:
+        cccccccccccccccccccccccccccccccccccccccc:
+          storage:
+            0: 0xc1c922f1  # Call to delegateSumTo(uint)
+            1: 1    # Call was successful
+        00000000000000000000000000000000c1c922f1:
           storage:
             1: 16    # Sum 1+2+3+...+16
             2: 1     # Call successful
@@ -336,6 +508,29 @@ transStorageOK:
         # Binary tree, showing that transients work correctly when there are two
         # calls to the contract
         00000000000000000000000000000000264bb86a:
+          storage:
+            1: 6      # Get 2^6
+            2: 1      # Call successful
+            3: 63     # Resulting power
+
+
+
+
+    - indexes:
+        data: :label delegateBinTree_6
+
+      network:
+        - Merge+1153
+      result:
+        cccccccccccccccccccccccccccccccccccccccc:
+          storage:
+            0: 0x7074a486  # Call to delegateBinTree(uint)
+            1: 1    # Call was successful
+
+
+        # Binary tree, showing that transients work correctly when there are two
+        # calls to the contract
+        000000000000000000000000000000007074a486:
           storage:
             1: 6      # Get 2^6
             2: 1      # Call successful
