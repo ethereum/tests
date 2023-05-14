@@ -377,6 +377,70 @@ transStorageOK:
         0: 0x60A7
 
 
+    # deepCall(uint)
+    #
+    # Show transients are preserved even after a stack of CALLCODEs,
+    # DELEGATECALLs, and CALLs
+    00000000000000000000000000000000c54b5829:
+      balance: 0
+      nonce: 1
+      code: |
+        :yul {
+            function tload_temp(loc) -> val {
+              val := verbatim_1i_1o(hex"B3", loc)
+            }
+          
+            function tstore_temp(loc, val) {
+              verbatim_2i_0o(hex"B4", loc, val)
+            }
+
+            // If we are at the bottom of the stack, increment
+            // the counter and return
+            if eq(calldatasize(), 0) {
+               tstore_temp(0, add(tload_temp(0),1))
+               return(0,0)
+            }
+
+            // If we are at the top of the stack (called by a different contract),
+            // set the counter to one
+            if iszero(eq(address(), caller())) {
+               tstore_temp(0, 1)
+            }
+
+            // Read the most significant byte of the input.
+            // Luckily for us the input is top justified - if the caller provided
+            // just n bytes (n<20), they will be the top n bytes of calldataload(0).
+            let callType := shr(
+                248,
+                calldataload(0)
+            )
+
+            // Prepare the data to send to the next call
+            mstore(0, calldataload(0))
+            let newSize := sub(calldatasize(), 1)
+            let newStart := 1
+
+            // CALL, CALLCODE or DELEGATECALL, as requested
+            switch callType
+            case 0xF1 {    // CALL
+               pop(call(gas(), address(), 0, newStart,newSize, 0,0))
+            }
+            case 0xF2 {    // CALLCODE
+               pop(callcode(gas(), address(), 0, newStart,newSize, 0,0))
+            }
+            case 0xF4 {    // DELEGATECALL
+               pop(delegatecall(gas(), address(), newStart,newSize, 0,0))
+            }
+
+            // If we are at the top of the stack (called by a different contract),
+            // write up the result. Should be two
+            if iszero(eq(address(), caller())) {
+               sstore(0, tload_temp(0))
+            }
+
+          }
+      storage: {}
+
 
 
 
@@ -413,10 +477,21 @@ transStorageOK:
     - :label callback_sum_10 :abi callbackSum(uint) 10
     - :label callback_sum_50 :abi callbackSum(uint) 50
     - :label bin_tree_6 :abi binTree(uint) 6
-    # Both DELEGATECALL and CODECALL here
+
+    # Both DELEGATECALL and CODECALL here 
     - :label delegate_bin_tree_6 :abi delegateBinTree(uint) 6
     - :label inherit_trans :abi inheritTrans()
-    
+
+    # Because of the way this is written, the call stack has to be exactly 32 bytes
+    - :label deep_call :abi deepCall(uint) 0xF1F2F4F1F2F4F1F2F4F1F2F4F1F2F4F1F2F4F1F2F4F1F2F4F1F2F4F1F2F4F1F1F1
+    - :label deep_call :abi deepCall(uint) 0xF1F1F1F1F2F2F2F2F4F4F4F4F1F1F1F1F2F2F2F2F4F4F4F4F1F1F1F1F2F2F2F2
+    - :label deep_call :abi deepCall(uint) 0xF1F1F1F1F1F1F1F1F1F1F1F1F1F1F1F1F1F1F1F1F1F1F1F1F1F1F1F1F1F1F1F1
+    - :label deep_call :abi deepCall(uint) 0xF1F1F1F1F1F1F1F1F1F1F1F1F1F1F1F1F1F1F1F1F1F1F1F1F1F1F1F1F1F1F1F1
+    - :label deep_call :abi deepCall(uint) 0xF2F2F2F2F2F2F2F2F2F2F2F2F2F2F2F2F2F2F2F2F2F2F2F2F2F2F2F2F2F2F2F2
+    - :label deep_call :abi deepCall(uint) 0xF4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4F4
+
+
+    # Static call - get the correct value (not delegated)
 
 
     gasLimit:
@@ -623,3 +698,20 @@ transStorageOK:
             0x13: 1    # CALL success
 
 
+
+    - indexes:
+        data: :label deep_call
+
+      network:
+        - Merge+1153
+      result:
+        cccccccccccccccccccccccccccccccccccccccc:
+          storage:
+            0: 0xc54b5829  # Call to deepCall()
+            1: 1    # Call was successful
+
+        # Show transients are preserved even after a stack of CALLCODEs and
+        # DELEGATECALLs
+        00000000000000000000000000000000c54b5829:
+          storage:
+            0: 2   # Two updates, one at the top of the stack, one at the bottom
