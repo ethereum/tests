@@ -6,7 +6,8 @@ declare -A forkMap=( ["Byzantium"]="ETC_Atlantis"
                      ["ConstantinopleFix"]="ETC_Agharta"
                      ["Berlin"]="ETC_Magneto"
                      ["London"]="ETC_Mystique"
-                     ["Merge"]="ETC_Mystique")
+                     ["Merge"]="ETC_Mystique"
+                     ["Shanghai"]="ETC_Mystique")
 
 function replaceFork()  {
     infile=$1
