@@ -35,6 +35,18 @@
 # 13. STATICCALL can read transient storage
 # 14. STATICCALL cannot write transient storage (even to the same value it has)
 
+
+# In general, the way these tests work is that the transaction calls 0xCCCCCC with
+# 36 bytes of data. Four bytes for a function signature and 32 for a parameter.
+# This is created using :abi funName(uint) <value>
+# 
+# 0xCCCCCC then calls the contract that actually runs the test. The contract's address
+# is, conveniently, the four bytes of the signature. 
+#
+# Note that because of the nature of transient storage, in most cases the test contract
+# has to call itself (directly or indirectly). This means it has to effectively have
+# at least two entry points.
+
 transStorageOK:
   _info:
     comment: Ori Pomerantz qbzzt1@gmail.com
@@ -62,11 +74,21 @@ transStorageOK:
     # 2. Backward availability of transient storage.
     #    The sum is updated and then the contract returns, and the new 
     #    value is available to the caller frame.
+    #
+    # Without the recursion, this code will look like this:
+    #
+    # for (Trans[0] = calldataload(4); Trans[0]!=0; Trans[0]--}
+    #     Trans[1] += Trans[0]
+    #
+
     00000000000000000000000000000000ebd141d5:
       balance: 0
       nonce: 1
       code: |
         :yul {
+            // These two functions use transient storage.
+            // Once the relevant opcodes are added to Yul, simply remove
+            // them (from all contracts) and remove the _temp suffices.
             function tload_temp(loc) -> val {
               val := verbatim_1i_1o(hex"B3", loc)
             }
@@ -75,19 +97,31 @@ transStorageOK:
               verbatim_2i_0o(hex"B4", loc, val)
             }
 
+            // If we are called by ourselves, this is part of the loop.
             if eq(caller(), address()) {
               let counter := tload_temp(0)
+
+              // If the counter is equal to zero, we're done - return.
               if eq(counter,0) {
                 return(0,0)
               }
-              // If counter isn't zero, add counter to trans[1] and do recursion
+
+              // If counter isn't zero, add counter to Trans[1] and do recursion
               tstore_temp(1, add(tload_temp(1), counter))
+
+              // Change the loop variable and call yourself
               tstore_temp(0, sub(counter, 1))
               let res := call(gas(), address(), 0, 0,0, 0,0)
               if iszero(res) { // If the call failed, fail too
                  revert(0,0)
               }
             }
+
+            // If called by a different address, we are the first call and need
+            // to setup Trans[0] before starting the loop. 
+            //
+            // This first frame is also responsible for putting results in storage,
+            // so the test will be able to read them.
             if iszero(eq(caller(), address())) { 
               let data := calldataload(0)
               sstore(1, data)
