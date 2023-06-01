@@ -4,7 +4,7 @@
 # 36 bytes of data. Four bytes for a function signature and 32 for a parameter.
 # This is created using :abi funName(uint) <value> 
 # 
-# 0xCCCCCC then calls the contract that actually runs the test. The contract's address
+# 0xCCC....CCC then calls the contract that actually runs the test. The contract's address
 # is, conveniently, the four bytes of the signature. 
 #
 # Note that because of the nature of transient storage, in most cases the test contract
@@ -29,6 +29,8 @@ transStorageReset:
     #
     # Byte 0: Type of call
     #   0xF1 - CALL
+    #   0xF2 - CALLCODE
+    #   0xF4 - DELEGATECALL
     #
     # Byte 1: Type of revert
     #    0x00 - RETURN (not a revert)
@@ -40,6 +42,9 @@ transStorageReset:
       nonce: 1
       code: |
         :yul {
+            // These two functions use transient storage.
+            // Once the relevant opcodes are added to Yul, simply remove
+            // them (from all contracts) and remove the _temp suffices.
             function tload_temp(loc) -> val {
               val := verbatim_1i_1o(hex"B3", loc)
             }
@@ -62,8 +67,7 @@ transStorageReset:
 
             // Don't call anything, just set Trans[0] here.
             // Only meaningfull with delegatecall() or callcode()
-            case 0x00 { tstore_temp(0,0xBEEF) }
-
+            case 0x00 { tstore_temp(0,0xBAD0BEEF) }
 
 
             // May end up in the reverter's storage (because of delegatecall / callcode)
@@ -83,7 +87,16 @@ transStorageReset:
     # reverter(uint)
     # 
     # Show that a TSTORE followed by a revert does not affect subsequent TLOADs.
+    # This works by calling 0x00..0dead, which itself calls back this contract
+    # and then reverts.
     # 
+    # The parameter includes three bytes:
+    # 
+    # 0xAABBCC
+    #
+    # 0xAA - type of call between this contract and 0xDEAD
+    # 0xBB - the type of call between 0xDEAD and back to this contract
+    # 0xCC - the type of revert (or stop, invalid, etc.)
     000000000000000000000000000000003f8390d5:
       balance: 0
       nonce: 1
@@ -121,6 +134,7 @@ transStorageReset:
               case 0xF2 { callRes := callcode    (callGas, 0xdead, 0, 0,32, 0,0) }
               case 0xF4 { callRes := delegatecall(callGas, 0xdead,    0,32, 0,0) }
 
+              // The result of the call to 0xDEAD. Usually zero.
               sstore(1, callRes)
               sstore(0, tload_temp(0))
 
@@ -175,7 +189,6 @@ transStorageReset:
     - :label reverter-delegate-call-revert       :abi reverter(uint) 0xF4F1FD
     - :label reverter-delegate-call-invalid      :abi reverter(uint) 0xF4F1FE
 
-
     # The reverter uses CALLCODE, and then 0xDEAD uses CALL
     - :label reverter-code-call-stop             :abi reverter(uint) 0xF2F100
     - :label reverter-code-call-revert           :abi reverter(uint) 0xF2F1FD
@@ -186,18 +199,15 @@ transStorageReset:
     - :label reverter-delegate-delegate-revert   :abi reverter(uint) 0xF4F4FD
     - :label reverter-delegate-delegate-invalid  :abi reverter(uint) 0xF4F4FE
 
-
     # The reverter uses DELEGATECALL, and then 0xDEAD uses CALLCODE
     - :label reverter-delegate-code-stop     :abi reverter(uint) 0xF4F200
     - :label reverter-delegate-code-revert   :abi reverter(uint) 0xF4F2FD
     - :label reverter-delegate-code-invalid  :abi reverter(uint) 0xF4F2FE
 
-
     # The reverter uses CALLCODE, and then 0xDEAD uses DELEGATECALL
     - :label reverter-code-delegate-stop     :abi reverter(uint) 0xF2F400
     - :label reverter-code-delegate-revert   :abi reverter(uint) 0xF2F4FD
     - :label reverter-code-delegate-invalid  :abi reverter(uint) 0xF2F4FE
-
 
     # The reverter uses CALLCODE, and then 0xDEAD uses CALLCODE
     - :label reverter-code-code-stop     :abi reverter(uint) 0xF2F200
@@ -268,7 +278,8 @@ transStorageReset:
             0x10: 0x01   # call was successful
 
 
-
+    # Because the first call is CALLCODE or DELEGATECALL, the SSTORE in 0xDEAD 
+    # Writes to the storage of 0x003f8390d5
     - indexes:
         data:
         - :label reverter-delegate-call-stop
@@ -305,14 +316,15 @@ transStorageReset:
             1: 1    # Call was successful
         000000000000000000000000000000003f8390d5:
           storage:
-            0x00: 0xBEEF # The call with tstore(0, 0xBEEF) was successful
+            0x00: 0xBAD0BEEF # The call with tstore(0, 0xBAD0BEEF) was successful
             0x01: 1      # The call was successful
             0x10: 0x7E57 # 0xDEAD didn't have any call, so the result stayed 0x7E57
 
 
 
 
-
+    # The main test. If 0xDEAD reverts, the call inside it that changed the transient
+    # storage does not have any effect.
     - indexes:
         data: 
         - :label reverter-call-call-revert
@@ -346,7 +358,8 @@ transStorageReset:
             1: 1    # Call was successful
         000000000000000000000000000000003f8390d5:
           storage:
-            0x00: 0x60A7 # The call with tstore(0, 0xBEEF) reverted
+            0x00: 0x60A7 # The call with tstore(0, 0xBEEF) or tstore(0, 0xBAD0BEEF)
+                         #  reverted
             0x01: 0      # The call failed
         000000000000000000000000000000000000dead:
           storage:
@@ -356,7 +369,9 @@ transStorageReset:
 
 
 
-
+    # The reverter calls 0xDEAD, which then stops (no revert). However, 
+    # because it was a CALL, 0xDEAD has different transient storage from 
+    # the reverter.
     - indexes:
         data: 
         - :label reverter-call-nop-stop
@@ -370,7 +385,7 @@ transStorageReset:
             1: 1    # Call was successful
         000000000000000000000000000000003f8390d5:
           storage:
-            0x00: 0x60A7 # The call with tstore(0, 0xBEEF) was in a different Trans
+            0x00: 0x60A7 # The call with tstore(0, 0xBAD0BEEF) was in a different Trans
             0x01: 1      # The call was successful
         000000000000000000000000000000000000dead:
           storage:
