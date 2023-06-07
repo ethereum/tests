@@ -60,7 +60,7 @@ validInvalid:
          EOF1I4200_0042 (Invalid) EOF code containing RJUMPV with target CALLF immediate
 
   forks:
-    - ">=Shanghai"
+    - ">=Cancun"
 
   vectors:
     # EOF1V4200_0001 (Valid) EOF code containing RJUMP (Positive, Negative)
@@ -86,7 +86,7 @@ validInvalid:
         5cfff7 # RJUMP(-9) 
                # Data section (empty)
       expectException:
-        "Shanghai" : "EOF_InvalidCode"
+        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V4200_0002 (Valid) EOF code containing RJUMP (Zero)
     # Code: RJUMP(0) PUSH1(1) PUSH1(1) SSTORE STOP
@@ -110,7 +110,7 @@ validInvalid:
             00 # STOP 
                # Data section (empty)
       expectException:
-        "Shanghai" : "EOF_InvalidCode"
+        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V4200_0003 (Valid) EOF code containing RJUMPI (Positive)
     # Code: PUSH1(1) RJUMPI(3) NOP NOP STOP PUSH1(1) PUSH1(1) SSTORE STOP
@@ -138,7 +138,7 @@ validInvalid:
             00 # STOP 
                # Data section (empty)
       expectException:
-        "Shanghai" : "EOF_InvalidCode"
+        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V4200_0004 (Valid) EOF code containing RJUMPI (Negative)
     # Code: RJUMP(positive) negative: PUSH1(1) PUSH1(1) SSTORE STOP positive: PUSH1(1) RJUMPI(negative) STOP
@@ -165,7 +165,7 @@ validInvalid:
             00 # STOP 
                # Data section (empty)
       expectException:
-        "Shanghai" : "EOF_InvalidCode"
+        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V4200_0005 (Valid) EOF code containing RJUMPI (Zero)
     # Code: PUSH1(1) RJUMPI(0) PUSH1(1) PUSH1(1) SSTORE STOP
@@ -190,7 +190,7 @@ validInvalid:
             00 # STOP 
                # Data section (empty)
       expectException:
-        "Shanghai" : "EOF_InvalidCode"
+        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V4200_0006 (Valid) EOF with RJUMPV table size 1 (Positive)
     # Code: PUSH1(0) RJUMPV(3) NOP NOP STOP PUSH1(1) PUSH1(1) SSTORE STOP
@@ -218,7 +218,7 @@ validInvalid:
             00 # STOP 
                # Data section (empty)
       expectException:
-        "Shanghai" : "EOF_InvalidCode"
+        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V4200_0007 (Valid) EOF with RJUMPV table size 1 (Negative)
     # Code: RJUMP(positive) negative: PUSH1(1) PUSH1(1) SSTORE STOP positive: PUSH1(0) RJUMPV(negative) STOP
@@ -245,7 +245,7 @@ validInvalid:
             00 # STOP 
                # Data section (empty)
       expectException:
-        "Shanghai" : "EOF_InvalidCode"
+        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V4200_0008 (Valid) EOF with RJUMPV table size 1 (Zero)
     # Code: PUSH1(0) RJUMPV(0) PUSH1(1) PUSH1(1) SSTORE STOP
@@ -270,7 +270,7 @@ validInvalid:
             00 # STOP 
                # Data section (empty)
       expectException:
-        "Shanghai" : "EOF_InvalidCode"
+        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V4200_0009 (Valid) EOF with RJUMPV table size 3
     # Code: PUSH1(0) RJUMPV(3,0,-10) NOP NOP STOP PUSH1(1) PUSH1(1) SSTORE STOP
@@ -298,51 +298,51 @@ validInvalid:
             00 # STOP 
                # Data section (empty)
       expectException:
-        "Shanghai" : "EOF_InvalidCode"
+        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V4200_0010 (Valid) EOF with RJUMPV table size 255 (Target 0)
     # Code: PUSH1(0) RJUMPV(random 255 offsets) NOP * 255 STOP PUSH1(1) PUSH1(1) SSTORE STOP
     - data: |
        :label EOF1V4200_0010 :raw 0xef00010100040200010308030000000000000260005eff010000c600690073005100ff004a00ec002900cd00ba00ab00f200fb00e30046007c00c2005400f8001b00e800e7008d0076005a002e00630033009f00c9009a00660032000d00b70031005800a3005a0025005d00050017005800e9005e00d400ab00b200cd00c6009b00b400540011000e0082007400410021003d00dc0087007000e9003e00a1004100e100fc0067003e0001007e009700ea00dc006b0096008f0038005c002a00ec00b0003b00fb003200af003c005400ec001800db005c0002001a00fe004300fb00fa00aa003a00fb002900d100e60005003c007c0094007500d800be0061008900f9005c00bb00a80099000f009500b100eb00f100b3000500ef00f7000000e900a1003a00e500ca000b00cb00d000480047006400bd001f0023001e00a8001c007b006400c500140073005a00c5005e004b00790063003b0070006400240011009e000900dc00aa00d400ac00f2001b001000af003b003300cd00e30050004800470015005c00bb006f0022001900ba009b007d00f5000b00e1001a001c007f002300f8002900f800a4001b001300b500ca004e00e800980032003800e00079004d003d003400bc005f004e007700fa00cb006c000500ac00860021002b00aa001a005500a200be007000b50073003b0004005c00d30036009400b300af00e200f000e4009e004f00320015004900fd008200ff5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b00600160015500
       expectException:
-        "Shanghai" : "EOF_InvalidCode"
+        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V4200_0011 (Valid) EOF with RJUMPV table size 255 (Target 100)
     # Code: PUSH1(100) RJUMPV(random 255 offsets) NOP * 255 STOP PUSH1(1) PUSH1(1) SSTORE STOP
     - data: |
        :label EOF1V4200_0011 :raw 0xef00010100040200010308030000000000000260645eff006700c600690073005100ff004a00ec002900cd00ba00ab00f200fb00e30046007c00c2005400f8001b00e800e7008d0076005a002e00630033009f00c9009a00660032000d00b70031005800a3005a0025005d00050017005800e9005e00d400ab00b200cd00c6009b00b400540011000e0082007400410021003d00dc0087007000e9003e00a1004100e100fc0067003e0001007e009700ea00dc006b0096008f0038005c002a00ec00b0003b00fb003200af003c005400ec001800db005c0002001a00fe0043010000fa00aa003a00fb002900d100e60005003c007c0094007500d800be0061008900f9005c00bb00a80099000f009500b100eb00f100b3000500ef00f7000000e900a1003a00e500ca000b00cb00d000480047006400bd001f0023001e00a8001c007b006400c500140073005a00c5005e004b00790063003b0070006400240011009e000900dc00aa00d400ac00f2001b001000af003b003300cd00e30050004800470015005c00bb006f0022001900ba009b007d00f5000b00e1001a001c007f002300f8002900f800a4001b001300b500ca004e00e800980032003800e00079004d003d003400bc005f004e007700fa00cb006c000500ac00860021002b00aa001a005500a200be007000b50073003b0004005c00d30036009400b300af00e200f000e4009e004f00320015004900fd008200ff5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b00600160015500
       expectException:
-        "Shanghai" : "EOF_InvalidCode"
+        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V4200_0012 (Valid) EOF with RJUMPV table size 255 (Target 254)
     # Code: PUSH1(254) RJUMPV(random 255 offsets) NOP * 255 STOP PUSH1(1) PUSH1(1) SSTORE STOP
     - data: |
        :label EOF1V4200_0012 :raw 0xef00010100040200010308030000000000000260fe5eff006700c600690073005100ff004a00ec002900cd00ba00ab00f200fb00e30046007c00c2005400f8001b00e800e7008d0076005a002e00630033009f00c9009a00660032000d00b70031005800a3005a0025005d00050017005800e9005e00d400ab00b200cd00c6009b00b400540011000e0082007400410021003d00dc0087007000e9003e00a1004100e100fc0067003e0001007e009700ea00dc006b0096008f0038005c002a00ec00b0003b00fb003200af003c005400ec001800db005c0002001a00fe004300fb00fa00aa003a00fb002900d100e60005003c007c0094007500d800be0061008900f9005c00bb00a80099000f009500b100eb00f100b3000500ef00f7000000e900a1003a00e500ca000b00cb00d000480047006400bd001f0023001e00a8001c007b006400c500140073005a00c5005e004b00790063003b0070006400240011009e000900dc00aa00d400ac00f2001b001000af003b003300cd00e30050004800470015005c00bb006f0022001900ba009b007d00f5000b00e1001a001c007f002300f8002900f800a4001b001300b500ca004e00e800980032003800e00079004d003d003400bc005f004e007700fa00cb006c000500ac00860021002b00aa001a005500a200be007000b50073003b0004005c00d30036009400b300af00e200f000e4009e004f00320015004900fd008201005b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b00600160015500
       expectException:
-        "Shanghai" : "EOF_InvalidCode"
+        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V4200_0013 (Valid) EOF with RJUMPV table size 255 (Target 256)
     # Code: PUSH2(256) RJUMPV(random 255 offsets) NOP * 255 PUSH1(1) PUSH1(1) SSTORE STOP
     - data: |
        :label EOF1V4200_0013 :raw 0xef0001010004020001030803000000000000026101005eff006700c600690073005100ff004a00ec002900cd00ba00ab00f200fb00e30046007c00c2005400f8001b00e800e7008d0076005a002e00630033009f00c9009a00660032000d00b70031005800a3005a0025005d00050017005800e9005e00d400ab00b200cd00c6009b00b400540011000e0082007400410021003d00dc0087007000e9003e00a1004100e100fc0067003e0001007e009700ea00dc006b0096008f0038005c002a00ec00b0003b00fb003200af003c005400ec001800db005c0002001a00fe004300fb00fa00aa003a00fb002900d100e60005003c007c0094007500d800be0061008900f9005c00bb00a80099000f009500b100eb00f100b3000500ef00f7000000e900a1003a00e500ca000b00cb00d000480047006400bd001f0023001e00a8001c007b006400c500140073005a00c5005e004b00790063003b0070006400240011009e000900dc00aa00d400ac00f2001b001000af003b003300cd00e30050004800470015005c00bb006f0022001900ba009b007d00f5000b00e1001a001c007f002300f8002900f800a4001b001300b500ca004e00e800980032003800e00079004d003d003400bc005f004e007700fa00cb006c000500ac00860021002b00aa001a005500a200be007000b50073003b0004005c00d30036009400b300af00e200f000e4009e004f00320015004900fd008200ff5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b600160015500
       expectException:
-        "Shanghai" : "EOF_InvalidCode"
+        "Cancun" : "EOF_InvalidCode"
 
     # EOF1I4200_0001 (Invalid) EOF code containing truncated RJUMP
     # Code: RJUMP
     - data: |
        :label EOF1I4200_0001 :raw 0xef0001010004020001000103000000000000005c
       expectException:
-        "Shanghai" : "EOF_InvalidCode"
-        ">=Cancun" : "EOF_TruncatedImmediate"
+        "Cancun" : "EOF_InvalidCode"
+        ">=Prague" : "EOF_TruncatedImmediate"
 
     # EOF1I4200_0002 (Invalid) EOF code containing truncated RJUMP
     # Code: RJUMP(0?
     - data: |
        :label EOF1I4200_0002 :raw 0xef0001010004020001000203000000000000005c00
       expectException:
-        "Shanghai" : "EOF_InvalidCode"
-        ">=Cancun" : "EOF_TruncatedImmediate"
+        "Cancun" : "EOF_InvalidCode"
+        ">=Prague" : "EOF_TruncatedImmediate"
 
     # EOF1I4200_0003 (Invalid) EOF code containing RJUMP with target outside code bounds (Jumping into header)
     # Code: RJUMP(-5)
@@ -362,8 +362,8 @@ validInvalid:
         5cfffb # RJUMP(-5) 
                # Data section (empty)
       expectException:
-        "Shanghai" : "EOF_InvalidCode"
-        ">=Cancun" : "EOF_InvalidJumpDestination"
+        "Cancun" : "EOF_InvalidCode"
+        ">=Prague" : "EOF_InvalidJumpDestination"
 
     # EOF1I4200_0004 (Invalid) EOF code containing RJUMP with target outside code bounds (Jumping before code begin)
     # Code: RJUMP(-23)
@@ -383,8 +383,8 @@ validInvalid:
         5cffe9 # RJUMP(-23) 
                # Data section (empty)
       expectException:
-        "Shanghai" : "EOF_InvalidCode"
-        ">=Cancun" : "EOF_InvalidJumpDestination"
+        "Cancun" : "EOF_InvalidCode"
+        ">=Prague" : "EOF_InvalidJumpDestination"
 
     # EOF1I4200_0005 (Invalid) EOF code containing RJUMP with target outside code bounds (Jumping into data section)
     # Code: RJUMP(2)
@@ -406,8 +406,8 @@ validInvalid:
                # Data section 
         aabbccdd
       expectException:
-        "Shanghai" : "EOF_InvalidCode"
-        ">=Cancun" : "EOF_InvalidJumpDestination"
+        "Cancun" : "EOF_InvalidCode"
+        ">=Prague" : "EOF_InvalidJumpDestination"
 
     # EOF1I4200_0006 (Invalid) EOF code containing RJUMP with target outside code bounds (Jumping after code end)
     # Code: RJUMP(2)
@@ -427,8 +427,8 @@ validInvalid:
         5c0002 # RJUMP(2) 
                # Data section (empty)
       expectException:
-        "Shanghai" : "EOF_InvalidCode"
-        ">=Cancun" : "EOF_InvalidJumpDestination"
+        "Cancun" : "EOF_InvalidCode"
+        ">=Prague" : "EOF_InvalidJumpDestination"
 
     # EOF1I4200_0007 (Invalid) EOF code containing RJUMP with target outside code bounds (Jumping to code end)
     # Code: RJUMP(1) STOP
@@ -449,8 +449,8 @@ validInvalid:
             00 # STOP 
                # Data section (empty)
       expectException:
-        "Shanghai" : "EOF_InvalidCode"
-        ">=Cancun" : "EOF_InvalidJumpDestination"
+        "Cancun" : "EOF_InvalidCode"
+        ">=Prague" : "EOF_InvalidJumpDestination"
 
     # EOF1I4200_0008 (Invalid) EOF code containing RJUMP with target self RJUMP immediate
     # Code: RJUMP(-1)
@@ -470,8 +470,8 @@ validInvalid:
         5cffff # RJUMP(-1) 
                # Data section (empty)
       expectException:
-        "Shanghai" : "EOF_InvalidCode"
-        ">=Cancun" : "EOF_InvalidJumpDestination"
+        "Cancun" : "EOF_InvalidCode"
+        ">=Prague" : "EOF_InvalidJumpDestination"
 
     # EOF1I4200_0009 (Invalid) EOF code containing RJUMP with target other RJUMP immediate
     # Code: RJUMP(3) STOP RJUMP(-4)
@@ -493,8 +493,8 @@ validInvalid:
         5cfffc # RJUMP(-4) 
                # Data section (empty)
       expectException:
-        "Shanghai" : "EOF_InvalidCode"
-        ">=Cancun" : "EOF_InvalidJumpDestination"
+        "Cancun" : "EOF_InvalidCode"
+        ">=Prague" : "EOF_InvalidJumpDestination"
 
     # EOF1I4200_0010 (Invalid) EOF code containing RJUMP with target RJUMPI immediate
     # Code: RJUMP(5) STOP PUSH1(1) RJUMPI(-6) STOP
@@ -518,8 +518,8 @@ validInvalid:
             00 # STOP 
                # Data section (empty)
       expectException:
-        "Shanghai" : "EOF_InvalidCode"
-        ">=Cancun" : "EOF_InvalidJumpDestination"
+        "Cancun" : "EOF_InvalidCode"
+        ">=Prague" : "EOF_InvalidJumpDestination"
 
     # EOF1I4200_0011 (Invalid) EOF code containing RJUMP with target PUSH immediate
     # Code: RJUMP(2) NOP PUSH1(1) PUSH1(1) SSTORE STOP
@@ -544,8 +544,8 @@ validInvalid:
             00 # STOP 
                # Data section (empty)
       expectException:
-        "Shanghai" : "EOF_InvalidCode"
-        ">=Cancun" : "EOF_InvalidJumpDestination"
+        "Cancun" : "EOF_InvalidCode"
+        ">=Prague" : "EOF_InvalidJumpDestination"
 
     # EOF1I4200_0012 (Invalid) EOF code containing RJUMP with target RJUMPV immediate
     # Code: RJUMP(5) STOP PUSH1(1) RJUMPV(0) STOP
@@ -569,8 +569,8 @@ validInvalid:
             00 # STOP 
                # Data section (empty)
       expectException:
-        "Shanghai" : "EOF_InvalidCode"
-        ">=Cancun" : "EOF_InvalidJumpDestination"
+        "Cancun" : "EOF_InvalidCode"
+        ">=Prague" : "EOF_InvalidJumpDestination"
 
     # EOF1I4200_0013 (Invalid) EOF code containing RJUMP with target CALLF immediate
       # Code[0](Types: 0:0): RJUMP(2) CALLF(1) STOP
@@ -603,24 +603,24 @@ validInvalid:
             b1 # RETF 
                # Data section (empty)
       expectException:
-        "Shanghai" : "EOF_InvalidCode"
-        ">=Cancun" : "EOF_InvalidJumpDestination"
+        "Cancun" : "EOF_InvalidCode"
+        ">=Prague" : "EOF_InvalidJumpDestination"
 
     # EOF1I4200_0014 (Invalid) EOF code containing truncated RJUMPI
     # Code: PUSH1(0) RJUMPI
     - data: |
        :label EOF1I4200_0014 :raw 0xef00010100040200010003030000000000000160005d
       expectException:
-        "Shanghai" : "EOF_InvalidCode"
-        ">=Cancun" : "EOF_TruncatedImmediate"
+        "Cancun" : "EOF_InvalidCode"
+        ">=Prague" : "EOF_TruncatedImmediate"
 
     # EOF1I4200_0015 (Invalid) EOF code containing truncated RJUMPI
     # Code: PUSH1(0) RJUMPI(0?
     - data: |
        :label EOF1I4200_0015 :raw 0xef00010100040200010004030000000000000160005d00
       expectException:
-        "Shanghai" : "EOF_InvalidCode"
-        ">=Cancun" : "EOF_TruncatedImmediate"
+        "Cancun" : "EOF_InvalidCode"
+        ">=Prague" : "EOF_TruncatedImmediate"
 
     # EOF1I4200_0016 (Invalid) EOF code containing RJUMPI with target outside code bounds (Jumping into header)
     # Code: PUSH1(1) RJUMPI(-7) STOP
@@ -642,8 +642,8 @@ validInvalid:
             00 # STOP 
                # Data section (empty)
       expectException:
-        "Shanghai" : "EOF_InvalidCode"
-        ">=Cancun" : "EOF_InvalidJumpDestination"
+        "Cancun" : "EOF_InvalidCode"
+        ">=Prague" : "EOF_InvalidJumpDestination"
 
     # EOF1I4200_0017 (Invalid) EOF code containing RJUMPI with target outside code bounds (Jumping to before code begin)
     # Code: PUSH1(1) RJUMPI(-25) STOP
@@ -665,8 +665,8 @@ validInvalid:
             00 # STOP 
                # Data section (empty)
       expectException:
-        "Shanghai" : "EOF_InvalidCode"
-        ">=Cancun" : "EOF_InvalidJumpDestination"
+        "Cancun" : "EOF_InvalidCode"
+        ">=Prague" : "EOF_InvalidJumpDestination"
 
     # EOF1I4200_0018 (Invalid) EOF code containing RJUMPI with target outside code bounds (Jumping into data section)
     # Code: PUSH1(1) RJUMPI(2) STOP
@@ -690,8 +690,8 @@ validInvalid:
                # Data section 
         aabbccdd
       expectException:
-        "Shanghai" : "EOF_InvalidCode"
-        ">=Cancun" : "EOF_InvalidJumpDestination"
+        "Cancun" : "EOF_InvalidCode"
+        ">=Prague" : "EOF_InvalidJumpDestination"
 
     # EOF1I4200_0019 (Invalid) EOF code containing RJUMPI with target outside code bounds (Jumping to after code end)
     # Code: PUSH1(1) RJUMPI(2) STOP
@@ -713,8 +713,8 @@ validInvalid:
             00 # STOP 
                # Data section (empty)
       expectException:
-        "Shanghai" : "EOF_InvalidCode"
-        ">=Cancun" : "EOF_InvalidJumpDestination"
+        "Cancun" : "EOF_InvalidCode"
+        ">=Prague" : "EOF_InvalidJumpDestination"
 
     # EOF1I4200_0020 (Invalid) EOF code containing RJUMPI with target outside code bounds (Jumping to code end)
     # Code: PUSH1(1) RJUMPI(1) STOP
@@ -736,8 +736,8 @@ validInvalid:
             00 # STOP 
                # Data section (empty)
       expectException:
-        "Shanghai" : "EOF_InvalidCode"
-        ">=Cancun" : "EOF_InvalidJumpDestination"
+        "Cancun" : "EOF_InvalidCode"
+        ">=Prague" : "EOF_InvalidJumpDestination"
 
     # EOF1I4200_0021 (Invalid) EOF code containing RJUMPI with target same RJUMPI immediate
     # Code: PUSH1(1) RJUMPI(-1) STOP
@@ -759,8 +759,8 @@ validInvalid:
             00 # STOP 
                # Data section (empty)
       expectException:
-        "Shanghai" : "EOF_InvalidCode"
-        ">=Cancun" : "EOF_InvalidJumpDestination"
+        "Cancun" : "EOF_InvalidCode"
+        ">=Prague" : "EOF_InvalidJumpDestination"
 
     # EOF1I4200_0022 (Invalid) EOF code containing RJUMPI with target other RJUMPI immediate
     # Code: PUSH1(1) RJUMPI(5) STOP PUSH1(1) RJUMPI(-11) STOP
@@ -785,8 +785,8 @@ validInvalid:
             00 # STOP 
                # Data section (empty)
       expectException:
-        "Shanghai" : "EOF_InvalidCode"
-        ">=Cancun" : "EOF_InvalidJumpDestination"
+        "Cancun" : "EOF_InvalidCode"
+        ">=Prague" : "EOF_InvalidJumpDestination"
 
     # EOF1I4200_0023 (Invalid) EOF code containing RJUMPI with target RJUMP immediate
     # Code: PUSH1(1) RJUMPI(3) STOP RJUMP(-9)
@@ -809,8 +809,8 @@ validInvalid:
         5cfff7 # RJUMP(-9) 
                # Data section (empty)
       expectException:
-        "Shanghai" : "EOF_InvalidCode"
-        ">=Cancun" : "EOF_InvalidJumpDestination"
+        "Cancun" : "EOF_InvalidCode"
+        ">=Prague" : "EOF_InvalidJumpDestination"
 
     # EOF1I4200_0024 (Invalid) EOF code containing RJUMPI with target PUSH immediate
     # Code: PUSH1(1) RJUMPI(-4) STOP
@@ -832,8 +832,8 @@ validInvalid:
             00 # STOP 
                # Data section (empty)
       expectException:
-        "Shanghai" : "EOF_InvalidCode"
-        ">=Cancun" : "EOF_InvalidJumpDestination"
+        "Cancun" : "EOF_InvalidCode"
+        ">=Prague" : "EOF_InvalidJumpDestination"
 
     # EOF1I4200_0025 (Invalid) EOF code containing RJUMPI with target RJUMPV immediate
     # Code: PUSH1(1) RJUMPI(5) STOP PUSH1(1) RJUMPV(0) STOP
@@ -858,8 +858,8 @@ validInvalid:
             00 # STOP 
                # Data section (empty)
       expectException:
-        "Shanghai" : "EOF_InvalidCode"
-        ">=Cancun" : "EOF_InvalidJumpDestination"
+        "Cancun" : "EOF_InvalidCode"
+        ">=Prague" : "EOF_InvalidJumpDestination"
 
     # EOF1I4200_0026 (Invalid) EOF code containing RJUMPI with target CALLF immediate
       # Code[0](Types: 0:0): PUSH1(1) RJUMPI(2) CALLF(1) STOP
@@ -893,48 +893,48 @@ validInvalid:
             b1 # RETF 
                # Data section (empty)
       expectException:
-        "Shanghai" : "EOF_InvalidCode"
-        ">=Cancun" : "EOF_InvalidJumpDestination"
+        "Cancun" : "EOF_InvalidCode"
+        ">=Prague" : "EOF_InvalidJumpDestination"
 
     # EOF1I4200_0027 (Invalid) EOF code containing RJUMPV with count 0 and zero immediates
     # Code: PUSH1(1) RJUMPV
     - data: |
        :label EOF1I4200_0027 :raw 0xef00010100040200010004030000000000000160015e00
       expectException:
-        "Shanghai" : "EOF_InvalidCode"
-        ">=Cancun" : "EOF_InvalidJumpTableCount"
+        "Cancun" : "EOF_InvalidCode"
+        ">=Prague" : "EOF_InvalidJumpTableCount"
 
     # EOF1I4200_0028 (Invalid) EOF code containing RJUMPV with count 0 and one immediates
     # Code: PUSH1(1) RJUMPV
     - data: |
        :label EOF1I4200_0028 :raw 0xef00010100040200010006030000000000000160015e000000
       expectException:
-        "Shanghai" : "EOF_InvalidCode"
-        ">=Cancun" : "EOF_InvalidJumpTableCount"
+        "Cancun" : "EOF_InvalidCode"
+        ">=Prague" : "EOF_InvalidJumpTableCount"
 
     # EOF1I4200_0029 (Invalid) EOF code containing truncated RJUMPV
     # Code: PUSH1(1) RJUMPV
     - data: |
        :label EOF1I4200_0029 :raw 0xef00010100040200010003030000000000000160015e
       expectException:
-        "Shanghai" : "EOF_InvalidCode"
-        ">=Cancun" : "EOF_TruncatedImmediate"
+        "Cancun" : "EOF_InvalidCode"
+        ">=Prague" : "EOF_TruncatedImmediate"
 
     # EOF1I4200_0030 (Invalid) EOF code containing truncated RJUMPV
     # Code: PUSH1(1) RJUMPV(
     - data: |
        :label EOF1I4200_0030 :raw 0xef00010100040200010004030000000000000160015e01
       expectException:
-        "Shanghai" : "EOF_InvalidCode"
-        ">=Cancun" : "EOF_TruncatedImmediate"
+        "Cancun" : "EOF_InvalidCode"
+        ">=Prague" : "EOF_TruncatedImmediate"
 
     # EOF1I4200_0031 (Invalid) EOF code containing truncated RJUMPV
     # Code: PUSH1(1) RJUMPV(0?
     - data: |
        :label EOF1I4200_0031 :raw 0xef00010100040200010005030000000000000160015e0100
       expectException:
-        "Shanghai" : "EOF_InvalidCode"
-        ">=Cancun" : "EOF_TruncatedImmediate"
+        "Cancun" : "EOF_InvalidCode"
+        ">=Prague" : "EOF_TruncatedImmediate"
 
     # EOF1I4200_0032 (Invalid) EOF code containing RJUMPV with target outside code bounds (Jumping into header)
     # Code: PUSH1(1) RJUMPV(-7) STOP
@@ -956,8 +956,8 @@ validInvalid:
             00 # STOP 
                # Data section (empty)
       expectException:
-        "Shanghai" : "EOF_InvalidCode"
-        ">=Cancun" : "EOF_InvalidJumpDestination"
+        "Cancun" : "EOF_InvalidCode"
+        ">=Prague" : "EOF_InvalidJumpDestination"
 
     # EOF1I4200_0033 (Invalid) EOF code containing RJUMPV with target outside code bounds (Jumping to before code begin)
     # Code: PUSH1(1) RJUMPV(-15) STOP
@@ -979,8 +979,8 @@ validInvalid:
             00 # STOP 
                # Data section (empty)
       expectException:
-        "Shanghai" : "EOF_InvalidCode"
-        ">=Cancun" : "EOF_InvalidJumpDestination"
+        "Cancun" : "EOF_InvalidCode"
+        ">=Prague" : "EOF_InvalidJumpDestination"
 
     # EOF1I4200_0034 (Invalid) EOF code containing RJUMPV with target outside code bounds (Jumping into data section)
     # Code: PUSH1(1) RJUMPV(2) STOP
@@ -1004,8 +1004,8 @@ validInvalid:
                # Data section 
         aabbccdd
       expectException:
-        "Shanghai" : "EOF_InvalidCode"
-        ">=Cancun" : "EOF_InvalidJumpDestination"
+        "Cancun" : "EOF_InvalidCode"
+        ">=Prague" : "EOF_InvalidJumpDestination"
 
     # EOF1I4200_0035 (Invalid) EOF code containing RJUMPV with target outside code bounds (Jumping to after code end)
     # Code: PUSH1(1) RJUMPV(2) STOP
@@ -1027,8 +1027,8 @@ validInvalid:
             00 # STOP 
                # Data section (empty)
       expectException:
-        "Shanghai" : "EOF_InvalidCode"
-        ">=Cancun" : "EOF_InvalidJumpDestination"
+        "Cancun" : "EOF_InvalidCode"
+        ">=Prague" : "EOF_InvalidJumpDestination"
 
     # EOF1I4200_0036 (Invalid) EOF code containing RJUMPV with target outside code bounds (Jumping to code end)
     # Code: PUSH1(1) RJUMPV(1) STOP
@@ -1050,8 +1050,8 @@ validInvalid:
             00 # STOP 
                # Data section (empty)
       expectException:
-        "Shanghai" : "EOF_InvalidCode"
-        ">=Cancun" : "EOF_InvalidJumpDestination"
+        "Cancun" : "EOF_InvalidCode"
+        ">=Prague" : "EOF_InvalidJumpDestination"
 
     # EOF1I4200_0037 (Invalid) EOF code containing RJUMPV with target same RJUMPV immediate
     # Code: PUSH1(1) RJUMPV(-1) STOP
@@ -1073,8 +1073,8 @@ validInvalid:
             00 # STOP 
                # Data section (empty)
       expectException:
-        "Shanghai" : "EOF_InvalidCode"
-        ">=Cancun" : "EOF_InvalidJumpDestination"
+        "Cancun" : "EOF_InvalidCode"
+        ">=Prague" : "EOF_InvalidJumpDestination"
 
     # EOF1I4200_0038 (Invalid) EOF code containing RJUMPV with target RJUMP immediate
     # Code: PUSH1(1) RJUMPV(5) STOP PUSH1(1) RJUMP(-9) STOP
@@ -1099,8 +1099,8 @@ validInvalid:
             00 # STOP 
                # Data section (empty)
       expectException:
-        "Shanghai" : "EOF_InvalidCode"
-        ">=Cancun" : "EOF_InvalidJumpDestination"
+        "Cancun" : "EOF_InvalidCode"
+        ">=Prague" : "EOF_InvalidJumpDestination"
 
     # EOF1I4200_0039 (Invalid) EOF code containing RJUMPV with target RJUMPI immediate
     # Code: PUSH1(1) RJUMPV(5) STOP PUSH1(1) RJUMPI(-9) STOP
@@ -1125,8 +1125,8 @@ validInvalid:
             00 # STOP 
                # Data section (empty)
       expectException:
-        "Shanghai" : "EOF_InvalidCode"
-        ">=Cancun" : "EOF_InvalidJumpDestination"
+        "Cancun" : "EOF_InvalidCode"
+        ">=Prague" : "EOF_InvalidJumpDestination"
 
     # EOF1I4200_0040 (Invalid) EOF code containing RJUMPV with target PUSH immediate
     # Code: PUSH1(1) RJUMPV(2) STOP PUSH1(1) PUSH1(1) SSTORE STOP
@@ -1152,8 +1152,8 @@ validInvalid:
             00 # STOP 
                # Data section (empty)
       expectException:
-        "Shanghai" : "EOF_InvalidCode"
-        ">=Cancun" : "EOF_InvalidJumpDestination"
+        "Cancun" : "EOF_InvalidCode"
+        ">=Prague" : "EOF_InvalidJumpDestination"
 
     # EOF1I4200_0041 (Invalid) EOF code containing RJUMPV with target other RJUMPV immediate
     # Code: PUSH1(1) RJUMPV(5) STOP PUSH1(1) RJUMPV(0) STOP
@@ -1178,8 +1178,8 @@ validInvalid:
             00 # STOP 
                # Data section (empty)
       expectException:
-        "Shanghai" : "EOF_InvalidCode"
-        ">=Cancun" : "EOF_InvalidJumpDestination"
+        "Cancun" : "EOF_InvalidCode"
+        ">=Prague" : "EOF_InvalidJumpDestination"
 
     # EOF1I4200_0042 (Invalid) EOF code containing RJUMPV with target CALLF immediate
       # Code[0](Types: 0:0): PUSH1(0) RJUMPV(2) CALLF(1) STOP
@@ -1213,5 +1213,5 @@ validInvalid:
             b1 # RETF 
                # Data section (empty)
       expectException:
-        "Shanghai" : "EOF_InvalidCode"
-        ">=Cancun" : "EOF_InvalidJumpDestination"
+        "Cancun" : "EOF_InvalidCode"
+        ">=Prague" : "EOF_InvalidJumpDestination"
