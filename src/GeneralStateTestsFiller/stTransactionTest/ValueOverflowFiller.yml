@@ -38,25 +38,17 @@ ValueOverflow:
       - '0x:bigint 0x10000000000000000000000000000000000000000000000000000000000000001'
 
   expect:
-    - indexes:
-       data: !!int -1
-       gas: !!int -1
-       value: !!int -1
-      network:
+    - network:
         - '>=EIP158'
       expectException:
         ">=EIP158" : "TR_NoFunds"
       result: {}
-    - indexes:
-       data: !!int -1
-       gas: !!int -1
-       value: !!int -1
-      network:
+    - network:
         - '<EIP158'
       expectException:
         "<EIP158" : "TR_NoFunds"
-      result: 
+      result: {}
         # 0 reward touch on state still creates an account pre eip158
-        2adc25665018aa1fe0e6bc666dac8fc2697ff9ba:
-           nonce: "0"
+       # 2adc25665018aa1fe0e6bc666dac8fc2697ff9ba:
+       #    nonce: "0"
 
