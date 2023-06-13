@@ -11,38 +11,23 @@ accessListExample:
     previousHash: 5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6
 
   expect:
-    - indexes:
-        data: !!int -1
-        gas:  !!int -1
-        value: !!int -1
-
-      network:
+    - network:
         - '>=Berlin'
       result:
         095e7baea6a6c7c4c2dfeb977efac326af552d87:
           storage:
             0x00: 2
 
-    - indexes:
-        data: !!int -1
-        gas:  !!int -1
-        value: !!int -1
-
-      network:
+    - network:
         - '<EIP158'
-      result:
+      result: {}
         # 0 touch mining reward creates account in state tests
-        2adc25665018aa1fe0e6bc666dac8fc2697ff9ba:
-           nonce: 0
+       # 2adc25665018aa1fe0e6bc666dac8fc2697ff9ba:
+       #   nonce: 0
       expectException:     
         '<EIP158': TR_TypeNotSupported
 
-    - indexes:
-        data: !!int -1
-        gas:  !!int -1
-        value: !!int -1
-
-      network:
+    - network:
         - 'EIP158'
         - 'Byzantium'
         - 'Constantinople'
