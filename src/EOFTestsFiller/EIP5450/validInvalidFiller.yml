@@ -226,14 +226,14 @@ validInvalid:
             00 # 0 outputs
           0002 # max stack: 2
                # Code section 0
-          6000 # PUSH1(0) 
-        5d0007 # RJUMPI(7) 
-          6001 # PUSH1(1) 
-          6002 # PUSH1(2) 
-        5c0004 # RJUMP(4) 
-          6003 # PUSH1(3) 
-          6004 # PUSH1(4) 
-            00 # STOP 
+          6000 # [0] PUSH1(0) 
+        e10007 # [2] RJUMPI(7) 
+          6001 # [5] PUSH1(1) 
+          6002 # [7] PUSH1(2) 
+        e00004 # [9] RJUMP(4) 
+          6003 # [12] PUSH1(3) 
+          6004 # [14] PUSH1(4) 
+            00 # [16] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -254,17 +254,17 @@ validInvalid:
             00 # 0 outputs
           0002 # max stack: 2
                # Code section 0
-          6000 # PUSH1(0) 
-        5e020007000e # RJUMPV(7,14) 
-          6001 # PUSH1(1) 
-          6002 # PUSH1(2) 
-        5c000b # RJUMP(11) 
-          6003 # PUSH1(3) 
-          6004 # PUSH1(4) 
-        5c0004 # RJUMP(4) 
-          6005 # PUSH1(5) 
-          6006 # PUSH1(6) 
-            00 # STOP 
+          6000 # [0] PUSH1(0) 
+        e2020007000e # [2] RJUMPV(7,14) 
+          6001 # [8] PUSH1(1) 
+          6002 # [10] PUSH1(2) 
+        e0000b # [12] RJUMP(11) 
+          6003 # [15] PUSH1(3) 
+          6004 # [17] PUSH1(4) 
+        e00004 # [19] RJUMP(4) 
+          6005 # [22] PUSH1(5) 
+          6006 # [24] PUSH1(6) 
+            00 # [26] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -285,11 +285,11 @@ validInvalid:
             00 # 0 outputs
           0002 # max stack: 2
                # Code section 0
-          6000 # PUSH1(0) 
-          6001 # PUSH1(1) 
-            50 # POP 
-            50 # POP 
-        5cfff7 # RJUMP(-9) 
+          6000 # [0] PUSH1(0) 
+          6001 # [2] PUSH1(1) 
+            50 # [4] POP 
+            50 # [5] POP 
+        e0fff7 # [6] RJUMP(-9) 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -310,9 +310,9 @@ validInvalid:
             00 # 0 outputs
           0001 # max stack: 1
                # Code section 0
-          60c9 # PUSH1(201) 
-        5eca000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000fe68 # RJUMPV(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-408) 
-            00 # STOP 
+          60c9 # [0] PUSH1(201) 
+        e2ca000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000fe68 # [2] RJUMPV(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-408) 
+            00 # [408] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -345,18 +345,18 @@ validInvalid:
             01 # 1 outputs
           0001 # max stack: 1
                # Code section 0
-          6000 # PUSH1(0) 
-        5d0006 # RJUMPI(6) 
-        b00001 # CALLF(1) 
-        5c0003 # RJUMP(3) 
-        b00002 # CALLF(2) 
-            00 # STOP 
+          6000 # [0] PUSH1(0) 
+        e10006 # [2] RJUMPI(6) 
+        e30001 # [5] CALLF(1) 
+        e00003 # [8] RJUMP(3) 
+        e30002 # [11] CALLF(2) 
+            00 # [14] STOP 
                # Code section 1
-            30 # ADDRESS 
-            00 # STOP 
+            30 # [0] ADDRESS 
+            00 # [1] STOP 
                # Code section 2
-            38 # CODESIZE 
-            00 # STOP 
+            38 # [0] CODESIZE 
+            00 # [1] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -395,146 +395,146 @@ validInvalid:
             00 # 0 outputs
           00fd # max stack: 253
                # Code section 0
-        b00000 # CALLF(0) 
-            00 # STOP 
+        e30000 # [0] CALLF(0) 
+            00 # [3] STOP 
                # Code section 1
-          6000 # PUSH1(0) 
-        b00001 # CALLF(1) 
-            00 # STOP 
+          6000 # [0] PUSH1(0) 
+        e30001 # [2] CALLF(1) 
+            00 # [5] STOP 
                # Code section 2
-          6000 # PUSH1(0) 
-          6000 # PUSH1(0) 
-        b00002 # CALLF(2) 
-            00 # STOP 
+          6000 # [0] PUSH1(0) 
+          6000 # [2] PUSH1(0) 
+        e30002 # [4] CALLF(2) 
+            00 # [7] STOP 
                # Code section 3
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-        b00003 # CALLF(3) 
-            00 # STOP 
+            80 # [0] DUP1 
+            80 # [1] DUP1 
+            80 # [2] DUP1 
+            80 # [3] DUP1 
+            80 # [4] DUP1 
+            80 # [5] DUP1 
+            80 # [6] DUP1 
+            80 # [7] DUP1 
+            80 # [8] DUP1 
+            80 # [9] DUP1 
+            80 # [10] DUP1 
+            80 # [11] DUP1 
+            80 # [12] DUP1 
+            80 # [13] DUP1 
+            80 # [14] DUP1 
+            80 # [15] DUP1 
+            80 # [16] DUP1 
+            80 # [17] DUP1 
+            80 # [18] DUP1 
+            80 # [19] DUP1 
+            80 # [20] DUP1 
+            80 # [21] DUP1 
+            80 # [22] DUP1 
+            80 # [23] DUP1 
+            80 # [24] DUP1 
+            80 # [25] DUP1 
+            80 # [26] DUP1 
+            80 # [27] DUP1 
+            80 # [28] DUP1 
+            80 # [29] DUP1 
+            80 # [30] DUP1 
+            80 # [31] DUP1 
+            80 # [32] DUP1 
+            80 # [33] DUP1 
+            80 # [34] DUP1 
+            80 # [35] DUP1 
+            80 # [36] DUP1 
+            80 # [37] DUP1 
+            80 # [38] DUP1 
+            80 # [39] DUP1 
+            80 # [40] DUP1 
+            80 # [41] DUP1 
+            80 # [42] DUP1 
+            80 # [43] DUP1 
+            80 # [44] DUP1 
+            80 # [45] DUP1 
+            80 # [46] DUP1 
+            80 # [47] DUP1 
+            80 # [48] DUP1 
+            80 # [49] DUP1 
+            80 # [50] DUP1 
+            80 # [51] DUP1 
+            80 # [52] DUP1 
+            80 # [53] DUP1 
+            80 # [54] DUP1 
+            80 # [55] DUP1 
+            80 # [56] DUP1 
+            80 # [57] DUP1 
+            80 # [58] DUP1 
+            80 # [59] DUP1 
+            80 # [60] DUP1 
+            80 # [61] DUP1 
+            80 # [62] DUP1 
+            80 # [63] DUP1 
+            80 # [64] DUP1 
+            80 # [65] DUP1 
+            80 # [66] DUP1 
+            80 # [67] DUP1 
+            80 # [68] DUP1 
+            80 # [69] DUP1 
+            80 # [70] DUP1 
+            80 # [71] DUP1 
+            80 # [72] DUP1 
+            80 # [73] DUP1 
+            80 # [74] DUP1 
+            80 # [75] DUP1 
+            80 # [76] DUP1 
+            80 # [77] DUP1 
+            80 # [78] DUP1 
+            80 # [79] DUP1 
+            80 # [80] DUP1 
+            80 # [81] DUP1 
+            80 # [82] DUP1 
+            80 # [83] DUP1 
+            80 # [84] DUP1 
+            80 # [85] DUP1 
+            80 # [86] DUP1 
+            80 # [87] DUP1 
+            80 # [88] DUP1 
+            80 # [89] DUP1 
+            80 # [90] DUP1 
+            80 # [91] DUP1 
+            80 # [92] DUP1 
+            80 # [93] DUP1 
+            80 # [94] DUP1 
+            80 # [95] DUP1 
+            80 # [96] DUP1 
+            80 # [97] DUP1 
+            80 # [98] DUP1 
+            80 # [99] DUP1 
+            80 # [100] DUP1 
+            80 # [101] DUP1 
+            80 # [102] DUP1 
+            80 # [103] DUP1 
+            80 # [104] DUP1 
+            80 # [105] DUP1 
+            80 # [106] DUP1 
+            80 # [107] DUP1 
+            80 # [108] DUP1 
+            80 # [109] DUP1 
+            80 # [110] DUP1 
+            80 # [111] DUP1 
+            80 # [112] DUP1 
+            80 # [113] DUP1 
+            80 # [114] DUP1 
+            80 # [115] DUP1 
+            80 # [116] DUP1 
+            80 # [117] DUP1 
+            80 # [118] DUP1 
+            80 # [119] DUP1 
+            80 # [120] DUP1 
+            80 # [121] DUP1 
+            80 # [122] DUP1 
+            80 # [123] DUP1 
+            80 # [124] DUP1 
+            80 # [125] DUP1 
+        e30003 # [126] CALLF(3) 
+            00 # [129] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -555,10 +555,10 @@ validInvalid:
             00 # 0 outputs
           0002 # max stack: 2
                # Code section 0
-          6001 # PUSH1(1) 
-            80 # DUP1 
-            01 # ADD 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            80 # [2] DUP1 
+            01 # [3] ADD 
+            00 # [4] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -579,10 +579,10 @@ validInvalid:
             00 # 0 outputs
           0002 # max stack: 2
                # Code section 0
-          6001 # PUSH1(1) 
-            80 # DUP1 
-            02 # MUL 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            80 # [2] DUP1 
+            02 # [3] MUL 
+            00 # [4] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -603,10 +603,10 @@ validInvalid:
             00 # 0 outputs
           0002 # max stack: 2
                # Code section 0
-          6001 # PUSH1(1) 
-            80 # DUP1 
-            03 # SUB 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            80 # [2] DUP1 
+            03 # [3] SUB 
+            00 # [4] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -627,10 +627,10 @@ validInvalid:
             00 # 0 outputs
           0002 # max stack: 2
                # Code section 0
-          6001 # PUSH1(1) 
-            80 # DUP1 
-            04 # DIV 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            80 # [2] DUP1 
+            04 # [3] DIV 
+            00 # [4] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -651,10 +651,10 @@ validInvalid:
             00 # 0 outputs
           0002 # max stack: 2
                # Code section 0
-          6001 # PUSH1(1) 
-            80 # DUP1 
-            05 # SDIV 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            80 # [2] DUP1 
+            05 # [3] SDIV 
+            00 # [4] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -675,10 +675,10 @@ validInvalid:
             00 # 0 outputs
           0002 # max stack: 2
                # Code section 0
-          6001 # PUSH1(1) 
-            80 # DUP1 
-            06 # MOD 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            80 # [2] DUP1 
+            06 # [3] MOD 
+            00 # [4] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -699,10 +699,10 @@ validInvalid:
             00 # 0 outputs
           0002 # max stack: 2
                # Code section 0
-          6001 # PUSH1(1) 
-            80 # DUP1 
-            07 # SMOD 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            80 # [2] DUP1 
+            07 # [3] SMOD 
+            00 # [4] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -723,11 +723,11 @@ validInvalid:
             00 # 0 outputs
           0003 # max stack: 3
                # Code section 0
-          6001 # PUSH1(1) 
-            80 # DUP1 
-            80 # DUP1 
-            08 # ADDMOD 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            80 # [2] DUP1 
+            80 # [3] DUP1 
+            08 # [4] ADDMOD 
+            00 # [5] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -748,11 +748,11 @@ validInvalid:
             00 # 0 outputs
           0003 # max stack: 3
                # Code section 0
-          6001 # PUSH1(1) 
-            80 # DUP1 
-            80 # DUP1 
-            09 # MULMOD 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            80 # [2] DUP1 
+            80 # [3] DUP1 
+            09 # [4] MULMOD 
+            00 # [5] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -773,10 +773,10 @@ validInvalid:
             00 # 0 outputs
           0002 # max stack: 2
                # Code section 0
-          6001 # PUSH1(1) 
-            80 # DUP1 
-            0a # EXP 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            80 # [2] DUP1 
+            0a # [3] EXP 
+            00 # [4] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -797,10 +797,10 @@ validInvalid:
             00 # 0 outputs
           0002 # max stack: 2
                # Code section 0
-          6001 # PUSH1(1) 
-            80 # DUP1 
-            0b # SIGNEXTEND 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            80 # [2] DUP1 
+            0b # [3] SIGNEXTEND 
+            00 # [4] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -821,10 +821,10 @@ validInvalid:
             00 # 0 outputs
           0002 # max stack: 2
                # Code section 0
-          6001 # PUSH1(1) 
-            80 # DUP1 
-            10 # LT 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            80 # [2] DUP1 
+            10 # [3] LT 
+            00 # [4] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -845,10 +845,10 @@ validInvalid:
             00 # 0 outputs
           0002 # max stack: 2
                # Code section 0
-          6001 # PUSH1(1) 
-            80 # DUP1 
-            11 # GT 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            80 # [2] DUP1 
+            11 # [3] GT 
+            00 # [4] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -869,10 +869,10 @@ validInvalid:
             00 # 0 outputs
           0002 # max stack: 2
                # Code section 0
-          6001 # PUSH1(1) 
-            80 # DUP1 
-            12 # SLT 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            80 # [2] DUP1 
+            12 # [3] SLT 
+            00 # [4] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -893,10 +893,10 @@ validInvalid:
             00 # 0 outputs
           0002 # max stack: 2
                # Code section 0
-          6001 # PUSH1(1) 
-            80 # DUP1 
-            13 # SGT 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            80 # [2] DUP1 
+            13 # [3] SGT 
+            00 # [4] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -917,10 +917,10 @@ validInvalid:
             00 # 0 outputs
           0002 # max stack: 2
                # Code section 0
-          6001 # PUSH1(1) 
-            80 # DUP1 
-            14 # EQ 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            80 # [2] DUP1 
+            14 # [3] EQ 
+            00 # [4] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -941,9 +941,9 @@ validInvalid:
             00 # 0 outputs
           0001 # max stack: 1
                # Code section 0
-          6001 # PUSH1(1) 
-            15 # ISZERO 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            15 # [2] ISZERO 
+            00 # [3] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -964,10 +964,10 @@ validInvalid:
             00 # 0 outputs
           0002 # max stack: 2
                # Code section 0
-          6001 # PUSH1(1) 
-            80 # DUP1 
-            16 # AND 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            80 # [2] DUP1 
+            16 # [3] AND 
+            00 # [4] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -988,10 +988,10 @@ validInvalid:
             00 # 0 outputs
           0002 # max stack: 2
                # Code section 0
-          6001 # PUSH1(1) 
-            80 # DUP1 
-            17 # OR 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            80 # [2] DUP1 
+            17 # [3] OR 
+            00 # [4] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -1012,10 +1012,10 @@ validInvalid:
             00 # 0 outputs
           0002 # max stack: 2
                # Code section 0
-          6001 # PUSH1(1) 
-            80 # DUP1 
-            18 # XOR 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            80 # [2] DUP1 
+            18 # [3] XOR 
+            00 # [4] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -1036,9 +1036,9 @@ validInvalid:
             00 # 0 outputs
           0001 # max stack: 1
                # Code section 0
-          6001 # PUSH1(1) 
-            19 # NOT 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            19 # [2] NOT 
+            00 # [3] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -1059,10 +1059,10 @@ validInvalid:
             00 # 0 outputs
           0002 # max stack: 2
                # Code section 0
-          6001 # PUSH1(1) 
-            80 # DUP1 
-            1a # BYTE 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            80 # [2] DUP1 
+            1a # [3] BYTE 
+            00 # [4] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -1083,10 +1083,10 @@ validInvalid:
             00 # 0 outputs
           0002 # max stack: 2
                # Code section 0
-          6001 # PUSH1(1) 
-            80 # DUP1 
-            1b # SHL 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            80 # [2] DUP1 
+            1b # [3] SHL 
+            00 # [4] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -1107,10 +1107,10 @@ validInvalid:
             00 # 0 outputs
           0002 # max stack: 2
                # Code section 0
-          6001 # PUSH1(1) 
-            80 # DUP1 
-            1c # SHR 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            80 # [2] DUP1 
+            1c # [3] SHR 
+            00 # [4] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -1131,10 +1131,10 @@ validInvalid:
             00 # 0 outputs
           0002 # max stack: 2
                # Code section 0
-          6001 # PUSH1(1) 
-            80 # DUP1 
-            1d # SAR 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            80 # [2] DUP1 
+            1d # [3] SAR 
+            00 # [4] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -1155,10 +1155,10 @@ validInvalid:
             00 # 0 outputs
           0002 # max stack: 2
                # Code section 0
-          6001 # PUSH1(1) 
-            80 # DUP1 
-            20 # SHA3 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            80 # [2] DUP1 
+            20 # [3] SHA3 
+            00 # [4] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -1179,9 +1179,9 @@ validInvalid:
             00 # 0 outputs
           0001 # max stack: 1
                # Code section 0
-          6001 # PUSH1(1) 
-            31 # BALANCE 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            31 # [2] BALANCE 
+            00 # [3] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -1202,9 +1202,9 @@ validInvalid:
             00 # 0 outputs
           0001 # max stack: 1
                # Code section 0
-          6001 # PUSH1(1) 
-            35 # CALLDATALOAD 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            35 # [2] CALLDATALOAD 
+            00 # [3] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -1225,11 +1225,11 @@ validInvalid:
             00 # 0 outputs
           0003 # max stack: 3
                # Code section 0
-          6001 # PUSH1(1) 
-            80 # DUP1 
-            80 # DUP1 
-            37 # CALLDATACOPY 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            80 # [2] DUP1 
+            80 # [3] DUP1 
+            37 # [4] CALLDATACOPY 
+            00 # [5] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -1250,11 +1250,11 @@ validInvalid:
             00 # 0 outputs
           0003 # max stack: 3
                # Code section 0
-          6001 # PUSH1(1) 
-            80 # DUP1 
-            80 # DUP1 
-            39 # CODECOPY 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            80 # [2] DUP1 
+            80 # [3] DUP1 
+            39 # [4] CODECOPY 
+            00 # [5] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -1275,9 +1275,9 @@ validInvalid:
             00 # 0 outputs
           0001 # max stack: 1
                # Code section 0
-          6001 # PUSH1(1) 
-            3b # EXTCODESIZE 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            3b # [2] EXTCODESIZE 
+            00 # [3] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -1298,12 +1298,12 @@ validInvalid:
             00 # 0 outputs
           0004 # max stack: 4
                # Code section 0
-          6001 # PUSH1(1) 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            3c # EXTCODECOPY 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            80 # [2] DUP1 
+            80 # [3] DUP1 
+            80 # [4] DUP1 
+            3c # [5] EXTCODECOPY 
+            00 # [6] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -1324,11 +1324,11 @@ validInvalid:
             00 # 0 outputs
           0003 # max stack: 3
                # Code section 0
-          6001 # PUSH1(1) 
-            80 # DUP1 
-            80 # DUP1 
-            3e # RETURNDATACOPY 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            80 # [2] DUP1 
+            80 # [3] DUP1 
+            3e # [4] RETURNDATACOPY 
+            00 # [5] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -1349,9 +1349,9 @@ validInvalid:
             00 # 0 outputs
           0001 # max stack: 1
                # Code section 0
-          6001 # PUSH1(1) 
-            3f # EXTCODEHASH 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            3f # [2] EXTCODEHASH 
+            00 # [3] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -1372,9 +1372,9 @@ validInvalid:
             00 # 0 outputs
           0001 # max stack: 1
                # Code section 0
-          6001 # PUSH1(1) 
-            40 # BLOCKHASH 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            40 # [2] BLOCKHASH 
+            00 # [3] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -1395,9 +1395,9 @@ validInvalid:
             00 # 0 outputs
           0001 # max stack: 1
                # Code section 0
-          6001 # PUSH1(1) 
-            50 # POP 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            50 # [2] POP 
+            00 # [3] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -1418,9 +1418,9 @@ validInvalid:
             00 # 0 outputs
           0001 # max stack: 1
                # Code section 0
-          6001 # PUSH1(1) 
-            51 # MLOAD 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            51 # [2] MLOAD 
+            00 # [3] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -1441,10 +1441,10 @@ validInvalid:
             00 # 0 outputs
           0002 # max stack: 2
                # Code section 0
-          6001 # PUSH1(1) 
-            80 # DUP1 
-            52 # MSTORE 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            80 # [2] DUP1 
+            52 # [3] MSTORE 
+            00 # [4] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -1465,10 +1465,10 @@ validInvalid:
             00 # 0 outputs
           0002 # max stack: 2
                # Code section 0
-          6001 # PUSH1(1) 
-            80 # DUP1 
-            53 # MSTORE8 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            80 # [2] DUP1 
+            53 # [3] MSTORE8 
+            00 # [4] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -1489,9 +1489,9 @@ validInvalid:
             00 # 0 outputs
           0001 # max stack: 1
                # Code section 0
-          6001 # PUSH1(1) 
-            54 # SLOAD 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            54 # [2] SLOAD 
+            00 # [3] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -1512,10 +1512,10 @@ validInvalid:
             00 # 0 outputs
           0002 # max stack: 2
                # Code section 0
-          6001 # PUSH1(1) 
-            80 # DUP1 
-            55 # SSTORE 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            80 # [2] DUP1 
+            55 # [3] SSTORE 
+            00 # [4] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -1536,9 +1536,9 @@ validInvalid:
             00 # 0 outputs
           0002 # max stack: 2
                # Code section 0
-          6001 # PUSH1(1) 
-            80 # DUP1 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            80 # [2] DUP1 
+            00 # [3] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -1559,10 +1559,10 @@ validInvalid:
             00 # 0 outputs
           0003 # max stack: 3
                # Code section 0
-          6001 # PUSH1(1) 
-            80 # DUP1 
-            81 # DUP2 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            80 # [2] DUP1 
+            81 # [3] DUP2 
+            00 # [4] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -1583,11 +1583,11 @@ validInvalid:
             00 # 0 outputs
           0004 # max stack: 4
                # Code section 0
-          6001 # PUSH1(1) 
-            80 # DUP1 
-            80 # DUP1 
-            82 # DUP3 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            80 # [2] DUP1 
+            80 # [3] DUP1 
+            82 # [4] DUP3 
+            00 # [5] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -1608,12 +1608,12 @@ validInvalid:
             00 # 0 outputs
           0005 # max stack: 5
                # Code section 0
-          6001 # PUSH1(1) 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            83 # DUP4 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            80 # [2] DUP1 
+            80 # [3] DUP1 
+            80 # [4] DUP1 
+            83 # [5] DUP4 
+            00 # [6] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -1634,13 +1634,13 @@ validInvalid:
             00 # 0 outputs
           0006 # max stack: 6
                # Code section 0
-          6001 # PUSH1(1) 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            84 # DUP5 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            80 # [2] DUP1 
+            80 # [3] DUP1 
+            80 # [4] DUP1 
+            80 # [5] DUP1 
+            84 # [6] DUP5 
+            00 # [7] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -1661,14 +1661,14 @@ validInvalid:
             00 # 0 outputs
           0007 # max stack: 7
                # Code section 0
-          6001 # PUSH1(1) 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            85 # DUP6 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            80 # [2] DUP1 
+            80 # [3] DUP1 
+            80 # [4] DUP1 
+            80 # [5] DUP1 
+            80 # [6] DUP1 
+            85 # [7] DUP6 
+            00 # [8] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -1689,15 +1689,15 @@ validInvalid:
             00 # 0 outputs
           0008 # max stack: 8
                # Code section 0
-          6001 # PUSH1(1) 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            86 # DUP7 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            80 # [2] DUP1 
+            80 # [3] DUP1 
+            80 # [4] DUP1 
+            80 # [5] DUP1 
+            80 # [6] DUP1 
+            80 # [7] DUP1 
+            86 # [8] DUP7 
+            00 # [9] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -1718,16 +1718,16 @@ validInvalid:
             00 # 0 outputs
           0009 # max stack: 9
                # Code section 0
-          6001 # PUSH1(1) 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            87 # DUP8 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            80 # [2] DUP1 
+            80 # [3] DUP1 
+            80 # [4] DUP1 
+            80 # [5] DUP1 
+            80 # [6] DUP1 
+            80 # [7] DUP1 
+            80 # [8] DUP1 
+            87 # [9] DUP8 
+            00 # [10] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -1748,17 +1748,17 @@ validInvalid:
             00 # 0 outputs
           000a # max stack: 10
                # Code section 0
-          6001 # PUSH1(1) 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            88 # DUP9 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            80 # [2] DUP1 
+            80 # [3] DUP1 
+            80 # [4] DUP1 
+            80 # [5] DUP1 
+            80 # [6] DUP1 
+            80 # [7] DUP1 
+            80 # [8] DUP1 
+            80 # [9] DUP1 
+            88 # [10] DUP9 
+            00 # [11] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -1779,18 +1779,18 @@ validInvalid:
             00 # 0 outputs
           000b # max stack: 11
                # Code section 0
-          6001 # PUSH1(1) 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            89 # DUP10 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            80 # [2] DUP1 
+            80 # [3] DUP1 
+            80 # [4] DUP1 
+            80 # [5] DUP1 
+            80 # [6] DUP1 
+            80 # [7] DUP1 
+            80 # [8] DUP1 
+            80 # [9] DUP1 
+            80 # [10] DUP1 
+            89 # [11] DUP10 
+            00 # [12] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -1811,19 +1811,19 @@ validInvalid:
             00 # 0 outputs
           000c # max stack: 12
                # Code section 0
-          6001 # PUSH1(1) 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            8a # DUP11 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            80 # [2] DUP1 
+            80 # [3] DUP1 
+            80 # [4] DUP1 
+            80 # [5] DUP1 
+            80 # [6] DUP1 
+            80 # [7] DUP1 
+            80 # [8] DUP1 
+            80 # [9] DUP1 
+            80 # [10] DUP1 
+            80 # [11] DUP1 
+            8a # [12] DUP11 
+            00 # [13] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -1844,20 +1844,20 @@ validInvalid:
             00 # 0 outputs
           000d # max stack: 13
                # Code section 0
-          6001 # PUSH1(1) 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            8b # DUP12 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            80 # [2] DUP1 
+            80 # [3] DUP1 
+            80 # [4] DUP1 
+            80 # [5] DUP1 
+            80 # [6] DUP1 
+            80 # [7] DUP1 
+            80 # [8] DUP1 
+            80 # [9] DUP1 
+            80 # [10] DUP1 
+            80 # [11] DUP1 
+            80 # [12] DUP1 
+            8b # [13] DUP12 
+            00 # [14] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -1878,21 +1878,21 @@ validInvalid:
             00 # 0 outputs
           000e # max stack: 14
                # Code section 0
-          6001 # PUSH1(1) 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            8c # DUP13 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            80 # [2] DUP1 
+            80 # [3] DUP1 
+            80 # [4] DUP1 
+            80 # [5] DUP1 
+            80 # [6] DUP1 
+            80 # [7] DUP1 
+            80 # [8] DUP1 
+            80 # [9] DUP1 
+            80 # [10] DUP1 
+            80 # [11] DUP1 
+            80 # [12] DUP1 
+            80 # [13] DUP1 
+            8c # [14] DUP13 
+            00 # [15] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -1913,22 +1913,22 @@ validInvalid:
             00 # 0 outputs
           000f # max stack: 15
                # Code section 0
-          6001 # PUSH1(1) 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            8d # DUP14 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            80 # [2] DUP1 
+            80 # [3] DUP1 
+            80 # [4] DUP1 
+            80 # [5] DUP1 
+            80 # [6] DUP1 
+            80 # [7] DUP1 
+            80 # [8] DUP1 
+            80 # [9] DUP1 
+            80 # [10] DUP1 
+            80 # [11] DUP1 
+            80 # [12] DUP1 
+            80 # [13] DUP1 
+            80 # [14] DUP1 
+            8d # [15] DUP14 
+            00 # [16] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -1949,23 +1949,23 @@ validInvalid:
             00 # 0 outputs
           0010 # max stack: 16
                # Code section 0
-          6001 # PUSH1(1) 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            8e # DUP15 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            80 # [2] DUP1 
+            80 # [3] DUP1 
+            80 # [4] DUP1 
+            80 # [5] DUP1 
+            80 # [6] DUP1 
+            80 # [7] DUP1 
+            80 # [8] DUP1 
+            80 # [9] DUP1 
+            80 # [10] DUP1 
+            80 # [11] DUP1 
+            80 # [12] DUP1 
+            80 # [13] DUP1 
+            80 # [14] DUP1 
+            80 # [15] DUP1 
+            8e # [16] DUP15 
+            00 # [17] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -1986,24 +1986,24 @@ validInvalid:
             00 # 0 outputs
           0011 # max stack: 17
                # Code section 0
-          6001 # PUSH1(1) 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            8f # DUP16 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            80 # [2] DUP1 
+            80 # [3] DUP1 
+            80 # [4] DUP1 
+            80 # [5] DUP1 
+            80 # [6] DUP1 
+            80 # [7] DUP1 
+            80 # [8] DUP1 
+            80 # [9] DUP1 
+            80 # [10] DUP1 
+            80 # [11] DUP1 
+            80 # [12] DUP1 
+            80 # [13] DUP1 
+            80 # [14] DUP1 
+            80 # [15] DUP1 
+            80 # [16] DUP1 
+            8f # [17] DUP16 
+            00 # [18] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -2024,10 +2024,10 @@ validInvalid:
             00 # 0 outputs
           0002 # max stack: 2
                # Code section 0
-          6001 # PUSH1(1) 
-            80 # DUP1 
-            90 # SWAP1 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            80 # [2] DUP1 
+            90 # [3] SWAP1 
+            00 # [4] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -2048,11 +2048,11 @@ validInvalid:
             00 # 0 outputs
           0003 # max stack: 3
                # Code section 0
-          6001 # PUSH1(1) 
-            80 # DUP1 
-            80 # DUP1 
-            91 # SWAP2 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            80 # [2] DUP1 
+            80 # [3] DUP1 
+            91 # [4] SWAP2 
+            00 # [5] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -2073,12 +2073,12 @@ validInvalid:
             00 # 0 outputs
           0004 # max stack: 4
                # Code section 0
-          6001 # PUSH1(1) 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            92 # SWAP3 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            80 # [2] DUP1 
+            80 # [3] DUP1 
+            80 # [4] DUP1 
+            92 # [5] SWAP3 
+            00 # [6] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -2099,13 +2099,13 @@ validInvalid:
             00 # 0 outputs
           0005 # max stack: 5
                # Code section 0
-          6001 # PUSH1(1) 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            93 # SWAP4 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            80 # [2] DUP1 
+            80 # [3] DUP1 
+            80 # [4] DUP1 
+            80 # [5] DUP1 
+            93 # [6] SWAP4 
+            00 # [7] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -2126,14 +2126,14 @@ validInvalid:
             00 # 0 outputs
           0006 # max stack: 6
                # Code section 0
-          6001 # PUSH1(1) 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            94 # SWAP5 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            80 # [2] DUP1 
+            80 # [3] DUP1 
+            80 # [4] DUP1 
+            80 # [5] DUP1 
+            80 # [6] DUP1 
+            94 # [7] SWAP5 
+            00 # [8] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -2154,15 +2154,15 @@ validInvalid:
             00 # 0 outputs
           0007 # max stack: 7
                # Code section 0
-          6001 # PUSH1(1) 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            95 # SWAP6 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            80 # [2] DUP1 
+            80 # [3] DUP1 
+            80 # [4] DUP1 
+            80 # [5] DUP1 
+            80 # [6] DUP1 
+            80 # [7] DUP1 
+            95 # [8] SWAP6 
+            00 # [9] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -2183,16 +2183,16 @@ validInvalid:
             00 # 0 outputs
           0008 # max stack: 8
                # Code section 0
-          6001 # PUSH1(1) 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            96 # SWAP7 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            80 # [2] DUP1 
+            80 # [3] DUP1 
+            80 # [4] DUP1 
+            80 # [5] DUP1 
+            80 # [6] DUP1 
+            80 # [7] DUP1 
+            80 # [8] DUP1 
+            96 # [9] SWAP7 
+            00 # [10] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -2213,17 +2213,17 @@ validInvalid:
             00 # 0 outputs
           0009 # max stack: 9
                # Code section 0
-          6001 # PUSH1(1) 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            97 # SWAP8 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            80 # [2] DUP1 
+            80 # [3] DUP1 
+            80 # [4] DUP1 
+            80 # [5] DUP1 
+            80 # [6] DUP1 
+            80 # [7] DUP1 
+            80 # [8] DUP1 
+            80 # [9] DUP1 
+            97 # [10] SWAP8 
+            00 # [11] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -2244,18 +2244,18 @@ validInvalid:
             00 # 0 outputs
           000a # max stack: 10
                # Code section 0
-          6001 # PUSH1(1) 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            98 # SWAP9 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            80 # [2] DUP1 
+            80 # [3] DUP1 
+            80 # [4] DUP1 
+            80 # [5] DUP1 
+            80 # [6] DUP1 
+            80 # [7] DUP1 
+            80 # [8] DUP1 
+            80 # [9] DUP1 
+            80 # [10] DUP1 
+            98 # [11] SWAP9 
+            00 # [12] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -2276,19 +2276,19 @@ validInvalid:
             00 # 0 outputs
           000b # max stack: 11
                # Code section 0
-          6001 # PUSH1(1) 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            99 # SWAP10 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            80 # [2] DUP1 
+            80 # [3] DUP1 
+            80 # [4] DUP1 
+            80 # [5] DUP1 
+            80 # [6] DUP1 
+            80 # [7] DUP1 
+            80 # [8] DUP1 
+            80 # [9] DUP1 
+            80 # [10] DUP1 
+            80 # [11] DUP1 
+            99 # [12] SWAP10 
+            00 # [13] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -2309,20 +2309,20 @@ validInvalid:
             00 # 0 outputs
           000c # max stack: 12
                # Code section 0
-          6001 # PUSH1(1) 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            9a # SWAP11 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            80 # [2] DUP1 
+            80 # [3] DUP1 
+            80 # [4] DUP1 
+            80 # [5] DUP1 
+            80 # [6] DUP1 
+            80 # [7] DUP1 
+            80 # [8] DUP1 
+            80 # [9] DUP1 
+            80 # [10] DUP1 
+            80 # [11] DUP1 
+            80 # [12] DUP1 
+            9a # [13] SWAP11 
+            00 # [14] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -2343,21 +2343,21 @@ validInvalid:
             00 # 0 outputs
           000d # max stack: 13
                # Code section 0
-          6001 # PUSH1(1) 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            9b # SWAP12 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            80 # [2] DUP1 
+            80 # [3] DUP1 
+            80 # [4] DUP1 
+            80 # [5] DUP1 
+            80 # [6] DUP1 
+            80 # [7] DUP1 
+            80 # [8] DUP1 
+            80 # [9] DUP1 
+            80 # [10] DUP1 
+            80 # [11] DUP1 
+            80 # [12] DUP1 
+            80 # [13] DUP1 
+            9b # [14] SWAP12 
+            00 # [15] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -2378,22 +2378,22 @@ validInvalid:
             00 # 0 outputs
           000e # max stack: 14
                # Code section 0
-          6001 # PUSH1(1) 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            9c # SWAP13 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            80 # [2] DUP1 
+            80 # [3] DUP1 
+            80 # [4] DUP1 
+            80 # [5] DUP1 
+            80 # [6] DUP1 
+            80 # [7] DUP1 
+            80 # [8] DUP1 
+            80 # [9] DUP1 
+            80 # [10] DUP1 
+            80 # [11] DUP1 
+            80 # [12] DUP1 
+            80 # [13] DUP1 
+            80 # [14] DUP1 
+            9c # [15] SWAP13 
+            00 # [16] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -2414,23 +2414,23 @@ validInvalid:
             00 # 0 outputs
           000f # max stack: 15
                # Code section 0
-          6001 # PUSH1(1) 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            9d # SWAP14 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            80 # [2] DUP1 
+            80 # [3] DUP1 
+            80 # [4] DUP1 
+            80 # [5] DUP1 
+            80 # [6] DUP1 
+            80 # [7] DUP1 
+            80 # [8] DUP1 
+            80 # [9] DUP1 
+            80 # [10] DUP1 
+            80 # [11] DUP1 
+            80 # [12] DUP1 
+            80 # [13] DUP1 
+            80 # [14] DUP1 
+            80 # [15] DUP1 
+            9d # [16] SWAP14 
+            00 # [17] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -2451,24 +2451,24 @@ validInvalid:
             00 # 0 outputs
           0010 # max stack: 16
                # Code section 0
-          6001 # PUSH1(1) 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            9e # SWAP15 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            80 # [2] DUP1 
+            80 # [3] DUP1 
+            80 # [4] DUP1 
+            80 # [5] DUP1 
+            80 # [6] DUP1 
+            80 # [7] DUP1 
+            80 # [8] DUP1 
+            80 # [9] DUP1 
+            80 # [10] DUP1 
+            80 # [11] DUP1 
+            80 # [12] DUP1 
+            80 # [13] DUP1 
+            80 # [14] DUP1 
+            80 # [15] DUP1 
+            80 # [16] DUP1 
+            9e # [17] SWAP15 
+            00 # [18] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -2489,25 +2489,25 @@ validInvalid:
             00 # 0 outputs
           0011 # max stack: 17
                # Code section 0
-          6001 # PUSH1(1) 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            9f # SWAP16 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            80 # [2] DUP1 
+            80 # [3] DUP1 
+            80 # [4] DUP1 
+            80 # [5] DUP1 
+            80 # [6] DUP1 
+            80 # [7] DUP1 
+            80 # [8] DUP1 
+            80 # [9] DUP1 
+            80 # [10] DUP1 
+            80 # [11] DUP1 
+            80 # [12] DUP1 
+            80 # [13] DUP1 
+            80 # [14] DUP1 
+            80 # [15] DUP1 
+            80 # [16] DUP1 
+            80 # [17] DUP1 
+            9f # [18] SWAP16 
+            00 # [19] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -2528,10 +2528,10 @@ validInvalid:
             00 # 0 outputs
           0002 # max stack: 2
                # Code section 0
-          6001 # PUSH1(1) 
-            80 # DUP1 
-            a0 # LOG0 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            80 # [2] DUP1 
+            a0 # [3] LOG0 
+            00 # [4] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -2552,11 +2552,11 @@ validInvalid:
             00 # 0 outputs
           0003 # max stack: 3
                # Code section 0
-          6001 # PUSH1(1) 
-            80 # DUP1 
-            80 # DUP1 
-            a1 # LOG1 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            80 # [2] DUP1 
+            80 # [3] DUP1 
+            a1 # [4] LOG1 
+            00 # [5] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -2577,12 +2577,12 @@ validInvalid:
             00 # 0 outputs
           0004 # max stack: 4
                # Code section 0
-          6001 # PUSH1(1) 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            a2 # LOG2 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            80 # [2] DUP1 
+            80 # [3] DUP1 
+            80 # [4] DUP1 
+            a2 # [5] LOG2 
+            00 # [6] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -2603,13 +2603,13 @@ validInvalid:
             00 # 0 outputs
           0005 # max stack: 5
                # Code section 0
-          6001 # PUSH1(1) 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            a3 # LOG3 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            80 # [2] DUP1 
+            80 # [3] DUP1 
+            80 # [4] DUP1 
+            80 # [5] DUP1 
+            a3 # [6] LOG3 
+            00 # [7] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -2630,14 +2630,14 @@ validInvalid:
             00 # 0 outputs
           0006 # max stack: 6
                # Code section 0
-          6001 # PUSH1(1) 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            a4 # LOG4 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            80 # [2] DUP1 
+            80 # [3] DUP1 
+            80 # [4] DUP1 
+            80 # [5] DUP1 
+            80 # [6] DUP1 
+            a4 # [7] LOG4 
+            00 # [8] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -2658,11 +2658,11 @@ validInvalid:
             00 # 0 outputs
           0003 # max stack: 3
                # Code section 0
-          6001 # PUSH1(1) 
-            80 # DUP1 
-            80 # DUP1 
-            f0 # CREATE 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            80 # [2] DUP1 
+            80 # [3] DUP1 
+            f0 # [4] CREATE 
+            00 # [5] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -2683,15 +2683,15 @@ validInvalid:
             00 # 0 outputs
           0007 # max stack: 7
                # Code section 0
-          6001 # PUSH1(1) 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            f1 # CALL 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            80 # [2] DUP1 
+            80 # [3] DUP1 
+            80 # [4] DUP1 
+            80 # [5] DUP1 
+            80 # [6] DUP1 
+            80 # [7] DUP1 
+            f1 # [8] CALL 
+            00 # [9] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -2712,9 +2712,9 @@ validInvalid:
             00 # 0 outputs
           0002 # max stack: 2
                # Code section 0
-          6001 # PUSH1(1) 
-            80 # DUP1 
-            f3 # RETURN 
+          6001 # [0] PUSH1(1) 
+            80 # [2] DUP1 
+            f3 # [3] RETURN 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -2735,14 +2735,14 @@ validInvalid:
             00 # 0 outputs
           0006 # max stack: 6
                # Code section 0
-          6001 # PUSH1(1) 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            f4 # DELEGATECALL 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            80 # [2] DUP1 
+            80 # [3] DUP1 
+            80 # [4] DUP1 
+            80 # [5] DUP1 
+            80 # [6] DUP1 
+            f4 # [7] DELEGATECALL 
+            00 # [8] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -2763,12 +2763,12 @@ validInvalid:
             00 # 0 outputs
           0004 # max stack: 4
                # Code section 0
-          6001 # PUSH1(1) 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            f5 # CREATE2 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            80 # [2] DUP1 
+            80 # [3] DUP1 
+            80 # [4] DUP1 
+            f5 # [5] CREATE2 
+            00 # [6] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -2789,14 +2789,14 @@ validInvalid:
             00 # 0 outputs
           0006 # max stack: 6
                # Code section 0
-          6001 # PUSH1(1) 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            fa # STATICCALL 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            80 # [2] DUP1 
+            80 # [3] DUP1 
+            80 # [4] DUP1 
+            80 # [5] DUP1 
+            80 # [6] DUP1 
+            fa # [7] STATICCALL 
+            00 # [8] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -2817,9 +2817,9 @@ validInvalid:
             00 # 0 outputs
           0002 # max stack: 2
                # Code section 0
-          6001 # PUSH1(1) 
-            80 # DUP1 
-            fd # REVERT 
+          6001 # [0] PUSH1(1) 
+            80 # [2] DUP1 
+            fd # [3] REVERT 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -2840,11 +2840,11 @@ validInvalid:
             00 # 0 outputs
           0002 # max stack: 2
                # Code section 0
-          6001 # PUSH1(1) 
-            50 # POP 
-          6000 # PUSH1(0) 
-            80 # DUP1 
-            f3 # RETURN 
+          6001 # [0] PUSH1(1) 
+            50 # [2] POP 
+          6000 # [3] PUSH1(0) 
+            80 # [5] DUP1 
+            f3 # [6] RETURN 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -2865,11 +2865,11 @@ validInvalid:
             00 # 0 outputs
           0002 # max stack: 2
                # Code section 0
-          6001 # PUSH1(1) 
-            50 # POP 
-          6000 # PUSH1(0) 
-            80 # DUP1 
-            fd # REVERT 
+          6001 # [0] PUSH1(1) 
+            50 # [2] POP 
+          6000 # [3] PUSH1(0) 
+            80 # [5] DUP1 
+            fd # [6] REVERT 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -2890,7 +2890,7 @@ validInvalid:
             00 # 0 outputs
           0000 # max stack: 0
                # Code section 0
-        5cfffd # RJUMP(-3) 
+        e0fffd # [0] RJUMP(-3) 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -2911,14 +2911,14 @@ validInvalid:
             00 # 0 outputs
           0002 # max stack: 2
                # Code section 0
-          600a # PUSH1(10) 
-          6001 # PUSH1(1) 
-            90 # SWAP1 
-            03 # SUB 
-            80 # DUP1 
-        5d0001 # RJUMPI(1) 
-            00 # STOP 
-        5cfff4 # RJUMP(-12) 
+          600a # [0] PUSH1(10) 
+          6001 # [2] PUSH1(1) 
+            90 # [4] SWAP1 
+            03 # [5] SUB 
+            80 # [6] DUP1 
+        e10001 # [7] RJUMPI(1) 
+            00 # [10] STOP 
+        e0fff4 # [11] RJUMP(-12) 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -2951,15 +2951,15 @@ validInvalid:
             02 # 2 outputs
           0002 # max stack: 2
                # Code section 0
-          6000 # PUSH1(0) 
-        b00001 # CALLF(1) 
-            00 # STOP 
+          6000 # [0] PUSH1(0) 
+        e30001 # [2] CALLF(1) 
+            00 # [5] STOP 
                # Code section 1
-            b1 # RETF 
+            e4 # [0] RETF 
                # Code section 2
-          6000 # PUSH1(0) 
-        610000 # PUSH2(0) 
-            b1 # RETF 
+          6000 # [0] PUSH1(0) 
+        610000 # [2] PUSH2(0) 
+            e4 # [5] RETF 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -2980,12 +2980,12 @@ validInvalid:
             00 # 0 outputs
           0005 # max stack: 5
                # Code section 0
-          6000 # PUSH1(0) 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            f3 # RETURN 
+          6000 # [0] PUSH1(0) 
+            80 # [2] DUP1 
+            80 # [3] DUP1 
+            80 # [4] DUP1 
+            80 # [5] DUP1 
+            f3 # [6] RETURN 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -3006,12 +3006,12 @@ validInvalid:
             00 # 0 outputs
           0005 # max stack: 5
                # Code section 0
-          6000 # PUSH1(0) 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            fd # REVERT 
+          6000 # [0] PUSH1(0) 
+            80 # [2] DUP1 
+            80 # [3] DUP1 
+            80 # [4] DUP1 
+            80 # [5] DUP1 
+            fd # [6] REVERT 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -3038,137 +3038,137 @@ validInvalid:
             7f # 127 outputs
           007f # max stack: 127
                # Code section 0
-        b00001 # CALLF(1) 
-            00 # STOP 
+        e30001 # [0] CALLF(1) 
+            00 # [3] STOP 
                # Code section 1
-          6000 # PUSH1(0) 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            80 # DUP1 
-            b1 # RETF 
+          6000 # [0] PUSH1(0) 
+            80 # [2] DUP1 
+            80 # [3] DUP1 
+            80 # [4] DUP1 
+            80 # [5] DUP1 
+            80 # [6] DUP1 
+            80 # [7] DUP1 
+            80 # [8] DUP1 
+            80 # [9] DUP1 
+            80 # [10] DUP1 
+            80 # [11] DUP1 
+            80 # [12] DUP1 
+            80 # [13] DUP1 
+            80 # [14] DUP1 
+            80 # [15] DUP1 
+            80 # [16] DUP1 
+            80 # [17] DUP1 
+            80 # [18] DUP1 
+            80 # [19] DUP1 
+            80 # [20] DUP1 
+            80 # [21] DUP1 
+            80 # [22] DUP1 
+            80 # [23] DUP1 
+            80 # [24] DUP1 
+            80 # [25] DUP1 
+            80 # [26] DUP1 
+            80 # [27] DUP1 
+            80 # [28] DUP1 
+            80 # [29] DUP1 
+            80 # [30] DUP1 
+            80 # [31] DUP1 
+            80 # [32] DUP1 
+            80 # [33] DUP1 
+            80 # [34] DUP1 
+            80 # [35] DUP1 
+            80 # [36] DUP1 
+            80 # [37] DUP1 
+            80 # [38] DUP1 
+            80 # [39] DUP1 
+            80 # [40] DUP1 
+            80 # [41] DUP1 
+            80 # [42] DUP1 
+            80 # [43] DUP1 
+            80 # [44] DUP1 
+            80 # [45] DUP1 
+            80 # [46] DUP1 
+            80 # [47] DUP1 
+            80 # [48] DUP1 
+            80 # [49] DUP1 
+            80 # [50] DUP1 
+            80 # [51] DUP1 
+            80 # [52] DUP1 
+            80 # [53] DUP1 
+            80 # [54] DUP1 
+            80 # [55] DUP1 
+            80 # [56] DUP1 
+            80 # [57] DUP1 
+            80 # [58] DUP1 
+            80 # [59] DUP1 
+            80 # [60] DUP1 
+            80 # [61] DUP1 
+            80 # [62] DUP1 
+            80 # [63] DUP1 
+            80 # [64] DUP1 
+            80 # [65] DUP1 
+            80 # [66] DUP1 
+            80 # [67] DUP1 
+            80 # [68] DUP1 
+            80 # [69] DUP1 
+            80 # [70] DUP1 
+            80 # [71] DUP1 
+            80 # [72] DUP1 
+            80 # [73] DUP1 
+            80 # [74] DUP1 
+            80 # [75] DUP1 
+            80 # [76] DUP1 
+            80 # [77] DUP1 
+            80 # [78] DUP1 
+            80 # [79] DUP1 
+            80 # [80] DUP1 
+            80 # [81] DUP1 
+            80 # [82] DUP1 
+            80 # [83] DUP1 
+            80 # [84] DUP1 
+            80 # [85] DUP1 
+            80 # [86] DUP1 
+            80 # [87] DUP1 
+            80 # [88] DUP1 
+            80 # [89] DUP1 
+            80 # [90] DUP1 
+            80 # [91] DUP1 
+            80 # [92] DUP1 
+            80 # [93] DUP1 
+            80 # [94] DUP1 
+            80 # [95] DUP1 
+            80 # [96] DUP1 
+            80 # [97] DUP1 
+            80 # [98] DUP1 
+            80 # [99] DUP1 
+            80 # [100] DUP1 
+            80 # [101] DUP1 
+            80 # [102] DUP1 
+            80 # [103] DUP1 
+            80 # [104] DUP1 
+            80 # [105] DUP1 
+            80 # [106] DUP1 
+            80 # [107] DUP1 
+            80 # [108] DUP1 
+            80 # [109] DUP1 
+            80 # [110] DUP1 
+            80 # [111] DUP1 
+            80 # [112] DUP1 
+            80 # [113] DUP1 
+            80 # [114] DUP1 
+            80 # [115] DUP1 
+            80 # [116] DUP1 
+            80 # [117] DUP1 
+            80 # [118] DUP1 
+            80 # [119] DUP1 
+            80 # [120] DUP1 
+            80 # [121] DUP1 
+            80 # [122] DUP1 
+            80 # [123] DUP1 
+            80 # [124] DUP1 
+            80 # [125] DUP1 
+            80 # [126] DUP1 
+            80 # [127] DUP1 
+            e4 # [128] RETF 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -3189,11 +3189,11 @@ validInvalid:
             00 # 0 outputs
           0002 # max stack: 2
                # Code section 0
-          6000 # PUSH1(0) 
-        5d0002 # RJUMPI(2) 
-          6001 # PUSH1(1) 
-          6002 # PUSH1(2) 
-            00 # STOP 
+          6000 # [0] PUSH1(0) 
+        e10002 # [2] RJUMPI(2) 
+          6001 # [5] PUSH1(1) 
+          6002 # [7] PUSH1(2) 
+            00 # [9] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -3215,13 +3215,13 @@ validInvalid:
             00 # 0 outputs
           0002 # max stack: 2
                # Code section 0
-          6000 # PUSH1(0) 
-        5d0005 # RJUMPI(5) 
-          6001 # PUSH1(1) 
-        5c0004 # RJUMP(4) 
-          6002 # PUSH1(2) 
-          6003 # PUSH1(3) 
-            00 # STOP 
+          6000 # [0] PUSH1(0) 
+        e10005 # [2] RJUMPI(5) 
+          6001 # [5] PUSH1(1) 
+        e00004 # [7] RJUMP(4) 
+          6002 # [10] PUSH1(2) 
+          6003 # [12] PUSH1(3) 
+            00 # [14] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -3255,19 +3255,19 @@ validInvalid:
             02 # 2 outputs
           0002 # max stack: 2
                # Code section 0
-          6000 # PUSH1(0) 
-        5d0006 # RJUMPI(6) 
-        b00001 # CALLF(1) 
-        5c0003 # RJUMP(3) 
-        b00002 # CALLF(2) 
-            00 # STOP 
+          6000 # [0] PUSH1(0) 
+        e10006 # [2] RJUMPI(6) 
+        e30001 # [5] CALLF(1) 
+        e00003 # [8] RJUMP(3) 
+        e30002 # [11] CALLF(2) 
+            00 # [14] STOP 
                # Code section 1
-          6001 # PUSH1(1) 
-            b1 # RETF 
+          6001 # [0] PUSH1(1) 
+            e4 # [2] RETF 
                # Code section 2
-          6001 # PUSH1(1) 
-            80 # DUP1 
-            b1 # RETF 
+          6001 # [0] PUSH1(1) 
+            80 # [2] DUP1 
+            e4 # [3] RETF 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -3289,8 +3289,8 @@ validInvalid:
             00 # 0 outputs
           0001 # max stack: 1
                # Code section 0
-          6000 # PUSH1(0) 
-        5cfffb # RJUMP(-5) 
+          6000 # [0] PUSH1(0) 
+        e0fffb # [2] RJUMP(-5) 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -3312,11 +3312,11 @@ validInvalid:
             00 # 0 outputs
           0003 # max stack: 3
                # Code section 0
-          6000 # PUSH1(0) 
-            80 # DUP1 
-            80 # DUP1 
-            50 # POP 
-        5cfffc # RJUMP(-4) 
+          6000 # [0] PUSH1(0) 
+            80 # [2] DUP1 
+            80 # [3] DUP1 
+            50 # [4] POP 
+        e0fffc # [5] RJUMP(-4) 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -3338,17 +3338,17 @@ validInvalid:
             00 # 0 outputs
           0003 # max stack: 3
                # Code section 0
-          6000 # PUSH1(0) 
-        5e020005000c # RJUMPV(5,12) 
-          6001 # PUSH1(1) 
-        5c000d # RJUMP(13) 
-          6002 # PUSH1(2) 
-          6003 # PUSH1(3) 
-        5c0006 # RJUMP(6) 
-          6003 # PUSH1(3) 
-          6004 # PUSH1(4) 
-          6005 # PUSH1(5) 
-            00 # STOP 
+          6000 # [0] PUSH1(0) 
+        e2020005000c # [2] RJUMPV(5,12) 
+          6001 # [8] PUSH1(1) 
+        e0000d # [10] RJUMP(13) 
+          6002 # [13] PUSH1(2) 
+          6003 # [15] PUSH1(3) 
+        e00006 # [17] RJUMP(6) 
+          6003 # [20] PUSH1(3) 
+          6004 # [22] PUSH1(4) 
+          6005 # [24] PUSH1(5) 
+            00 # [26] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -3370,9 +3370,9 @@ validInvalid:
             00 # 0 outputs
           0001 # max stack: 1
                # Code section 0
-          6001 # PUSH1(1) 
-            01 # ADD 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            01 # [2] ADD 
+            00 # [3] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -3394,9 +3394,9 @@ validInvalid:
             00 # 0 outputs
           0001 # max stack: 1
                # Code section 0
-          6001 # PUSH1(1) 
-            02 # MUL 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            02 # [2] MUL 
+            00 # [3] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -3418,9 +3418,9 @@ validInvalid:
             00 # 0 outputs
           0001 # max stack: 1
                # Code section 0
-          6001 # PUSH1(1) 
-            03 # SUB 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            03 # [2] SUB 
+            00 # [3] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -3442,9 +3442,9 @@ validInvalid:
             00 # 0 outputs
           0001 # max stack: 1
                # Code section 0
-          6001 # PUSH1(1) 
-            04 # DIV 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            04 # [2] DIV 
+            00 # [3] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -3466,9 +3466,9 @@ validInvalid:
             00 # 0 outputs
           0001 # max stack: 1
                # Code section 0
-          6001 # PUSH1(1) 
-            05 # SDIV 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            05 # [2] SDIV 
+            00 # [3] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -3490,9 +3490,9 @@ validInvalid:
             00 # 0 outputs
           0001 # max stack: 1
                # Code section 0
-          6001 # PUSH1(1) 
-            06 # MOD 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            06 # [2] MOD 
+            00 # [3] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -3514,9 +3514,9 @@ validInvalid:
             00 # 0 outputs
           0001 # max stack: 1
                # Code section 0
-          6001 # PUSH1(1) 
-            07 # SMOD 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            07 # [2] SMOD 
+            00 # [3] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -3538,10 +3538,10 @@ validInvalid:
             00 # 0 outputs
           0002 # max stack: 2
                # Code section 0
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-            08 # ADDMOD 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+          6001 # [2] PUSH1(1) 
+            08 # [4] ADDMOD 
+            00 # [5] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -3563,10 +3563,10 @@ validInvalid:
             00 # 0 outputs
           0002 # max stack: 2
                # Code section 0
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-            09 # MULMOD 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+          6001 # [2] PUSH1(1) 
+            09 # [4] MULMOD 
+            00 # [5] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -3588,9 +3588,9 @@ validInvalid:
             00 # 0 outputs
           0001 # max stack: 1
                # Code section 0
-          6001 # PUSH1(1) 
-            0a # EXP 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            0a # [2] EXP 
+            00 # [3] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -3612,9 +3612,9 @@ validInvalid:
             00 # 0 outputs
           0001 # max stack: 1
                # Code section 0
-          6001 # PUSH1(1) 
-            0b # SIGNEXTEND 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            0b # [2] SIGNEXTEND 
+            00 # [3] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -3636,9 +3636,9 @@ validInvalid:
             00 # 0 outputs
           0001 # max stack: 1
                # Code section 0
-          6001 # PUSH1(1) 
-            10 # LT 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            10 # [2] LT 
+            00 # [3] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -3660,9 +3660,9 @@ validInvalid:
             00 # 0 outputs
           0001 # max stack: 1
                # Code section 0
-          6001 # PUSH1(1) 
-            11 # GT 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            11 # [2] GT 
+            00 # [3] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -3684,9 +3684,9 @@ validInvalid:
             00 # 0 outputs
           0001 # max stack: 1
                # Code section 0
-          6001 # PUSH1(1) 
-            12 # SLT 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            12 # [2] SLT 
+            00 # [3] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -3708,9 +3708,9 @@ validInvalid:
             00 # 0 outputs
           0001 # max stack: 1
                # Code section 0
-          6001 # PUSH1(1) 
-            13 # SGT 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            13 # [2] SGT 
+            00 # [3] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -3732,9 +3732,9 @@ validInvalid:
             00 # 0 outputs
           0001 # max stack: 1
                # Code section 0
-          6001 # PUSH1(1) 
-            14 # EQ 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            14 # [2] EQ 
+            00 # [3] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -3756,8 +3756,8 @@ validInvalid:
             00 # 0 outputs
           0000 # max stack: 0
                # Code section 0
-            15 # ISZERO 
-            00 # STOP 
+            15 # [0] ISZERO 
+            00 # [1] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -3779,9 +3779,9 @@ validInvalid:
             00 # 0 outputs
           0001 # max stack: 1
                # Code section 0
-          6001 # PUSH1(1) 
-            16 # AND 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            16 # [2] AND 
+            00 # [3] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -3803,9 +3803,9 @@ validInvalid:
             00 # 0 outputs
           0001 # max stack: 1
                # Code section 0
-          6001 # PUSH1(1) 
-            17 # OR 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            17 # [2] OR 
+            00 # [3] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -3827,9 +3827,9 @@ validInvalid:
             00 # 0 outputs
           0001 # max stack: 1
                # Code section 0
-          6001 # PUSH1(1) 
-            18 # XOR 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            18 # [2] XOR 
+            00 # [3] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -3851,8 +3851,8 @@ validInvalid:
             00 # 0 outputs
           0000 # max stack: 0
                # Code section 0
-            19 # NOT 
-            00 # STOP 
+            19 # [0] NOT 
+            00 # [1] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -3874,9 +3874,9 @@ validInvalid:
             00 # 0 outputs
           0001 # max stack: 1
                # Code section 0
-          6001 # PUSH1(1) 
-            1a # BYTE 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            1a # [2] BYTE 
+            00 # [3] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -3898,9 +3898,9 @@ validInvalid:
             00 # 0 outputs
           0001 # max stack: 1
                # Code section 0
-          6001 # PUSH1(1) 
-            1b # SHL 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            1b # [2] SHL 
+            00 # [3] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -3922,9 +3922,9 @@ validInvalid:
             00 # 0 outputs
           0001 # max stack: 1
                # Code section 0
-          6001 # PUSH1(1) 
-            1c # SHR 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            1c # [2] SHR 
+            00 # [3] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -3946,9 +3946,9 @@ validInvalid:
             00 # 0 outputs
           0001 # max stack: 1
                # Code section 0
-          6001 # PUSH1(1) 
-            1d # SAR 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            1d # [2] SAR 
+            00 # [3] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -3970,9 +3970,9 @@ validInvalid:
             00 # 0 outputs
           0001 # max stack: 1
                # Code section 0
-          6001 # PUSH1(1) 
-            20 # SHA3 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            20 # [2] SHA3 
+            00 # [3] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -3994,8 +3994,8 @@ validInvalid:
             00 # 0 outputs
           0000 # max stack: 0
                # Code section 0
-            31 # BALANCE 
-            00 # STOP 
+            31 # [0] BALANCE 
+            00 # [1] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -4017,8 +4017,8 @@ validInvalid:
             00 # 0 outputs
           0000 # max stack: 0
                # Code section 0
-            35 # CALLDATALOAD 
-            00 # STOP 
+            35 # [0] CALLDATALOAD 
+            00 # [1] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -4040,10 +4040,10 @@ validInvalid:
             00 # 0 outputs
           0002 # max stack: 2
                # Code section 0
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-            37 # CALLDATACOPY 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+          6001 # [2] PUSH1(1) 
+            37 # [4] CALLDATACOPY 
+            00 # [5] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -4065,10 +4065,10 @@ validInvalid:
             00 # 0 outputs
           0002 # max stack: 2
                # Code section 0
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-            39 # CODECOPY 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+          6001 # [2] PUSH1(1) 
+            39 # [4] CODECOPY 
+            00 # [5] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -4090,8 +4090,8 @@ validInvalid:
             00 # 0 outputs
           0000 # max stack: 0
                # Code section 0
-            3b # EXTCODESIZE 
-            00 # STOP 
+            3b # [0] EXTCODESIZE 
+            00 # [1] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -4113,11 +4113,11 @@ validInvalid:
             00 # 0 outputs
           0003 # max stack: 3
                # Code section 0
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-            3c # EXTCODECOPY 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+          6001 # [2] PUSH1(1) 
+          6001 # [4] PUSH1(1) 
+            3c # [6] EXTCODECOPY 
+            00 # [7] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -4139,10 +4139,10 @@ validInvalid:
             00 # 0 outputs
           0002 # max stack: 2
                # Code section 0
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-            3e # RETURNDATACOPY 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+          6001 # [2] PUSH1(1) 
+            3e # [4] RETURNDATACOPY 
+            00 # [5] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -4164,8 +4164,8 @@ validInvalid:
             00 # 0 outputs
           0000 # max stack: 0
                # Code section 0
-            3f # EXTCODEHASH 
-            00 # STOP 
+            3f # [0] EXTCODEHASH 
+            00 # [1] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -4187,8 +4187,8 @@ validInvalid:
             00 # 0 outputs
           0000 # max stack: 0
                # Code section 0
-            40 # BLOCKHASH 
-            00 # STOP 
+            40 # [0] BLOCKHASH 
+            00 # [1] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -4210,8 +4210,8 @@ validInvalid:
             00 # 0 outputs
           0000 # max stack: 0
                # Code section 0
-            50 # POP 
-            00 # STOP 
+            50 # [0] POP 
+            00 # [1] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -4233,8 +4233,8 @@ validInvalid:
             00 # 0 outputs
           0000 # max stack: 0
                # Code section 0
-            51 # MLOAD 
-            00 # STOP 
+            51 # [0] MLOAD 
+            00 # [1] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -4256,9 +4256,9 @@ validInvalid:
             00 # 0 outputs
           0001 # max stack: 1
                # Code section 0
-          6001 # PUSH1(1) 
-            52 # MSTORE 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            52 # [2] MSTORE 
+            00 # [3] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -4280,9 +4280,9 @@ validInvalid:
             00 # 0 outputs
           0001 # max stack: 1
                # Code section 0
-          6001 # PUSH1(1) 
-            53 # MSTORE8 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            53 # [2] MSTORE8 
+            00 # [3] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -4304,8 +4304,8 @@ validInvalid:
             00 # 0 outputs
           0000 # max stack: 0
                # Code section 0
-            54 # SLOAD 
-            00 # STOP 
+            54 # [0] SLOAD 
+            00 # [1] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -4327,9 +4327,9 @@ validInvalid:
             00 # 0 outputs
           0001 # max stack: 1
                # Code section 0
-          6001 # PUSH1(1) 
-            55 # SSTORE 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            55 # [2] SSTORE 
+            00 # [3] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -4351,8 +4351,8 @@ validInvalid:
             00 # 0 outputs
           0000 # max stack: 0
                # Code section 0
-            80 # DUP1 
-            00 # STOP 
+            80 # [0] DUP1 
+            00 # [1] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -4374,9 +4374,9 @@ validInvalid:
             00 # 0 outputs
           0001 # max stack: 1
                # Code section 0
-          6001 # PUSH1(1) 
-            81 # DUP2 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            81 # [2] DUP2 
+            00 # [3] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -4398,10 +4398,10 @@ validInvalid:
             00 # 0 outputs
           0002 # max stack: 2
                # Code section 0
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-            82 # DUP3 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+          6001 # [2] PUSH1(1) 
+            82 # [4] DUP3 
+            00 # [5] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -4423,11 +4423,11 @@ validInvalid:
             00 # 0 outputs
           0003 # max stack: 3
                # Code section 0
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-            83 # DUP4 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+          6001 # [2] PUSH1(1) 
+          6001 # [4] PUSH1(1) 
+            83 # [6] DUP4 
+            00 # [7] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -4449,12 +4449,12 @@ validInvalid:
             00 # 0 outputs
           0004 # max stack: 4
                # Code section 0
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-            84 # DUP5 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+          6001 # [2] PUSH1(1) 
+          6001 # [4] PUSH1(1) 
+          6001 # [6] PUSH1(1) 
+            84 # [8] DUP5 
+            00 # [9] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -4476,13 +4476,13 @@ validInvalid:
             00 # 0 outputs
           0005 # max stack: 5
                # Code section 0
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-            85 # DUP6 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+          6001 # [2] PUSH1(1) 
+          6001 # [4] PUSH1(1) 
+          6001 # [6] PUSH1(1) 
+          6001 # [8] PUSH1(1) 
+            85 # [10] DUP6 
+            00 # [11] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -4504,14 +4504,14 @@ validInvalid:
             00 # 0 outputs
           0006 # max stack: 6
                # Code section 0
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-            86 # DUP7 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+          6001 # [2] PUSH1(1) 
+          6001 # [4] PUSH1(1) 
+          6001 # [6] PUSH1(1) 
+          6001 # [8] PUSH1(1) 
+          6001 # [10] PUSH1(1) 
+            86 # [12] DUP7 
+            00 # [13] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -4533,15 +4533,15 @@ validInvalid:
             00 # 0 outputs
           0007 # max stack: 7
                # Code section 0
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-            87 # DUP8 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+          6001 # [2] PUSH1(1) 
+          6001 # [4] PUSH1(1) 
+          6001 # [6] PUSH1(1) 
+          6001 # [8] PUSH1(1) 
+          6001 # [10] PUSH1(1) 
+          6001 # [12] PUSH1(1) 
+            87 # [14] DUP8 
+            00 # [15] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -4563,16 +4563,16 @@ validInvalid:
             00 # 0 outputs
           0008 # max stack: 8
                # Code section 0
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-            88 # DUP9 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+          6001 # [2] PUSH1(1) 
+          6001 # [4] PUSH1(1) 
+          6001 # [6] PUSH1(1) 
+          6001 # [8] PUSH1(1) 
+          6001 # [10] PUSH1(1) 
+          6001 # [12] PUSH1(1) 
+          6001 # [14] PUSH1(1) 
+            88 # [16] DUP9 
+            00 # [17] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -4594,17 +4594,17 @@ validInvalid:
             00 # 0 outputs
           0009 # max stack: 9
                # Code section 0
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-            89 # DUP10 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+          6001 # [2] PUSH1(1) 
+          6001 # [4] PUSH1(1) 
+          6001 # [6] PUSH1(1) 
+          6001 # [8] PUSH1(1) 
+          6001 # [10] PUSH1(1) 
+          6001 # [12] PUSH1(1) 
+          6001 # [14] PUSH1(1) 
+          6001 # [16] PUSH1(1) 
+            89 # [18] DUP10 
+            00 # [19] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -4626,18 +4626,18 @@ validInvalid:
             00 # 0 outputs
           000a # max stack: 10
                # Code section 0
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-            8a # DUP11 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+          6001 # [2] PUSH1(1) 
+          6001 # [4] PUSH1(1) 
+          6001 # [6] PUSH1(1) 
+          6001 # [8] PUSH1(1) 
+          6001 # [10] PUSH1(1) 
+          6001 # [12] PUSH1(1) 
+          6001 # [14] PUSH1(1) 
+          6001 # [16] PUSH1(1) 
+          6001 # [18] PUSH1(1) 
+            8a # [20] DUP11 
+            00 # [21] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -4659,19 +4659,19 @@ validInvalid:
             00 # 0 outputs
           000b # max stack: 11
                # Code section 0
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-            8b # DUP12 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+          6001 # [2] PUSH1(1) 
+          6001 # [4] PUSH1(1) 
+          6001 # [6] PUSH1(1) 
+          6001 # [8] PUSH1(1) 
+          6001 # [10] PUSH1(1) 
+          6001 # [12] PUSH1(1) 
+          6001 # [14] PUSH1(1) 
+          6001 # [16] PUSH1(1) 
+          6001 # [18] PUSH1(1) 
+          6001 # [20] PUSH1(1) 
+            8b # [22] DUP12 
+            00 # [23] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -4693,20 +4693,20 @@ validInvalid:
             00 # 0 outputs
           000c # max stack: 12
                # Code section 0
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-            8c # DUP13 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+          6001 # [2] PUSH1(1) 
+          6001 # [4] PUSH1(1) 
+          6001 # [6] PUSH1(1) 
+          6001 # [8] PUSH1(1) 
+          6001 # [10] PUSH1(1) 
+          6001 # [12] PUSH1(1) 
+          6001 # [14] PUSH1(1) 
+          6001 # [16] PUSH1(1) 
+          6001 # [18] PUSH1(1) 
+          6001 # [20] PUSH1(1) 
+          6001 # [22] PUSH1(1) 
+            8c # [24] DUP13 
+            00 # [25] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -4728,21 +4728,21 @@ validInvalid:
             00 # 0 outputs
           000d # max stack: 13
                # Code section 0
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-            8d # DUP14 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+          6001 # [2] PUSH1(1) 
+          6001 # [4] PUSH1(1) 
+          6001 # [6] PUSH1(1) 
+          6001 # [8] PUSH1(1) 
+          6001 # [10] PUSH1(1) 
+          6001 # [12] PUSH1(1) 
+          6001 # [14] PUSH1(1) 
+          6001 # [16] PUSH1(1) 
+          6001 # [18] PUSH1(1) 
+          6001 # [20] PUSH1(1) 
+          6001 # [22] PUSH1(1) 
+          6001 # [24] PUSH1(1) 
+            8d # [26] DUP14 
+            00 # [27] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -4764,22 +4764,22 @@ validInvalid:
             00 # 0 outputs
           000e # max stack: 14
                # Code section 0
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-            8e # DUP15 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+          6001 # [2] PUSH1(1) 
+          6001 # [4] PUSH1(1) 
+          6001 # [6] PUSH1(1) 
+          6001 # [8] PUSH1(1) 
+          6001 # [10] PUSH1(1) 
+          6001 # [12] PUSH1(1) 
+          6001 # [14] PUSH1(1) 
+          6001 # [16] PUSH1(1) 
+          6001 # [18] PUSH1(1) 
+          6001 # [20] PUSH1(1) 
+          6001 # [22] PUSH1(1) 
+          6001 # [24] PUSH1(1) 
+          6001 # [26] PUSH1(1) 
+            8e # [28] DUP15 
+            00 # [29] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -4801,23 +4801,23 @@ validInvalid:
             00 # 0 outputs
           000f # max stack: 15
                # Code section 0
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-            8f # DUP16 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+          6001 # [2] PUSH1(1) 
+          6001 # [4] PUSH1(1) 
+          6001 # [6] PUSH1(1) 
+          6001 # [8] PUSH1(1) 
+          6001 # [10] PUSH1(1) 
+          6001 # [12] PUSH1(1) 
+          6001 # [14] PUSH1(1) 
+          6001 # [16] PUSH1(1) 
+          6001 # [18] PUSH1(1) 
+          6001 # [20] PUSH1(1) 
+          6001 # [22] PUSH1(1) 
+          6001 # [24] PUSH1(1) 
+          6001 # [26] PUSH1(1) 
+          6001 # [28] PUSH1(1) 
+            8f # [30] DUP16 
+            00 # [31] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -4839,9 +4839,9 @@ validInvalid:
             00 # 0 outputs
           0001 # max stack: 1
                # Code section 0
-          6001 # PUSH1(1) 
-            90 # SWAP1 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            90 # [2] SWAP1 
+            00 # [3] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -4863,10 +4863,10 @@ validInvalid:
             00 # 0 outputs
           0002 # max stack: 2
                # Code section 0
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-            91 # SWAP2 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+          6001 # [2] PUSH1(1) 
+            91 # [4] SWAP2 
+            00 # [5] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -4888,11 +4888,11 @@ validInvalid:
             00 # 0 outputs
           0003 # max stack: 3
                # Code section 0
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-            92 # SWAP3 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+          6001 # [2] PUSH1(1) 
+          6001 # [4] PUSH1(1) 
+            92 # [6] SWAP3 
+            00 # [7] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -4914,12 +4914,12 @@ validInvalid:
             00 # 0 outputs
           0004 # max stack: 4
                # Code section 0
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-            93 # SWAP4 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+          6001 # [2] PUSH1(1) 
+          6001 # [4] PUSH1(1) 
+          6001 # [6] PUSH1(1) 
+            93 # [8] SWAP4 
+            00 # [9] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -4941,13 +4941,13 @@ validInvalid:
             00 # 0 outputs
           0005 # max stack: 5
                # Code section 0
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-            94 # SWAP5 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+          6001 # [2] PUSH1(1) 
+          6001 # [4] PUSH1(1) 
+          6001 # [6] PUSH1(1) 
+          6001 # [8] PUSH1(1) 
+            94 # [10] SWAP5 
+            00 # [11] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -4969,14 +4969,14 @@ validInvalid:
             00 # 0 outputs
           0006 # max stack: 6
                # Code section 0
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-            95 # SWAP6 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+          6001 # [2] PUSH1(1) 
+          6001 # [4] PUSH1(1) 
+          6001 # [6] PUSH1(1) 
+          6001 # [8] PUSH1(1) 
+          6001 # [10] PUSH1(1) 
+            95 # [12] SWAP6 
+            00 # [13] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -4998,15 +4998,15 @@ validInvalid:
             00 # 0 outputs
           0007 # max stack: 7
                # Code section 0
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-            96 # SWAP7 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+          6001 # [2] PUSH1(1) 
+          6001 # [4] PUSH1(1) 
+          6001 # [6] PUSH1(1) 
+          6001 # [8] PUSH1(1) 
+          6001 # [10] PUSH1(1) 
+          6001 # [12] PUSH1(1) 
+            96 # [14] SWAP7 
+            00 # [15] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -5028,16 +5028,16 @@ validInvalid:
             00 # 0 outputs
           0008 # max stack: 8
                # Code section 0
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-            97 # SWAP8 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+          6001 # [2] PUSH1(1) 
+          6001 # [4] PUSH1(1) 
+          6001 # [6] PUSH1(1) 
+          6001 # [8] PUSH1(1) 
+          6001 # [10] PUSH1(1) 
+          6001 # [12] PUSH1(1) 
+          6001 # [14] PUSH1(1) 
+            97 # [16] SWAP8 
+            00 # [17] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -5059,17 +5059,17 @@ validInvalid:
             00 # 0 outputs
           0009 # max stack: 9
                # Code section 0
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-            98 # SWAP9 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+          6001 # [2] PUSH1(1) 
+          6001 # [4] PUSH1(1) 
+          6001 # [6] PUSH1(1) 
+          6001 # [8] PUSH1(1) 
+          6001 # [10] PUSH1(1) 
+          6001 # [12] PUSH1(1) 
+          6001 # [14] PUSH1(1) 
+          6001 # [16] PUSH1(1) 
+            98 # [18] SWAP9 
+            00 # [19] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -5091,18 +5091,18 @@ validInvalid:
             00 # 0 outputs
           000a # max stack: 10
                # Code section 0
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-            99 # SWAP10 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+          6001 # [2] PUSH1(1) 
+          6001 # [4] PUSH1(1) 
+          6001 # [6] PUSH1(1) 
+          6001 # [8] PUSH1(1) 
+          6001 # [10] PUSH1(1) 
+          6001 # [12] PUSH1(1) 
+          6001 # [14] PUSH1(1) 
+          6001 # [16] PUSH1(1) 
+          6001 # [18] PUSH1(1) 
+            99 # [20] SWAP10 
+            00 # [21] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -5124,19 +5124,19 @@ validInvalid:
             00 # 0 outputs
           000b # max stack: 11
                # Code section 0
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-            9a # SWAP11 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+          6001 # [2] PUSH1(1) 
+          6001 # [4] PUSH1(1) 
+          6001 # [6] PUSH1(1) 
+          6001 # [8] PUSH1(1) 
+          6001 # [10] PUSH1(1) 
+          6001 # [12] PUSH1(1) 
+          6001 # [14] PUSH1(1) 
+          6001 # [16] PUSH1(1) 
+          6001 # [18] PUSH1(1) 
+          6001 # [20] PUSH1(1) 
+            9a # [22] SWAP11 
+            00 # [23] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -5158,20 +5158,20 @@ validInvalid:
             00 # 0 outputs
           000c # max stack: 12
                # Code section 0
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-            9b # SWAP12 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+          6001 # [2] PUSH1(1) 
+          6001 # [4] PUSH1(1) 
+          6001 # [6] PUSH1(1) 
+          6001 # [8] PUSH1(1) 
+          6001 # [10] PUSH1(1) 
+          6001 # [12] PUSH1(1) 
+          6001 # [14] PUSH1(1) 
+          6001 # [16] PUSH1(1) 
+          6001 # [18] PUSH1(1) 
+          6001 # [20] PUSH1(1) 
+          6001 # [22] PUSH1(1) 
+            9b # [24] SWAP12 
+            00 # [25] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -5193,21 +5193,21 @@ validInvalid:
             00 # 0 outputs
           000d # max stack: 13
                # Code section 0
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-            9c # SWAP13 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+          6001 # [2] PUSH1(1) 
+          6001 # [4] PUSH1(1) 
+          6001 # [6] PUSH1(1) 
+          6001 # [8] PUSH1(1) 
+          6001 # [10] PUSH1(1) 
+          6001 # [12] PUSH1(1) 
+          6001 # [14] PUSH1(1) 
+          6001 # [16] PUSH1(1) 
+          6001 # [18] PUSH1(1) 
+          6001 # [20] PUSH1(1) 
+          6001 # [22] PUSH1(1) 
+          6001 # [24] PUSH1(1) 
+            9c # [26] SWAP13 
+            00 # [27] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -5229,22 +5229,22 @@ validInvalid:
             00 # 0 outputs
           000e # max stack: 14
                # Code section 0
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-            9d # SWAP14 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+          6001 # [2] PUSH1(1) 
+          6001 # [4] PUSH1(1) 
+          6001 # [6] PUSH1(1) 
+          6001 # [8] PUSH1(1) 
+          6001 # [10] PUSH1(1) 
+          6001 # [12] PUSH1(1) 
+          6001 # [14] PUSH1(1) 
+          6001 # [16] PUSH1(1) 
+          6001 # [18] PUSH1(1) 
+          6001 # [20] PUSH1(1) 
+          6001 # [22] PUSH1(1) 
+          6001 # [24] PUSH1(1) 
+          6001 # [26] PUSH1(1) 
+            9d # [28] SWAP14 
+            00 # [29] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -5266,23 +5266,23 @@ validInvalid:
             00 # 0 outputs
           000f # max stack: 15
                # Code section 0
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-            9e # SWAP15 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+          6001 # [2] PUSH1(1) 
+          6001 # [4] PUSH1(1) 
+          6001 # [6] PUSH1(1) 
+          6001 # [8] PUSH1(1) 
+          6001 # [10] PUSH1(1) 
+          6001 # [12] PUSH1(1) 
+          6001 # [14] PUSH1(1) 
+          6001 # [16] PUSH1(1) 
+          6001 # [18] PUSH1(1) 
+          6001 # [20] PUSH1(1) 
+          6001 # [22] PUSH1(1) 
+          6001 # [24] PUSH1(1) 
+          6001 # [26] PUSH1(1) 
+          6001 # [28] PUSH1(1) 
+            9e # [30] SWAP15 
+            00 # [31] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -5304,24 +5304,24 @@ validInvalid:
             00 # 0 outputs
           0010 # max stack: 16
                # Code section 0
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-            9f # SWAP16 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+          6001 # [2] PUSH1(1) 
+          6001 # [4] PUSH1(1) 
+          6001 # [6] PUSH1(1) 
+          6001 # [8] PUSH1(1) 
+          6001 # [10] PUSH1(1) 
+          6001 # [12] PUSH1(1) 
+          6001 # [14] PUSH1(1) 
+          6001 # [16] PUSH1(1) 
+          6001 # [18] PUSH1(1) 
+          6001 # [20] PUSH1(1) 
+          6001 # [22] PUSH1(1) 
+          6001 # [24] PUSH1(1) 
+          6001 # [26] PUSH1(1) 
+          6001 # [28] PUSH1(1) 
+          6001 # [30] PUSH1(1) 
+            9f # [32] SWAP16 
+            00 # [33] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -5343,9 +5343,9 @@ validInvalid:
             00 # 0 outputs
           0001 # max stack: 1
                # Code section 0
-          6001 # PUSH1(1) 
-            a0 # LOG0 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+            a0 # [2] LOG0 
+            00 # [3] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -5367,10 +5367,10 @@ validInvalid:
             00 # 0 outputs
           0002 # max stack: 2
                # Code section 0
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-            a1 # LOG1 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+          6001 # [2] PUSH1(1) 
+            a1 # [4] LOG1 
+            00 # [5] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -5392,11 +5392,11 @@ validInvalid:
             00 # 0 outputs
           0003 # max stack: 3
                # Code section 0
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-            a2 # LOG2 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+          6001 # [2] PUSH1(1) 
+          6001 # [4] PUSH1(1) 
+            a2 # [6] LOG2 
+            00 # [7] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -5418,12 +5418,12 @@ validInvalid:
             00 # 0 outputs
           0004 # max stack: 4
                # Code section 0
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-            a3 # LOG3 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+          6001 # [2] PUSH1(1) 
+          6001 # [4] PUSH1(1) 
+          6001 # [6] PUSH1(1) 
+            a3 # [8] LOG3 
+            00 # [9] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -5445,13 +5445,13 @@ validInvalid:
             00 # 0 outputs
           0005 # max stack: 5
                # Code section 0
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-            a4 # LOG4 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+          6001 # [2] PUSH1(1) 
+          6001 # [4] PUSH1(1) 
+          6001 # [6] PUSH1(1) 
+          6001 # [8] PUSH1(1) 
+            a4 # [10] LOG4 
+            00 # [11] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -5473,10 +5473,10 @@ validInvalid:
             00 # 0 outputs
           0002 # max stack: 2
                # Code section 0
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-            f0 # CREATE 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+          6001 # [2] PUSH1(1) 
+            f0 # [4] CREATE 
+            00 # [5] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -5498,14 +5498,14 @@ validInvalid:
             00 # 0 outputs
           0006 # max stack: 6
                # Code section 0
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-            f1 # CALL 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+          6001 # [2] PUSH1(1) 
+          6001 # [4] PUSH1(1) 
+          6001 # [6] PUSH1(1) 
+          6001 # [8] PUSH1(1) 
+          6001 # [10] PUSH1(1) 
+            f1 # [12] CALL 
+            00 # [13] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -5527,8 +5527,8 @@ validInvalid:
             00 # 0 outputs
           0001 # max stack: 1
                # Code section 0
-          6001 # PUSH1(1) 
-            f3 # RETURN 
+          6001 # [0] PUSH1(1) 
+            f3 # [2] RETURN 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -5550,13 +5550,13 @@ validInvalid:
             00 # 0 outputs
           0005 # max stack: 5
                # Code section 0
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-            f4 # DELEGATECALL 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+          6001 # [2] PUSH1(1) 
+          6001 # [4] PUSH1(1) 
+          6001 # [6] PUSH1(1) 
+          6001 # [8] PUSH1(1) 
+            f4 # [10] DELEGATECALL 
+            00 # [11] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -5578,11 +5578,11 @@ validInvalid:
             00 # 0 outputs
           0003 # max stack: 3
                # Code section 0
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-            f5 # CREATE2 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+          6001 # [2] PUSH1(1) 
+          6001 # [4] PUSH1(1) 
+            f5 # [6] CREATE2 
+            00 # [7] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -5604,13 +5604,13 @@ validInvalid:
             00 # 0 outputs
           0005 # max stack: 5
                # Code section 0
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-          6001 # PUSH1(1) 
-            fa # STATICCALL 
-            00 # STOP 
+          6001 # [0] PUSH1(1) 
+          6001 # [2] PUSH1(1) 
+          6001 # [4] PUSH1(1) 
+          6001 # [6] PUSH1(1) 
+          6001 # [8] PUSH1(1) 
+            fa # [10] STATICCALL 
+            00 # [11] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -5632,8 +5632,8 @@ validInvalid:
             00 # 0 outputs
           0001 # max stack: 1
                # Code section 0
-          6001 # PUSH1(1) 
-            fd # REVERT 
+          6001 # [0] PUSH1(1) 
+            fd # [2] REVERT 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -5667,16 +5667,16 @@ validInvalid:
             00 # 0 outputs
           0002 # max stack: 2
                # Code section 0
-        b00001 # CALLF(1) 
-            00 # STOP 
+        e30001 # [0] CALLF(1) 
+            00 # [3] STOP 
                # Code section 1
-          6000 # PUSH1(0) 
-            80 # DUP1 
-        b00002 # CALLF(2) 
+          6000 # [0] PUSH1(0) 
+            80 # [2] DUP1 
+        e30002 # [3] CALLF(2) 
                # Code section 2
-            50 # POP 
-            50 # POP 
-            b1 # RETF 
+            50 # [0] POP 
+            50 # [1] POP 
+            e4 # [2] RETF 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -5710,16 +5710,16 @@ validInvalid:
             00 # 0 outputs
           0002 # max stack: 2
                # Code section 0
-          6000 # PUSH1(0) 
-        b00001 # CALLF(1) 
-            00 # STOP 
+          6000 # [0] PUSH1(0) 
+        e30001 # [2] CALLF(1) 
+            00 # [5] STOP 
                # Code section 1
-          6000 # PUSH1(0) 
-        b00002 # CALLF(2) 
+          6000 # [0] PUSH1(0) 
+        e30002 # [2] CALLF(2) 
                # Code section 2
-            50 # POP 
-            50 # POP 
-            b1 # RETF 
+            50 # [0] POP 
+            50 # [1] POP 
+            e4 # [2] RETF 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -5753,15 +5753,15 @@ validInvalid:
             00 # 0 outputs
           0002 # max stack: 2
                # Code section 0
-        b00001 # CALLF(1) 
-            00 # STOP 
+        e30001 # [0] CALLF(1) 
+            00 # [3] STOP 
                # Code section 1
-          6000 # PUSH1(0) 
-        b00002 # CALLF(2) 
+          6000 # [0] PUSH1(0) 
+        e30002 # [2] CALLF(2) 
                # Code section 2
-            50 # POP 
-            50 # POP 
-        b00003 # CALLF(3) 
+            50 # [0] POP 
+            50 # [1] POP 
+        e30003 # [2] CALLF(3) 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -5779,7 +5779,7 @@ validInvalid:
       # Code[0](Types: 0:0): PUSH1(0) (1020 Times) CALLF(1)
       # Code[1](Types: 0:5): PUSH1(0) (5 Times) RETF
     - data: |
-       :label EOF1I5450_0096 :raw 0xef000101000802000207fb000b030000000000040100050005600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000b0000160006000600060006000b1
+       :label EOF1I5450_0096 :raw 0xef000101000802000207fb000b030000000000040100050005600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000e3000160006000600060006000e4
       expectException:
         "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_MaxStackHeightExceeded"
@@ -5800,7 +5800,7 @@ validInvalid:
             00 # 0 outputs
           0001 # max stack: 1
                # Code section 0
-          6000 # PUSH1(0) 
+          6000 # [0] PUSH1(0) 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -5822,10 +5822,10 @@ validInvalid:
             00 # 0 outputs
           0001 # max stack: 1
                # Code section 0
-          6000 # PUSH1(0) 
-        5d0001 # RJUMPI(1) 
-            00 # STOP 
-            5b # NOP 
+          6000 # [0] PUSH1(0) 
+        e10001 # [2] RJUMPI(1) 
+            00 # [5] STOP 
+            5b # [6] NOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -5847,11 +5847,11 @@ validInvalid:
             00 # 0 outputs
           0001 # max stack: 1
                # Code section 0
-          6000 # PUSH1(0) 
-        5e0200010002 # RJUMPV(1,2) 
-            fe # INVALID 
-            00 # STOP 
-            5b # NOP 
+          6000 # [0] PUSH1(0) 
+        e20200010002 # [2] RJUMPV(1,2) 
+            fe # [8] INVALID 
+            00 # [9] STOP 
+            5b # [10] NOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -5873,10 +5873,10 @@ validInvalid:
             00 # 0 outputs
           0002 # max stack: 2
                # Code section 0
-          6000 # PUSH1(0) 
-          6000 # PUSH1(0) 
-            f3 # RETURN 
-            00 # STOP 
+          6000 # [0] PUSH1(0) 
+          6000 # [2] PUSH1(0) 
+            f3 # [4] RETURN 
+            00 # [5] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -5898,10 +5898,10 @@ validInvalid:
             00 # 0 outputs
           0002 # max stack: 2
                # Code section 0
-          6000 # PUSH1(0) 
-          6000 # PUSH1(0) 
-            fd # REVERT 
-            00 # STOP 
+          6000 # [0] PUSH1(0) 
+          6000 # [2] PUSH1(0) 
+            fd # [4] REVERT 
+            00 # [5] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -5923,10 +5923,10 @@ validInvalid:
             00 # 0 outputs
           0001 # max stack: 1
                # Code section 0
-        5c0002 # RJUMP(2) 
-          6000 # PUSH1(0) 
-          6000 # PUSH1(0) 
-            00 # STOP 
+        e00002 # [0] RJUMP(2) 
+          6000 # [3] PUSH1(0) 
+          6000 # [5] PUSH1(0) 
+            00 # [7] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -5948,12 +5948,12 @@ validInvalid:
             00 # 0 outputs
           0001 # max stack: 1
                # Code section 0
-        5c0002 # RJUMP(2) 
-          6000 # PUSH1(0) 
-          6000 # PUSH1(0) 
-            50 # POP 
-        5cfffa # RJUMP(-6) 
-            00 # STOP 
+        e00002 # [0] RJUMP(2) 
+          6000 # [3] PUSH1(0) 
+          6000 # [5] PUSH1(0) 
+            50 # [7] POP 
+        e0fffa # [8] RJUMP(-6) 
+            00 # [11] STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
