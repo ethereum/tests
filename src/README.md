@@ -429,3 +429,9 @@
 - ID: **SUC008.2** Same txn, same addr, different frames. Frame1 DELEGATECALLs frame2, frame2 SELFDESTRUCTs into contract's own ADDR, and then frame1 SELFDESTRUCTs into another address. Balance disappears.
 - ID: **SUC008.3** Same txn, same addr, different frames. Frame1 STATICCALLs frame2, frame2 SELFDESTRUCTs into contract's own ADDR, and then frame1 SELFDESTRUCTs into the same address. Balance ends up where frame1 sent it (static frames can't SELFDESTRUCT).
 
+## BLOBHASH EIP4844
+- ID: **BLOB000** empty blobhash list transaction is rejected
+- ID: **BLOB001** blobhash list element with wrong version byte transaction is rejected
+- ID: **BLOB002** blobhash create transaction is rejected
+- ID: **BLOB003** blobhash opcode return out of range
+- ID: **BLOB004** same blobhash in the list
