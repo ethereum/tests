@@ -435,3 +435,4 @@
 - ID: **BLOB002** blobhash create transaction is rejected
 - ID: **BLOB003** blobhash opcode return out of range
 - ID: **BLOB004** same blobhash in the list
+- ID: **BLOB005** blobhash opcode bounds
