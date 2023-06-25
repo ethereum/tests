@@ -22,9 +22,23 @@
         },
 	    "sealEngine" : "NoProof",
         "expect" : [
-            
 	        {
-                "network" : [">=Istanbul"],
+                "network" : ["Istanbul", "Berlin"],
+                "result" : {
+                    "0x095e7baea6a6c7c4c2dfeb977efac326af552d87" : {
+                        "balance" : "0",
+                        "storage" : {
+                        }
+                    },
+                    "0x195e7baea6a6c7c4c2dfeb977efac326af552d87" : {
+                        "balance" : "200000",
+                        "storage" : {
+                        }
+                    }
+                }
+            },
+	        {
+                "network" : [">=London"],
                 "result" : {
                     "0x095e7baea6a6c7c4c2dfeb977efac326af552d87" : {
                         "balance" : "0",
@@ -69,7 +83,7 @@
                         "expectException" : {
                             "Istanbul" : "TR_GasLimitReached",
                             "Berlin" : "TR_GasLimitReached",
-                            ">=London" : "TR_FeeCapLessThanBlocks"
+                            ">=London" : "TR_FeeCapLessThanBlocksORGasLimitReached"
                         },
                         "data" : "",
                         "gasLimit" : "1100000",
@@ -90,6 +104,24 @@
                         "gasLimit" : "100000",
                         "gasPrice" : "20",
                         "nonce" : "0",
+                        "secretKey" : "45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8",
+                        "to" : "0x195e7baea6a6c7c4c2dfeb977efac326af552d87",
+                        "value" : "100000"
+                    }
+                ],
+                "uncleHeaders" : [
+                ]
+           },
+           {
+                "transactions" : [
+                     {
+                        "expectException" : {
+                            ">=London" : "TR_FeeCapLessThanBlocks"
+                        },
+                        "data" : "",
+                        "gasLimit" : "100000",
+                        "gasPrice" : "0",
+                        "nonce" : "1",
                         "secretKey" : "45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8",
                         "to" : "0x195e7baea6a6c7c4c2dfeb977efac326af552d87",
                         "value" : "100000"
