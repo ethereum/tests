@@ -26,17 +26,17 @@
       nonce: 0
       code: |
         :yul {
-          verbatim_2i_0o(hex"b4", 0, 1)
+          verbatim_2i_0o(hex"5D", 0, 1)
 
           // transient storage at slot 0 successfully changes
           let success := delegatecall(gas(), 0x000000000000000000000000000000000000000B, 0, 32, 0, 0)
-          let v0 := verbatim_1i_1o(hex"b3", 0)
+          let v0 := verbatim_1i_1o(hex"5C", 0)
           sstore(0, success)
           sstore(1, v0)
 
           // transient storage at slot 0 does not change
           let fail := delegatecall(gas(), 0x000000000000000000000000000000000000000C, 0, 32, 0, 0)
-          let v1 := verbatim_1i_1o(hex"b3", 0)
+          let v1 := verbatim_1i_1o(hex"5C", 0)
           sstore(2, fail)
           sstore(3, v1)
         }
@@ -47,7 +47,7 @@
       nonce: 0
       code: |
         :yul {
-          verbatim_2i_0o(hex"b4", 0, 2)
+          verbatim_2i_0o(hex"5D", 0, 2)
         }
       storage: {}
     000000000000000000000000000000000000000C:
@@ -55,7 +55,7 @@
       nonce: 0
       code: |
         :yul {
-          verbatim_2i_0o(hex"b4", 0, 3)
+          verbatim_2i_0o(hex"5D", 0, 3)
           revert(0,0)
         }
       storage: {}
@@ -81,7 +81,7 @@
 
   expect:
     - network:
-        - "Merge+1153"
+        - "Cancun"
       result:
         000000000000000000000000000000000000000A:
           storage:

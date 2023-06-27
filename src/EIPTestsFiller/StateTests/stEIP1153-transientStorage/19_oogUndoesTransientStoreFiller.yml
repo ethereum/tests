@@ -35,20 +35,20 @@
           }
 
           function doStoreAndRevert() {
-            verbatim_2i_0o(hex"b4", 0, 11)
+            verbatim_2i_0o(hex"5D", 0, 11)
             let hash := keccak256(0, 0x2fffff)
           }
 
           function doReenter() {
-            verbatim_2i_0o(hex"b4", 0, 0x4e)
-            let v := verbatim_1i_1o(hex"b3", 0)
+            verbatim_2i_0o(hex"5D", 0, 0x4e)
+            let v := verbatim_1i_1o(hex"5C", 0)
             sstore(0, v)
 
             mstore(0, hex"e2da2eb0") // doStoreAndRevert() runs out of gas
             let fail := call(0xC350, address(), 0, 0, 32, 0, 0)
             sstore(2, fail)
 
-            sstore(1, verbatim_1i_1o(hex"b3", 0))
+            sstore(1, verbatim_1i_1o(hex"5C", 0))
           }
 
           function selector() -> s {
@@ -79,7 +79,7 @@
 
   expect:
     - network:
-        - "Merge+1153"
+        - "Cancun"
       result:
         000000000000000000000000000000000000000A:
           storage:

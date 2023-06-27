@@ -36,25 +36,25 @@
           }
 
           function storeTwiceAndRevert() {
-            verbatim_2i_0o(hex"b4", 0, 5)
-            verbatim_2i_0o(hex"b4", 0, 6)
-            verbatim_2i_0o(hex"b4", 1, 11)
-            verbatim_2i_0o(hex"b4", 1, 12)
+            verbatim_2i_0o(hex"5D", 0, 5)
+            verbatim_2i_0o(hex"5D", 0, 6)
+            verbatim_2i_0o(hex"5D", 1, 11)
+            verbatim_2i_0o(hex"5D", 1, 12)
             revert(0,0)
           }
 
           function doReenter() {
-            verbatim_2i_0o(hex"b4", 0, 4)
-            verbatim_2i_0o(hex"b4", 1, 10)
+            verbatim_2i_0o(hex"5D", 0, 4)
+            verbatim_2i_0o(hex"5D", 1, 10)
             mstore(0, hex"578290e5") // storeTwiceAndRevert()
 
             let fail := call(gas(), address(), 0, 0, 32, 0, 0)
             sstore(0, fail)
 
-            let v0 := verbatim_1i_1o(hex"b3", 0)
+            let v0 := verbatim_1i_1o(hex"5C", 0)
             sstore(1, v0)
 
-            let v1 := verbatim_1i_1o(hex"b3", 1)
+            let v1 := verbatim_1i_1o(hex"5C", 1)
             sstore(2, v1)
           }
 
@@ -87,7 +87,7 @@
 
   expect:
     - network:
-        - "Merge+1153"
+        - "Cancun"
       result:
         000000000000000000000000000000000000000A:
           storage:

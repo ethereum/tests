@@ -25,9 +25,9 @@
           let extraOpcodesGas := 5
 
           // calculate tload gas
-          verbatim_2i_0o(hex"b4", 0, 2)
+          verbatim_2i_0o(hex"5D", 0, 2)
           let g1 := gas()
-          let t := verbatim_1i_1o(hex"b3", 0)
+          let t := verbatim_1i_1o(hex"5C", 0)
           let g2 := gas()
           sstore(0, sub(sub(g1, g2), extraOpcodesGas))
 
@@ -55,7 +55,7 @@
 
   expect:
     - network:
-        - "Merge+1153"
+        - "Cancun"
       result:
         000000000000000000000000000000000000000A:
           storage:

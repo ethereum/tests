@@ -65,11 +65,11 @@ transStorageBlockchain:
             // Once the relevant opcodes are added to Yul, simply remove
             // them (from all contracts) and remove the _temp suffices.
             function tload_temp(loc) -> val {
-              val := verbatim_1i_1o(hex"B3", loc)
+              val := verbatim_1i_1o(hex"5C", loc)
             }
           
             function tstore_temp(loc, val) {
-              verbatim_2i_0o(hex"B4", loc, val)
+              verbatim_2i_0o(hex"5D", loc, val)
             }
 
             let txNum := byte(0x00, calldataload(0))
@@ -313,7 +313,7 @@ transStorageBlockchain:
 
   expect:
   - network:
-    - Merge+1153
+    - Cancun
     result:
       0xde570000de570000de570000de570000de570000:
         storage: {}
