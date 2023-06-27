@@ -48,7 +48,7 @@
 
             sstore(2, mload(0))
 
-            let v := verbatim_1i_1o(hex"b3", 0)
+            let v := verbatim_1i_1o(hex"5C", 0)
             sstore(1, v)
           }
 
@@ -60,11 +60,11 @@
               switch even 
               case 0 {
                 index := i
-                verbatim_2i_0o(hex"b4", i, 600)
+                verbatim_2i_0o(hex"5D", i, 600)
               }
               case 1 {
                 index := sub(0, i)
-                 verbatim_2i_0o(hex"b4", index, 600)
+                 verbatim_2i_0o(hex"5D", index, 600)
                }
             }
             mstore(0, i)
@@ -99,7 +99,7 @@
 
   expect:
     - network:
-        - "Merge+1153"
+        - "Cancun"
       result:
         000000000000000000000000000000000000000A:
           storage:

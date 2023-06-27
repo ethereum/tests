@@ -43,14 +43,14 @@
 
             sstore(2, mload(0))
 
-            let v := verbatim_1i_1o(hex"b3", 0)
+            let v := verbatim_1i_1o(hex"5C", 0)
             sstore(1, v)
           }
 
           function doNStores(n) {
             let i
             for {i := 0 } lt(i, n) { i := add(i, 1) } {
-              verbatim_2i_0o(hex"b4", i, 48)
+              verbatim_2i_0o(hex"5D", i, 48)
             }
             mstore(0, i)
             revert(0, 32)
@@ -84,7 +84,7 @@
 
   expect:
     - network:
-        - "Merge+1153"
+        - "Cancun"
       result:
         000000000000000000000000000000000000000A:
           storage:

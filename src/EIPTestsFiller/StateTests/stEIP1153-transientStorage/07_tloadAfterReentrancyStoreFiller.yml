@@ -35,19 +35,19 @@
           }
 
           function doStore() {
-            verbatim_2i_0o(hex"b4", 0, 78)
+            verbatim_2i_0o(hex"5D", 0, 78)
           }
 
           function doReenter() {
-            verbatim_2i_0o(hex"b4", 0, 55)
-            let v := verbatim_1i_1o(hex"b3", 0)
+            verbatim_2i_0o(hex"5D", 0, 55)
+            let v := verbatim_1i_1o(hex"5C", 0)
             sstore(0, v)
 
             mstore(0, hex"62fdb9be") // doStore()
             let success := call(gas(), address(), 0, 0, 32, 0, 0)
             sstore(2, success)
 
-            sstore(1, verbatim_1i_1o(hex"b3", 0))
+            sstore(1, verbatim_1i_1o(hex"5C", 0))
           } 
 
           function selector() -> s {
@@ -78,7 +78,7 @@
 
   expect:
     - network:
-        - "Merge+1153"
+        - "Cancun"
       result:
         000000000000000000000000000000000000000A:
           storage:

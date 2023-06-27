@@ -27,9 +27,9 @@
       nonce: 0
       code: |
         :yul {
-          verbatim_2i_0o(hex"b4", 0, 10)
+          verbatim_2i_0o(hex"5D", 0, 10)
           let success := call(gas(), 0x000000000000000000000000000000000000000B, 0, 0, 32, 0, 0)
-          let val := verbatim_1i_1o(hex"b3", 0)
+          let val := verbatim_1i_1o(hex"5C", 0)
           sstore(0, val)
           sstore(1, success)
         }
@@ -39,11 +39,11 @@
       nonce: 0
       code: |
         :yul {
-          let val := verbatim_1i_1o(hex"b3", 0)
+          let val := verbatim_1i_1o(hex"5C", 0)
           sstore(0, val)
           
-          verbatim_2i_0o(hex"b4", 0, 20)
-          let updated_val := verbatim_1i_1o(hex"b3", 0)
+          verbatim_2i_0o(hex"5D", 0, 20)
+          let updated_val := verbatim_1i_1o(hex"5C", 0)
           sstore(1, updated_val)
         }
       storage: { 0x00: 0xffff }
@@ -69,7 +69,7 @@
 
   expect:
     - network:
-        - "Merge+1153"
+        - "Cancun"
       result:
         000000000000000000000000000000000000000A:
           storage:

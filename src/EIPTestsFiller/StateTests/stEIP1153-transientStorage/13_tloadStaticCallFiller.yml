@@ -42,17 +42,17 @@
           }
 
           function tstore3() {
-            verbatim_2i_0o(hex"b4", 0, 3)
+            verbatim_2i_0o(hex"5D", 0, 3)
           }
 
           function tload0() {
-            let v := verbatim_1i_1o(hex"b3", 0)
+            let v := verbatim_1i_1o(hex"5C", 0)
             mstore(0, v)
             return(0, 32)
           }
 
           function doReenter() {
-            verbatim_2i_0o(hex"b4", 0, 2)
+            verbatim_2i_0o(hex"5D", 0, 2)
 
             mstore(0, hex"611e535a") // tstore3()
 
@@ -61,7 +61,7 @@
             sstore(0, fail)
             
             // should load prev value, 2
-            let v := verbatim_1i_1o(hex"b3", 0)
+            let v := verbatim_1i_1o(hex"5C", 0)
             sstore(1, v)
 
             mstore(0, hex"01729275") // tload0()
@@ -100,7 +100,7 @@
 
   expect:
     - network:
-        - "Merge+1153"
+        - "Cancun"
       result:
         000000000000000000000000000000000000000A:
           storage:

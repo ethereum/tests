@@ -24,15 +24,15 @@
       nonce: 0
       code: |
         :yul {
-            verbatim_2i_0o(hex"b4", 1, 0x05)
-            let v := verbatim_1i_1o(hex"b3", 1)
+            verbatim_2i_0o(hex"5D", 1, 0x05)
+            let v := verbatim_1i_1o(hex"5C", 1)
             sstore(0xa, v)
 
             // reverts from oog 
             let fail := call(0xC350, 0x000000000000000000000000000000000000000B, 0, 0, 32, 0, 0)
             sstore(0xc, fail)
 
-            sstore(0xb, verbatim_1i_1o(hex"b3", 1))
+            sstore(0xb, verbatim_1i_1o(hex"5C", 1))
 
         }
       storage: { 0xa: 0xffff, 0xb: 0xffff, 0xc: 0xffff }
@@ -41,7 +41,7 @@
       nonce: 0
       code: |
         :yul {
-          verbatim_2i_0o(hex"b4", 0, 11)
+          verbatim_2i_0o(hex"5D", 0, 11)
           let hash := keccak256(0, 0x2fffff)
         }
       storage: {}
@@ -67,7 +67,7 @@
 
   expect:
     - network:
-        - "Merge+1153"
+        - "Cancun"
       result:
         000000000000000000000000000000000000000A:
           storage:

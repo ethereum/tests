@@ -41,9 +41,9 @@
           }
 
           function doFirstCall() {
-            verbatim_2i_0o(hex"b4", 0, 5)
+            verbatim_2i_0o(hex"5D", 0, 5)
 
-            let v := verbatim_1i_1o(hex"b3", 0)
+            let v := verbatim_1i_1o(hex"5C", 0)
             sstore(0, v)
 
             mstore(0, hex"76b85d23") // calls doCallThenRevert()
@@ -52,7 +52,7 @@
             sstore(1, fail) // should be 0 (revert)
             sstore(2, mload(0)) // load 1 (successful call)
 
-            let val := verbatim_1i_1o(hex"b3", 0)
+            let val := verbatim_1i_1o(hex"5C", 0)
             sstore(3, val)
           }
 
@@ -65,7 +65,7 @@
           }
 
           function doSuccessfulStore() {
-            verbatim_2i_0o(hex"b4", 0, 6)
+            verbatim_2i_0o(hex"5D", 0, 6)
           }
 
           function doReenter(fs) -> f {
@@ -101,7 +101,7 @@
 
   expect:
     - network:
-        - "Merge+1153"
+        - "Cancun"
       result:
         000000000000000000000000000000000000000A:
           storage:

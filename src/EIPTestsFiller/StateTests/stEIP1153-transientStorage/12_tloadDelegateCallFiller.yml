@@ -24,7 +24,7 @@
       nonce: 0
       code: |
         :yul {
-          verbatim_2i_0o(hex"b4", 0, 2)
+          verbatim_2i_0o(hex"5D", 0, 2)
           let success := delegatecall(gas(), 0x000000000000000000000000000000000000000B, 0, 32, 0, 0)
           sstore(0, success)
         }
@@ -34,7 +34,7 @@
       nonce: 0
       code: |
         :yul {
-          let v := verbatim_1i_1o(hex"b3", 0)
+          let v := verbatim_1i_1o(hex"5C", 0)
           sstore(1, v)
         }
       storage: {}
@@ -60,7 +60,7 @@
 
   expect:
     - network:
-        - "Merge+1153"
+        - "Cancun"
       result:
         000000000000000000000000000000000000000A:
           storage:
