@@ -1,3 +1,0 @@
-"""
-Cross-client Withdrawals Tests
-"""
