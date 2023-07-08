@@ -14,11 +14,11 @@ Linux running anywhere else with an Internet connection.
 #. Download the **retesteth** `docker image <http://retesteth.ethdevops.io/>`_. 
    It is a tar file.
 
-#. Load the docker image: 
+#. Load the docker image (Example: retesteth: version 0.3.0, fork: shanghai): 
 
    ::
 
-      sudo docker load -i dretest*.tar
+      sudo docker image import retesteth-0.3.0-shanghai.tar.gz
 
 #. Download the **dretesteth.sh** script. 
 
@@ -58,10 +58,24 @@ Linux running anywhere else with an Internet connection.
       *** No errors detected 
       *** Total Tests Run: 1 
 
-
    .. note:: 
        The **/tests** directory is referenced inside the docker container. It is
        the same as the **~/tests** directory outside it.
+
+   If you get the following error:
+
+   ::
+
+      Tests folder does not exists, creating test folder: '/tests/GeneralStateTests/stExample'
+      WARNING: /tests/src/GeneralStateTestsFiller/stExample does not exist!
+      WARNING: stExample no tests detected in folder!
+      Running tests for config 'Ethereum GO on StateTool' 2
+
+      *** No errors detected
+      WARNING: /tests/src/GeneralStateTestsFiller does not exist!
+      *** Total Tests Run: 0
+
+   try moving the dretesteth.sh file and cloned tests folder to your root directory.
 
 #. To avoid having to run with **sudo** all the time, add yourself to
    the **docker** group.
