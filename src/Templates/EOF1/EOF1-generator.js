@@ -21,7 +21,7 @@ const eof1Good = {
        lengths: [3]   // Length of that code section
     },
     {    // data section
-       type: 3,   // Data section
+       type: 4,   // Data section
        size: 1    // One byte
     }
   ],    // sections
@@ -612,7 +612,7 @@ ${goodContracts.map((code, i) => `
         data:
         - :label good
       network:
-        - '>=Cancun'
+        - '>=Prague'
       result:
         ec0e71ad0a90ffe1909d27dac207f7680abba42d:
           nonce: 1
@@ -622,7 +622,7 @@ ${goodContracts.map((code, i) => `
         data:
         - :label bad
       network:
-        - '>=Cancun'
+        - '>=Prague'
       result:
         ec0e71ad0a90ffe1909d27dac207f7680abba42d:
           shouldnotexist: 1

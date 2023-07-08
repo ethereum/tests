@@ -20,11 +20,11 @@ RJUMP_MaxOffset:
         :yul 
         {
           // This constructs EOF initcode:
-          // RJUMP(3) RJUMP(32767) PUSH1(0) RJUMPI(-8) NOP * 32768 PUSH32(ef000101000402000100010300000000000000fe000000000000000000000000) PUSH1(0) MSTORE PUSH1(20) PUSH1(0) RET
+          // RJUMP(3) RJUMP(32767) PUSH1(0) RJUMPI(-8) NOP * 32768 PUSH32(ef000101000402000100010400000000000000fe000000000000000000000000) PUSH1(0) MSTORE PUSH1(20) PUSH1(0) RET
           // NOP series is preceded with RJUMPI to make it reachable.
 
           // eof prefix
-          mstore(0,  0xef00010100040200018034030000000000000200000000000000000000000000) // 19 bytes
+          mstore(0,  0xef00010100040200018034040000000000000200000000000000000000000000) // 19 bytes
           let offset := 19
 
           // start of code section: RJUMP(3) RJUMP(32767) PUSH1(0) RJUMPI(-8)
@@ -41,7 +41,7 @@ RJUMP_MaxOffset:
           // end of code section: 
           // PUSH32(ef000101000402000100010300000000000000fe000000000000000000000000) PUSH1(0) MSTORE PUSH1(20) PUSH1(0) RET
           // (41 bytes)
-          mstore(offset, 0x7fef000101000402000100010300000000000000fe0000000000000000000000)
+          mstore(offset, 0x7fef000101000402000100010400000000000000fe0000000000000000000000)
           offset := add(offset, 32)
           mstore(offset, 0x0060005260146000f30000000000000000000000000000000000000000000000) // 9 bytes
           offset := add(offset, 9)
@@ -80,5 +80,5 @@ RJUMP_MaxOffset:
             '1': '1'
        f1ecf98489fa9ed60a664fc4998db699cfa39d40:
           nonce: 1
-          code: '0xef000101000402000100010300000000000000fe'
+          code: '0xef000101000402000100010400000000000000fe'
           storage: {}

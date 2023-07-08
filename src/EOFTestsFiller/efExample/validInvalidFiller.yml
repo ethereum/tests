@@ -45,7 +45,7 @@ validInvalid:
          EOF1V0015 data stack height of 1023 is valid
 
   forks:
-    - ">=Shanghai"
+    - ">=Cancun"
 
   vectors:
 
@@ -58,7 +58,7 @@ validInvalid:
       010004  # One code segment
       020001  # One code segment
         0003  #   code seg 0: 3 bytes
-      030001  # One byte data segment
+      040001  # One byte data segment
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
@@ -71,7 +71,7 @@ validInvalid:
               # Data segment
            ef
     expectException:
-      "Shanghai" : "Invalid Code"
+      "Cancun" : "EOF_InvalidCode"
 
 
   # Data 1
@@ -83,7 +83,7 @@ validInvalid:
       010004  # One code segment
       020001  # One code segment
         0003  #   code seg 0: 3 bytes
-      030004  # Four byte data segment
+      040004  # Four byte data segment
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
@@ -96,8 +96,8 @@ validInvalid:
               # Data segment
            0bad  # 2 bytes instead of four
     expectException:
-      "Shanghai" : "Invalid Code"
-      ">=Cancun" : "invalid container size"
+      "Cancun" : "EOF_InvalidCode"
+      ">=Prague" : "EOF_InvalidContainerSize"
 
 
   # Data 2
@@ -109,7 +109,7 @@ validInvalid:
       010004  # One code segment
       020001  # One code segment
         0003  #   code seg 0: 3 bytes
-      030004  # Four byte data segment
+      040004  # Four byte data segment
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
@@ -122,8 +122,8 @@ validInvalid:
               # Data segment
            0bad60A70BAD  # 6 bytes instead of four
     expectException:
-      "Shanghai" : "Invalid Code"
-      ">=Cancun" : "invalid container size"
+      "Cancun" : "EOF_InvalidCode"
+      ">=Prague" : "EOF_InvalidContainerSize"
 
   # Data 3
   # EOF1V0001 Valid
@@ -134,7 +134,7 @@ validInvalid:
       010004  # One code segment
       020001  # One code segment
         0003  #   code seg 0: 3 bytes
-      030004  # Four byte data segment
+      040004  # Four byte data segment
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
@@ -147,7 +147,7 @@ validInvalid:
               # Data segment
            0bad60A7  # 4 bytes (valid)
     expectException:
-      "Shanghai" : "Invalid Code"
+      "Cancun" : "EOF_InvalidCode"
 
 
   # Data 4
@@ -159,7 +159,7 @@ validInvalid:
       010004  # One code segment
       020001  # One code segment
         0003  #   code seg 0: 3 bytes
-      030004  # Four byte data segment
+      040004  # Four byte data segment
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
@@ -172,8 +172,8 @@ validInvalid:
               # Data segment
            0bad60A7  # 4 bytes (valid)
     expectException:
-      "Shanghai" : "Invalid Code"
-      ">=Cancun" : "undefined instrustion"
+      "Cancun" : "EOF_InvalidCode"
+      ">=Prague" : "EOF_UndefinedInstruction"
 
 
   # Data 5
@@ -185,7 +185,7 @@ validInvalid:
       010004  # One code segment
       020001  # One code segment
         0003  #   code seg 0: 3 bytes
-      030004  # Four byte data segment
+      040004  # Four byte data segment
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
@@ -198,7 +198,7 @@ validInvalid:
               # Data segment
            0bad60A7  # 4 bytes (valid)
     expectException:
-      "Shanghai" : "Invalid Code"
+      "Cancun" : "EOF_InvalidCode"
 
 
   # EOF1I0005 check that EOF1 with a bad end of sections number fails
@@ -209,7 +209,7 @@ validInvalid:
       010004  # One code segment
       020001  # One code segment
         0003  #   code seg 0: 3 bytes
-      030001  # One byte data segment
+      040001  # One byte data segment
       FF      # Bad end of header
               # Code segment 0 header
           00  # Zero inputs
@@ -222,8 +222,8 @@ validInvalid:
               # Data segment
            ef
     expectException:
-      "Shanghai" : "Invalid Code"
-      ">=Cancun" : "missing header terminator"
+      "Cancun" : "EOF_InvalidCode"
+      ">=Prague" : "EOF_MissingHeaderTerminator"
 
 
   # EOF1V0008 check that code that uses a new style relative jump (5C) succeeds
@@ -234,21 +234,21 @@ validInvalid:
       010004  # One code segment
       020001  # One code segment
         000A  #   code seg 0: 10 bytes
-      030004  # Four byte data segment
+      040004  # Four byte data segment
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
           00  # Zero outputs
         0000  # Max stack height 0
               # Code segment 0 code
-      5C0003  #  0   RJUMP +3
-      5C0003  #  3   RJUMP +3
-      5CFFFA  #  6   RJUMP -6
+      E00003  #  0   RJUMP +3
+      E00003  #  3   RJUMP +3
+      E0FFFA  #  6   RJUMP -6
           00  #  9   STOP
               # Data segment
            0bad60A7  # 4 bytes (valid)
     expectException:
-      "Shanghai" : "Invalid Code"
+      "Cancun" : "EOF_InvalidCode"
 
   # EOF1I0023 sections with unreachable code fail
   - data: |
@@ -258,21 +258,21 @@ validInvalid:
       010004  # One code segment
       020001  # One code segment
         0005  #   code seg 0: 5 bytes
-      030004  # Four byte data segment
+      040004  # Four byte data segment
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
           00  # Zero outputs
         0000  # Max stack height 0
               # Code segment 0 code
-      5C0001  #  0   RJUMP +1
+      E00001  #  0   RJUMP +1
           5B  #  3   NOP
           00  #  9   STOP
               # Data segment
            0bad60A7  # 4 bytes (valid)
     expectException:
-      "Shanghai" : "Invalid Code"
-      ">=Cancun" : "unreachable code"
+      "Cancun" : "EOF_InvalidCode"
+      ">=Prague" : "EOF_UnreachableCode"
 
   # EOF1V0011 check that code that uses a new style conditional jump (5D) succeeds
   - data: |
@@ -282,7 +282,7 @@ validInvalid:
       010004  # One code segment
       020001  # One code segment
         0007  #   code seg 0: 7 bytes
-      030004  # Four byte data segment
+      040004  # Four byte data segment
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
@@ -290,13 +290,13 @@ validInvalid:
         0001  # Max stack height 1
               # Code segment 0 code
         6001  #  0   PUSH1 1
-      5D0001  #  2   RJUMPI +1
+      E10001  #  2   RJUMPI +1
           5B  #  5   NOP
           00  #  6   STOP
               # Data segment
            0bad60A7  # 4 bytes (valid)
     expectException:
-      "Shanghai" : "Invalid Code"
+      "Cancun" : "EOF_InvalidCode"
 
 
   # EOF1V0014 sections that end with a legit terminating opcode are OK
@@ -311,7 +311,7 @@ validInvalid:
         0005  #   code seg 2: 5 bytes
         0001  #   code seg 3: 1 bytes
         0001  #   code seg 4: 1 bytes
-      030004  # Four byte data segment
+      040004  # Four byte data segment
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
@@ -346,11 +346,11 @@ validInvalid:
               # Code segment 3 code
           FE  # INVALID
               # Code segment 4 code
-          B1  # RETF
+          E4  # RETF
               # Data segment
            0bad60A7  # 4 bytes (valid)
     expectException:
-      "Shanghai" : "Invalid Code"
+      "Cancun" : "EOF_InvalidCode"
 
 
   # EOF1V0013 jump tables work
@@ -361,7 +361,7 @@ validInvalid:
       010004  # One code segment
       020001  # One code segment
         000D  #   code seg 0: 13 bytes
-      030004  # Four byte data segment
+      040004  # Four byte data segment
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
@@ -369,7 +369,7 @@ validInvalid:
         0001  # Max stack height 1
               # Code segment 0 code
         6001  #  0   PUSH1 1
-        5E02  #  2   RJUMPV (empty table)
+        E202  #  2   RJUMPV (empty table)
         0002  #  4   0 -> +2
         0000  #  6   1 ->  0
         3050  #  8   ADDRESS, POP
@@ -378,7 +378,7 @@ validInvalid:
               # Data segment
            0bad60A7  # 4 bytes (valid)
     expectException:
-      "Shanghai" : "Invalid Code"
+      "Cancun" : "EOF_InvalidCode"
 
 
 
@@ -390,7 +390,7 @@ validInvalid:
       010004  # One code segment
       020001  # One code segment
         0009  #   code seg 0: 9 bytes
-      030004  # Four byte data segment
+      040004  # Four byte data segment
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
@@ -398,15 +398,15 @@ validInvalid:
         0001  # Max stack height 1
               # Code segment 0 code
         6001  #  0   PUSH1 1
-        5E00  #  2   RJUMPV (empty table)
+        E200  #  2   RJUMPV (empty table)
         3050  #  4   ADDRESS, POP
         3050  #  6   ADDRESS, POP
           00  #  8   STOP
               # Data segment
            0bad60A7  # 4 bytes (valid)
     expectException:
-      "Shanghai" : "Invalid Code"
-      ">=Cancun" : "invalid number of branches in jump table"
+      "Cancun" : "EOF_InvalidCode"
+      ">=Prague" : "EOF_InvalidJumpTableCount"
 
 
   # EOF1I0019 check that jumps into the middle on an opcode are not allowed
@@ -417,7 +417,7 @@ validInvalid:
       010004  # One code segment
       020001  # One code segment
         000D  #   code seg 0: 13 bytes
-      030004  # Four byte data segment
+      040004  # Four byte data segment
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
@@ -425,7 +425,7 @@ validInvalid:
         0001  # Max stack height 1
               # Code segment 0 code
         6001  #  0   PUSH1 1
-        5E02  #  2   RJUMPV
+        E202  #  2   RJUMPV
         0002  #  4   0 => +2 (10)
         FFFF  #  6   1 -> -1 ( 7)
         3050  #  8   ADDRESS, POP
@@ -434,8 +434,8 @@ validInvalid:
               # Data segment
            0bad60A7  # 4 bytes (valid)
     expectException:
-      "Shanghai" : "Invalid Code"
-      ">=Cancun" : "invalid jump destination"
+      "Cancun" : "EOF_InvalidCode"
+      ">=Prague" : "EOF_InvalidJumpDestination"
 
 
 
@@ -448,7 +448,7 @@ validInvalid:
       010004  # One code segment
       020001  # One code segment
         0008  #   code seg 0: 8 bytes
-      030004  # Four byte data segment
+      040004  # Four byte data segment
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
@@ -456,15 +456,15 @@ validInvalid:
         0002  # Max stack height 2
               # Code segment 0 code
         6001  #  0   PUSH1 1
-      5D0001  #  2   RJUMPI +1
+      E10001  #  2   RJUMPI +1
           30  #  5   ADDRESS
           5B  #  6   NOP
           00  #  7   STOP
               # Data segment
            0bad60A7  # 4 bytes (valid)
     expectException:
-      "Shanghai" : "Invalid Code"
-      ">=Cancun" : "conflicting stack height"
+      "Cancun" : "EOF_InvalidCode"
+      ">=Prague" : "EOF_ConflictingStackHeight"
 
 
 
@@ -476,22 +476,22 @@ validInvalid:
       010004  # One code segment
       020001  # One code segment
         000A  #   code seg 0: 10 bytes
-      030004  # Four byte data segment
+      040004  # Four byte data segment
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
           00  # Zero outputs
         0000  # Max stack height 0
               # Code segment 0 code
-      5C0003  #  0   RJUMP +3
-      5C0002  #  3   RJUMP +2
-      5CFFFA  #  6   RJUMP -6
+      E00003  #  0   RJUMP +3
+      E00002  #  3   RJUMP +2
+      E0FFFA  #  6   RJUMP -6
           00  #  9   STOP
               # Data segment
            0bad60A7  # 4 bytes (valid)
     expectException:
-      "Shanghai" : "Invalid Code"
-      ">=Cancun" : "invalid jump destination"
+      "Cancun" : "EOF_InvalidCode"
+      ">=Prague" : "EOF_InvalidJumpDestination"
 
   # EOF1I0019 check that jumps into the middle on an opcode are not allowed
   - data: |
@@ -501,7 +501,7 @@ validInvalid:
       010004  # One code segment
       020001  # One code segment
         0010  #   code seg 0: 16 bytes
-      030004  # Four byte data segment
+      040004  # Four byte data segment
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
@@ -511,15 +511,15 @@ validInvalid:
         6000  #  0   PUSH1 0
         6000  #  2   PUSH1 0
         6000  #  4   PUSH1 0
-      5D0003  #  6   RJUMPI +3
-      5D0002  #  9   RJUMPI +2
-      5DFFFA  # 12   RJUMPI -6
+      E10003  #  6   RJUMPI +3
+      E10002  #  9   RJUMPI +2
+      E1FFFA  # 12   RJUMPI -6
           00  # 15   STOP
               # Data segment
            0bad60A7  # 4 bytes (valid)
     expectException:
-      "Shanghai" : "Invalid Code"
-      ">=Cancun" : "invalid jump destination"
+      "Cancun" : "EOF_InvalidCode"
+      ">=Prague" : "EOF_InvalidJumpDestination"
 
 
 
@@ -531,7 +531,7 @@ validInvalid:
       010008  # Two code segments
       020001  # One code segment
         0003  #   code seg 0: 3 bytes
-      030004  # Four byte data segment
+      040004  # Four byte data segment
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
@@ -544,8 +544,8 @@ validInvalid:
               # Data segment
            0bad60A7  # 4 bytes (valid)
     expectException:
-      "Shanghai" : "Invalid Code"
-      ">=Cancun" : "invalid code size"
+      "Cancun" : "EOF_InvalidCode"
+      ">=Prague" : "EOF_InvalidTypeSectionSize"
 
   # EOF1I0015 check that code that uses removed opcodes fails
   - data: |
@@ -555,7 +555,7 @@ validInvalid:
       010004  # One code segment
       020001  # One code segment
         0005  #   code seg 0: 5 bytes
-      030001  # One byte data segment
+      040001  # One byte data segment
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
@@ -569,8 +569,8 @@ validInvalid:
               # Data segment
            ef
     expectException:
-      "Shanghai" : "Invalid Code"
-      ">=Cancun" : "undefined instrustion"
+      "Cancun" : "EOF_InvalidCode"
+      ">=Prague" : "EOF_UndefinedInstruction"
 
   # EOF1I0015 check that code that uses removed opcodes fails
   - data: |
@@ -580,7 +580,7 @@ validInvalid:
       010004  # One code segment
       020001  # One code segment
         0007  #   code seg 0: 5 bytes
-      030001  # One byte data segment
+      040001  # One byte data segment
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
@@ -595,8 +595,8 @@ validInvalid:
               # Data segment
            ef
     expectException:
-      "Shanghai" : "Invalid Code"
-      ">=Cancun" : "undefined instrustion"
+      "Cancun" : "EOF_InvalidCode"
+      ">=Prague" : "EOF_UndefinedInstruction"
 
   # EOF1I0015 check that code that uses removed opcodes fails
   - data: |
@@ -606,7 +606,7 @@ validInvalid:
       010004  # One code segment
       020001  # One code segment
         0004  #   code seg 0: 4 bytes
-      030001  # One byte data segment
+      040001  # One byte data segment
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
@@ -619,8 +619,8 @@ validInvalid:
               # Data segment
            ef
     expectException:
-      "Shanghai" : "Invalid Code"
-      ">=Cancun" : "undefined instrustion"
+      "Cancun" : "EOF_InvalidCode"
+      ">=Prague" : "EOF_UndefinedInstruction"
 
   # EOF1I0015 check that code that uses removed opcodes fails
   - data: |
@@ -630,7 +630,7 @@ validInvalid:
       010004  # One code segment
       020001  # One code segment
         0004  #   code seg 0: 4 bytes
-      030001  # One byte data segment
+      040001  # One byte data segment
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
@@ -638,8 +638,8 @@ validInvalid:
         0007  # Max stack height 1
               # Code segment 0 code
     expectException:
-      "Shanghai" : "Invalid Code"
-      ">=Cancun" : "invalid container size"
+      "Cancun" : "EOF_InvalidCode"
+      ">=Prague" : "EOF_InvalidContainerSize"
 
   # EOF1I0015 check that code that uses removed opcodes fails
   - data: |
@@ -649,7 +649,7 @@ validInvalid:
       010004  # One code segment
       020001  # One code segment
         0010  #   code seg 0: 16 bytes
-      030001  # One byte data segment
+      040001  # One byte data segment
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
@@ -668,8 +668,8 @@ validInvalid:
               # Data segment
            ef
     expectException:
-      "Shanghai" : "Invalid Code"
-      ">=Cancun" : "undefined instrustion"
+      "Cancun" : "EOF_InvalidCode"
+      ">=Prague" : "EOF_UndefinedInstruction"
 
   # EOF1I0016 check that code that uses new relative jumps to outside the section fails
   - data: |
@@ -679,7 +679,7 @@ validInvalid:
       010004  # One code segment
       020001  # One code segment
         0005  #   code seg 0: 5 bytes
-      030001  # One byte data segment
+      040001  # One byte data segment
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
@@ -693,8 +693,8 @@ validInvalid:
               # Data segment
            ef
     expectException:
-      "Shanghai" : "Invalid Code"
-      ">=Cancun" : "undefined instrustion"
+      "Cancun" : "EOF_InvalidCode"
+      ">=Prague" : "EOF_UndefinedInstruction"
 
 
   # EOF1V0002 check that valid EOF1 with two code sections deploys
@@ -707,7 +707,7 @@ validInvalid:
       020002  # Two code segments
         0003  #   code seg 0: 3 bytes
         0003  #   code seg 1: 3 bytes
-      030004  # Four byte data segment
+      040004  # Four byte data segment
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
@@ -728,7 +728,7 @@ validInvalid:
               # Data segment
            0bad60A7  # 4 bytes (valid)
     expectException:
-      "Shanghai" : "Invalid Code"
+      "Cancun" : "EOF_InvalidCode"
 
   # EOF1V0012 return values on code sections affect maxStackHeight of the caller
   - data: |
@@ -739,7 +739,7 @@ validInvalid:
       020002  # Two code segments
         0004  #   code seg 0: 4 bytes
         0002  #   code seg 1: 2 bytes
-      030004  # Four byte data segment
+      040004  # Four byte data segment
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
@@ -750,15 +750,15 @@ validInvalid:
           01  # Zero outputs
         0001  # Max stack height 1
               # Code segment 0 code
-      B00001  #  0 CALLF #1 
+      E30001  #  0 CALLF #1 
           00  #  3 STOP 
               # Code segment 1 code
           30  #  0 ADDRESS
-          B1  #  1 RETF
+          E4  #  1 RETF
               # Data segment
            0bad60A7  # 4 bytes (valid)
     expectException:
-      "Shanghai" : "Invalid Code"
+      "Cancun" : "EOF_InvalidCode"
 
   # EOF1I0024 sections that end with a non-terminator opcode fail
   - data: |
@@ -769,7 +769,7 @@ validInvalid:
       020002  # Two code segments
         0003  #   code seg 0: 3 bytes
         0001  #   code seg 1: 1 bytes
-      030004  # Four byte data segment
+      040004  # Four byte data segment
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
@@ -780,14 +780,14 @@ validInvalid:
           01  # One output
         0001  # Max stack height 1
               # Code segment 0 code
-      B00001  #  0 CALLF #1 
+      E30001  #  0 CALLF #1 
               # Code segment 1 code
           30  #  0 ADDRESS
               # Data segment
            0bad60A7  # 4 bytes (valid)
     expectException:
-      "Shanghai" : "Invalid Code"
-      ">=Cancun" : "invalid code termination"
+      "Cancun" : "EOF_InvalidCode"
+      ">=Prague" : "EOF_InvalidCodeTermination"
 
 
   # EOF1I0022 stack underflow caused by a function call
@@ -799,7 +799,7 @@ validInvalid:
       020002  # Two code segments
         0004  #   code seg 0: 4 bytes
         0002  #   code seg 1: 2 bytes
-      030004  # Four byte data segment
+      040004  # Four byte data segment
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
@@ -810,16 +810,16 @@ validInvalid:
           00  # Zero outputs
         0001  # Max stack height 1
               # Code segment 0 code
-      B00001  #  0 CALLF #1 
+      E30001  #  0 CALLF #1 
           00  #  3 STOP 
               # Code segment 1 code
           50  #  0 POP
-          B1  #  1 RETF
+          E4  #  1 RETF
               # Data segment
            0bad60A7  # 4 bytes (valid)
     expectException:
-      "Shanghai" : "Invalid Code"
-      ">=Cancun" : "stack underflow"
+      "Cancun" : "EOF_InvalidCode"
+      ">=Prague" : "EOF_StackUnderflow"
 
 
   # EOF1V0015 data stack height of 1023 is valid
@@ -832,7 +832,7 @@ validInvalid:
         0028  #   code seg 0: 40 bytes
         000B  #   code seg 1: 11 bytes
         001F  #   code seg 2: 31 bytes
-      030004  # Four byte data segment
+      040004  # Four byte data segment
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
@@ -847,18 +847,18 @@ validInvalid:
           64  # A hundred outputs
         0064  # Max stack height 100
               # Code segment 0 code
-          B00002  #  0 CALLF #2
-          B00002  #  3 CALLF #2
-          B00002  #  6 CALLF #2
-          B00002  #  9 CALLF #2
-          B00002  #  C CALLF #2
-          B00002  #  F CALLF #2
-          B00002  # 12 CALLF #2
-          B00002  # 15 CALLF #2
-          B00002  # 18 CALLF #2
-          B00002  # 1B CALLF #2
-          B00001  # 1E CALLF #1
-          B00001  # 21 CALLF #1
+          E30002  #  0 CALLF #2
+          E30002  #  3 CALLF #2
+          E30002  #  6 CALLF #2
+          E30002  #  9 CALLF #2
+          E30002  #  C CALLF #2
+          E30002  #  F CALLF #2
+          E30002  # 12 CALLF #2
+          E30002  # 15 CALLF #2
+          E30002  # 18 CALLF #2
+          E30002  # 1B CALLF #2
+          E30001  # 1E CALLF #1
+          E30001  # 21 CALLF #1
               30  # 24 ADDRESS
               30  # 25 ADDRESS
               30  # 26 ADDRESS
@@ -874,23 +874,23 @@ validInvalid:
           30  #  7 ADDRESS
           30  #  8 ADDRESS
           30  #  9 ADDRESS
-          B1  #  A RETF
+          E4  #  A RETF
               # Code segment 2 code
-          B00001  #  0 CALLF #1
-          B00001  #  3 CALLF #1
-          B00001  #  6 CALLF #1
-          B00001  #  9 CALLF #1
-          B00001  #  C CALLF #1
-          B00001  #  F CALLF #1
-          B00001  # 12 CALLF #1
-          B00001  # 15 CALLF #1
-          B00001  # 18 CALLF #1
-          B00001  # 1B CALLF #1
-          B1      # 1E RETF
+          E30001  #  0 CALLF #1
+          E30001  #  3 CALLF #1
+          E30001  #  6 CALLF #1
+          E30001  #  9 CALLF #1
+          E30001  #  C CALLF #1
+          E30001  #  F CALLF #1
+          E30001  # 12 CALLF #1
+          E30001  # 15 CALLF #1
+          E30001  # 18 CALLF #1
+          E30001  # 1B CALLF #1
+          E4      # 1E RETF
               # Data segment
            0bad60A7  # 4 bytes (valid)
     expectException:
-      "Shanghai" : "Invalid Code"
+      "Cancun" : "EOF_InvalidCode"
 
   # EOF1I0025 data stack height of 1024 is invalid
   - data: |
@@ -902,7 +902,7 @@ validInvalid:
         0029  #   code seg 0: 41 bytes
         000B  #   code seg 1: 11 bytes
         001F  #   code seg 2: 31 bytes
-      030004  # Four byte data segment
+      040004  # Four byte data segment
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
@@ -917,18 +917,18 @@ validInvalid:
           64  # A hundred outputs
         0064  # Max stack height 100
               # Code segment 0 code
-          B00002  #  0 CALLF #2
-          B00002  #  3 CALLF #2
-          B00002  #  6 CALLF #2
-          B00002  #  9 CALLF #2
-          B00002  #  C CALLF #2
-          B00002  #  F CALLF #2
-          B00002  # 12 CALLF #2
-          B00002  # 15 CALLF #2
-          B00002  # 18 CALLF #2
-          B00002  # 1B CALLF #2
-          B00001  # 1E CALLF #1
-          B00001  # 21 CALLF #1
+          E30002  #  0 CALLF #2
+          E30002  #  3 CALLF #2
+          E30002  #  6 CALLF #2
+          E30002  #  9 CALLF #2
+          E30002  #  C CALLF #2
+          E30002  #  F CALLF #2
+          E30002  # 12 CALLF #2
+          E30002  # 15 CALLF #2
+          E30002  # 18 CALLF #2
+          E30002  # 1B CALLF #2
+          E30001  # 1E CALLF #1
+          E30001  # 21 CALLF #1
               30  # 24 ADDRESS
               30  # 25 ADDRESS
               30  # 26 ADDRESS
@@ -945,24 +945,24 @@ validInvalid:
           30  #  7 ADDRESS
           30  #  8 ADDRESS
           30  #  9 ADDRESS
-          B1  #  A RETF
+          E4  #  A RETF
               # Code segment 2 code
-          B00001  #  0 CALLF #1
-          B00001  #  3 CALLF #1
-          B00001  #  6 CALLF #1
-          B00001  #  9 CALLF #1
-          B00001  #  C CALLF #1
-          B00001  #  F CALLF #1
-          B00001  # 12 CALLF #1
-          B00001  # 15 CALLF #1
-          B00001  # 18 CALLF #1
-          B00001  # 1B CALLF #1
-          B1      # 1E RETF
+          E30001  #  0 CALLF #1
+          E30001  #  3 CALLF #1
+          E30001  #  6 CALLF #1
+          E30001  #  9 CALLF #1
+          E30001  #  C CALLF #1
+          E30001  #  F CALLF #1
+          E30001  # 12 CALLF #1
+          E30001  # 15 CALLF #1
+          E30001  # 18 CALLF #1
+          E30001  # 1B CALLF #1
+          E4      # 1E RETF
               # Data segment
            0bad60A7  # 4 bytes (valid)
     expectException:
-      "Shanghai" : "Invalid Code"
-      ">=Cancun" : "invalid type content, max stack height exceeds limit"
+      "Cancun" : "EOF_InvalidCode"
+      ">=Prague" : "EOF_MaxStackHeightExceeded"
 
   # EOF1V0003 check that valid EOF1 with four code sections deploys
   - data: |
@@ -975,7 +975,7 @@ validInvalid:
         0003  #   code seg 1: 3 bytes
         0003  #   code seg 2: 3 bytes
         0003  #   code seg 3: 3 bytes
-      030004  # Four byte data segment
+      040004  # Four byte data segment
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
@@ -1012,7 +1012,7 @@ validInvalid:
               # Data segment
            0bad60A7  # 4 bytes (valid)
     expectException:
-      "Shanghai" : "Invalid Code"
+      "Cancun" : "EOF_InvalidCode"
 
 
 
@@ -1027,7 +1027,7 @@ validInvalid:
         0005  #   code seg 1: 5 bytes
         0007  #   code seg 2: 7 bytes
         0007  #   code seg 3: 7 bytes
-      030004  # Four byte data segment
+      040004  # Four byte data segment
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
@@ -1074,7 +1074,7 @@ validInvalid:
               # Data segment
            0bad60A7  # 4 bytes (valid)
     expectException:
-      "Shanghai" : "Invalid Code"
+      "Cancun" : "EOF_InvalidCode"
 
 
   # EOF1V0007 check that function calls to code sections that exist are allowed
@@ -1088,7 +1088,7 @@ validInvalid:
         0005  #   code seg 1: 5 bytes
         0007  #   code seg 2: 7 bytes
         0007  #   code seg 3: 7 bytes
-      030004  # Four byte data segment
+      040004  # Four byte data segment
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
@@ -1132,8 +1132,8 @@ validInvalid:
               # Data segment
            0bad60A7  # 4 bytes (valid)
     expectException:
-      "Shanghai" : "Invalid Code"
-      ">=Cancun" : "invalid container size"
+      "Cancun" : "EOF_InvalidCode"
+      ">=Prague" : "EOF_InvalidContainerSize"
 
 
   # EOF1I0011 check that function calls to code sections that don't exist fail
@@ -1147,7 +1147,7 @@ validInvalid:
         0005  #   code seg 1: 5 bytes
         0007  #   code seg 2: 7 bytes
         0007  #   code seg 3: 7 bytes
-      030004  # Four byte data segment
+      040004  # Four byte data segment
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
@@ -1191,8 +1191,8 @@ validInvalid:
               # Data segment
            0bad60A7  # 4 bytes (valid)
     expectException:
-      "Shanghai" : "Invalid Code"
-      ">=Cancun" : "invalid container size"
+      "Cancun" : "EOF_InvalidCode"
+      ">=Prague" : "EOF_InvalidContainerSize"
 
 
   # EOF1I0012 check that code sections that cause stack underflow fail
@@ -1204,7 +1204,7 @@ validInvalid:
       020002  # Two code segments
         0003  #   code seg 0: 3 bytes
         0003  #   code seg 1: 3 bytes
-      030004  # Four byte data segment
+      040004  # Four byte data segment
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
@@ -1225,8 +1225,8 @@ validInvalid:
               # Data segment
            0bad60A7  # 4 bytes (valid)
     expectException:
-      "Shanghai" : "Invalid Code"
-      ">=Cancun" : "stack underflow"
+      "Cancun" : "EOF_InvalidCode"
+      ">=Prague" : "EOF_StackUnderflow"
 
 
   # EOF1I0013 check that we can't return more values than we declare
@@ -1238,7 +1238,7 @@ validInvalid:
       020002  # Two code segments
         0003  #   code seg 0: 3 bytes
         0003  #   code seg 1: 3 bytes
-      030004  # Four byte data segment
+      040004  # Four byte data segment
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
@@ -1259,8 +1259,8 @@ validInvalid:
               # Data segment
            0bad60A7  # 4 bytes (valid)
     expectException:
-      "Shanghai" : "Invalid Code"
-      ">=Cancun" : "invalid max stack height"
+      "Cancun" : "EOF_InvalidCode"
+      ">=Prague" : "EOF_InvalidMaxStackHeight"
 
   # EOF1I0014 check that code that looks deeper in the stack than the parameters fails
   - data: |
@@ -1271,7 +1271,7 @@ validInvalid:
       020002  # Two code segments
         0003  #   code seg 0: 3 bytes
         0003  #   code seg 1: 3 bytes
-      030004  # Four byte data segment
+      040004  # Four byte data segment
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
@@ -1292,8 +1292,8 @@ validInvalid:
               # Data segment
            0bad60A7  # 4 bytes (valid)
     expectException:
-      "Shanghai" : "Invalid Code"
-      ">=Cancun" : "stack underflow"
+      "Cancun" : "EOF_InvalidCode"
+      ">=Prague" : "EOF_StackUnderflow"
 
   # EOF1I0010 check that return values are not allowed on section 0
   - data: |
@@ -1303,7 +1303,7 @@ validInvalid:
       010004  # One code segment
       020001  # One code segment
         0003  #   code seg 0: 3 bytes
-      030004  # Four byte data segment
+      040004  # Four byte data segment
       00      # End of header
               # Code segment 0 header
           01  # Zero inputs
@@ -1316,8 +1316,8 @@ validInvalid:
               # Data segment
            0bad60A7  # 4 bytes (valid)
     expectException:
-      "Shanghai" : "Invalid Code"
-      ">=Cancun" : "invalid section 0 type"
+      "Cancun" : "EOF_InvalidCode"
+      ">=Prague" : "EOF_InvalidFirstSectionType"
 
   # EOF1V0009 check that parameters are allowed on code sections that aren't zero
   # EOF1V0010 parameters are part of the max stack height
@@ -1329,7 +1329,7 @@ validInvalid:
       020002  # Two code segments
         0003  #   code seg 0: 3 bytes
         0003  #   code seg 1: 3 bytes
-      030004  # Four byte data segment
+      040004  # Four byte data segment
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
@@ -1350,7 +1350,7 @@ validInvalid:
               # Data segment
            0bad60A7  # 4 bytes (valid)
     expectException:
-      "Shanghai" : "Invalid Code"
+      "Cancun" : "EOF_InvalidCode"
 
   # EOF1I0017 check that parameters are not allowed on section 0
   - data: |
@@ -1360,7 +1360,7 @@ validInvalid:
       010004  # One code segment
       020001  # One code segment
         0003  #   code seg 0: 3 bytes
-      030004  # Four byte data segment
+      040004  # Four byte data segment
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
@@ -1373,8 +1373,8 @@ validInvalid:
               # Data segment
            0bad60A7  # 4 bytes (valid)
     expectException:
-      "Shanghai" : "Invalid Code"
-      ">=Cancun" : "invalid section 0 type"
+      "Cancun" : "EOF_InvalidCode"
+      ">=Prague" : "EOF_InvalidFirstSectionType"
 
 
   # EOF1I0009 check that EOF1 with the wrong maxStackDepth fails
@@ -1385,7 +1385,7 @@ validInvalid:
       010004  # One code segment
       020001  # One code segment
         0003  #   code seg 0: 3 bytes
-      030004  # Four byte data segment
+      040004  # Four byte data segment
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
@@ -1398,8 +1398,8 @@ validInvalid:
               # Data segment
            0bad60A7  # 4 bytes (valid)
     expectException:
-      "Shanghai" : "Invalid Code"
-      ">=Cancun" : "invalid max stack height"
+      "Cancun" : "EOF_InvalidCode"
+      ">=Prague" : "EOF_InvalidMaxStackHeight"
 
   # EOF1I0009 check that EOF1 with the wrong maxStackDepth fails
   - data: |
@@ -1409,7 +1409,7 @@ validInvalid:
       010004  # One code segment
       020001  # One code segment
         0001  #   code seg 0: 3 bytes
-      030004  # Four byte data segment
+      040004  # Four byte data segment
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
@@ -1424,8 +1424,8 @@ validInvalid:
               # Data segment
            0bad60A7  # 4 bytes (valid)
     expectException:
-      "Shanghai" : "Invalid Code"
-      ">=Cancun" : "invalid container size"
+      "Cancun" : "EOF_InvalidCode"
+      ">=Prague" : "EOF_InvalidContainerSize"
 
   # EOF1I0007 check that EOF1 with a malformed code section fails
   - data: |
@@ -1435,7 +1435,7 @@ validInvalid:
       010004  # One code segment
       020001  # One code segment
         0003  #   code seg 0: 3 bytes
-      030004  # Four byte data segment
+      040004  # Four byte data segment
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
@@ -1448,8 +1448,8 @@ validInvalid:
               # Data segment
            0bad60A7  # 4 bytes (valid)
     expectException:
-      "Shanghai" : "Invalid Code"
-      ">=Cancun" : "truncated immediate"
+      "Cancun" : "EOF_InvalidCode"
+      ">=Prague" : "EOF_TruncatedImmediate"
 
 
   # check that EOF1 with a bad end of sections number fails
@@ -1460,7 +1460,7 @@ validInvalid:
       010004  # One code segment
       020001  # One code segment
         0003  #   code seg 0: 3 bytes
-      030001  # One byte data segment
+      040001  # One byte data segment
       FF      # End of header (bad)
               # Code segment 0 header
           00  # Zero inputs
@@ -1473,8 +1473,8 @@ validInvalid:
               # Data segment
            ef
     expectException:
-      "Shanghai" : "Invalid Code"
-      ">=Cancun" : "missing header terminator"
+      "Cancun" : "EOF_InvalidCode"
+      ">=Prague" : "EOF_MissingHeaderTerminator"
 
 
   # EOF1I0001 check that EOF1 with a bad magic number fails
@@ -1485,7 +1485,7 @@ validInvalid:
       010004  # One code segment
       020001  # One code segment
         0003  #   code seg 0: 3 bytes
-      030001  # One byte data segment
+      040001  # One byte data segment
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
@@ -1498,8 +1498,8 @@ validInvalid:
               # Data segment
            ef
     expectException:
-      "Shanghai" : "Invalid Code"
-      ">=Cancun" : "invalid magic"
+      "Cancun" : "EOF_InvalidCode"
+      ">=Prague" : "EOF_InvalidMagic"
 
   # EOF1I0002 check that EOF1 with a bad version number fails (ver 0)
   - data: |
@@ -1509,7 +1509,7 @@ validInvalid:
       010004  # One code segment
       020001  # One code segment
         0003  #   code seg 0: 3 bytes
-      030001  # One byte data segment
+      040001  # One byte data segment
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
@@ -1522,8 +1522,8 @@ validInvalid:
               # Data segment
            ef
     expectException:
-      "Shanghai" : "Invalid Code"
-      ">=Cancun" : "invalid version"
+      "Cancun" : "EOF_InvalidCode"
+      ">=Prague" : "EOF_InvalidVersion"
 
   # EOF1I0002 check that EOF1 with a bad version number fails (ver 2)
   - data: |
@@ -1533,7 +1533,7 @@ validInvalid:
       010004  # One code segment
       020001  # One code segment
         0003  #   code seg 0: 3 bytes
-      030001  # One byte data segment
+      040001  # One byte data segment
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
@@ -1546,8 +1546,8 @@ validInvalid:
               # Data segment
            ef
     expectException:
-      "Shanghai" : "Invalid Code"
-      ">=Cancun" : "invalid version"
+      "Cancun" : "EOF_InvalidCode"
+      ">=Prague" : "EOF_InvalidVersion"
 
   # EOF1I0003 check that EOF1 with a bad section order fails
   - data: |
@@ -1557,7 +1557,7 @@ validInvalid:
       020001  # One code segment
         0003  #   code seg 0: 3 bytes
       010004  # One code segment
-      030001  # One byte data segment
+      040001  # One byte data segment
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
@@ -1570,8 +1570,8 @@ validInvalid:
               # Data segment
            ef
     expectException:
-      "Shanghai" : "Invalid Code"
-      ">=Cancun" : "missing type header"
+      "Cancun" : "EOF_InvalidCode"
+      ">=Prague" : "EOF_TypeSectionMissing"
 
   # EOF1I0003 check that EOF1 with a bad section order fails
   - data: |
@@ -1580,7 +1580,7 @@ validInvalid:
       ef0001  # Magic followed by bad version
       020001  # One code segment
         0003  #   code seg 0: 3 bytes
-      030001  # One byte data segment
+      040001  # One byte data segment
       010004  # One code segment
       00      # End of header
               # Code segment 0 header
@@ -1594,8 +1594,8 @@ validInvalid:
               # Data segment
            ef
     expectException:
-      "Shanghai" : "Invalid Code"
-      ">=Cancun" : "missing type header"
+      "Cancun" : "EOF_InvalidCode"
+      ">=Prague" : "EOF_TypeSectionMissing"
 
 
   # EOF1I0004 check that EOF1 missing a section fails
@@ -1605,7 +1605,7 @@ validInvalid:
       ef0001  # Magic followed by bad version
       020001  # One code segment
         0003  #   code seg 0: 3 bytes
-      030001  # One byte data segment
+      040001  # One byte data segment
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
@@ -1618,8 +1618,8 @@ validInvalid:
               # Data segment
            ef
     expectException:
-      "Shanghai" : "Invalid Code"
-      ">=Cancun" : "missing type header"
+      "Cancun" : "EOF_InvalidCode"
+      ">=Prague" : "EOF_TypeSectionMissing"
 
   # EOF1I0004 check that EOF1 missing a section fails
   - data: |
@@ -1627,7 +1627,7 @@ validInvalid:
       # EOF deployed code 
       ef0001  # Magic followed by bad version
       010004  # One code segment
-      030001  # One byte data segment
+      040001  # One byte data segment
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
@@ -1640,8 +1640,8 @@ validInvalid:
               # Data segment
            ef
     expectException:
-      "Shanghai" : "Invalid Code"
-      ">=Cancun" : "missing code header"
+      "Cancun" : "EOF_InvalidCode"
+      ">=Prague" : "EOF_CodeSectionMissing"
 
   # EOF1I0004 check that EOF1 missing a section fails
   - data: |
@@ -1663,8 +1663,8 @@ validInvalid:
               # Data segment
            ef
     expectException:
-      "Shanghai" : "Invalid Code"
-      ">=Cancun" : "missing data header"
+      "Cancun" : "EOF_InvalidCode"
+      ">=Prague" : "EOF_DataSectionMissing"
 
 
   # EOF1 constructor returning an EOF1 contract
@@ -1674,7 +1674,7 @@ validInvalid:
         010004  # One code segment
         020001  # One code segment
           000a  # Code segment zero length: 10 bytes
-        030016  # Data segment length (the code being deployed): 0x16=22 bytes
+        040016  # Data segment length (the code being deployed): 0x16=22 bytes
         00      # End of header 
 
         # Code segment zero (header)
@@ -1698,7 +1698,7 @@ validInvalid:
         010004 # One code segment
         020001 # One code segment
           0003 # Code segment zero's length: 3 bytes 
-        03001d # Data segment length: 22 bytes 
+        04001d # Data segment length: 22 bytes 
                # (not specified here, but part of the buffer returned by the init code)
         00     # End of header
         # Code segment 0 header         
@@ -1710,11 +1710,11 @@ validInvalid:
             50 # POP
             00 # STOP
     expectException:
-      "Shanghai" : "Invalid Code"
+      "Cancun" : "EOF_InvalidCode"
 
   # Init code which doesn't create a contract
   - data: :label bad :raw 0x610BADFE
     expectException:
-      "Shanghai" : "Invalid Code"
-      ">=Cancun" : "invalid magic"
+      "Cancun" : "EOF_InvalidCode"
+      ">=Prague" : "EOF_InvalidMagic"
 
