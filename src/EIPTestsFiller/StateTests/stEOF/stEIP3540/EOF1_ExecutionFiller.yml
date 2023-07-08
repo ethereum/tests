@@ -1,6 +1,5 @@
 # Calls to various EOF-formatted contracts, tests EOF execution rules
 # ---
-# Tests filled with geth version in: https://github.com/ipsilon/go-ethereum/tree/c673883fae922f84c3ae1e66fd4e3f9a3d6683c3
 # Active EIPs: 3540, 3670, 4200, 4750, 5450
 EOF1_Execution:
   env:
@@ -28,7 +27,7 @@ EOF1_Execution:
       balance: 0
       # Basic valid EOF code
       # code section: ':yul { sstore(0, 1) stop() }'
-      code: ':raw 0xef000101000402000100060300000000000002600160005500'
+      code: ':raw 0xef000101000402000100060400000000000002600160005500'
       nonce: 0
       storage: {}
 
@@ -37,39 +36,41 @@ EOF1_Execution:
       # Basic valid EOF code with data section
       # code section: ':yul { sstore(0, 1) stop() }'
       # data section: 'aabbccdd'
-      code: ':raw 0xef000101000402000100060300040000000002600160005500aabbccdd'
+      code: ':raw 0xef000101000402000100060400040000000002600160005500aabbccdd'
       nonce: 0
       storage: {}
 
     024f5374fce5edbc8e2a8697c15331677e6ebf0b:
       balance: 0
       # PUSH with complete pushdata
-      # code: ':yul { sstore(0, push4(aabbccdd)) stop() }'
-      code: ':raw 0xef00010100040200010009030000000000000263aabbccdd60005500'
+      # code: ':yul { sstore(0, 0xaabbccdd) stop() }'
+      code: ':raw 0xef00010100040200010009040000000000000263aabbccdd60005500'
       nonce: 0
       storage: {}
 
     504f5374fce5edbc8e2a8697c15331677e6ebf0b:
       balance: 0
       # CODESIZE
-      # code section: 'sstore(0, codesize()) stop()'
-      code: ':raw 0xef0001010004020001000503000000000000023860005500'
+      # code section: ':yul { sstore(0, codesize()) stop() }'
+      code: ':raw 0xef0001010004020001000504000000000000023860005500'
       nonce: 0
       storage: {}
 
     514f5374fce5edbc8e2a8697c15331677e6ebf0b:
       balance: 0
       # CODECOPY copying part of header + code section + part of data section
-      # code section: 'codecopy(0, 1, 45) sstore(0, mload(0)) sstore(1, mload(32)) stop()'
-      code: ':raw 0xef000101000402000100140300040000000003602d600160003960005160005560205160015500aabbccdd'
+      # code section: ':yul { codecopy(0, 1, 45) sstore(0, mload(0)) sstore(1, mload(32)) stop() }'
+      # data section: aabbccdd
+      code: ':raw 0xef000101000402000100140400040000000003602d600160003960005160005560205160015500aabbccdd'
       nonce: 0
       storage: {}
 
     524f5374fce5edbc8e2a8697c15331677e6ebf0b:
       balance: 0
       # CODECOPY data section with len out of bounds
-      # code section: 'mstore(0, 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff) codecopy(0, 0x5a, 8) sstore(0, mload(0)) stop()'
-      code: ':raw 0xef0001010004020001003203000400000000037fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff6000526008604560003960005160005500aabbccdd'
+      # code section: ':yul { mstore(0, 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff) codecopy(0, 69, 8) sstore(0, mload(0)) stop() }'
+      # data section: aabbccdd
+      code: ':raw 0xef0001010004020001003204000400000000037fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff6000526008604560003960005160005500aabbccdd'
       nonce: 0
       storage: {}
 
@@ -84,7 +85,7 @@ EOF1_Execution:
       balance: 0
       # EXTCODESIZE of EOF contract executed inside EOF contract
       # code: PUSH20(0xd94f5374fce5edbc8e2a8697c15331677e6ebf0b) EXTCODESIZE PUSH1(0) SSTORE STOP
-      code: ':raw 0xef0001010004020001001a030000000000000273d94f5374fce5edbc8e2a8697c15331677e6ebf0b3b60005500'
+      code: ':raw 0xef0001010004020001001a040000000000000273d94f5374fce5edbc8e2a8697c15331677e6ebf0b3b60005500'
       nonce: 0
       storage: {}
 
@@ -99,22 +100,22 @@ EOF1_Execution:
       balance: 0
       # EXTCODEHASH of EOF contract executed inside EOF contract
       # code: PUSH20(0xd94f5374fce5edbc8e2a8697c15331677e6ebf0b) EXTCODEHASH PUSH1(0) SSTORE STOP
-      code: ':raw 0xef0001010004020001001a030000000000000273d94f5374fce5edbc8e2a8697c15331677e6ebf0b3f60005500'
+      code: ':raw 0xef0001010004020001001a040000000000000273d94f5374fce5edbc8e2a8697c15331677e6ebf0b3f60005500'
       nonce: 0
       storage: {}
 
     644f5374fce5edbc8e2a8697c15331677e6ebf0b:
       balance: 0
       # EXTCODECOPY copying part of header + code section + part of data section
-      code: ':yul { extcodecopy(0xd94f5374fce5edbc8e2a8697c15331677e6ebf0b, 0, 1, 27) sstore(0, mload(0)) }'
+      code: ':yul { extcodecopy(0xd94f5374fce5edbc8e2a8697c15331677e6ebf0b, 0, 1, 40) sstore(0, mload(0)) }'
       nonce: 0
       storage: {}
 
     654f5374fce5edbc8e2a8697c15331677e6ebf0b:
       balance: 0
       # EXTCODECOPY copying part of header + code section + part of data section inside EOF contract
-      # code: PUSH1(27) PUSH1(1) PUSH1(0) PUSH20(0xd94f5374fce5edbc8e2a8697c15331677e6ebf0b) EXTCODECOPY PUSH1(0) MLOAD PUSH1(0) SSTORE STOP
-      code: ':raw 0xef000101000402000100230300000000000004601b6001600073d94f5374fce5edbc8e2a8697c15331677e6ebf0b3c60005160005500'
+      # code: PUSH1(40) PUSH1(1) PUSH1(0) PUSH20(0xd94f5374fce5edbc8e2a8697c15331677e6ebf0b) EXTCODECOPY PUSH1(0) MLOAD PUSH1(0) SSTORE STOP
+      code: ':raw 0xef00010100040200010023040000000000000460286001600073d94f5374fce5edbc8e2a8697c15331677e6ebf0b3c60005160005500'
       nonce: 0
       storage: {}
 
@@ -129,7 +130,7 @@ EOF1_Execution:
       balance: 0
       # EXTCODECOPY with len out of bounds executed inside EOF contract
       # code: PUSH32(0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff) PUSH1(0) MSTORE PUSH1(8) PUSH1(25) PUSH1(0) PUSH20(0xd94f5374fce5edbc8e2a8697c15331677e6ebf0b) EXTCODECOPY PUSH1(0) MLOAD PUSH1(0) SSTORE STOP
-      code: ':raw 0xef0001010004020001004703000000000000047fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff60005260086019600073d94f5374fce5edbc8e2a8697c15331677e6ebf0b3c60005160005500'
+      code: ':raw 0xef0001010004020001004704000000000000047fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff60005260086019600073d94f5374fce5edbc8e2a8697c15331677e6ebf0b3c60005160005500'
       nonce: 0
       storage: {}
 
@@ -228,7 +229,7 @@ EOF1_Execution:
             '1': '1'
         514f5374fce5edbc8e2a8697c15331677e6ebf0b:
           storage:
-            '0': '0x000101000402000100140300040000000003602d600160003960005160005560'
+            '0': '0x000101000402000100140400040000000003602d600160003960005160005560'
             '1': '0x205160015500aabbccdd00000000000000000000000000000000000000000000'
     - indexes:
        data: ':label codecopy_out_out_bounds'
@@ -285,7 +286,7 @@ EOF1_Execution:
             '1': '1'
         624f5374fce5edbc8e2a8697c15331677e6ebf0b:
           storage:
-            '0': '87732cef143af086d74c6174da4304c04d79dbc65e309b9629c7bd055c525dab'
+            '0': '0x0f68d8af569a59269d17be77775145993a81bbea8c53a922e4e6ddda4233bcb2'
     - indexes:
        data: ':label extcodehash_inside_eof'
       network:
@@ -299,7 +300,7 @@ EOF1_Execution:
             '1': '1'
         634f5374fce5edbc8e2a8697c15331677e6ebf0b:
           storage:
-            '0': '87732cef143af086d74c6174da4304c04d79dbc65e309b9629c7bd055c525dab'
+            '0': '0x0f68d8af569a59269d17be77775145993a81bbea8c53a922e4e6ddda4233bcb2'
     - indexes:
        data: ':label extcodecopy'
       network:
@@ -313,7 +314,7 @@ EOF1_Execution:
             '1': '1'
         644f5374fce5edbc8e2a8697c15331677e6ebf0b:
           storage:
-            '0': '0101000402000100060300040000000002600160005500aabbcc0000000000'
+            '0': '0x0101000402000100060400040000000002600160005500aabbccdd00000000'
     - indexes:
        data: ':label extcodecopy_inside_eof'
       network:
@@ -327,7 +328,7 @@ EOF1_Execution:
             '1': '1'
         654f5374fce5edbc8e2a8697c15331677e6ebf0b:
           storage:
-            '0': '0101000402000100060300040000000002600160005500aabbcc0000000000'
+            '0': '0x0101000402000100060400040000000002600160005500aabbccdd00000000'
     - indexes:
        data: ':label extcodecopy_out_of_bounds'
       network:

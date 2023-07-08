@@ -1,8 +1,7 @@
 validInvalid:
   _info:
      comment: |
-       Test various examples to see if they are valid or invalid.
-       Implements
+       # >@f1
          EOF1V4200_0001 (Valid) EOF code containing RJUMP (Positive, Negative)
          EOF1V4200_0002 (Valid) EOF code containing RJUMP (Zero)
          EOF1V4200_0003 (Valid) EOF code containing RJUMPI (Positive)
@@ -58,11 +57,13 @@ validInvalid:
          EOF1I4200_0040 (Invalid) EOF code containing RJUMPV with target PUSH immediate
          EOF1I4200_0041 (Invalid) EOF code containing RJUMPV with target other RJUMPV immediate
          EOF1I4200_0042 (Invalid) EOF code containing RJUMPV with target CALLF immediate
+         # <@f1
 
   forks:
     - ">=Cancun"
 
   vectors:
+    # >@f2
     # EOF1V4200_0001 (Valid) EOF code containing RJUMP (Positive, Negative)
     # Code: RJUMP(push) save: SSTORE STOP push: PUSH1(1) PUSH1(1) RJUMP(save)
     - data: |
@@ -71,19 +72,19 @@ validInvalid:
         010004 # Types length ( 4 )
         020001 # Total code sections ( 1 )
           000c # Code section  0 , 12  bytes
-        030000 # Data section length ( 0 )
+        040000 # Data section length ( 0 )
             00 # Terminator (end of header)
                # Code 0 types
             00 # 0 inputs
             00 # 0 outputs
           0002 # max stack: 2
                # Code section 0
-        e00002 # [0] RJUMP(2) 
-            55 # [3] SSTORE 
-            00 # [4] STOP 
-          6001 # [5] PUSH1(1) 
-          6001 # [7] PUSH1(1) 
-        e0fff7 # [9] RJUMP(-9) 
+        e00002 # RJUMP(2) 
+            55 # SSTORE 
+            00 # STOP 
+          6001 # PUSH1(1) 
+          6001 # PUSH1(1) 
+        e0fff7 # RJUMP(-9) 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -96,18 +97,18 @@ validInvalid:
         010004 # Types length ( 4 )
         020001 # Total code sections ( 1 )
           0009 # Code section  0 , 9  bytes
-        030000 # Data section length ( 0 )
+        040000 # Data section length ( 0 )
             00 # Terminator (end of header)
                # Code 0 types
             00 # 0 inputs
             00 # 0 outputs
           0002 # max stack: 2
                # Code section 0
-        e00000 # [0] RJUMP(0) 
-          6001 # [3] PUSH1(1) 
-          6001 # [5] PUSH1(1) 
-            55 # [7] SSTORE 
-            00 # [8] STOP 
+        e00000 # RJUMP(0) 
+          6001 # PUSH1(1) 
+          6001 # PUSH1(1) 
+            55 # SSTORE 
+            00 # STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -120,22 +121,22 @@ validInvalid:
         010004 # Types length ( 4 )
         020001 # Total code sections ( 1 )
           000e # Code section  0 , 14  bytes
-        030000 # Data section length ( 0 )
+        040000 # Data section length ( 0 )
             00 # Terminator (end of header)
                # Code 0 types
             00 # 0 inputs
             00 # 0 outputs
           0002 # max stack: 2
                # Code section 0
-          6001 # [0] PUSH1(1) 
-        e10003 # [2] RJUMPI(3) 
-            5b # [5] NOP 
-            5b # [6] NOP 
-            00 # [7] STOP 
-          6001 # [8] PUSH1(1) 
-          6001 # [10] PUSH1(1) 
-            55 # [12] SSTORE 
-            00 # [13] STOP 
+          6001 # PUSH1(1) 
+        e10003 # RJUMPI(3) 
+            5b # NOP 
+            5b # NOP 
+            00 # STOP 
+          6001 # PUSH1(1) 
+          6001 # PUSH1(1) 
+            55 # SSTORE 
+            00 # STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -148,21 +149,21 @@ validInvalid:
         010004 # Types length ( 4 )
         020001 # Total code sections ( 1 )
           000f # Code section  0 , 15  bytes
-        030000 # Data section length ( 0 )
+        040000 # Data section length ( 0 )
             00 # Terminator (end of header)
                # Code 0 types
             00 # 0 inputs
             00 # 0 outputs
           0002 # max stack: 2
                # Code section 0
-        e00006 # [0] RJUMP(6) 
-          6001 # [3] PUSH1(1) 
-          6001 # [5] PUSH1(1) 
-            55 # [7] SSTORE 
-            00 # [8] STOP 
-          6001 # [9] PUSH1(1) 
-        e1fff5 # [11] RJUMPI(-11) 
-            00 # [14] STOP 
+        e00006 # RJUMP(6) 
+          6001 # PUSH1(1) 
+          6001 # PUSH1(1) 
+            55 # SSTORE 
+            00 # STOP 
+          6001 # PUSH1(1) 
+        e1fff5 # RJUMPI(-11) 
+            00 # STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -175,19 +176,19 @@ validInvalid:
         010004 # Types length ( 4 )
         020001 # Total code sections ( 1 )
           000b # Code section  0 , 11  bytes
-        030000 # Data section length ( 0 )
+        040000 # Data section length ( 0 )
             00 # Terminator (end of header)
                # Code 0 types
             00 # 0 inputs
             00 # 0 outputs
           0002 # max stack: 2
                # Code section 0
-          6001 # [0] PUSH1(1) 
-        e10000 # [2] RJUMPI(0) 
-          6001 # [5] PUSH1(1) 
-          6001 # [7] PUSH1(1) 
-            55 # [9] SSTORE 
-            00 # [10] STOP 
+          6001 # PUSH1(1) 
+        e10000 # RJUMPI(0) 
+          6001 # PUSH1(1) 
+          6001 # PUSH1(1) 
+            55 # SSTORE 
+            00 # STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -200,22 +201,22 @@ validInvalid:
         010004 # Types length ( 4 )
         020001 # Total code sections ( 1 )
           000f # Code section  0 , 15  bytes
-        030000 # Data section length ( 0 )
+        040000 # Data section length ( 0 )
             00 # Terminator (end of header)
                # Code 0 types
             00 # 0 inputs
             00 # 0 outputs
           0002 # max stack: 2
                # Code section 0
-          6000 # [0] PUSH1(0) 
-        e2010003 # [2] RJUMPV(3, 
-            5b # [6] NOP 
-            5b # [7] NOP 
-            00 # [8] STOP 
-          6001 # [9] PUSH1(1) 
-          6001 # [11] PUSH1(1) 
-            55 # [13] SSTORE 
-            00 # [14] STOP 
+          6000 # PUSH1(0) 
+        e2010003 # RJUMPV(3, 
+            5b # NOP 
+            5b # NOP 
+            00 # STOP 
+          6001 # PUSH1(1) 
+          6001 # PUSH1(1) 
+            55 # SSTORE 
+            00 # STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -228,21 +229,21 @@ validInvalid:
         010004 # Types length ( 4 )
         020001 # Total code sections ( 1 )
           0010 # Code section  0 , 16  bytes
-        030000 # Data section length ( 0 )
+        040000 # Data section length ( 0 )
             00 # Terminator (end of header)
                # Code 0 types
             00 # 0 inputs
             00 # 0 outputs
           0002 # max stack: 2
                # Code section 0
-        e00006 # [0] RJUMP(6) 
-          6001 # [3] PUSH1(1) 
-          6001 # [5] PUSH1(1) 
-            55 # [7] SSTORE 
-            00 # [8] STOP 
-          6000 # [9] PUSH1(0) 
-        e201fff4 # [11] RJUMPV(-12, 
-            00 # [15] STOP 
+        e00006 # RJUMP(6) 
+          6001 # PUSH1(1) 
+          6001 # PUSH1(1) 
+            55 # SSTORE 
+            00 # STOP 
+          6000 # PUSH1(0) 
+        e201fff4 # RJUMPV(-12, 
+            00 # STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -255,19 +256,19 @@ validInvalid:
         010004 # Types length ( 4 )
         020001 # Total code sections ( 1 )
           000c # Code section  0 , 12  bytes
-        030000 # Data section length ( 0 )
+        040000 # Data section length ( 0 )
             00 # Terminator (end of header)
                # Code 0 types
             00 # 0 inputs
             00 # 0 outputs
           0002 # max stack: 2
                # Code section 0
-          6000 # [0] PUSH1(0) 
-        e2010000 # [2] RJUMPV(0, 
-          6001 # [6] PUSH1(1) 
-          6001 # [8] PUSH1(1) 
-            55 # [10] SSTORE 
-            00 # [11] STOP 
+          6000 # PUSH1(0) 
+        e2010000 # RJUMPV(0, 
+          6001 # PUSH1(1) 
+          6001 # PUSH1(1) 
+            55 # SSTORE 
+            00 # STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -280,22 +281,22 @@ validInvalid:
         010004 # Types length ( 4 )
         020001 # Total code sections ( 1 )
           0013 # Code section  0 , 19  bytes
-        030000 # Data section length ( 0 )
+        040000 # Data section length ( 0 )
             00 # Terminator (end of header)
                # Code 0 types
             00 # 0 inputs
             00 # 0 outputs
           0002 # max stack: 2
                # Code section 0
-          6000 # [0] PUSH1(0) 
-        e20300030000fff6 # [2] RJUMPV(3,0,-10) 
-            5b # [10] NOP 
-            5b # [11] NOP 
-            00 # [12] STOP 
-          6001 # [13] PUSH1(1) 
-          6001 # [15] PUSH1(1) 
-            55 # [17] SSTORE 
-            00 # [18] STOP 
+          6000 # PUSH1(0) 
+        e20300030000fff6 # RJUMPV(3,0,-10) 
+            5b # NOP 
+            5b # NOP 
+            00 # STOP 
+          6001 # PUSH1(1) 
+          6001 # PUSH1(1) 
+            55 # SSTORE 
+            00 # STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -303,35 +304,35 @@ validInvalid:
     # EOF1V4200_0010 (Valid) EOF with RJUMPV table size 255 (Target 0)
     # Code: PUSH1(0) RJUMPV(random 255 offsets) NOP * 255 STOP PUSH1(1) PUSH1(1) SSTORE STOP
     - data: |
-       :label EOF1V4200_0010 :raw 0xef0001010004020001030803000000000000026000e2ff010000c600690073005100ff004a00ec002900cd00ba00ab00f200fb00e30046007c00c2005400f8001b00e800e7008d0076005a002e00630033009f00c9009a00660032000d00b70031005800a3005a0025005d00050017005800e9005e00d400ab00b200cd00c6009b00b400540011000e0082007400410021003d00dc0087007000e9003e00a1004100e100fc0067003e0001007e009700ea00dc006b0096008f0038005c002a00ec00b0003b00fb003200af003c005400ec001800db005c0002001a00fe004300fb00fa00aa003a00fb002900d100e60005003c007c0094007500d800be0061008900f9005c00bb00a80099000f009500b100eb00f100b3000500ef00f7000000e900a1003a00e500ca000b00cb00d000480047006400bd001f0023001e00a8001c007b006400c500140073005a00c5005e004b00790063003b0070006400240011009e000900dc00aa00d400ac00f2001b001000af003b003300cd00e30050004800470015005c00bb006f0022001900ba009b007d00f5000b00e1001a001c007f002300f8002900f800a4001b001300b500ca004e00e800980032003800e00079004d003d003400bc005f004e007700fa00cb006c000500ac00860021002b00aa001a005500a200be007000b50073003b0004005c00d30036009400b300af00e200f000e4009e004f00320015004900fd008200ff5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b00600160015500
+       :label EOF1V4200_0010 :raw 0xef0001010004020001030804000000000000026000e2ff010000c600690073005100ff004a00ec002900cd00ba00ab00f200fb00e30046007c00c2005400f8001b00e800e7008d0076005a002e00630033009f00c9009a00660032000d00b70031005800a3005a0025005d00050017005800e9005e00d400ab00b200cd00c6009b00b400540011000e0082007400410021003d00dc0087007000e9003e00a1004100e100fc0067003e0001007e009700ea00dc006b0096008f0038005c002a00ec00b0003b00fb003200af003c005400ec001800db005c0002001a00fe004300fb00fa00aa003a00fb002900d100e60005003c007c0094007500d800be0061008900f9005c00bb00a80099000f009500b100eb00f100b3000500ef00f7000000e900a1003a00e500ca000b00cb00d000480047006400bd001f0023001e00a8001c007b006400c500140073005a00c5005e004b00790063003b0070006400240011009e000900dc00aa00d400ac00f2001b001000af003b003300cd00e30050004800470015005c00bb006f0022001900ba009b007d00f5000b00e1001a001c007f002300f8002900f800a4001b001300b500ca004e00e800980032003800e00079004d003d003400bc005f004e007700fa00cb006c000500ac00860021002b00aa001a005500a200be007000b50073003b0004005c00d30036009400b300af00e200f000e4009e004f00320015004900fd008200ff5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b00600160015500
       expectException:
         "Cancun" : "EOF_InvalidCode"
 
     # EOF1V4200_0011 (Valid) EOF with RJUMPV table size 255 (Target 100)
     # Code: PUSH1(100) RJUMPV(random 255 offsets) NOP * 255 STOP PUSH1(1) PUSH1(1) SSTORE STOP
     - data: |
-       :label EOF1V4200_0011 :raw 0xef0001010004020001030803000000000000026064e2ff006700c600690073005100ff004a00ec002900cd00ba00ab00f200fb00e30046007c00c2005400f8001b00e800e7008d0076005a002e00630033009f00c9009a00660032000d00b70031005800a3005a0025005d00050017005800e9005e00d400ab00b200cd00c6009b00b400540011000e0082007400410021003d00dc0087007000e9003e00a1004100e100fc0067003e0001007e009700ea00dc006b0096008f0038005c002a00ec00b0003b00fb003200af003c005400ec001800db005c0002001a00fe0043010000fa00aa003a00fb002900d100e60005003c007c0094007500d800be0061008900f9005c00bb00a80099000f009500b100eb00f100b3000500ef00f7000000e900a1003a00e500ca000b00cb00d000480047006400bd001f0023001e00a8001c007b006400c500140073005a00c5005e004b00790063003b0070006400240011009e000900dc00aa00d400ac00f2001b001000af003b003300cd00e30050004800470015005c00bb006f0022001900ba009b007d00f5000b00e1001a001c007f002300f8002900f800a4001b001300b500ca004e00e800980032003800e00079004d003d003400bc005f004e007700fa00cb006c000500ac00860021002b00aa001a005500a200be007000b50073003b0004005c00d30036009400b300af00e200f000e4009e004f00320015004900fd008200ff5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b00600160015500
+       :label EOF1V4200_0011 :raw 0xef0001010004020001030804000000000000026064e2ff006700c600690073005100ff004a00ec002900cd00ba00ab00f200fb00e30046007c00c2005400f8001b00e800e7008d0076005a002e00630033009f00c9009a00660032000d00b70031005800a3005a0025005d00050017005800e9005e00d400ab00b200cd00c6009b00b400540011000e0082007400410021003d00dc0087007000e9003e00a1004100e100fc0067003e0001007e009700ea00dc006b0096008f0038005c002a00ec00b0003b00fb003200af003c005400ec001800db005c0002001a00fe0043010000fa00aa003a00fb002900d100e60005003c007c0094007500d800be0061008900f9005c00bb00a80099000f009500b100eb00f100b3000500ef00f7000000e900a1003a00e500ca000b00cb00d000480047006400bd001f0023001e00a8001c007b006400c500140073005a00c5005e004b00790063003b0070006400240011009e000900dc00aa00d400ac00f2001b001000af003b003300cd00e30050004800470015005c00bb006f0022001900ba009b007d00f5000b00e1001a001c007f002300f8002900f800a4001b001300b500ca004e00e800980032003800e00079004d003d003400bc005f004e007700fa00cb006c000500ac00860021002b00aa001a005500a200be007000b50073003b0004005c00d30036009400b300af00e200f000e4009e004f00320015004900fd008200ff5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b00600160015500
       expectException:
         "Cancun" : "EOF_InvalidCode"
 
     # EOF1V4200_0012 (Valid) EOF with RJUMPV table size 255 (Target 254)
     # Code: PUSH1(254) RJUMPV(random 255 offsets) NOP * 255 STOP PUSH1(1) PUSH1(1) SSTORE STOP
     - data: |
-       :label EOF1V4200_0012 :raw 0xef00010100040200010308030000000000000260fee2ff006700c600690073005100ff004a00ec002900cd00ba00ab00f200fb00e30046007c00c2005400f8001b00e800e7008d0076005a002e00630033009f00c9009a00660032000d00b70031005800a3005a0025005d00050017005800e9005e00d400ab00b200cd00c6009b00b400540011000e0082007400410021003d00dc0087007000e9003e00a1004100e100fc0067003e0001007e009700ea00dc006b0096008f0038005c002a00ec00b0003b00fb003200af003c005400ec001800db005c0002001a00fe004300fb00fa00aa003a00fb002900d100e60005003c007c0094007500d800be0061008900f9005c00bb00a80099000f009500b100eb00f100b3000500ef00f7000000e900a1003a00e500ca000b00cb00d000480047006400bd001f0023001e00a8001c007b006400c500140073005a00c5005e004b00790063003b0070006400240011009e000900dc00aa00d400ac00f2001b001000af003b003300cd00e30050004800470015005c00bb006f0022001900ba009b007d00f5000b00e1001a001c007f002300f8002900f800a4001b001300b500ca004e00e800980032003800e00079004d003d003400bc005f004e007700fa00cb006c000500ac00860021002b00aa001a005500a200be007000b50073003b0004005c00d30036009400b300af00e200f000e4009e004f00320015004900fd008201005b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b00600160015500
+       :label EOF1V4200_0012 :raw 0xef00010100040200010308040000000000000260fee2ff006700c600690073005100ff004a00ec002900cd00ba00ab00f200fb00e30046007c00c2005400f8001b00e800e7008d0076005a002e00630033009f00c9009a00660032000d00b70031005800a3005a0025005d00050017005800e9005e00d400ab00b200cd00c6009b00b400540011000e0082007400410021003d00dc0087007000e9003e00a1004100e100fc0067003e0001007e009700ea00dc006b0096008f0038005c002a00ec00b0003b00fb003200af003c005400ec001800db005c0002001a00fe004300fb00fa00aa003a00fb002900d100e60005003c007c0094007500d800be0061008900f9005c00bb00a80099000f009500b100eb00f100b3000500ef00f7000000e900a1003a00e500ca000b00cb00d000480047006400bd001f0023001e00a8001c007b006400c500140073005a00c5005e004b00790063003b0070006400240011009e000900dc00aa00d400ac00f2001b001000af003b003300cd00e30050004800470015005c00bb006f0022001900ba009b007d00f5000b00e1001a001c007f002300f8002900f800a4001b001300b500ca004e00e800980032003800e00079004d003d003400bc005f004e007700fa00cb006c000500ac00860021002b00aa001a005500a200be007000b50073003b0004005c00d30036009400b300af00e200f000e4009e004f00320015004900fd008201005b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b00600160015500
       expectException:
         "Cancun" : "EOF_InvalidCode"
 
     # EOF1V4200_0013 (Valid) EOF with RJUMPV table size 255 (Target 256)
     # Code: PUSH2(256) RJUMPV(random 255 offsets) NOP * 255 PUSH1(1) PUSH1(1) SSTORE STOP
     - data: |
-       :label EOF1V4200_0013 :raw 0xef000101000402000103080300000000000002610100e2ff006700c600690073005100ff004a00ec002900cd00ba00ab00f200fb00e30046007c00c2005400f8001b00e800e7008d0076005a002e00630033009f00c9009a00660032000d00b70031005800a3005a0025005d00050017005800e9005e00d400ab00b200cd00c6009b00b400540011000e0082007400410021003d00dc0087007000e9003e00a1004100e100fc0067003e0001007e009700ea00dc006b0096008f0038005c002a00ec00b0003b00fb003200af003c005400ec001800db005c0002001a00fe004300fb00fa00aa003a00fb002900d100e60005003c007c0094007500d800be0061008900f9005c00bb00a80099000f009500b100eb00f100b3000500ef00f7000000e900a1003a00e500ca000b00cb00d000480047006400bd001f0023001e00a8001c007b006400c500140073005a00c5005e004b00790063003b0070006400240011009e000900dc00aa00d400ac00f2001b001000af003b003300cd00e30050004800470015005c00bb006f0022001900ba009b007d00f5000b00e1001a001c007f002300f8002900f800a4001b001300b500ca004e00e800980032003800e00079004d003d003400bc005f004e007700fa00cb006c000500ac00860021002b00aa001a005500a200be007000b50073003b0004005c00d30036009400b300af00e200f000e4009e004f00320015004900fd008200ff5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b600160015500
+       :label EOF1V4200_0013 :raw 0xef000101000402000103080400000000000002610100e2ff006700c600690073005100ff004a00ec002900cd00ba00ab00f200fb00e30046007c00c2005400f8001b00e800e7008d0076005a002e00630033009f00c9009a00660032000d00b70031005800a3005a0025005d00050017005800e9005e00d400ab00b200cd00c6009b00b400540011000e0082007400410021003d00dc0087007000e9003e00a1004100e100fc0067003e0001007e009700ea00dc006b0096008f0038005c002a00ec00b0003b00fb003200af003c005400ec001800db005c0002001a00fe004300fb00fa00aa003a00fb002900d100e60005003c007c0094007500d800be0061008900f9005c00bb00a80099000f009500b100eb00f100b3000500ef00f7000000e900a1003a00e500ca000b00cb00d000480047006400bd001f0023001e00a8001c007b006400c500140073005a00c5005e004b00790063003b0070006400240011009e000900dc00aa00d400ac00f2001b001000af003b003300cd00e30050004800470015005c00bb006f0022001900ba009b007d00f5000b00e1001a001c007f002300f8002900f800a4001b001300b500ca004e00e800980032003800e00079004d003d003400bc005f004e007700fa00cb006c000500ac00860021002b00aa001a005500a200be007000b50073003b0004005c00d30036009400b300af00e200f000e4009e004f00320015004900fd008200ff5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b600160015500
       expectException:
         "Cancun" : "EOF_InvalidCode"
 
     # EOF1I4200_0001 (Invalid) EOF code containing truncated RJUMP
     # Code: RJUMP
     - data: |
-       :label EOF1I4200_0001 :raw 0xef000101000402000100010300000000000000e0
+       :label EOF1I4200_0001 :raw 0xef000101000402000100010400000000000000e0
       expectException:
         "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_TruncatedImmediate"
@@ -339,7 +340,7 @@ validInvalid:
     # EOF1I4200_0002 (Invalid) EOF code containing truncated RJUMP
     # Code: RJUMP(0?
     - data: |
-       :label EOF1I4200_0002 :raw 0xef000101000402000100020300000000000000e000
+       :label EOF1I4200_0002 :raw 0xef000101000402000100020400000000000000e000
       expectException:
         "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_TruncatedImmediate"
@@ -352,14 +353,14 @@ validInvalid:
         010004 # Types length ( 4 )
         020001 # Total code sections ( 1 )
           0003 # Code section  0 , 3  bytes
-        030000 # Data section length ( 0 )
+        040000 # Data section length ( 0 )
             00 # Terminator (end of header)
                # Code 0 types
             00 # 0 inputs
             00 # 0 outputs
           0000 # max stack: 0
                # Code section 0
-        e0fffb # [0] RJUMP(-5) 
+        e0fffb # RJUMP(-5) 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -373,14 +374,14 @@ validInvalid:
         010004 # Types length ( 4 )
         020001 # Total code sections ( 1 )
           0003 # Code section  0 , 3  bytes
-        030000 # Data section length ( 0 )
+        040000 # Data section length ( 0 )
             00 # Terminator (end of header)
                # Code 0 types
             00 # 0 inputs
             00 # 0 outputs
           0000 # max stack: 0
                # Code section 0
-        e0ffe9 # [0] RJUMP(-23) 
+        e0ffe9 # RJUMP(-23) 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -395,14 +396,14 @@ validInvalid:
         010004 # Types length ( 4 )
         020001 # Total code sections ( 1 )
           0003 # Code section  0 , 3  bytes
-        030004 # Data section length ( 4 )
+        040004 # Data section length ( 4 )
             00 # Terminator (end of header)
                # Code 0 types
             00 # 0 inputs
             00 # 0 outputs
           0000 # max stack: 0
                # Code section 0
-        e00002 # [0] RJUMP(2) 
+        e00002 # RJUMP(2) 
                # Data section 
         aabbccdd
       expectException:
@@ -417,14 +418,14 @@ validInvalid:
         010004 # Types length ( 4 )
         020001 # Total code sections ( 1 )
           0003 # Code section  0 , 3  bytes
-        030000 # Data section length ( 0 )
+        040000 # Data section length ( 0 )
             00 # Terminator (end of header)
                # Code 0 types
             00 # 0 inputs
             00 # 0 outputs
           0000 # max stack: 0
                # Code section 0
-        e00002 # [0] RJUMP(2) 
+        e00002 # RJUMP(2) 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -438,15 +439,15 @@ validInvalid:
         010004 # Types length ( 4 )
         020001 # Total code sections ( 1 )
           0004 # Code section  0 , 4  bytes
-        030000 # Data section length ( 0 )
+        040000 # Data section length ( 0 )
             00 # Terminator (end of header)
                # Code 0 types
             00 # 0 inputs
             00 # 0 outputs
           0000 # max stack: 0
                # Code section 0
-        e00001 # [0] RJUMP(1) 
-            00 # [3] STOP 
+        e00001 # RJUMP(1) 
+            00 # STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -460,14 +461,14 @@ validInvalid:
         010004 # Types length ( 4 )
         020001 # Total code sections ( 1 )
           0003 # Code section  0 , 3  bytes
-        030000 # Data section length ( 0 )
+        040000 # Data section length ( 0 )
             00 # Terminator (end of header)
                # Code 0 types
             00 # 0 inputs
             00 # 0 outputs
           0000 # max stack: 0
                # Code section 0
-        e0ffff # [0] RJUMP(-1) 
+        e0ffff # RJUMP(-1) 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -481,16 +482,16 @@ validInvalid:
         010004 # Types length ( 4 )
         020001 # Total code sections ( 1 )
           0007 # Code section  0 , 7  bytes
-        030000 # Data section length ( 0 )
+        040000 # Data section length ( 0 )
             00 # Terminator (end of header)
                # Code 0 types
             00 # 0 inputs
             00 # 0 outputs
           0000 # max stack: 0
                # Code section 0
-        e00003 # [0] RJUMP(3) 
-            00 # [3] STOP 
-        e0fffc # [4] RJUMP(-4) 
+        e00003 # RJUMP(3) 
+            00 # STOP 
+        e0fffc # RJUMP(-4) 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -504,18 +505,18 @@ validInvalid:
         010004 # Types length ( 4 )
         020001 # Total code sections ( 1 )
           000a # Code section  0 , 10  bytes
-        030000 # Data section length ( 0 )
+        040000 # Data section length ( 0 )
             00 # Terminator (end of header)
                # Code 0 types
             00 # 0 inputs
             00 # 0 outputs
           0000 # max stack: 0
                # Code section 0
-        e00005 # [0] RJUMP(5) 
-            00 # [3] STOP 
-          6001 # [4] PUSH1(1) 
-        e1fffa # [6] RJUMPI(-6) 
-            00 # [9] STOP 
+        e00005 # RJUMP(5) 
+            00 # STOP 
+          6001 # PUSH1(1) 
+        e1fffa # RJUMPI(-6) 
+            00 # STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -529,19 +530,19 @@ validInvalid:
         010004 # Types length ( 4 )
         020001 # Total code sections ( 1 )
           000a # Code section  0 , 10  bytes
-        030000 # Data section length ( 0 )
+        040000 # Data section length ( 0 )
             00 # Terminator (end of header)
                # Code 0 types
             00 # 0 inputs
             00 # 0 outputs
           0000 # max stack: 0
                # Code section 0
-        e00002 # [0] RJUMP(2) 
-            5b # [3] NOP 
-          6001 # [4] PUSH1(1) 
-          6001 # [6] PUSH1(1) 
-            55 # [8] SSTORE 
-            00 # [9] STOP 
+        e00002 # RJUMP(2) 
+            5b # NOP 
+          6001 # PUSH1(1) 
+          6001 # PUSH1(1) 
+            55 # SSTORE 
+            00 # STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -555,18 +556,18 @@ validInvalid:
         010004 # Types length ( 4 )
         020001 # Total code sections ( 1 )
           000b # Code section  0 , 11  bytes
-        030000 # Data section length ( 0 )
+        040000 # Data section length ( 0 )
             00 # Terminator (end of header)
                # Code 0 types
             00 # 0 inputs
             00 # 0 outputs
           0000 # max stack: 0
                # Code section 0
-        e00005 # [0] RJUMP(5) 
-            00 # [3] STOP 
-          6001 # [4] PUSH1(1) 
-        e2010000 # [6] RJUMPV(0, 
-            00 # [10] STOP 
+        e00005 # RJUMP(5) 
+            00 # STOP 
+          6001 # PUSH1(1) 
+        e2010000 # RJUMPV(0, 
+            00 # STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -582,7 +583,7 @@ validInvalid:
         020002 # Total code sections ( 2 )
           0007 # Code section  0 , 7  bytes
           0006 # Code section  1 , 6  bytes
-        030000 # Data section length ( 0 )
+        040000 # Data section length ( 0 )
             00 # Terminator (end of header)
                # Code 0 types
             00 # 0 inputs
@@ -593,14 +594,14 @@ validInvalid:
             00 # 0 outputs
           0002 # max stack: 2
                # Code section 0
-        e00002 # [0] RJUMP(2) 
-        e30001 # [3] CALLF(1) 
-            00 # [6] STOP 
+        e00002 # RJUMP(2) 
+        e30001 # CALLF(1) 
+            00 # STOP 
                # Code section 1
-          6001 # [0] PUSH1(1) 
-          6001 # [2] PUSH1(1) 
-            55 # [4] SSTORE 
-            e4 # [5] RETF 
+          6001 # PUSH1(1) 
+          6001 # PUSH1(1) 
+            55 # SSTORE 
+            e4 # RETF 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -609,7 +610,7 @@ validInvalid:
     # EOF1I4200_0014 (Invalid) EOF code containing truncated RJUMPI
     # Code: PUSH1(0) RJUMPI
     - data: |
-       :label EOF1I4200_0014 :raw 0xef0001010004020001000303000000000000016000e1
+       :label EOF1I4200_0014 :raw 0xef0001010004020001000304000000000000016000e1
       expectException:
         "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_TruncatedImmediate"
@@ -617,7 +618,7 @@ validInvalid:
     # EOF1I4200_0015 (Invalid) EOF code containing truncated RJUMPI
     # Code: PUSH1(0) RJUMPI(0?
     - data: |
-       :label EOF1I4200_0015 :raw 0xef0001010004020001000403000000000000016000e100
+       :label EOF1I4200_0015 :raw 0xef0001010004020001000404000000000000016000e100
       expectException:
         "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_TruncatedImmediate"
@@ -630,16 +631,16 @@ validInvalid:
         010004 # Types length ( 4 )
         020001 # Total code sections ( 1 )
           0006 # Code section  0 , 6  bytes
-        030000 # Data section length ( 0 )
+        040000 # Data section length ( 0 )
             00 # Terminator (end of header)
                # Code 0 types
             00 # 0 inputs
             00 # 0 outputs
           0001 # max stack: 1
                # Code section 0
-          6001 # [0] PUSH1(1) 
-        e1fff9 # [2] RJUMPI(-7) 
-            00 # [5] STOP 
+          6001 # PUSH1(1) 
+        e1fff9 # RJUMPI(-7) 
+            00 # STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -653,16 +654,16 @@ validInvalid:
         010004 # Types length ( 4 )
         020001 # Total code sections ( 1 )
           0006 # Code section  0 , 6  bytes
-        030000 # Data section length ( 0 )
+        040000 # Data section length ( 0 )
             00 # Terminator (end of header)
                # Code 0 types
             00 # 0 inputs
             00 # 0 outputs
           0001 # max stack: 1
                # Code section 0
-          6001 # [0] PUSH1(1) 
-        e1ffe7 # [2] RJUMPI(-25) 
-            00 # [5] STOP 
+          6001 # PUSH1(1) 
+        e1ffe7 # RJUMPI(-25) 
+            00 # STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -677,16 +678,16 @@ validInvalid:
         010004 # Types length ( 4 )
         020001 # Total code sections ( 1 )
           0006 # Code section  0 , 6  bytes
-        030004 # Data section length ( 4 )
+        040004 # Data section length ( 4 )
             00 # Terminator (end of header)
                # Code 0 types
             00 # 0 inputs
             00 # 0 outputs
           0001 # max stack: 1
                # Code section 0
-          6001 # [0] PUSH1(1) 
-        e10002 # [2] RJUMPI(2) 
-            00 # [5] STOP 
+          6001 # PUSH1(1) 
+        e10002 # RJUMPI(2) 
+            00 # STOP 
                # Data section 
         aabbccdd
       expectException:
@@ -701,16 +702,16 @@ validInvalid:
         010004 # Types length ( 4 )
         020001 # Total code sections ( 1 )
           0006 # Code section  0 , 6  bytes
-        030000 # Data section length ( 0 )
+        040000 # Data section length ( 0 )
             00 # Terminator (end of header)
                # Code 0 types
             00 # 0 inputs
             00 # 0 outputs
           0001 # max stack: 1
                # Code section 0
-          6001 # [0] PUSH1(1) 
-        e10002 # [2] RJUMPI(2) 
-            00 # [5] STOP 
+          6001 # PUSH1(1) 
+        e10002 # RJUMPI(2) 
+            00 # STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -724,16 +725,16 @@ validInvalid:
         010004 # Types length ( 4 )
         020001 # Total code sections ( 1 )
           0006 # Code section  0 , 6  bytes
-        030000 # Data section length ( 0 )
+        040000 # Data section length ( 0 )
             00 # Terminator (end of header)
                # Code 0 types
             00 # 0 inputs
             00 # 0 outputs
           0001 # max stack: 1
                # Code section 0
-          6001 # [0] PUSH1(1) 
-        e10001 # [2] RJUMPI(1) 
-            00 # [5] STOP 
+          6001 # PUSH1(1) 
+        e10001 # RJUMPI(1) 
+            00 # STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -747,16 +748,16 @@ validInvalid:
         010004 # Types length ( 4 )
         020001 # Total code sections ( 1 )
           0006 # Code section  0 , 6  bytes
-        030000 # Data section length ( 0 )
+        040000 # Data section length ( 0 )
             00 # Terminator (end of header)
                # Code 0 types
             00 # 0 inputs
             00 # 0 outputs
           0001 # max stack: 1
                # Code section 0
-          6001 # [0] PUSH1(1) 
-        e1ffff # [2] RJUMPI(-1) 
-            00 # [5] STOP 
+          6001 # PUSH1(1) 
+        e1ffff # RJUMPI(-1) 
+            00 # STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -770,19 +771,19 @@ validInvalid:
         010004 # Types length ( 4 )
         020001 # Total code sections ( 1 )
           000c # Code section  0 , 12  bytes
-        030000 # Data section length ( 0 )
+        040000 # Data section length ( 0 )
             00 # Terminator (end of header)
                # Code 0 types
             00 # 0 inputs
             00 # 0 outputs
           0001 # max stack: 1
                # Code section 0
-          6001 # [0] PUSH1(1) 
-        e10005 # [2] RJUMPI(5) 
-            00 # [5] STOP 
-          6001 # [6] PUSH1(1) 
-        e1fff5 # [8] RJUMPI(-11) 
-            00 # [11] STOP 
+          6001 # PUSH1(1) 
+        e10005 # RJUMPI(5) 
+            00 # STOP 
+          6001 # PUSH1(1) 
+        e1fff5 # RJUMPI(-11) 
+            00 # STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -796,17 +797,17 @@ validInvalid:
         010004 # Types length ( 4 )
         020001 # Total code sections ( 1 )
           0009 # Code section  0 , 9  bytes
-        030000 # Data section length ( 0 )
+        040000 # Data section length ( 0 )
             00 # Terminator (end of header)
                # Code 0 types
             00 # 0 inputs
             00 # 0 outputs
           0001 # max stack: 1
                # Code section 0
-          6001 # [0] PUSH1(1) 
-        e10003 # [2] RJUMPI(3) 
-            00 # [5] STOP 
-        e0fff7 # [6] RJUMP(-9) 
+          6001 # PUSH1(1) 
+        e10003 # RJUMPI(3) 
+            00 # STOP 
+        e0fff7 # RJUMP(-9) 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -820,16 +821,16 @@ validInvalid:
         010004 # Types length ( 4 )
         020001 # Total code sections ( 1 )
           0006 # Code section  0 , 6  bytes
-        030000 # Data section length ( 0 )
+        040000 # Data section length ( 0 )
             00 # Terminator (end of header)
                # Code 0 types
             00 # 0 inputs
             00 # 0 outputs
           0001 # max stack: 1
                # Code section 0
-          6001 # [0] PUSH1(1) 
-        e1fffc # [2] RJUMPI(-4) 
-            00 # [5] STOP 
+          6001 # PUSH1(1) 
+        e1fffc # RJUMPI(-4) 
+            00 # STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -843,19 +844,19 @@ validInvalid:
         010004 # Types length ( 4 )
         020001 # Total code sections ( 1 )
           000d # Code section  0 , 13  bytes
-        030000 # Data section length ( 0 )
+        040000 # Data section length ( 0 )
             00 # Terminator (end of header)
                # Code 0 types
             00 # 0 inputs
             00 # 0 outputs
           0001 # max stack: 1
                # Code section 0
-          6001 # [0] PUSH1(1) 
-        e10005 # [2] RJUMPI(5) 
-            00 # [5] STOP 
-          6001 # [6] PUSH1(1) 
-        e2010000 # [8] RJUMPV(0, 
-            00 # [12] STOP 
+          6001 # PUSH1(1) 
+        e10005 # RJUMPI(5) 
+            00 # STOP 
+          6001 # PUSH1(1) 
+        e2010000 # RJUMPV(0, 
+            00 # STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -871,7 +872,7 @@ validInvalid:
         020002 # Total code sections ( 2 )
           0009 # Code section  0 , 9  bytes
           0006 # Code section  1 , 6  bytes
-        030000 # Data section length ( 0 )
+        040000 # Data section length ( 0 )
             00 # Terminator (end of header)
                # Code 0 types
             00 # 0 inputs
@@ -882,15 +883,15 @@ validInvalid:
             00 # 0 outputs
           0002 # max stack: 2
                # Code section 0
-          6001 # [0] PUSH1(1) 
-        e10002 # [2] RJUMPI(2) 
-        e30001 # [5] CALLF(1) 
-            00 # [8] STOP 
+          6001 # PUSH1(1) 
+        e10002 # RJUMPI(2) 
+        e30001 # CALLF(1) 
+            00 # STOP 
                # Code section 1
-          6001 # [0] PUSH1(1) 
-          6001 # [2] PUSH1(1) 
-            55 # [4] SSTORE 
-            e4 # [5] RETF 
+          6001 # PUSH1(1) 
+          6001 # PUSH1(1) 
+            55 # SSTORE 
+            e4 # RETF 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -899,7 +900,7 @@ validInvalid:
     # EOF1I4200_0027 (Invalid) EOF code containing RJUMPV with count 0 and zero immediates
     # Code: PUSH1(1) RJUMPV
     - data: |
-       :label EOF1I4200_0027 :raw 0xef0001010004020001000403000000000000016001e200
+       :label EOF1I4200_0027 :raw 0xef0001010004020001000404000000000000016001e200
       expectException:
         "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_InvalidJumpTableCount"
@@ -907,7 +908,7 @@ validInvalid:
     # EOF1I4200_0028 (Invalid) EOF code containing RJUMPV with count 0 and one immediates
     # Code: PUSH1(1) RJUMPV
     - data: |
-       :label EOF1I4200_0028 :raw 0xef0001010004020001000603000000000000016001e2000000
+       :label EOF1I4200_0028 :raw 0xef0001010004020001000604000000000000016001e2000000
       expectException:
         "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_InvalidJumpTableCount"
@@ -915,7 +916,7 @@ validInvalid:
     # EOF1I4200_0029 (Invalid) EOF code containing truncated RJUMPV
     # Code: PUSH1(1) RJUMPV
     - data: |
-       :label EOF1I4200_0029 :raw 0xef0001010004020001000303000000000000016001e2
+       :label EOF1I4200_0029 :raw 0xef0001010004020001000304000000000000016001e2
       expectException:
         "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_TruncatedImmediate"
@@ -923,7 +924,7 @@ validInvalid:
     # EOF1I4200_0030 (Invalid) EOF code containing truncated RJUMPV
     # Code: PUSH1(1) RJUMPV(
     - data: |
-       :label EOF1I4200_0030 :raw 0xef0001010004020001000403000000000000016001e201
+       :label EOF1I4200_0030 :raw 0xef0001010004020001000404000000000000016001e201
       expectException:
         "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_TruncatedImmediate"
@@ -931,7 +932,7 @@ validInvalid:
     # EOF1I4200_0031 (Invalid) EOF code containing truncated RJUMPV
     # Code: PUSH1(1) RJUMPV(0?
     - data: |
-       :label EOF1I4200_0031 :raw 0xef0001010004020001000503000000000000016001e20100
+       :label EOF1I4200_0031 :raw 0xef0001010004020001000504000000000000016001e20100
       expectException:
         "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_TruncatedImmediate"
@@ -944,16 +945,16 @@ validInvalid:
         010004 # Types length ( 4 )
         020001 # Total code sections ( 1 )
           0007 # Code section  0 , 7  bytes
-        030000 # Data section length ( 0 )
+        040000 # Data section length ( 0 )
             00 # Terminator (end of header)
                # Code 0 types
             00 # 0 inputs
             00 # 0 outputs
           0001 # max stack: 1
                # Code section 0
-          6001 # [0] PUSH1(1) 
-        e201fff9 # [2] RJUMPV(-7, 
-            00 # [6] STOP 
+          6001 # PUSH1(1) 
+        e201fff9 # RJUMPV(-7, 
+            00 # STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -967,16 +968,16 @@ validInvalid:
         010004 # Types length ( 4 )
         020001 # Total code sections ( 1 )
           0007 # Code section  0 , 7  bytes
-        030000 # Data section length ( 0 )
+        040000 # Data section length ( 0 )
             00 # Terminator (end of header)
                # Code 0 types
             00 # 0 inputs
             00 # 0 outputs
           0001 # max stack: 1
                # Code section 0
-          6001 # [0] PUSH1(1) 
-        e201fff1 # [2] RJUMPV(-15, 
-            00 # [6] STOP 
+          6001 # PUSH1(1) 
+        e201fff1 # RJUMPV(-15, 
+            00 # STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -991,16 +992,16 @@ validInvalid:
         010004 # Types length ( 4 )
         020001 # Total code sections ( 1 )
           0007 # Code section  0 , 7  bytes
-        030004 # Data section length ( 4 )
+        040004 # Data section length ( 4 )
             00 # Terminator (end of header)
                # Code 0 types
             00 # 0 inputs
             00 # 0 outputs
           0001 # max stack: 1
                # Code section 0
-          6001 # [0] PUSH1(1) 
-        e2010002 # [2] RJUMPV(2, 
-            00 # [6] STOP 
+          6001 # PUSH1(1) 
+        e2010002 # RJUMPV(2, 
+            00 # STOP 
                # Data section 
         aabbccdd
       expectException:
@@ -1015,16 +1016,16 @@ validInvalid:
         010004 # Types length ( 4 )
         020001 # Total code sections ( 1 )
           0007 # Code section  0 , 7  bytes
-        030000 # Data section length ( 0 )
+        040000 # Data section length ( 0 )
             00 # Terminator (end of header)
                # Code 0 types
             00 # 0 inputs
             00 # 0 outputs
           0001 # max stack: 1
                # Code section 0
-          6001 # [0] PUSH1(1) 
-        e2010002 # [2] RJUMPV(2, 
-            00 # [6] STOP 
+          6001 # PUSH1(1) 
+        e2010002 # RJUMPV(2, 
+            00 # STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -1038,16 +1039,16 @@ validInvalid:
         010004 # Types length ( 4 )
         020001 # Total code sections ( 1 )
           0007 # Code section  0 , 7  bytes
-        030000 # Data section length ( 0 )
+        040000 # Data section length ( 0 )
             00 # Terminator (end of header)
                # Code 0 types
             00 # 0 inputs
             00 # 0 outputs
           0001 # max stack: 1
                # Code section 0
-          6001 # [0] PUSH1(1) 
-        e2010001 # [2] RJUMPV(1, 
-            00 # [6] STOP 
+          6001 # PUSH1(1) 
+        e2010001 # RJUMPV(1, 
+            00 # STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -1061,16 +1062,16 @@ validInvalid:
         010004 # Types length ( 4 )
         020001 # Total code sections ( 1 )
           0007 # Code section  0 , 7  bytes
-        030000 # Data section length ( 0 )
+        040000 # Data section length ( 0 )
             00 # Terminator (end of header)
                # Code 0 types
             00 # 0 inputs
             00 # 0 outputs
           0001 # max stack: 1
                # Code section 0
-          6001 # [0] PUSH1(1) 
-        e201ffff # [2] RJUMPV(-1, 
-            00 # [6] STOP 
+          6001 # PUSH1(1) 
+        e201ffff # RJUMPV(-1, 
+            00 # STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -1084,19 +1085,19 @@ validInvalid:
         010004 # Types length ( 4 )
         020001 # Total code sections ( 1 )
           000d # Code section  0 , 13  bytes
-        030000 # Data section length ( 0 )
+        040000 # Data section length ( 0 )
             00 # Terminator (end of header)
                # Code 0 types
             00 # 0 inputs
             00 # 0 outputs
           0001 # max stack: 1
                # Code section 0
-          6001 # [0] PUSH1(1) 
-        e2010005 # [2] RJUMPV(5, 
-            00 # [6] STOP 
-          6001 # [7] PUSH1(1) 
-        e0fff7 # [9] RJUMP(-9) 
-            00 # [12] STOP 
+          6001 # PUSH1(1) 
+        e2010005 # RJUMPV(5, 
+            00 # STOP 
+          6001 # PUSH1(1) 
+        e0fff7 # RJUMP(-9) 
+            00 # STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -1110,19 +1111,19 @@ validInvalid:
         010004 # Types length ( 4 )
         020001 # Total code sections ( 1 )
           000d # Code section  0 , 13  bytes
-        030000 # Data section length ( 0 )
+        040000 # Data section length ( 0 )
             00 # Terminator (end of header)
                # Code 0 types
             00 # 0 inputs
             00 # 0 outputs
           0001 # max stack: 1
                # Code section 0
-          6001 # [0] PUSH1(1) 
-        e2010005 # [2] RJUMPV(5, 
-            00 # [6] STOP 
-          6001 # [7] PUSH1(1) 
-        e1fff7 # [9] RJUMPI(-9) 
-            00 # [12] STOP 
+          6001 # PUSH1(1) 
+        e2010005 # RJUMPV(5, 
+            00 # STOP 
+          6001 # PUSH1(1) 
+        e1fff7 # RJUMPI(-9) 
+            00 # STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -1136,20 +1137,20 @@ validInvalid:
         010004 # Types length ( 4 )
         020001 # Total code sections ( 1 )
           000d # Code section  0 , 13  bytes
-        030000 # Data section length ( 0 )
+        040000 # Data section length ( 0 )
             00 # Terminator (end of header)
                # Code 0 types
             00 # 0 inputs
             00 # 0 outputs
           0001 # max stack: 1
                # Code section 0
-          6001 # [0] PUSH1(1) 
-        e2010002 # [2] RJUMPV(2, 
-            00 # [6] STOP 
-          6001 # [7] PUSH1(1) 
-          6001 # [9] PUSH1(1) 
-            55 # [11] SSTORE 
-            00 # [12] STOP 
+          6001 # PUSH1(1) 
+        e2010002 # RJUMPV(2, 
+            00 # STOP 
+          6001 # PUSH1(1) 
+          6001 # PUSH1(1) 
+            55 # SSTORE 
+            00 # STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -1163,19 +1164,19 @@ validInvalid:
         010004 # Types length ( 4 )
         020001 # Total code sections ( 1 )
           000e # Code section  0 , 14  bytes
-        030000 # Data section length ( 0 )
+        040000 # Data section length ( 0 )
             00 # Terminator (end of header)
                # Code 0 types
             00 # 0 inputs
             00 # 0 outputs
           0001 # max stack: 1
                # Code section 0
-          6001 # [0] PUSH1(1) 
-        e2010005 # [2] RJUMPV(5, 
-            00 # [6] STOP 
-          6001 # [7] PUSH1(1) 
-        e2010000 # [9] RJUMPV(0, 
-            00 # [13] STOP 
+          6001 # PUSH1(1) 
+        e2010005 # RJUMPV(5, 
+            00 # STOP 
+          6001 # PUSH1(1) 
+        e2010000 # RJUMPV(0, 
+            00 # STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
@@ -1191,7 +1192,7 @@ validInvalid:
         020002 # Total code sections ( 2 )
           000a # Code section  0 , 10  bytes
           0006 # Code section  1 , 6  bytes
-        030000 # Data section length ( 0 )
+        040000 # Data section length ( 0 )
             00 # Terminator (end of header)
                # Code 0 types
             00 # 0 inputs
@@ -1202,17 +1203,18 @@ validInvalid:
             00 # 0 outputs
           0002 # max stack: 2
                # Code section 0
-          6000 # [0] PUSH1(0) 
-        e2010002 # [2] RJUMPV(2, 
-        e30001 # [6] CALLF(1) 
-            00 # [9] STOP 
+          6000 # PUSH1(0) 
+        e2010002 # RJUMPV(2, 
+        e30001 # CALLF(1) 
+            00 # STOP 
                # Code section 1
-          6001 # [0] PUSH1(1) 
-          6001 # [2] PUSH1(1) 
-            55 # [4] SSTORE 
-            e4 # [5] RETF 
+          6001 # PUSH1(1) 
+          6001 # PUSH1(1) 
+            55 # SSTORE 
+            e4 # RETF 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_InvalidJumpDestination"
 
+    # <@f2

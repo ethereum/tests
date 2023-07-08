@@ -1,6 +1,5 @@
 # CREATE2 opcode with invalid EOF1 in initcode or in deployed code called from inside EOF contract
 # ---
-# Tests filled with geth version in: https://github.com/ipsilon/go-ethereum/tree/c673883fae922f84c3ae1e66fd4e3f9a3d6683c3
 # Active EIPs: 3540, 3670, 4200, 4750, 5450
 CREATE2_EOF1Invalid_FromEOF:
   env:
@@ -31,15 +30,15 @@ CREATE2_EOF1Invalid_FromEOF:
       # No magic
       - ':raw 0xef'  # (data index: 0)
       # Invalid magic
-      - ':raw 0xef0101010004020001002903000000000000027fef000101000402000100010300000000000000fe00000000000000000000000060005260146000f3'  # (data index: 1)
-      - ':raw 0xef0201010004020001002903000000000000027fef000101000402000100010300000000000000fe00000000000000000000000060005260146000f3'  # (data index: 2)
-      - ':raw 0xefff01010004020001002903000000000000027fef000101000402000100010300000000000000fe00000000000000000000000060005260146000f3'  # (data index: 3)
+      - ':raw 0xef0101010004020001002904000000000000027fef000101000402000100010400000000000000fe00000000000000000000000060005260146000f3'  # (data index: 1)
+      - ':raw 0xef0201010004020001002904000000000000027fef000101000402000100010400000000000000fe00000000000000000000000060005260146000f3'  # (data index: 2)
+      - ':raw 0xefff01010004020001002904000000000000027fef000101000402000100010400000000000000fe00000000000000000000000060005260146000f3'  # (data index: 3)
       # No version
       - ':raw 0xef00'  # (data index: 4)
       # Invalid version
-      - ':raw 0xef0000010004020001002903000000000000027fef000101000402000100010300000000000000fe00000000000000000000000060005260146000f3'  # (data index: 5)
-      - ':raw 0xef0002010004020001002903000000000000027fef000101000402000100010300000000000000fe00000000000000000000000060005260146000f3'  # (data index: 6)
-      - ':raw 0xef00ff010004020001002903000000000000027fef000101000402000100010300000000000000fe00000000000000000000000060005260146000f3'  # (data index: 7)
+      - ':raw 0xef0000010004020001002904000000000000027fef000101000402000100010400000000000000fe00000000000000000000000060005260146000f3'  # (data index: 5)
+      - ':raw 0xef0002010004020001002904000000000000027fef000101000402000100010400000000000000fe00000000000000000000000060005260146000f3'  # (data index: 6)
+      - ':raw 0xef00ff010004020001002904000000000000027fef000101000402000100010400000000000000fe00000000000000000000000060005260146000f3'  # (data index: 7)
       # No header
       - ':raw 0xef0001'  # (data index: 8)
       # No section
@@ -48,253 +47,243 @@ CREATE2_EOF1Invalid_FromEOF:
       - ':raw 0xef000101'  # (data index: 10)
       # Type section type incomplete
       - ':raw 0xef00010100'  # (data index: 11)
+      # No code section after type section
+      - ':raw 0xef0001010004'  # (data index: 12)
       # No total of code sections
-      - ':raw 0xef000101000402'  # (data index: 12)
+      - ':raw 0xef000101000402'  # (data index: 13)
       # Total of code sections incomplete
-      - ':raw 0xef00010100040200'  # (data index: 13)
+      - ':raw 0xef00010100040200'  # (data index: 14)
       # No code section size
-      - ':raw 0xef0001010004020001'  # (data index: 14)
+      - ':raw 0xef0001010004020001'  # (data index: 15)
       # Code section size incomplete
-      - ':raw 0xef000101000402000100'  # (data index: 15)
-      # No data section after code section size
-      - ':raw 0xef00010100040200010001'  # (data index: 16)
+      - ':raw 0xef000101000402000100'  # (data index: 16)
+      # No data section after code section sizes
+      - ':raw 0xef00010100040200010029'  # (data index: 17)
+      # No data size
+      - ':raw 0xef0001010004020001002904'  # (data index: 18)
+      # Data size incomplete
+      - ':raw 0xef000101000402000100290400'  # (data index: 19)
       # No section terminator after data section size
-      - ':raw 0xef00010100040200010001030000'  # (data index: 17)
+      - ':raw 0xef00010100040200010029040000'  # (data index: 20)
+      # No type section contents
+      - ':raw 0xef0001010004020001002904000000'  # (data index: 21)
+      # Type section contents incomplete (no outputs and max stack)
+      - ':raw 0xef000101000402000100290400000000'  # (data index: 22)
+      # Type section contents incomplete (no max stack)
+      - ':raw 0xef00010100040200010029040000000000'  # (data index: 23)
+      # Type section contents incomplete (max stack incomplete)
+      - ':raw 0xef0001010004020001002904000000000000'  # (data index: 24)
       # No code section contents
-      - ':raw 0xef000101000402000000010300000000000000'  # (data index: 18)
-      - ':raw 0xef000101000402000000000300000000000000'  # (data index: 19)
-      - ':raw 0xef00010100040200000300000000000000'  # (data index: 20)
-      - ':raw 0xef0001010000020000000003000000'  # (data index: 21)
-      - ':raw 0xef000101000002000003000000'  # (data index: 22)
-      # Type section contents incomplete
-      - ':raw 0xef0001010004020001000103000000000000fe'  # (data index: 23)
+      - ':raw 0xef000101000402000100290400000000000002'  # (data index: 25)
       # Code section contents incomplete
-      - ':raw 0xef000101000402000100020300000000000000fe'  # (data index: 24)
+      - ':raw 0xef0001010004020001002904000000000000027f'  # (data index: 26)
       # Trailing bytes after code section
-      - ':raw 0xef00010100040200010004030000000000000160015000deadbeef'  # (data index: 25)
+      - ':raw 0xef0001010004020001004c04000000000000027fef0001010004020001000c04001400000000036014601f60003960146000f3ef6000527e0101000402000100010400000000000000fe0000000000000000000000000060205260336000f3aabbcc'  # (data index: 27)
       # Empty code section
-      - ':raw 0xef000101000402000000000300000000000000'  # (data index: 26)
-      - ':raw 0xef000101000002000000000300000000000000'  # (data index: 27)
-      - ':raw 0xef000101000002000003000000'  # (data index: 28)
+      - ':raw 0xef00010100040200000400000000000000'  # (data index: 28)
+      - ':raw 0xef000101000402000000000400000000000000'  # (data index: 29)
       # Empty code section with non-empty data section
-      - ':raw 0xef000101000402000100000300020000000000aabb'  # (data index: 29)
+      - ':raw 0xef000101000402000100000400140000000000fe'  # (data index: 30)
+      - ':raw 0xef00010100040200000400140000000000fe'  # (data index: 31)
       # Code section preceding type section
-      - ':raw 0xef000102000100010100040300020000000000feaabb'  # (data index: 30)
+      - ':raw 0xef0001020001004c01000404000000000000027fef0001010004020001000c04001400000000036014601f60003960146000f3ef6000527e0101000402000100010400000000000000fe0000000000000000000000000060205260336000f3'  # (data index: 32)
       # Data section preceding type section
-      - ':raw 0xef000103000201000402000100010000000000feaabb'  # (data index: 31)
+      - ':raw 0xef0001040014010004020001000c00000000036014601f60003960146000f3ef000101000402000100010400000000000000fe'  # (data index: 33)
       # Data section preceding code section
-      - ':raw 0xef000101000403000202000100010000000000feaabb'  # (data index: 32)
-      # Data section without code section
-      - ':raw 0xef00010100040300020000000000aabb'  # (data index: 33)
+      - ':raw 0xef0001010004040014020001000c00000000036014601f60003960146000f3ef000101000402000100010400000000000000fe'  # (data index: 34)
       # No data section
-      - ':raw 0xef000101000402000100010000000000fe'  # (data index: 34)
-      # No data section size
-      - ':raw 0xef0001010004020001000103'  # (data index: 35)
-      # Data section size incomplete
-      - ':raw 0xef000101000402000100010300'  # (data index: 36)
-      # No section terminator after data section size
-      - ':raw 0xef00010100040200010001030002'  # (data index: 37)
-      - ':raw 0xef0001010004020001000103000200000000feaabb'  # (data index: 38)
+      - ':raw 0xef0001010004020001004c0000000000027fef0001010004020001000c04001400000000036014601f60003960146000f3ef6000527e0101000402000100010400000000000000fe0000000000000000000000000060205260336000f3'  # (data index: 35)
       # No data section contents
-      - ':raw 0xef000101000402000100010300020000000000fe'  # (data index: 39)
+      - ':raw 0xef0001010004020001000c04001400000000036014601f60003960146000f3'  # (data index: 36)
       # Data section contents incomplete
-      - ':raw 0xef000101000402000100010300040000000000feaabbcc'  # (data index: 40)
+      - ':raw 0xef0001010004020001000c04001400000000036014601f60003960146000f3ef0001010004020001000104000000'  # (data index: 37)
       # Trailing bytes after data section
-      - ':raw 0xef000101000402000100010300040000000000feaabbccddee'  # (data index: 41)
+      - ':raw 0xef0001010004020001000c04001400000000036014601f60003960146000f3ef000101000402000100010400000000000000feaabbcc'  # (data index: 38)
       # Multiple data sections
-      - ':raw 0xef000101000402000100010300020300020000000000feaabbaabb'  # (data index: 42)
+      - ':raw 0xef0001010004020001000c04001404000300000000036014601f60003960146000f3ef000101000402000100010400000000000000feaabbcc'  # (data index: 39)
       # Multiple code and data sections
-      - ':raw 0xef000101000802000200010001030002030002000000000000000000fefeaabbaabb'  # (data index: 43)
+      - ':raw 0xef0001010004020002000c000104001404000300000000036014601f60003960146000f3feef000101000402000100010400000000000000feaabbcc'  # (data index: 40)
       # Unknown section IDs
       #   at the beginning
-      - ':raw 0xef000104000300600000'  # (data index: 44)
-      - ':raw 0xef000105000300600000'  # (data index: 45)
-      - ':raw 0xef0001ff000300600000'  # (data index: 46)
+      - ':raw 0xef00010500010004020001000c04001400000000036014601f60003960146000f3ef000101000402000100010400000000000000fe'  # (data index: 41)
+      - ':raw 0xef00010600010004020001000c04001400000000036014601f60003960146000f3ef000101000402000100010400000000000000fe'  # (data index: 42)
+      - ':raw 0xef0001ff00010004020001000c04001400000000036014601f60003960146000f3ef000101000402000100010400000000000000fe'  # (data index: 43)
       #  after types section
-      - ':raw 0xef000101000404000002000100010000000000fe'  # (data index: 47)
-      - ':raw 0xef000101000405000002000100010000000000fe'  # (data index: 48)
-      - ':raw 0xef0001010004ff000002000100010000000000fe'  # (data index: 49)
+      - ':raw 0xef0001010004050000020001000c04001400000000036014601f60003960146000f3ef000101000402000100010400000000000000fe'  # (data index: 44)
+      - ':raw 0xef0001010004060000020001000c04001400000000036014601f60003960146000f3ef000101000402000100010400000000000000fe'  # (data index: 45)
+      - ':raw 0xef0001010004ff0000020001000c04001400000000036014601f60003960146000f3ef000101000402000100010400000000000000fe'  # (data index: 46)
       #  after code section
-      - ':raw 0xef000101000402000104000000010000000000fe'  # (data index: 50)
-      - ':raw 0xef000101000402000105000000010000000000fe'  # (data index: 51)
-      - ':raw 0xef0001010004020001ff000000010000000000fe'  # (data index: 52)
+      - ':raw 0xef0001010004020001000c05000004001400000000036014601f60003960146000f3ef000101000402000100010400000000000000fe'  # (data index: 47)
+      - ':raw 0xef0001010004020001000c06000004001400000000036014601f60003960146000f3ef000101000402000100010400000000000000fe'  # (data index: 48)
+      - ':raw 0xef0001010004020001000cff000004001400000000036014601f60003960146000f3ef000101000402000100010400000000000000fe'  # (data index: 49)
       #  after data section
-      - ':raw 0xef000101000402000100010300010400000000000000feaa'  # (data index: 53)
-      - ':raw 0xef000101000402000100010300010500000000000000feaa'  # (data index: 54)
-      - ':raw 0xef00010100040200010001030001ff00000000000000feaa'  # (data index: 55)
+      - ':raw 0xef0001010004020001000c04001405000000000000036014601f60003960146000f3ef000101000402000100010400000000000000fe'  # (data index: 50)
+      - ':raw 0xef0001010004020001000c04001406000000000000036014601f60003960146000f3ef000101000402000100010400000000000000fe'  # (data index: 51)
+      - ':raw 0xef0001010004020001000c040014ff000000000000036014601f60003960146000f3ef000101000402000100010400000000000000fe'  # (data index: 52)
       # Legacy initcode => EOF code
       # deployed code without data section
       # deployed code section: PUSH1(0) POP STOP
-      - ':yul { mstore(0, 0xef00010100040200010004030000000000000160005000000000000000000000) return(0, 23) }'  # (data index: 56)
+      - ':yul { mstore(0, 0xef00010100040200010004040000000000000160005000000000000000000000) return(0, 23) }'  # (data index: 53)
       # deployed code with data section
       # deployed code section: 
       #     code: PUSH1(0) POP STOP
       #     data section: aabbccdd
-      - ':yul { mstore(0, 0xef00010100040200010004030004000000000160005000aabbccdd0000000000) return(0, 27) }'  # (data index: 57)
-      # code section: PUSH1 23 CODESIZE SUB DUP1 PUSH1 23 CODECOPY PUSH1 0 RETURN
-      # 23 is offset of data section
-      # data section contains deployed code
+      - ':yul { mstore(0, 0xef00010100040200010004040004000000000160005000aabbccdd0000000000) return(0, 27) }'  # (data index: 54)
 
-
-      # valid EOF initcode returning malformed code
+      
+      # Valid EOF initcode returning malformed code
 
       # No magic
       # code to deploy: ef
-      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef" }'  # (data index: 58)
+      - ':yul-eof { mstore(0, 0xef00000000000000000000000000000000000000000000000000000000000000) return(0, 1) }'  # (data index: 55)
       # Invalid magic
-      # code to deploy: ef010101000402000100010300000000000000fe
-      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef010101000402000100010300000000000000fe" }'  # (data index: 59)
-      # code to deploy: ef020101000402000100010300000000000000fe
-      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef020101000402000100010300000000000000fe" }'  # (data index: 60)
-      # code to deploy: efff0101000402000100010300000000000000fe
-      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"efff0101000402000100010300000000000000fe" }'  # (data index: 61)
+      # code to deploy: ef0101010004020001002904000000000000027fef000101000402000100010400000000000000fe00000000000000000000000060005260146000f3
+      - ':yul-eof { mstore(0, 0xef0101010004020001002904000000000000027fef0001010004020001000104) mstore(32, 0x00000000000000fe00000000000000000000000060005260146000f300000000) return(0, 60) }'  # (data index: 56)
+      # code to deploy: ef0201010004020001002904000000000000027fef000101000402000100010400000000000000fe00000000000000000000000060005260146000f3
+      - ':yul-eof { mstore(0, 0xef0201010004020001002904000000000000027fef0001010004020001000104) mstore(32, 0x00000000000000fe00000000000000000000000060005260146000f300000000) return(0, 60) }'  # (data index: 57)
+      # code to deploy: efff01010004020001002904000000000000027fef000101000402000100010400000000000000fe00000000000000000000000060005260146000f3
+      - ':yul-eof { mstore(0, 0xefff01010004020001002904000000000000027fef0001010004020001000104) mstore(32, 0x00000000000000fe00000000000000000000000060005260146000f300000000) return(0, 60) }'  # (data index: 58)
       # No version
       # code to deploy: ef00
-      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00" }'  # (data index: 62)
+      - ':yul-eof { mstore(0, 0xef00000000000000000000000000000000000000000000000000000000000000) return(0, 2) }'  # (data index: 59)
       # Invalid version
-      # code to deploy: ef000001000402000100010300000000000000fe
-      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000001000402000100010300000000000000fe" }'  # (data index: 63)
-      # code to deploy: ef000201000402000100010300000000000000fe
-      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000201000402000100010300000000000000fe" }'  # (data index: 64)
-      # code to deploy: ef00ff01000402000100010300000000000000fe
-      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00ff01000402000100010300000000000000fe" }'  # (data index: 65)
+      # code to deploy: ef000001000402000100010400000000000000fe
+      - ':yul-eof { mstore(0, 0xef000001000402000100010400000000000000fe000000000000000000000000) return(0, 20) }'  # (data index: 60)
+      # code to deploy: ef000201000402000100010400000000000000fe
+      - ':yul-eof { mstore(0, 0xef000201000402000100010400000000000000fe000000000000000000000000) return(0, 20) }'  # (data index: 61)
+      # code to deploy: ef00ff01000402000100010400000000000000fe
+      - ':yul-eof { mstore(0, 0xef00ff01000402000100010400000000000000fe000000000000000000000000) return(0, 20) }'  # (data index: 62)
       # No header
       # code to deploy: ef0001
-      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001" }'  # (data index: 66)
+      - ':yul-eof { mstore(0, 0xef00010000000000000000000000000000000000000000000000000000000000) return(0, 3) }'  # (data index: 63)
       # No type section size
       # code to deploy: ef000101
-      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101" }'  # (data index: 67)
+      - ':yul-eof { mstore(0, 0xef00010100000000000000000000000000000000000000000000000000000000) return(0, 4) }'  # (data index: 64)
       # Type section size incomplete
       # code to deploy: ef00010100
-      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100" }'  # (data index: 68)
+      - ':yul-eof { mstore(0, 0xef00010100000000000000000000000000000000000000000000000000000000) return(0, 5) }'  # (data index: 65)
       # Empty code section with non-empty data section
-      # code to deploy: ef000101000402000100000300020000000000aabb
-      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101000402000100000300020000000000aabb" }'  # (data index: 69)
+      # code to deploy: ef000101000402000100000400020000000000aabb
+      - ':yul-eof { mstore(0, 0xef000101000402000100000400020000000000aabb0000000000000000000000) return(0, 21) }'  # (data index: 66)
       # No total of code sections
       # code to deploy: ef000101000402
-      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101000402" }'  # (data index: 70)
+      - ':yul-eof { mstore(0, 0xef00010100040200000000000000000000000000000000000000000000000000) return(0, 7) }'  # (data index: 67)
       # Total of code sections incomplete
       # code to deploy: ef00010100040200
-      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200" }'  # (data index: 71)
+      - ':yul-eof { mstore(0, 0xef00010100040200000000000000000000000000000000000000000000000000) return(0, 8) }'  # (data index: 68)
       # No code section size
       # code to deploy: ef0001010004020001
-      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001" }'  # (data index: 72)
+      - ':yul-eof { mstore(0, 0xef00010100040200010000000000000000000000000000000000000000000000) return(0, 9) }'  # (data index: 69)
       # Code section size incomplete
       # code to deploy: ef000101000402000100
-      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101000402000100" }'  # (data index: 73)
+      - ':yul-eof { mstore(0, 0xef00010100040200010000000000000000000000000000000000000000000000) return(0, 10) }'  # (data index: 70)
       # No data section after code section size
-      # code to deploy: ef00010100040200010001
-      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010001" }'  # (data index: 74)
+      # code to deploy: 0xef00010100040200010029
+      - ':yul-eof { mstore(0, 0xef00010100040200010029000000000000000000000000000000000000000000) return(0, 11) }'  # (data index: 71)
+      # No data size
+      # code to deploy: 0xef0001010004020001002904
+      - ':yul-eof { mstore(0, 0xef00010100040200010029040000000000000000000000000000000000000000) return(0, 12) }'  # (data index: 72)
+      # Data size incomplete
+      # code to deploy: 0xef000101000402000100290400
+      - ':yul-eof { mstore(0, 0xef00010100040200010029040000000000000000000000000000000000000000) return(0, 13) }'  # (data index: 73)
       # No section terminator after data section size
-      # code to deploy: ef00010100040200010001030000
-      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010001030000" }'  # (data index: 75)
+      # code to deploy: 0xef00010100040200010029040000
+      - ':yul-eof { mstore(0, 0xef00010100040200010029040000000000000000000000000000000000000000) return(0, 14) }'  # (data index: 74)
+      # No type section contents
+      # code to deploy: 0xef0001010004020001002904000000
+      - ':yul-eof { mstore(0, 0xef00010100040200010029040000000000000000000000000000000000000000) return(0, 15) }'  # (data index: 75)
+      # Type section contents (no outputs and max stack)
+      # code to deploy: 0xef000101000402000100290400000000
+      - ':yul-eof { mstore(0, 0xef00010100040200010029040000000000000000000000000000000000000000) return(0, 16) }'  # (data index: 76)
+      # Type section contents (no max stack)
+      # code to deploy: 0xef00010100040200010029040000000000
+      - ':yul-eof { mstore(0, 0xef00010100040200010029040000000000000000000000000000000000000000) return(0, 17) }'  # (data index: 77)
+      # Type section contents (max stack incomplete)
+      # code to deploy: 0xef0001010004020001002904000000000000
+      - ':yul-eof { mstore(0, 0xef00010100040200010029040000000000000000000000000000000000000000) return(0, 18) }'  # (data index: 78)
       # No code section contents
-      # code to deploy: ef000101000402000000010300000000000000
-      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101000402000000010300000000000000" }'  # (data index: 76)
-      # code to deploy: ef000101000402000000000300000000000000
-      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101000402000000000300000000000000" }'  # (data index: 77)
-      # code to deploy: ef00010100040200000300000000000000
-      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200000300000000000000" }'  # (data index: 78)
-      # code to deploy: ef0001010000020000000003000000
-      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010000020000000003000000" }'  # (data index: 79)
-      # code to deploy: ef000101000002000003000000
-      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101000002000003000000" }'  # (data index: 80)
-      # Type section contents incomplete
-      # code to deploy: ef0001010004020001000100000000fe
-      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000100000000fe" }'  # (data index: 81)
+      # code to deploy: 0xef000101000402000100290400000000000002
+      - ':yul-eof { mstore(0, 0xef00010100040200010029040000000000000200000000000000000000000000) return(0, 19) }'  # (data index: 79)
       # Code section contents incomplete
-      # code to deploy: ef000101000402000100020300000000000000fe
-      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101000402000100020300000000000000fe" }'  # (data index: 82)
+      # code to deploy: 0xef0001010004020001002904000000000000027f
+      - ':yul-eof { mstore(0, 0xef0001010004020001002904000000000000027f000000000000000000000000) return(0, 20) }'  # (data index: 80)
       # Trailing bytes after code section
-      # code to deploy: ef00010100040200010004030000000000000160015000deadbeef
-      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010004030000000000000160015000deadbeef" }'  # (data index: 83)
+      # code to deploy: 0xef000101000402000100010400000000000000feaabbcc
+      - ':yul-eof { mstore(0, 0xef000101000402000100010400000000000000feaabbcc000000000000000000) return(0, 23) }'  # (data index: 81)
       # Empty code section
-      #   code to deploy: ef000101000402000000000300000000000000
-      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101000402000000000300000000000000" }'  # (data index: 84)
-      #   code to deploy: ef000101000002000000000300000000000000
-      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101000002000000000300000000000000" }'  # (data index: 85)
-      #   code to deploy: ef000101000002000003000000
-      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101000002000003000000" }'  # (data index: 86)
+      #   code to deploy: 0xef000101000402000100000400000000000000
+      - ':yul-eof { mstore(0, 0xef00010100040200010000040000000000000000000000000000000000000000) return(0, 19) }'  # (data index: 82)
+      # Empty code section with non-empty data section
+      #   code to deploy: ef000101000402000100000400020000000000aabb
+      - ':yul-eof { mstore(0, 0xef000101000402000100000400020000000000aabb0000000000000000000000) return(0, 21) }'  # (data index: 83)
       # Code section preceding type section
-      # code to deploy: ef000102000100010100040300020000000000feaabb
-      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000102000100010100040300020000000000feaabb" }'  # (data index: 87)
+      # code to deploy: ef000102000100010100040400020000000000feaabb
+      - ':yul-eof { mstore(0, 0xef000102000100010100040400020000000000feaabb00000000000000000000) return(0, 22) }'  # (data index: 84)
       # Data section preceding type section
-      # code to deploy: ef000103000201000402000100010000000000feaabb
-      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000103000201000402000100010000000000feaabb" }'  # (data index: 88)
+      # code to deploy: ef000104000201000402000100010000000000feaabb
+      - ':yul-eof { mstore(0, 0xef000104000201000402000100010000000000feaabb00000000000000000000) return(0, 22) }'  # (data index: 85)
       # Data section preceding code section
-      # code to deploy: ef000101000403000202000100010000000000feaabb
-      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101000403000202000100010000000000feaabb" }'  # (data index: 89)
+      # code to deploy: ef000101000404000202000100010000000000feaabb
+      - ':yul-eof { mstore(0, 0xef000101000404000202000100010000000000feaabb00000000000000000000) return(0, 22) }'  # (data index: 86)
       # Data section without code section
-      # code to deploy: ef00010100040300020000000000aabb
-      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040300020000000000aabb" }'  # (data index: 90)
+      # code to deploy: ef00010100040400020000000000aabb
+      - ':yul-eof { mstore(0, 0xef00010100040400020000000000aabb00000000000000000000000000000000) return(0, 16) }'  # (data index: 87)
       # No data section
       # code to deploy: %s  % code_to_deploy
-      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101000402000100010000000000fe" }'  # (data index: 91)
-      # No data section size
-      # code to deploy: ef0001010004020001000103
-      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000103" }'  # (data index: 92)
-      # Data section size incomplete
-      # code to deploy: ef000101000402000100010300
-      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101000402000100010300" }'  # (data index: 93)
-      # No section terminator after data section size
-      # code to deploy: ef00010100040200010001030002
-      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010001030002" }'  # (data index: 94)
-      # code to deploy: ef0001010004020001000103000200000000feaabb
-      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001000103000200000000feaabb" }'  # (data index: 95)
+      - ':yul-eof { mstore(0, 0xef000101000402000100010000000000fe000000000000000000000000000000) return(0, 17) }'  # (data index: 88)
       # No data section contents
-      # code to deploy: ef000101000402000100010300020000000000fe
-      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101000402000100010300020000000000fe" }'  # (data index: 96)
+      # code to deploy: ef000101000402000100010400020000000000fe
+      - ':yul-eof { mstore(0, 0xef000101000402000100010400020000000000fe000000000000000000000000) return(0, 20) }'  # (data index: 89)
       # Data section contents incomplete
-      # code to deploy: ef000101000402000100010300040000000000feaabbcc
-      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101000402000100010300040000000000feaabbcc" }'  # (data index: 97)
+      # code to deploy: ef000101000402000100010400020000000000feaa
+      - ':yul-eof { mstore(0, 0xef000101000402000100010400020000000000feaa0000000000000000000000) return(0, 21) }'  # (data index: 90)
       # Trailing bytes after data section
-      # code to deploy: ef000101000402000100010300040000000000feaabbccddee
-      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101000402000100010300040000000000feaabbccddee" }'  # (data index: 98)
+      # code to deploy: ef000101000402000100010400020000000000feaabbccdd
+      - ':yul-eof { mstore(0, 0xef000101000402000100010400020000000000feaabbccdd0000000000000000) return(0, 24) }'  # (data index: 91)
       # Multiple data sections
-      # code to deploy: ef000101000402000100010300020300020000000000feaabbaabb
-      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101000402000100010300020300020000000000feaabbaabb" }'  # (data index: 99)
+      # code to deploy: ef000101000402000100010400020400020000000000feaabbaabb
+      - ':yul-eof { mstore(0, 0xef000101000402000100010400020400020000000000feaabbaabb0000000000) return(0, 27) }'  # (data index: 92)
       # Multiple code and data sections
-      # code to deploy: ef000101000802000200010001030002030002000000000000000000fefeaabbaabb
-      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101000802000200010001030002030002000000000000000000fefeaabbaabb" }'  # (data index: 100)
+      # code to deploy: ef000101000802000200010001040002040002000000000000000000fefeaabbaabb
+      - ':yul-eof { mstore(0, 0xef000101000802000200010001040002040002000000000000000000fefeaabb) mstore(32, 0xaabb000000000000000000000000000000000000000000000000000000000000) return(0, 34) }'  # (data index: 93)
       # Unknown section IDs
       #  at the beginning:
-      # code to deploy: ef000104000300600000
-      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000104000300600000" }'  # (data index: 101)
-      # code to deploy: ef000105000300600000
-      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000105000300600000" }'  # (data index: 102)
-      # code to deploy: ef0001ff000300600000
-      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001ff000300600000" }'  # (data index: 103)
+      # code to deploy: ef000105000402000100010400000000000000fe
+      - ':yul-eof { mstore(0, 0xef000105000402000100010400000000000000fe000000000000000000000000) return(0, 20) }'  # (data index: 94)
+      # code to deploy: ef000106000402000100010400000000000000fe
+      - ':yul-eof { mstore(0, 0xef000106000402000100010400000000000000fe000000000000000000000000) return(0, 20) }'  # (data index: 95)
+      # code to deploy: ef0001ff000402000100010400000000000000fe
+      - ':yul-eof { mstore(0, 0xef0001ff000402000100010400000000000000fe000000000000000000000000) return(0, 20) }'  # (data index: 96)
       #  after types section
-      # code to deploy: ef000101000404000002000100010000000000fe
-      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101000404000002000100010000000000fe" }'  # (data index: 104)
-      # code to deploy: ef000101000405000002000100010000000000fe
-      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101000405000002000100010000000000fe" }'  # (data index: 105)
-      # code to deploy: ef0001010004ff000002000100010000000000fe
-      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004ff000002000100010000000000fe" }'  # (data index: 106)
+      # code to deploy: ef000101000405000100010400000000000000fe
+      - ':yul-eof { mstore(0, 0xef000101000405000100010400000000000000fe000000000000000000000000) return(0, 20) }'  # (data index: 97)
+      # code to deploy: ef000101000406000100010400000000000000fe
+      - ':yul-eof { mstore(0, 0xef000101000406000100010400000000000000fe000000000000000000000000) return(0, 20) }'  # (data index: 98)
+      # code to deploy: ef0001010004ff000100010400000000000000fe
+      - ':yul-eof { mstore(0, 0xef0001010004ff000100010400000000000000fe000000000000000000000000) return(0, 20) }'  # (data index: 99)
       #  after code section
-      # code to deploy: ef000101000402000104000000010000000000fe
-      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101000402000104000000010000000000fe" }'  # (data index: 107)
-      # code to deploy: ef000101000402000105000000010000000000fe
-      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101000402000105000000010000000000fe" }'  # (data index: 108)
-      # code to deploy: ef0001010004020001ff000000010000000000fe
-      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef0001010004020001ff000000010000000000fe" }'  # (data index: 109)
+      # code to deploy: ef000101000402000100010500010400000000000000fe
+      - ':yul-eof { mstore(0, 0xef000101000402000100010500010400000000000000fe000000000000000000) return(0, 23) }'  # (data index: 100)
+      # code to deploy: ef000101000402000100010600010400000000000000fe
+      - ':yul-eof { mstore(0, 0xef000101000402000100010600010400000000000000fe000000000000000000) return(0, 23) }'  # (data index: 101)
+      # code to deploy: ef00010100040200010001ff00010400000000000000fe
+      - ':yul-eof { mstore(0, 0xef00010100040200010001ff00010400000000000000fe000000000000000000) return(0, 23) }'  # (data index: 102)
       #  after data section
-      # code to deploy: ef000101000402000100010300010400000000000000feaa
-      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101000402000100010300010400000000000000feaa" }'  # (data index: 110)
-      # code to deploy: ef000101000402000100010300010500000000000000feaa
-      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef000101000402000100010300010500000000000000feaa" }'  # (data index: 111)
-      # code to deploy: ef00010100040200010001030001ff00000000000000feaa
-      - ':yul-eof object "c" { code { datacopy(0, dataoffset("r"), datasize("r")) return(0, datasize("r")) } data "r" hex"ef00010100040200010001030001ff00000000000000feaa" }'  # (data index: 112)
+      # code to deploy: ef000101000402000100010400000500000000000000fe
+      - ':yul-eof { mstore(0, 0xef000101000402000100010400000500000000000000fe000000000000000000) return(0, 23) }'  # (data index: 103)
+      # code to deploy: ef000101000402000100010400000600000000000000fe
+      - ':yul-eof { mstore(0, 0xef000101000402000100010400000600000000000000fe000000000000000000) return(0, 23) }'  # (data index: 104)
+      # code to deploy: ef00010100040200010001040000ff00000000000000fe
+      - ':yul-eof { mstore(0, 0xef00010100040200010001040000ff00000000000000fe000000000000000000) return(0, 23) }'  # (data index: 105)
       # EOF initcode => legacy code
       # initcode without data section
       # initcode code section: 'RETURN(0, 1)'
       # code to deploy: 'STOP'
-      - ':raw 0xef00010100040200010005030000000000000260016000f3'  # (data index: 113)
+      - ':raw 0xef0001010004020001000904000000000000026000805260016000f3'  # (data index: 106)
       # inicode with data section
       # initcode code section: 'CODECOPY(0, 31, 1) RETURN(0,1)' data section: '00'
       # code to deploy: 'STOP'
-      - ':raw 0xef0001010004020001000c03000100000000036001601f60003960016000f300'  # (data index: 114)
-
+      - ':raw 0xef0001010004020001000904000100000000026000805260016000f300'  # (data index: 107)
     gasLimit:
       - 15000000
     gasPrice: 10
@@ -305,7 +294,6 @@ CREATE2_EOF1Invalid_FromEOF:
     - 0
 
   expect:
-      # Bumping nonce
       - indexes: {}
         network:
           - '>=Prague'
