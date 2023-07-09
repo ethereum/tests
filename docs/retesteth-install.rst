@@ -1,6 +1,6 @@
 .. _retesteth_install:
 
-These directions are written using Debian Linux 10 on Google Cloud
+These directions are written using Debian Linux 11 on Google Cloud
 Platform, but should work with minor changes on any other version of
 Linux running anywhere else with an Internet connection.
 
@@ -11,14 +11,14 @@ Linux running anywhere else with an Internet connection.
 
       sudo apt install -y wget docker docker.io
 
-#. Download the **retesteth** `docker image <http://retesteth.ethdevops.io/>`_. 
-   It is a tar file.
+#. Download the latest **retesteth** `docker image <http://retesteth.ethdevops.io/release/>`_. 
+   It is a tar file called `dretesteth-<version>-<fork>.tar`.
 
 #. Load the docker image (Example: retesteth: version 0.3.0, fork: shanghai): 
 
    ::
 
-      sudo docker image import retesteth-0.3.0-shanghai.tar.gz
+      sudo docker image import dretesteth*tar retesteth
 
 #. Download the **dretesteth.sh** script. 
 
