@@ -436,3 +436,4 @@
 - ID: **BLOB003** blobhash opcode return out of range
 - ID: **BLOB004** same blobhash in the list
 - ID: **BLOB005** blobhash opcode bounds
+- ID: **BLOB006** see how many blobhash records are allowed per tx
