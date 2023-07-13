@@ -29,7 +29,6 @@ CREATE2_EOF1DeployValidOpcodes:
 
   transaction:
     data: 
-     # >@f1
      # Deployed EOF Code: STOP 
      - ':label stop :yul { mstore(0, 0xef00010100040200010001040000000000000000000000000000000000000000) return(0, 20) }'
      # Deployed EOF Code: PUSH1(1) DUP1  ADD STOP 
@@ -306,7 +305,6 @@ CREATE2_EOF1DeployValidOpcodes:
      - ':label revert :yul { mstore(0, 0xef000101000402000100040400000000000002600180fd000000000000000000) return(0, 23) }'
      # Deployed EOF Code: INVALID 
      - ':label invalid :yul { mstore(0, 0xef000101000402000100010400000000000000fe000000000000000000000000) return(0, 20) }'
-     # <@f1
     gasLimit:
       - 89000000
     gasPrice: 10
@@ -317,7 +315,6 @@ CREATE2_EOF1DeployValidOpcodes:
     - 0
 
   expect:
-     # >@f2
      - indexes:
          data: ':label stop'
        network:
@@ -2388,4 +2385,3 @@ CREATE2_EOF1DeployValidOpcodes:
            nonce: 1
            storage: {}
            code: '0xef000101000402000100010400000000000000fe'
-   # <@f2

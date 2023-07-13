@@ -32,8 +32,6 @@ CREATE2_EOF1Invalid:
      # Valid legacy initcode returning invalid EOF code - Truncated PUSH data at the end
      # EOF Code: PUSH1(1) PUSH1(1) SSTORE PUSH1(2) PUSH1(2) SSTORE PUSH1( - ef0001010004020001000b04000000000000026001600155600260025560
      - ':yul { mstore(0, 0xef0001010004020001000b040000000000000260016001556002600255600000) return(0, 30) }'
-     # EOF Code: PUSH1(1) PUSH1(1) SSTORE PUSH1(2) PUSH1(2) SSTORE PUSH1(0x - ef0001010004020001000b04000000000000026001600155600260025560
-     - ':yul { mstore(0, 0xef0001010004020001000b040000000000000260016001556002600255600000) return(0, 30) }'
      # EOF Code: PUSH1(1) PUSH1(1) SSTORE PUSH1(2) PUSH1(2) SSTORE PUSH2( - ef0001010004020001000b04000000000000026001600155600260025561
      - ':yul { mstore(0, 0xef0001010004020001000b040000000000000260016001556002600255610000) return(0, 30) }'
      # EOF Code: PUSH1(1) PUSH1(1) SSTORE PUSH1(2) PUSH1(2) SSTORE PUSH2(0xff - ef0001010004020001000c04000000000000026001600155600260025561ff
@@ -159,14 +157,12 @@ CREATE2_EOF1Invalid:
      # EOF Code: PUSH1(1) PUSH1(1) SSTORE PUSH1(2) PUSH1(2) SSTORE PUSH32(0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff - ef0001010004020001002a0400000000000002600160015560026002557fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
      - ':yul { mstore(0, 0xef0001010004020001002a0400000000000002600160015560026002557fffff) mstore(32, 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffff000000) return(0, 61) }'
 
-     # Valid legacy initcode returning invalid EOF code - Containing undefined instruction (0xf6) after STOP
-     # Returns EOF code: PUSH1(1) PUSH1(1) SSTORE PUSH1(2) PUSH1(2) SSTORE STOP 0xf6 - ef0001010004020001000c04000000000000026001600155600260025500f6
-     - ':yul { mstore(0, 0xef0001010004020001000c04000000000000026001600155600260025500f600) return(0, 31) }'
+     # Valid legacy initcode returning invalid EOF code - Containing undefined instruction (0xee) after STOP
+     # Returns EOF code: PUSH1(1) PUSH1(1) SSTORE PUSH1(2) PUSH1(2) SSTORE STOP 0xee - ef0001010004020001000c04000000000000026001600155600260025500ee
+     - ':yul { mstore(0, 0xef0001010004020001000c04000000000000026001600155600260025500ee00) return(0, 31) }'
 
      # Valid EOF initcode returning invalid EOF code - Truncated PUSH data at the end
      # Returns EOF code: PUSH1(1) PUSH1(1) SSTORE PUSH1(2) PUSH1(2) SSTORE PUSH1(
-     - ':yul-eof { mstore(0, 0xef0001010004020001000b040000000000000260016001556002600255600000) return(0, 30) }'
-     # Returns EOF code: PUSH1(1) PUSH1(1) SSTORE PUSH1(2) PUSH1(2) SSTORE PUSH1(0x
      - ':yul-eof { mstore(0, 0xef0001010004020001000b040000000000000260016001556002600255600000) return(0, 30) }'
      # Returns EOF code: PUSH1(1) PUSH1(1) SSTORE PUSH1(2) PUSH1(2) SSTORE PUSH2(
      - ':yul-eof { mstore(0, 0xef0001010004020001000b040000000000000260016001556002600255610000) return(0, 30) }'
@@ -293,9 +289,9 @@ CREATE2_EOF1Invalid:
      # Returns EOF code: PUSH1(1) PUSH1(1) SSTORE PUSH1(2) PUSH1(2) SSTORE PUSH32(0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
      - ':yul-eof { mstore(0, 0xef0001010004020001002a0400000000000002600160015560026002557fffff) mstore(32, 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffff000000) return(0, 61) }'
 
-     # Valid EOF initcode returning invalid EOF code - Containing undefined instruction (0xf6 after STOP
-     # Code: PUSH1(1) PUSH1(1) SSTORE PUSH1(2) PUSH1(2) SSTORE STOP 0xf6
-     - ':yul-eof { mstore(0, 0xef0001010004020001000c04000000000000026001600155600260025500f600) return(0, 31) }'
+     # Valid EOF initcode returning invalid EOF code - Containing undefined instruction (0xee) after STOP
+     # Code: PUSH1(1) PUSH1(1) SSTORE PUSH1(2) PUSH1(2) SSTORE STOP 0xee
+     - ':yul-eof { mstore(0, 0xef0001010004020001000c04000000000000026001600155600260025500ee00) return(0, 31) }'
     gasLimit:
       - 15000000
     gasPrice: 10
@@ -308,7 +304,7 @@ CREATE2_EOF1Invalid:
   expect:
     - indexes: {}
       network:
-        - 'Shanghai'
+        - 'Cancun'
       result:
        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           nonce: 1
@@ -317,7 +313,7 @@ CREATE2_EOF1Invalid:
           storage:
             '0': '0'
             '1': '1'
-    # Same expectation, but for Shanghai execution fails on EF byte, for >=Prague it fails because EOF initcode or code is invalid
+    # Same expectation, but for Cancun execution fails on EF byte, for >=Prague it fails because EOF initcode or code is invalid
     - indexes: {}
       network:
         - '>=Prague'

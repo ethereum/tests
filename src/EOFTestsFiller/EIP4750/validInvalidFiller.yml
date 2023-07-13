@@ -1,7 +1,8 @@
 validInvalid:
   _info:
      comment: |
-         # >@f1
+       Test various examples to see if they are valid or invalid.
+       Implements
          EOF1V4750_0001 (Valid) EOF code containing single type section
          EOF1V4750_0002 (Valid) EOF code containing single type section and data section
          EOF1V4750_0003 (Valid) EOF code containing multiple type/code sections
@@ -31,12 +32,10 @@ validInvalid:
          EOF1I4750_0016 (Invalid) EOF code containing function trying to return more items than specified in type section
          EOF1I4750_0017 (Invalid) EOF code containing function exceeding max stack items
          EOF1I4750_0018 (Invalid) EOF code containing function which max stack height causes to exceed max stack items (stack overflow)
-         # <@f1
   forks:
     - ">=Cancun"
 
   vectors:
-    # >@f2
     # EOF1V4750_0001 (Valid) EOF code containing single type section
     # Code: INVALID
     - data: |
@@ -584,4 +583,3 @@ validInvalid:
         "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackOverflow"
 
-    # <@f2

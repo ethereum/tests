@@ -25,8 +25,6 @@ CREATE_EOF1Invalid_FromEOF:
      # Valid EOF initcode returning invalid EOF code - Truncated PUSH data at the end
      # Returns EOF code: PUSH1(1) PUSH1(1) SSTORE PUSH1(2) PUSH1(2) SSTORE PUSH1(
      - ':yul-eof { mstore(0, 0xef0001010004020001000b040000000000000260016001556002600255600000) return(0, 30) }'
-     # Returns EOF code: PUSH1(1) PUSH1(1) SSTORE PUSH1(2) PUSH1(2) SSTORE PUSH1(0x
-     - ':yul-eof { mstore(0, 0xef0001010004020001000b040000000000000260016001556002600255600000) return(0, 30) }'
      # Returns EOF code: PUSH1(1) PUSH1(1) SSTORE PUSH1(2) PUSH1(2) SSTORE PUSH2(
      - ':yul-eof { mstore(0, 0xef0001010004020001000b040000000000000260016001556002600255610000) return(0, 30) }'
      # Returns EOF code: PUSH1(1) PUSH1(1) SSTORE PUSH1(2) PUSH1(2) SSTORE PUSH2(0xff
@@ -152,9 +150,9 @@ CREATE_EOF1Invalid_FromEOF:
      # Returns EOF code: PUSH1(1) PUSH1(1) SSTORE PUSH1(2) PUSH1(2) SSTORE PUSH32(0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
      - ':yul-eof { mstore(0, 0xef0001010004020001002a0400000000000002600160015560026002557fffff) mstore(32, 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffff000000) return(0, 61) }'
 
-     # Valid EOF initcode returning invalid EOF code - Containing undefined instruction (0xf6 after STOP
-     # Returns EOF Code: PUSH1(1) PUSH1(1) SSTORE PUSH1(2) PUSH1(2) SSTORE STOP 0xf6
-     - ':yul-eof { mstore(0, 0xef0001010004020001000c04000000000000026001600155600260025500f600) return(0, 31) }'
+     # Valid EOF initcode returning invalid EOF code - Containing undefined instruction (0xee) after STOP
+     # Returns EOF Code: PUSH1(1) PUSH1(1) SSTORE PUSH1(2) PUSH1(2) SSTORE STOP 0xee
+     - ':yul-eof { mstore(0, 0xef0001010004020001000c04000000000000026001600155600260025500ee00) return(0, 31) }'
 
     gasLimit:
       - 15000000
