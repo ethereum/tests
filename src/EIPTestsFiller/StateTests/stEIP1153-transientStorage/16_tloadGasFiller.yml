@@ -17,12 +17,12 @@
     currentBaseFee: 10
 
   pre:
-    000000000000000000000000000000000000000A:
+    A00000000000000000000000000000000000000A:
       balance: 1000000000000000000
       nonce: 0
       code: |
         :yul {
-          let extraOpcodesGas := 5
+          let extraOpcodesGas := 4
 
           // calculate tload gas
           verbatim_2i_0o(hex"5D", 0, 2)
@@ -46,7 +46,7 @@
     gasLimit:
       - "400000"
     nonce: 0
-    to: 000000000000000000000000000000000000000A
+    to: A00000000000000000000000000000000000000A
     value:
       - 0
     secretKey: "45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8"
@@ -55,8 +55,8 @@
 
   expect:
     - network:
-        - "Cancun"
+        - ">=Cancun"
       result:
-        000000000000000000000000000000000000000A:
+        A00000000000000000000000000000000000000A:
           storage:
             0x00: 100
