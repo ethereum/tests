@@ -1,7 +1,8 @@
 validInvalid:
   _info:
      comment: |
-       # >@f1
+       Test various examples to see if they are valid or invalid.
+       Implements
          EOF1V4200_0001 (Valid) EOF code containing RJUMP (Positive, Negative)
          EOF1V4200_0002 (Valid) EOF code containing RJUMP (Zero)
          EOF1V4200_0003 (Valid) EOF code containing RJUMPI (Positive)
@@ -57,13 +58,11 @@ validInvalid:
          EOF1I4200_0040 (Invalid) EOF code containing RJUMPV with target PUSH immediate
          EOF1I4200_0041 (Invalid) EOF code containing RJUMPV with target other RJUMPV immediate
          EOF1I4200_0042 (Invalid) EOF code containing RJUMPV with target CALLF immediate
-         # <@f1
 
   forks:
     - ">=Cancun"
 
   vectors:
-    # >@f2
     # EOF1V4200_0001 (Valid) EOF code containing RJUMP (Positive, Negative)
     # Code: RJUMP(push) save: SSTORE STOP push: PUSH1(1) PUSH1(1) RJUMP(save)
     - data: |
@@ -209,7 +208,7 @@ validInvalid:
           0002 # max stack: 2
                # Code section 0
           6000 # PUSH1(0) 
-        e2010003 # RJUMPV(3, 
+        e2010003 # RJUMPV(3) 
             5b # NOP 
             5b # NOP 
             00 # STOP 
@@ -242,7 +241,7 @@ validInvalid:
             55 # SSTORE 
             00 # STOP 
           6000 # PUSH1(0) 
-        e201fff4 # RJUMPV(-12, 
+        e201fff4 # RJUMPV(-12) 
             00 # STOP 
                # Data section (empty)
       expectException:
@@ -264,7 +263,7 @@ validInvalid:
           0002 # max stack: 2
                # Code section 0
           6000 # PUSH1(0) 
-        e2010000 # RJUMPV(0, 
+        e2010000 # RJUMPV(0) 
           6001 # PUSH1(1) 
           6001 # PUSH1(1) 
             55 # SSTORE 
@@ -566,7 +565,7 @@ validInvalid:
         e00005 # RJUMP(5) 
             00 # STOP 
           6001 # PUSH1(1) 
-        e2010000 # RJUMPV(0, 
+        e2010000 # RJUMPV(0) 
             00 # STOP 
                # Data section (empty)
       expectException:
@@ -855,7 +854,7 @@ validInvalid:
         e10005 # RJUMPI(5) 
             00 # STOP 
           6001 # PUSH1(1) 
-        e2010000 # RJUMPV(0, 
+        e2010000 # RJUMPV(0) 
             00 # STOP 
                # Data section (empty)
       expectException:
@@ -953,7 +952,7 @@ validInvalid:
           0001 # max stack: 1
                # Code section 0
           6001 # PUSH1(1) 
-        e201fff9 # RJUMPV(-7, 
+        e201fff9 # RJUMPV(-7) 
             00 # STOP 
                # Data section (empty)
       expectException:
@@ -976,7 +975,7 @@ validInvalid:
           0001 # max stack: 1
                # Code section 0
           6001 # PUSH1(1) 
-        e201fff1 # RJUMPV(-15, 
+        e201fff1 # RJUMPV(-15) 
             00 # STOP 
                # Data section (empty)
       expectException:
@@ -1000,7 +999,7 @@ validInvalid:
           0001 # max stack: 1
                # Code section 0
           6001 # PUSH1(1) 
-        e2010002 # RJUMPV(2, 
+        e2010002 # RJUMPV(2) 
             00 # STOP 
                # Data section 
         aabbccdd
@@ -1024,7 +1023,7 @@ validInvalid:
           0001 # max stack: 1
                # Code section 0
           6001 # PUSH1(1) 
-        e2010002 # RJUMPV(2, 
+        e2010002 # RJUMPV(2) 
             00 # STOP 
                # Data section (empty)
       expectException:
@@ -1047,7 +1046,7 @@ validInvalid:
           0001 # max stack: 1
                # Code section 0
           6001 # PUSH1(1) 
-        e2010001 # RJUMPV(1, 
+        e2010001 # RJUMPV(1) 
             00 # STOP 
                # Data section (empty)
       expectException:
@@ -1070,7 +1069,7 @@ validInvalid:
           0001 # max stack: 1
                # Code section 0
           6001 # PUSH1(1) 
-        e201ffff # RJUMPV(-1, 
+        e201ffff # RJUMPV(-1) 
             00 # STOP 
                # Data section (empty)
       expectException:
@@ -1093,7 +1092,7 @@ validInvalid:
           0001 # max stack: 1
                # Code section 0
           6001 # PUSH1(1) 
-        e2010005 # RJUMPV(5, 
+        e2010005 # RJUMPV(5) 
             00 # STOP 
           6001 # PUSH1(1) 
         e0fff7 # RJUMP(-9) 
@@ -1119,7 +1118,7 @@ validInvalid:
           0001 # max stack: 1
                # Code section 0
           6001 # PUSH1(1) 
-        e2010005 # RJUMPV(5, 
+        e2010005 # RJUMPV(5) 
             00 # STOP 
           6001 # PUSH1(1) 
         e1fff7 # RJUMPI(-9) 
@@ -1145,7 +1144,7 @@ validInvalid:
           0001 # max stack: 1
                # Code section 0
           6001 # PUSH1(1) 
-        e2010002 # RJUMPV(2, 
+        e2010002 # RJUMPV(2) 
             00 # STOP 
           6001 # PUSH1(1) 
           6001 # PUSH1(1) 
@@ -1172,10 +1171,10 @@ validInvalid:
           0001 # max stack: 1
                # Code section 0
           6001 # PUSH1(1) 
-        e2010005 # RJUMPV(5, 
+        e2010005 # RJUMPV(5) 
             00 # STOP 
           6001 # PUSH1(1) 
-        e2010000 # RJUMPV(0, 
+        e2010000 # RJUMPV(0) 
             00 # STOP 
                # Data section (empty)
       expectException:
@@ -1204,7 +1203,7 @@ validInvalid:
           0002 # max stack: 2
                # Code section 0
           6000 # PUSH1(0) 
-        e2010002 # RJUMPV(2, 
+        e2010002 # RJUMPV(2) 
         e30001 # CALLF(1) 
             00 # STOP 
                # Code section 1
@@ -1217,4 +1216,3 @@ validInvalid:
         "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_InvalidJumpDestination"
 
-    # <@f2
