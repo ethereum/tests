@@ -11,10 +11,11 @@ Linux running anywhere else with an Internet connection.
 
       sudo apt install -y wget docker docker.io
 
-#. Download the latest **retesteth** `docker image <http://retesteth.ethdevops.io/release/>`_. 
+#. Browse `to the repository <http://retesteth.ethdevops.io/release/>`_ and
+   download the latest **retesteth**. 
    It is a tar file called `dretesteth-<version>-<fork>.tar`.
 
-#. Load the docker image (Example: retesteth: version 0.3.0, fork: shanghai): 
+#. Load the docker image: 
 
    ::
 
@@ -75,10 +76,10 @@ Linux running anywhere else with an Internet connection.
       WARNING: /tests/src/GeneralStateTestsFiller does not exist!
       *** Total Tests Run: 0
 
-   try moving the dretesteth.sh file and cloned tests folder to your root directory.
+   try moving the dretesteth.sh file and cloned tests folder to your home directory (**~**).
 
 #. To avoid having to run with **sudo** all the time, add yourself to
-   the **docker** group.
+   the **docker** group and open a new console.
 
    ::
 
