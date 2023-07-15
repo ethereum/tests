@@ -11,15 +11,13 @@ Linux running anywhere else with an Internet connection.
 
       sudo apt install -y wget docker docker.io
 
-#. Browse `to the repository <http://retesteth.ethdevops.io/release/>`_ and
-   download the latest **retesteth**. 
-   It is a tar file called `dretesteth-<version>-<fork>.tar`.
+#. Download the latest **retesteth** `docker image <https://retesteth.ethdevops.io/dretesteth.tar>_
 
 #. Load the docker image: 
 
    ::
 
-      sudo docker image import dretesteth*tar retesteth
+      sudo docker image import dretesteth.tar retesteth
 
 #. Download the **dretesteth.sh** script. 
 
