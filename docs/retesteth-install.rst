@@ -14,6 +14,10 @@ Linux running anywhere else with an Internet connection.
 
 #. Download the latest **retesteth** `docker image <https://retesteth.ethdevops.io/dretesteth.tar>_
 
+   ::
+
+      wget http://retesteth.ethdevops.io/dretesteth.tar
+
 #. Load the docker image: 
 
    ::
