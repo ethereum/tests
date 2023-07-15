@@ -1,7 +1,8 @@
 .. _retesteth_install:
 
 These directions are written using Debian Linux 11 on Google Cloud
-Platform, but should work with minor changes on any other version of
+Platform (using a 20 GB disk - the default 10 GB is not enough), 
+but should work with minor changes on any other version of
 Linux running anywhere else with an Internet connection.
 
 #. Install docker. You may need to reboot afterwards to get the latest
