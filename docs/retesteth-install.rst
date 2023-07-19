@@ -53,14 +53,20 @@ Linux running anywhere else with an Internet connection.
 
    ::
 
-      Running 1 test case... 
       Running tests using path: /tests
-      Active client configurations: 't8ntool ' 
-      Running tests for config 'Ethereum GO on StateTool' 
-      Test Case "stExample": 
-      100% 
-      *** No errors detected 
-      *** Total Tests Run: 1 
+      Running 1 test case...
+      Retesteth config path: /tests/config
+      Active client configurations: 't8ntool '
+      Running tests for config 'Ethereum GO on StateTool' 2
+      Test Case "stExample": (1 of 1)
+      25%...
+      50%...
+      75%...
+      100%
+      
+      *** No errors detected
+      *** Total Tests Run: 12
+
 
    .. note:: 
        The **/tests** directory is referenced inside the docker container. It is
