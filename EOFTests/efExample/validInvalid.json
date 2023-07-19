@@ -2,611 +2,611 @@
     "validInvalid" : {
         "_info" : {
             "comment" : "Test various examples to see if they are valid or invalid.\nImplements\n  EOF1I0001 check that EOF1 with a bad magic number fails\n  EOF1I0002 check that EOF1 with a bad version number fails\n  EOF1I0003 check that EOF1 with a bad section order fails\n  EOF1I0004 check that EOF1 missing a section fails\n  EOF1I0005 check that EOF1 with a bad end of sections number fails\n  EOF1I0006 check that EOF1 with too many or too few bytes fails\n  EOF1I0007 check that EOF1 with a malformed code section fails\n  EOF1I0008 check that EOF1 with an illegal opcode fails\n  EOF1I0009 check that EOF1 with the wrong maxStackDepth fails\n  EOF1I0010 check that return values are not allowed on section 0\n  EOF1I0011 check that function calls to code sections that don't exist fail\n  EOF1I0012 check that code sections that cause stack underflow fail\n  EOF1I0013 check that we can't return more values than we declare\n  EOF1I0014 check that code that looks deeper in the stack than the parameters fails\n  EOF1I0015 check that code that uses removed opcodes fails\n  EOF1I0016 check that code that uses new relative jumps to outside the section fails\n  EOF1I0017 check that parameters are not allowed on section 0\n  EOF1I0018 inconsistent number of code sections (between types and code)\n  EOF1I0019 check that jumps into the middle on an opcode are not allowed\n  EOF1I0020 check that you can't get to the same opcode with two different stack heights\n  EOF1I0021 empty jump table\n  EOF1I0022 stack underflow caused by a function call\n  EOF1I0023 sections with unreachable code fail\n  EOF1I0024 sections that end with a non-terminator opcode fail\n  EOF1I0025 data stack height of 1024 is invalid\n  EOF1V0001 check that simple valid EOF1 deploys\n  EOF1V0002 check that valid EOF1 with two code sections deploys\n  EOF1V0003 check that valid EOF1 with four code sections deploys\n  EOF1V0004 check that valid EOF1 can include 0xFE, the designated invalid opcode\n  EOF1V0005 check that EOF1 with the right maxStackDepth deploys\n  EOF1V0006 check that return values are allowed on code sections that aren't zero\n  EOF1V0007 check that function calls to code sections that exist are allowed\n  EOF1V0008 check that code that uses a new style relative jump (5C) succeeds\n  EOF1V0009 check that parameters are allowed on code sections that aren't zero\n  EOF1V0010 parameters are part of the max stack height\n  EOF1V0011 check that code that uses a new style conditional jump (5D) succeeds\n  EOF1V0012 return values on code sections affect maxStackHeight of the caller\n  EOF1V0013 jump tables work\n  EOF1V0014 sections that end with a legit terminating opcode are OK\n  EOF1V0015 data stack height of 1023 is valid\n",
-            "filling-rpc-server" : "evm version 1.11.0-unstable-97c49b85-20230411",
-            "filling-tool-version" : "retesteth-0.3.1-shanghai+commit.9e1f1208.Linux.g++",
-            "generatedTestHash" : "36f0d04d49c407e1a97e8fc22110d81caa4ff87c4698013729036ba3616ca6a9",
-            "lllcversion" : "Version: 0.5.14-develop.2022.7.30+commit.a096d7a9.Linux.g++",
-            "solidity" : "Version: 0.8.17+commit.8df45f5f.Linux.g++",
+            "filling-rpc-server" : "evmone-t8n 0.11.0-dev+commit.cf827ae2.dirty",
+            "filling-tool-version" : "retesteth-0.3.1-shanghai+commit.acfdfad0.Linux.g++",
+            "generatedTestHash" : "3a10c600a08b545ac5f4ee691ebf71449186bc46867b23072d5d5dfc60b042fa",
+            "lllcversion" : "Version: 0.5.14-develop.2022.4.6+commit.401d5358.Linux.g++",
+            "solidity" : "Version: 0.8.18-develop.2023.1.16+commit.469d6d4d.Linux.g++",
             "source" : "src/EOFTestsFiller/efExample/validInvalidFiller.yml",
-            "sourceHash" : "e677b5d86875d7c8b2b9208a804ed232b56093a7a477d3b5b071f1089163b3f5"
+            "sourceHash" : "909c4ea9e9559bc52759e78fe20b04ae294ce23a68f3107918395677fb305392"
         },
         "vectors" : {
             "validInvalid_0" : {
-                "code" : "0xef000101000402000100030300010000000001305000ef",
+                "code" : "0xef000101000402000100030400010000000001305000ef",
                 "results" : {
                     "Cancun" : {
-                        "result" : true
-                    },
-                    "Shanghai" : {
-                        "exception" : "Invalid Code",
+                        "exception" : "EOF_InvalidCode",
                         "result" : false
+                    },
+                    "Prague" : {
+                        "result" : true
                     }
                 }
             },
             "validInvalid_1" : {
-                "code" : "0xef0001010004020001000303000400000000013050000bad",
+                "code" : "0xef0001010004020001000304000400000000013050000bad",
                 "results" : {
                     "Cancun" : {
-                        "exception" : "invalid container size",
+                        "exception" : "EOF_InvalidCode",
                         "result" : false
                     },
-                    "Shanghai" : {
-                        "exception" : "Invalid Code",
+                    "Prague" : {
+                        "exception" : "EOF_InvalidContainerSize",
                         "result" : false
                     }
                 }
             },
             "validInvalid_10" : {
-                "code" : "0xef0001010014020005000100050005000100010300040000000000000000020000000200000000000000000060006000f360006000fdfeb10bad60a7",
+                "code" : "0xef0001010014020005000100050005000100010400040000000000000000020000000200000000000000000060006000f360006000fdfee40bad60a7",
                 "results" : {
                     "Cancun" : {
-                        "result" : true
-                    },
-                    "Shanghai" : {
-                        "exception" : "Invalid Code",
+                        "exception" : "EOF_InvalidCode",
                         "result" : false
+                    },
+                    "Prague" : {
+                        "result" : true
                     }
                 }
             },
             "validInvalid_11" : {
-                "code" : "0xef0001010004020001000d030004000000000160015e020002000030503050000bad60a7",
+                "code" : "0xef0001010004020001000d04000400000000016001e2020002000030503050000bad60a7",
                 "results" : {
                     "Cancun" : {
-                        "result" : true
-                    },
-                    "Shanghai" : {
-                        "exception" : "Invalid Code",
+                        "exception" : "EOF_InvalidCode",
                         "result" : false
+                    },
+                    "Prague" : {
+                        "result" : true
                     }
                 }
             },
             "validInvalid_12" : {
-                "code" : "0xef00010100040200010009030004000000000160015e0030503050000bad60a7",
+                "code" : "0xef0001010004020001000904000400000000016001e20030503050000bad60a7",
                 "results" : {
                     "Cancun" : {
-                        "exception" : "invalid number of branches in jump table",
+                        "exception" : "EOF_InvalidCode",
                         "result" : false
                     },
-                    "Shanghai" : {
-                        "exception" : "Invalid Code",
+                    "Prague" : {
+                        "exception" : "EOF_InvalidJumpTableCount",
                         "result" : false
                     }
                 }
             },
             "validInvalid_13" : {
-                "code" : "0xef0001010004020001000d030004000000000160015e020002ffff30503050000bad60a7",
+                "code" : "0xef0001010004020001000d04000400000000016001e2020002ffff30503050000bad60a7",
                 "results" : {
                     "Cancun" : {
-                        "exception" : "invalid jump destination",
+                        "exception" : "EOF_InvalidCode",
                         "result" : false
                     },
-                    "Shanghai" : {
-                        "exception" : "Invalid Code",
+                    "Prague" : {
+                        "exception" : "EOF_InvalidJumpDestination",
                         "result" : false
                     }
                 }
             },
             "validInvalid_14" : {
-                "code" : "0xef00010100040200010008030004000000000260015d0001305b000bad60a7",
+                "code" : "0xef0001010004020001000804000400000000026001e10001305b000bad60a7",
                 "results" : {
                     "Cancun" : {
-                        "exception" : "conflicting stack height",
+                        "exception" : "EOF_InvalidCode",
                         "result" : false
                     },
-                    "Shanghai" : {
-                        "exception" : "Invalid Code",
+                    "Prague" : {
+                        "exception" : "EOF_ConflictingStackHeight",
                         "result" : false
                     }
                 }
             },
             "validInvalid_15" : {
-                "code" : "0xef0001010004020001000a03000400000000005c00035c00025cfffa000bad60a7",
+                "code" : "0xef0001010004020001000a0400040000000000e00003e00002e0fffa000bad60a7",
                 "results" : {
                     "Cancun" : {
-                        "exception" : "invalid jump destination",
+                        "exception" : "EOF_InvalidCode",
                         "result" : false
                     },
-                    "Shanghai" : {
-                        "exception" : "Invalid Code",
+                    "Prague" : {
+                        "exception" : "EOF_InvalidJumpDestination",
                         "result" : false
                     }
                 }
             },
             "validInvalid_16" : {
-                "code" : "0xef0001010004020001001003000400000000036000600060005d00035d00025dfffa000bad60a7",
+                "code" : "0xef000101000402000100100400040000000003600060006000e10003e10002e1fffa000bad60a7",
                 "results" : {
                     "Cancun" : {
-                        "exception" : "invalid jump destination",
+                        "exception" : "EOF_InvalidCode",
                         "result" : false
                     },
-                    "Shanghai" : {
-                        "exception" : "Invalid Code",
+                    "Prague" : {
+                        "exception" : "EOF_InvalidJumpDestination",
                         "result" : false
                     }
                 }
             },
             "validInvalid_17" : {
-                "code" : "0xef0001010008020001000303000400000000013050000bad60a7",
+                "code" : "0xef0001010008020001000304000400000000013050000bad60a7",
                 "results" : {
                     "Cancun" : {
-                        "exception" : "invalid code size",
+                        "exception" : "EOF_InvalidCode",
                         "result" : false
                     },
-                    "Shanghai" : {
-                        "exception" : "Invalid Code",
+                    "Prague" : {
+                        "exception" : "EOF_InvalidTypeSectionSize",
                         "result" : false
                     }
                 }
             },
             "validInvalid_18" : {
-                "code" : "0xef0001010004020001000503000100000000016003565b00ef",
+                "code" : "0xef0001010004020001000504000100000000016003565b00ef",
                 "results" : {
                     "Cancun" : {
-                        "exception" : "undefined instrustion",
+                        "exception" : "EOF_InvalidCode",
                         "result" : false
                     },
-                    "Shanghai" : {
-                        "exception" : "Invalid Code",
+                    "Prague" : {
+                        "exception" : "EOF_UndefinedInstruction",
                         "result" : false
                     }
                 }
             },
             "validInvalid_19" : {
-                "code" : "0xef00010100040200010007030001000000000160016003575b00ef",
+                "code" : "0xef00010100040200010007040001000000000160016003575b00ef",
                 "results" : {
                     "Cancun" : {
-                        "exception" : "undefined instrustion",
+                        "exception" : "EOF_InvalidCode",
                         "result" : false
                     },
-                    "Shanghai" : {
-                        "exception" : "Invalid Code",
+                    "Prague" : {
+                        "exception" : "EOF_UndefinedInstruction",
                         "result" : false
                     }
                 }
             },
             "validInvalid_2" : {
-                "code" : "0xef0001010004020001000303000400000000013050000bad60a70bad",
+                "code" : "0xef0001010004020001000304000400000000013050000bad60a70bad",
                 "results" : {
                     "Cancun" : {
-                        "exception" : "invalid container size",
+                        "exception" : "EOF_InvalidCode",
                         "result" : false
                     },
-                    "Shanghai" : {
-                        "exception" : "Invalid Code",
+                    "Prague" : {
+                        "exception" : "EOF_InvalidContainerSize",
                         "result" : false
                     }
                 }
             },
             "validInvalid_20" : {
-                "code" : "0xef0001010004020001000403000100000000016001ff00ef",
+                "code" : "0xef0001010004020001000404000100000000016001ff00ef",
                 "results" : {
                     "Cancun" : {
-                        "exception" : "undefined instrustion",
+                        "exception" : "EOF_InvalidCode",
                         "result" : false
                     },
-                    "Shanghai" : {
-                        "exception" : "Invalid Code",
+                    "Prague" : {
+                        "exception" : "EOF_UndefinedInstruction",
                         "result" : false
                     }
                 }
             },
             "validInvalid_21" : {
-                "code" : "0xef000101000402000100040300010000000007",
+                "code" : "0xef000101000402000100040400010000000007",
                 "results" : {
                     "Cancun" : {
-                        "exception" : "invalid container size",
+                        "exception" : "EOF_InvalidCode",
                         "result" : false
                     },
-                    "Shanghai" : {
-                        "exception" : "Invalid Code",
+                    "Prague" : {
+                        "exception" : "EOF_InvalidContainerSize",
                         "result" : false
                     }
                 }
             },
             "validInvalid_22" : {
-                "code" : "0xef0001010004020001001003000100000000016001600260036004600560066007f200ef",
+                "code" : "0xef0001010004020001001004000100000000016001600260036004600560066007f200ef",
                 "results" : {
                     "Cancun" : {
-                        "exception" : "undefined instrustion",
+                        "exception" : "EOF_InvalidCode",
                         "result" : false
                     },
-                    "Shanghai" : {
-                        "exception" : "Invalid Code",
+                    "Prague" : {
+                        "exception" : "EOF_UndefinedInstruction",
                         "result" : false
                     }
                 }
             },
             "validInvalid_23" : {
-                "code" : "0xef0001010004020001000503000100000000016003565b00ef",
+                "code" : "0xef0001010004020001000504000100000000016003565b00ef",
                 "results" : {
                     "Cancun" : {
-                        "exception" : "undefined instrustion",
+                        "exception" : "EOF_InvalidCode",
                         "result" : false
                     },
-                    "Shanghai" : {
-                        "exception" : "Invalid Code",
+                    "Prague" : {
+                        "exception" : "EOF_UndefinedInstruction",
                         "result" : false
                     }
                 }
             },
             "validInvalid_24" : {
-                "code" : "0xef0001010008020002000300030300040000000001010100013050005030000bad60a7",
+                "code" : "0xef0001010008020002000300030400040000000001010100013050005030000bad60a7",
                 "results" : {
                     "Cancun" : {
-                        "result" : true
-                    },
-                    "Shanghai" : {
-                        "exception" : "Invalid Code",
+                        "exception" : "EOF_InvalidCode",
                         "result" : false
+                    },
+                    "Prague" : {
+                        "result" : true
                     }
                 }
             },
             "validInvalid_25" : {
-                "code" : "0xef000101000802000200040002030004000000000100010001b000010030b10bad60a7",
+                "code" : "0xef000101000802000200040002040004000000000100010001e300010030e40bad60a7",
                 "results" : {
                     "Cancun" : {
-                        "result" : true
-                    },
-                    "Shanghai" : {
-                        "exception" : "Invalid Code",
+                        "exception" : "EOF_InvalidCode",
                         "result" : false
+                    },
+                    "Prague" : {
+                        "result" : true
                     }
                 }
             },
             "validInvalid_26" : {
-                "code" : "0xef000101000802000200030001030004000000000100010001b00001300bad60a7",
+                "code" : "0xef000101000802000200030001040004000000000100010001e30001300bad60a7",
                 "results" : {
                     "Cancun" : {
-                        "exception" : "invalid code termination",
+                        "exception" : "EOF_InvalidCode",
                         "result" : false
                     },
-                    "Shanghai" : {
-                        "exception" : "Invalid Code",
+                    "Prague" : {
+                        "exception" : "EOF_InvalidCodeTermination",
                         "result" : false
                     }
                 }
             },
             "validInvalid_27" : {
-                "code" : "0xef000101000802000200040002030004000000000101000001b000010050b10bad60a7",
+                "code" : "0xef000101000802000200040002040004000000000101000001e300010050e40bad60a7",
                 "results" : {
                     "Cancun" : {
-                        "exception" : "stack underflow",
+                        "exception" : "EOF_InvalidCode",
                         "result" : false
                     },
-                    "Shanghai" : {
-                        "exception" : "Invalid Code",
+                    "Prague" : {
+                        "exception" : "EOF_StackUnderflow",
                         "result" : false
                     }
                 }
             },
             "validInvalid_28" : {
-                "code" : "0xef000101000c0200030028000b001f03000400000003ff000a000a00640064b00002b00002b00002b00002b00002b00002b00002b00002b00002b00002b00001b000013030300030303030303030303030b1b00001b00001b00001b00001b00001b00001b00001b00001b00001b00001b10bad60a7",
+                "code" : "0xef000101000c0200030028000b001f04000400000003ff000a000a00640064e30002e30002e30002e30002e30002e30002e30002e30002e30002e30002e30001e300013030300030303030303030303030e4e30001e30001e30001e30001e30001e30001e30001e30001e30001e30001e40bad60a7",
                 "results" : {
                     "Cancun" : {
-                        "result" : true
-                    },
-                    "Shanghai" : {
-                        "exception" : "Invalid Code",
+                        "exception" : "EOF_InvalidCode",
                         "result" : false
+                    },
+                    "Prague" : {
+                        "result" : true
                     }
                 }
             },
             "validInvalid_29" : {
-                "code" : "0xef000101000c0200030029000b001f0300040000000400000a000a00640064b00002b00002b00002b00002b00002b00002b00002b00002b00002b00002b00001b00001303030300030303030303030303030b1b00001b00001b00001b00001b00001b00001b00001b00001b00001b00001b10bad60a7",
+                "code" : "0xef000101000c0200030029000b001f0400040000000400000a000a00640064e30002e30002e30002e30002e30002e30002e30002e30002e30002e30002e30001e30001303030300030303030303030303030e4e30001e30001e30001e30001e30001e30001e30001e30001e30001e30001e40bad60a7",
                 "results" : {
                     "Cancun" : {
-                        "exception" : "invalid type content, max stack height exceeds limit",
+                        "exception" : "EOF_InvalidCode",
                         "result" : false
                     },
-                    "Shanghai" : {
-                        "exception" : "Invalid Code",
+                    "Prague" : {
+                        "exception" : "EOF_MaxStackHeightExceeded",
                         "result" : false
                     }
                 }
             },
             "validInvalid_3" : {
-                "code" : "0xef0001010004020001000303000400000000013050000bad60a7",
+                "code" : "0xef0001010004020001000304000400000000013050000bad60a7",
                 "results" : {
                     "Cancun" : {
-                        "result" : true
-                    },
-                    "Shanghai" : {
-                        "exception" : "Invalid Code",
+                        "exception" : "EOF_InvalidCode",
                         "result" : false
+                    },
+                    "Prague" : {
+                        "result" : true
                     }
                 }
             },
             "validInvalid_30" : {
-                "code" : "0xef0001010010020004000300030003000303000400000000010101000100000001010100013050005030003050005030000bad60a7",
+                "code" : "0xef0001010010020004000300030003000304000400000000010101000100000001010100013050005030003050005030000bad60a7",
                 "results" : {
                     "Cancun" : {
-                        "result" : true
-                    },
-                    "Shanghai" : {
-                        "exception" : "Invalid Code",
+                        "exception" : "EOF_InvalidCode",
                         "result" : false
+                    },
+                    "Prague" : {
+                        "result" : true
                     }
                 }
             },
             "validInvalid_31" : {
-                "code" : "0xef000101001002000400030005000700070300040000000001000000020000000300000001305000303050500030303050505000305030503050000bad60a7",
+                "code" : "0xef000101001002000400030005000700070400040000000001000000020000000300000001305000303050500030303050505000305030503050000bad60a7",
                 "results" : {
                     "Cancun" : {
-                        "result" : true
-                    },
-                    "Shanghai" : {
-                        "exception" : "Invalid Code",
+                        "exception" : "EOF_InvalidCode",
                         "result" : false
+                    },
+                    "Prague" : {
+                        "result" : true
                     }
                 }
             },
             "validInvalid_32" : {
-                "code" : "0xef000101001002000400030005000700070300040000000001000000000000000300000001305000b000020030303050505000305030503050000bad60a7",
+                "code" : "0xef000101001002000400030005000700070400040000000001000000000000000300000001305000b000020030303050505000305030503050000bad60a7",
                 "results" : {
                     "Cancun" : {
-                        "exception" : "invalid container size",
+                        "exception" : "EOF_InvalidCode",
                         "result" : false
                     },
-                    "Shanghai" : {
-                        "exception" : "Invalid Code",
+                    "Prague" : {
+                        "exception" : "EOF_InvalidContainerSize",
                         "result" : false
                     }
                 }
             },
             "validInvalid_33" : {
-                "code" : "0xef000101001002000400030005000700070300040000000001000000020000000300000001305000b0000f0030303050505000305030503050000bad60a7",
+                "code" : "0xef000101001002000400030005000700070400040000000001000000020000000300000001305000b0000f0030303050505000305030503050000bad60a7",
                 "results" : {
                     "Cancun" : {
-                        "exception" : "invalid container size",
+                        "exception" : "EOF_InvalidCode",
                         "result" : false
                     },
-                    "Shanghai" : {
-                        "exception" : "Invalid Code",
+                    "Prague" : {
+                        "exception" : "EOF_InvalidContainerSize",
                         "result" : false
                     }
                 }
             },
             "validInvalid_34" : {
-                "code" : "0xef0001010008020002000300030300040000000001010000013050005050000bad60a7",
+                "code" : "0xef0001010008020002000300030400040000000001010000013050005050000bad60a7",
                 "results" : {
                     "Cancun" : {
-                        "exception" : "stack underflow",
+                        "exception" : "EOF_InvalidCode",
                         "result" : false
                     },
-                    "Shanghai" : {
-                        "exception" : "Invalid Code",
+                    "Prague" : {
+                        "exception" : "EOF_StackUnderflow",
                         "result" : false
                     }
                 }
             },
             "validInvalid_35" : {
-                "code" : "0xef0001010008020002000300030300040000000001000100013050003030000bad60a7",
+                "code" : "0xef0001010008020002000300030400040000000001000100013050003030000bad60a7",
                 "results" : {
                     "Cancun" : {
-                        "exception" : "invalid max stack height",
+                        "exception" : "EOF_InvalidCode",
                         "result" : false
                     },
-                    "Shanghai" : {
-                        "exception" : "Invalid Code",
+                    "Prague" : {
+                        "exception" : "EOF_InvalidMaxStackHeight",
                         "result" : false
                     }
                 }
             },
             "validInvalid_36" : {
-                "code" : "0xef0001010008020002000300030300040000000001010100013050003091000bad60a7",
+                "code" : "0xef0001010008020002000300030400040000000001010100013050003091000bad60a7",
                 "results" : {
                     "Cancun" : {
-                        "exception" : "stack underflow",
+                        "exception" : "EOF_InvalidCode",
                         "result" : false
                     },
-                    "Shanghai" : {
-                        "exception" : "Invalid Code",
+                    "Prague" : {
+                        "exception" : "EOF_StackUnderflow",
                         "result" : false
                     }
                 }
             },
             "validInvalid_37" : {
-                "code" : "0xef0001010004020001000303000400010000013050fe0bad60a7",
+                "code" : "0xef0001010004020001000304000400010000013050fe0bad60a7",
                 "results" : {
                     "Cancun" : {
-                        "exception" : "invalid section 0 type",
+                        "exception" : "EOF_InvalidCode",
                         "result" : false
                     },
-                    "Shanghai" : {
-                        "exception" : "Invalid Code",
+                    "Prague" : {
+                        "exception" : "EOF_InvalidFirstSectionType",
                         "result" : false
                     }
                 }
             },
             "validInvalid_38" : {
-                "code" : "0xef0001010008020002000300030300040000000001020000023050005050000bad60a7",
+                "code" : "0xef0001010008020002000300030400040000000001020000023050005050000bad60a7",
                 "results" : {
                     "Cancun" : {
-                        "result" : true
-                    },
-                    "Shanghai" : {
-                        "exception" : "Invalid Code",
+                        "exception" : "EOF_InvalidCode",
                         "result" : false
+                    },
+                    "Prague" : {
+                        "result" : true
                     }
                 }
             },
             "validInvalid_39" : {
-                "code" : "0xef0001010004020001000303000400000100013050fe0bad60a7",
+                "code" : "0xef0001010004020001000304000400000100013050fe0bad60a7",
                 "results" : {
                     "Cancun" : {
-                        "exception" : "invalid section 0 type",
+                        "exception" : "EOF_InvalidCode",
                         "result" : false
                     },
-                    "Shanghai" : {
-                        "exception" : "Invalid Code",
+                    "Prague" : {
+                        "exception" : "EOF_InvalidFirstSectionType",
                         "result" : false
                     }
                 }
             },
             "validInvalid_4" : {
-                "code" : "0xef00010100040200010003030004000000000130ef000bad60a7",
+                "code" : "0xef00010100040200010003040004000000000130ef000bad60a7",
                 "results" : {
                     "Cancun" : {
-                        "exception" : "undefined instrustion",
+                        "exception" : "EOF_InvalidCode",
                         "result" : false
                     },
-                    "Shanghai" : {
-                        "exception" : "Invalid Code",
+                    "Prague" : {
+                        "exception" : "EOF_UndefinedInstruction",
                         "result" : false
                     }
                 }
             },
             "validInvalid_40" : {
-                "code" : "0xef0001010004020001000303000400000000033050000bad60a7",
+                "code" : "0xef0001010004020001000304000400000000033050000bad60a7",
                 "results" : {
                     "Cancun" : {
-                        "exception" : "invalid max stack height",
+                        "exception" : "EOF_InvalidCode",
                         "result" : false
                     },
-                    "Shanghai" : {
-                        "exception" : "Invalid Code",
+                    "Prague" : {
+                        "exception" : "EOF_InvalidMaxStackHeight",
                         "result" : false
                     }
                 }
             },
             "validInvalid_41" : {
-                "code" : "0xef00010100040200010001030004000000000530503050000bad60a7",
+                "code" : "0xef00010100040200010001040004000000000530503050000bad60a7",
                 "results" : {
                     "Cancun" : {
-                        "exception" : "invalid container size",
+                        "exception" : "EOF_InvalidCode",
                         "result" : false
                     },
-                    "Shanghai" : {
-                        "exception" : "Invalid Code",
+                    "Prague" : {
+                        "exception" : "EOF_InvalidContainerSize",
                         "result" : false
                     }
                 }
             },
             "validInvalid_42" : {
-                "code" : "0xef0001010004020001000303000400000000013050620bad60a7",
+                "code" : "0xef0001010004020001000304000400000000013050620bad60a7",
                 "results" : {
                     "Cancun" : {
-                        "exception" : "truncated immediate",
+                        "exception" : "EOF_InvalidCode",
                         "result" : false
                     },
-                    "Shanghai" : {
-                        "exception" : "Invalid Code",
+                    "Prague" : {
+                        "exception" : "EOF_TruncatedImmediate",
                         "result" : false
                     }
                 }
             },
             "validInvalid_43" : {
-                "code" : "0xef00010100040200010003030001ff00000001305000ef",
+                "code" : "0xef00010100040200010003040001ff00000001305000ef",
                 "results" : {
                     "Cancun" : {
-                        "exception" : "missing header terminator",
+                        "exception" : "EOF_InvalidCode",
                         "result" : false
                     },
-                    "Shanghai" : {
-                        "exception" : "Invalid Code",
+                    "Prague" : {
+                        "exception" : "EOF_MissingHeaderTerminator",
                         "result" : false
                     }
                 }
             },
             "validInvalid_44" : {
-                "code" : "0xef020101000402000100030300010000000001305000ef",
+                "code" : "0xef020101000402000100030400010000000001305000ef",
                 "results" : {
                     "Cancun" : {
-                        "exception" : "invalid magic",
+                        "exception" : "EOF_InvalidCode",
                         "result" : false
                     },
-                    "Shanghai" : {
-                        "exception" : "Invalid Code",
+                    "Prague" : {
+                        "exception" : "EOF_InvalidMagic",
                         "result" : false
                     }
                 }
             },
             "validInvalid_45" : {
-                "code" : "0xef000001000402000100030300010000000001305000ef",
+                "code" : "0xef000001000402000100030400010000000001305000ef",
                 "results" : {
                     "Cancun" : {
-                        "exception" : "invalid version",
+                        "exception" : "EOF_InvalidCode",
                         "result" : false
                     },
-                    "Shanghai" : {
-                        "exception" : "Invalid Code",
+                    "Prague" : {
+                        "exception" : "EOF_InvalidVersion",
                         "result" : false
                     }
                 }
             },
             "validInvalid_46" : {
-                "code" : "0xef000201000402000100030300010000000001305000ef",
+                "code" : "0xef000201000402000100030400010000000001305000ef",
                 "results" : {
                     "Cancun" : {
-                        "exception" : "invalid version",
+                        "exception" : "EOF_InvalidCode",
                         "result" : false
                     },
-                    "Shanghai" : {
-                        "exception" : "Invalid Code",
+                    "Prague" : {
+                        "exception" : "EOF_InvalidVersion",
                         "result" : false
                     }
                 }
             },
             "validInvalid_47" : {
-                "code" : "0xef000102000100030100040300010000000001305000ef",
+                "code" : "0xef000102000100030100040400010000000001305000ef",
                 "results" : {
                     "Cancun" : {
-                        "exception" : "missing type header",
+                        "exception" : "EOF_InvalidCode",
                         "result" : false
                     },
-                    "Shanghai" : {
-                        "exception" : "Invalid Code",
+                    "Prague" : {
+                        "exception" : "EOF_TypeSectionMissing",
                         "result" : false
                     }
                 }
             },
             "validInvalid_48" : {
-                "code" : "0xef000102000100030300010100040000000001305000ef",
+                "code" : "0xef000102000100030400010100040000000001305000ef",
                 "results" : {
                     "Cancun" : {
-                        "exception" : "missing type header",
+                        "exception" : "EOF_InvalidCode",
                         "result" : false
                     },
-                    "Shanghai" : {
-                        "exception" : "Invalid Code",
+                    "Prague" : {
+                        "exception" : "EOF_TypeSectionMissing",
                         "result" : false
                     }
                 }
             },
             "validInvalid_49" : {
-                "code" : "0xef000102000100030300010000000001305000ef",
+                "code" : "0xef000102000100030400010000000001305000ef",
                 "results" : {
                     "Cancun" : {
-                        "exception" : "missing type header",
+                        "exception" : "EOF_InvalidCode",
                         "result" : false
                     },
-                    "Shanghai" : {
-                        "exception" : "Invalid Code",
+                    "Prague" : {
+                        "exception" : "EOF_TypeSectionMissing",
                         "result" : false
                     }
                 }
             },
             "validInvalid_5" : {
-                "code" : "0xef0001010004020001000303000400000000013050fe0bad60a7",
+                "code" : "0xef0001010004020001000304000400000000013050fe0bad60a7",
                 "results" : {
                     "Cancun" : {
-                        "result" : true
-                    },
-                    "Shanghai" : {
-                        "exception" : "Invalid Code",
+                        "exception" : "EOF_InvalidCode",
                         "result" : false
+                    },
+                    "Prague" : {
+                        "result" : true
                     }
                 }
             },
             "validInvalid_50" : {
-                "code" : "0xef00010100040300010000000001305000ef",
+                "code" : "0xef00010100040400010000000001305000ef",
                 "results" : {
                     "Cancun" : {
-                        "exception" : "missing code header",
+                        "exception" : "EOF_InvalidCode",
                         "result" : false
                     },
-                    "Shanghai" : {
-                        "exception" : "Invalid Code",
+                    "Prague" : {
+                        "exception" : "EOF_CodeSectionMissing",
                         "result" : false
                     }
                 }
@@ -615,24 +615,24 @@
                 "code" : "0xef000101000402000100030000000001305000ef",
                 "results" : {
                     "Cancun" : {
-                        "exception" : "missing data header",
+                        "exception" : "EOF_InvalidCode",
                         "result" : false
                     },
-                    "Shanghai" : {
-                        "exception" : "Invalid Code",
+                    "Prague" : {
+                        "exception" : "EOF_DataSectionMissing",
                         "result" : false
                     }
                 }
             },
             "validInvalid_52" : {
-                "code" : "0xef0001010004020001000a030016000000000338600060003938601df3ef0001010004020001000303001d0000000001385000",
+                "code" : "0xef0001010004020001000a040016000000000338600060003938601df3ef0001010004020001000304001d0000000001385000",
                 "results" : {
                     "Cancun" : {
-                        "result" : true
-                    },
-                    "Shanghai" : {
-                        "exception" : "Invalid Code",
+                        "exception" : "EOF_InvalidCode",
                         "result" : false
+                    },
+                    "Prague" : {
+                        "result" : true
                     }
                 }
             },
@@ -640,62 +640,62 @@
                 "code" : "0x610badfe",
                 "results" : {
                     "Cancun" : {
-                        "exception" : "invalid magic",
+                        "exception" : "EOF_InvalidCode",
                         "result" : false
                     },
-                    "Shanghai" : {
-                        "exception" : "Invalid Code",
+                    "Prague" : {
+                        "exception" : "EOF_InvalidMagic",
                         "result" : false
                     }
                 }
             },
             "validInvalid_6" : {
-                "code" : "0xef00010100040200010003030001ff00000001305000ef",
+                "code" : "0xef00010100040200010003040001ff00000001305000ef",
                 "results" : {
                     "Cancun" : {
-                        "exception" : "missing header terminator",
+                        "exception" : "EOF_InvalidCode",
                         "result" : false
                     },
-                    "Shanghai" : {
-                        "exception" : "Invalid Code",
+                    "Prague" : {
+                        "exception" : "EOF_MissingHeaderTerminator",
                         "result" : false
                     }
                 }
             },
             "validInvalid_7" : {
-                "code" : "0xef0001010004020001000a03000400000000005c00035c00035cfffa000bad60a7",
+                "code" : "0xef0001010004020001000a0400040000000000e00003e00003e0fffa000bad60a7",
                 "results" : {
                     "Cancun" : {
-                        "result" : true
-                    },
-                    "Shanghai" : {
-                        "exception" : "Invalid Code",
+                        "exception" : "EOF_InvalidCode",
                         "result" : false
+                    },
+                    "Prague" : {
+                        "result" : true
                     }
                 }
             },
             "validInvalid_8" : {
-                "code" : "0xef0001010004020001000503000400000000005c00015b000bad60a7",
+                "code" : "0xef000101000402000100050400040000000000e000015b000bad60a7",
                 "results" : {
                     "Cancun" : {
-                        "exception" : "unreachable code",
+                        "exception" : "EOF_InvalidCode",
                         "result" : false
                     },
-                    "Shanghai" : {
-                        "exception" : "Invalid Code",
+                    "Prague" : {
+                        "exception" : "EOF_UnreachableCode",
                         "result" : false
                     }
                 }
             },
             "validInvalid_9" : {
-                "code" : "0xef00010100040200010007030004000000000160015d00015b000bad60a7",
+                "code" : "0xef0001010004020001000704000400000000016001e100015b000bad60a7",
                 "results" : {
                     "Cancun" : {
-                        "result" : true
-                    },
-                    "Shanghai" : {
-                        "exception" : "Invalid Code",
+                        "exception" : "EOF_InvalidCode",
                         "result" : false
+                    },
+                    "Prague" : {
+                        "result" : true
                     }
                 }
             }
