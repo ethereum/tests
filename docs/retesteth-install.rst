@@ -22,7 +22,7 @@ Linux running anywhere else with an Internet connection.
 
    ::
 
-      sudo docker image import dretesteth.tar retesteth
+      sudo docker image load --input dretesteth.tar
 
 #. Download the **dretesteth.sh** script. 
 
