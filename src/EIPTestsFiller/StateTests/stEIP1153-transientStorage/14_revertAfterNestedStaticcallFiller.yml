@@ -20,7 +20,7 @@
     currentBaseFee: 10
 
   pre:
-    000000000000000000000000000000000000000A:
+    A00000000000000000000000000000000000000A:
       balance: 1000000000000000000
       nonce: 0
       code: |
@@ -40,9 +40,9 @@
           }
 
           function doStoreAndStaticCall() {
-            verbatim_2i_0o(hex"b4", 0, 10)
+            verbatim_2i_0o(hex"5D", 0, 10)
 
-            let v := verbatim_1i_1o(hex"b3", 0)
+            let v := verbatim_1i_1o(hex"5C", 0)
             sstore(0, v)
 
             mstore(0, hex"f8dfc2d0") // doCallToStore()
@@ -51,7 +51,7 @@
             sstore(1, mload(0)) // should be 0 from nested unsuccessful call
             sstore(2, success) // should be 1
 
-            let val := verbatim_1i_1o(hex"b3", 0)
+            let val := verbatim_1i_1o(hex"5C", 0)
             sstore(3, val)
           }
           
@@ -63,7 +63,7 @@
           }
 
           function doStore() {
-            verbatim_2i_0o(hex"b4", 0, 11) // will revert
+            verbatim_2i_0o(hex"5D", 0, 11) // will revert
           }
 
           function selector() -> s {
@@ -85,7 +85,7 @@
     gasLimit:
       - "400000"
     nonce: 0
-    to: 000000000000000000000000000000000000000A
+    to: A00000000000000000000000000000000000000A
     value:
       - 0
     secretKey: "45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8"
@@ -94,9 +94,9 @@
 
   expect:
     - network:
-        - "Merge+1153"
+        - ">=Cancun"
       result:
-        000000000000000000000000000000000000000A:
+        A00000000000000000000000000000000000000A:
           storage:
             0x00: 10
             0x01: 0

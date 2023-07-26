@@ -22,7 +22,7 @@
     currentBaseFee: 10
 
   pre:
-    000000000000000000000000000000000000000A:
+    A00000000000000000000000000000000000000A:
       balance: 1000000000000000000
       nonce: 0
       code: |
@@ -42,17 +42,17 @@
           }
 
           function tstore3() {
-            verbatim_2i_0o(hex"b4", 0, 3)
+            verbatim_2i_0o(hex"5D", 0, 3)
           }
 
           function tload0() {
-            let v := verbatim_1i_1o(hex"b3", 0)
+            let v := verbatim_1i_1o(hex"5C", 0)
             mstore(0, v)
             return(0, 32)
           }
 
           function doReenter() {
-            verbatim_2i_0o(hex"b4", 0, 2)
+            verbatim_2i_0o(hex"5D", 0, 2)
 
             mstore(0, hex"611e535a") // tstore3()
 
@@ -61,7 +61,7 @@
             sstore(0, fail)
             
             // should load prev value, 2
-            let v := verbatim_1i_1o(hex"b3", 0)
+            let v := verbatim_1i_1o(hex"5C", 0)
             sstore(1, v)
 
             mstore(0, hex"01729275") // tload0()
@@ -91,7 +91,7 @@
     gasLimit:
       - "400000"
     nonce: 0
-    to: 000000000000000000000000000000000000000A
+    to: A00000000000000000000000000000000000000A
     value:
       - 0
     secretKey: "45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8"
@@ -100,9 +100,9 @@
 
   expect:
     - network:
-        - "Merge+1153"
+        - ">=Cancun"
       result:
-        000000000000000000000000000000000000000A:
+        A00000000000000000000000000000000000000A:
           storage:
             0x00: 0
             0x01: 2

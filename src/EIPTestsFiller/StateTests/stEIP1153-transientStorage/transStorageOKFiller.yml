@@ -90,11 +90,11 @@ transStorageOK:
             // Once the relevant opcodes are added to Yul, simply remove
             // them (from all contracts) and remove the _temp suffices.
             function tload_temp(loc) -> val {
-              val := verbatim_1i_1o(hex"B3", loc)
+              val := verbatim_1i_1o(hex"5C", loc)
             }
           
             function tstore_temp(loc, val) {
-              verbatim_2i_0o(hex"B4", loc, val)
+              verbatim_2i_0o(hex"5D", loc, val)
             }
 
             // If we are called by ourselves, this is part of the loop.
@@ -151,11 +151,11 @@ transStorageOK:
       code: |
         :yul {
             function tload_temp(loc) -> val {
-              val := verbatim_1i_1o(hex"B3", loc)
+              val := verbatim_1i_1o(hex"5C", loc)
             }
           
             function tstore_temp(loc, val) {
-              verbatim_2i_0o(hex"B4", loc, val)
+              verbatim_2i_0o(hex"5D", loc, val)
             }
 
             // If we are called by ourselves, this is part of the loop.
@@ -212,11 +212,11 @@ transStorageOK:
       code: |
         :yul {
             function tload_temp(loc) -> val {
-              val := verbatim_1i_1o(hex"B3", loc)
+              val := verbatim_1i_1o(hex"5C", loc)
             }
           
             function tstore_temp(loc, val) {
-              verbatim_2i_0o(hex"B4", loc, val)
+              verbatim_2i_0o(hex"5D", loc, val)
             }
 
             // If we are called by ourselves, this is part of the loop.
@@ -276,11 +276,11 @@ transStorageOK:
       code: |
         :yul {
             function tload_temp(loc) -> val {
-              val := verbatim_1i_1o(hex"B3", loc)
+              val := verbatim_1i_1o(hex"5C", loc)
             }
           
             function tstore_temp(loc, val) {
-              verbatim_2i_0o(hex"B4", loc, val)
+              verbatim_2i_0o(hex"5D", loc, val)
             }
 
             // Write these values to storage (overwriting the 0x60A7's).
@@ -315,11 +315,11 @@ transStorageOK:
       code: |
         :yul {
             function tload_temp(loc) -> val {
-              val := verbatim_1i_1o(hex"B3", loc)
+              val := verbatim_1i_1o(hex"5C", loc)
             }
           
             function tstore_temp(loc, val) {
-              verbatim_2i_0o(hex"B4", loc, val)
+              verbatim_2i_0o(hex"5D", loc, val)
             }
 
             // If we are called by 0xca11bacc, this is part of the loop
@@ -392,11 +392,11 @@ transStorageOK:
       code: |
         :yul {
             function tload_temp(loc) -> val {
-              val := verbatim_1i_1o(hex"B3", loc)
+              val := verbatim_1i_1o(hex"5C", loc)
             }
           
             function tstore_temp(loc, val) {
-              verbatim_2i_0o(hex"B4", loc, val)
+              verbatim_2i_0o(hex"5D", loc, val)
             }
 
             // We are inside the loop
@@ -481,11 +481,11 @@ transStorageOK:
       code: |
         :yul {
             function tload_temp(loc) -> val {
-              val := verbatim_1i_1o(hex"B3", loc)
+              val := verbatim_1i_1o(hex"5C", loc)
             }
           
             function tstore_temp(loc, val) {
-              verbatim_2i_0o(hex"B4", loc, val)
+              verbatim_2i_0o(hex"5D", loc, val)
             }
 
             // If we are in the loop
@@ -548,11 +548,11 @@ transStorageOK:
       code: |
         :yul {
             function tload_temp(loc) -> val {
-              val := verbatim_1i_1o(hex"B3", loc)
+              val := verbatim_1i_1o(hex"5C", loc)
             }
 
             function tstore_temp(loc, val) {
-              verbatim_2i_0o(hex"B4", loc, val)
+              verbatim_2i_0o(hex"5D", loc, val)
             }
 
             tstore_temp(0, add(tload_temp(0), 1))
@@ -571,11 +571,11 @@ transStorageOK:
       code: |
         :yul {
             function tload_temp(loc) -> val {
-              val := verbatim_1i_1o(hex"B3", loc)
+              val := verbatim_1i_1o(hex"5C", loc)
             }
           
             function tstore_temp(loc, val) {
-              verbatim_2i_0o(hex"B4", loc, val)
+              verbatim_2i_0o(hex"5D", loc, val)
             }
 
             // The initial value of the counter is zero
@@ -621,11 +621,11 @@ transStorageOK:
       code: |
         :yul {
             function tload_temp(loc) -> val {
-              val := verbatim_1i_1o(hex"B3", loc)
+              val := verbatim_1i_1o(hex"5C", loc)
             }
           
             function tstore_temp(loc, val) {
-              verbatim_2i_0o(hex"B4", loc, val)
+              verbatim_2i_0o(hex"5D", loc, val)
             }
 
             // If we are at the bottom of the call stack, increment
@@ -695,11 +695,11 @@ transStorageOK:
       code: |
         :yul {
             function tload_temp(loc) -> val {
-              val := verbatim_1i_1o(hex"B3", loc)
+              val := verbatim_1i_1o(hex"5C", loc)
             }
           
             function tstore_temp(loc, val) {
-              verbatim_2i_0o(hex"B4", loc, val)
+              verbatim_2i_0o(hex"5D", loc, val)
             }
 
             // There is calldata, so write to Trans[0]
@@ -826,7 +826,7 @@ transStorageOK:
         data: :label sum_16
 
       network:
-        - Merge+1153
+        - ">=Cancun"
       result:
         cccccccccccccccccccccccccccccccccccccccc:
           storage:
@@ -843,7 +843,7 @@ transStorageOK:
         data: :label callcode_sum_16
 
       network:
-        - Merge+1153
+        - ">=Cancun"
       result:
         cccccccccccccccccccccccccccccccccccccccc:
           storage:
@@ -861,7 +861,7 @@ transStorageOK:
         data: :label delegate_sum_16
 
       network:
-        - Merge+1153
+        - ">=Cancun"
       result:
         cccccccccccccccccccccccccccccccccccccccc:
           storage:
@@ -878,7 +878,7 @@ transStorageOK:
         data: :label sum_256
 
       network:
-        - Merge+1153
+        - ">=Cancun"
       result:
         cccccccccccccccccccccccccccccccccccccccc:
           storage:
@@ -897,7 +897,7 @@ transStorageOK:
         data: :label callback_sum_10
 
       network:
-        - Merge+1153
+        - ">=Cancun"
       result:
         cccccccccccccccccccccccccccccccccccccccc:
           storage:
@@ -923,7 +923,7 @@ transStorageOK:
         data: :label callback_sum_50
 
       network:
-        - Merge+1153
+        - ">=Cancun"
       result:
         cccccccccccccccccccccccccccccccccccccccc:
           storage:
@@ -949,7 +949,7 @@ transStorageOK:
         data: :label bin_tree_6
 
       network:
-        - Merge+1153
+        - ">=Cancun"
       result:
         cccccccccccccccccccccccccccccccccccccccc:
           storage:
@@ -972,7 +972,7 @@ transStorageOK:
         data: :label delegate_bin_tree_6
 
       network:
-        - Merge+1153
+        - ">=Cancun"
       result:
         cccccccccccccccccccccccccccccccccccccccc:
           storage:
@@ -995,7 +995,7 @@ transStorageOK:
         data: :label inherit_trans
 
       network:
-        - Merge+1153
+        - ">=Cancun"
       result:
         cccccccccccccccccccccccccccccccccccccccc:
           storage:
@@ -1019,7 +1019,7 @@ transStorageOK:
         data: :label deep_call
 
       network:
-        - Merge+1153
+        - ">=Cancun"
       result:
         cccccccccccccccccccccccccccccccccccccccc:
           storage:
@@ -1038,7 +1038,7 @@ transStorageOK:
         data: :label static_call
 
       network:
-        - Merge+1153
+        - ">=Cancun"
       result:
         cccccccccccccccccccccccccccccccccccccccc:
           storage:

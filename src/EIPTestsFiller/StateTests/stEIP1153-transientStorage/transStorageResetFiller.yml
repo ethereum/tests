@@ -46,11 +46,11 @@ transStorageReset:
             // Once the relevant opcodes are added to Yul, simply remove
             // them (from all contracts) and remove the _temp suffices.
             function tload_temp(loc) -> val {
-              val := verbatim_1i_1o(hex"B3", loc)
+              val := verbatim_1i_1o(hex"5C", loc)
             }
           
             function tstore_temp(loc, val) {
-              verbatim_2i_0o(hex"B4", loc, val)
+              verbatim_2i_0o(hex"5D", loc, val)
             }
 
             let callType := byte(0x1E, calldataload(0))
@@ -103,11 +103,11 @@ transStorageReset:
       code: |
         :yul {
             function tload_temp(loc) -> val {
-              val := verbatim_1i_1o(hex"B3", loc)
+              val := verbatim_1i_1o(hex"5C", loc)
             }
           
             function tstore_temp(loc, val) {
-              verbatim_2i_0o(hex"B4", loc, val)
+              verbatim_2i_0o(hex"5D", loc, val)
             }
 
             // The type of call to use here
@@ -263,7 +263,7 @@ transStorageReset:
         data:
         - :label reverter-call-call-stop
       network:
-        - Merge+1153
+        - ">=Cancun"
       result:
         cccccccccccccccccccccccccccccccccccccccc:
           storage:
@@ -289,7 +289,7 @@ transStorageReset:
         - :label reverter-code-delegate-stop
         - :label reverter-code-code-stop
       network:
-        - Merge+1153
+        - ">=Cancun"
       result:
         cccccccccccccccccccccccccccccccccccccccc:
           storage:
@@ -308,7 +308,7 @@ transStorageReset:
         - :label reverter-delegate-nop-stop
         - :label reverter-code-nop-stop
       network:
-        - Merge+1153
+        - ">=Cancun"
       result:
         cccccccccccccccccccccccccccccccccccccccc:
           storage:
@@ -350,7 +350,7 @@ transStorageReset:
 
 
       network:
-        - Merge+1153
+        - ">=Cancun"
       result:
         cccccccccccccccccccccccccccccccccccccccc:
           storage:
@@ -377,7 +377,7 @@ transStorageReset:
         - :label reverter-call-nop-stop
 
       network:
-        - Merge+1153
+        - ">=Cancun"
       result:
         cccccccccccccccccccccccccccccccccccccccc:
           storage:

@@ -17,16 +17,16 @@
     currentBaseFee: 10
 
   pre:
-    000000000000000000000000000000000000000A:
+    A00000000000000000000000000000000000000A:
       balance: 1000000000000000000
       nonce: 0
       code: |
         :yul {
-          let extraOpcodes := 8
+          let extraOpcodes := 7
           
           // calculate tstore gas
           let g1 := gas()
-          verbatim_2i_0o(hex"b4", 0, 3)
+          verbatim_2i_0o(hex"5D", 0, 3)
           let g2 := gas()
           sstore(1, sub(sub(g1, g2), extraOpcodes))
         }
@@ -44,7 +44,7 @@
     gasLimit:
       - "400000"
     nonce: 0
-    to: 000000000000000000000000000000000000000A
+    to: A00000000000000000000000000000000000000A
     value:
       - 0
     secretKey: "45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8"
@@ -53,8 +53,8 @@
 
   expect:
     - network:
-        - "Merge+1153"
+        - ">=Cancun"
       result:
-        000000000000000000000000000000000000000A:
+        A00000000000000000000000000000000000000A:
           storage:
             0x01: 100
