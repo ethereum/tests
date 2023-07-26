@@ -1,7 +1,8 @@
 .. _retesteth_install:
 
-These directions are written using Debian Linux 10 on Google Cloud
-Platform, but should work with minor changes on any other version of
+These directions are written using Debian Linux 11 on Google Cloud
+Platform (using a 20 GB disk - the default 10 GB is not enough), 
+but should work with minor changes on any other version of
 Linux running anywhere else with an Internet connection.
 
 #. Install docker. You may need to reboot afterwards to get the latest
@@ -11,14 +12,17 @@ Linux running anywhere else with an Internet connection.
 
       sudo apt install -y wget docker docker.io
 
-#. Download the **retesteth** `docker image <http://retesteth.ethdevops.io/>`_. 
-   It is a tar file.
+#. Download the latest **retesteth** `docker image <https://retesteth.ethdevops.io/dretesteth.tar>_
+
+   ::
+
+      wget http://retesteth.ethdevops.io/dretesteth.tar
 
 #. Load the docker image: 
 
    ::
 
-      sudo docker load -i dretest*.tar
+      sudo docker image load --input dretesteth.tar
 
 #. Download the **dretesteth.sh** script. 
 
@@ -49,22 +53,42 @@ Linux running anywhere else with an Internet connection.
 
    ::
 
-      Running 1 test case... 
       Running tests using path: /tests
-      Active client configurations: 't8ntool ' 
-      Running tests for config 'Ethereum GO on StateTool' 
-      Test Case "stExample": 
-      100% 
-      *** No errors detected 
-      *** Total Tests Run: 1 
+      Running 1 test case...
+      Retesteth config path: /tests/config
+      Active client configurations: 't8ntool '
+      Running tests for config 'Ethereum GO on StateTool' 2
+      Test Case "stExample": (1 of 1)
+      25%...
+      50%...
+      75%...
+      100%
+      
+      *** No errors detected
+      *** Total Tests Run: 12
 
 
    .. note:: 
        The **/tests** directory is referenced inside the docker container. It is
        the same as the **~/tests** directory outside it.
 
+   If you get the following error:
+
+   ::
+
+      Tests folder does not exists, creating test folder: '/tests/GeneralStateTests/stExample'
+      WARNING: /tests/src/GeneralStateTestsFiller/stExample does not exist!
+      WARNING: stExample no tests detected in folder!
+      Running tests for config 'Ethereum GO on StateTool' 2
+
+      *** No errors detected
+      WARNING: /tests/src/GeneralStateTestsFiller does not exist!
+      *** Total Tests Run: 0
+
+   try moving the dretesteth.sh file and cloned tests folder to your home directory (**~**).
+
 #. To avoid having to run with **sudo** all the time, add yourself to
-   the **docker** group.
+   the **docker** group and open a new console.
 
    ::
 
