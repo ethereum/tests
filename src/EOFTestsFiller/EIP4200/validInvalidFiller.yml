@@ -3,6 +3,7 @@ validInvalid:
      comment: |
        Test various examples to see if they are valid or invalid.
        Implements
+         # >@f1
          EOF1V4200_0001 (Valid) EOF code containing RJUMP (Positive, Negative)
          EOF1V4200_0002 (Valid) EOF code containing RJUMP (Zero)
          EOF1V4200_0003 (Valid) EOF code containing RJUMPI (Positive)
@@ -12,10 +13,10 @@ validInvalid:
          EOF1V4200_0007 (Valid) EOF with RJUMPV table size 1 (Negative)
          EOF1V4200_0008 (Valid) EOF with RJUMPV table size 1 (Zero)
          EOF1V4200_0009 (Valid) EOF with RJUMPV table size 3
-         EOF1V4200_0010 (Valid) EOF with RJUMPV table size 255 (Target 0)
-         EOF1V4200_0011 (Valid) EOF with RJUMPV table size 255 (Target 100)
-         EOF1V4200_0012 (Valid) EOF with RJUMPV table size 255 (Target 254)
-         EOF1V4200_0013 (Valid) EOF with RJUMPV table size 255 (Target 256)
+         EOF1V4200_0010 (Valid) EOF with RJUMPV table size 256 (Target 0)
+         EOF1V4200_0011 (Valid) EOF with RJUMPV table size 256 (Target 100)
+         EOF1V4200_0012 (Valid) EOF with RJUMPV table size 256 (Target 254)
+         EOF1V4200_0013 (Valid) EOF with RJUMPV table size 256 (Target 256)
          EOF1I4200_0001 (Invalid) EOF code containing truncated RJUMP
          EOF1I4200_0002 (Invalid) EOF code containing truncated RJUMP
          EOF1I4200_0003 (Invalid) EOF code containing RJUMP with target outside code bounds (Jumping into header)
@@ -42,27 +43,28 @@ validInvalid:
          EOF1I4200_0024 (Invalid) EOF code containing RJUMPI with target PUSH immediate
          EOF1I4200_0025 (Invalid) EOF code containing RJUMPI with target RJUMPV immediate
          EOF1I4200_0026 (Invalid) EOF code containing RJUMPI with target CALLF immediate
-         EOF1I4200_0027 (Invalid) EOF code containing RJUMPV with count 0 and zero immediates
-         EOF1I4200_0028 (Invalid) EOF code containing RJUMPV with count 0 and one immediates
+         EOF1I4200_0027 (Invalid) EOF code containing RJUMPV with max_index 0 but no immediates
+         EOF1I4200_0028 (Invalid) EOF code containing truncated RJUMPV
          EOF1I4200_0029 (Invalid) EOF code containing truncated RJUMPV
          EOF1I4200_0030 (Invalid) EOF code containing truncated RJUMPV
-         EOF1I4200_0031 (Invalid) EOF code containing truncated RJUMPV
-         EOF1I4200_0032 (Invalid) EOF code containing RJUMPV with target outside code bounds (Jumping into header)
-         EOF1I4200_0033 (Invalid) EOF code containing RJUMPV with target outside code bounds (Jumping to before code begin)
-         EOF1I4200_0034 (Invalid) EOF code containing RJUMPV with target outside code bounds (Jumping into data section)
-         EOF1I4200_0035 (Invalid) EOF code containing RJUMPV with target outside code bounds (Jumping to after code end)
-         EOF1I4200_0036 (Invalid) EOF code containing RJUMPV with target outside code bounds (Jumping to code end)
-         EOF1I4200_0037 (Invalid) EOF code containing RJUMPV with target same RJUMPV immediate
-         EOF1I4200_0038 (Invalid) EOF code containing RJUMPV with target RJUMP immediate
-         EOF1I4200_0039 (Invalid) EOF code containing RJUMPV with target RJUMPI immediate
-         EOF1I4200_0040 (Invalid) EOF code containing RJUMPV with target PUSH immediate
-         EOF1I4200_0041 (Invalid) EOF code containing RJUMPV with target other RJUMPV immediate
-         EOF1I4200_0042 (Invalid) EOF code containing RJUMPV with target CALLF immediate
+         EOF1I4200_0031 (Invalid) EOF code containing RJUMPV with target outside code bounds (Jumping into header)
+         EOF1I4200_0032 (Invalid) EOF code containing RJUMPV with target outside code bounds (Jumping to before code begin)
+         EOF1I4200_0033 (Invalid) EOF code containing RJUMPV with target outside code bounds (Jumping into data section)
+         EOF1I4200_0034 (Invalid) EOF code containing RJUMPV with target outside code bounds (Jumping to after code end)
+         EOF1I4200_0035 (Invalid) EOF code containing RJUMPV with target outside code bounds (Jumping to code end)
+         EOF1I4200_0036 (Invalid) EOF code containing RJUMPV with target same RJUMPV immediate
+         EOF1I4200_0037 (Invalid) EOF code containing RJUMPV with target RJUMP immediate
+         EOF1I4200_0038 (Invalid) EOF code containing RJUMPV with target RJUMPI immediate
+         EOF1I4200_0039 (Invalid) EOF code containing RJUMPV with target PUSH immediate
+         EOF1I4200_0040 (Invalid) EOF code containing RJUMPV with target other RJUMPV immediate
+         EOF1I4200_0041 (Invalid) EOF code containing RJUMPV with target CALLF immediate
+         # <@f1
 
   forks:
     - ">=Cancun"
 
   vectors:
+    # >@f2
     # EOF1V4200_0001 (Valid) EOF code containing RJUMP (Positive, Negative)
     # Code: RJUMP(push) save: SSTORE STOP push: PUSH1(1) PUSH1(1) RJUMP(save)
     - data: |
@@ -208,7 +210,7 @@ validInvalid:
           0002 # max stack: 2
                # Code section 0
           6000 # PUSH1(0) 
-        e2010003 # RJUMPV(3) 
+        e2000003 # RJUMPV(3) 
             5b # NOP 
             5b # NOP 
             00 # STOP 
@@ -241,7 +243,7 @@ validInvalid:
             55 # SSTORE 
             00 # STOP 
           6000 # PUSH1(0) 
-        e201fff4 # RJUMPV(-12) 
+        e200fff4 # RJUMPV(-12) 
             00 # STOP 
                # Data section (empty)
       expectException:
@@ -263,7 +265,7 @@ validInvalid:
           0002 # max stack: 2
                # Code section 0
           6000 # PUSH1(0) 
-        e2010000 # RJUMPV(0) 
+        e2000000 # RJUMPV(0) 
           6001 # PUSH1(1) 
           6001 # PUSH1(1) 
             55 # SSTORE 
@@ -288,7 +290,7 @@ validInvalid:
           0002 # max stack: 2
                # Code section 0
           6000 # PUSH1(0) 
-        e20300030000fff6 # RJUMPV(3,0,-10) 
+        e20200030000fff6 # RJUMPV(3,0,-10) 
             5b # NOP 
             5b # NOP 
             00 # STOP 
@@ -300,31 +302,31 @@ validInvalid:
       expectException:
         "Cancun" : "EOF_InvalidCode"
 
-    # EOF1V4200_0010 (Valid) EOF with RJUMPV table size 255 (Target 0)
-    # Code: PUSH1(0) RJUMPV(random 255 offsets) NOP * 255 STOP PUSH1(1) PUSH1(1) SSTORE STOP
+    # EOF1V4200_0010 (Valid) EOF with RJUMPV table size 256 (Target 0)
+    # Code: PUSH1(0) RJUMPV(random 256 offsets) NOP * 255 STOP PUSH1(1) PUSH1(1) SSTORE STOP
     - data: |
-       :label EOF1V4200_0010 :raw 0xef0001010004020001030804000000000000026000e2ff010000c600690073005100ff004a00ec002900cd00ba00ab00f200fb00e30046007c00c2005400f8001b00e800e7008d0076005a002e00630033009f00c9009a00660032000d00b70031005800a3005a0025005d00050017005800e9005e00d400ab00b200cd00c6009b00b400540011000e0082007400410021003d00dc0087007000e9003e00a1004100e100fc0067003e0001007e009700ea00dc006b0096008f0038005c002a00ec00b0003b00fb003200af003c005400ec001800db005c0002001a00fe004300fb00fa00aa003a00fb002900d100e60005003c007c0094007500d800be0061008900f9005c00bb00a80099000f009500b100eb00f100b3000500ef00f7000000e900a1003a00e500ca000b00cb00d000480047006400bd001f0023001e00a8001c007b006400c500140073005a00c5005e004b00790063003b0070006400240011009e000900dc00aa00d400ac00f2001b001000af003b003300cd00e30050004800470015005c00bb006f0022001900ba009b007d00f5000b00e1001a001c007f002300f8002900f800a4001b001300b500ca004e00e800980032003800e00079004d003d003400bc005f004e007700fa00cb006c000500ac00860021002b00aa001a005500a200be007000b50073003b0004005c00d30036009400b300af00e200f000e4009e004f00320015004900fd008200ff5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b00600160015500
+       :label EOF1V4200_0010 :raw 0xef0001010004020001030a04000000000000026000e2ff010000c600690073005100ff004a00ec002900cd00ba00ab00f200fb00e30046007c00c2005400f8001b00e800e7008d0076005a002e00630033009f00c9009a00660032000d00b70031005800a3005a0025005d00050017005800e9005e00d400ab00b200cd00c6009b00b400540011000e0082007400410021003d00dc0087007000e9003e00a1004100e100fc0067003e0001007e009700ea00dc006b0096008f0038005c002a00ec00b0003b00fb003200af003c005400ec001800db005c0002001a00fe004300fb00fa00aa003a00fb002900d100e60005003c007c0094007500d800be0061008900f9005c00bb00a80099000f009500b100eb00f100b3000500ef00f7000000e900a1003a00e500ca000b00cb00d000480047006400bd001f0023001e00a8001c007b006400c500140073005a00c5005e004b00790063003b0070006400240011009e000900dc00aa00d400ac00f2001b001000af003b003300cd00e30050004800470015005c00bb006f0022001900ba009b007d00f5000b00e1001a001c007f002300f8002900f800a4001b001300b500ca004e00e800980032003800e00079004d003d003400bc005f004e007700fa00cb006c000500ac00860021002b00aa001a005500a200be007000b50073003b0004005c00d30036009400b300af00e200f000e4009e004f00320015004900fd008200c500ff5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b00600160015500
       expectException:
         "Cancun" : "EOF_InvalidCode"
 
-    # EOF1V4200_0011 (Valid) EOF with RJUMPV table size 255 (Target 100)
-    # Code: PUSH1(100) RJUMPV(random 255 offsets) NOP * 255 STOP PUSH1(1) PUSH1(1) SSTORE STOP
+    # EOF1V4200_0011 (Valid) EOF with RJUMPV table size 256 (Target 100)
+    # Code: PUSH1(100) RJUMPV(random 256 offsets) NOP * 255 STOP PUSH1(1) PUSH1(1) SSTORE STOP
     - data: |
-       :label EOF1V4200_0011 :raw 0xef0001010004020001030804000000000000026064e2ff006700c600690073005100ff004a00ec002900cd00ba00ab00f200fb00e30046007c00c2005400f8001b00e800e7008d0076005a002e00630033009f00c9009a00660032000d00b70031005800a3005a0025005d00050017005800e9005e00d400ab00b200cd00c6009b00b400540011000e0082007400410021003d00dc0087007000e9003e00a1004100e100fc0067003e0001007e009700ea00dc006b0096008f0038005c002a00ec00b0003b00fb003200af003c005400ec001800db005c0002001a00fe0043010000fa00aa003a00fb002900d100e60005003c007c0094007500d800be0061008900f9005c00bb00a80099000f009500b100eb00f100b3000500ef00f7000000e900a1003a00e500ca000b00cb00d000480047006400bd001f0023001e00a8001c007b006400c500140073005a00c5005e004b00790063003b0070006400240011009e000900dc00aa00d400ac00f2001b001000af003b003300cd00e30050004800470015005c00bb006f0022001900ba009b007d00f5000b00e1001a001c007f002300f8002900f800a4001b001300b500ca004e00e800980032003800e00079004d003d003400bc005f004e007700fa00cb006c000500ac00860021002b00aa001a005500a200be007000b50073003b0004005c00d30036009400b300af00e200f000e4009e004f00320015004900fd008200ff5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b00600160015500
+       :label EOF1V4200_0011 :raw 0xef0001010004020001030a04000000000000026064e2ff006700c600690073005100ff004a00ec002900cd00ba00ab00f200fb00e30046007c00c2005400f8001b00e800e7008d0076005a002e00630033009f00c9009a00660032000d00b70031005800a3005a0025005d00050017005800e9005e00d400ab00b200cd00c6009b00b400540011000e0082007400410021003d00dc0087007000e9003e00a1004100e100fc0067003e0001007e009700ea00dc006b0096008f0038005c002a00ec00b0003b00fb003200af003c005400ec001800db005c0002001a00fe0043010000fa00aa003a00fb002900d100e60005003c007c0094007500d800be0061008900f9005c00bb00a80099000f009500b100eb00f100b3000500ef00f7000000e900a1003a00e500ca000b00cb00d000480047006400bd001f0023001e00a8001c007b006400c500140073005a00c5005e004b00790063003b0070006400240011009e000900dc00aa00d400ac00f2001b001000af003b003300cd00e30050004800470015005c00bb006f0022001900ba009b007d00f5000b00e1001a001c007f002300f8002900f800a4001b001300b500ca004e00e800980032003800e00079004d003d003400bc005f004e007700fa00cb006c000500ac00860021002b00aa001a005500a200be007000b50073003b0004005c00d30036009400b300af00e200f000e4009e004f00320015004900fd008200c500ff5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b00600160015500
       expectException:
         "Cancun" : "EOF_InvalidCode"
 
-    # EOF1V4200_0012 (Valid) EOF with RJUMPV table size 255 (Target 254)
-    # Code: PUSH1(254) RJUMPV(random 255 offsets) NOP * 255 STOP PUSH1(1) PUSH1(1) SSTORE STOP
+    # EOF1V4200_0012 (Valid) EOF with RJUMPV table size 256 (Target 254)
+    # Code: PUSH1(254) RJUMPV(random 256 offsets) NOP * 255 STOP PUSH1(1) PUSH1(1) SSTORE STOP
     - data: |
-       :label EOF1V4200_0012 :raw 0xef00010100040200010308040000000000000260fee2ff006700c600690073005100ff004a00ec002900cd00ba00ab00f200fb00e30046007c00c2005400f8001b00e800e7008d0076005a002e00630033009f00c9009a00660032000d00b70031005800a3005a0025005d00050017005800e9005e00d400ab00b200cd00c6009b00b400540011000e0082007400410021003d00dc0087007000e9003e00a1004100e100fc0067003e0001007e009700ea00dc006b0096008f0038005c002a00ec00b0003b00fb003200af003c005400ec001800db005c0002001a00fe004300fb00fa00aa003a00fb002900d100e60005003c007c0094007500d800be0061008900f9005c00bb00a80099000f009500b100eb00f100b3000500ef00f7000000e900a1003a00e500ca000b00cb00d000480047006400bd001f0023001e00a8001c007b006400c500140073005a00c5005e004b00790063003b0070006400240011009e000900dc00aa00d400ac00f2001b001000af003b003300cd00e30050004800470015005c00bb006f0022001900ba009b007d00f5000b00e1001a001c007f002300f8002900f800a4001b001300b500ca004e00e800980032003800e00079004d003d003400bc005f004e007700fa00cb006c000500ac00860021002b00aa001a005500a200be007000b50073003b0004005c00d30036009400b300af00e200f000e4009e004f00320015004900fd008201005b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b00600160015500
+       :label EOF1V4200_0012 :raw 0xef0001010004020001030a040000000000000260fee2ff006700c600690073005100ff004a00ec002900cd00ba00ab00f200fb00e30046007c00c2005400f8001b00e800e7008d0076005a002e00630033009f00c9009a00660032000d00b70031005800a3005a0025005d00050017005800e9005e00d400ab00b200cd00c6009b00b400540011000e0082007400410021003d00dc0087007000e9003e00a1004100e100fc0067003e0001007e009700ea00dc006b0096008f0038005c002a00ec00b0003b00fb003200af003c005400ec001800db005c0002001a00fe004300fb00fa00aa003a00fb002900d100e60005003c007c0094007500d800be0061008900f9005c00bb00a80099000f009500b100eb00f100b3000500ef00f7000000e900a1003a00e500ca000b00cb00d000480047006400bd001f0023001e00a8001c007b006400c500140073005a00c5005e004b00790063003b0070006400240011009e000900dc00aa00d400ac00f2001b001000af003b003300cd00e30050004800470015005c00bb006f0022001900ba009b007d00f5000b00e1001a001c007f002300f8002900f800a4001b001300b500ca004e00e800980032003800e00079004d003d003400bc005f004e007700fa00cb006c000500ac00860021002b00aa001a005500a200be007000b50073003b0004005c00d30036009400b300af00e200f000e4009e004f00320015004900fd0082010000c55b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b00600160015500
       expectException:
         "Cancun" : "EOF_InvalidCode"
 
-    # EOF1V4200_0013 (Valid) EOF with RJUMPV table size 255 (Target 256)
-    # Code: PUSH2(256) RJUMPV(random 255 offsets) NOP * 255 PUSH1(1) PUSH1(1) SSTORE STOP
+    # EOF1V4200_0013 (Valid) EOF with RJUMPV table size 256 (Target 256)
+    # Code: PUSH2(256) RJUMPV(random 256 offsets) NOP * 255 PUSH1(1) PUSH1(1) SSTORE STOP
     - data: |
-       :label EOF1V4200_0013 :raw 0xef000101000402000103080400000000000002610100e2ff006700c600690073005100ff004a00ec002900cd00ba00ab00f200fb00e30046007c00c2005400f8001b00e800e7008d0076005a002e00630033009f00c9009a00660032000d00b70031005800a3005a0025005d00050017005800e9005e00d400ab00b200cd00c6009b00b400540011000e0082007400410021003d00dc0087007000e9003e00a1004100e100fc0067003e0001007e009700ea00dc006b0096008f0038005c002a00ec00b0003b00fb003200af003c005400ec001800db005c0002001a00fe004300fb00fa00aa003a00fb002900d100e60005003c007c0094007500d800be0061008900f9005c00bb00a80099000f009500b100eb00f100b3000500ef00f7000000e900a1003a00e500ca000b00cb00d000480047006400bd001f0023001e00a8001c007b006400c500140073005a00c5005e004b00790063003b0070006400240011009e000900dc00aa00d400ac00f2001b001000af003b003300cd00e30050004800470015005c00bb006f0022001900ba009b007d00f5000b00e1001a001c007f002300f8002900f800a4001b001300b500ca004e00e800980032003800e00079004d003d003400bc005f004e007700fa00cb006c000500ac00860021002b00aa001a005500a200be007000b50073003b0004005c00d30036009400b300af00e200f000e4009e004f00320015004900fd008200ff5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b600160015500
+       :label EOF1V4200_0013 :raw 0xef0001010004020001030a0400000000000002610100e2ff006700c600690073005100ff004a00ec002900cd00ba00ab00f200fb00e30046007c00c2005400f8001b00e800e7008d0076005a002e00630033009f00c9009a00660032000d00b70031005800a3005a0025005d00050017005800e9005e00d400ab00b200cd00c6009b00b400540011000e0082007400410021003d00dc0087007000e9003e00a1004100e100fc0067003e0001007e009700ea00dc006b0096008f0038005c002a00ec00b0003b00fb003200af003c005400ec001800db005c0002001a00fe004300fb00fa00aa003a00fb002900d100e60005003c007c0094007500d800be0061008900f9005c00bb00a80099000f009500b100eb00f100b3000500ef00f7000000e900a1003a00e500ca000b00cb00d000480047006400bd001f0023001e00a8001c007b006400c500140073005a00c5005e004b00790063003b0070006400240011009e000900dc00aa00d400ac00f2001b001000af003b003300cd00e30050004800470015005c00bb006f0022001900ba009b007d00f5000b00e1001a001c007f002300f8002900f800a4001b001300b500ca004e00e800980032003800e00079004d003d003400bc005f004e007700fa00cb006c000500ac00860021002b00aa001a005500a200be007000b50073003b0004005c00d30036009400b300af00e200f000e4009e004f00320015004900fd008200ff00c55b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b600160015500
       expectException:
         "Cancun" : "EOF_InvalidCode"
 
@@ -565,7 +567,7 @@ validInvalid:
         e00005 # RJUMP(5) 
             00 # STOP 
           6001 # PUSH1(1) 
-        e2010000 # RJUMPV(0) 
+        e2000000 # RJUMPV(0) 
             00 # STOP 
                # Data section (empty)
       expectException:
@@ -854,7 +856,7 @@ validInvalid:
         e10005 # RJUMPI(5) 
             00 # STOP 
           6001 # PUSH1(1) 
-        e2010000 # RJUMPV(0) 
+        e2000000 # RJUMPV(0) 
             00 # STOP 
                # Data section (empty)
       expectException:
@@ -896,48 +898,63 @@ validInvalid:
         "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_InvalidJumpDestination"
 
-    # EOF1I4200_0027 (Invalid) EOF code containing RJUMPV with count 0 and zero immediates
+    # EOF1I4200_0027 (Invalid) EOF code containing RJUMPV with max_index 0 but no immediates
     # Code: PUSH1(1) RJUMPV
     - data: |
        :label EOF1I4200_0027 :raw 0xef0001010004020001000404000000000000016001e200
       expectException:
         "Cancun" : "EOF_InvalidCode"
-        ">=Prague" : "EOF_InvalidJumpTableCount"
+        ">=Prague" : "EOF_TruncatedImmediate"
 
-    # EOF1I4200_0028 (Invalid) EOF code containing RJUMPV with count 0 and one immediates
+    # EOF1I4200_0028 (Invalid) EOF code containing truncated RJUMPV
     # Code: PUSH1(1) RJUMPV
     - data: |
-       :label EOF1I4200_0028 :raw 0xef0001010004020001000604000000000000016001e2000000
+       :label EOF1I4200_0028 :raw 0xef0001010004020001000304000000000000016001e2
       expectException:
         "Cancun" : "EOF_InvalidCode"
-        ">=Prague" : "EOF_InvalidJumpTableCount"
+        ">=Prague" : "EOF_TruncatedImmediate"
 
     # EOF1I4200_0029 (Invalid) EOF code containing truncated RJUMPV
-    # Code: PUSH1(1) RJUMPV
+    # Code: PUSH1(1) RJUMPV(
     - data: |
-       :label EOF1I4200_0029 :raw 0xef0001010004020001000304000000000000016001e2
+       :label EOF1I4200_0029 :raw 0xef0001010004020001000404000000000000016001e200
       expectException:
         "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_TruncatedImmediate"
 
     # EOF1I4200_0030 (Invalid) EOF code containing truncated RJUMPV
-    # Code: PUSH1(1) RJUMPV(
-    - data: |
-       :label EOF1I4200_0030 :raw 0xef0001010004020001000404000000000000016001e201
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
-        ">=Prague" : "EOF_TruncatedImmediate"
-
-    # EOF1I4200_0031 (Invalid) EOF code containing truncated RJUMPV
     # Code: PUSH1(1) RJUMPV(0?
     - data: |
-       :label EOF1I4200_0031 :raw 0xef0001010004020001000504000000000000016001e20100
+       :label EOF1I4200_0030 :raw 0xef0001010004020001000504000000000000016001e20000
       expectException:
         "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_TruncatedImmediate"
 
-    # EOF1I4200_0032 (Invalid) EOF code containing RJUMPV with target outside code bounds (Jumping into header)
+    # EOF1I4200_0031 (Invalid) EOF code containing RJUMPV with target outside code bounds (Jumping into header)
     # Code: PUSH1(1) RJUMPV(-7) STOP
+    - data: |
+       :label EOF1I4200_0031 :raw 0x
+        EF0001 # Magic and Version ( 1 )
+        010004 # Types length ( 4 )
+        020001 # Total code sections ( 1 )
+          0007 # Code section  0 , 7  bytes
+        040000 # Data section length ( 0 )
+            00 # Terminator (end of header)
+               # Code 0 types
+            00 # 0 inputs
+            00 # 0 outputs
+          0001 # max stack: 1
+               # Code section 0
+          6001 # PUSH1(1) 
+        e200fff9 # RJUMPV(-7) 
+            00 # STOP 
+               # Data section (empty)
+      expectException:
+        "Cancun" : "EOF_InvalidCode"
+        ">=Prague" : "EOF_InvalidJumpDestination"
+
+    # EOF1I4200_0032 (Invalid) EOF code containing RJUMPV with target outside code bounds (Jumping to before code begin)
+    # Code: PUSH1(1) RJUMPV(-15) STOP
     - data: |
        :label EOF1I4200_0032 :raw 0x
         EF0001 # Magic and Version ( 1 )
@@ -952,41 +969,18 @@ validInvalid:
           0001 # max stack: 1
                # Code section 0
           6001 # PUSH1(1) 
-        e201fff9 # RJUMPV(-7) 
+        e200fff1 # RJUMPV(-15) 
             00 # STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_InvalidJumpDestination"
 
-    # EOF1I4200_0033 (Invalid) EOF code containing RJUMPV with target outside code bounds (Jumping to before code begin)
-    # Code: PUSH1(1) RJUMPV(-15) STOP
-    - data: |
-       :label EOF1I4200_0033 :raw 0x
-        EF0001 # Magic and Version ( 1 )
-        010004 # Types length ( 4 )
-        020001 # Total code sections ( 1 )
-          0007 # Code section  0 , 7  bytes
-        040000 # Data section length ( 0 )
-            00 # Terminator (end of header)
-               # Code 0 types
-            00 # 0 inputs
-            00 # 0 outputs
-          0001 # max stack: 1
-               # Code section 0
-          6001 # PUSH1(1) 
-        e201fff1 # RJUMPV(-15) 
-            00 # STOP 
-               # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
-        ">=Prague" : "EOF_InvalidJumpDestination"
-
-    # EOF1I4200_0034 (Invalid) EOF code containing RJUMPV with target outside code bounds (Jumping into data section)
+    # EOF1I4200_0033 (Invalid) EOF code containing RJUMPV with target outside code bounds (Jumping into data section)
     # Code: PUSH1(1) RJUMPV(2) STOP
     # Data: aabbccdd
     - data: |
-       :label EOF1I4200_0034 :raw 0x
+       :label EOF1I4200_0033 :raw 0x
         EF0001 # Magic and Version ( 1 )
         010004 # Types length ( 4 )
         020001 # Total code sections ( 1 )
@@ -999,7 +993,7 @@ validInvalid:
           0001 # max stack: 1
                # Code section 0
           6001 # PUSH1(1) 
-        e2010002 # RJUMPV(2) 
+        e2000002 # RJUMPV(2) 
             00 # STOP 
                # Data section 
         aabbccdd
@@ -1007,8 +1001,31 @@ validInvalid:
         "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_InvalidJumpDestination"
 
-    # EOF1I4200_0035 (Invalid) EOF code containing RJUMPV with target outside code bounds (Jumping to after code end)
+    # EOF1I4200_0034 (Invalid) EOF code containing RJUMPV with target outside code bounds (Jumping to after code end)
     # Code: PUSH1(1) RJUMPV(2) STOP
+    - data: |
+       :label EOF1I4200_0034 :raw 0x
+        EF0001 # Magic and Version ( 1 )
+        010004 # Types length ( 4 )
+        020001 # Total code sections ( 1 )
+          0007 # Code section  0 , 7  bytes
+        040000 # Data section length ( 0 )
+            00 # Terminator (end of header)
+               # Code 0 types
+            00 # 0 inputs
+            00 # 0 outputs
+          0001 # max stack: 1
+               # Code section 0
+          6001 # PUSH1(1) 
+        e2000002 # RJUMPV(2) 
+            00 # STOP 
+               # Data section (empty)
+      expectException:
+        "Cancun" : "EOF_InvalidCode"
+        ">=Prague" : "EOF_InvalidJumpDestination"
+
+    # EOF1I4200_0035 (Invalid) EOF code containing RJUMPV with target outside code bounds (Jumping to code end)
+    # Code: PUSH1(1) RJUMPV(1) STOP
     - data: |
        :label EOF1I4200_0035 :raw 0x
         EF0001 # Magic and Version ( 1 )
@@ -1023,15 +1040,15 @@ validInvalid:
           0001 # max stack: 1
                # Code section 0
           6001 # PUSH1(1) 
-        e2010002 # RJUMPV(2) 
+        e2000001 # RJUMPV(1) 
             00 # STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_InvalidJumpDestination"
 
-    # EOF1I4200_0036 (Invalid) EOF code containing RJUMPV with target outside code bounds (Jumping to code end)
-    # Code: PUSH1(1) RJUMPV(1) STOP
+    # EOF1I4200_0036 (Invalid) EOF code containing RJUMPV with target same RJUMPV immediate
+    # Code: PUSH1(1) RJUMPV(-1) STOP
     - data: |
        :label EOF1I4200_0036 :raw 0x
         EF0001 # Magic and Version ( 1 )
@@ -1046,21 +1063,21 @@ validInvalid:
           0001 # max stack: 1
                # Code section 0
           6001 # PUSH1(1) 
-        e2010001 # RJUMPV(1) 
+        e200ffff # RJUMPV(-1) 
             00 # STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_InvalidJumpDestination"
 
-    # EOF1I4200_0037 (Invalid) EOF code containing RJUMPV with target same RJUMPV immediate
-    # Code: PUSH1(1) RJUMPV(-1) STOP
+    # EOF1I4200_0037 (Invalid) EOF code containing RJUMPV with target RJUMP immediate
+    # Code: PUSH1(1) RJUMPV(5) STOP PUSH1(1) RJUMP(-9) STOP
     - data: |
        :label EOF1I4200_0037 :raw 0x
         EF0001 # Magic and Version ( 1 )
         010004 # Types length ( 4 )
         020001 # Total code sections ( 1 )
-          0007 # Code section  0 , 7  bytes
+          000d # Code section  0 , 13  bytes
         040000 # Data section length ( 0 )
             00 # Terminator (end of header)
                # Code 0 types
@@ -1069,15 +1086,18 @@ validInvalid:
           0001 # max stack: 1
                # Code section 0
           6001 # PUSH1(1) 
-        e201ffff # RJUMPV(-1) 
+        e2000005 # RJUMPV(5) 
+            00 # STOP 
+          6001 # PUSH1(1) 
+        e0fff7 # RJUMP(-9) 
             00 # STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_InvalidJumpDestination"
 
-    # EOF1I4200_0038 (Invalid) EOF code containing RJUMPV with target RJUMP immediate
-    # Code: PUSH1(1) RJUMPV(5) STOP PUSH1(1) RJUMP(-9) STOP
+    # EOF1I4200_0038 (Invalid) EOF code containing RJUMPV with target RJUMPI immediate
+    # Code: PUSH1(1) RJUMPV(5) STOP PUSH1(1) RJUMPI(-9) STOP
     - data: |
        :label EOF1I4200_0038 :raw 0x
         EF0001 # Magic and Version ( 1 )
@@ -1092,18 +1112,18 @@ validInvalid:
           0001 # max stack: 1
                # Code section 0
           6001 # PUSH1(1) 
-        e2010005 # RJUMPV(5) 
+        e2000005 # RJUMPV(5) 
             00 # STOP 
           6001 # PUSH1(1) 
-        e0fff7 # RJUMP(-9) 
+        e1fff7 # RJUMPI(-9) 
             00 # STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_InvalidJumpDestination"
 
-    # EOF1I4200_0039 (Invalid) EOF code containing RJUMPV with target RJUMPI immediate
-    # Code: PUSH1(1) RJUMPV(5) STOP PUSH1(1) RJUMPI(-9) STOP
+    # EOF1I4200_0039 (Invalid) EOF code containing RJUMPV with target PUSH immediate
+    # Code: PUSH1(1) RJUMPV(2) STOP PUSH1(1) PUSH1(1) SSTORE STOP
     - data: |
        :label EOF1I4200_0039 :raw 0x
         EF0001 # Magic and Version ( 1 )
@@ -1118,33 +1138,7 @@ validInvalid:
           0001 # max stack: 1
                # Code section 0
           6001 # PUSH1(1) 
-        e2010005 # RJUMPV(5) 
-            00 # STOP 
-          6001 # PUSH1(1) 
-        e1fff7 # RJUMPI(-9) 
-            00 # STOP 
-               # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
-        ">=Prague" : "EOF_InvalidJumpDestination"
-
-    # EOF1I4200_0040 (Invalid) EOF code containing RJUMPV with target PUSH immediate
-    # Code: PUSH1(1) RJUMPV(2) STOP PUSH1(1) PUSH1(1) SSTORE STOP
-    - data: |
-       :label EOF1I4200_0040 :raw 0x
-        EF0001 # Magic and Version ( 1 )
-        010004 # Types length ( 4 )
-        020001 # Total code sections ( 1 )
-          000d # Code section  0 , 13  bytes
-        040000 # Data section length ( 0 )
-            00 # Terminator (end of header)
-               # Code 0 types
-            00 # 0 inputs
-            00 # 0 outputs
-          0001 # max stack: 1
-               # Code section 0
-          6001 # PUSH1(1) 
-        e2010002 # RJUMPV(2) 
+        e2000002 # RJUMPV(2) 
             00 # STOP 
           6001 # PUSH1(1) 
           6001 # PUSH1(1) 
@@ -1155,10 +1149,10 @@ validInvalid:
         "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_InvalidJumpDestination"
 
-    # EOF1I4200_0041 (Invalid) EOF code containing RJUMPV with target other RJUMPV immediate
+    # EOF1I4200_0040 (Invalid) EOF code containing RJUMPV with target other RJUMPV immediate
     # Code: PUSH1(1) RJUMPV(5) STOP PUSH1(1) RJUMPV(0) STOP
     - data: |
-       :label EOF1I4200_0041 :raw 0x
+       :label EOF1I4200_0040 :raw 0x
         EF0001 # Magic and Version ( 1 )
         010004 # Types length ( 4 )
         020001 # Total code sections ( 1 )
@@ -1171,21 +1165,21 @@ validInvalid:
           0001 # max stack: 1
                # Code section 0
           6001 # PUSH1(1) 
-        e2010005 # RJUMPV(5) 
+        e2000005 # RJUMPV(5) 
             00 # STOP 
           6001 # PUSH1(1) 
-        e2010000 # RJUMPV(0) 
+        e2000000 # RJUMPV(0) 
             00 # STOP 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_InvalidJumpDestination"
 
-    # EOF1I4200_0042 (Invalid) EOF code containing RJUMPV with target CALLF immediate
+    # EOF1I4200_0041 (Invalid) EOF code containing RJUMPV with target CALLF immediate
       # Code[0](Types: 0:0): PUSH1(0) RJUMPV(2) CALLF(1) STOP
       # Code[1](Types: 0:0): PUSH1(1) PUSH1(1) SSTORE RETF
     - data: |
-       :label EOF1I4200_0042 :raw 0x
+       :label EOF1I4200_0041 :raw 0x
         EF0001 # Magic and Version ( 1 )
         010008 # Types length ( 8 )
         020002 # Total code sections ( 2 )
@@ -1203,7 +1197,7 @@ validInvalid:
           0002 # max stack: 2
                # Code section 0
           6000 # PUSH1(0) 
-        e2010002 # RJUMPV(2) 
+        e2000002 # RJUMPV(2) 
         e30001 # CALLF(1) 
             00 # STOP 
                # Code section 1
@@ -1216,3 +1210,4 @@ validInvalid:
         "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_InvalidJumpDestination"
 
+     # <@f2
