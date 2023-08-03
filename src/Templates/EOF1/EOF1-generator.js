@@ -397,7 +397,7 @@ eof1GoodList.push(
       ([
         "6001" +   // PUSH1 1
         "E2"   +   // RJUMPV, use jump table
-        "05"   +   // Number of entries in jump table
+        "04"   +   // Jump table max index
         "0000" +   // Relative address, case 0
         "0000" +   // Relative address, case 1
         "0000" +   // Relative address, case 2
@@ -415,7 +415,7 @@ eof1GoodList.push(
       ([
         "6001" +   // PUSH1 1
         "E2"   +   // RJUMPV, use jump table
-        "05"   +   // Number of entries in jump table
+        "04"   +   // Jump table max index
         "0000" +   // Relative address, case 0
         "0001" +   // Relative address, case 1
         "0001" +   // Relative address, case 2
@@ -435,7 +435,7 @@ eof1GoodList.push(
       ([
         "6001" +   // PUSH1 1
         "E2"   +   // RJUMPV, use jump table
-        "05"   +   // Number of entries in jump table
+        "04"   +   // Jump table max index
         "0000" +   // Relative address, case 0
         "0001" +   // Relative address, case 1
         "0001" +   // Relative address, case 2
@@ -454,7 +454,7 @@ eof1GoodList.push(
       ([
         "6001" +   // PUSH1 1
         "E2"   +   // RJUMPV, use jump table
-        "05"   +   // Number of entries in jump table
+        "04"   +   // Jump table max index
         "0000" +   // Relative address, case 0
         "0001" +   // Relative address, case 1
         "0001" +   // Relative address, case 2
@@ -464,19 +464,6 @@ eof1GoodList.push(
         "60FF5000" // PUSH1, POP, STOP
        ], [1]
       ), "EOF1I0019"])
-
-
-// RJUMPV with an empty jump table
- eof1BadList.push(
-  [
-    createEOF1Code
-      ([
-        "6001" +   // PUSH1 1
-        "E2"   +   // RJUMPV, use jump table
-        "00"   +   // Number of entries in jump table
-        "60FF5000" // PUSH1, POP, STOP
-       ], [1]
-      ), "EOF1I0021"])
 
 
 // Unreachable code fails
@@ -491,7 +478,7 @@ eof1GoodList.push([createEOF1Code(["6001E1000100305000"], [1]), ""])
 
 // Jump table
 eof1GoodList.push([createEOF1Code(["6001" +
-                                   "E202" +
+                                   "E201" +
                                      "0002" +
                                      "0004" +
                                    "3050" +
@@ -501,7 +488,7 @@ eof1GoodList.push([createEOF1Code(["6001" +
 
 
  eof1BadList.push([createEOF1Code(["6001" +
-                                   "E202" +
+                                   "E201" +
                                      "0002" +
                                      "0004" +
                                    "3050" +
