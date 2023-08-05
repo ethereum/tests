@@ -19,9 +19,12 @@ oog:
     0000000000000000000000000000000000010020:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-       :yul {
-          pop(keccak256(0,0x1000))
-       }    
+        :yul berlin
+        {
+            // Instead of keccak256, which seems to be optimized into
+            // not happening
+            pop(verbatim_2i_1o(hex"20", 0, 0x1000))
+        }
       nonce: 1
       storage: {}
 
@@ -31,7 +34,8 @@ oog:
     0000000000000000000000000000000000010037:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-       :yul {
+       :yul berlin
+       {
           calldatacopy(0,0,0x1000)
        }    
       nonce: 1
@@ -43,7 +47,8 @@ oog:
     0000000000000000000000000000000000010039:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-       :yul {
+       :yul berlin 
+       {
           codecopy(0,0,0x1000)
        }    
       nonce: 1
@@ -54,7 +59,8 @@ oog:
     000000000000000000000000000000000001003C:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-       :yul {
+       :yul berlin 
+       {
           extcodecopy(address(),0,0,0x1000)
        }    
       nonce: 1
@@ -66,7 +72,8 @@ oog:
     000000000000000000000000000000000001003E:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-       :yul {
+       :yul berlin
+       {
           // Make sure there is return data to be copied
           pop(call(gas(), 0x1113e, 0, 0, 0x20, 0, 0x20))
 
@@ -80,7 +87,8 @@ oog:
     000000000000000000000000000000000001113E:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-       :yul {
+       :yul berlin
+       {
           mstore(0, 0x0102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F20)
           return(0,0x20)
        }    
@@ -92,8 +100,9 @@ oog:
     0000000000000000000000000000000000010051:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-       :yul {
-           pop(mload(0x1000))
+       :yul berlin
+       {
+           pop(verbatim_1i_1o(hex"51", 0x1000))
        }    
       nonce: 1
       storage: {}
@@ -103,7 +112,8 @@ oog:
     0000000000000000000000000000000000010052:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-       :yul {
+       :yul berlin
+       {
            mstore(0x1000, 0xFF)
        }    
       nonce: 1
@@ -114,7 +124,8 @@ oog:
     0000000000000000000000000000000000010053:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-       :yul {
+       :yul berlin
+       {
            mstore8(0x1000, 0xFF)
        }    
       nonce: 1
@@ -125,7 +136,8 @@ oog:
     00000000000000000000000000000000000100A0:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-       :yul {
+       :yul berlin
+       {
           log0(0x10000, 0x20)
        }    
       nonce: 1
@@ -136,7 +148,8 @@ oog:
     00000000000000000000000000000000000100A1:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-       :yul {
+       :yul berlin
+       {
           log1(0x10000, 0x20, 0x1)
        }    
       nonce: 1
@@ -147,7 +160,8 @@ oog:
     00000000000000000000000000000000000100A2:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-       :yul {
+       :yul berlin
+       {
           log2(0x10000, 0x20, 0x1, 0x2)
        }    
       nonce: 1
@@ -158,7 +172,8 @@ oog:
     00000000000000000000000000000000000100A3:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-       :yul {
+       :yul berlin
+       {
           log3(0x10000, 0x20, 0x1, 0x2, 0x3)
        }    
       nonce: 1
@@ -169,7 +184,8 @@ oog:
     00000000000000000000000000000000000100A4:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-       :yul {
+       :yul berlin
+       {
           log4(0x10000, 0x20, 0x1, 0x2, 0x3, 0x4)
        }    
       nonce: 1
@@ -180,7 +196,8 @@ oog:
     00000000000000000000000000000000000100F0:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-       :yul {
+       :yul berlin
+       {
           pop(create(0, 0x10000, 0x20))
        }    
       nonce: 1
@@ -191,7 +208,8 @@ oog:
     00000000000000000000000000000000000100F5:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-       :yul {
+       :yul berlin
+       {
           pop(create2(0, 0x10000, 0x20, 0x5a17))
        }    
       nonce: 1
@@ -203,7 +221,8 @@ oog:
     00000000000000000000000000000000000100F3:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-       :yul {
+       :yul berlin
+       {
           return(0x10000, 0x20)
        }    
       nonce: 1
@@ -214,7 +233,8 @@ oog:
     00000000000000000000000000000000000100f1:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-       :yul {
+       :yul berlin
+       {
           pop(call(gas(), 0x111f1, 0, 0x10000, 0, 0, 0))
        }    
       nonce: 1
@@ -225,7 +245,8 @@ oog:
     00000000000000000000000000000000000100f2:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-       :yul {
+       :yul berlin
+       {
           pop(callcode(gas(), 0x111f1, 0, 0x10000, 0, 0, 0))
        }    
       nonce: 1
@@ -236,7 +257,8 @@ oog:
     00000000000000000000000000000000000100f4:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-       :yul {
+       :yul berlin
+       {
           pop(delegatecall(gas(), 0x111f1, 0x10000, 0, 0, 0))
        }    
       nonce: 1
@@ -247,7 +269,8 @@ oog:
     00000000000000000000000000000000000100fa:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-       :yul {
+       :yul berlin
+       {
           pop(staticcall(gas(), 0x111f1, 0x10000, 0, 0, 0))
        }    
       nonce: 1
@@ -258,7 +281,8 @@ oog:
     00000000000000000000000000000000000111f1:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-       :yul {
+       :yul berlin
+       {
           stop()
        }    
       nonce: 1
@@ -269,13 +293,14 @@ oog:
     cccccccccccccccccccccccccccccccccccccccc:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-       :yul {
+       :yul berlin
+       {
           let op     := calldataload(0x04)
           let gasAmt := calldataload(0x24)
 
           // Call the function that actually goes OOG (or not)
           sstore(0, call(gasAmt, add(0x10000,op), 0, 0, 0, 0, 0))
-       }        
+       }
       nonce: 1
       storage: {}
 
@@ -288,33 +313,34 @@ oog:
 
   transaction:
     data:
-    # SHA3
+    # SHA3 0,1
     - :label success :abi f(uint,uint) 0x20 0xFFFF
     - :label failure :abi f(uint,uint) 0x20 1210
 
-    # CALLDATACOPY
+    # CALLDATACOPY 2,3
     - :label success :abi f(uint,uint) 0x37 0xFFFF
     - :label failure :abi f(uint,uint) 0x37 810
 
-    # CODECOPY
+    # CODECOPY 4,5
     - :label success :abi f(uint,uint) 0x39 0xFFFF
     - :label failure :abi f(uint,uint) 0x39 810
 
-    # EXTCODECOPY
+    # EXTCODECOPY 6,7
     - :label success :abi f(uint,uint) 0x3C 0xFFFF
     - :label failure :abi f(uint,uint) 0x3C 700
 
-    # RETURNDATACOPY
+    # RETURNDATACOPY 8,9
     - :label success :abi f(uint,uint) 0x3E 0xFFFF
     - :label success :abi f(uint,uint) 0x3E 3074
 
     # Two failures because @chfast has two memory related
     # gas costs in his RETURNDATACOPY code, and we want to check both:
+    # 10
     - :label failure :abi f(uint,uint) 0x3E 2000   # Memory extension cost
+    # 11
     - :label failure :abi f(uint,uint) 0x3E 3073   # Memory copying cost (I think)
 
-
-    # MLOAD
+    # MLOAD 12,30
     - :label success :abi f(uint,uint) 0x51 0xFFFF
     - :label failure :abi f(uint,uint) 0x51 400
 
