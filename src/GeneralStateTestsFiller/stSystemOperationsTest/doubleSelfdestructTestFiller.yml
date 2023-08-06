@@ -21,7 +21,8 @@ doubleSelfdestructTest:
     000000000000000000000000000000000000c0de:
       balance: 1_000_000
       code: |
-        :yul {
+        :yul berlin
+        {
            // If there's data, call this again and then
            // try to selfdestruct.
            // Necessary to use data, because delegatecall and staticcall don't
@@ -103,7 +104,11 @@ doubleSelfdestructTest:
       gas: !!int -1
       value: !!int -1
     network:
-    - '>=Istanbul'
+    - Istanbul
+    - Berlin
+    - London
+    - Merge
+    - Shanghai
     result:
       # Caller self destruct
       0000000000000000000000000000000000001001:
@@ -120,7 +125,11 @@ doubleSelfdestructTest:
       gas: !!int -1
       value: !!int -1
     network:
-    - '>=Istanbul'
+    - Istanbul
+    - Berlin
+    - London
+    - Merge
+    - Shanghai
     result:
       # Caller self destruct
       0000000000000000000000000000000000001001:
@@ -140,7 +149,11 @@ doubleSelfdestructTest:
       gas: !!int -1
       value: !!int -1
     network:
-    - '>=Istanbul'
+    - Istanbul
+    - Berlin
+    - London
+    - Merge
+    - Shanghai
     result:
       # Caller self destruct
       0000000000000000000000000000000000001001:
