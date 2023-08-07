@@ -13,7 +13,8 @@ CreateOOGafterMaxCodesize:
     00000000000000000000000000000000000c0de0:
       balance: 0
       code: |
-        :yul {
+        :yul berlin
+        {
           // If calldata > 0, self-destruct, otherwise 
           sstore(0, codesize())
           if gt(calldatasize(), 0) {
@@ -26,7 +27,8 @@ CreateOOGafterMaxCodesize:
     00000000000000000000000000000000000c0de1:
       balance: 0
       code: |
-        :yul {
+        :yul berlin
+        {
           // Init code that uses max codesize and can be called to selfdestruct
           let code_addr := 0x00000000000000000000000000000000000c0de0
           extcodecopy(code_addr, 0, 0, extcodesize(code_addr))
@@ -41,7 +43,8 @@ CreateOOGafterMaxCodesize:
       # The second parameter is used to determine if this call should OOG instead of returning,
       # which should revert the creation of any contracts.
       code: |
-        :yul {
+        :yul berlin
+        {
           sstore (1, 1)
           let contract_count := calldataload(0)
           let should_oog := calldataload(32)
@@ -75,7 +78,8 @@ CreateOOGafterMaxCodesize:
       # Third action is to call the created contracts for self-destruct, which will test the max-codesize-contracts are
       # correctly removed.
       code: |
-        :yul {
+        :yul berlin
+        {
 
           // Get the amount of contracts to create on this level
           let delegate_contract_count := calldataload(4)
