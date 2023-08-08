@@ -131,6 +131,7 @@ Create2OOGFromCallRefunds:
           sstore(1, 1)
           pop(delegatecall(gas(), 0x00000000000000000000000000000000000c0deA, 0, 0, 0, 0))
           return(0, 1)
+          let noOpt := msize()
         }
       nonce: '0'
       storage: {}
@@ -174,6 +175,7 @@ Create2OOGFromCallRefunds:
           sstore(1, 1)
           pop(callcode(gas(), 0x00000000000000000000000000000000000c0deA, 0, 0, 0, 0, 0))
           return(0, 1)
+          let noOpt := msize()
         }
       nonce: '0'
       storage: {}
@@ -216,6 +218,7 @@ Create2OOGFromCallRefunds:
           sstore(0, 1)
           pop(call(gas(), 0x00000000000000000000000000000000000c0deD, 0, 0, 0, 0, 0))
           return(0, 1)
+          let noOpt := msize()
         }
       nonce: '0'
       storage: {}
@@ -256,6 +259,7 @@ Create2OOGFromCallRefunds:
           sstore(0, 1)
           pop(call(gas(), 0x00000000000000000000000000000000000c0de0, 0, 0, 0, 0, 0))
           return(0, 1)
+          let noOpt := msize()
         }
       nonce: '0'
       storage: {}
@@ -301,6 +305,7 @@ Create2OOGFromCallRefunds:
           extcodecopy(initcodeaddr, 0, 0, initcodelength)
           pop(create(0, 0, initcodelength))
           return(add(initcodelength, 1), 1)
+          let noOptimization := msize()
         }
       nonce: '0'
       storage: {}
@@ -356,6 +361,7 @@ Create2OOGFromCallRefunds:
           extcodecopy(initcodeaddr, 0, 0, initcodelength)
           pop(create2(0, 0, initcodelength, 0))
           return(add(initcodelength, 1), 1)
+          let noOpt := msize()
         }
       nonce: '0'
       storage: {}
@@ -459,15 +465,19 @@ Create2OOGFromCallRefunds:
   transaction:
     data:
     # Create from EOA, Sstore Refund in Init Code, no OoG
+    # 0
     - :label SStore_Refund_NoOoG :abi f(uint) 0x1a
 
     # Create from EOA, Sstore Refund in Init Code, OoG on Code Deposit
+    # 1
     - :label SStore_Refund_OoG :abi f(uint) 0x1b
 
     # Create from EOA, Sstore Refund in Init Code, OoG on Invalid opcode
+    # 2
     - :label SStore_Refund_OoG :abi f(uint) 0x1c
 
     # Create from EOA, Sstore Refund in Call, no OoG
+    # 3
     - :label SStore_Call_Refund_NoOoG :abi f(uint) 0x2a
 
     # Create from EOA, Sstore Refund in Call, OoG on Code Deposit
