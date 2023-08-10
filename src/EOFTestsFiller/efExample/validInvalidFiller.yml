@@ -23,7 +23,6 @@ validInvalid:
          EOF1I0018 inconsistent number of code sections (between types and code)
          EOF1I0019 check that jumps into the middle on an opcode are not allowed
          EOF1I0020 check that you can't get to the same opcode with two different stack heights
-         EOF1I0021 empty jump table
          EOF1I0022 stack underflow caused by a function call
          EOF1I0023 sections with unreachable code fail
          EOF1I0024 sections that end with a non-terminator opcode fail
@@ -369,7 +368,7 @@ validInvalid:
         0001  # Max stack height 1
               # Code segment 0 code
         6001  #  0   PUSH1 1
-        E202  #  2   RJUMPV (empty table)
+        E201  #  2   RJUMPV (empty table)
         0002  #  4   0 -> +2
         0000  #  6   1 ->  0
         3050  #  8   ADDRESS, POP
@@ -380,33 +379,6 @@ validInvalid:
     expectException:
       "Cancun" : "EOF_InvalidCode"
 
-
-
-  # EOF1I0021 empty jump table
-  - data: |
-     :label EOF1I0021 :raw 0x
-      # EOF deployed code 
-      ef0001  # Magic followed by version
-      010004  # One code segment
-      020001  # One code segment
-        0009  #   code seg 0: 9 bytes
-      040004  # Four byte data segment
-      00      # End of header
-              # Code segment 0 header
-          00  # Zero inputs
-          00  # Zero outputs
-        0001  # Max stack height 1
-              # Code segment 0 code
-        6001  #  0   PUSH1 1
-        E200  #  2   RJUMPV (empty table)
-        3050  #  4   ADDRESS, POP
-        3050  #  6   ADDRESS, POP
-          00  #  8   STOP
-              # Data segment
-           0bad60A7  # 4 bytes (valid)
-    expectException:
-      "Cancun" : "EOF_InvalidCode"
-      ">=Prague" : "EOF_InvalidJumpTableCount"
 
 
   # EOF1I0019 check that jumps into the middle on an opcode are not allowed

@@ -3,7 +3,6 @@ validInvalid:
      comment: |
        Test various examples to see if they are valid or invalid.
        Implements
-         # >@f1
          EOF1V4200_0001 (Valid) EOF code containing RJUMP (Positive, Negative)
          EOF1V4200_0002 (Valid) EOF code containing RJUMP (Zero)
          EOF1V4200_0003 (Valid) EOF code containing RJUMPI (Positive)
@@ -58,13 +57,11 @@ validInvalid:
          EOF1I4200_0039 (Invalid) EOF code containing RJUMPV with target PUSH immediate
          EOF1I4200_0040 (Invalid) EOF code containing RJUMPV with target other RJUMPV immediate
          EOF1I4200_0041 (Invalid) EOF code containing RJUMPV with target CALLF immediate
-         # <@f1
 
   forks:
     - ">=Cancun"
 
   vectors:
-    # >@f2
     # EOF1V4200_0001 (Valid) EOF code containing RJUMP (Positive, Negative)
     # Code: RJUMP(push) save: SSTORE STOP push: PUSH1(1) PUSH1(1) RJUMP(save)
     - data: |
@@ -1210,4 +1207,3 @@ validInvalid:
         "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_InvalidJumpDestination"
 
-     # <@f2
