@@ -15,14 +15,18 @@ coinbaseWarmAccountCallGas:
     cccccccccccccccccccccccccccccccccccccccc:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-        :yul
+        :yul berlin
         {
            // Save the coinbase value 
            let cb := coinbase()
            
            // Minimum gas spent on the measurement, which changes depending on
            // the tested opcode
+           //
+           // Note that this value can change (mostly down) when Yul rolls out new
+           // optimizations
            let measureGas
+
            let gas0, gas1
            let retVal
 
@@ -32,56 +36,56 @@ coinbaseWarmAccountCallGas:
            switch calldataload(4)
            case 0 {
              // EXTCODESIZE
-             measureGas := 15
+             measureGas := 8
              gas0 := gas()
              retVal := extcodesize(cb)
              gas1 := gas()
            }
            case 1 {
              // EXTCODECOPY
-             measureGas := 19
+             measureGas := 5
              gas0 := gas()
              extcodecopy(cb, 0, 0, 0)
              gas1 := gas()
            }
            case 2 {
              // EXTCODEHASH
-             measureGas := 15
+             measureGas := 8
              gas0 := gas()
              retVal := extcodehash(cb)
              gas1 := gas()
            }
            case 3 {
              // BALANCE
-             measureGas := 15
+             measureGas := 8
              gas0 := gas()
              retVal := balance(cb)
              gas1 := gas()
            }
            case 4 {
              // CALL
-             measureGas := 33
+             measureGas := 11
              gas0 := gas()
              retVal := call(10000, cb, 0, 0, 0, 0, 0)
              gas1 := gas()
            }
            case 5 {
              // CALLCODE
-             measureGas := 33
+             measureGas := 11
              gas0 := gas()
              retVal := callcode(10000, cb, 0, 0, 0, 0, 0)
              gas1 := gas()
            }
            case 6 {
              // DELEGATECALL
-             measureGas := 30
+             measureGas := 11
              gas0 := gas()
              retVal := delegatecall(10000, cb, 0, 0, 0, 0)
              gas1 := gas()
            }
            case 7 {
              // STATICCALL
-             measureGas := 30
+             measureGas := 11
              gas0 := gas()
              retVal := staticcall(10000, cb, 0, 0, 0, 0)
              gas1 := gas()
@@ -91,20 +95,20 @@ coinbaseWarmAccountCallGas:
            }
 
            // Save the measured gas
-           sstore(0, sub(sub(gas0, gas1), measureGas)) 
+           sstore(0, sub(sub(gas0, gas1), measureGas))
            mstore(0, retVal)
            return(0, 32)
         }
       nonce: 1
       storage: {}
     2adc25665018aa1fe0e6bc666dac8fc2697ff9ba:
-      balance: '0x0ba1a9ce0ba1a9ce'
-      code: '0x00'
+      balance: 0x0ba1a9ce0ba1a9ce
+      code: 0x
       nonce: 1
       storage: {}
     a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
-      balance: '0x0ba1a9ce0ba1a9ce'
-      code: '0x'
+      balance: 0x0ba1a9ce0ba1a9ce
+      code: 0x
       nonce: 1
       storage: {}
 
@@ -146,10 +150,12 @@ coinbaseWarmAccountCallGas:
           storage:
             # Coinbase access post-Shanghai is warm
             0x0:  100
+
+
     - network:
-        - 'Berlin'
-        - 'London'
-        - 'Merge'
+        - Berlin
+        - London
+        - Merge
       result:
         cccccccccccccccccccccccccccccccccccccccc:
           storage:
