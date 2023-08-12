@@ -27,7 +27,7 @@ operationDiffGas:
     0000000000000000000000000000000000C0DEF0:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-       :yul {
+       :yul berlin {
           sstore(0,create(0, 0, 0x200))
        }        
       nonce: 1
@@ -38,7 +38,7 @@ operationDiffGas:
     0000000000000000000000000000000000C0DEF5:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-       :yul {
+       :yul berlin {
           sstore(0,create2(0, 0, 0x200, 0x5A17))
        }        
       nonce: 1
@@ -49,7 +49,7 @@ operationDiffGas:
     0000000000000000000000000000000000C0DEF1:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-       :yul {
+       :yul berlin {
           let retval := call(gas(), 0xCA11, 0, 0, 0x100, 0, 0x100)
        }        
       nonce: 1
@@ -62,7 +62,7 @@ operationDiffGas:
     0000000000000000000000000000000000C0DEF2:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-       :yul {
+       :yul berlin {
           let retval := callcode(gas(), 0xCA11, 0, 0, 0x100, 0, 0x100)
        }        
       nonce: 1
@@ -73,7 +73,7 @@ operationDiffGas:
     0000000000000000000000000000000000C0DEF4:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-       :yul {
+       :yul berlin {
           let retval := delegatecall(gas(), 0xCA11, 0, 0x100, 0, 0x100)
        }        
       nonce: 1
@@ -84,7 +84,7 @@ operationDiffGas:
     0000000000000000000000000000000000C0DEFA:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-       :yul {
+       :yul berlin {
           let retval := staticcall(gas(), 0xCA11, 0, 0x100, 0, 0x100)
        }        
       nonce: 1
@@ -95,7 +95,7 @@ operationDiffGas:
     000000000000000000000000000000000000CA11:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-       :yul {
+       :yul berlin {
           mstore(0, 0xDEADBEEF)
           return(0, 0x100)
        }        
@@ -108,7 +108,7 @@ operationDiffGas:
     0000000000000000000000000000000000C0DE51:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-       :yul {
+       :yul berlin {
           let useless := mload(0xBEEF)
        }        
       nonce: 1
@@ -120,7 +120,7 @@ operationDiffGas:
     0000000000000000000000000000000000C0DE52:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-       :yul {
+       :yul berlin {
           mstore(0xBEEF, 0xFF)
        }        
       nonce: 1
@@ -132,7 +132,7 @@ operationDiffGas:
     0000000000000000000000000000000000C0DE53:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-       :yul {
+       :yul berlin {
           mstore8(0xBEEF, 0xFF)
        }        
       nonce: 1
@@ -142,7 +142,7 @@ operationDiffGas:
     0000000000000000000000000000000000C0DE20:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-       :yul {
+       :yul berlin {
           let useless := keccak256(0,0xBEEF)
        }        
       nonce: 1
@@ -153,7 +153,7 @@ operationDiffGas:
     0000000000000000000000000000000000C0DE3B:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-       :yul {
+       :yul berlin {
          let addr := 0xCA11
          extcodecopy(addr, 0, 0, extcodesize(addr))
        }        
@@ -172,7 +172,7 @@ operationDiffGas:
     cccccccccccccccccccccccccccccccccccccccc:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-       :yul {
+       :yul berlin {
          // Run the operation with gasAmt, gasAmt+gasDiff, gasAmt+2*gasDiff, etc.
          let gasAmt := calldataload(0x24)
          let gasDiff := calldataload(0x44)
