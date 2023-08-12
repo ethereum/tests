@@ -31,7 +31,7 @@ invalidDiffPlaces:
     000000000000000000000000000000000000C0DE:
       balance: 1000000000000000000
       code: |
-        :yul {
+        :yul berlin {
            invalid()
             
             // If we get here, kill the goat so we'll get an error
@@ -56,7 +56,7 @@ invalidDiffPlaces:
     000000000000000000000000000000000020C0DE:
       balance: 1000000000000000000
       code: |
-        :yul {
+        :yul berlin {
            invalid()
             
             // If we get here, kill the goat so we'll get an error
@@ -75,7 +75,7 @@ invalidDiffPlaces:
     00000000000000000000000000000000C0DEC0DE:
       balance: 1000000000000000000
       code: |
-        :yul {
+        :yul berlin {
            let addr := 0x20C0DE
            let length := extcodesize(addr)
 
@@ -94,7 +94,7 @@ invalidDiffPlaces:
     cccccccccccccccccccccccccccccccccccccccc:
       balance: 1000000000000000000
       code: |
-          :yul {
+          :yul berlin {
              let action := calldataload(4)
              let res := 1   // If the result of a call is revert, revert here too
              let addr := 1  // If the result of CREATE[2] is zero, it reverted
@@ -417,7 +417,7 @@ invalidDiffPlaces:
     000000000000000000000000000000000000ca11:
       balance: '1000000000000000000'
       code: |
-          :yul {
+          :yul berlin {
             invalid()
             
             // If we get here, kill the goat so we'll get an error
@@ -433,7 +433,7 @@ invalidDiffPlaces:
     00000000000000000000000000000000ca1100f1:
       balance: '1000000000000000000'
       code: |
-          :yul {
+          :yul berlin {
             if iszero(call(gas(), 0xca11, 0, 0, 0, 0, 0x20))
                { revert(0,0x20) }
 
@@ -447,7 +447,7 @@ invalidDiffPlaces:
     00000000000000000000000000000000ca1100f2:
       balance: '1000000000000000000'
       code: |
-          :yul {
+          :yul berlin {
             if iszero(callcode(gas(), 0xca11, 0, 0, 0, 0, 0x20))
                { revert(0,0x20) }
 
@@ -461,7 +461,7 @@ invalidDiffPlaces:
     00000000000000000000000000000000ca1100f4:
       balance: '1000000000000000000'
       code: |
-          :yul {
+          :yul berlin {
             if iszero(delegatecall(gas(), 0xca11, 0, 0, 0, 0x20))
                { revert(0,0x20) }
 
@@ -475,7 +475,7 @@ invalidDiffPlaces:
     00000000000000000000000000000000ca1100fa:
       balance: '1000000000000000000'
       code: |
-          :yul {
+          :yul berlin {
             if iszero(staticcall(gas(), 0xca11, 0, 0, 0, 0x20))
                { revert(0,0x20) }
 
@@ -491,7 +491,7 @@ invalidDiffPlaces:
     0000000000000000000000000000000000060006:
       balance: '1000000000000000000'
       code: |
-        :yul {
+        :yul berlin {
            invalid()
             
             // If we get here, kill the goat so we'll get an error
@@ -509,7 +509,7 @@ invalidDiffPlaces:
     000000000000000000000000000000000060BACC:
       balance: '1000000000000000000'
       code: |
-        :yul {
+        :yul berlin {
            invalid()
             
             // If we get here, kill the goat so we'll get an error
@@ -527,7 +527,7 @@ invalidDiffPlaces:
     00000000000000000000000000000000DEADDEAD:
       balance: '1000000000000000000'
       code: |
-        :yul {
+        :yul berlin {
            selfdestruct(0)
         }
       nonce: 1
@@ -540,7 +540,7 @@ invalidDiffPlaces:
     00000000000000000000000000000060BACCFA57:
       balance: 1000000000000000000
       code: |
-        :yul {
+        :yul berlin {
            let depth := calldataload(0)
 
            if eq(depth,0) {
