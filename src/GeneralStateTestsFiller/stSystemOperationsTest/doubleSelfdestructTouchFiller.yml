@@ -26,7 +26,8 @@ doubleSelfdestructTouch:
       balance: 0
       storage: {}
       code: |
-        :yul {
+        :yul berlin
+        {
           let v0 := callvalue()
           let v1 := shr(1, v0)
           let r1 := call(70000, 0xdead, v1, 0, 0, 0, 0)
@@ -40,7 +41,8 @@ doubleSelfdestructTouch:
       balance: 0
       storage: {}
       code: |
-        :yul {
+        :yul berlin 
+        {
           let index := sload(0)
           sstore(0, add(index, 1))
           selfdestruct(add(0xe49701, index))
