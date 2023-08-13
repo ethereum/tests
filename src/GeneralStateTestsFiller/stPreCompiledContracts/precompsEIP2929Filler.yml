@@ -74,7 +74,8 @@ precompsEIP2929:
     #      0x3F - get the code hash
     cccccccccccccccccccccccccccccccccccccccc:
       code: |
-        :yul {
+        :yul berlin
+        {
           let addrTest   := calldataload(0x04)
           let action     := calldataload(0x24)
           let gas0, gas1, gas2
@@ -255,6 +256,9 @@ precompsEIP2929:
           
           sstore(0, eq(gasTest1, gasTest2))
           sstore(1, sub(gasTest1, gasTest2))
+
+          // Otherwise a Yul optimization throws us off
+          let noOptimization := msize()
         }  
       nonce: 1
       storage:
@@ -266,7 +270,8 @@ precompsEIP2929:
     # Just a normal contract for comparison
     000000000000000000000000000000000010c0de:
       code: |
-        :yul {
+        :yul berlin
+        {
            mstore(0,add(1,2))
         }  
       nonce: 1
@@ -277,7 +282,8 @@ precompsEIP2929:
     # And a contract that has been previously accessed
     0000000000000000000000000000000000101157:
       code: |
-        :yul {
+        :yul berlin
+        {
            mstore(0,add(1,2))
         }  
       nonce: 1
@@ -298,6 +304,18 @@ precompsEIP2929:
     # The first parameter is the address to call
     # The second parameter is the action
 
+
+    # Empty account (nothing there)
+    - :label no  :abi f(uint,uint) 0x100000 0xf100
+
+    # Normal contract account
+    - :label no  :abi f(uint,uint) 0x10c0de 0xf100
+
+    # Account that has already been touched
+    - :label yes :abi f(uint,uint) 0x101157 0xf100
+
+
+
     # Precompiles
     - :label yes :abi f(uint,uint) 0x01 0xf100
     - :label yes :abi f(uint,uint) 0x02 0xf100
@@ -317,19 +335,11 @@ precompsEIP2929:
     - :label no  :abi f(uint,uint) 0x0e 0xf100
     - :label no  :abi f(uint,uint) 0x0f 0xf100
 
-    # Empty account (nothing there)
-    - :label no  :abi f(uint,uint) 0x100000 0xf100
-
-    # Normal contract account
-    - :label no  :abi f(uint,uint) 0x10c0de 0xf100
-
-    # Account that has already been touched
-    - :label yes :abi f(uint,uint) 0x101157 0xf100
 
     # When we do send wei there is an extra cost for the first access because it
     # needs to create the trie for the account. This is not an issue in the real
     # world because on mainnet these tries already exist (each of these accounts
-    # has at least one wei, but to 0x0...020
+    # has at least one wei, up to 0x0...020
     - :label new :abi f(uint,uint) 0x01 0xf101
     - :label new :abi f(uint,uint) 0x02 0xf101
     - :label new :abi f(uint,uint) 0x03 0xf101
