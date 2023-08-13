@@ -29,7 +29,8 @@ intrinsic:
     cccccccccccccccccccccccccccccccccccccccc:
       balance: '1000000000000000000'
       code: |
-          :yul {
+          :yul berlin
+          {
               sstore(0, add(1,1))
           }
       nonce: '0'
