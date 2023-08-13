@@ -112,7 +112,10 @@ idPrecomps:
     - :label no     :abi f(uint) 0x11
     - :label no     :abi f(uint) 0x12
     - :label no     :abi f(uint) 0x13
+
+    # Added in Cancun
     - :label no     :abi f(uint) 0x14
+
     - :label no     :abi f(uint) 0x15
     - :label no     :abi f(uint) 0x16
     - :label no     :abi f(uint) 0x17
@@ -377,13 +380,18 @@ idPrecomps:
 
   expect:
 
+  # Cancun will require a different expect because 0x14 is a precompile
+  # from Cancun on.
   - indexes:
       data: 
       - :label yes
       gas: !!int -1
       value: !!int -1
     network: 
-    - ">=Istanbul"
+    - Berlin
+    - London
+    - Merge
+    - Shanghai
     result:
       cccccccccccccccccccccccccccccccccccccccc:
         storage:
@@ -397,9 +405,12 @@ idPrecomps:
       gas: !!int -1
       value: !!int -1
     network: 
-    - ">=Istanbul"
+    - Berlin
+    - London
+    - Merge
+    - Shanghai
     result:
       cccccccccccccccccccccccccccccccccccccccc:
         storage:
           # Normal gas cost when there isn't a precompile
-          0x00: 0x01    
+          0x00: 0x01
