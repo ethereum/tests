@@ -46,22 +46,27 @@ initCollidingWithNonEmptyAccount:
   # Transaction originating from account, init address collides with existing code
   transaction:
     data:
-    - ':yul {
+    - ':yul berlin
+       {
          return (0, 32)
        }'
-    - ':yul {
+    - ':yul berlin
+       {
          sstore(0, 1)
          pop(call(gas(), 0xd0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0, 10000, 0, 0, 0, 0))
        }'
-    - ':yul {
+    - ':yul berlin
+       {
          sstore(0, 1)
          pop(create2(10000, 0, 32, 0))
        }'
-    - ':yul {
+    - ':yul berlin
+        {
          sstore(0, 1)
          pop(create(10000, 0, 32))
        }'
-    - ':yul {
+    - ':yul berlin
+       {
          sstore(0, 1)
          pop(delegatecall(gas(), 0xd0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0, 0, 0, 0, 0))
        }'

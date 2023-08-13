@@ -49,15 +49,18 @@ transactionCollidingWithNonEmptyAccount_init:
     # Simple stop init code
     - ':raw 0x00'
     # Simple contract deployment
-    - ':yul {
+    - ':yul berlin
+       {
          return (0, 32)
        }'
     # Call another contract from init code
-    - ':yul {
+    - ':yul berlin
+       {
          pop(call(gas(), 0xd0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0, 10000, 0, 0, 0, 0))
        }'
     # Delegate call another contract from init code
-    - ':yul {
+    - ':yul berlin
+       {
          pop(delegatecall(gas(), 0xd0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0, 0, 0, 0, 0))
        }'
     gasLimit:
