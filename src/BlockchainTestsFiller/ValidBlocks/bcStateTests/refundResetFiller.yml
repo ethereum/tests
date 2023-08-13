@@ -33,7 +33,8 @@ refundReset:
     0x0000000000000000000000000000000000000fee:
       balance: 0
       nonce: 1
-      code: :yul {
+      code: :yul berlin
+        {
            let data := calldataload(0)
            for { let i := 0} lt(i, 0x10) 
                { i := add(i, 1) } 
@@ -47,7 +48,8 @@ refundReset:
     0x000000000000000000000000000000000000600D:
       balance: 0
       nonce: 1
-      code: :yul {
+      code: :yul berlin
+        {
           return(0,0)
         }
       storage: {}
@@ -57,7 +59,8 @@ refundReset:
     0x0000000000000000000000000000000000ca1102:
       balance: 0
       nonce: 1
-      code: :yul {
+      code: :yul berlin
+        {
            mstore(0, calldataload(0))
            pop(call(gas(), 0x0FEE, 0, 0, 0x20, 0, 0))
            pop(call(22000, 0x600D, 0, 0, 0, 0, 0))
@@ -69,7 +72,8 @@ refundReset:
     0x000000000000000000000000000000000000BAD3:
       balance: 0
       nonce: 1
-      code: :yul {
+      code: :yul berlin
+        {
            revert(0,0)
         }
       storage: {}
@@ -78,7 +82,8 @@ refundReset:
     0x0000000000000000000000000000000000ca1103:
       balance: 0
       nonce: 1
-      code: :yul {
+      code: :yul berlin
+        {
            mstore(0, calldataload(0))
            pop(call(gas(), 0x0FEE, 0, 0, 0x20, 0, 0))
            pop(call(22000, 0xBAD3, 0, 0, 0, 0, 0))
@@ -91,7 +96,8 @@ refundReset:
     0x000000000000000000000000000000000000BAD4:
       balance: 0
       nonce: 1
-      code: :yul {
+      code: :yul berlin
+        {
            invalid()
         }
       storage: {}
@@ -100,7 +106,8 @@ refundReset:
     0x0000000000000000000000000000000000ca1104:
       balance: 0
       nonce: 1
-      code: :yul {
+      code: :yul berlin 
+        {
            mstore(0, calldataload(0))
            pop(call(gas(), 0x0FEE, 0, 0, 0x20, 0, 0))
            pop(call(22000, 0xBAD4, 0, 0, 0, 0, 0))
@@ -113,7 +120,8 @@ refundReset:
     0x0000000000000000000000000000000000ca1105:
       balance: 0
       nonce: 1
-      code: :yul {
+      code: :yul berlin
+        {
            mstore(0, calldataload(0))
            pop(call(gas(), 0x0FEE, 0, 0, 0x20, 0, 0))
            mstore8(0, 0x60)
@@ -131,7 +139,8 @@ refundReset:
     0x000000000000000000000000000000000000BAD6:
       balance: 0
       nonce: 1
-      code: :yul {
+      code: :yul berlin
+        {
            mstore8(1, 0xFE)
            pop(create(0, 0, 1))
         }
@@ -143,7 +152,8 @@ refundReset:
     0x0000000000000000000000000000000000ca1106:
       balance: 0
       nonce: 1
-      code: :yul {
+      code: :yul berlin
+        {
            mstore(0, calldataload(0))
            pop(call(gas(), 0x0FEE, 0, 0, 0x20, 0, 0))
            pop(call(22000, 0xBAD6, 0, 0, 0, 0, 0))
@@ -155,7 +165,8 @@ refundReset:
     0x000000000000000000000000000000000000DA7A:
       balance: 0
       nonce: 1
-      code: :yul {
+      code: :yul berlin
+        {
            let slot := sload(0)
            sstore(slot, balance(0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b))
            sstore(0, add(slot,1))
@@ -168,9 +179,7 @@ refundReset:
              }
              sstore(sub(slot,1), 0)
              sstore(slot, 0)
-           }
-
-            
+           }            
         }
       storage:
         0: 1
