@@ -21,7 +21,9 @@ refundResetFrontier:
     0x000000000000000000000000000000000000c0de:
       balance: 0
       nonce: 1
-      code: :yul {
+      code: |
+        :yul berlin 
+        {
            /* Constructor to return a large buffer as code */
            mstore8(0x00, 0x61)   /* PUSH2 0x1000 */
            mstore8(0x01, 0x10)
@@ -40,7 +42,9 @@ refundResetFrontier:
     0x000000000000000000000000000000000000ca11:
       balance: 0
       nonce: 1
-      code: :yul {
+      code: | 
+        :yul berlin 
+        {
            /* Avoid running into the different cost of zeros in a tx
             * slt checks if the top bit is on
             */
@@ -74,6 +78,8 @@ refundResetFrontier:
            if eq(enoughGas, 0) { gasAmt := 32480 }
        
            let res := call(gasAmt, 0xc0de, 0, 0, 0, 0, 0)
+
+           let noOptimization := msize()
         }
       storage:
         0x00: 0x60A7
@@ -130,7 +136,7 @@ refundResetFrontier:
         - Frontier
       result:
         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
-          balance: 999999999999866131000
+          balance: 999999999999866133000
 
 
 
@@ -157,7 +163,7 @@ refundResetFrontier:
         - Frontier
       result:
         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
-          balance: 999999999999933065000
+          balance: 999999999999933066000
 
 
 
