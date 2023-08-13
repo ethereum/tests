@@ -23,7 +23,8 @@ createLargeResult:
       nonce: 1
       storage: {}
       code: |
-        :yul {
+        :yul berlin
+        {
            // Store some data
            mstore(0, not(0))
 
@@ -39,7 +40,8 @@ createLargeResult:
     cccccccccccccccccccccccccccccccccccccccc:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-       :yul {
+       :yul berlin
+       {
          sstore(1, gas())
 
          // The operation to run
@@ -76,6 +78,7 @@ createLargeResult:
          sstore(1, sub(sload(1), gas()))
          sstore(2, extcodehash(newAddr))
          
+         let noOptimization := msize()
        }        
       nonce: 1
       storage:
