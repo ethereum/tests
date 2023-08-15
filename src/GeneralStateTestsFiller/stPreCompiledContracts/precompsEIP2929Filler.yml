@@ -88,7 +88,7 @@ precompsEIP2929:
           // won't confuse the gas measurement
           mstore(0x100, 0xDEADBEEF)
 
-          // Access 0x101157 (so it becomes hot and send it wei)
+          // Access 0x101157 (so it becomes warm and send it wei)
           pop(call(0x100000, 0x101157, 1, 0, 0, 0, 0))
 
           // Switch before measuring, so it won't affect
@@ -303,6 +303,12 @@ precompsEIP2929:
     data:
     # The first parameter is the address to call
     # The second parameter is the action
+    #
+    # :label no   means that the address is cold (either there is nothing there,
+    #             or it exists but hasn't been touched by the txn yet).
+    #
+    # :label yes  means that the address is already warm. As per the EIP, precompiles
+    #             are always warm.
 
 
     # Empty account (nothing there)
@@ -312,6 +318,7 @@ precompsEIP2929:
     - :label no  :abi f(uint,uint) 0x10c0de 0xf100
 
     # Account that has already been touched
+    # (we touch it earlier in 
     - :label yes :abi f(uint,uint) 0x101157 0xf100
 
 
@@ -337,9 +344,10 @@ precompsEIP2929:
 
 
     # When we do send wei there is an extra cost for the first access because it
-    # needs to create the trie for the account. This is not an issue in the real
-    # world because on mainnet these tries already exist (each of these accounts
-    # has at least one wei, up to 0x0...020
+    # needs to create the trie for the account. 
+    # On a real chain it's possible some precompiles will already have a trie,
+    # once somebody sends wei it gets stuck and unretrievable, but we are running
+    # as part of a highly artificial test blockchain. 
     - :label new :abi f(uint,uint) 0x01 0xf101
     - :label new :abi f(uint,uint) 0x02 0xf101
     - :label new :abi f(uint,uint) 0x03 0xf101
