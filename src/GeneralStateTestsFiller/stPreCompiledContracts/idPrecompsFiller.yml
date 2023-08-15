@@ -87,7 +87,9 @@ idPrecomps:
 
   transaction:
     data:
-    # Some precomps don't appear to happen in Istanbul for some reason
+    # :label yes - there is precompile here
+    # :label no  - there is no precompile here
+    # :label from_<fork> - no prior to <fork>, yes afterwards.
  
     # Accounts where we expect to find precompiles
     - :label yes :abi f(uint) 0x01
@@ -114,7 +116,7 @@ idPrecomps:
     - :label no     :abi f(uint) 0x13
 
     # Added in Cancun
-    - :label no     :abi f(uint) 0x14
+    - :label from_cancun  :abi f(uint) 0x14
 
     - :label no     :abi f(uint) 0x15
     - :label no     :abi f(uint) 0x16
@@ -380,18 +382,13 @@ idPrecomps:
 
   expect:
 
-  # Cancun will require a different expect because 0x14 is a precompile
-  # from Cancun on.
   - indexes:
       data: 
       - :label yes
       gas: !!int -1
       value: !!int -1
     network: 
-    - Berlin
-    - London
-    - Merge
-    - Shanghai
+    - '>=Berlin'
     result:
       cccccccccccccccccccccccccccccccccccccccc:
         storage:
@@ -405,6 +402,22 @@ idPrecomps:
       gas: !!int -1
       value: !!int -1
     network: 
+    - '>=Berlin'
+    result:
+      cccccccccccccccccccccccccccccccccccccccc:
+        storage:
+          # Normal gas cost when there isn't a precompile
+          0x00: 0x01
+
+
+
+  # For precompiles that only become available in Cancun.
+  - indexes:
+      data: 
+      - :label from_cancun
+      gas: !!int -1
+      value: !!int -1
+    network: 
     - Berlin
     - London
     - Merge
@@ -414,3 +427,23 @@ idPrecomps:
         storage:
           # Normal gas cost when there isn't a precompile
           0x00: 0x01
+
+
+
+  # Uncomment here when we add the Cancun fork
+
+#  - indexes:
+#      data: 
+#      - :label from_cancun
+#      gas: !!int -1
+#      value: !!int -1
+#    network: 
+#    - '>=Cancun'
+#    result:
+#      cccccccccccccccccccccccccccccccccccccccc:
+#        storage:
+#          # High gas when there is a precompile
+#          0x00: 0x00
+
+
+
