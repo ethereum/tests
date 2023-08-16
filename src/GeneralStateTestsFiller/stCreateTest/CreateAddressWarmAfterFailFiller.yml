@@ -30,7 +30,7 @@ CreateAddressWarmAfterFail:
       balance: 0x1000
       storage: {}
       code: |
-        :yul
+        :yul berlin
           object "C" {
             code {
               let failType := calldataload(4)
@@ -227,6 +227,11 @@ CreateAddressWarmAfterFail:
                 return(0, 1)     // A zero, which makes it a STOP when it is called
               }
             }
+            object "no-optimization" {
+              code {
+                 let noOptimization := msize()
+              }
+            }
           }
 
 
@@ -238,7 +243,7 @@ CreateAddressWarmAfterFail:
       balance: 0x1000
       storage: {}
       code: |
-        :yul
+        :yul berlin
           object "C" {
             code {
               datacopy(0, dataoffset("dummy"), datasize("dummy"))
@@ -260,7 +265,7 @@ CreateAddressWarmAfterFail:
       balance: 0x1000
       storage: {}
       code: |
-        :yul
+        :yul berlin
           object "C" {
             code {
               datacopy(0, dataoffset("dummy"), datasize("dummy"))
@@ -283,7 +288,7 @@ CreateAddressWarmAfterFail:
       balance: 0x1000
       storage: {}
       code: |
-        :yul
+        :yul berlin
           object "C" {
             code {
               datacopy(0, dataoffset("dummy"), datasize("dummy"))
