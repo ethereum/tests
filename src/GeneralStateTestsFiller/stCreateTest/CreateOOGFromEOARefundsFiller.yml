@@ -21,7 +21,8 @@ CreateOOGFromEOARefunds:
     00000000000000000000000000000000000c0deA:
       balance: '0'
       code: |
-        :yul {
+        :yul berlin
+        {
           // Simple SSTORE to zero to get a refund
           sstore(1, 0)
         }
@@ -34,7 +35,8 @@ CreateOOGFromEOARefunds:
     00000000000000000000000000000000000c0deD:
       balance: '0'
       code: |
-        :yul {
+        :yul berlin
+        {
           selfdestruct(origin())
         }
       nonce: '1'
@@ -46,7 +48,8 @@ CreateOOGFromEOARefunds:
     00000000000000000000000000000000000c0de0:
       balance: '0'
       code: |
-        :yul {
+        :yul berlin
+        {
           mstore(0, 0xff)
           log0(0, 32)
           log1(0, 32, 0xfa)
@@ -63,7 +66,8 @@ CreateOOGFromEOARefunds:
     00000000000000000000000000000000000c0de1:
       balance: '0'
       code: |
-        :yul {
+        :yul berlin
+        {
           sstore(0, 1)
           sstore(0, 0)
           return(0, 1)
@@ -75,7 +79,7 @@ CreateOOGFromEOARefunds:
   transaction:
     data:
     # Create from EOA, Sstore Refund in Init Code, no OoG
-    - :label SStore_Refund_NoOoG :yul {
+    - :label SStore_Refund_NoOoG :yul berlin {
         sstore(0, 1)
         sstore(1, 1)
         sstore(1, 0)
@@ -83,7 +87,7 @@ CreateOOGFromEOARefunds:
       }
 
     # Create from EOA, Sstore Refund in Init Code, OoG on Code Deposit
-    - :label SStore_Refund_OoG :yul {
+    - :label SStore_Refund_OoG :yul berlin {
         sstore(0, 1)
         sstore(1, 1)
         sstore(1, 0)
@@ -91,7 +95,7 @@ CreateOOGFromEOARefunds:
       }
 
     # Create from EOA, Sstore Refund in Init Code, OoG on Invalid opcode
-    - :label SStore_Refund_OoG :yul {
+    - :label SStore_Refund_OoG :yul berlin {
         sstore(0, 1)
         sstore(1, 1)
         sstore(1, 0)
@@ -99,28 +103,28 @@ CreateOOGFromEOARefunds:
       }
 
     # Create from EOA, Sstore Refund in Call, no OoG
-    - :label SStore_Refund_NoOoG :yul {
+    - :label SStore_Refund_NoOoG :yul berlin {
         sstore(0, 1)
         pop(call(gas(), 0x00000000000000000000000000000000000c0deA, 0, 0, 0, 0, 0))
         return(0, 1)
       }
 
     # Create from EOA, Sstore Refund in Call, OoG on Code Deposit
-    - :label SStore_Refund_OoG :yul {
+    - :label SStore_Refund_OoG :yul berlin {
         sstore(0, 1)
         pop(call(gas(), 0x00000000000000000000000000000000000c0deA, 0, 0, 0, 0, 0))
         return(0, 5000)
       }
 
     # Create from EOA, Sstore Refund in Call, OoG on Invalid opcode
-    - :label SStore_Refund_OoG :yul {
+    - :label SStore_Refund_OoG :yul berlin {
         sstore(0, 1)
         pop(call(gas(), 0x00000000000000000000000000000000000c0deA, 0, 0, 0, 0, 0))
         invalid()
       }
 
     # Create from EOA, Sstore Refund in DelegateCall, no OoG
-    - :label SStore_Refund_NoOoG :yul {
+    - :label SStore_Refund_NoOoG :yul berlin {
         sstore(0, 1)
         sstore(1, 1)
         pop(delegatecall(gas(), 0x00000000000000000000000000000000000c0deA, 0, 0, 0, 0))
@@ -128,7 +132,7 @@ CreateOOGFromEOARefunds:
       }
 
     # Create from EOA, Sstore Refund in DelegateCall, OoG on Code Deposit
-    - :label SStore_Refund_OoG :yul {
+    - :label SStore_Refund_OoG :yul berlin {
         sstore(0, 1)
         sstore(1, 1)
         pop(delegatecall(gas(), 0x00000000000000000000000000000000000c0deA, 0, 0, 0, 0))
@@ -136,7 +140,7 @@ CreateOOGFromEOARefunds:
       }
 
     # Create from EOA, Sstore Refund in DelegateCall, OoG on Invalid opcode
-    - :label SStore_Refund_OoG :yul {
+    - :label SStore_Refund_OoG :yul berlin {
         sstore(0, 1)
         sstore(1, 1)
         pop(delegatecall(gas(), 0x00000000000000000000000000000000000c0deA, 0, 0, 0, 0))
@@ -144,7 +148,7 @@ CreateOOGFromEOARefunds:
       }
 
     # Create from EOA, Sstore Refund in CallCode, no OoG
-    - :label SStore_Refund_NoOoG :yul {
+    - :label SStore_Refund_NoOoG :yul berlin {
         sstore(0, 1)
         sstore(1, 1)
         pop(callcode(gas(), 0x00000000000000000000000000000000000c0deA, 0, 0, 0, 0, 0))
@@ -152,7 +156,7 @@ CreateOOGFromEOARefunds:
       }
 
     # Create from EOA, Sstore Refund in CallCode, OoG on Code Deposit
-    - :label SStore_Refund_OoG :yul {
+    - :label SStore_Refund_OoG :yul berlin {
         sstore(0, 1)
         sstore(1, 1)
         pop(callcode(gas(), 0x00000000000000000000000000000000000c0deA, 0, 0, 0, 0, 0))
@@ -160,7 +164,7 @@ CreateOOGFromEOARefunds:
       }
 
     # Create from EOA, Sstore Refund in CallCode, OoG on Invalid opcode
-    - :label SStore_Refund_OoG :yul {
+    - :label SStore_Refund_OoG :yul berlin {
         sstore(0, 1)
         sstore(1, 1)
         pop(callcode(gas(), 0x00000000000000000000000000000000000c0deA, 0, 0, 0, 0, 0))
@@ -168,49 +172,49 @@ CreateOOGFromEOARefunds:
       }
 
     # Create from EOA, Refund Self-destruct call, no OoG
-    - :label SelfDestruct_Refund_NoOoG :yul {
+    - :label SelfDestruct_Refund_NoOoG :yul berlin {
         sstore(0, 1)
         pop(call(gas(), 0x00000000000000000000000000000000000c0deD, 0, 0, 0, 0, 0))
         return(0, 1)
       }
 
     # Create from EOA, Refund Self-destruct call, OoG on Code Deposit
-    - :label SelfDestruct_Refund_OoG :yul {
+    - :label SelfDestruct_Refund_OoG :yul berlin {
         sstore(0, 1)
         pop(call(gas(), 0x00000000000000000000000000000000000c0deD, 0, 0, 0, 0, 0))
         return(0, 5000)
       }
 
     # Create from EOA, Refund Self-destruct call, OoG on Invalid opcode
-    - :label SelfDestruct_Refund_OoG :yul {
+    - :label SelfDestruct_Refund_OoG :yul berlin {
         sstore(0, 1)
         pop(call(gas(), 0x00000000000000000000000000000000000c0deD, 0, 0, 0, 0, 0))
         invalid()
       }
     
     # Create from EOA, Log operation in call, no OoG
-    - :label LogOp_NoOoG :yul {
+    - :label LogOp_NoOoG :yul berlin {
         sstore(0, 1)
         pop(call(gas(), 0x00000000000000000000000000000000000c0de0, 0, 0, 0, 0, 0))
         return(0, 1)
       }
 
     # Create from EOA, Log operation in call, OoG on Code Deposit
-    - :label LogOp_OoG :yul {
+    - :label LogOp_OoG :yul berlin {
         sstore(0, 1)
         pop(call(gas(), 0x00000000000000000000000000000000000c0de0, 0, 0, 0, 0, 0))
         return(0, 5000)
       }
 
     # Create from EOA, Log operation in call, OoG on Invalid opcode
-    - :label LogOp_OoG :yul {
+    - :label LogOp_OoG :yul berlin {
         sstore(0, 1)
         pop(call(gas(), 0x00000000000000000000000000000000000c0de0, 0, 0, 0, 0, 0))
         invalid()
       }
 
     # Create from EOA, Refund within CREATE, no OoG
-    - :label SStore_Create_Refund_NoOoG :yul {
+    - :label SStore_Create_Refund_NoOoG :yul berlin {
         sstore(0, 1)
         sstore(1, 1)
         sstore(1, 0)
@@ -222,7 +226,7 @@ CreateOOGFromEOARefunds:
       }
 
     # Create from EOA, Refund within CREATE, OoG on Code Deposit
-    - :label SStore_Create_Refund_OoG :yul {
+    - :label SStore_Create_Refund_OoG :yul berlin {
         sstore(0, 1)
         sstore(1, 1)
         sstore(1, 0)
@@ -234,7 +238,7 @@ CreateOOGFromEOARefunds:
       }
 
     # Create from EOA, Refund within CREATE, OoG on Invalid opcode
-    - :label SStore_Create_Refund_OoG :yul {
+    - :label SStore_Create_Refund_OoG :yul berlin {
         sstore(0, 1)
         sstore(1, 1)
         sstore(1, 0)
@@ -246,7 +250,7 @@ CreateOOGFromEOARefunds:
       }
 
     # Create2 from EOA, Refund within CREATE, no OoG
-    - :label SStore_Create2_Refund_NoOoG :yul {
+    - :label SStore_Create2_Refund_NoOoG :yul berlin {
         sstore(0, 1)
         sstore(1, 1)
         sstore(1, 0)
@@ -264,7 +268,7 @@ CreateOOGFromEOARefunds:
       }
 
     # Create2 from EOA, Refund within CREATE, OoG on Code Deposit
-    - :label SStore_Create2_Refund_OoG :yul {
+    - :label SStore_Create2_Refund_OoG :yul berlin {
         sstore(0, 1)
         sstore(1, 1)
         sstore(1, 0)
@@ -276,7 +280,7 @@ CreateOOGFromEOARefunds:
       }
 
     # Create2 from EOA, Refund within CREATE, OoG on Invalid opcode
-    - :label SStore_Create2_Refund_OoG :yul {
+    - :label SStore_Create2_Refund_OoG :yul berlin {
         sstore(0, 1)
         sstore(1, 1)
         sstore(1, 0)
