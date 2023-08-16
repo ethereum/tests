@@ -27,7 +27,8 @@ createFailResult:
     000000000000000000000000000000000000DA7A:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-       :yul {
+       :yul berlin
+       {
            mstore(0x00, 0xDEADBEEF)
            mstore(0x20, 0x60A7)
  
@@ -42,7 +43,8 @@ createFailResult:
     0000000000000000000000000000000000000BAD:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-       :yul {
+       :yul berlin
+       {
           mstore(0, 0x0BAD0BAD0BAD)
           revert(0, 0x20)
        }        
@@ -54,7 +56,8 @@ createFailResult:
     000000000000000000000000000000000000600D:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-       :yul {
+       :yul berlin
+       {
           mstore(0, 0x600D)
           return(0, 0x20)
        }        
@@ -68,7 +71,8 @@ createFailResult:
     0000000000000000000000000000000000C0DEF0:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-       :yul {
+       :yul berlin
+       {
           // Before the main call, call DA7A to fill up the return buffer
           sstore(0x10, call(gas(), 0xDA7A, 0, 0, 0, 0x100, 0x40))
           sstore(0x11, returndatasize())
@@ -99,7 +103,8 @@ createFailResult:
     0000000000000000000000000000000000C0DEF5:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-       :yul {
+       :yul berlin
+       {
           // Before the main call, call DA7A to fill up the return buffer
           sstore(0x10, call(gas(), 0xDA7A, 0, 0, 0, 0x100, 0x40))
           sstore(0x11, returndatasize())
@@ -130,7 +135,8 @@ createFailResult:
     0000000000000000000000000000000000C0DEFF:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-       :yul {
+       :yul berlin
+       {
           // Before the main call, call DA7A to fill up the return buffer
           sstore(0x10, call(gas(), 0xDA7A, 0, 0, 0, 0x100, 0x40))
           sstore(0x11, returndatasize())
@@ -176,7 +182,8 @@ createFailResult:
     0000000000000000000000000000000000C0DEEE:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-       :yul {
+       :yul berlin
+       {
           // Before the main call, call DA7A to fill up the return buffer
           sstore(0x10, call(gas(), 0xDA7A, 0, 0, 0, 0x100, 0x40))
           sstore(0x11, returndatasize())
@@ -215,7 +222,8 @@ createFailResult:
     cccccccccccccccccccccccccccccccccccccccc:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-       :yul {
+       :yul berlin
+       {
          // The operation to run
          // F0 - CREATE
          // F5 - CREATE2
