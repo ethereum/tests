@@ -30,7 +30,7 @@ const eof1Good = {
       {
          code: "305000",
          stackInputs: 0,
-         stackOutputs: 0,
+         stackOutputs: 128, // 0x80 (Non-Returning Function)
          maxStack: 1      // maxStack needs to be accurate, otherwise CREATE[2] fails
       }
   ],
@@ -113,10 +113,21 @@ const createEOF1Code = (codeList, maxStacks) => {
     eof1.sections[1].lengths = codeList.map(code => code.length/2)
 
     // Assume stackInputs and stackOutputs are zero
-    eof1.code = codeList.map((code, i) => { return {
+    eof1.code = codeList.map((code, i) => { 
+      let outputs = 128 // Assume is a Non-Returning Function 
+      if ( i != 0 ) {
+        // If code contains RETF opcode (0xe4), then it is a Returning Function
+        for (var j = 0; j < code.length; j += 2) {
+          if (code.slice(j, j+2) == "E4") {
+            outputs = 0
+            break
+          }
+        }
+      }
+      return {
 	code: code,
 	stackInputs: 0,
-	stackOutputs: 0,
+	stackOutputs: outputs,
 	maxStack: maxStacks[i]
     }})
 
@@ -256,7 +267,8 @@ temp.code[0].stackInputs = 1
  eof1BadList.push([temp, "EOF1I0017"])
 
 
-// Return values are allowed, except on section 0
+// Return values are allowed, except on section 0, which should be marked as
+// Non-Returning Function (0x80)
 temp = createEOF1Code(["305000", "303001E4"], [1, 2])
 temp.code[1].stackOutputs = 1
 eof1GoodList.push([temp, "EOF1V0006"])
@@ -515,13 +527,13 @@ eof1GoodList.push([createEOF1Code(["600060006000600000"], [4]), "EOF1V0014"])
 eof1GoodList.push([createEOF1Code(["6000600060006000F3"], [4]), "EOF1V0014"])
 eof1GoodList.push([createEOF1Code(["6000600060006000FD"], [4]), "EOF1V0014"])
 eof1GoodList.push([createEOF1Code(["6000600060006000FE"], [4]), "EOF1V0014"])
-eof1GoodList.push([createEOF1Code(["3050E4"], [1]), "EOF1V0014"])
  eof1BadList.push([createEOF1Code(["6000600060006000"], [4]), "EOF1I0024"])
  eof1BadList.push([createEOF1Code(["600060006000600001"], [4]), "EOF1I0024"])
  eof1BadList.push([createEOF1Code(["600060006000600034"], [4]), "EOF1I0024"])
  eof1BadList.push([createEOF1Code(["600060006000600003"], [4]), "EOF1I0024"])
  eof1BadList.push([createEOF1Code(["6000600060006000A4"], [4]), "EOF1I0024"])
  eof1BadList.push([createEOF1Code(["6000600060006000F5"], [4]), "EOF1I0024"])
+ eof1BadList.push([createEOF1Code(["3050E4"], [1]), "EOF1I0024"])
 
 
 
