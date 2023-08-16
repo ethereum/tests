@@ -61,7 +61,7 @@ validInvalid:
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
-          00  # Zero outputs
+          80  # Non-Returning Function
         0001  # Max stack height 1
               # Code segment 0 code
            30 #  1 ADDRESS 
@@ -86,7 +86,7 @@ validInvalid:
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
-          00  # Zero outputs
+          80  # Non-Returning Function
         0001  # Max stack height 1
               # Code segment 0 code
            30 #  1 ADDRESS 
@@ -112,7 +112,7 @@ validInvalid:
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
-          00  # Zero outputs
+          80  # Non-Returning Function
         0001  # Max stack height 1
               # Code segment 0 code
            30 #  1 ADDRESS 
@@ -137,7 +137,7 @@ validInvalid:
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
-          00  # Zero outputs
+          80  # Non-Returning Function
         0001  # Max stack height 1
               # Code segment 0 code
            30 #  1 ADDRESS 
@@ -162,7 +162,7 @@ validInvalid:
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
-          00  # Zero outputs
+          80  # Non-Returning Function
         0001  # Max stack height 1
               # Code segment 0 code
            30 #  1 ADDRESS 
@@ -188,7 +188,7 @@ validInvalid:
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
-          00  # Zero outputs
+          80  # Non-Returning Function
         0001  # Max stack height 1
               # Code segment 0 code
            30 #  1 ADDRESS 
@@ -212,7 +212,7 @@ validInvalid:
       FF      # Bad end of header
               # Code segment 0 header
           00  # Zero inputs
-          00  # Zero outputs
+          80  # Non-Returning Function
         0001  # Max stack height 1
               # Code segment 0 code
            30 #  1 ADDRESS 
@@ -237,7 +237,7 @@ validInvalid:
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
-          00  # Zero outputs
+          80  # Non-Returning Function
         0000  # Max stack height 0
               # Code segment 0 code
       E00003  #  0   RJUMP +3
@@ -261,7 +261,7 @@ validInvalid:
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
-          00  # Zero outputs
+          80  # Non-Returning Function
         0000  # Max stack height 0
               # Code segment 0 code
       E00001  #  0   RJUMP +1
@@ -285,7 +285,7 @@ validInvalid:
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
-          00  # Zero outputs
+          80  # Non-Returning Function
         0001  # Max stack height 1
               # Code segment 0 code
         6001  #  0   PUSH1 1
@@ -314,19 +314,19 @@ validInvalid:
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
-          00  # Zero outputs
+          80  # Non-Returning Function
         0000  # Max stack height 0
               # Code segment 1 header
           00  # Zero inputs
-          00  # Zero outputs
+          80  # Non-Returning Function
         0002  # Max stack height 0
               # Code segment 2 header
           00  # Zero inputs
-          00  # Zero outputs
+          80  # Non-Returning Function
         0002  # Max stack height 0
               # Code segment 3 header
           00  # Zero inputs
-          00  # Zero outputs
+          80  # Non-Returning Function
         0000  # Max stack height 0
               # Code segment 4 header
           00  # Zero inputs
@@ -364,7 +364,7 @@ validInvalid:
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
-          00  # Zero outputs
+          80  # Non-Returning Function
         0001  # Max stack height 1
               # Code segment 0 code
         6001  #  0   PUSH1 1
@@ -393,7 +393,7 @@ validInvalid:
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
-          00  # Zero outputs
+          80  # Non-Returning Function
         0001  # Max stack height 1
               # Code segment 0 code
         6001  #  0   PUSH1 1
@@ -424,7 +424,7 @@ validInvalid:
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
-          00  # Zero outputs
+          80  # Non-Returning Function
         0002  # Max stack height 2
               # Code segment 0 code
         6001  #  0   PUSH1 1
@@ -452,7 +452,7 @@ validInvalid:
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
-          00  # Zero outputs
+          80  # Non-Returning Function
         0000  # Max stack height 0
               # Code segment 0 code
       E00003  #  0   RJUMP +3
@@ -477,7 +477,7 @@ validInvalid:
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
-          00  # Zero outputs
+          80  # Non-Returning Function
         0003  # Max stack height 3
               # Code segment 0 code
         6000  #  0   PUSH1 0
@@ -507,8 +507,12 @@ validInvalid:
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
-          00  # Zero outputs
+          80  # Non-Returning Function
         0001  # Max stack height 1
+              # Non-existing Code segment 1 header
+          00  # Zero inputs
+          00  # Zero outputs
+        0000  # Max stack height 0
               # Code segment 0 code
            30 #  1 ADDRESS 
            50 #  2 POP
@@ -518,6 +522,30 @@ validInvalid:
     expectException:
       "Cancun" : "EOF_InvalidCode"
       ">=Prague" : "EOF_InvalidTypeSectionSize"
+
+  # EOF1I0018 inconsistent number of code sections (between types and code)
+  - data: |
+     :label EOF1I0018 :raw 0x
+      # EOF deployed code 
+      ef0001  # Magic followed by version
+      010008  # Two code segments
+      020001  # One code segment
+        0003  #   code seg 0: 3 bytes
+      040004  # Four byte data segment
+      00      # End of header
+              # Code segment 0 header
+          00  # Zero inputs
+          80  # Non-Returning Function
+        0001  # Max stack height 1
+              # Code segment 0 code
+           30 #  1 ADDRESS 
+           50 #  2 POP
+           00 #  3 STOP
+              # Data segment
+           0bad60A7  # 4 bytes (valid)
+    expectException:
+      "Cancun" : "EOF_InvalidCode"
+      ">=Prague" : "EOF_InvalidSectionBodiesSize"
 
   # EOF1I0015 check that code that uses removed opcodes fails
   - data: |
@@ -531,7 +559,7 @@ validInvalid:
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
-          00  # Zero outputs
+          80  # Non-Returning Function
         0001  # Max stack height 1
               # Code segment 0 code
          6003 #  0 PUSH1 3
@@ -556,7 +584,7 @@ validInvalid:
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
-          00  # Zero outputs
+          80  # Non-Returning Function
         0001  # Max stack height 1
               # Code segment 0 code
          6001 #  0 PUSH1 1
@@ -582,7 +610,7 @@ validInvalid:
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
-          00  # Zero outputs
+          80  # Non-Returning Function
         0001  # Max stack height 1
               # Code segment 0 code
          6001 #  0 PUSH1 1
@@ -606,7 +634,7 @@ validInvalid:
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
-          00  # Zero outputs
+          80  # Non-Returning Function
         0007  # Max stack height 1
               # Code segment 0 code
     expectException:
@@ -625,7 +653,7 @@ validInvalid:
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
-          00  # Zero outputs
+          80  # Non-Returning Function
         0001  # Max stack height 1
               # Code segment 0 code
         6001  # PUSH1 1
@@ -655,7 +683,7 @@ validInvalid:
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
-          00  # Zero outputs
+          80  # Non-Returning Function
         0001  # Max stack height 1
               # Code segment 0 code
          6003 #  0 PUSH1 3
@@ -683,7 +711,7 @@ validInvalid:
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
-          00  # Zero outputs
+          80  # Non-Returning Function
         0001  # Max stack height 1
               # Code segment 1 header
           01  # Zero inputs
@@ -696,7 +724,7 @@ validInvalid:
               # Code segment 1 code
            50 #  1 POP
            30 #  2 ADDRESS
-           00 #  3 STOP
+           E4 #  3 RETF
               # Data segment
            0bad60A7  # 4 bytes (valid)
     expectException:
@@ -715,7 +743,7 @@ validInvalid:
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
-          00  # Zero outputs
+          80  # Non-Returning Function
         0001  # Max stack height 1
               # Code segment 1 header
           00  # Zero inputs
@@ -745,7 +773,7 @@ validInvalid:
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
-          00  # Zero outputs
+          80  # Non-Returning Function
         0001  # Max stack height 1
               # Code segment 1 header
           00  # Zero inputs
@@ -775,7 +803,7 @@ validInvalid:
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
-          00  # Zero outputs
+          80  # Non-Returning Function
         0001  # Max stack height 1
               # Code segment 1 header
           01  # One input
@@ -808,7 +836,7 @@ validInvalid:
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
-          00  # Zero outputs
+          80  # Non-Returning Function
         03ff  # Max stack height 1023
               # Code segment 1 header
           00  # Zero inputs
@@ -878,7 +906,7 @@ validInvalid:
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
-          00  # Zero outputs
+          80  # Non-Returning Function
         0400  # Max stack height 1024
               # Code segment 1 header
           00  # Zero inputs
@@ -951,7 +979,7 @@ validInvalid:
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
-          00  # Zero outputs
+          80  # Non-Returning Function
         0001  # Max stack height 1
               # Code segment 1 header
           01  # Zero inputs
@@ -972,15 +1000,15 @@ validInvalid:
               # Code segment 1 code
            50 #  1 POP
            30 #  2 ADDRESS
-           00 #  3 STOP
+           E4 #  3 RETF
               # Code segment 2 code
            30 #  1 ADDRESS 
            50 #  2 POP
-           00 #  3 STOP
+           E4 #  3 RETF
               # Code segment 3 code
            50 #  1 POP
            30 #  2 ADDRESS
-           00 #  3 STOP
+           E4 #  3 RETF
               # Data segment
            0bad60A7  # 4 bytes (valid)
     expectException:
@@ -1003,19 +1031,19 @@ validInvalid:
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
-          00  # Zero outputs
+          80  # Non-Returning Function
         0001  # Max stack height 1
               # Code segment 1 header
           00  # Zero inputs
-          00  # Zero outputs
+          80  # Non-Returning Function
         0002  # Max stack height 2
               # Code segment 2 header
           00  # Zero inputs
-          00  # Zero outputs
+          80  # Non-Returning Function
         0003  # Max stack height 3
               # Code segment 3 header
           00  # Zero inputs
-          00  # Zero outputs
+          80  # Non-Returning Function
         0001  # Max stack height 1
               # Code segment 0 code
            30 #  1 ADDRESS 
@@ -1064,7 +1092,7 @@ validInvalid:
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
-          00  # Zero outputs
+          80  # Non-Returning Function
         0001  # Max stack height 1
               # Code segment 1 header
           00  # Zero inputs
@@ -1123,7 +1151,7 @@ validInvalid:
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
-          00  # Zero outputs
+          80  # Non-Returning Function
         0001  # Max stack height 1
               # Code segment 1 header
           00  # Zero inputs
@@ -1180,11 +1208,11 @@ validInvalid:
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
-          00  # Zero outputs
+          80  # Non-Returning Function
         0001  # Max stack height 1
               # Code segment 1 header
           01  # Zero inputs
-          00  # Zero outputs
+          80  # Non-Returning Function
         0001  # Max stack height 1
               # Code segment 0 code
            30 #  1 ADDRESS 
@@ -1214,12 +1242,12 @@ validInvalid:
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
-          00  # Zero outputs
+          80  # Non-Returning Function
         0001  # Max stack height 1
               # Code segment 1 header
           00  # Zero input
           01  # One output
-        0001  # Max stack height 1
+        0002  # Max stack height 2
               # Code segment 0 code
            30 #  1 ADDRESS 
            50 #  2 POP
@@ -1227,12 +1255,12 @@ validInvalid:
               # Code segment 1 code
            30 #  1 ADDRESS
            30 #  2 ADDRESS
-           00 #  3 STOP
+           E4 #  3 RETF
               # Data segment
            0bad60A7  # 4 bytes (valid)
     expectException:
       "Cancun" : "EOF_InvalidCode"
-      ">=Prague" : "EOF_InvalidMaxStackHeight"
+      ">=Prague" : "EOF_InvalidNumberOfOutputs"
 
   # EOF1I0014 check that code that looks deeper in the stack than the parameters fails
   - data: |
@@ -1247,7 +1275,7 @@ validInvalid:
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
-          00  # Zero outputs
+          80  # Non-Returning Function
         0001  # Max stack height 1
               # Code segment 1 header
           01  # One input
@@ -1260,7 +1288,7 @@ validInvalid:
               # Code segment 1 code
            30 #  1 ADDRESS
            91 #  2 SWAP2
-           00 #  3 STOP
+           E4 #  3 RETF
               # Data segment
            0bad60A7  # 4 bytes (valid)
     expectException:
@@ -1278,8 +1306,8 @@ validInvalid:
       040004  # Four byte data segment
       00      # End of header
               # Code segment 0 header
-          01  # Zero inputs
-          00  # One output (not allowed in section 0)
+          00  # Zero inputs
+          01  # One output (not allowed in section 0)
         0001  # Max stack height 1
               # Code segment 0 code
            30 #  1 ADDRESS 
@@ -1305,11 +1333,11 @@ validInvalid:
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
-          00  # One output (not allowed in section 0)
+          80  # Non-Returning Function
         0001  # Max stack height 1
               # Code segment 1 header
           02  # Two inputs
-          00  # One output (not allowed in section 0)
+          80  # Non-Returning Function
         0002  # Max stack height 2
               # Code segment 0 code
            30 #  1 ADDRESS 
@@ -1335,8 +1363,8 @@ validInvalid:
       040004  # Four byte data segment
       00      # End of header
               # Code segment 0 header
-          00  # Zero inputs
-          01  # One output (not allowed in section 0)
+          01  # One inputs (not allowed in section 0)
+          80  # Non-Returning Function
         0001  # Max stack height 1
               # Code segment 0 code
            30 #  1 ADDRESS 
@@ -1361,7 +1389,7 @@ validInvalid:
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
-          00  # Zero outputs
+          80  # Non-Returning Function
         0003  # Max stack height 1
               # Code segment 0 code
            30 #  1 ADDRESS 
@@ -1385,7 +1413,7 @@ validInvalid:
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
-          00  # Zero outputs
+          80  # Non-Returning Function
         0005  # Max stack height 1
               # Code segment 0 code
            30 #  1 ADDRESS 
@@ -1411,7 +1439,7 @@ validInvalid:
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
-          00  # Zero outputs
+          80  # Non-Returning Function
         0001  # Max stack height 1
               # Code segment 0 code
            30 #  1 ADDRESS 
@@ -1436,7 +1464,7 @@ validInvalid:
       FF      # End of header (bad)
               # Code segment 0 header
           00  # Zero inputs
-          00  # Zero outputs
+          80  # Non-Returning Function
         0001  # Max stack height 1
               # Code segment 0 code
            30 #  1 ADDRESS 
@@ -1461,7 +1489,7 @@ validInvalid:
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
-          00  # Zero outputs
+          80  # Non-Returning Function
         0001  # Max stack height 1
               # Code segment 0 code
            30 #  1 ADDRESS 
@@ -1485,7 +1513,7 @@ validInvalid:
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
-          00  # Zero outputs
+          80  # Non-Returning Function
         0001  # Max stack height 1
               # Code segment 0 code
            30 #  1 ADDRESS 
@@ -1509,7 +1537,7 @@ validInvalid:
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
-          00  # Zero outputs
+          80  # Non-Returning Function
         0001  # Max stack height 1
               # Code segment 0 code
            30 #  1 ADDRESS 
@@ -1533,7 +1561,7 @@ validInvalid:
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
-          00  # Zero outputs
+          80  # Non-Returning Function
         0001  # Max stack height 1
               # Code segment 0 code
            30 #  1 ADDRESS 
@@ -1557,7 +1585,7 @@ validInvalid:
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
-          00  # Zero outputs
+          80  # Non-Returning Function
         0001  # Max stack height 1
               # Code segment 0 code
            30 #  1 ADDRESS 
@@ -1581,7 +1609,7 @@ validInvalid:
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
-          00  # Zero outputs
+          80  # Non-Returning Function
         0001  # Max stack height 1
               # Code segment 0 code
            30 #  1 ADDRESS 
@@ -1603,7 +1631,7 @@ validInvalid:
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
-          00  # Zero outputs
+          80  # Non-Returning Function
         0001  # Max stack height 1
               # Code segment 0 code
            30 #  1 ADDRESS 
@@ -1626,7 +1654,7 @@ validInvalid:
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
-          00  # Zero outputs
+          80  # Non-Returning Function
         0001  # Max stack height 1
               # Code segment 0 code
            30 #  1 ADDRESS 
@@ -1651,7 +1679,7 @@ validInvalid:
 
         # Code segment zero (header)
             00 # No inputs
-            00 # No outputs
+            80  # Non-Returning Function
           0003 # Max stack height 3
 
 

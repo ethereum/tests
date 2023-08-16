@@ -37,26 +37,26 @@ CREATE_EOF1_FromEOF:
       # initcode without data section, deployed code without data section
       # deployed code:
       #    code section: PUSH1(0) POP STOP
-      - ':label eof1_initcode_deploying_valid_eof1 :yul-eof { mstore(0, 0xef00010100040200010004040000000000000160005000000000000000000000) return(0, 23) }' 
+      - ':label eof1_initcode_deploying_valid_eof1 :yul-eof { mstore(0, 0xef00010100040200010004040000000080000160005000000000000000000000) return(0, 23) }' 
       # initcode without data section, deployed code with data section
       # deployed code:
       #    code section: PUSH1(0) POP STOP
       #    data section: aabbccdd
-      - ':label eof1_initcode_deploying_valid_eof1_with_data :yul-eof { mstore(0, 0xef00010100040200010004040004000000000160005000aabbccdd0000000000) return(0, 27) }' 
+      - ':label eof1_initcode_deploying_valid_eof1_with_data :yul-eof { mstore(0, 0xef00010100040200010004040004000080000160005000aabbccdd0000000000) return(0, 27) }' 
       # initcode with data section, deployed code without data section
       # initcode:
-      #    code section: :yul { mstore(0, 0xef00010100040200010004040000000000000160005000000000000000000000) return(0, 23) }
+      #    code section: :yul { mstore(0, 0xef00010100040200010004040000000080000160005000000000000000000000) return(0, 23) }
       #    data section: aabbccdd
       # deployed code section: PUSH1(0) POP STOP
-      - ':label eof1_initcode_with_data_deploying_valid_eof1 :raw 0xef0001010004020001002904000400000000027fef0001010004020001000404000000000000016000500000000000000000000060005260176000f3aabbccdd' 
+      - ':label eof1_initcode_with_data_deploying_valid_eof1 :raw 0xef0001010004020001002904000400008000027fef0001010004020001000404000000008000016000500000000000000000000060005260176000f3aabbccdd' 
       # initcode with data section, deployed code with data section
       # initcode:
-      #    code section: :yul { mstore(0, 0xef00010100040200010004040004000000000160005000aabbccdd0000000000) return(0, 27) }
+      #    code section: :yul { mstore(0, 0xef00010100040200010004040004000080000160005000aabbccdd0000000000) return(0, 27) }
       #    data section: eeff
       # deployed code:
       #    code section: PUSH1(0) POP STOP
       #    data section: aabbccdd
-      - ':label eof1_initcode_with_data_deploying_valid_eof1_with_data :raw 0xef0001010004020001002904000200000000027fef00010100040200010004040004000000000160005000aabbccdd0000000000600052601b6000f3eeff' 
+      - ':label eof1_initcode_with_data_deploying_valid_eof1_with_data :raw 0xef0001010004020001002904000200008000027fef00010100040200010004040004000080000160005000aabbccdd0000000000600052601b6000f3eeff' 
 
     gasLimit:
       - 15000000
@@ -142,7 +142,7 @@ CREATE_EOF1_FromEOF:
             '1': '1'
        f1ecf98489fa9ed60a664fc4998db699cfa39d40:
           nonce: 1
-          code: '0xef00010100040200010004040000000000000160005000'
+          code: '0xef00010100040200010004040000000080000160005000'
           storage: {}
 
     - indexes:
@@ -159,7 +159,7 @@ CREATE_EOF1_FromEOF:
             '1': '1'
        f1ecf98489fa9ed60a664fc4998db699cfa39d40:
           nonce: 1
-          code: '0xef00010100040200010004040004000000000160005000aabbccdd'
+          code: '0xef00010100040200010004040004000080000160005000aabbccdd'
           storage: {}
 
     - indexes:
@@ -176,7 +176,7 @@ CREATE_EOF1_FromEOF:
             '1': '1'
        f1ecf98489fa9ed60a664fc4998db699cfa39d40:
           nonce: 1
-          code: '0xef00010100040200010004040000000000000160005000'
+          code: '0xef00010100040200010004040000000080000160005000'
           storage: {}
 
     - indexes:
@@ -193,6 +193,6 @@ CREATE_EOF1_FromEOF:
             '1': '1'
        f1ecf98489fa9ed60a664fc4998db699cfa39d40:
           nonce: 1
-          code: '0xef00010100040200010004040004000000000160005000aabbccdd'
+          code: '0xef00010100040200010004040004000080000160005000aabbccdd'
           storage: {}
 
