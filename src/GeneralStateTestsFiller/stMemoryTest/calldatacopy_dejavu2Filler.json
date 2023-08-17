@@ -36,7 +36,8 @@
         "pre" : {
             "0f572e5295c57f15886f9b263e2f6d2d6c7b5ec6" : {
                 "balance" : "1000000000000000000",
-                "code" : "0x6005565b005b6042601f536101036000601f3760005180606014600357640badc0ffee60ff55",
+                "//code" : ":raw 0x6005565b005b6042601f536101036000601f3760005180606014600357640badc0ffee60ff55",
+                "code" : ":yul berlin { mstore8(0x1f, 0x42) calldatacopy(0x1f, 0, 0x0103) let mem := mload(0) if eq(mem,0x60) { stop() }  sstore(0xff, 0x0badc0ffee) }"
                 "nonce" : "0",
                 "storage" : {
                 }

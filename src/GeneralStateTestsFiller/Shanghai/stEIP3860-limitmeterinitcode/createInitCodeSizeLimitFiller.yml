@@ -10,27 +10,31 @@ createInitCodeSizeLimit:
     previousHash: 5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6
 
   pre:
-    a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+
+
+    a94f5374Fce5edBC8E2a8697C15331677e6EbF0B:
       balance: 200000000
-      code: ''
-      nonce: 0
+      code: 0x
+      nonce: 1
       storage: {}
-    b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+
+    bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb:
       balance: 0
       code: |
-        :yul 
+        :yul berlin 
         {
           mstore(0, calldataload(0))
-          let call_result := call(10000000, 0xc94f5374fce5edbc8e2a8697c15331677e6ebf0b, 0, 0, calldatasize(), 0, 0)
+          let call_result := call(10000000, 0xc0de, 0, 0, calldatasize(), 0, 0)
           sstore(0, call_result)
           sstore(1, 1)
         }
-      nonce: 0
+      nonce: 1
       storage: {}
-    c94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+ 
+    000000000000000000000000000000000000c0de:
       balance: 0
       code: |
-        :yul 
+        :yul berlin 
         {
           // :yul { codecopy(0x00, 0x00, 0x0a) return(0x00, 0x0a) }
           mstore(0, 0x600a80600080396000f300000000000000000000000000000000000000000000) 
@@ -41,7 +45,7 @@ createInitCodeSizeLimit:
           sstore(10, sub(gas_before, gas()))
           sstore(0, create_result)
         }
-      nonce: 0
+      nonce: 1
       storage: {}
 
   transaction:
@@ -53,9 +57,9 @@ createInitCodeSizeLimit:
     gasLimit:
       - 15000000
     gasPrice: 10
-    nonce: 0
+    nonce: 1
     secretKey: 45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8
-    to: 'b94f5374fce5edbc8e2a8697c15331677e6ebf0b'
+    to: bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
     value:
     - 0
 
@@ -65,38 +69,47 @@ createInitCodeSizeLimit:
       network:
         - 'Merge'
       result:
-       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
-          nonce: 1
-       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+       a94f5374Fce5edBC8E2a8697C15331677e6EbF0B:
+          nonce: 2
+
+       bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb:
           storage:
               '0': 1 # subcall successful
               '1': 1 # test successful, no OOG
-       c94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+
+       000000000000000000000000000000000000c0de:
           storage:
-              '0': '682327124c5d2dc0cd2158ba65d37ac3d2140c91' # created account
+              '0': 0x5f6baaeb5b7c97725f84d1569c4abc85135f4716 # created account
               '10': 43248                                     # gas used by CREATE
-       682327124c5d2dc0cd2158ba65d37ac3d2140c91:
+
+
+       5f6baaeb5b7c97725f84d1569c4abc85135f4716:
           balance: 0
           code: '0x600a80600080396000f3'
           nonce: 1
           storage: {}
+
+
 
     - indexes:
        data: ':label invalid'
       network:
         - 'Merge'
       result:
-       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
-          nonce: 1
-       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+       a94f5374Fce5edBC8E2a8697C15331677e6EbF0B:
+          nonce: 2
+
+       bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb:
           storage:
               '0': 1 # subcall successful
               '1': 1 # test successful, no OOG
-       c94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+
+       000000000000000000000000000000000000c0de:
           storage:
-              '0': '682327124c5d2dc0cd2158ba65d37ac3d2140c91' # created account
+              '0': 0x5f6baaeb5b7c97725f84d1569c4abc85135f4716 # created account
               '10': 43257                                     # gas used by CREATE
-       682327124c5d2dc0cd2158ba65d37ac3d2140c91:
+
+       5f6baaeb5b7c97725f84d1569c4abc85135f4716:
           balance: 0
           code: '0x600a80600080396000f3'
           nonce: 1
@@ -107,36 +120,43 @@ createInitCodeSizeLimit:
       network:
         - 'Shanghai'
       result:
-       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
-          nonce: 1
-       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+       a94f5374Fce5edBC8E2a8697C15331677e6EbF0B:
+          nonce: 2
+
+       bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb:
           storage:
               '0': 1 # subcall successful
               '1': 1 # test successful, no OOG
-       c94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+
+       000000000000000000000000000000000000c0de:
           storage:
-              '0': '682327124c5d2dc0cd2158ba65d37ac3d2140c91' # created account
+              '0': 0x5f6baaeb5b7c97725f84d1569c4abc85135f4716 # created account
                # Difference with Merge is the charge for initcode 49152 // 32 * 2 = 3072 gas
               '10': 46320                                     # gas used by CREATE
-       682327124c5d2dc0cd2158ba65d37ac3d2140c91:
+       5f6baaeb5b7c97725f84d1569c4abc85135f4716:
           balance: 0
           code: '0x600a80600080396000f3'
           nonce: 1
           storage: {}
+
 
     - indexes:
        data: ':label invalid'
       network:
         - 'Shanghai'
       result:
-       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+       a94f5374Fce5edBC8E2a8697C15331677e6EbF0B:
+          nonce: 2
+
+       bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb:
           nonce: 1
-       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
-          nonce: 0
           storage:
               '0': 0 # subcall aborted
               '1': 1 # test successful, no OOG
-       c94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+
+       000000000000000000000000000000000000c0de:
           storage: {}
+
+
        682327124c5d2dc0cd2158ba65d37ac3d2140c91:
           shouldnotexist: 1

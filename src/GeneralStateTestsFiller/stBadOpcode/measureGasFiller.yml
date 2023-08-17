@@ -23,7 +23,7 @@ measureGas:
     0000000000000000000000000000000000C0DEF0:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-       :yul {
+       :yul berlin {
           pop(create(0, 0, 0x200))
        }        
       nonce: 1
@@ -34,7 +34,7 @@ measureGas:
     0000000000000000000000000000000000C0DEF5:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-       :yul {
+       :yul berlin {
           // SALT needs to be different each time
           pop(create2(0, 0, 0x200, add(0x5A17, gas())))
        }        
@@ -47,7 +47,7 @@ measureGas:
     000000000000000000000000000000000000CA11:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-       :yul {
+       :yul berlin {
           stop()
        }        
       nonce: 1
@@ -58,7 +58,7 @@ measureGas:
     0000000000000000000000000000000000C0DEF1:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-       :yul {
+       :yul berlin {
           let retval := call(gas(), 0xCA11, 0, 0, 0x100, 0, 0x100)
        }        
       nonce: 1
@@ -71,7 +71,7 @@ measureGas:
     0000000000000000000000000000000000C0DEF2:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-       :yul {
+       :yul berlin {
           let retval := callcode(gas(), 0xCA11, 0, 0, 0x100, 0, 0x100)
        }        
       nonce: 1
@@ -82,7 +82,7 @@ measureGas:
     0000000000000000000000000000000000C0DEF4:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-       :yul {
+       :yul berlin {
           let retval := delegatecall(gas(), 0xCA11, 0, 0x100, 0, 0x100)
        }        
       nonce: 1
@@ -93,7 +93,7 @@ measureGas:
     0000000000000000000000000000000000C0DEFA:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-       :yul {
+       :yul berlin {
           let retval := staticcall(gas(), 0xCA11, 0, 0x100, 0, 0x100)
        }        
       nonce: 1
@@ -106,7 +106,7 @@ measureGas:
     0000000000000000000000000000000000C0DE51:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-       :yul {
+       :yul berlin {
           let useless := mload(0xB000)
        }        
       nonce: 1
@@ -118,7 +118,7 @@ measureGas:
     0000000000000000000000000000000000C0DE52:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-       :yul {
+       :yul berlin {
           mstore(0xB000, 0xFF)
        }        
       nonce: 1
@@ -130,7 +130,7 @@ measureGas:
     0000000000000000000000000000000000C0DE53:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-       :yul {
+       :yul berlin {
           mstore8(0xB000, 0xFF)
        }        
       nonce: 1
@@ -140,7 +140,7 @@ measureGas:
     0000000000000000000000000000000000C0DE20:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-       :yul {
+       :yul berlin {
           let useless := keccak256(0,0xBEEF)
        }        
       nonce: 1
@@ -151,7 +151,7 @@ measureGas:
     0000000000000000000000000000000000C0DE3B:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-       :yul {
+       :yul berlin {
          let addr := 0xCA11
          extcodecopy(addr, 0, 0, extcodesize(addr))
        }        
@@ -170,7 +170,7 @@ measureGas:
     cccccccccccccccccccccccccccccccccccccccc:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-       :yul {
+       :yul berlin {
          // Find the operation's cost in gas
          let min :=     0
          let max := 60000

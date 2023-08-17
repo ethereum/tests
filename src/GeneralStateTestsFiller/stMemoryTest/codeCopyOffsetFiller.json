@@ -38,7 +38,8 @@
                 "balance" : "1000000000000000000",
                 "//codeDescription": "{ /*store call data in memory*/ /* make call with the call data*/ ) }",
                 "//code": "{ (asm 0x0123456789abcdef 0x00 mstore) (CALL 0xffff 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee 0x00 0x00 0x0f 0x00 0x00) }",
-                "code" : "0x670123456789abcdef60005260006000600f6000600073eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee61fffff1",
+                "//code" : ":raw 0x670123456789abcdef60005260006000600f6000600073eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee61fffff1",
+                "code" : ":yul berlin { mstore(0, 0x0123456789abcdef)  pop(call(0xffff, 0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee, 0, 0, 0x0f, 0, 0))  } ",
                 "nonce" : "1",
                 "storage" : {
                 }

@@ -26,7 +26,8 @@ refundMax:
     cccccccccccccccccccccccccccccccccccccccc:
       balance: '1000000000000000000'
       code: |
-          :yul {
+          :yul berlin
+          {
              let newVal := 0
              sstore(0x00,newVal)
              sstore(0x01,newVal)
@@ -36,6 +37,9 @@ refundMax:
              sstore(0x05,newVal)
              sstore(0x06,newVal)
              sstore(0x07,newVal)
+
+             // Get rid of Yul optimizations
+             newVal := msize()
           }
       nonce: 1
       storage:
@@ -49,7 +53,7 @@ refundMax:
         0x07: 0x60A7
 
     a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
-      balance: 1000061057000
+      balance: 1000061060000
       code: '0x'
       nonce: 1
       storage: {}
@@ -76,12 +80,14 @@ refundMax:
         value: !!int -1
 
       network:
-        - '>=London'
+        - London
+        - Merge
+        - '>=Shanghai'
       result:
         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           # Without a refund, the balance would be 1000000000000
-          # The London refund is 12211000 wei, which is 12211 gas 
-          balance: 1000012211000
+          # The London refund is 12208000 wei, which is 12208 gas 
+          balance: 1000012208000
 
 
     - indexes:
@@ -90,7 +96,7 @@ refundMax:
         value: !!int -1
 
       network:
-        - 'Berlin'
+        - Berlin
       result:
         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           # Without a refund, the balance would be 1000000000000

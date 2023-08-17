@@ -18,7 +18,12 @@ push0:
 
     b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
       balance: 0
-      code: ':yul { sstore(0, call(100000, shr(96, calldataload(0)), 0, 0, 0, 0, 0)) sstore(1, 1) }'
+      code: |
+        :yul berlin 
+          { 
+            sstore(0, call(100000, shr(96, calldataload(0)), 0, 0, 0, 0, 0)) 
+            sstore(1, 1) 
+          }
       nonce: 0
       storage: {}
 
@@ -103,7 +108,15 @@ push0:
 
     0000000000000000000000000000000000000500:
       balance: 0
-      code: ':yul { sstore(0, staticcall(100000, 0x0000000000000000000000000000000000000600, 0, 0, 0, 0)) sstore(1, 1) returndatacopy(0x1f, 0x0, 0x1) sstore(0x2, mload(0x00)) }'
+      code: |
+        :yul berlin 
+        { 
+           sstore(0, 
+             staticcall(100000, 0x0000000000000000000000000000000000000600, 0, 0, 0, 0))
+           sstore(1, 1) 
+           returndatacopy(0x1f, 0x0, 0x1) 
+           sstore(0x2, mload(0x00)) 
+        }
       nonce: 0
       storage: {}
 
