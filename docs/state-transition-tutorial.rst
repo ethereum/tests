@@ -304,6 +304,20 @@ This is a sample contract:
 It is very similar to an LLL test, except for having the **:yul** keyword before the
 opening curly bracket (**{**).
 
+Note that you can specify the `fork <https://ethereum.org/en/history/>`_ 
+for which you compile the code.
+This is important because of
+`the PUSH0 opcode <https://www.evm.codes/#5f?fork=shanghai>`_, 
+which cannot be used in tests that need to run on forks prior to Shanghai.
+
+
+::
+
+      code: |
+        :yul <fork, such as berlin or shanghai>
+        {
+            <code goes here>
+        }
 
   
 Solidity Tests
@@ -333,6 +347,17 @@ because Solidity code tends to be longer than LLL (or Yul) code.
 
 The **retesteth** docker only includes one version of the Solidity compiler, so
 it is best not to have a **pragma solidity** line.
+
+
+::
+
+      // RETESTETH_SOLC_EVM_VERSION=<fork, such as london or prague>
+
+
+Specify the `hardfork <https://ethereum.org/en/history/>`_ for the compiler to use.
+If a test needs to be executed on forks prior to Shanghai, that needs to be specified
+because of the PUSH0 opcode added in Shanghai.
+
 
 ::
 
