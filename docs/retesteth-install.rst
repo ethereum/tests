@@ -12,7 +12,7 @@ Linux running anywhere else with an Internet connection.
 
       sudo apt install -y wget docker docker.io
 
-#. Download the latest **retesteth** `docker image <https://retesteth.ethdevops.io/dretesteth.tar>_
+#. Download the latest **retesteth** `docker image <https://retesteth.ethdevops.io/dretesteth.tar>`_
 
    ::
 
