@@ -289,7 +289,7 @@ eof1GoodList.push([createEOF1Code(["3030015000"], [2]), ""])
 
 
 // Endless loops are OK
-eof1GoodList.push([createEOF1Code(["3050E3000000"], [1]), "EOF1V0007"])
+eof1GoodList.push([createEOF1Code(["3050E50000"], [1]), "EOF1V0007"])
 
 // The parameters are part of maxStackHeight
 temp = createEOF1Code(["60FF" + "E30001" + "00", "50" + "E4"], [1, 1])

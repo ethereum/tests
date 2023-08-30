@@ -362,17 +362,17 @@ validInvalid:
         "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0006 (Valid) CALLF inputs - data index: 5
-      # Code[0](Types: 0:0): CALLF(0) STOP
-      # Code[1](Types: 1:0): PUSH1(0) CALLF(1) STOP
-      # Code[2](Types: 2:0): PUSH1(0) PUSH1(0) CALLF(2) STOP
-      # Code[3](Types: 127:0): DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 CALLF(3) STOP
+      # Code[0](Types: 0:0): INVALID
+      # Code[1](Types: 1:0): PUSH1(0) CALLF(1) RETF
+      # Code[2](Types: 2:0): PUSH1(0) PUSH1(0) CALLF(2) RETF
+      # Code[3](Types: 127:0): DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 CALLF(3) RETF
     - data: |
        :label EOF1V5450_0006 :raw 0x
         # EOF deployed code
         EF0001 # Magic and Version ( 1 )
         010010 # Types length ( 16 )
         020004 # Total code sections ( 4 )
-          0004 # Code section  0 , 4  bytes
+          0001 # Code section  0 , 1  bytes
           0006 # Code section  1 , 6  bytes
           0008 # Code section  2 , 8  bytes
           0082 # Code section  3 , 130  bytes
@@ -384,28 +384,27 @@ validInvalid:
           0000 # max stack: 0
                # Code 1 types
             01 # 1 inputs
-            80 # 0 outputs (Non-returning function)
+            00 # 0 outputs
           0002 # max stack: 2
                # Code 2 types
             02 # 2 inputs
-            80 # 0 outputs (Non-returning function)
+            00 # 0 outputs
           0004 # max stack: 4
                # Code 3 types
             7f # 127 inputs
-            80 # 0 outputs (Non-returning function)
+            00 # 0 outputs
           00fd # max stack: 253
                # Code section 0
-        e30000 # CALLF(0) 
-            00 # STOP 
+            fe # INVALID 
                # Code section 1
           6000 # PUSH1(0) 
         e30001 # CALLF(1) 
-            00 # STOP 
+            e4 # RETF 
                # Code section 2
           6000 # PUSH1(0) 
           6000 # PUSH1(0) 
         e30002 # CALLF(2) 
-            00 # STOP 
+            e4 # RETF 
                # Code section 3
             80 # DUP1 
             80 # DUP1 
@@ -534,10 +533,11 @@ validInvalid:
             80 # DUP1 
             80 # DUP1 
         e30003 # CALLF(3) 
-            00 # STOP 
+            e4 # RETF 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
+        ">=Prague" : "EOF_NonEmptyStackOnTerminatingInstruction"
 
     # EOF1V5450_0007 (Valid) Validate input for ADD opcode - data index: 6
     # Code: PUSH1(1) DUP1 ADD STOP
@@ -5641,7 +5641,7 @@ validInvalid:
 
     # EOF1I5450_0092 (Invalid) Calling function without enough stack items: Function 0 calls Function 1 without enough parameters - data index: 190
       # Code[0](Types: 0:0): CALLF(1) STOP
-      # Code[1](Types: 1:0): PUSH1(0) DUP1 CALLF(2)
+      # Code[1](Types: 1:0): PUSH1(0) DUP1 CALLF(2) RETF
       # Code[2](Types: 2:0): POP POP RETF
     - data: |
        :label EOF1I5450_0092 :raw 0x
@@ -5650,7 +5650,7 @@ validInvalid:
         01000c # Types length ( 12 )
         020003 # Total code sections ( 3 )
           0004 # Code section  0 , 4  bytes
-          0006 # Code section  1 , 6  bytes
+          0007 # Code section  1 , 7  bytes
           0003 # Code section  2 , 3  bytes
         040000 # Data section length ( 0 )
             00 # Terminator (end of header)
@@ -5660,7 +5660,7 @@ validInvalid:
           0000 # max stack: 0
                # Code 1 types
             01 # 1 inputs
-            80 # 0 outputs (Non-returning function)
+            00 # 0 outputs
           0003 # max stack: 3
                # Code 2 types
             02 # 2 inputs
@@ -5673,6 +5673,7 @@ validInvalid:
           6000 # PUSH1(0) 
             80 # DUP1 
         e30002 # CALLF(2) 
+            e4 # RETF 
                # Code section 2
             50 # POP 
             50 # POP 
@@ -5684,7 +5685,7 @@ validInvalid:
 
     # EOF1I5450_0093 (Invalid) Calling function without enough stack items: Function 1 calls Function 2 with enough parameters - data index: 191
       # Code[0](Types: 0:0): PUSH1(0) CALLF(1) STOP
-      # Code[1](Types: 1:0): PUSH1(0) CALLF(2) STOP
+      # Code[1](Types: 1:0): PUSH1(0) CALLF(2) RETF
       # Code[2](Types: 2:0): POP POP RETF
     - data: |
        :label EOF1I5450_0093 :raw 0x
@@ -5703,7 +5704,7 @@ validInvalid:
           0001 # max stack: 1
                # Code 1 types
             01 # 1 inputs
-            80 # 0 outputs (Non-returning function)
+            00 # 0 outputs
           0002 # max stack: 2
                # Code 2 types
             02 # 2 inputs
@@ -5716,7 +5717,7 @@ validInvalid:
                # Code section 1
           6000 # PUSH1(0) 
         e30002 # CALLF(2) 
-            00 # STOP 
+            e4 # RETF 
                # Code section 2
             50 # POP 
             50 # POP 
@@ -5727,8 +5728,8 @@ validInvalid:
 
     # EOF1I5450_0094 (Invalid) Calling function without enough stack items: Function 0 calls Function 1 without enought parameters, Function 1 calls Function 2 without enough parameers - data index: 192
       # Code[0](Types: 0:0): CALLF(1) STOP
-      # Code[1](Types: 1:0): PUSH1(0) CALLF(2)
-      # Code[2](Types: 2:0): POP POP CALLF(3)
+      # Code[1](Types: 1:0): PUSH1(0) CALLF(2) RETF
+      # Code[2](Types: 2:0): POP POP CALLF(3) RETF
     - data: |
        :label EOF1I5450_0094 :raw 0x
         # EOF deployed code
@@ -5736,8 +5737,8 @@ validInvalid:
         01000c # Types length ( 12 )
         020003 # Total code sections ( 3 )
           0004 # Code section  0 , 4  bytes
-          0005 # Code section  1 , 5  bytes
-          0005 # Code section  2 , 5  bytes
+          0006 # Code section  1 , 6  bytes
+          0006 # Code section  2 , 6  bytes
         040000 # Data section length ( 0 )
             00 # Terminator (end of header)
                # Code 0 types
@@ -5746,7 +5747,7 @@ validInvalid:
           0000 # max stack: 0
                # Code 1 types
             01 # 1 inputs
-            80 # 0 outputs (Non-returning function)
+            00 # 0 outputs
           0002 # max stack: 2
                # Code 2 types
             02 # 2 inputs
@@ -5758,10 +5759,12 @@ validInvalid:
                # Code section 1
           6000 # PUSH1(0) 
         e30002 # CALLF(2) 
+            e4 # RETF 
                # Code section 2
             50 # POP 
             50 # POP 
         e30003 # CALLF(3) 
+            e4 # RETF 
                # Data section (empty)
       expectException:
         "Cancun" : "EOF_InvalidCode"
