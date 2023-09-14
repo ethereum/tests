@@ -1,6 +1,5 @@
 # CREATE opcode with EOF1 initcode or/and code called from inside EOF contract
 # ---
-# Tests filled with geth version in: https://github.com/ipsilon/go-ethereum/tree/c673883fae922f84c3ae1e66fd4e3f9a3d6683c3
 # Active EIPs: 3540, 3670, 4200, 4750, 5450
 CREATE_EOF1_FromEOF:
   env:
@@ -27,39 +26,37 @@ CREATE_EOF1_FromEOF:
   transaction:
     data: 
       # Deploying codes starting with 0xef
+      - ':label deploying_0xef :yul-eof { mstore(0, 0xef00000000000000000000000000000000000000000000000000000000000000) return(0, 1) }' 
+      - ':label deploying_0xef00 :yul-eof { mstore(0, 0xef00000000000000000000000000000000000000000000000000000000000000) return(0, 2) }' 
+      - ':label deploying_0xef0000 :yul-eof { mstore(0, 0xef00000000000000000000000000000000000000000000000000000000000000) return(0, 3) }' 
+      - ':label deploying_0xef0000...00 :yul-eof { mstore(0, 0xef00000000000000000000000000000000000000000000000000000000000000) return(0, 32) }' 
 
-      - ":label deploying_0xef :yul-eof { mstore8(0, 0xef) return(0, 1) }"
-      - ':label deploying_0xef00 :yul-eof { mstore8(0, 0xef) return(0, 2) }'
-      - ':label deploying_0xef0000 :yul-eof { mstore8(0, 0xef) return(0, 3) }'
-      - ':label deploying_0xef00..00  :yul-eof { mstore8(0, 0xef) return(0, 32) }'
-
-      # Valid EOF1 initcode and code combinations (both with and without data section)
-
-      # EOF initcode => EOF code
+      
+      # Valid EOF1 initcode and code combinations
+      # EOF Initcode => EOF code
       # initcode without data section, deployed code without data section
-      # initcode code section: :yul { mstore(0, 0xef00010100040200010004030000000000000160005000000000000000000000) return(0, 23) }
-      # deployed code section: PUSH1(0) POP STOP
-      - ':label eof1_initcode_deploying_valid_eof1 :raw 0xef0001010004020001002903000000000000027fef0001010004020001000403000000000000016000500000000000000000000060005260176000f3'
-      # initcode without data section, deployed code with data section
-      # initcode code section: :yul { mstore(0, 0xef00010100040200010004030004000000000160005000aabbccdd0000000000) return(0, 27) }
       # deployed code:
-      #   code section: PUSH1(0) POP STOP 
-      #   data section: aabbccdd
-      - ':label eof1_initcode_deploying_valid_eof1_with_data :raw 0xef0001010004020001002903000000000000027fef00010100040200010004030004000000000160005000aabbccdd0000000000600052601b6000f3'
+      #    code section: PUSH1(0) POP STOP
+      - ':label eof1_initcode_deploying_valid_eof1 :yul-eof { mstore(0, 0xef00010100040200010004040000000080000160005000000000000000000000) return(0, 23) }' 
+      # initcode without data section, deployed code with data section
+      # deployed code:
+      #    code section: PUSH1(0) POP STOP
+      #    data section: aabbccdd
+      - ':label eof1_initcode_deploying_valid_eof1_with_data :yul-eof { mstore(0, 0xef00010100040200010004040004000080000160005000aabbccdd0000000000) return(0, 27) }' 
       # initcode with data section, deployed code without data section
       # initcode:
-      #   code section: :yul { mstore(0, 0xef00010100040200010004030000000000000160005000000000000000000000) return(0, 23) }
-      #   data section: aabbccdd
+      #    code section: :yul { mstore(0, 0xef00010100040200010004040000000080000160005000000000000000000000) return(0, 23) }
+      #    data section: aabbccdd
       # deployed code section: PUSH1(0) POP STOP
-      - ':label eof1_initcode_with_data_deploying_valid_eof1 :raw 0xef0001010004020001002903000400000000027fef0001010004020001000403000000000000016000500000000000000000000060005260176000f3aabbccdd'
+      - ':label eof1_initcode_with_data_deploying_valid_eof1 :raw 0xef0001010004020001002904000400008000027fef0001010004020001000404000000008000016000500000000000000000000060005260176000f3aabbccdd' 
       # initcode with data section, deployed code with data section
-      # initcode 
-      #   code section: :yul { mstore(0, 0xef00010100040200010004030004000000000160005000aabbccdd0000000000) return(0, 27) }
-      #   data section: eeff
+      # initcode:
+      #    code section: :yul { mstore(0, 0xef00010100040200010004040004000080000160005000aabbccdd0000000000) return(0, 27) }
+      #    data section: eeff
       # deployed code:
-      #   code section: PUSH1(0) POP STOP
-      #   data section: aabbccdd
-      - ':label eof1_initcode_with_data_deploying_valid_eof1_with_data :raw 0xef0001010004020001002903000200000000027fef00010100040200010004030004000000000160005000aabbccdd0000000000600052601b6000f3eeff'
+      #    code section: PUSH1(0) POP STOP
+      #    data section: aabbccdd
+      - ':label eof1_initcode_with_data_deploying_valid_eof1_with_data :raw 0xef0001010004020001002904000200008000027fef00010100040200010004040004000080000160005000aabbccdd0000000000600052601b6000f3eeff' 
 
     gasLimit:
       - 15000000
@@ -74,7 +71,7 @@ CREATE_EOF1_FromEOF:
     - indexes:
        data: ':label deploying_0xef'
       network:
-        - '>=Cancun'
+        - '>=Prague'
       result:
        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           nonce: 1
@@ -89,7 +86,7 @@ CREATE_EOF1_FromEOF:
     - indexes:
        data: ':label deploying_0xef00'
       network:
-        - '>=Cancun'
+        - '>=Prague'
       result:
        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           nonce: 1
@@ -104,7 +101,7 @@ CREATE_EOF1_FromEOF:
     - indexes:
        data: ':label deploying_0xef0000'
       network:
-        - '>=Cancun'
+        - '>=Prague'
       result:
        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           nonce: 1
@@ -117,9 +114,9 @@ CREATE_EOF1_FromEOF:
           shouldnotexist: 1
 
     - indexes:
-       data: ':label deploying_0xef00..00'
+       data: ':label deploying_0xef0000...00'
       network:
-        - '>=Cancun'
+        - '>=Prague'
       result:
        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           nonce: 1
@@ -134,7 +131,7 @@ CREATE_EOF1_FromEOF:
     - indexes:
        data: ':label eof1_initcode_deploying_valid_eof1'
       network:
-        - '>=Cancun'
+        - '>=Prague'
       result:
        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           nonce: 1
@@ -145,13 +142,13 @@ CREATE_EOF1_FromEOF:
             '1': '1'
        f1ecf98489fa9ed60a664fc4998db699cfa39d40:
           nonce: 1
-          code: '0xef00010100040200010004030000000000000160005000'
+          code: '0xef00010100040200010004040000000080000160005000'
           storage: {}
 
     - indexes:
        data: ':label eof1_initcode_deploying_valid_eof1_with_data'
       network:
-        - '>=Cancun'
+        - '>=Prague'
       result:
        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           nonce: 1
@@ -162,13 +159,13 @@ CREATE_EOF1_FromEOF:
             '1': '1'
        f1ecf98489fa9ed60a664fc4998db699cfa39d40:
           nonce: 1
-          code: '0xef00010100040200010004030004000000000160005000aabbccdd'
+          code: '0xef00010100040200010004040004000080000160005000aabbccdd'
           storage: {}
 
     - indexes:
        data: ':label eof1_initcode_with_data_deploying_valid_eof1'
       network:
-        - '>=Cancun'
+        - '>=Prague'
       result:
        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           nonce: 1
@@ -179,13 +176,13 @@ CREATE_EOF1_FromEOF:
             '1': '1'
        f1ecf98489fa9ed60a664fc4998db699cfa39d40:
           nonce: 1
-          code: '0xef00010100040200010004030000000000000160005000'
+          code: '0xef00010100040200010004040000000080000160005000'
           storage: {}
 
     - indexes:
        data: ':label eof1_initcode_with_data_deploying_valid_eof1_with_data'
       network:
-        - '>=Cancun'
+        - '>=Prague'
       result:
        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           nonce: 1
@@ -196,6 +193,6 @@ CREATE_EOF1_FromEOF:
             '1': '1'
        f1ecf98489fa9ed60a664fc4998db699cfa39d40:
           nonce: 1
-          code: '0xef00010100040200010004030004000000000160005000aabbccdd'
+          code: '0xef00010100040200010004040004000080000160005000aabbccdd'
           storage: {}
 

@@ -20,14 +20,14 @@ RJUMPI_MaxOffset:
         :yul 
         {
           // This constructs EOF initcode:
-          // PUSH1(1) RJUMPI(32767) NOP * 32768 PUSH32(ef000101000402000100010300000000000000fe000000000000000000000000) PUSH1(0) MSTORE PUSH1(20) PUSH1(0) RET
+          // PUSH1(1) RJUMPI(32767) NOP * 32768 PUSH32(ef000101000402000100010400000000800000fe000000000000000000000000) PUSH1(0) MSTORE PUSH1(20) PUSH1(0) RET
 
           // eof prefix
-          mstore(0,  0xef0001010004020001802e030000000000000200000000000000000000000000) // 19 bytes
+          mstore(0,  0xef0001010004020001802e040000000080000200000000000000000000000000) // 19 bytes
           let offset := 19
 
           // start of code section: PUSH1(1) RJUMPI(32767)
-          mstore(offset, 0x60015d7fff000000000000000000000000000000000000000000000000000000) // 5 bytes
+          mstore(offset, 0x6001e17fff000000000000000000000000000000000000000000000000000000) // 5 bytes
           offset := add(offset, 5)
 
           // loop to add 32768 = 1024 * 32 NOPs
@@ -38,9 +38,9 @@ RJUMPI_MaxOffset:
           }
 
           // end of code section: 
-          // PUSH32(ef000101000402000100010300000000000000fe000000000000000000000000) PUSH1(0) MSTORE PUSH1(20) PUSH1(0) RET
+          // PUSH32(ef000101000402000100010400000000800000fe000000000000000000000000) PUSH1(0) MSTORE PUSH1(20) PUSH1(0) RET
           // (41 bytes)
-          mstore(offset, 0x7fef000101000402000100010300000000000000fe0000000000000000000000)
+          mstore(offset, 0x7fef000101000402000100010400000000800000fe0000000000000000000000)
           offset := add(offset, 32)
           mstore(offset, 0x0060005260146000f30000000000000000000000000000000000000000000000) // 9 bytes
           offset := add(offset, 9)
@@ -68,7 +68,7 @@ RJUMPI_MaxOffset:
   expect:
     - indexes: {}
       network:
-        - '>=Cancun'
+        - '>=Prague'
       result:
        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           nonce: 1
@@ -79,5 +79,5 @@ RJUMPI_MaxOffset:
             '1': '1'
        f1ecf98489fa9ed60a664fc4998db699cfa39d40:
           nonce: 1
-          code: '0xef000101000402000100010300000000000000fe'
+          code: '0xef000101000402000100010400000000800000fe'
           storage: {}

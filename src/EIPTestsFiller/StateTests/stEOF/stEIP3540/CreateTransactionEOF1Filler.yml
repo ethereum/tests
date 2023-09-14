@@ -1,6 +1,5 @@
 # Creation transaction with EOF1 initcode or/and code
 # ---
-# Tests filled with geth version in: https://github.com/ipsilon/go-ethereum/tree/c673883fae922f84c3ae1e66fd4e3f9a3d6683c3
 # Active EIPs: 3540, 3670, 4200, 4750, 5450
 CreateTransactionEOF1:
   env:
@@ -32,42 +31,40 @@ CreateTransactionEOF1:
       #- ':yul { mstore8(0, 0xef) return(0, 32) }'
       - ':label deploying_0xef00..00 :raw 0x60ef60005360206000f3'
 
-      # Valid EOF1 initcode and code combinations (both with and withoug data section)
+      # Valid EOF1 initcode and code combinations (both with and without data section)
 
       # Legacy initcode => EOF code
       # deployed code without data section
       # deployed code section: PUSH1(0) POP STOP
-      - ':label deploying_valid_eof1 :yul { mstore(0, 0xef00010100040200010004030000000000000160005000000000000000000000) return(0, 23) }'
+      - ':label deploying_valid_eof1 :yul { mstore(0, 0xef00010100040200010004040000000080000160005000000000000000000000) return(0, 23) }'
       # deployed code with data section
+      # deployed code section: 
+      #     code: PUSH1(0) POP STOP
+      #     data section: aabbccdd
+      - ':label deploying_valid_eof1_with_data :yul { mstore(0, 0xef00010100040200010004040004000080000160005000aabbccdd0000000000) return(0, 27) }'
+      # EOF initcode => EOF code
+      # initcode without data section, deployed code without data section
+      # deployed code section: PUSH1(0) POP STOP
+      - ':label eof1_initcode_deploying_valid_eof1 :yul-eof { mstore(0, 0xef00010100040200010004040000000080000160005000000000000000000000) return(0, 23) }'
+      # initcode without data section, deployed code with data section
       # deployed code:
       #   code section: PUSH1(0) POP STOP 
       #   data section: aabbccdd
-      - ':label deploying_valid_eof1_with_data :yul { mstore(0, 0xef00010100040200010004030004000000000160005000aabbccdd0000000000) return(0, 27) }'
-      # EOF initcode => EOF code
-      # initcode without data section, deployed code without data section
-      # initcode code section: :yul { mstore(0, 0xef00010100040200010004030000000000000160005000000000000000000000) return(0, 23) }
+      - ':label eof1_initcode_deploying_valid_eof1_with_data :yul-eof { mstore(0, 0xef00010100040200010004040004000080000160005000aabbccdd0000000000) return(0, 27) }'
+      # initcode with data section, deployed code without data section
+      # initcode:
+      #   code section: :yul { mstore(0, 0xef00010100040200010004040000000080000160005000000000000000000000) return(0, 23) }
+      #   data section: aabbccdd
       # deployed code section: PUSH1(0) POP STOP
-      - ':label eof1_initcode_deploying_valid_eof1 :raw 0xef0001010004020001002903000000000000027fef0001010004020001000403000000000000016000500000000000000000000060005260176000f3'
-      # initcode without data section, deployed code with data section
-      # initcode code section: :yul { mstore(0, 0xef00010100040200010004030004000000000160005000aabbccdd0000000000) return(0, 27) }
+      - ':label eof1_initcode_with_data_deploying_valid_eof1 :raw 0xef0001010004020001002904000400008000027fef0001010004020001000404000000008000016000500000000000000000000060005260176000f3aabbccdd'
+      # initcode with data section, deployed code with data section
+      # initcode 
+      #   code section: :yul { mstore(0, 0xef00010100040200010004040004000080000160005000aabbccdd0000000000) return(0, 27) }
+      #   data section: eeff
       # deployed code:
       #   code section: PUSH1(0) POP STOP
       #   data section: aabbccdd
-      - ':label eof1_initcode_deploying_valid_eof1_with_data :raw 0xef0001010004020001002903000000000000027fef00010100040200010004030004000000000160005000aabbccdd0000000000600052601b6000f3'
-      # initcode with data section, deployed code without data section
-      # initcode:
-      #   code section: :yul { mstore(0, 0xef00010100040200010004030000000000000160005000000000000000000000) return(0, 23) }
-      #   data section aabbccdd
-      # deployed code section: PUSH1(0) POP STOP
-      - ':label eof1_initcode_with_data_deploying_valid_eof1 :raw 0xef0001010004020001002903000400000000027fef0001010004020001000403000000000000016000500000000000000000000060005260176000f3aabbccdd'
-      # initcode with data section, deployed code with data section
-      # initcode: 
-      #   code section: :yul { mstore(0, 0xef00010100040200010004030004000000000160005000aabbccdd0000000000) return(0, 27) }
-      #   data section: eeff
-      # deployed code: 
-      #   code section: PUSH1(0) POP STOP 
-      #   data section: aabbccdd
-      - ':label eof1_initcode_with_data_deploying_valid_eof1_with_data :raw 0xef0001010004020001002903000200000000027fef00010100040200010004030004000000000160005000aabbccdd0000000000600052601b6000f3eeff'
+      - ':label eof1_initcode_with_data_deploying_valid_eof1_with_data :raw 0xef0001010004020001002904000200008000027fef00010100040200010004040004000080000160005000aabbccdd0000000000600052601b6000f3eeff'
 
     gasLimit:
       - 70000
@@ -159,7 +156,7 @@ CreateTransactionEOF1:
     - indexes:
        data: ':label deploying_0xef00..00'
       network:
-        - '>=London'
+        - 'London'
       result:
        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
          nonce: 1
@@ -170,7 +167,7 @@ CreateTransactionEOF1:
     - indexes:
        data: ':label deploying_valid_eof1'
       network:
-        - 'Shanghai'
+        - 'Cancun'
       result:
        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
          nonce: 1
@@ -180,19 +177,19 @@ CreateTransactionEOF1:
     - indexes:
        data: ':label deploying_valid_eof1'
       network:
-        - '>=Cancun'
+        - '>=Prague'
       result:
        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
          nonce: 1
        6295ee1b4f6dd65047762f924ecd367c17eabf8f:
          balance: 0
-         code: '0xef00010100040200010004030000000000000160005000'
+         code: '0xef00010100040200010004040000000080000160005000'
          nonce: 1
 
     - indexes:
        data: ':label deploying_valid_eof1_with_data'
       network:
-        - 'Shanghai'
+        - 'Cancun'
       result:
        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
          nonce: 1
@@ -202,19 +199,19 @@ CreateTransactionEOF1:
     - indexes:
        data: ':label deploying_valid_eof1_with_data'
       network:
-        - '>=Cancun'
+        - '>=Prague'
       result:
        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
          nonce: 1
        6295ee1b4f6dd65047762f924ecd367c17eabf8f:
          balance: 0
-         code: '0xef00010100040200010004030004000000000160005000aabbccdd'
+         code: '0xef00010100040200010004040004000080000160005000aabbccdd'
          nonce: 1
 
     - indexes:
        data: ':label eof1_initcode_deploying_valid_eof1'
       network:
-        - 'Shanghai'
+        - 'Cancun'
       result:
        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
          nonce: 1
@@ -224,19 +221,19 @@ CreateTransactionEOF1:
     - indexes:
        data: ':label eof1_initcode_deploying_valid_eof1'
       network:
-        - '>=Cancun'
+        - '>=Prague'
       result:
        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
          nonce: 1
        6295ee1b4f6dd65047762f924ecd367c17eabf8f:
          balance: 0
-         code: '0xef00010100040200010004030000000000000160005000'
+         code: '0xef00010100040200010004040000000080000160005000'
          nonce: 1
 
     - indexes:
        data: ':label eof1_initcode_deploying_valid_eof1_with_data'
       network:
-        - 'Shanghai'
+        - 'Cancun'
       result:
        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
          nonce: 1
@@ -246,19 +243,19 @@ CreateTransactionEOF1:
     - indexes:
        data: ':label eof1_initcode_deploying_valid_eof1_with_data'
       network:
-        - '>=Cancun'
+        - '>=Prague'
       result:
        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
          nonce: 1
        6295ee1b4f6dd65047762f924ecd367c17eabf8f:
          balance: 0
-         code: '0xef00010100040200010004030004000000000160005000aabbccdd'
+         code: '0xef00010100040200010004040004000080000160005000aabbccdd'
          nonce: 1
 
     - indexes:
        data: ':label eof1_initcode_with_data_deploying_valid_eof1'
       network:
-        - 'Shanghai'
+        - 'Cancun'
       result:
        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
          nonce: 1
@@ -268,19 +265,19 @@ CreateTransactionEOF1:
     - indexes:
        data: ':label eof1_initcode_with_data_deploying_valid_eof1'
       network:
-        - '>=Cancun'
+        - '>=Prague'
       result:
        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
          nonce: 1
        6295ee1b4f6dd65047762f924ecd367c17eabf8f:
          balance: 0
-         code: '0xef00010100040200010004030000000000000160005000'
+         code: '0xef00010100040200010004040000000080000160005000'
          nonce: 1
 
     - indexes:
        data: ':label eof1_initcode_with_data_deploying_valid_eof1_with_data'
       network:
-        - 'Shanghai'
+        - 'Cancun'
       result:
        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
          nonce: 1
@@ -290,12 +287,12 @@ CreateTransactionEOF1:
     - indexes:
        data: ':label eof1_initcode_with_data_deploying_valid_eof1_with_data'
       network:
-        - '>=Cancun'
+        - '>=Prague'
       result:
        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
          nonce: 1
        6295ee1b4f6dd65047762f924ecd367c17eabf8f:
          balance: 0
-         code: '0xef00010100040200010004030004000000000160005000aabbccdd'
+         code: '0xef00010100040200010004040004000080000160005000aabbccdd'
          nonce: 1
 

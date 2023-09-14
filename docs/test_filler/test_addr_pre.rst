@@ -35,6 +35,19 @@
           sstore(0, add(2,2))
        }
 
+    Optionally, you can specify the hard fork for which to compile the code
+
+    ::
+
+       :yul berlin {
+          // Add 2+2 and store the value in storage location 0.
+          // Because we compile using the Berlin hardfork, 
+          // there is no PUSH0, and we can use the code to check
+          // forks prior to Shanghai.
+          sstore(0, add(2,2))
+       }
+ 
+
 
   - `Solidity, which you can learn here <https://cryptozombies.io/>`_. Solidity
     code can be provided to a test in two ways:
@@ -44,3 +57,9 @@
 
     - Put a **:solidity** section with the contract source code. In 
       that case, the value in **code:** is **:solidity <name of contract>**.
+
+    In either case, you can specify the hardfork to use using this syntax:
+
+    ::
+
+        // RETESTETH_SOLC_EVM_VERSION=berlin

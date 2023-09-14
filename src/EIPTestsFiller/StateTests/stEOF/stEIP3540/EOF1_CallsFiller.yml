@@ -1,6 +1,5 @@
 # Tests for all kinds of calls to/from EOF contracts
 # ---
-# Tests filled with geth version in: https://github.com/ipsilon/go-ethereum/tree/c673883fae922f84c3ae1e66fd4e3f9a3d6683c3
 # Active EIPs: 3540, 3670, 4200, 4750, 5450
 EOF1_Calls:
   env:
@@ -28,14 +27,12 @@ EOF1_Calls:
     # EOF destination contracts
     c94f5374fce5edbc8e2a8697c15331677e6ebf0b:
       balance: 0
-      # code: ':yul { sstore(10, caller()) stop() }'
-      code: ':raw 0xef00010100040200010005030000000000000233600a5500'
+      code: ':yul-eof { sstore(10, caller()) stop() }'
       nonce: 0
       storage: {}
     d94f5374fce5edbc8e2a8697c15331677e6ebf0b:
       balance: 0
-      # code: ':yul { mstore8(0, 0x42) return(0, 1) }'
-      code: ':raw 0xef0001010004020001000a0300000000000002604260005360016000f3'
+      code: ':yul-eof { mstore8(0, 0x42) return(0, 1) }'
       nonce: 0
       storage: {}
 
@@ -84,29 +81,25 @@ EOF1_Calls:
     204f5374fce5edbc8e2a8697c15331677e6ebf0b:
       balance: 0
       # EOF code CALLs legacy code
-      # code: ':yul { sstore(0, call(100000, 0xe94f5374fce5edbc8e2a8697c15331677e6ebf0b, 0, 0, 0, 0, 0)) sstore(1, 1) stop() }'
-      code: ':raw 0xef0001010004020001002d03000000000000076000600060006000600073e94f5374fce5edbc8e2a8697c15331677e6ebf0b620186a0f1600055600160015500'
+      code: ':yul-eof { sstore(0, call(100000, 0xe94f5374fce5edbc8e2a8697c15331677e6ebf0b, 0, 0, 0, 0, 0)) sstore(1, 1) stop() }'
       nonce: 0
       storage: {}
     224f5374fce5edbc8e2a8697c15331677e6ebf0b:
       balance: 0
       # EOF code DELEGATECALLs legacy code
-      # code: ':yul { sstore(0, delegatecall(100000, 0xe94f5374fce5edbc8e2a8697c15331677e6ebf0b, 0, 0, 0, 0)) sstore(1, 1) stop() }'
-      code: ':raw 0xef0001010004020001002b0300000000000006600060006000600073e94f5374fce5edbc8e2a8697c15331677e6ebf0b620186a0f4600055600160015500'
+      code: ':yul-eof { sstore(0, delegatecall(100000, 0xe94f5374fce5edbc8e2a8697c15331677e6ebf0b, 0, 0, 0, 0)) sstore(1, 1) stop() }'
       nonce: 0
       storage: {}
     234f5374fce5edbc8e2a8697c15331677e6ebf0b:
       balance: 0
       # EOF code STATICCALLs non-pure legacy code
-      # code: ':yul { sstore(0, staticcall(100000, 0xe94f5374fce5edbc8e2a8697c15331677e6ebf0b, 0, 0, 0, 0)) sstore(1, 1) stop() }'
-      code: ':raw 0xef0001010004020001002b0300000000000006600060006000600073e94f5374fce5edbc8e2a8697c15331677e6ebf0b620186a0fa600055600160015500'
+      code: ':yul-eof { sstore(0, staticcall(100000, 0xe94f5374fce5edbc8e2a8697c15331677e6ebf0b, 0, 0, 0, 0)) sstore(1, 1) stop() }'
       nonce: 0
       storage: {}
     244f5374fce5edbc8e2a8697c15331677e6ebf0b:
       balance: 0
       # EOF code STATICCALLs legacy code
-      # code: ':yul { sstore(0, staticcall(100000, 0xf94f5374fce5edbc8e2a8697c15331677e6ebf0b, 0, 0, 0, 1)) sstore(1, mload(0)) sstore(2, 2) stop()}'
-      code: ':raw 0xef000101000402000100310300000000000006600160006000600073f94f5374fce5edbc8e2a8697c15331677e6ebf0b620186a0fa600055600051600155600260025500'
+      code: ':yul-eof { sstore(0, staticcall(100000, 0xf94f5374fce5edbc8e2a8697c15331677e6ebf0b, 0, 0, 0, 1)) sstore(1, mload(0)) sstore(2, 2) stop()}'
       nonce: 0
       storage: {}
 
@@ -115,29 +108,25 @@ EOF1_Calls:
     304f5374fce5edbc8e2a8697c15331677e6ebf0b:
       balance: 0
       # EOF code CALLs legacy code
-      # code: ':yul { sstore(0, call(100000, 0xc94f5374fce5edbc8e2a8697c15331677e6ebf0b, 0, 0, 0, 0, 0)) sstore(1, 1) stop() }'
-      code: ':raw 0xef0001010004020001002d03000000000000076000600060006000600073c94f5374fce5edbc8e2a8697c15331677e6ebf0b620186a0f1600055600160015500'
+      code: ':yul-eof { sstore(0, call(100000, 0xc94f5374fce5edbc8e2a8697c15331677e6ebf0b, 0, 0, 0, 0, 0)) sstore(1, 1) stop() }'
       nonce: 0
       storage: {}
     324f5374fce5edbc8e2a8697c15331677e6ebf0b:
       balance: 0
       # EOF code DELEGATECALLs legacy code
-      # code: ':yul { sstore(0, delegatecall(100000, 0xc94f5374fce5edbc8e2a8697c15331677e6ebf0b, 0, 0, 0, 0)) sstore(1, 1) stop() }'
-      code: ':raw 0xef0001010004020001002b0300000000000006600060006000600073c94f5374fce5edbc8e2a8697c15331677e6ebf0b620186a0f4600055600160015500'
+      code: ':yul-eof { sstore(0, delegatecall(100000, 0xc94f5374fce5edbc8e2a8697c15331677e6ebf0b, 0, 0, 0, 0)) sstore(1, 1) stop() }'
       nonce: 0
       storage: {}
     334f5374fce5edbc8e2a8697c15331677e6ebf0b:
       balance: 0
       # EOF code STATICCALLs non-pure legacy code
-      # code: ':yul { sstore(0, staticcall(100000, 0xc94f5374fce5edbc8e2a8697c15331677e6ebf0b, 0, 0, 0, 0)) sstore(1, 1) stop() }'
-      code: ':raw 0xef0001010004020001002b0300000000000006600060006000600073c94f5374fce5edbc8e2a8697c15331677e6ebf0b620186a0fa600055600160015500'
+      code: ':yul-eof { sstore(0, staticcall(100000, 0xc94f5374fce5edbc8e2a8697c15331677e6ebf0b, 0, 0, 0, 0)) sstore(1, 1) stop() }'
       nonce: 0
       storage: {}
     344f5374fce5edbc8e2a8697c15331677e6ebf0b:
       balance: 0
       # EOF code STATICCALLs legacy code
-      # code: ':yul { sstore(0, staticcall(100000, 0xd94f5374fce5edbc8e2a8697c15331677e6ebf0b, 0, 0, 0, 1)) sstore(1, mload(0)) sstore(2, 2) stop()}'
-      code: ':raw 0xef000101000402000100310300000000000006600160006000600073d94f5374fce5edbc8e2a8697c15331677e6ebf0b620186a0fa600055600051600155600260025500'
+      code: ':yul-eof { sstore(0, staticcall(100000, 0xd94f5374fce5edbc8e2a8697c15331677e6ebf0b, 0, 0, 0, 1)) sstore(1, mload(0)) sstore(2, 2) stop()}'
       nonce: 0
       storage: {}
 
@@ -170,7 +159,7 @@ EOF1_Calls:
     - indexes:
        data: ':label legacy_call_eof'
       network:
-        - '>=Cancun'
+        - '>=Prague'
       result:
         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           nonce: 1
@@ -188,7 +177,7 @@ EOF1_Calls:
     - indexes:
        data: ':label legacy_delegatecall_eof'
       network:
-        - '>=Cancun'
+        - '>=Prague'
       result:
         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           nonce: 1
@@ -204,7 +193,7 @@ EOF1_Calls:
     - indexes:
        data: ':label legacy_staticcall_eof_failure'
       network:
-        - '>=Cancun'
+        - '>=Prague'
       result:
         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           nonce: 1
@@ -218,7 +207,7 @@ EOF1_Calls:
     - indexes:
        data: ':label legacy_staticcall_eof'
       network:
-        - '>=Cancun'
+        - '>=Prague'
       result:
         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           nonce: 1
@@ -235,7 +224,7 @@ EOF1_Calls:
     - indexes:
        data: ':label eof_call_legacy'
       network:
-        - '>=Cancun'
+        - '>=Prague'
       result:
         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           nonce: 1
@@ -254,7 +243,7 @@ EOF1_Calls:
     - indexes:
        data: ':label eof_delegatecall_legacy'
       network:
-        - '>=Cancun'
+        - '>=Prague'
       result:
         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           nonce: 1
@@ -271,7 +260,7 @@ EOF1_Calls:
     - indexes:
        data: ':label eof_staticcall_legacy_failure'
       network:
-        - '>=Cancun'
+        - '>=Prague'
       result:
         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           nonce: 1
@@ -286,7 +275,7 @@ EOF1_Calls:
     - indexes:
        data: ':label eof_staticcall_legacy'
       network:
-        - '>=Cancun'
+        - '>=Prague'
       result:
         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           nonce: 1
@@ -303,7 +292,7 @@ EOF1_Calls:
     - indexes:
        data: ':label eof_call_eof'
       network:
-        - '>=Cancun'
+        - '>=Prague'
       result:
         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           nonce: 1
@@ -322,7 +311,7 @@ EOF1_Calls:
     - indexes:
        data: ':label eof_delegatecall_eof'
       network:
-        - '>=Cancun'
+        - '>=Prague'
       result:
         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           nonce: 1
@@ -339,7 +328,7 @@ EOF1_Calls:
     - indexes:
        data: ':label eof_staticcall_eof_failure'
       network:
-        - '>=Cancun'
+        - '>=Prague'
       result:
         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           nonce: 1
@@ -354,7 +343,7 @@ EOF1_Calls:
     - indexes:
        data: ':label eof_staticcall_eof'
       network:
-        - '>=Cancun'
+        - '>=Prague'
       result:
         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           nonce: 1

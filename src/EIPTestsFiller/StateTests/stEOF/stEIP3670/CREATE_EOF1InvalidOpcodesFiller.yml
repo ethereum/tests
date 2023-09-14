@@ -21,8 +21,8 @@ CREATE_EOF1InvalidOpcodes:
         :yul
         {
           // code to deploy: <invalid_opcode> STOP
-          // initcode: { mstore(0, 0xef00010100040200010002030000000000000000000000000000000000000000) return(0, 21) }
-          mstore(128, 0x7fef000101000402000100020300000000000000000000000000000000000000)
+          // initcode: { mstore(0, 0xef0001010004020001000204000000008000005b000000000000000000000000) return(0, 21) }
+          mstore(128, 0x7fef0001010004020001000204000000008000005b0000000000000000000000)
           mstore(160, 0x0060005260156000f30000000000000000000000000000000000000000000000)
 
           // Add the opcode to the init code
@@ -164,7 +164,7 @@ CREATE_EOF1InvalidOpcodes:
   expect:
     - indexes: {}
       network:
-        - '>=Cancun'
+        - '>=Prague'
       result:
        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
          nonce: 1

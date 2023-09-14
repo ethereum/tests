@@ -3,7 +3,7 @@ ymlExample:
      comment: EOF example test
 
   forks:
-    - ">=Shanghai"
+    - ">=Cancun"
 
   vectors:
 
@@ -11,8 +11,8 @@ ymlExample:
   - data: |
      :raw 0x60016000F3
     expectException:
-      "Shanghai" : "Invalid Code"
-      ">=Cancun" : "invalid magic"
+      "Cancun" : "EOF_InvalidCode"
+      ">=Prague" : "EOF_InvalidMagic"
 
   # EOF1 constructor returning an EOF1 contract
   - data: |
@@ -21,12 +21,12 @@ ymlExample:
         010004  # One code segment
         020001  # One code segment
           000a  # Code segment zero length: 10 bytes
-        030016  # Data segment length (the code being deployed): 0x16=22 bytes
+        040016  # Data segment length (the code being deployed): 0x16=22 bytes
         00      # End of header 
 
         # Code segment zero (header)
             00 # No inputs
-            00 # No outputs
+            80 # Non-Returning Function
           0003 # Max stack height 3
 
 
@@ -45,27 +45,27 @@ ymlExample:
         010004 # One code segment
         020001 # One code segment
           0003 # Code segment zero's length: 3 bytes 
-        03001d # Data segment length: 22 bytes 
+        04001d # Data segment length: 22 bytes 
                # (not specified here, but part of the buffer returned by the init code)
         00     # End of header
         # Code segment 0 header         
             00 # No inputs
-            00 # No outputs
+            80 # Non-Returning Function
           0001 # Max stack height 1
         # Code segment 0 code
             38 # CODESIZE
             50 # POP
             00 # STOP
     expectException:
-      "Shanghai" : "Invalid Code"
+      "Cancun" : "EOF_InvalidCode"
 
     # Invalid init code
   # Not EOF1
   - data: |
      :raw 0xEFFFFF
     expectException:
-      "Shanghai" : "Invalid Code"
-      ">=Cancun" : "invalid magic"
+      "Cancun" : "EOF_InvalidCode"
+      ">=Prague" : "EOF_InvalidMagic"
 
 
 
@@ -73,7 +73,7 @@ ymlExample:
   - data: |
      :raw 0x610BADFE
     expectException:
-      "Shanghai" : "Invalid Code"
-      ">=Cancun" : "invalid magic"
+      "Cancun" : "EOF_InvalidCode"
+      ">=Prague" : "EOF_InvalidMagic"
 
 
