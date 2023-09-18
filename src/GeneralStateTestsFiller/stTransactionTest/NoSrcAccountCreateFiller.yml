@@ -62,11 +62,30 @@ NoSrcAccountCreate:
     - network:
         - '>=Frontier'
       indexes:
-        data: 0-1
-        gas: 0-1
+        data: !!int 0
+        gas: !!int 0
         value: !!int -1
       expectException:
-        ">=Frontier" : "Transaction without funds"
+        ">=Homestead" : "TR_NoFundsOrGas"    #nimbus have different exception type here
+        "<Homestead" : "TR_NoFunds"
+      result: {}
+    - network:
+        - '>=Frontier'
+      indexes:
+        data: !!int 1
+        gas: !!int 0
+        value: !!int -1
+      expectException:
+        ">=Frontier" : "TR_NoFundsOrGas"    #nimbus have different exception type here
+      result: {}
+    - network:
+        - '>=Frontier'
+      indexes:
+        data: 0-1
+        gas: !!int 1
+        value: !!int -1
+      expectException:
+        ">=Frontier" : "TR_NoFunds"
       result: {}
 
 
@@ -78,7 +97,7 @@ NoSrcAccountCreate:
         gas: !!int 2
         value: !!int 1
       expectException:
-        ">=Frontier" : "Transaction without funds"
+        ">=Frontier" : "TR_NoFundsOrGas"        #nimbus have different exception type here
       result: {}
 
 
@@ -102,10 +121,20 @@ NoSrcAccountCreate:
         - '>=Frontier'
       indexes:
         data: 2-4
-        gas: 0-1
+        gas: !!int 0
         value: !!int -1
       expectException:
-        ">=Berlin" : "Transaction without funds"
+        ">=Berlin" : "TR_NoFundsOrGas"
+        "<Berlin" : "TR_TypeNotSupported"
+      result: {}
+    - network:
+        - '>=Frontier'
+      indexes:
+        data: 2-4
+        gas: !!int 1
+        value: !!int -1
+      expectException:
+        ">=Berlin" : "TR_NoFunds"
         "<Berlin" : "TR_TypeNotSupported"
       result: {}
 
@@ -118,7 +147,7 @@ NoSrcAccountCreate:
         gas: !!int 2
         value: !!int 1
       expectException:
-        ">=Berlin" : "Transaction without funds"
+        ">=Berlin" : "TR_NoFundsOrGas"
         "<Berlin" : "TR_TypeNotSupported"
       result: {}
 

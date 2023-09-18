@@ -57,16 +57,39 @@ NoSrcAccount:
       - 1
 
   expect:
+
     # Not enough ETH for executing the transaction
     - network:
         - '>=Frontier'
       indexes:
-        data: 0-1
+        data: !!int 0
         gas: 0-1
         value: !!int -1
       expectException:
-        ">=Frontier" : "Transaction without funds"
+        ">=Frontier" : "TR_NoFunds"
       result: {}
+
+
+    - network:
+        - '>=Frontier'
+      indexes:
+        data: !!int 1
+        gas: !!int 0
+        value: !!int -1
+      expectException:
+        ">=Frontier" : "TR_NoFundsOrGas"            # Nimbus check triggers a different exception in this case
+      result: {}
+
+    - network:
+        - '>=Frontier'
+      indexes:
+        data: !!int 1
+        gas: !!int 1
+        value: !!int -1
+      expectException:
+        ">=Frontier" : "TR_NoFunds"
+      result: {}
+
 
 
     # Not enough ETH for the value we transfer
@@ -77,7 +100,7 @@ NoSrcAccount:
         gas: !!int 2
         value: !!int 1
       expectException:
-        ">=Frontier" : "Transaction without funds"
+        ">=Frontier" : "TR_NoFundsOrGas"
       result: {}
 
 
@@ -100,11 +123,61 @@ NoSrcAccount:
     - network:
         - '>=Frontier'
       indexes:
-        data: 2-4
-        gas: 0-1
+        data: !!int 2
+        gas: !!int 0
         value: !!int -1
       expectException:
-        ">=Berlin" : "Transaction without funds"
+        ">=Berlin" : "TR_NoFundsOrGas"  # Nimbus check triggers a different exception in this case
+        "<Berlin" : "TR_TypeNotSupported"
+      result: {}
+    - network:
+        - '>=Frontier'
+      indexes:
+        data: !!int 2
+        gas: !!int 1
+        value: !!int -1
+      expectException:
+        ">=Berlin" : "TR_NoFunds"
+        "<Berlin" : "TR_TypeNotSupported"
+      result: {}
+    - network:
+        - '>=Frontier'
+      indexes:
+        data: !!int 3
+        gas: !!int 0
+        value: !!int -1
+      expectException:
+        ">=Berlin" : "TR_NoFundsOrGas" # Nimbus check triggers a different exception in this case
+        "<Berlin" : "TR_TypeNotSupported"
+      result: {}
+    - network:
+        - '>=Frontier'
+      indexes:
+        data: !!int 3
+        gas: !!int 1
+        value: !!int -1
+      expectException:
+        ">=Berlin" : "TR_NoFunds"
+        "<Berlin" : "TR_TypeNotSupported"
+      result: {}
+    - network:
+        - '>=Frontier'
+      indexes:
+        data: !!int 4
+        gas: !!int 0
+        value: !!int -1
+      expectException:
+        ">=Berlin" : "TR_NoFundsOrGas" # Nimbus check triggers a different exception in this case
+        "<Berlin" : "TR_TypeNotSupported"
+      result: {}
+    - network:
+        - '>=Frontier'
+      indexes:
+        data: !!int 4
+        gas: !!int 1
+        value: !!int -1
+      expectException:
+        ">=Berlin" : "TR_NoFunds"
         "<Berlin" : "TR_TypeNotSupported"
       result: {}
 
@@ -117,7 +190,7 @@ NoSrcAccount:
         gas: !!int 2
         value: !!int 1
       expectException:
-        ">=Berlin" : "Transaction without funds"
+        ">=Berlin" : "TR_NoFundsOrGas"
         "<Berlin" : "TR_TypeNotSupported"
       result: {}
 
