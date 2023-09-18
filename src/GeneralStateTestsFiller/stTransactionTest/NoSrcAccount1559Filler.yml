@@ -59,10 +59,21 @@ NoSrcAccount1559:
         - '>=Frontier'
       indexes:
         data: !!int -1
-        gas: 0-1
+        gas: !!int 0
         value: !!int -1
       expectException:
-        ">=London" : "Transaction without funds"
+        ">=London" : "TR_NoFundsOrGas"        #Nimbus get different exception type here
+        "<London" : "TR_TypeNotSupported"
+      result: {}
+
+    - network:
+        - '>=Frontier'
+      indexes:
+        data: !!int -1
+        gas: !!int 1
+        value: !!int -1
+      expectException:
+        ">=London" : "TR_NoFunds"
         "<London" : "TR_TypeNotSupported"
       result: {}
 
@@ -75,7 +86,7 @@ NoSrcAccount1559:
         gas: !!int 2
         value: !!int 1
       expectException:
-        ">=London" : "Transaction without funds"
+        ">=London" : "TR_NoFundsOrGas"
         "<London" : "TR_TypeNotSupported"
       result: {}
 
