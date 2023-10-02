@@ -20,13 +20,7 @@ from ethereum_test_tools import (
 )
 from ethereum_test_tools.vm.opcode import Opcodes as Op
 
-from .common import (
-    BEACON_ROOT_CONTRACT_ADDRESS,
-    BEACON_ROOT_CONTRACT_CALL_GAS,
-    HISTORY_BUFFER_LENGTH,
-    SYSTEM_ADDRESS,
-    expected_storage,
-)
+from .spec import Spec, SpecHelpers
 
 BLOB_COMMITMENT_VERSION_KZG = 1
 
@@ -88,7 +82,7 @@ def call_value() -> int:  # noqa: D103
 
 @pytest.fixture
 def call_gas() -> int:  # noqa: D103
-    return BEACON_ROOT_CONTRACT_CALL_GAS
+    return Spec.BEACON_ROOTS_CALL_GAS
 
 
 @pytest.fixture
@@ -108,7 +102,7 @@ def contract_call_account(call_type: Op, call_value: int, call_gas: int) -> Acco
             0x00,  # store the result of the contract call in storage[0]
             call_type(
                 call_gas,
-                BEACON_ROOT_CONTRACT_ADDRESS,
+                Spec.BEACON_ROOTS_ADDRESS,
                 call_value,
                 args_start,
                 args_length,
@@ -122,7 +116,7 @@ def contract_call_account(call_type: Op, call_value: int, call_gas: int) -> Acco
             0x00,
             call_type(
                 call_gas,
-                BEACON_ROOT_CONTRACT_ADDRESS,
+                Spec.BEACON_ROOTS_ADDRESS,
                 args_start,
                 args_length,
                 return_start,
@@ -189,17 +183,19 @@ def pre(
     Prepares the pre state of all test cases, by setting the balance of the
     source account of all test transactions, and the contract caller account.
     """
-    return {
+    pre_alloc = {
         TestAddress: Account(
             nonce=0,
             balance=0x10**10,
         ),
         caller_address: contract_call_account,
-        SYSTEM_ADDRESS: Account(
+    }
+    if system_address_balance > 0:
+        pre_alloc[to_address(Spec.SYSTEM_ADDRESS)] = Account(
             nonce=0,
             balance=system_address_balance,
-        ),
-    }
+        )
+    return pre_alloc
 
 
 @pytest.fixture
@@ -223,10 +219,10 @@ def access_list(auto_access_list: bool, timestamp: int) -> List[AccessList]:
     if auto_access_list:
         return [
             AccessList(
-                address=BEACON_ROOT_CONTRACT_ADDRESS,
+                address=Spec.BEACON_ROOTS_ADDRESS,
                 storage_keys=[
                     timestamp,
-                    timestamp + HISTORY_BUFFER_LENGTH,
+                    timestamp + Spec.HISTORY_BUFFER_LENGTH,
                 ],
             ),
         ]
@@ -262,7 +258,7 @@ def tx(
     """
     Prepares transaction to call the beacon root contract caller account.
     """
-    to = BEACON_ROOT_CONTRACT_ADDRESS if call_beacon_root_contract else tx_to_address
+    to = Spec.BEACON_ROOTS_ADDRESS if call_beacon_root_contract else tx_to_address
     kwargs: Dict = {
         "ty": tx_type,
         "nonce": 0,
@@ -305,7 +301,7 @@ def post(
     """
     storage = Storage()
     if not call_beacon_root_contract:
-        storage = expected_storage(
+        storage = SpecHelpers.expected_storage(
             beacon_root=beacon_root,
             valid_call=valid_call,
             valid_input=valid_input,
