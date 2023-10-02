@@ -61,7 +61,11 @@ extCodeHashSubcallSuicide:
         gas:  !!int -1
         value: !!int -1
       network:
-        - '>=Istanbul'
+        - 'Istanbul'
+        - 'Berlin'
+        - 'London'
+        - 'Merge'
+        - 'Shanghai'
       result:
         b000000000000000000000000000000000000000:
           storage: {
@@ -75,6 +79,28 @@ extCodeHashSubcallSuicide:
           }
         a000000000000000000000000000000000000000:
             'shouldnotexist': '1'
+    - indexes:
+        data: !!int -1
+        gas:  !!int -1
+        value: !!int -1
+      network:
+        - '>=Cancun'
+      result:
+        b000000000000000000000000000000000000000:
+          storage: {
+             "0x01": '0x367d3c0e810bbdebc72c25e80dcb9a337c7c87e3a36e6fae87d1d51b3c745d24',
+             "0x02": '0x25',
+             "0x03": '0x6020600060006000600073c00000000000000000000000000000000000000062',
+             "0x04": '0x367d3c0e810bbdebc72c25e80dcb9a337c7c87e3a36e6fae87d1d51b3c745d24',
+             "0x05": '0x25',
+             "0x06": '0x6020600060006000600073c00000000000000000000000000000000000000062',
+             "0x07": '0x01'
+          }
+        a000000000000000000000000000000000000000:
+            balance: 0
+            nonce: 0
+            code: '0x6020600060006000600073c00000000000000000000000000000000000000062055730f200'
+            storage: {}
   transaction:
     data:
     - ''

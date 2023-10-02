@@ -10,15 +10,23 @@
         },
         "expect" : [
             {
-                "indexes" : {
-                    "data" : -1,
-                    "gas" : -1,
-                    "value" : -1
-                },
-                "network" : [">=Istanbul"],
+                "network" : ["Istanbul", "Berlin", "London", "Merge", "Shanghai"],
                 "result" : {
                     "1000000000000000000000000000000000000000" : {
                         "shouldnotexist" : "1"
+                    }
+                }
+            },
+            {
+                "network" : [">=Cancun"],
+                "result" : {
+                    "1000000000000000000000000000000000000000" : {
+                        "balance" : "0",
+                        "nonce" : "0",
+                        "storage" : {
+                            "0x00" : "0x01",
+                            "0x01" : "0x2cec03"
+                        }
                     }
                 }
             }

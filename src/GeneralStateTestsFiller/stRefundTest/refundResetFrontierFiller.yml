@@ -129,22 +129,15 @@ refundResetFrontier:
   expect:
     - indexes:
         data: !!int 0   # No refund, enough gas
-        gas:  !!int -1
-        value: !!int -1
-
       network:
         - Frontier
       result:
         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
-          balance: 999999999999866131000
-
+          balance: 999999999999866133000
 
 
     - indexes:
         data: !!int 1   # No refund, not enough gas
-        gas:  !!int -1
-        value: !!int -1
-
       network:
         - Frontier
       result:
@@ -152,26 +145,17 @@ refundResetFrontier:
           balance: 999999999999866141000
 
 
-
-
     - indexes:
         data: !!int 2   # Refund, enough gas
-        gas:  !!int -1
-        value: !!int -1
-
       network:
         - Frontier
       result:
         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
-          balance: 999999999999933065000
-
+          balance: 999999999999933066000
 
 
     - indexes:
         data: !!int 3   # Refund, not enough gas
-        gas:  !!int -1
-        value: !!int -1
-
       network:
         - Frontier
       result:

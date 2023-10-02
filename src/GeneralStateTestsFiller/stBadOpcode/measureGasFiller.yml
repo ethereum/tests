@@ -229,15 +229,13 @@ measureGas:
     - indexes:
         data: 
         - :label CREATE
-        gas:  !!int -1
-        value: !!int -1
       network:
         - London
         - Merge
       result:
         cccccccccccccccccccccccccccccccccccccccc:
           storage:
-            0: 32059
+            0: 32057
 
 
     # CREATE
@@ -246,93 +244,78 @@ measureGas:
     - indexes:
         data: 
         - :label CREATE
-        gas:  !!int -1
-        value: !!int -1
       network:
         - '>=Shanghai'
       result:
         cccccccccccccccccccccccccccccccccccccccc:
           storage:
-            0: 32091
+            0: 32089
 
 
     # CREATE2
     - indexes:
         data: 
         - :label CREATE2
-        gas:  !!int -1
-        value: !!int -1
       network:
         - London
         - Merge
       result:
         cccccccccccccccccccccccccccccccccccccccc:
           storage:
-            0: 32163
+            0: 32161
 
 
     # CREATE2
     - indexes:
         data: 
         - :label CREATE2
-        gas:  !!int -1
-        value: !!int -1
       network:
         - '>=Shanghai'
       result:
         cccccccccccccccccccccccccccccccccccccccc:
           storage:
-            0: 32195
+            0: 32193
 
 
     - indexes:
         data: 
         - :label CALL
         - :label CALLCODE
-        gas:  !!int -1
-        value: !!int -1
       network:
         - '>=London'
       result:
         cccccccccccccccccccccccccccccccccccccccc:
           storage:
-            0: 146
-
+            0: 144
 
     # Slightly cheaper because there's one less PUSH (one less parameter)
     - indexes:
         data: 
         - :label DELEGATECALL
         - :label STATICCALL
-        gas:  !!int -1
-        value: !!int -1
       network:
         - '>=London'
       result:
         cccccccccccccccccccccccccccccccccccccccc:
           storage:
-            0: 143
+            0: 141
 
 
     - indexes:
         data: 
         - :label MLOAD
-        gas:  !!int -1
-        value: !!int -1
       network:
         - '>=London'
       result:
         cccccccccccccccccccccccccccccccccccccccc:
           storage:
-            0: 8112
+            0: 1 #8112
 
 
     - indexes:
         data: 
         - :label MSTORE
         - :label MSTORE8
-        gas:  !!int -1
-        value: !!int -1
       network:
         - '>=London'
       result:
@@ -341,28 +324,21 @@ measureGas:
             0: 8113
 
 
-
     - indexes:
         data: 
         - :label EXTCODE
-        gas:  !!int -1
-        value: !!int -1
       network:
         - '>=London'
       result:
         cccccccccccccccccccccccccccccccccccccccc:
           storage:
-            0: 223
-
-
+            0: 221
 
     - indexes:
         data: :label SHA3
-        gas:  !!int -1
-        value: !!int -1
       network:
         - '>=London'
       result:
         cccccccccccccccccccccccccccccccccccccccc:
           storage:
-            0: 18350
+            0: 1   #18350

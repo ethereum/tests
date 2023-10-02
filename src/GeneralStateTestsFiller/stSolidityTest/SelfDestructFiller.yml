@@ -169,8 +169,6 @@ SelfDestruct:
   expect:
     - indexes:
         data: !!int 0
-        gas:  !!int -1
-        value: !!int -1
       network:
         - '>=Istanbul'
       result:
@@ -189,10 +187,12 @@ SelfDestruct:
 
     - indexes:
         data: !!int 1
-        gas:  !!int -1
-        value: !!int -1
       network:
-        - '>=Istanbul'
+        - 'Istanbul'
+        - 'Berlin'
+        - 'London'
+        - 'Merge'
+        - 'Shanghai'
       result:
         0000000000000000000000000000000000000001:
            balance: 1
@@ -206,14 +206,33 @@ SelfDestruct:
              2: 0
              3: 0xffffffffffffff
 
+    - indexes:
+        data: !!int 1
+      network:
+        - '>=Cancun'
+      result:
+        0000000000000000000000000000000000000001:
+           balance: 1
+        0000000000000000000000000000000000000002:
+           balance: 1
+        0000000000000000000000000000000000000003:
+           balance: 0x0100000000000000
+        cccccccccccccccccccccccccccccccccccccccc:
+           storage:
+             1: 0xffffffffffffff
+             2: 0
+             3: 0xffffffffffffff
+
 
 
     - indexes:
         data: !!int 2
-        gas:  !!int -1
-        value: !!int -1
       network:
-        - '>=Istanbul'
+        - 'Istanbul'
+        - 'Berlin'
+        - 'London'
+        - 'Merge'
+        - 'Shanghai'
       result:
         0000000000000000000000000000000000000001:
            balance: 1
@@ -226,3 +245,20 @@ SelfDestruct:
              1: 0xffffffffffffff
              2: 0xffffffffffffff
              3: 0
+
+    - indexes:
+        data: !!int 2
+      network:
+        - '>=Cancun'
+      result:
+        0000000000000000000000000000000000000001:
+           balance: 1
+        0000000000000000000000000000000000000002:
+           balance: 1
+        0000000000000000000000000000000000000003:
+           balance: 1
+        cccccccccccccccccccccccccccccccccccccccc:
+           storage:
+             1: 0xffffffffffffff
+             2: 0xffffffffffffff
+             3: 0xffffffffffffff

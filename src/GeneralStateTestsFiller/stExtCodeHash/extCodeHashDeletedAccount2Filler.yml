@@ -70,13 +70,42 @@ extCodeHashDeletedAccount2:
         gas:  !!int -1
         value: !!int -1
       network:
-        - '>=Istanbul'
+        - 'Istanbul'
+        - 'Berlin'
+        - 'London'
+        - 'Merge'
+        - 'Shanghai'
       result:
         095e7baea6a6c7c4c2dfeb977efac326af552d87:
           balance: '1000000000000000001'
           storage: {}
         aaaaaaaa00000000000000000000000000000000:
           shouldnotexist: '1'
+        bbbbbbbb00000000000000000000000000000000:
+          balance: '1000000000000000000'
+          storage: {
+            "0x01": '0x94e08c34847a4e52a3e523b70a5d9b2151155bd0bc10f7b7c550bda63229c756',
+            "0x02": '0x18',
+            "0x03": '0x73deadbeef0000000000000000000000000000000031ff000000000000000000',
+            "0x04": '0x94e08c34847a4e52a3e523b70a5d9b2151155bd0bc10f7b7c550bda63229c756',
+            "0x05": '0x18',
+            "0x06": '0x73deadbeef0000000000000000000000000000000031ff000000000000000000'
+          }
+    - indexes:
+        data: !!int -1
+        gas:  !!int -1
+        value: !!int -1
+      network:
+        - '>=Cancun'
+      result:
+        095e7baea6a6c7c4c2dfeb977efac326af552d87:
+          balance: '1000000000000000001'
+          storage: {}
+        aaaaaaaa00000000000000000000000000000000:
+          balance: '0'
+          nonce: 0
+          code: '0x73deadbeef0000000000000000000000000000000031ff00'
+          storage: {}
         bbbbbbbb00000000000000000000000000000000:
           balance: '1000000000000000000'
           storage: {

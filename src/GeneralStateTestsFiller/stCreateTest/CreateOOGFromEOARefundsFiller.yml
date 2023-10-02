@@ -305,8 +305,6 @@ CreateOOGFromEOARefunds:
     - indexes:
         data: 
         - :label SStore_Refund_NoOoG
-        gas:  !!int -1
-        value: !!int -1
       network:
         - '>=London'
       result:
@@ -323,8 +321,6 @@ CreateOOGFromEOARefunds:
     - indexes:
         data: 
         - :label SStore_Refund_OoG
-        gas:  !!int -1
-        value: !!int -1
       network:
         - '>=London'
       result:
@@ -340,10 +336,10 @@ CreateOOGFromEOARefunds:
     - indexes:
         data: 
         - :label SelfDestruct_Refund_NoOoG
-        gas:  !!int -1
-        value: !!int -1
       network:
-        - '>=London'
+        - 'London'
+        - 'Merge'
+        - 'Shanghai'
       result:
 
         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
@@ -357,12 +353,29 @@ CreateOOGFromEOARefunds:
           }
         00000000000000000000000000000000000c0deD:
           shouldnotexist: 1
+    - indexes:
+        data: 
+        - :label SelfDestruct_Refund_NoOoG
+      network:
+        - '>=Cancun'
+      result:
+
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 2
+
+        ec0e71ad0a90ffe1909d27dac207f7680abba42d:
+          nonce: 1
+          code: '0x00'
+          storage: {
+            '0': 1
+          }
+        00000000000000000000000000000000000c0deD:
+          balance: 0
+          nonce: 1
 
     - indexes:
         data: 
         - :label SelfDestruct_Refund_OoG
-        gas:  !!int -1
-        value: !!int -1
       network:
         - '>=London'
       result:
@@ -385,8 +398,6 @@ CreateOOGFromEOARefunds:
     - indexes:
         data: 
         - :label LogOp_NoOoG
-        gas:  !!int -1
-        value: !!int -1
       network:
         - '>=London'
       result:
@@ -403,8 +414,6 @@ CreateOOGFromEOARefunds:
     - indexes:
         data: 
         - :label LogOp_OoG
-        gas:  !!int -1
-        value: !!int -1
       network:
         - '>=London'
       result:
@@ -420,8 +429,6 @@ CreateOOGFromEOARefunds:
     - indexes:
         data: 
         - :label SStore_Create_Refund_NoOoG
-        gas:  !!int -1
-        value: !!int -1
       network:
         - '>=London'
       result:
@@ -443,8 +450,6 @@ CreateOOGFromEOARefunds:
     - indexes:
         data: 
         - :label SStore_Create_Refund_OoG
-        gas:  !!int -1
-        value: !!int -1
       network:
         - '>=London'
       result:
@@ -462,8 +467,6 @@ CreateOOGFromEOARefunds:
     - indexes:
         data: 
         - :label SStore_Create2_Refund_NoOoG
-        gas:  !!int -1
-        value: !!int -1
       network:
         - '>=London'
       result:
@@ -485,8 +488,6 @@ CreateOOGFromEOARefunds:
     - indexes:
         data: 
         - :label SStore_Create2_Refund_OoG
-        gas:  !!int -1
-        value: !!int -1
       network:
         - '>=London'
       result:
