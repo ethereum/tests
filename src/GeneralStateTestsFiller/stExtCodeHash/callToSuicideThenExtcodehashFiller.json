@@ -15,7 +15,7 @@
             {
 				"//comment" : "Call[0] Callcode[1] delegatecall[2] staticcall[3] to suicider, then extcodehash of it",
                 "indexes" : { "data" : [0], "gas" : -1, "value" : -1 },
-                "network" : [ ">=Istanbul"],
+                "network" : [ "Istanbul", "Berlin", "London", "Merge", "Shanghai"],
                 "result" : {
 					"1000000000000000000000000000000000000000" : {
                		    "balance" : "1",
@@ -32,16 +32,61 @@
 					}
                 }
             },
+            {
+				"//comment" : "Call[0] Callcode[1] delegatecall[2] staticcall[3] to suicider, then extcodehash of it",
+                "indexes" : { "data" : [0], "gas" : -1, "value" : -1 },
+                "network" : [ ">=Cancun"],
+                "result" : {
+					"1000000000000000000000000000000000000000" : {
+               		    "balance" : "1",
+						"storage" : {
+							"0x00" : "1",
+							"0x01" : "0x2f715723d7cde71586406b2995d4fc62acc9ce1adb8df087cc8d4502d047d3ca"
+						}
+            		 },
+					"0000000000000000000000000000000000000025" : {
+               		    "balance" : "5555555555"
+            		 },
+					"0xdead000000000000000000000000000000000001" : {
+						"balance" : "0",
+                        "nonce" : "0",
+                        "code" : "0x6025ff00",
+                        "storage" : {}
+					}
+                }
+            },
 			{
 				"//comment" : "Call[0] Callcode[1] delegatecall[2] staticcall[3] to suicider, then extcodehash of it",
                 "indexes" : { "data" : [1,2], "gas" : -1, "value" : -1 },
-                "network" : [ ">=Istanbul"],
+                "network" : [ "Istanbul", "Berlin", "London", "Merge", "Shanghai"],
                 "result" : {
 					"0000000000000000000000000000000000000025" : {
                		    "balance" : "1"
             		 },
 					"1000000000000000000000000000000000000000" : {
 						"shouldnotexist" : "1"
+					},
+					"0xdead000000000000000000000000000000000001" : {
+						"balance" : "5555555555"
+					}
+                }
+            },
+			{
+				"//comment" : "Call[0] Callcode[1] delegatecall[2] staticcall[3] to suicider, then extcodehash of it",
+                "indexes" : { "data" : [1,2], "gas" : -1, "value" : -1 },
+                "network" : [ ">=Cancun"],
+                "result" : {
+					"0000000000000000000000000000000000000025" : {
+               		    "balance" : "1"
+            		 },
+					"1000000000000000000000000000000000000000" : {
+						"balance" : "0",
+						"nonce" : "0",
+						"code" : "0x604060006040600060006000355af200",
+						"storage" : {
+                            "0x00" : "0x01",
+                            "0x01" : "0x2f715723d7cde71586406b2995d4fc62acc9ce1adb8df087cc8d4502d047d3ca"
+                        }
 					},
 					"0xdead000000000000000000000000000000000001" : {
 						"balance" : "5555555555"

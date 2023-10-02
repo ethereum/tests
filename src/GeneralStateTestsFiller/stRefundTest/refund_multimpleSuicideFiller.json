@@ -10,11 +10,6 @@
         },
         "expect" : [
     	    {
-                "indexes" : {
-                    "data" : -1,
-                    "gas" : -1,
-                    "value" : -1
-                },
                 "network" : ["Istanbul"],
                 "result" : {
                     "1000000000000000000000000000000000000001" : {
@@ -30,11 +25,6 @@
                 }
             },
     	    {
-                "indexes" : {
-                    "data" : -1,
-                    "gas" : -1,
-                    "value" : -1
-                },
                 "network" : ["Berlin"],
                 "result" : {
                     "1000000000000000000000000000000000000001" : {
@@ -50,15 +40,25 @@
                 }
             },
     	    {
-                "indexes" : {
-                    "data" : -1,
-                    "gas" : -1,
-                    "value" : -1
-                },
-                "network" : [">=London"],
+                "network" : ["London", "Merge", "Shanghai"],
                 "result" : {
                     "1000000000000000000000000000000000000001" : {
                         "shouldnotexist" : "1"
+                    },
+                    "2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                        "balance" : "0"
+                    },
+                    "a94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                        "balance" : "102679610",
+                        "nonce" : "1"
+                    }
+                }
+            },
+    	    {
+                "network" : [">=Cancun"],
+                "result" : {
+                    "1000000000000000000000000000000000000001" : {
+                        "balance" : "1000000000000000000"
                     },
                     "2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
                         "balance" : "0"
