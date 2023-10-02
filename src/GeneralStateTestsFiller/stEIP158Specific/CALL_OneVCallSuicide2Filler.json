@@ -1,5 +1,5 @@
 {
-    "SuicideToNotExistingContract" : {
+    "CALL_OneVCallSuicide2" : {
         "env" : {
             "currentCoinbase" : "2adc25665018aa1fe0e6bc666dac8fc2697ff9ba",
             "currentDifficulty" : "0x020000",
@@ -9,46 +9,48 @@
             "previousHash" : "5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6"
         },
         "expect" : [
-    	    {
+            {
                 "network" : ["Istanbul"],
                 "result" : {
-		            "1000000000000000000000000000000000000116" : {
-		                "shouldnotexist" : "1"
-		            },
-		            "b94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-		                "storage" : {
-		                    "0x01" : "0x1669"
-		                }
-		            } 
+        		    "c94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+	                		"shouldnotexist" : "1"
+	        	    },
+	        	    "b94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+	            		"storage" : {
+	        	            "0x64" : "12437"
+	        	        }
+	        	    }
                 }
             },
-    	    {
+            {
                 "network" : ["Berlin", "London", "Merge", "Shanghai"],
                 "result" : {
-		            "1000000000000000000000000000000000000116" : {
-		                "shouldnotexist" : "1"
-		            },
-		            "b94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-		                "storage" : {
-		                    "0x01" : "0x27fd"
-		                }
-		            } 
+        		    "c94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+	                		"shouldnotexist" : "1"
+	        	    },
+	        	    "b94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+	            		"storage" : {
+	        	            "0x64" : "16937"
+	        	        }
+	        	    }
                 }
             },
-    	    {
+            {
                 "network" : [">=Cancun"],
                 "result" : {
-		            "1000000000000000000000000000000000000116" : {
-		                "balance" : "0",
-		                "nonce" : "0",
-		                "code" : "0x732000000000000000000000000000000000000115ff00",
-		                "storage" : {}
-		            },
-		            "b94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-		                "storage" : {
-		                    "0x01" : "0x27fd"
-		                }
-		            } 
+        		    "c94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0",
+	                		"storage" : {}
+	        	    },
+	        	    "b94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                        "balance" : "99",
+	            		"storage" : {
+	        	            "0x64" : "16937"
+	        	        }
+	        	    },
+        		    "d94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "1"
+	        	    }
                 }
             }
         ],
@@ -62,18 +64,23 @@
                 }
             },
     	    "b94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-                "balance" : "0",
+                "balance" : "100",
 		        "nonce" : "0",
-		        "// code" : "check gas spent on suicide to unknown contract on EIP150",
-		        "code" : "{ [0] (GAS) (CALL 60000 0x1000000000000000000000000000000000000116 0 0 0 0 0) [[1]] (SUB @0 (GAS)) }",
+		        "code" : "{ [0](GAS) (CALL 60000 0xc94f5374fce5edbc8e2a8697c15331677e6ebf0b 1 0 0 0 0) [[100]] (SUB @0 (GAS)) }",
 		        "storage": {
 		        }
             },
-    	    "1000000000000000000000000000000000000116" : {
+    	    "c94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
                 "balance" : "0",
 		        "nonce" : "0",
-		        "// code" : "Suicide to not existing account",
-		        "code" : "{ (SELFDESTRUCT 0x2000000000000000000000000000000000000115) }",
+		        "code" : "{ (SELFDESTRUCT 0xd94f5374fce5edbc8e2a8697c15331677e6ebf0b) }",
+		        "storage": {
+		        }
+            },
+    	    "d94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                "balance" : "0",
+		        "nonce" : "1",
+		        "code" : "",
 		        "storage": {
 		        }
             }

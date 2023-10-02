@@ -101,9 +101,9 @@ idPrecomps:
     - :label yes :abi f(uint) 0x07
     - :label yes :abi f(uint) 0x08
     - :label yes :abi f(uint) 0x09
+    - :label from_cancun :abi f(uint) 0x0A     # Added in Cancun
 
     # Accounts where we do not expect to find precompiles
-    - :label no :abi f(uint) 0x0A
     - :label no :abi f(uint) 0x0B
     - :label no :abi f(uint) 0x0C
     - :label no :abi f(uint) 0x0D
@@ -114,10 +114,7 @@ idPrecomps:
     - :label no     :abi f(uint) 0x11
     - :label no     :abi f(uint) 0x12
     - :label no     :abi f(uint) 0x13
-
-    # Added in Cancun
-    - :label from_cancun  :abi f(uint) 0x14
-
+    - :label no     :abi f(uint) 0x14
     - :label no     :abi f(uint) 0x15
     - :label no     :abi f(uint) 0x16
     - :label no     :abi f(uint) 0x17
@@ -432,18 +429,18 @@ idPrecomps:
 
   # Uncomment here when we add the Cancun fork
 
-#  - indexes:
-#      data: 
-#      - :label from_cancun
-#      gas: !!int -1
-#      value: !!int -1
-#    network: 
-#    - '>=Cancun'
-#    result:
-#      cccccccccccccccccccccccccccccccccccccccc:
-#        storage:
-#          # High gas when there is a precompile
-#          0x00: 0x00
+  - indexes:
+      data: 
+      - :label from_cancun
+      gas: !!int -1
+      value: !!int -1
+    network: 
+    - '>=Cancun'
+    result:
+      cccccccccccccccccccccccccccccccccccccccc:
+        storage:
+          # High gas when there is a precompile
+          0x00: 0x00
 
 
 

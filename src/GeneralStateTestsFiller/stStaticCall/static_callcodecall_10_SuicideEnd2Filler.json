@@ -11,10 +11,28 @@
         "expect" : [
             {
                 "indexes" : { "data" : -1, "gas" : -1, "value" : -1 },
-                "network" : [">=Istanbul"],
+                "network" : ["Istanbul", "Berlin", "London", "Merge", "Shanghai" ],
                 "result" : {
                     "1000000000000000000000000000000000000000" : {
                         "shouldnotexist" : "1"
+                    }
+                }
+            },
+            {
+                "indexes" : { "data" : -1, "gas" : -1, "value" : 0 },
+                "network" : [">=Cancun"],
+                "result" : {
+                    "1000000000000000000000000000000000000000" : {
+                        "balance" : "1000000000000000000"
+                    }
+                }
+            },
+            {
+                "indexes" : { "data" : -1, "gas" : -1, "value" : 1 },
+                "network" : [">=Cancun"],
+                "result" : {
+                    "1000000000000000000000000000000000000000" : {
+                        "balance" : "1000000000000000001"
                     }
                 }
             }

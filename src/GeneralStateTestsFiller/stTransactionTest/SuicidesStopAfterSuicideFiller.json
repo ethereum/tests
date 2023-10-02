@@ -10,22 +10,33 @@
         },
         "expect" : [
             {
-                "indexes" : {
-                    "data" : -1,
-                    "gas" : -1,
-                    "value" : -1
-                },
-                "network" : [">=Istanbul"],
+                "network" : ["Istanbul", "Berlin", "London", "Shanghai"],
                 "result" : {
                     "0000000000000000000000000000000000000000" : {
-                        "storage" : {
-                        }
+                        "storage" : {}
                     },
                     "a94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
                         "nonce" : "1"
                     },
 		            "c94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
     			        "shouldnotexist" : "1"
+		            }
+                }
+            },
+            {
+                "network" : [">=Cancun"],
+                "result" : {
+                    "0000000000000000000000000000000000000000" : {
+                        "storage" : {}
+                    },
+                    "a94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                        "nonce" : "1"
+                    },
+		            "c94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+    			        "balance" : "0",
+                        "nonce" : "0",
+                        "code" : "0x6000ff600060006000600060006000617530f100",
+                        "storage" : {}
 		            }
                 }
             }

@@ -36,56 +36,56 @@ coinbaseWarmAccountCallGas:
            switch calldataload(4)
            case 0 {
              // EXTCODESIZE
-             measureGas := 15
+             measureGas := 8
              gas0 := gas()
              retVal := extcodesize(cb)
              gas1 := gas()
            }
            case 1 {
              // EXTCODECOPY
-             measureGas := 19
+             measureGas := 5
              gas0 := gas()
              extcodecopy(cb, 0, 0, 0)
              gas1 := gas()
            }
            case 2 {
              // EXTCODEHASH
-             measureGas := 15
+             measureGas := 8
              gas0 := gas()
              retVal := extcodehash(cb)
              gas1 := gas()
            }
            case 3 {
              // BALANCE
-             measureGas := 15
+             measureGas := 8
              gas0 := gas()
              retVal := balance(cb)
              gas1 := gas()
            }
            case 4 {
              // CALL
-             measureGas := 33
+             measureGas := 11
              gas0 := gas()
              retVal := call(10000, cb, 0, 0, 0, 0, 0)
              gas1 := gas()
            }
            case 5 {
              // CALLCODE
-             measureGas := 33
+             measureGas := 11
              gas0 := gas()
              retVal := callcode(10000, cb, 0, 0, 0, 0, 0)
              gas1 := gas()
            }
            case 6 {
              // DELEGATECALL
-             measureGas := 30
+             measureGas := 11
              gas0 := gas()
              retVal := delegatecall(10000, cb, 0, 0, 0, 0)
              gas1 := gas()
            }
            case 7 {
              // STATICCALL
-             measureGas := 30
+             measureGas := 11
              gas0 := gas()
              retVal := staticcall(10000, cb, 0, 0, 0, 0)
              gas1 := gas()

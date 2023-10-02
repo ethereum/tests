@@ -554,8 +554,6 @@ Create2OOGFromCallRefunds:
     - indexes:
         data: 
         - :label SStore_Refund_NoOoG
-        gas:  !!int -1
-        value: !!int -1
       network:
         - '>=London'
       result:
@@ -572,8 +570,6 @@ Create2OOGFromCallRefunds:
     - indexes:
         data: 
         - :label SStore_Call_Refund_NoOoG
-        gas:  !!int -1
-        value: !!int -1
       network:
         - '>=London'
       result:
@@ -590,8 +586,6 @@ Create2OOGFromCallRefunds:
     - indexes:
         data: 
         - :label SStore_DelegateCall_Refund_NoOoG
-        gas:  !!int -1
-        value: !!int -1
       network:
         - '>=London'
       result:
@@ -608,8 +602,6 @@ Create2OOGFromCallRefunds:
     - indexes:
         data: 
         - :label SStore_CallCode_Refund_NoOoG
-        gas:  !!int -1
-        value: !!int -1
       network:
         - '>=London'
       result:
@@ -626,8 +618,6 @@ Create2OOGFromCallRefunds:
     - indexes:
         data: 
         - :label SStore_Refund_OoG
-        gas:  !!int -1
-        value: !!int -1
       network:
         - '>=London'
       result:
@@ -657,10 +647,10 @@ Create2OOGFromCallRefunds:
     - indexes:
         data: 
         - :label SelfDestruct_Refund_NoOoG
-        gas:  !!int -1
-        value: !!int -1
       network:
-        - '>=London'
+        - 'London'
+        - 'Merge'
+        - 'Shanghai'
       result:
 
         a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
@@ -677,9 +667,27 @@ Create2OOGFromCallRefunds:
 
     - indexes:
         data: 
+        - :label SelfDestruct_Refund_NoOoG
+      network:
+        - '>=Cancun'
+      result:
+
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 2
+
+        8c7d920758c8729e04c65e7ad58e8379736dd9c4:
+          nonce: 1
+          code: '0x00'
+          storage: {
+            '0': 1
+          }
+        00000000000000000000000000000000000c0deD:   # Suicide in Cancun no longer deletes account
+          balance: 0
+          nonce: 1
+
+    - indexes:
+        data: 
         - :label SelfDestruct_Refund_OoG
-        gas:  !!int -1
-        value: !!int -1
       network:
         - '>=London'
       result:
@@ -704,8 +712,6 @@ Create2OOGFromCallRefunds:
     - indexes:
         data: 
         - :label LogOp_NoOoG
-        gas:  !!int -1
-        value: !!int -1
       network:
         - '>=London'
       result:
@@ -722,8 +728,6 @@ Create2OOGFromCallRefunds:
     - indexes:
         data: 
         - :label LogOp_OoG
-        gas:  !!int -1
-        value: !!int -1
       network:
         - '>=London'
       result:
@@ -741,8 +745,6 @@ Create2OOGFromCallRefunds:
     - indexes:
         data: 
         - :label SStore_Create_Refund_NoOoG
-        gas:  !!int -1
-        value: !!int -1
       network:
         - '>=London'
       result:
@@ -764,8 +766,6 @@ Create2OOGFromCallRefunds:
     - indexes:
         data: 
         - :label SStore_Create_Refund_OoG
-        gas:  !!int -1
-        value: !!int -1
       network:
         - '>=London'
       result:
@@ -788,8 +788,6 @@ Create2OOGFromCallRefunds:
     - indexes:
         data: 
         - :label SStore_Create2_Refund_NoOoG
-        gas:  !!int -1
-        value: !!int -1
       network:
         - '>=London'
       result:
@@ -811,8 +809,6 @@ Create2OOGFromCallRefunds:
     - indexes:
         data: 
         - :label SStore_Create2_Refund_OoG
-        gas:  !!int -1
-        value: !!int -1
       network:
         - '>=London'
       result:
