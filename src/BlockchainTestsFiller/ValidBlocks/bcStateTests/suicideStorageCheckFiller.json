@@ -1,8 +1,8 @@
 {
     "suicideStorageCheck" : {
-	"_info" : {
-	    "comment" : "[2:21:10] Vitalik Buterin: (i) set storage key 1 of contract C to 3. (ii) self-destruct contract C. (iii) in the next transaction create contract C, and read its storage key.  I - via transaction create."
-	},
+	    "_info" : {
+	        "comment" : "[2:21:10] Vitalik Buterin: (i) set storage key 1 of contract C to 3. (ii) self-destruct contract C. (iii) in the next transaction create contract C, and read its storage key.  I - via transaction create."
+	    },
         "genesisBlockHeader" : {
             "bloom" : "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
             "coinbase" : "0x8888f1f195afa192cfee860698584c030f4c9db1",
@@ -20,25 +20,43 @@
             "transactionsTrie" : "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
             "uncleHash" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347"
         },
-	"sealEngine" : "NoProof",
-	"expect" : [
-	   {
-		    "network" : [">=Istanbul"],
-		    "result" : {
-			    "0000000000000000000000000000000000000001" : {
-				"balance" : "1000"
-			    },
-			    "ec0e71ad0a90ffe1909d27dac207f7680abba42d" : {
-				"nonce" : "1",
-				"storage" : {
-				    "0x02" : "2"
-				}
-			    },
-			    "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-				"nonce" : "2"
-			    }
-		   }
-	   }
+    	"sealEngine" : "NoProof",
+	    "expect" : [
+	       {
+		        "network" : ["Istanbul", "Berlin", "London", "Merge", "Shanghai"],
+		        "result" : {
+			        "0000000000000000000000000000000000000001" : {
+    				    "balance" : "1000"
+			        },
+			        "ec0e71ad0a90ffe1909d27dac207f7680abba42d" : {
+				        "nonce" : "1",
+				        "storage" : {
+				            "0x02" : "2"
+				        }
+			        },
+			        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+    				    "nonce" : "2"
+			        }
+		       }
+	       },
+           {
+		        "network" : [">=Cancun"],
+		        "result" : {
+			        "0000000000000000000000000000000000000001" : {
+    				    "balance" : "1000"
+			        },
+			        "ec0e71ad0a90ffe1909d27dac207f7680abba42d" : {
+				        "nonce" : "0",
+                        "balance" : "0",
+				        "storage" : {
+				            "0x01" : "3"
+				        }
+			        },
+			        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+    				    "nonce" : "2"
+			        }
+		       }
+	       }
         ],
         "pre" : {
             "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
@@ -57,24 +75,24 @@
         "blocks" : [
             {
                 "transactions" : [
-		 {
-			"data" : "",
-			"gasLimit" : "400000",
-			"gasPrice" : "1000",
-			"nonce" : "0",
-			"secretKey" : "45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8",
-			"to" : "ec0e71ad0a90ffe1909d27dac207f7680abba42d",
-			"value" : "0"
-		 },
-		 {
-			"data" : "{ (SSTORE 3 (SLOAD 1)) (SSTORE 2 2) }",
-			"gasLimit" : "400000",
-			"gasPrice" : "1000",
-			"nonce" : "1",
-			"secretKey" : "45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8",
-			"to" : "",
-			"value" : "0"
-		 }
+		             {
+			            "data" : "",
+			            "gasLimit" : "400000",
+			            "gasPrice" : "1000",
+			            "nonce" : "0",
+			            "secretKey" : "45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8",
+			            "to" : "ec0e71ad0a90ffe1909d27dac207f7680abba42d",
+			            "value" : "0"
+		             },
+		             {
+			            "data" : "{ (SSTORE 3 (SLOAD 1)) (SSTORE 2 2) }",
+			            "gasLimit" : "400000",
+			            "gasPrice" : "1000",
+			            "nonce" : "1",
+			            "secretKey" : "45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8",
+			            "to" : "",
+			            "value" : "0"
+		             }
                 ],
                 "uncleHeaders" : [
                 ]
