@@ -19,7 +19,8 @@ reentrencySuicide:
   sealEngine: NoProof
   expect:
   - network:
-    - ">=Merge"
+    - "Merge"
+    - "Shanghai"
     result:
       '0x000000000000000000000000000000000000c0de':
         shouldnotexist: '1'
@@ -27,6 +28,18 @@ reentrencySuicide:
         balance: '1'
       '0x000000000000000000000000000000000000000b':
         balance: '2'
+  - network:
+    - ">=Cancun"
+    result:
+      '0x000000000000000000000000000000000000c0de':
+        nonce: '0'
+        code: '0x600035ff00'
+        balance: '0'
+        storage: {}
+      '0x000000000000000000000000000000000000000a':
+        balance: '1'
+      '0x000000000000000000000000000000000000000b':
+        balance: '5'
 
   pre:
     '0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b':

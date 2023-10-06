@@ -278,7 +278,7 @@
         ],
         "expect" : [
             {
-                "network" : [">=Shanghai"],
+                "network" : ["Shanghai"],
                 "result" : {
                     "//comment" : "BSHB0019 Suicided account received withdrawals",
                     "0xc000000000000000000000000000000000000001" : {
@@ -327,6 +327,74 @@
                         "nonce" : "0"
                      },
                   "0x0000000000000000000000000000000000010002" : {
+                        "balance" : "1010"
+                    },
+
+                   "//comment" : "BSHB0024 account created, receive withdrawals",
+                    "0x10fb6e0812178b547b4781f2a84456b36dc3ec05" : {
+                        "balance" : "100000000000000",
+                        "nonce" : "1"
+                     },
+
+                   "//comment" : "BSHB0024b account created, reverted, receive withdrawals",
+                    "0x2af4594dcbf603a12b3a16175de99e9b1cf7f1e3" : {
+                        "balance" : "100000000000000",
+                        "nonce" : "0"
+                     }
+
+
+                }
+            },
+            {
+                "network" : [">=Cancun"],
+                "result" : {
+                    "//comment" : "BSHB0019 Suicided account received withdrawals",
+                    "0xc000000000000000000000000000000000000001" : {
+                        "balance" : "100000000000000",
+                        "code" : "0x62010000ff00",
+                        "nonce" : "0"
+                    },
+                    "0x0000000000000000000000000000000000010000" : {
+                        "balance" : "10"
+                    },
+
+
+                    "//comment" : "BSHB0020,BSHB0021 Withdrawal receiver got also value transfer",
+                    "0xc000000000000000000000000000000000000002" : {
+                        "balance" : "100000000000015",
+                        "code" : "0x",
+                        "nonce" : "0"
+                    },
+                   "0xd000000000000000000000000000000000000002" : {
+                        "storage" : {
+                            "0x00" : "15"
+                        }
+                    },
+
+                    "//comment" : "BSHB0022 Withdrawal receiver tries to spend before block fin",
+                    "0xc000000000000000000000000000000000000003" : {
+                        "balance" : "100000000000010",
+                        "storage" : {
+                            "0x00" : "1"
+                        },
+                        "nonce" : "0"
+                    },
+
+                   "//comment" : "BSHB0023 suicide, receive funds, receive withdrawals",
+                    "0xc000000000000000000000000000000000000004" : {
+                        "balance" : "100000000000000",
+                        "nonce" : "0"
+                     },
+                   "0x0000000000000000000000000000000000010001" : {
+                        "balance" : "110"
+                    },
+
+                   "//comment" : "BSHB0023b suicide, receive funds, receive withdrawals",
+                    "0xc000000000000000000000000000000000000005" : {
+                        "balance" : "100000000000000",
+                        "nonce" : "0"
+                     },
+                   "0x0000000000000000000000000000000000010002" : {
                         "balance" : "1010"
                     },
 

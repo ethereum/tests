@@ -22,24 +22,42 @@
         },
         "sealEngine" : "NoProof",
         "expect" : [
-	    {
-		    "network" : [">=Istanbul"],
-		    "result" : {
-                "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-                    "nonce" : "0x02"
-            	},
-                "0x0000000000000000000000000000000000000010" : {
-                    "balance" : "1"
-                },
-                "0xec0e71ad0a90ffe1909d27dac207f7680abba42d" : {
-                    "balance" : "10",
-                    "code" : "",
-                    "nonce" : "0x02",
-                    "storage" : {
+	        {
+		        "network" : ["Istanbul", "Berlin", "Merge", "Shanghai"],
+		        "result" : {
+                    "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                        "nonce" : "0x02"
+                	},
+                    "0x0000000000000000000000000000000000000010" : {
+                        "balance" : "1"
+                    },
+                    "0xec0e71ad0a90ffe1909d27dac207f7680abba42d" : {
+                        "balance" : "10",
+                        "code" : "",
+                        "nonce" : "0x02",
+                        "storage" : {
+                        }
                     }
-                }
-		    }
-	    }
+		        }
+	        },
+            {
+		        "network" : [">=Cancun"],
+		        "result" : {
+                    "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                        "nonce" : "0x02"
+                	},
+                    "0x0000000000000000000000000000000000000010" : {
+                        "balance" : "1"
+                    },
+                    "0xec0e71ad0a90ffe1909d27dac207f7680abba42d" : {
+                        "balance" : "0",
+                        "code" : "0x6001546001556010ff00",
+                        "nonce" : "0x03",
+                        "storage" : {
+                        }
+                    }
+		        }
+	        }
         ],
         "pre" : {
             "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
@@ -52,7 +70,7 @@
             "ec0e71ad0a90ffe1909d27dac207f7680abba42d" : {
                 "balance" : "1",
                 "nonce" : "3",
-                "code" : "{ (SELFDESTRUCT 0x10) }",
+                "code" : "{ [[1]] (SLOAD 1) (SELFDESTRUCT 0x10) }",
                 "storage": {
                 }
             }

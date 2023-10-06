@@ -20,7 +20,7 @@
 	    "sealEngine" : "NoProof",
         "expect" : [
 	        {
-                "network" : [">=Merge"],
+                "network" : ["Merge", "Shanghai"],
                 "result" : {
     	            "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
                     	"nonce" : "2"
@@ -39,6 +39,29 @@
                     "//comment" : "no reward with suicide even if priority fee is set?",
 		            "b24f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
                         "shouldnotexist" : "1"
+		            }
+                }
+            },
+	        {
+                "network" : [">=Cancun"],
+                "result" : {
+    	            "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                    	"nonce" : "2"
+            	    },
+            	    "c94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                    	"shouldnotexist" : "1"
+            	    },
+            	    "c24f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                    	"balance" : "1010"
+            	    },
+		            "0xb94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+			            "nonce" : "0",
+			            "code" : "0x73c94f5374fce5edbc8e2a8697c15331677e6ebf0bff00",
+			            "storage" : {}
+		            },
+		            "b24f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                        "nonce" : "0",
+                        "balance" : "53603"
 		            }
                 }
             }
@@ -84,9 +107,17 @@
             },
             {
                 "blockHeader" : {
-                    ">=Merge" : {
+                    "Merge" : {
                         "coinbase" : "0xb24f5374fce5edbc8e2a8697c15331677e6ebf0b",
                         "stateRoot" : "0x602b01d9587fd41105414b9cb65d20918836a971e664fd8184b1cc99fce6b618"
+                    },
+                    "Shanghai" : {
+                        "coinbase" : "0xb24f5374fce5edbc8e2a8697c15331677e6ebf0b",
+                        "stateRoot" : "0x602b01d9587fd41105414b9cb65d20918836a971e664fd8184b1cc99fce6b618"
+                    },
+                    ">=Cancun" : {
+                        "coinbase" : "0xb24f5374fce5edbc8e2a8697c15331677e6ebf0b",
+                        "stateRoot" : "0x2aa866d38c34b5331a75f8548ba3d81705ebafcf8758b34d6d5914682e7537e9"
                     }
                 },
                 "transactions" : [
