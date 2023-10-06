@@ -425,30 +425,30 @@ burnVerify:
       0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC:
         storage:
           # Block one
-          0x0001:  68215875   # Wei burned (in all blocks so far)
-          0x1001:     77961   # Gas used (<wei burned> / <baseFee>)
+          0x0001:  68195750   # Wei burned (in all blocks so far)
+          0x1001:     77938   # Gas used (<wei burned> / <baseFee>)
 
           # Block two
-          0x0002: 160565601   # Wei burned in this block:  92349726
-          0x1002:    120561   # 92355854 / 766
+          0x0002: 160527858   # Wei burned in this block:  92349726
+          0x1002:    120538   # 92355854 / 766
  
           # Block three (same transactions as block two, lower baseFee)          
-          0x0003: 241462032   # Wei burned in this block:  80896431
-          0x1003:    120561   # 80901799 / 671
+          0x0003: 241408856   # Wei burned in this block:  80896431
+          0x1003:    120538   # 80901799 / 671
           
           # Block four (new transactions)
-          0x0004: 395853192   # Wei burned in this block: 154391160
-          0x1004:    262570   # 154391160 / 588
+          0x0004: 395786492   # Wei burned in this block: 154391160
+          0x1004:    262547   # 154391160 / 588
 
           # Block five (same transactions as block four, but with tips)
-          0x0005: 531076742   # Wei burned in this block: 135223550
-          0x1005:    262570   # 135223550 / 515
+          0x0005: 530998197   # Wei burned in this block: 135223550
+          0x1005:    262547   # 135223550 / 515
 
           # Block six (still the same transactions as block four, but
           # tips calculated based on maxFeePerGas 
           # rather than maxPriorityFeePerGas
-          0x0006: 649495812   # Wei burned in this block: 118419070
-          0x1006:    262570   # 118419070 / 451
+          0x0006: 649406894   # Wei burned in this block: 118419070
+          0x1006:    262547   # 118419070 / 451
 
           # Temporary value is it easiest not to erase
           0xffffff: 0x018b
@@ -472,34 +472,35 @@ burnVerify:
   - network:
     - '>=Shanghai'
     result:
+      # This data is affected by solc version, latest fetch solc21
       # Number of wei "missing" because they were burned
       0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC:
         storage:
           # Block one
-          0x0001:  66028375   # Wei burned (in all blocks so far)
-          0x1001:     75461   # Gas used (<wei burned> / <baseFee, 875>)
+          0x0001:  66008250   # Wei burned (in all blocks so far)
+          0x1001:     75438   # Gas used (<wei burned> / <baseFee, 875>)
 
           # Block two
-          0x0002: 156463101   # Wei burned in this block: 90434726
-          0x1002:    118061   # 90434726 / 766
+          0x0002: 156425358   # Wei burned in this block: 90434726
+          0x1002:    118038   # 90434726 / 766
  
           # Block three (same transactions as block two, lower baseFee)          
-          0x0003: 235682032   # Wei burned in this block: 79218931 
-          0x1003:    118061   # 79218931 / 671
+          0x0003: 235628856   # Wei burned in this block: 79218931 
+          0x1003:    118038   # 79218931 / 671
           
           # Block four (new transactions)
-          0x0004: 388603192   # Wei burned in this block: 152921160
-          0x1004:    260070   # 152921160 / 588
+          0x0004: 388536492   # Wei burned in this block: 152921160
+          0x1004:    260047   # 152921160 / 588
 
           # Block five (same transactions as block four, but with tips)
-          0x0005: 522539242   # Wei burned in this block: 133936050
-          0x1005:    260070   #  / 515
+          0x0005: 522460697   # Wei burned in this block: 133936050
+          0x1005:    260047   #  / 515
 
           # Block six (still the same transactions as block four, but
           # tips calculated based on maxFeePerGas 
           # rather than maxPriorityFeePerGas
-          0x0006: 639830812   # Wei burned in this block: 117291570
-          0x1006:    260070   # 117291570 / 451
+          0x0006: 639741894   # Wei burned in this block: 117291570
+          0x1006:    260047   # 117291570 / 451
 
           # Temporary value is it easiest not to erase
           0xffffff: 0x018b
