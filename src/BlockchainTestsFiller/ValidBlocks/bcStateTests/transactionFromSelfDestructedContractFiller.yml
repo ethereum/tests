@@ -75,6 +75,8 @@ transactionFromSelfDestructedContract:
 
     # Finally send a transaction signed by the self-destructed contract
     - data: ''
+      expectException:
+        ">=Cancun": "SenderNotEOA"
       gasLimit: 50000
       gasPrice: 100
       nonce: 0
@@ -84,7 +86,9 @@ transactionFromSelfDestructedContract:
 
   expect:
   - network:
-    - ">=London"
+    - "London"
+    - "Merge"
+    - "Shanghai"
     result:
       0xd0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0:
         balance: '9990000000'
@@ -93,4 +97,15 @@ transactionFromSelfDestructedContract:
       0xfebc70C40FadB14d796F1d499b3f247e12FBbd94:
         code: ''
         nonce: '1'
+        storage: {}
+  - network:
+    - ">=Cancun"
+    result:
+      0xd0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0:
+        balance: '0'
+        nonce: '0'
+
+      0xfebc70C40FadB14d796F1d499b3f247e12FBbd94:
+        code: '0x737ae27a42774a1f034ac7edb93d23cb5a662017d5ff'
+        nonce: '0'
         storage: {}

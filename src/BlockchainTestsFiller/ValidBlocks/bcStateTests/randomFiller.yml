@@ -65,8 +65,9 @@ random:
 
 # Block 2, we have a mixHash
   - blockHeader:
-      mixHash: 0x0102030405060708091011121314151617181920212223242526272829303132
-      stateRoot: 0x7a3760ed3aa3e40711b3ecd1cb898a9f37c14cbde7f95b7c5c7af05e6d794864
+      ">=Merge":
+        mixHash: 0x0102030405060708091011121314151617181920212223242526272829303132
+        stateRoot: 0xe2eb7e02ca4367423c01b5039686c2ab18919d0e2672411d9ae0441cc4e64a81
 
     transactions:
     - data: 0x
@@ -80,8 +81,9 @@ random:
 
 # Block 3, we have a mixHash
   - blockHeader:
-      mixHash: 0x0000000405060708091011121314151617181920212223242526272829303132
-      stateRoot: 0x05827a09c9d998aca37cdb5a076c0c6e07d385d8f2c8792746c82381efad3f92
+      ">=Merge":
+        mixHash: 0x0000000405060708091011121314151617181920212223242526272829303132
+        stateRoot: 0x73140ff0c686e09c6624d9ce852320aedcac23c1b1d8c7686bcca27e022940f0
     transactions:
     - data: 0x
       gasPrice: 20
@@ -106,7 +108,25 @@ random:
   expect:
 
   - network:
-    - ">=Merge"
+    - "Merge"
+    - "Shanghai"
+    result:
+      0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC:
+        storage:
+          # Coming from the genesis
+          1: 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+
+          # Coming from blockHeader
+          2: 0x0102030405060708091011121314151617181920212223242526272829303132
+
+          # Coming from blockHeader
+          3: 0x0000000405060708091011121314151617181920212223242526272829303132
+
+          # Inherited from the blockHeader of the previous block
+          4: 0x0000000405060708091011121314151617181920212223242526272829303132
+
+  - network:
+    - ">=Cancun"
     result:
       0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC:
         storage:

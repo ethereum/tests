@@ -1,8 +1,8 @@
 {
     "suicideThenCheckBalance" : {
-	"_info" : {
-	    "comment" : "[2:22:42] Vitalik Buterin: another one is: (i) self-destruct contract C, (ii) in the next transaction, send 1 wei to C, (iii) verify that C's balance is 1 wei. [2:23:01] Vitalik Buterin: the reason this is important now is that with EIP98, clients will be switching to not 'committing' their caches to the trie at the end of every tx. [2:23:18] Vitalik Buterin: and this means that selfdestruct has to be handled more carefully than before. [2:23:49] Vitalik Buterin: pyethereum screwed it up and it had to get fixed, though pyethereum's bug had to do with pre-spurious dragon 'existence' so it may not be relevant now."
-	},
+	    "_info" : {
+	        "comment" : "[2:22:42] Vitalik Buterin: another one is: (i) self-destruct contract C, (ii) in the next transaction, send 1 wei to C, (iii) verify that C's balance is 1 wei. [2:23:01] Vitalik Buterin: the reason this is important now is that with EIP98, clients will be switching to not 'committing' their caches to the trie at the end of every tx. [2:23:18] Vitalik Buterin: and this means that selfdestruct has to be handled more carefully than before. [2:23:49] Vitalik Buterin: pyethereum screwed it up and it had to get fixed, though pyethereum's bug had to do with pre-spurious dragon 'existence' so it may not be relevant now."
+	    },
         "genesisBlockHeader" : {
             "bloom" : "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
             "coinbase" : "0x8888f1f195afa192cfee860698584c030f4c9db1",
@@ -20,28 +20,47 @@
             "transactionsTrie" : "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
             "uncleHash" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347"
         },
-	"sealEngine" : "NoProof",
-	"expect" : [
-	   {
-		    "network" : [">=Istanbul"],
-		    "result" : {
-			    "0000000000000000000000000000000000000001" : {
-				"balance" : "1000"
-			    },
-			    "e3476106159f87477ad639e3ddcbb6b240efe459" : {
-				"balance" : "1",
-				"code" : ""
-			    },
-			    "a3476106159f87477ad639e3ddcbb6b240efe459" : {
-				"storage" : {
-				    "0x01" : "1"
-				}
-			    },
-			    "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-				"nonce" : "2"
-			    }
-		   }
-	   }
+    	"sealEngine" : "NoProof",
+	    "expect" : [
+	       {
+		        "network" : ["Istanbul", "Berlin", "London", "Merge", "Shanghai"],
+		        "result" : {
+			        "0000000000000000000000000000000000000001" : {
+    				    "balance" : "1000"
+			        },
+			        "e3476106159f87477ad639e3ddcbb6b240efe459" : {
+				        "balance" : "1",
+				        "code" : ""
+			        },
+			        "a3476106159f87477ad639e3ddcbb6b240efe459" : {
+				        "storage" : {
+				            "0x01" : "1"
+				        }
+			        },
+			        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+    				    "nonce" : "2"
+			        }
+		       }
+	       },
+           {
+		        "network" : [">=Cancun"],
+		        "result" : {
+			        "0000000000000000000000000000000000000001" : {
+    				    "balance" : "1000"
+			        },
+			        "e3476106159f87477ad639e3ddcbb6b240efe459" : {
+				        "balance" : "0",
+				        "code" : "0x60036001556001ff00"
+			        },
+			        "a3476106159f87477ad639e3ddcbb6b240efe459" : {
+				        "storage" : {
+				        }
+			        },
+			        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+    				    "nonce" : "2"
+			        }
+		       }
+	       }
         ],
         "pre" : {
             "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
