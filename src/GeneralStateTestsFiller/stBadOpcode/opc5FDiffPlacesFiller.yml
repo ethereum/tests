@@ -8,6 +8,11 @@
 #            
 #            verbatim_9i_0o(hex"5F", 1, 2, 3, 4, 5, 6, 7, 8, 9)
 #            
+#            // A bunch of NOPs in case the opcode has immediate operands
+#            // (starting in Cancun we have opcodes with immediate operands)
+#            
+#            verbatim_0i_0o(hex"5B5B5B5B5B")
+#            
 #            // If we get here, kill the goat so we'll get an error
 #            mstore(0, hex"DEAD60A7")
 #            
@@ -35,12 +40,17 @@ opc5FDiffPlaces:
     000000000000000000000000000000000000C0DE:
       balance: 1000000000000000000
       code: |
-        :yul {
+        :yul berlin {
            // Run an invalid opcode (make sure it doesn't fail due to a stack underflow) and then
             // kill the goat if we don't revert.
             
             
             verbatim_9i_0o(hex"5F", 1, 2, 3, 4, 5, 6, 7, 8, 9)
+            
+            // A bunch of NOPs in case the opcode has immediate operands
+            // (starting in Cancun we have opcodes with immediate operands)
+            
+            verbatim_0i_0o(hex"5B5B5B5B5B")
             
             // If we get here, kill the goat so we'll get an error
             mstore(0, hex"DEAD60A7")
@@ -64,12 +74,17 @@ opc5FDiffPlaces:
     000000000000000000000000000000000020C0DE:
       balance: 1000000000000000000
       code: |
-        :yul {
+        :yul berlin {
            // Run an invalid opcode (make sure it doesn't fail due to a stack underflow) and then
             // kill the goat if we don't revert.
             
             
             verbatim_9i_0o(hex"5F", 1, 2, 3, 4, 5, 6, 7, 8, 9)
+            
+            // A bunch of NOPs in case the opcode has immediate operands
+            // (starting in Cancun we have opcodes with immediate operands)
+            
+            verbatim_0i_0o(hex"5B5B5B5B5B")
             
             // If we get here, kill the goat so we'll get an error
             mstore(0, hex"DEAD60A7")
@@ -87,7 +102,7 @@ opc5FDiffPlaces:
     00000000000000000000000000000000C0DEC0DE:
       balance: 1000000000000000000
       code: |
-        :yul {
+        :yul berlin {
            let addr := 0x20C0DE
            let length := extcodesize(addr)
 
@@ -106,7 +121,7 @@ opc5FDiffPlaces:
     cccccccccccccccccccccccccccccccccccccccc:
       balance: 1000000000000000000
       code: |
-          :yul {
+          :yul berlin {
              let action := calldataload(4)
              let res := 1   // If the result of a call is revert, revert here too
              let addr := 1  // If the result of CREATE[2] is zero, it reverted
@@ -128,6 +143,11 @@ opc5FDiffPlaces:
             
             
             verbatim_9i_0o(hex"5F", 1, 2, 3, 4, 5, 6, 7, 8, 9)
+            
+            // A bunch of NOPs in case the opcode has immediate operands
+            // (starting in Cancun we have opcodes with immediate operands)
+            
+            verbatim_0i_0o(hex"5B5B5B5B5B")
             
             // If we get here, kill the goat so we'll get an error
             mstore(0, hex"DEAD60A7")
@@ -204,6 +224,11 @@ opc5FDiffPlaces:
             
             verbatim_9i_0o(hex"5F", 1, 2, 3, 4, 5, 6, 7, 8, 9)
             
+            // A bunch of NOPs in case the opcode has immediate operands
+            // (starting in Cancun we have opcodes with immediate operands)
+            
+            verbatim_0i_0o(hex"5B5B5B5B5B")
+            
             // If we get here, kill the goat so we'll get an error
             mstore(0, hex"DEAD60A7")
             
@@ -215,6 +240,11 @@ opc5FDiffPlaces:
             
             
             verbatim_9i_0o(hex"5F", 1, 2, 3, 4, 5, 6, 7, 8, 9)
+            
+            // A bunch of NOPs in case the opcode has immediate operands
+            // (starting in Cancun we have opcodes with immediate operands)
+            
+            verbatim_0i_0o(hex"5B5B5B5B5B")
             
             // If we get here, kill the goat so we'll get an error
             mstore(0, hex"DEAD60A7")
@@ -230,6 +260,11 @@ opc5FDiffPlaces:
             
             verbatim_9i_0o(hex"5F", 1, 2, 3, 4, 5, 6, 7, 8, 9)
             
+            // A bunch of NOPs in case the opcode has immediate operands
+            // (starting in Cancun we have opcodes with immediate operands)
+            
+            verbatim_0i_0o(hex"5B5B5B5B5B")
+            
             // If we get here, kill the goat so we'll get an error
             mstore(0, hex"DEAD60A7")
             
@@ -241,6 +276,11 @@ opc5FDiffPlaces:
             
             
             verbatim_9i_0o(hex"5F", 1, 2, 3, 4, 5, 6, 7, 8, 9)
+            
+            // A bunch of NOPs in case the opcode has immediate operands
+            // (starting in Cancun we have opcodes with immediate operands)
+            
+            verbatim_0i_0o(hex"5B5B5B5B5B")
             
             // If we get here, kill the goat so we'll get an error
             mstore(0, hex"DEAD60A7")
@@ -256,6 +296,11 @@ opc5FDiffPlaces:
             
             verbatim_9i_0o(hex"5F", 1, 2, 3, 4, 5, 6, 7, 8, 9)
             
+            // A bunch of NOPs in case the opcode has immediate operands
+            // (starting in Cancun we have opcodes with immediate operands)
+            
+            verbatim_0i_0o(hex"5B5B5B5B5B")
+            
             // If we get here, kill the goat so we'll get an error
             mstore(0, hex"DEAD60A7")
             
@@ -267,6 +312,11 @@ opc5FDiffPlaces:
             
             
             verbatim_9i_0o(hex"5F", 1, 2, 3, 4, 5, 6, 7, 8, 9)
+            
+            // A bunch of NOPs in case the opcode has immediate operands
+            // (starting in Cancun we have opcodes with immediate operands)
+            
+            verbatim_0i_0o(hex"5B5B5B5B5B")
             
             // If we get here, kill the goat so we'll get an error
             mstore(0, hex"DEAD60A7")
@@ -457,12 +507,17 @@ opc5FDiffPlaces:
     000000000000000000000000000000000000ca11:
       balance: '1000000000000000000'
       code: |
-          :yul {
+          :yul berlin {
             // Run an invalid opcode (make sure it doesn't fail due to a stack underflow) and then
             // kill the goat if we don't revert.
             
             
             verbatim_9i_0o(hex"5F", 1, 2, 3, 4, 5, 6, 7, 8, 9)
+            
+            // A bunch of NOPs in case the opcode has immediate operands
+            // (starting in Cancun we have opcodes with immediate operands)
+            
+            verbatim_0i_0o(hex"5B5B5B5B5B")
             
             // If we get here, kill the goat so we'll get an error
             mstore(0, hex"DEAD60A7")
@@ -477,7 +532,7 @@ opc5FDiffPlaces:
     00000000000000000000000000000000ca1100f1:
       balance: '1000000000000000000'
       code: |
-          :yul {
+          :yul berlin {
             if iszero(call(gas(), 0xca11, 0, 0, 0, 0, 0x20))
                { revert(0,0x20) }
 
@@ -491,7 +546,7 @@ opc5FDiffPlaces:
     00000000000000000000000000000000ca1100f2:
       balance: '1000000000000000000'
       code: |
-          :yul {
+          :yul berlin {
             if iszero(callcode(gas(), 0xca11, 0, 0, 0, 0, 0x20))
                { revert(0,0x20) }
 
@@ -505,7 +560,7 @@ opc5FDiffPlaces:
     00000000000000000000000000000000ca1100f4:
       balance: '1000000000000000000'
       code: |
-          :yul {
+          :yul berlin {
             if iszero(delegatecall(gas(), 0xca11, 0, 0, 0, 0x20))
                { revert(0,0x20) }
 
@@ -519,7 +574,7 @@ opc5FDiffPlaces:
     00000000000000000000000000000000ca1100fa:
       balance: '1000000000000000000'
       code: |
-          :yul {
+          :yul berlin {
             if iszero(staticcall(gas(), 0xca11, 0, 0, 0, 0x20))
                { revert(0,0x20) }
 
@@ -535,12 +590,17 @@ opc5FDiffPlaces:
     0000000000000000000000000000000000060006:
       balance: '1000000000000000000'
       code: |
-        :yul {
+        :yul berlin {
            // Run an invalid opcode (make sure it doesn't fail due to a stack underflow) and then
             // kill the goat if we don't revert.
             
             
             verbatim_9i_0o(hex"5F", 1, 2, 3, 4, 5, 6, 7, 8, 9)
+            
+            // A bunch of NOPs in case the opcode has immediate operands
+            // (starting in Cancun we have opcodes with immediate operands)
+            
+            verbatim_0i_0o(hex"5B5B5B5B5B")
             
             // If we get here, kill the goat so we'll get an error
             mstore(0, hex"DEAD60A7")
@@ -557,12 +617,17 @@ opc5FDiffPlaces:
     000000000000000000000000000000000060BACC:
       balance: '1000000000000000000'
       code: |
-        :yul {
+        :yul berlin {
            // Run an invalid opcode (make sure it doesn't fail due to a stack underflow) and then
             // kill the goat if we don't revert.
             
             
             verbatim_9i_0o(hex"5F", 1, 2, 3, 4, 5, 6, 7, 8, 9)
+            
+            // A bunch of NOPs in case the opcode has immediate operands
+            // (starting in Cancun we have opcodes with immediate operands)
+            
+            verbatim_0i_0o(hex"5B5B5B5B5B")
             
             // If we get here, kill the goat so we'll get an error
             mstore(0, hex"DEAD60A7")
@@ -579,7 +644,7 @@ opc5FDiffPlaces:
     00000000000000000000000000000000DEADDEAD:
       balance: '1000000000000000000'
       code: |
-        :yul {
+        :yul berlin {
            selfdestruct(0)
         }
       nonce: 1
@@ -592,7 +657,7 @@ opc5FDiffPlaces:
     00000000000000000000000000000060BACCFA57:
       balance: 1000000000000000000
       code: |
-        :yul {
+        :yul berlin {
            let depth := calldataload(0)
 
            if eq(depth,0) {
@@ -601,6 +666,11 @@ opc5FDiffPlaces:
             
             
             verbatim_9i_0o(hex"5F", 1, 2, 3, 4, 5, 6, 7, 8, 9)
+            
+            // A bunch of NOPs in case the opcode has immediate operands
+            // (starting in Cancun we have opcodes with immediate operands)
+            
+            verbatim_0i_0o(hex"5B5B5B5B5B")
             
             // If we get here, kill the goat so we'll get an error
             mstore(0, hex"DEAD60A7")
@@ -734,9 +804,9 @@ opc5FDiffPlaces:
         value: !!int -1
 
       network:
-        - London
-        - Merge
-        # Shanghai and later 5F is a valid opcode, PUSH0
+        - 'London'
+        - 'Merge'
+
       result:
         cccccccccccccccccccccccccccccccccccccccc:
           storage:
