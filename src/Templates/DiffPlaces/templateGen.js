@@ -16,6 +16,8 @@ const result = process.argv[4]
 // This is the name of the created test
 const testName = process.argv[2]
 
+// This is the fork to which the test applies
+const fork = process.argv[5]
 
 // The code is executed, and the result checked, in these contexts:
 //  0. 0x0000  Normal execution
@@ -54,6 +56,13 @@ const testName = process.argv[2]
 // 33. 0xF5FA  CREATE2 a contract with the code and then STATICCALL it
 // 34. 0x60BACCFA57 Call recurse to the limit
 indentedCode = code.replace(/\n/g, "\n            ")
+
+
+const forks = fork.split(/,/).map( fork => `        - '${fork}'
+` ).reduce((a,b) => a+b, "")
+
+
+
 
 console.log(`
 # Created by tests/src/Templates/DiffPlaces/templateGen.js
@@ -679,7 +688,7 @@ ${testName}:
         value: !!int -1
 
       network:
-        - '>=London'
+${forks}
       result:
         cccccccccccccccccccccccccccccccccccccccc:
           storage:
