@@ -32,9 +32,11 @@ baseFeeDiffPlaces:
     000000000000000000000000000000000000C0DE:
       balance: 1000000000000000000
       code: |
-        :yul london
-        {
-            mstore(0, basefee())
+        :yul berlin {
+           // basefee is still not supported in Yul 0.8.5
+            
+            
+            mstore(0, verbatim_0i_1o(hex"48"))
             
             
 
@@ -56,8 +58,7 @@ baseFeeDiffPlaces:
     000000000000000000000000000000000020C0DE:
       balance: 1000000000000000000
       code: |
-        :yul london
-        {
+        :yul berlin {
            // basefee is still not supported in Yul 0.8.5
             
             
@@ -77,8 +78,7 @@ baseFeeDiffPlaces:
     00000000000000000000000000000000C0DEC0DE:
       balance: 1000000000000000000
       code: |
-        :yul london
-        {
+        :yul berlin {
            let addr := 0x20C0DE
            let length := extcodesize(addr)
 
@@ -97,8 +97,7 @@ baseFeeDiffPlaces:
     cccccccccccccccccccccccccccccccccccccccc:
       balance: 1000000000000000000
       code: |
-          :yul london
-          {
+          :yul berlin {
              let action := calldataload(4)
              let res := 1   // If the result of a call is revert, revert here too
              let addr := 1  // If the result of CREATE[2] is zero, it reverted
@@ -428,9 +427,11 @@ baseFeeDiffPlaces:
     000000000000000000000000000000000000ca11:
       balance: '1000000000000000000'
       code: |
-          :yul london
-          {
-            mstore(0, basefee())
+          :yul berlin {
+            // basefee is still not supported in Yul 0.8.5
+            
+            
+            mstore(0, verbatim_0i_1o(hex"48"))
             
             
             return(0, 0x20)     // return the result as our return value
@@ -443,8 +444,7 @@ baseFeeDiffPlaces:
     00000000000000000000000000000000ca1100f1:
       balance: '1000000000000000000'
       code: |
-          :yul london 
-          {
+          :yul berlin {
             if iszero(call(gas(), 0xca11, 0, 0, 0, 0, 0x20))
                { revert(0,0x20) }
 
@@ -458,8 +458,7 @@ baseFeeDiffPlaces:
     00000000000000000000000000000000ca1100f2:
       balance: '1000000000000000000'
       code: |
-          :yul london
-          {
+          :yul berlin {
             if iszero(callcode(gas(), 0xca11, 0, 0, 0, 0, 0x20))
                { revert(0,0x20) }
 
@@ -473,8 +472,7 @@ baseFeeDiffPlaces:
     00000000000000000000000000000000ca1100f4:
       balance: '1000000000000000000'
       code: |
-          :yul london
-          {
+          :yul berlin {
             if iszero(delegatecall(gas(), 0xca11, 0, 0, 0, 0x20))
                { revert(0,0x20) }
 
@@ -488,8 +486,7 @@ baseFeeDiffPlaces:
     00000000000000000000000000000000ca1100fa:
       balance: '1000000000000000000'
       code: |
-          :yul london
-          {
+          :yul berlin {
             if iszero(staticcall(gas(), 0xca11, 0, 0, 0, 0x20))
                { revert(0,0x20) }
 
@@ -505,8 +502,7 @@ baseFeeDiffPlaces:
     0000000000000000000000000000000000060006:
       balance: '1000000000000000000'
       code: |
-        :yul london
-        {
+        :yul berlin {
            // basefee is still not supported in Yul 0.8.5
             
             
@@ -525,9 +521,12 @@ baseFeeDiffPlaces:
     000000000000000000000000000000000060BACC:
       balance: '1000000000000000000'
       code: |
-        :yul london
-        {
-           mstore(0, basefee())
+        :yul berlin {
+           // basefee is still not supported in Yul 0.8.5
+            
+            
+            mstore(0, verbatim_0i_1o(hex"48"))
+            
             
            sstore(0,mload(0))
            revert(0,0x20)
@@ -541,8 +540,7 @@ baseFeeDiffPlaces:
     00000000000000000000000000000000DEADDEAD:
       balance: '1000000000000000000'
       code: |
-        :yul london
-        {
+        :yul berlin {
            selfdestruct(0)
         }
       nonce: 1
@@ -555,13 +553,17 @@ baseFeeDiffPlaces:
     00000000000000000000000000000060BACCFA57:
       balance: 1000000000000000000
       code: |
-        :yul london
-        {
+        :yul berlin {
            let depth := calldataload(0)
 
            if eq(depth,0) {
-              mstore(0, basefee())
-              return(0, 0x20)
+               // basefee is still not supported in Yul 0.8.5
+            
+            
+            mstore(0, verbatim_0i_1o(hex"48"))
+            
+            
+               return(0, 0x20)
            }
 
            // Dig deeper
@@ -690,7 +692,11 @@ baseFeeDiffPlaces:
         value: !!int -1
 
       network:
-        - '>=London'
+        - 'London'
+        - 'Merge'
+        - 'Shanghai'
+        - 'Cancun'
+
       result:
         cccccccccccccccccccccccccccccccccccccccc:
           storage:

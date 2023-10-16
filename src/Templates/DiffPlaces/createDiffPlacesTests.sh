@@ -5,15 +5,13 @@
 # in templateGen.js
 
 stateTestDir=../../GeneralStateTestsFiller
+fork=London,Merge,Shanghai,Cancun
 
-./templateGen.js diffPlaces selfBalance.yul 1000000000000000000 \
+./templateGen.js diffPlaces selfBalance.yul 1000000000000000000 $fork \
           > $stateTestDir/stSelfBalance/diffPlacesFiller.yml
-./templateGen.js invalidDiffPlaces invalid.yul 0x60A7 \
+./templateGen.js invalidDiffPlaces invalid.yul 0x60A7 $fork \
           > $stateTestDir/stBadOpcode/invalidDiffPlacesFiller.yml
-./templateGen.js gasPriceDiffPlaces gasPrice.yul 2000 \
+./templateGen.js gasPriceDiffPlaces gasPrice.yul 2000 $fork \
           > $stateTestDir/stEIP1559/gasPriceDiffPlacesFiller.yml
-./templateGen.js baseFeeDiffPlaces baseFee.yul 10 \
+./templateGen.js baseFeeDiffPlaces baseFee.yul 10 $fork \
           > $stateTestDir/stEIP1559/baseFeeDiffPlacesFiller.yml
-
-
-
