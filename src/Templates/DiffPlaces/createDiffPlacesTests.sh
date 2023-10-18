@@ -5,7 +5,7 @@
 # in templateGen.js
 
 stateTestDir=../../GeneralStateTestsFiller
-fork=London,Merge,Shanghai,Cancun
+fork=">=London"
 
 ./templateGen.js diffPlaces selfBalance.yul 1000000000000000000 $fork \
           > $stateTestDir/stSelfBalance/diffPlacesFiller.yml
