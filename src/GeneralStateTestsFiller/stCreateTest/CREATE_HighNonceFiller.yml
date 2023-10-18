@@ -17,8 +17,9 @@ CREATE_HighNonce:
       storage: {}
     b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
       balance: 0
+      # use byzantium here because solc introduces SHL which is not supported on first evm revisions
       code: |
-        :yul berlin
+        :yul byzantium
         {
           // initcode: { return(0, 1) }
           mstore(0, 0x60016000f3000000000000000000000000000000000000000000000000000000)
