@@ -69,19 +69,19 @@
                 "nonce" : "0",
                 "code" : "{ [[ (CALLDATALOAD 0) ]] (DIFFICULTY) }",
                 "storage": {}
-            }
+            },
     	    "1000000000000000000000000000000000000002" : {
                 "balance" : "9",
                 "nonce" : "0",
                 "//comment": "Check if EXTCODEHASH exists in this block (Byzantium vs. ConstantinopleFix",
-                "code" : "{ [0] (extcodehash 0) [[(number)]] 1 }"
+                "code" : "{ [0] (extcodehash 0) [[(number)]] 1 }",
                 "storage": {}
             },
     	    "1000000000000000000000000000000000000003" : {
                 "balance" : "9",
                 "nonce" : "0",
                 "//comment": "Check that EIP 1283 is disabled, the cost of rewriting storage is still ~5000",
-                "code" : "{ [0] (gas) [[0x100]] 0xFF [0x20] (gas) [[(number)]] (- @0 @0x20)}"
+                "code" : "{ [0] (gas) [[0x100]] 0xFF [0x20] (gas) [[(number)]] (- @0 @0x20)}",
                 "storage": { "0x100": "0xFF" }
             }
         },
