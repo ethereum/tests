@@ -2,22 +2,24 @@
     "transactionCollidingWithNonEmptyAccount_calls" : {
         "_info" : {
             "comment" : "Account with non-empty code attempts to send tx to call a contract",
-            "filling-rpc-server" : "evm version 1.11.4-unstable-e14043db-20230308",
-            "filling-tool-version" : "retesteth-0.3.0-shanghai+commit.fd2c0a83.Linux.g++",
-            "generatedTestHash" : "68aec068f1cc082b500031d32c8574a39d520717435e05855ba39a86738d87d8",
-            "lllcversion" : "Version: 0.5.14-develop.2022.7.30+commit.a096d7a9.Linux.g++",
-            "solidity" : "Version: 0.8.17+commit.8df45f5f.Linux.g++",
+            "filling-rpc-server" : "evm version 1.13.5-unstable-cd295356-20231019",
+            "filling-tool-version" : "retesteth-0.3.1-cancun+commit.1e18e0b3.Linux.g++",
+            "generatedTestHash" : "65bcfd3061b4d3072faa4684e564aa9d718ef339520223d409f2ff3b93622177",
+            "lllcversion" : "Version: 0.5.14-develop.2023.7.11+commit.c58ab2c6.mod.Linux.g++",
+            "solidity" : "Version: 0.8.21+commit.d9974bed.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/stEIP3607/transactionCollidingWithNonEmptyAccount_callsFiller.yml",
             "sourceHash" : "fcc498b742c42a8e6ff4eabaeae48268d070b09458417fed45b7433febf08016"
         },
         "env" : {
             "currentBaseFee" : "0x0a",
+            "currentBeaconRoot" : "0x0000000000000000000000000000000000000000000000000000000000000000",
             "currentCoinbase" : "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba",
             "currentDifficulty" : "0x020000",
             "currentGasLimit" : "0xff112233445566",
             "currentNumber" : "0x01",
             "currentRandom" : "0x0000000000000000000000000000000000000000000000000000000000020000",
             "currentTimestamp" : "0x03e8",
+            "currentWithdrawalsRoot" : "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
             "previousHash" : "0x5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6"
         },
         "post" : {
@@ -35,6 +37,19 @@
                 }
             ],
             "Byzantium" : [
+                {
+                    "expectException" : "SenderNotEOA",
+                    "hash" : "0x38d709e7d59719ea722353ff57910c4db65866cfd94125434831702917f505ee",
+                    "indexes" : {
+                        "data" : 0,
+                        "gas" : 0,
+                        "value" : 0
+                    },
+                    "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "txbytes" : "0xf863800a83061a8094095e7baea6a6c7c4c2dfeb977efac326af552d87830186a0801ba0ffb600e63115a7362e7811894a91d8ba4330e526f22121c994c4692035dfdfd5a06198379fcac8de3dbfac48b165df4bf88e2088f294b61efb9a65fe2281c76e16"
+                }
+            ],
+            "Cancun" : [
                 {
                     "expectException" : "SenderNotEOA",
                     "hash" : "0x38d709e7d59719ea722353ff57910c4db65866cfd94125434831702917f505ee",
