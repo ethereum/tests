@@ -17,7 +17,7 @@ MCOPY_copy_cost:
       balance: 0
       nonce: 1
       code: |
-        :yul {
+        :yul shanghai optimise {
           function mcopy(dst, src, size) { verbatim_3i_0o(hex"5e", dst, src, size) }
         
           // Put a flag in storage indicating successful execution (will be reverted in case of OOG).
@@ -254,6 +254,16 @@ MCOPY_copy_cost:
           - :label src32_size33
           - :label src0_size44769
 
+      network:
+        - '>=Cancun'
+      result:
+        000000000000000000000000000000000000c0de:
+          storage:
+            0: 1
+
+    - indexes:
+        gas: !!int 1
+        data:
           # Can't regenerate this vectors as failed, now all works
           - :label src1_size44767
           - :label src1_size44768
@@ -264,11 +274,10 @@ MCOPY_copy_cost:
           - :label src32_size44768
           - :label src32_size44769
           - :label src32_size44767
+
       network:
         - '>=Cancun'
       result:
         000000000000000000000000000000000000c0de:
           storage:
-            0: 1
-
-
+            0: 0
