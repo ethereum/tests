@@ -2,9 +2,9 @@
     "CreateTransactionHighNonce_d0g0v0_Cancun" : {
         "_info" : {
             "comment" : "The test check if the create transaction is reject if the origin's nonce is maximum value\n(and would overflow if increased by 1).\n",
-            "filling-rpc-server" : "evm version 1.13.5-unstable-cd295356-20231019",
-            "filling-tool-version" : "retesteth-0.3.1-cancun+commit.1e18e0b3.Linux.g++",
-            "generatedTestHash" : "8e1345a822ce2652cda50b31193fe8a41974ebaf52266a2f6acf0ac2929e3b42",
+            "filling-rpc-server" : "evm version 1.13.5-unstable-bc823f46-20231024",
+            "filling-tool-version" : "retesteth-0.3.1-cancun+commit.3e1440a8.Linux.g++",
+            "generatedTestHash" : "db890ff7da13c9e0129919459288462262f595147ea1a76bd38467cb8f40621d",
             "lllcversion" : "Version: 0.5.14-develop.2023.7.11+commit.c58ab2c6.mod.Linux.g++",
             "solidity" : "Version: 0.8.21+commit.d9974bed.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/stCreateTest/CreateTransactionHighNonceFiller.yml",
@@ -14,6 +14,48 @@
             {
                 "expectException" : "TR_NonceHasMaxValue",
                 "rlp" : "0xf90299f90237a0625ee6eebc6120f16a06bcb5c14549b952cb3dca6f61a4d617ac1653e3c62388a01dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d4934794a94f5374fce5edbc8e2a8697c15331677e6ebf0ba02fb5804c5079bae761a87f44bc870b2c8675b72980d98c99acd2e451cb84aa94a056e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421a056e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421b90100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000008001830f4240808203e800a000000000000000000000000000000000000000000000000000000000000000018800000000000000000aa056e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b4218080a00000000000000000000000000000000000000000000000000000000000000000f85bf85988ffffffffffffffff0a83015f9080808560016000f31ca03bfef6a444fcead2d0db16eb8e1f52dab1c735bff73b805e39a91c0b941be81ca069fe69ac730ae0bbfa7b940a34635dd987516ce0898d37cfa29d145a238b92e8c0c0",
+                "rlp_decoded" : {
+                    "blockHeader" : {
+                        "baseFeePerGas" : "0x0a",
+                        "blobGasUsed" : "0x00",
+                        "bloom" : "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+                        "coinbase" : "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b",
+                        "difficulty" : "0x00",
+                        "excessBlobGas" : "0x00",
+                        "extraData" : "0x00",
+                        "gasLimit" : "0x0f4240",
+                        "gasUsed" : "0x00",
+                        "hash" : "0x376d1e3d911c06f0e6ac23035784ba1ab8732f1aea9aec7fd0fdcf6fffb7e823",
+                        "mixHash" : "0x0000000000000000000000000000000000000000000000000000000000000001",
+                        "nonce" : "0x0000000000000000",
+                        "number" : "0x01",
+                        "parentBeaconBlockRoot" : "0x0000000000000000000000000000000000000000000000000000000000000000",
+                        "parentHash" : "0x625ee6eebc6120f16a06bcb5c14549b952cb3dca6f61a4d617ac1653e3c62388",
+                        "receiptTrie" : "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
+                        "stateRoot" : "0x2fb5804c5079bae761a87f44bc870b2c8675b72980d98c99acd2e451cb84aa94",
+                        "timestamp" : "0x03e8",
+                        "transactionsTrie" : "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
+                        "uncleHash" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                        "withdrawalsRoot" : "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421"
+                    },
+                    "transactions" : [
+                        {
+                            "data" : "0x60016000f3",
+                            "gasLimit" : "0x015f90",
+                            "gasPrice" : "0x0a",
+                            "nonce" : "0xffffffffffffffff",
+                            "r" : "0x3bfef6a444fcead2d0db16eb8e1f52dab1c735bff73b805e39a91c0b941be81c",
+                            "s" : "0x69fe69ac730ae0bbfa7b940a34635dd987516ce0898d37cfa29d145a238b92e8",
+                            "to" : "",
+                            "v" : "0x1c",
+                            "value" : "0x00"
+                        }
+                    ],
+                    "uncleHeaders" : [
+                    ],
+                    "withdrawals" : [
+                    ]
+                },
                 "transactionSequence" : [
                     {
                         "exception" : "TR_NonceHasMaxValue",
@@ -72,9 +114,9 @@
     "CreateTransactionHighNonce_d0g0v0_London" : {
         "_info" : {
             "comment" : "The test check if the create transaction is reject if the origin's nonce is maximum value\n(and would overflow if increased by 1).\n",
-            "filling-rpc-server" : "evm version 1.13.5-unstable-cd295356-20231019",
-            "filling-tool-version" : "retesteth-0.3.1-cancun+commit.1e18e0b3.Linux.g++",
-            "generatedTestHash" : "942ef41526c2eaecf30e1d033fda46e40434918720ca9fc3002264295eb7c3fa",
+            "filling-rpc-server" : "evm version 1.13.5-unstable-bc823f46-20231024",
+            "filling-tool-version" : "retesteth-0.3.1-cancun+commit.3e1440a8.Linux.g++",
+            "generatedTestHash" : "c6eea613667aa8f88db8699269d574445c4d5cc3bd82689a745eaf832adb0b32",
             "lllcversion" : "Version: 0.5.14-develop.2023.7.11+commit.c58ab2c6.mod.Linux.g++",
             "solidity" : "Version: 0.8.21+commit.d9974bed.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/stCreateTest/CreateTransactionHighNonceFiller.yml",
@@ -84,6 +126,44 @@
             {
                 "expectException" : "TR_NonceHasMaxValue",
                 "rlp" : "0xf90257f901f6a0a30dd852345843374b0e6bd1b972c5a4a247598744e149dc086ea0f4f5df6de1a01dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d4934794a94f5374fce5edbc8e2a8697c15331677e6ebf0ba00b931d7705bd19afcc87a0f21460f4dcf4367a4440c52052bd84a0fb0aa40209a056e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421a056e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421b90100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000008302000001830f4240808203e800a000000000000000000000000000000000000000000000000000000000000000008800000000000000000af85bf85988ffffffffffffffff0a83015f9080808560016000f31ca03bfef6a444fcead2d0db16eb8e1f52dab1c735bff73b805e39a91c0b941be81ca069fe69ac730ae0bbfa7b940a34635dd987516ce0898d37cfa29d145a238b92e8c0",
+                "rlp_decoded" : {
+                    "blockHeader" : {
+                        "baseFeePerGas" : "0x0a",
+                        "bloom" : "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+                        "coinbase" : "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b",
+                        "difficulty" : "0x020000",
+                        "extraData" : "0x00",
+                        "gasLimit" : "0x0f4240",
+                        "gasUsed" : "0x00",
+                        "hash" : "0xd90a8d88e1706aa99816a2ce9af7e2f395512afb89aa3dfe13740c17ef7b082b",
+                        "mixHash" : "0x0000000000000000000000000000000000000000000000000000000000000000",
+                        "nonce" : "0x0000000000000000",
+                        "number" : "0x01",
+                        "parentHash" : "0xa30dd852345843374b0e6bd1b972c5a4a247598744e149dc086ea0f4f5df6de1",
+                        "receiptTrie" : "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
+                        "stateRoot" : "0x0b931d7705bd19afcc87a0f21460f4dcf4367a4440c52052bd84a0fb0aa40209",
+                        "timestamp" : "0x03e8",
+                        "transactionsTrie" : "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
+                        "uncleHash" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347"
+                    },
+                    "transactions" : [
+                        {
+                            "data" : "0x60016000f3",
+                            "gasLimit" : "0x015f90",
+                            "gasPrice" : "0x0a",
+                            "nonce" : "0xffffffffffffffff",
+                            "r" : "0x3bfef6a444fcead2d0db16eb8e1f52dab1c735bff73b805e39a91c0b941be81c",
+                            "s" : "0x69fe69ac730ae0bbfa7b940a34635dd987516ce0898d37cfa29d145a238b92e8",
+                            "to" : "",
+                            "v" : "0x1c",
+                            "value" : "0x00"
+                        }
+                    ],
+                    "uncleHeaders" : [
+                    ],
+                    "withdrawals" : [
+                    ]
+                },
                 "transactionSequence" : [
                     {
                         "exception" : "TR_NonceHasMaxValue",
@@ -138,9 +218,9 @@
     "CreateTransactionHighNonce_d0g0v0_Merge" : {
         "_info" : {
             "comment" : "The test check if the create transaction is reject if the origin's nonce is maximum value\n(and would overflow if increased by 1).\n",
-            "filling-rpc-server" : "evm version 1.13.5-unstable-cd295356-20231019",
-            "filling-tool-version" : "retesteth-0.3.1-cancun+commit.1e18e0b3.Linux.g++",
-            "generatedTestHash" : "949a8788fd76145c65873d68605fbd89312271dc031639048dabff20eb72d386",
+            "filling-rpc-server" : "evm version 1.13.5-unstable-bc823f46-20231024",
+            "filling-tool-version" : "retesteth-0.3.1-cancun+commit.3e1440a8.Linux.g++",
+            "generatedTestHash" : "d762b8a7fb8ee7430f3950d54186f7122a2fec5f96b0a55abbdb68c9bb9adc14",
             "lllcversion" : "Version: 0.5.14-develop.2023.7.11+commit.c58ab2c6.mod.Linux.g++",
             "solidity" : "Version: 0.8.21+commit.d9974bed.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/stCreateTest/CreateTransactionHighNonceFiller.yml",
@@ -150,6 +230,44 @@
             {
                 "expectException" : "TR_NonceHasMaxValue",
                 "rlp" : "0xf90254f901f3a0f731bd51d947edda3dea4c8c16c301a903b1796a8fdc48702c13132145fb5981a01dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d4934794a94f5374fce5edbc8e2a8697c15331677e6ebf0ba02fb5804c5079bae761a87f44bc870b2c8675b72980d98c99acd2e451cb84aa94a056e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421a056e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421b90100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000008001830f4240808203e800a000000000000000000000000000000000000000000000000000000000000000018800000000000000000af85bf85988ffffffffffffffff0a83015f9080808560016000f31ca03bfef6a444fcead2d0db16eb8e1f52dab1c735bff73b805e39a91c0b941be81ca069fe69ac730ae0bbfa7b940a34635dd987516ce0898d37cfa29d145a238b92e8c0",
+                "rlp_decoded" : {
+                    "blockHeader" : {
+                        "baseFeePerGas" : "0x0a",
+                        "bloom" : "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+                        "coinbase" : "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b",
+                        "difficulty" : "0x00",
+                        "extraData" : "0x00",
+                        "gasLimit" : "0x0f4240",
+                        "gasUsed" : "0x00",
+                        "hash" : "0x09892f2c1892853dc54d505df862469f8bd288842d5ed18e2dece964563f163b",
+                        "mixHash" : "0x0000000000000000000000000000000000000000000000000000000000000001",
+                        "nonce" : "0x0000000000000000",
+                        "number" : "0x01",
+                        "parentHash" : "0xf731bd51d947edda3dea4c8c16c301a903b1796a8fdc48702c13132145fb5981",
+                        "receiptTrie" : "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
+                        "stateRoot" : "0x2fb5804c5079bae761a87f44bc870b2c8675b72980d98c99acd2e451cb84aa94",
+                        "timestamp" : "0x03e8",
+                        "transactionsTrie" : "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
+                        "uncleHash" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347"
+                    },
+                    "transactions" : [
+                        {
+                            "data" : "0x60016000f3",
+                            "gasLimit" : "0x015f90",
+                            "gasPrice" : "0x0a",
+                            "nonce" : "0xffffffffffffffff",
+                            "r" : "0x3bfef6a444fcead2d0db16eb8e1f52dab1c735bff73b805e39a91c0b941be81c",
+                            "s" : "0x69fe69ac730ae0bbfa7b940a34635dd987516ce0898d37cfa29d145a238b92e8",
+                            "to" : "",
+                            "v" : "0x1c",
+                            "value" : "0x00"
+                        }
+                    ],
+                    "uncleHeaders" : [
+                    ],
+                    "withdrawals" : [
+                    ]
+                },
                 "transactionSequence" : [
                     {
                         "exception" : "TR_NonceHasMaxValue",
@@ -204,9 +322,9 @@
     "CreateTransactionHighNonce_d0g0v0_Shanghai" : {
         "_info" : {
             "comment" : "The test check if the create transaction is reject if the origin's nonce is maximum value\n(and would overflow if increased by 1).\n",
-            "filling-rpc-server" : "evm version 1.13.5-unstable-cd295356-20231019",
-            "filling-tool-version" : "retesteth-0.3.1-cancun+commit.1e18e0b3.Linux.g++",
-            "generatedTestHash" : "34a77a1bee5291634fc609b9ef812cfe18a5b8b5c7bd17dbf184441a36260968",
+            "filling-rpc-server" : "evm version 1.13.5-unstable-bc823f46-20231024",
+            "filling-tool-version" : "retesteth-0.3.1-cancun+commit.3e1440a8.Linux.g++",
+            "generatedTestHash" : "fdfb37f701af08d9034ed45adb2ed72786cacd595fff9613c50e4accc68942e6",
             "lllcversion" : "Version: 0.5.14-develop.2023.7.11+commit.c58ab2c6.mod.Linux.g++",
             "solidity" : "Version: 0.8.21+commit.d9974bed.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/stCreateTest/CreateTransactionHighNonceFiller.yml",
@@ -216,6 +334,45 @@
             {
                 "expectException" : "TR_NonceHasMaxValue",
                 "rlp" : "0xf90276f90214a02078a57cf8e6154b00cddd8cf8cc08163d46bee45b85ab37f23528d309a86d89a01dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d4934794a94f5374fce5edbc8e2a8697c15331677e6ebf0ba02fb5804c5079bae761a87f44bc870b2c8675b72980d98c99acd2e451cb84aa94a056e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421a056e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421b90100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000008001830f4240808203e800a000000000000000000000000000000000000000000000000000000000000000018800000000000000000aa056e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421f85bf85988ffffffffffffffff0a83015f9080808560016000f31ca03bfef6a444fcead2d0db16eb8e1f52dab1c735bff73b805e39a91c0b941be81ca069fe69ac730ae0bbfa7b940a34635dd987516ce0898d37cfa29d145a238b92e8c0c0",
+                "rlp_decoded" : {
+                    "blockHeader" : {
+                        "baseFeePerGas" : "0x0a",
+                        "bloom" : "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+                        "coinbase" : "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b",
+                        "difficulty" : "0x00",
+                        "extraData" : "0x00",
+                        "gasLimit" : "0x0f4240",
+                        "gasUsed" : "0x00",
+                        "hash" : "0x91418164d71de9e95cdc6328674b401404ccaaa6d3d01e65084a174c85c583b7",
+                        "mixHash" : "0x0000000000000000000000000000000000000000000000000000000000000001",
+                        "nonce" : "0x0000000000000000",
+                        "number" : "0x01",
+                        "parentHash" : "0x2078a57cf8e6154b00cddd8cf8cc08163d46bee45b85ab37f23528d309a86d89",
+                        "receiptTrie" : "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
+                        "stateRoot" : "0x2fb5804c5079bae761a87f44bc870b2c8675b72980d98c99acd2e451cb84aa94",
+                        "timestamp" : "0x03e8",
+                        "transactionsTrie" : "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
+                        "uncleHash" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                        "withdrawalsRoot" : "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421"
+                    },
+                    "transactions" : [
+                        {
+                            "data" : "0x60016000f3",
+                            "gasLimit" : "0x015f90",
+                            "gasPrice" : "0x0a",
+                            "nonce" : "0xffffffffffffffff",
+                            "r" : "0x3bfef6a444fcead2d0db16eb8e1f52dab1c735bff73b805e39a91c0b941be81c",
+                            "s" : "0x69fe69ac730ae0bbfa7b940a34635dd987516ce0898d37cfa29d145a238b92e8",
+                            "to" : "",
+                            "v" : "0x1c",
+                            "value" : "0x00"
+                        }
+                    ],
+                    "uncleHeaders" : [
+                    ],
+                    "withdrawals" : [
+                    ]
+                },
                 "transactionSequence" : [
                     {
                         "exception" : "TR_NonceHasMaxValue",
@@ -271,9 +428,9 @@
     "CreateTransactionHighNonce_d0g0v1_Cancun" : {
         "_info" : {
             "comment" : "The test check if the create transaction is reject if the origin's nonce is maximum value\n(and would overflow if increased by 1).\n",
-            "filling-rpc-server" : "evm version 1.13.5-unstable-cd295356-20231019",
-            "filling-tool-version" : "retesteth-0.3.1-cancun+commit.1e18e0b3.Linux.g++",
-            "generatedTestHash" : "bf1db05bbac33b3470c46aaf3415b4fe971342779c8e0b1c75c274c7c2c1f4f8",
+            "filling-rpc-server" : "evm version 1.13.5-unstable-bc823f46-20231024",
+            "filling-tool-version" : "retesteth-0.3.1-cancun+commit.3e1440a8.Linux.g++",
+            "generatedTestHash" : "9305b94d1559efb7e80819484353b4f8f60e8a35ef67d3c64893e5b8ede24574",
             "lllcversion" : "Version: 0.5.14-develop.2023.7.11+commit.c58ab2c6.mod.Linux.g++",
             "solidity" : "Version: 0.8.21+commit.d9974bed.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/stCreateTest/CreateTransactionHighNonceFiller.yml",
@@ -283,6 +440,48 @@
             {
                 "expectException" : "TR_NonceHasMaxValue",
                 "rlp" : "0xf90299f90237a0625ee6eebc6120f16a06bcb5c14549b952cb3dca6f61a4d617ac1653e3c62388a01dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d4934794a94f5374fce5edbc8e2a8697c15331677e6ebf0ba02fb5804c5079bae761a87f44bc870b2c8675b72980d98c99acd2e451cb84aa94a056e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421a056e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421b90100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000008001830f4240808203e800a000000000000000000000000000000000000000000000000000000000000000018800000000000000000aa056e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b4218080a00000000000000000000000000000000000000000000000000000000000000000f85bf85988ffffffffffffffff0a83015f9080018560016000f31ba0d154e5b04a2c660a597398d67cd85358e8fe9b9bf2a649883ed170e1b56b2dada005568798db9c655c634562bcbb61ae0c0dc81d8d4c0cfe3c7b4464aa6f1679f6c0c0",
+                "rlp_decoded" : {
+                    "blockHeader" : {
+                        "baseFeePerGas" : "0x0a",
+                        "blobGasUsed" : "0x00",
+                        "bloom" : "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+                        "coinbase" : "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b",
+                        "difficulty" : "0x00",
+                        "excessBlobGas" : "0x00",
+                        "extraData" : "0x00",
+                        "gasLimit" : "0x0f4240",
+                        "gasUsed" : "0x00",
+                        "hash" : "0x376d1e3d911c06f0e6ac23035784ba1ab8732f1aea9aec7fd0fdcf6fffb7e823",
+                        "mixHash" : "0x0000000000000000000000000000000000000000000000000000000000000001",
+                        "nonce" : "0x0000000000000000",
+                        "number" : "0x01",
+                        "parentBeaconBlockRoot" : "0x0000000000000000000000000000000000000000000000000000000000000000",
+                        "parentHash" : "0x625ee6eebc6120f16a06bcb5c14549b952cb3dca6f61a4d617ac1653e3c62388",
+                        "receiptTrie" : "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
+                        "stateRoot" : "0x2fb5804c5079bae761a87f44bc870b2c8675b72980d98c99acd2e451cb84aa94",
+                        "timestamp" : "0x03e8",
+                        "transactionsTrie" : "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
+                        "uncleHash" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                        "withdrawalsRoot" : "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421"
+                    },
+                    "transactions" : [
+                        {
+                            "data" : "0x60016000f3",
+                            "gasLimit" : "0x015f90",
+                            "gasPrice" : "0x0a",
+                            "nonce" : "0xffffffffffffffff",
+                            "r" : "0xd154e5b04a2c660a597398d67cd85358e8fe9b9bf2a649883ed170e1b56b2dad",
+                            "s" : "0x05568798db9c655c634562bcbb61ae0c0dc81d8d4c0cfe3c7b4464aa6f1679f6",
+                            "to" : "",
+                            "v" : "0x1b",
+                            "value" : "0x01"
+                        }
+                    ],
+                    "uncleHeaders" : [
+                    ],
+                    "withdrawals" : [
+                    ]
+                },
                 "transactionSequence" : [
                     {
                         "exception" : "TR_NonceHasMaxValue",
@@ -341,9 +540,9 @@
     "CreateTransactionHighNonce_d0g0v1_London" : {
         "_info" : {
             "comment" : "The test check if the create transaction is reject if the origin's nonce is maximum value\n(and would overflow if increased by 1).\n",
-            "filling-rpc-server" : "evm version 1.13.5-unstable-cd295356-20231019",
-            "filling-tool-version" : "retesteth-0.3.1-cancun+commit.1e18e0b3.Linux.g++",
-            "generatedTestHash" : "0d892bcbea1988f657fb71651cd6674ae95bc0db43d027936e6412f7988cfbc6",
+            "filling-rpc-server" : "evm version 1.13.5-unstable-bc823f46-20231024",
+            "filling-tool-version" : "retesteth-0.3.1-cancun+commit.3e1440a8.Linux.g++",
+            "generatedTestHash" : "279abafbc46daf48660ee400e00b0458c46f11645cc53b375d165fdd99110e2a",
             "lllcversion" : "Version: 0.5.14-develop.2023.7.11+commit.c58ab2c6.mod.Linux.g++",
             "solidity" : "Version: 0.8.21+commit.d9974bed.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/stCreateTest/CreateTransactionHighNonceFiller.yml",
@@ -353,6 +552,44 @@
             {
                 "expectException" : "TR_NonceHasMaxValue",
                 "rlp" : "0xf90257f901f6a0a30dd852345843374b0e6bd1b972c5a4a247598744e149dc086ea0f4f5df6de1a01dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d4934794a94f5374fce5edbc8e2a8697c15331677e6ebf0ba00b931d7705bd19afcc87a0f21460f4dcf4367a4440c52052bd84a0fb0aa40209a056e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421a056e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421b90100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000008302000001830f4240808203e800a000000000000000000000000000000000000000000000000000000000000000008800000000000000000af85bf85988ffffffffffffffff0a83015f9080018560016000f31ba0d154e5b04a2c660a597398d67cd85358e8fe9b9bf2a649883ed170e1b56b2dada005568798db9c655c634562bcbb61ae0c0dc81d8d4c0cfe3c7b4464aa6f1679f6c0",
+                "rlp_decoded" : {
+                    "blockHeader" : {
+                        "baseFeePerGas" : "0x0a",
+                        "bloom" : "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+                        "coinbase" : "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b",
+                        "difficulty" : "0x020000",
+                        "extraData" : "0x00",
+                        "gasLimit" : "0x0f4240",
+                        "gasUsed" : "0x00",
+                        "hash" : "0xd90a8d88e1706aa99816a2ce9af7e2f395512afb89aa3dfe13740c17ef7b082b",
+                        "mixHash" : "0x0000000000000000000000000000000000000000000000000000000000000000",
+                        "nonce" : "0x0000000000000000",
+                        "number" : "0x01",
+                        "parentHash" : "0xa30dd852345843374b0e6bd1b972c5a4a247598744e149dc086ea0f4f5df6de1",
+                        "receiptTrie" : "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
+                        "stateRoot" : "0x0b931d7705bd19afcc87a0f21460f4dcf4367a4440c52052bd84a0fb0aa40209",
+                        "timestamp" : "0x03e8",
+                        "transactionsTrie" : "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
+                        "uncleHash" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347"
+                    },
+                    "transactions" : [
+                        {
+                            "data" : "0x60016000f3",
+                            "gasLimit" : "0x015f90",
+                            "gasPrice" : "0x0a",
+                            "nonce" : "0xffffffffffffffff",
+                            "r" : "0xd154e5b04a2c660a597398d67cd85358e8fe9b9bf2a649883ed170e1b56b2dad",
+                            "s" : "0x05568798db9c655c634562bcbb61ae0c0dc81d8d4c0cfe3c7b4464aa6f1679f6",
+                            "to" : "",
+                            "v" : "0x1b",
+                            "value" : "0x01"
+                        }
+                    ],
+                    "uncleHeaders" : [
+                    ],
+                    "withdrawals" : [
+                    ]
+                },
                 "transactionSequence" : [
                     {
                         "exception" : "TR_NonceHasMaxValue",
@@ -407,9 +644,9 @@
     "CreateTransactionHighNonce_d0g0v1_Merge" : {
         "_info" : {
             "comment" : "The test check if the create transaction is reject if the origin's nonce is maximum value\n(and would overflow if increased by 1).\n",
-            "filling-rpc-server" : "evm version 1.13.5-unstable-cd295356-20231019",
-            "filling-tool-version" : "retesteth-0.3.1-cancun+commit.1e18e0b3.Linux.g++",
-            "generatedTestHash" : "66a580936237bd2b4aacbb1f799bea32ebdc7fdae8fe6a1ebae7a265b62c7d61",
+            "filling-rpc-server" : "evm version 1.13.5-unstable-bc823f46-20231024",
+            "filling-tool-version" : "retesteth-0.3.1-cancun+commit.3e1440a8.Linux.g++",
+            "generatedTestHash" : "8f0b877849f94b7aceaa179aa200a5c1bbd8498e67a861755218691cbf9e359c",
             "lllcversion" : "Version: 0.5.14-develop.2023.7.11+commit.c58ab2c6.mod.Linux.g++",
             "solidity" : "Version: 0.8.21+commit.d9974bed.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/stCreateTest/CreateTransactionHighNonceFiller.yml",
@@ -419,6 +656,44 @@
             {
                 "expectException" : "TR_NonceHasMaxValue",
                 "rlp" : "0xf90254f901f3a0f731bd51d947edda3dea4c8c16c301a903b1796a8fdc48702c13132145fb5981a01dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d4934794a94f5374fce5edbc8e2a8697c15331677e6ebf0ba02fb5804c5079bae761a87f44bc870b2c8675b72980d98c99acd2e451cb84aa94a056e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421a056e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421b90100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000008001830f4240808203e800a000000000000000000000000000000000000000000000000000000000000000018800000000000000000af85bf85988ffffffffffffffff0a83015f9080018560016000f31ba0d154e5b04a2c660a597398d67cd85358e8fe9b9bf2a649883ed170e1b56b2dada005568798db9c655c634562bcbb61ae0c0dc81d8d4c0cfe3c7b4464aa6f1679f6c0",
+                "rlp_decoded" : {
+                    "blockHeader" : {
+                        "baseFeePerGas" : "0x0a",
+                        "bloom" : "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+                        "coinbase" : "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b",
+                        "difficulty" : "0x00",
+                        "extraData" : "0x00",
+                        "gasLimit" : "0x0f4240",
+                        "gasUsed" : "0x00",
+                        "hash" : "0x09892f2c1892853dc54d505df862469f8bd288842d5ed18e2dece964563f163b",
+                        "mixHash" : "0x0000000000000000000000000000000000000000000000000000000000000001",
+                        "nonce" : "0x0000000000000000",
+                        "number" : "0x01",
+                        "parentHash" : "0xf731bd51d947edda3dea4c8c16c301a903b1796a8fdc48702c13132145fb5981",
+                        "receiptTrie" : "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
+                        "stateRoot" : "0x2fb5804c5079bae761a87f44bc870b2c8675b72980d98c99acd2e451cb84aa94",
+                        "timestamp" : "0x03e8",
+                        "transactionsTrie" : "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
+                        "uncleHash" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347"
+                    },
+                    "transactions" : [
+                        {
+                            "data" : "0x60016000f3",
+                            "gasLimit" : "0x015f90",
+                            "gasPrice" : "0x0a",
+                            "nonce" : "0xffffffffffffffff",
+                            "r" : "0xd154e5b04a2c660a597398d67cd85358e8fe9b9bf2a649883ed170e1b56b2dad",
+                            "s" : "0x05568798db9c655c634562bcbb61ae0c0dc81d8d4c0cfe3c7b4464aa6f1679f6",
+                            "to" : "",
+                            "v" : "0x1b",
+                            "value" : "0x01"
+                        }
+                    ],
+                    "uncleHeaders" : [
+                    ],
+                    "withdrawals" : [
+                    ]
+                },
                 "transactionSequence" : [
                     {
                         "exception" : "TR_NonceHasMaxValue",
@@ -473,9 +748,9 @@
     "CreateTransactionHighNonce_d0g0v1_Shanghai" : {
         "_info" : {
             "comment" : "The test check if the create transaction is reject if the origin's nonce is maximum value\n(and would overflow if increased by 1).\n",
-            "filling-rpc-server" : "evm version 1.13.5-unstable-cd295356-20231019",
-            "filling-tool-version" : "retesteth-0.3.1-cancun+commit.1e18e0b3.Linux.g++",
-            "generatedTestHash" : "6f98d3d1d63735f7f23ec8fed3587b32150392140e750996f38f46836e67216f",
+            "filling-rpc-server" : "evm version 1.13.5-unstable-bc823f46-20231024",
+            "filling-tool-version" : "retesteth-0.3.1-cancun+commit.3e1440a8.Linux.g++",
+            "generatedTestHash" : "b3798607e35a078edcce765b2f26fb9fb12943960432a9732775ba93b9240436",
             "lllcversion" : "Version: 0.5.14-develop.2023.7.11+commit.c58ab2c6.mod.Linux.g++",
             "solidity" : "Version: 0.8.21+commit.d9974bed.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/stCreateTest/CreateTransactionHighNonceFiller.yml",
@@ -485,6 +760,45 @@
             {
                 "expectException" : "TR_NonceHasMaxValue",
                 "rlp" : "0xf90276f90214a02078a57cf8e6154b00cddd8cf8cc08163d46bee45b85ab37f23528d309a86d89a01dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d4934794a94f5374fce5edbc8e2a8697c15331677e6ebf0ba02fb5804c5079bae761a87f44bc870b2c8675b72980d98c99acd2e451cb84aa94a056e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421a056e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421b90100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000008001830f4240808203e800a000000000000000000000000000000000000000000000000000000000000000018800000000000000000aa056e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421f85bf85988ffffffffffffffff0a83015f9080018560016000f31ba0d154e5b04a2c660a597398d67cd85358e8fe9b9bf2a649883ed170e1b56b2dada005568798db9c655c634562bcbb61ae0c0dc81d8d4c0cfe3c7b4464aa6f1679f6c0c0",
+                "rlp_decoded" : {
+                    "blockHeader" : {
+                        "baseFeePerGas" : "0x0a",
+                        "bloom" : "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+                        "coinbase" : "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b",
+                        "difficulty" : "0x00",
+                        "extraData" : "0x00",
+                        "gasLimit" : "0x0f4240",
+                        "gasUsed" : "0x00",
+                        "hash" : "0x91418164d71de9e95cdc6328674b401404ccaaa6d3d01e65084a174c85c583b7",
+                        "mixHash" : "0x0000000000000000000000000000000000000000000000000000000000000001",
+                        "nonce" : "0x0000000000000000",
+                        "number" : "0x01",
+                        "parentHash" : "0x2078a57cf8e6154b00cddd8cf8cc08163d46bee45b85ab37f23528d309a86d89",
+                        "receiptTrie" : "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
+                        "stateRoot" : "0x2fb5804c5079bae761a87f44bc870b2c8675b72980d98c99acd2e451cb84aa94",
+                        "timestamp" : "0x03e8",
+                        "transactionsTrie" : "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
+                        "uncleHash" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                        "withdrawalsRoot" : "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421"
+                    },
+                    "transactions" : [
+                        {
+                            "data" : "0x60016000f3",
+                            "gasLimit" : "0x015f90",
+                            "gasPrice" : "0x0a",
+                            "nonce" : "0xffffffffffffffff",
+                            "r" : "0xd154e5b04a2c660a597398d67cd85358e8fe9b9bf2a649883ed170e1b56b2dad",
+                            "s" : "0x05568798db9c655c634562bcbb61ae0c0dc81d8d4c0cfe3c7b4464aa6f1679f6",
+                            "to" : "",
+                            "v" : "0x1b",
+                            "value" : "0x01"
+                        }
+                    ],
+                    "uncleHeaders" : [
+                    ],
+                    "withdrawals" : [
+                    ]
+                },
                 "transactionSequence" : [
                     {
                         "exception" : "TR_NonceHasMaxValue",
