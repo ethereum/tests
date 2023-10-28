@@ -150,6 +150,19 @@ initialVal:
       to: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCD
       value: 0x0
 
+    # This call to cc..cd should is a type 2, it should fail
+    - data: :abi f(uint) 0x4030
+      accessList: []
+      expectException:
+        BerlinToLondonAt5: TR_TypeNotSupported
+      gasLimit: 500000
+      maxFeePerGas:  10000000000
+      maxPriorityFeePerGas: 1000
+      nonce: 1
+      secretKey: 45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8
+      to: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCD
+      value: 0x0
+
 
   # Block 5     
   - blockHeader:
