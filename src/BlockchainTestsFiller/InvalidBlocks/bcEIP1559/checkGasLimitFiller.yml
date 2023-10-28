@@ -51,13 +51,16 @@ checkGasLimit:
   # Gas used is one more than the gas limit
   - blockHeader:
       gasLimit: 4000000  # 4m gas
+    blocknumber: "1"
+    expectException:
+      ">=London": TR_GasLimitReached
     transactions:
     - data: ''
       accessList: []
       gasLimit: 1000001  # 1m gas plus one
       maxPriorityFeePerGas: 0x00
       maxFeePerGas: 4000
-      nonce: auto
+      nonce: 1
       secretKey: 41f6e321b31e72173f8ff2e292359e1862f24fba42fe6f97efaf641980eff298
       to: 0x1111111111111111111111111111111111111111
       value: 0x0
@@ -66,7 +69,7 @@ checkGasLimit:
       gasLimit: 1000000  # 1m gas
       maxPriorityFeePerGas: 0x00
       maxFeePerGas: 4000
-      nonce: auto
+      nonce: 2
       secretKey: 41f6e321b31e72173f8ff2e292359e1862f24fba42fe6f97efaf641980eff298
       to: 0x1111111111111111111111111111111111111111
       value: 0x0
@@ -75,7 +78,7 @@ checkGasLimit:
       gasLimit: 1000000  # 1m gas
       maxPriorityFeePerGas: 0x00
       maxFeePerGas: 4000
-      nonce: auto
+      nonce: 3
       secretKey: 41f6e321b31e72173f8ff2e292359e1862f24fba42fe6f97efaf641980eff298
       to: 0x1111111111111111111111111111111111111111
       value: 0x0
@@ -86,16 +89,49 @@ checkGasLimit:
       gasLimit: 1000000  # 1m gas
       maxPriorityFeePerGas: 0x00
       maxFeePerGas: 4000
-      nonce: auto
+      nonce: 4
+      secretKey: 41f6e321b31e72173f8ff2e292359e1862f24fba42fe6f97efaf641980eff298
+      to: 0x1111111111111111111111111111111111111111
+      value: 0x0
+
+  # Gas used is one more than the gas limit
+  - blockHeader:
+      gasLimit: 4000000  # 4m gas
+    blocknumber: "1"
+    transactions:
+    - data: ''
+      accessList: []
+      gasLimit: 1000001  # 1m gas plus one
+      maxPriorityFeePerGas: 0x00
+      maxFeePerGas: 4000
+      nonce: 1
+      secretKey: 41f6e321b31e72173f8ff2e292359e1862f24fba42fe6f97efaf641980eff298
+      to: 0x1111111111111111111111111111111111111111
+      value: 0x0
+    - data: ''
+      accessList: []
+      gasLimit: 1000000  # 1m gas
+      maxPriorityFeePerGas: 0x00
+      maxFeePerGas: 4000
+      nonce: 2
+      secretKey: 41f6e321b31e72173f8ff2e292359e1862f24fba42fe6f97efaf641980eff298
+      to: 0x1111111111111111111111111111111111111111
+      value: 0x0
+    - data: ''
+      accessList: []
+      gasLimit: 1000000  # 1m gas
+      maxPriorityFeePerGas: 0x00
+      maxFeePerGas: 4000
+      nonce: 3
       secretKey: 41f6e321b31e72173f8ff2e292359e1862f24fba42fe6f97efaf641980eff298
       to: 0x1111111111111111111111111111111111111111
       value: 0x0
 
 
-
   # Gas used is exactly the gas limit
   - blockHeader:
       gasLimit: 4000000  # 4m gas
+    blocknumber: "2"
     transactions:
     - data: ''
       accessList: []
@@ -111,7 +147,7 @@ checkGasLimit:
       gasLimit: 1000000  # 1m gas
       maxPriorityFeePerGas: 0x00
       maxFeePerGas: 4000
-      nonce: auto
+      nonce: 5
       secretKey: 41f6e321b31e72173f8ff2e292359e1862f24fba42fe6f97efaf641980eff298
       to: 0x1111111111111111111111111111111111111111
       value: 0x0
@@ -120,7 +156,7 @@ checkGasLimit:
       gasLimit: 1000000  # 1m gas
       maxPriorityFeePerGas: 0x00
       maxFeePerGas: 4000
-      nonce: auto
+      nonce: 6
       secretKey: 41f6e321b31e72173f8ff2e292359e1862f24fba42fe6f97efaf641980eff298
       to: 0x1111111111111111111111111111111111111111
       value: 0x0
@@ -129,7 +165,7 @@ checkGasLimit:
       gasLimit: 1000000  # 1m gas
       maxPriorityFeePerGas: 0x00
       maxFeePerGas: 4000
-      nonce: auto
+      nonce: 7
       secretKey: 41f6e321b31e72173f8ff2e292359e1862f24fba42fe6f97efaf641980eff298
       to: 0x1111111111111111111111111111111111111111
       value: 0x0
@@ -138,13 +174,14 @@ checkGasLimit:
   # Gas used is exactly the gas limit, all in one transaction
   - blockHeader:
       gasLimit: 4000000  # 4m gas
+    blocknumber: "3"
     transactions:
     - data: ''
       accessList: []
       gasLimit: 4000000
       maxPriorityFeePerGas: 0x00
       maxFeePerGas: 4000
-      nonce: auto
+      nonce: 8
       secretKey: 41f6e321b31e72173f8ff2e292359e1862f24fba42fe6f97efaf641980eff298
       to: 0x1111111111111111111111111111111111111111
       value: 0x0
@@ -153,6 +190,9 @@ checkGasLimit:
   # Gas used is the gas limit plus one, all in one transaction
   - blockHeader:
       gasLimit: 4000000  # 4m gas
+    blocknumber: "4"
+    expectException:
+      ">=London": TR_GasLimitReached
     transactions:
     - data: ''
       expectException:
@@ -161,7 +201,7 @@ checkGasLimit:
       gasLimit: 4000001
       maxPriorityFeePerGas: 0x00
       maxFeePerGas: 4000
-      nonce: auto
+      nonce: 9
       secretKey: 41f6e321b31e72173f8ff2e292359e1862f24fba42fe6f97efaf641980eff298
       to: 0x1111111111111111111111111111111111111111
       value: 0x0

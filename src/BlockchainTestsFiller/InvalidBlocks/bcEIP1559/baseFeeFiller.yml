@@ -94,26 +94,28 @@ baseFee:
 
   blocks:
   # Block 1
-  - transactions:
+  - blocknumber: "1"
+    transactions:
     - data: :raw 0x01
       accessList: []
       gasLimit: 1000000000000	
       maxPriorityFeePerGas: 1
       maxFeePerGas:      1000
-      nonce: auto
+      nonce: 1
       secretKey: 41f6e321b31e72173f8ff2e292359e1862f24fba42fe6f97efaf641980eff298
       to: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
       value: 0x0
 
 
   # Block 2
-  - transactions:
+  - blocknumber: "2"
+    transactions:
     - data: :raw 0x0201
       accessList: []
       gasLimit: 1000000000000	
       maxPriorityFeePerGas: 10
       maxFeePerGas:       1000
-      nonce: auto
+      nonce: 2
       secretKey: 41f6e321b31e72173f8ff2e292359e1862f24fba42fe6f97efaf641980eff298
       to: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
       value: 0x0
@@ -122,7 +124,7 @@ baseFee:
       gasLimit: 1000000000000	
       maxPriorityFeePerGas: 100
       maxFeePerGas:        1000
-      nonce: auto
+      nonce: 3
       secretKey: 41f6e321b31e72173f8ff2e292359e1862f24fba42fe6f97efaf641980eff298
       to: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCD
       value: 0x0
@@ -131,20 +133,23 @@ baseFee:
       gasLimit: 1000000000000	
       maxPriorityFeePerGas: 100
       maxFeePerGas:        1000
-      nonce: auto
+      nonce: 4
       secretKey: 41f6e321b31e72173f8ff2e292359e1862f24fba42fe6f97efaf641980eff298
       to: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCE
       value: 0x0
 
 
-  # Block 3
-  - transactions:
+  # Block 3 Invalid
+  - blocknumber: "3"
+    expectException:
+      ">=London": TR_TipGtFeeCap
+    transactions:
     - data: :raw 0x0301
       accessList: []
       gasLimit: 1000000000000	
       maxPriorityFeePerGas: 1000
       maxFeePerGas:         1000
-      nonce: auto
+      nonce: 5
       secretKey: 41f6e321b31e72173f8ff2e292359e1862f24fba42fe6f97efaf641980eff298
       to: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
       value: 0x0
@@ -156,9 +161,22 @@ baseFee:
       gasLimit: 1000000000000	
       maxPriorityFeePerGas: 100000
       maxFeePerGas:           1000
-      nonce: auto
+      nonce: 6
       secretKey: 41f6e321b31e72173f8ff2e292359e1862f24fba42fe6f97efaf641980eff298
       to: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCD
+      value: 0x0
+
+  # Block 3 Valid
+  - blocknumber: "3"
+    transactions:
+    - data: :raw 0x0301
+      accessList: []
+      gasLimit: 1000000000000	
+      maxPriorityFeePerGas: 1000
+      maxFeePerGas:         1000
+      nonce: 5
+      secretKey: 41f6e321b31e72173f8ff2e292359e1862f24fba42fe6f97efaf641980eff298
+      to: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
       value: 0x0
 
     - data: :raw 0x0303
@@ -176,20 +194,23 @@ baseFee:
       gasLimit: 1000000000000	
       maxPriorityFeePerGas: 100000
       maxFeePerGas:         100000
-      nonce: auto
+      nonce: 7
       secretKey: 41f6e321b31e72173f8ff2e292359e1862f24fba42fe6f97efaf641980eff298
       to: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCD
       value: 0x0
 
 
-  # Block 4
-  - transactions:
+  # Block 4 Invalid
+  - blocknumber: "4"
+    expectException:
+      ">=London": TR_TipGtFeeCap
+    transactions:
     - data: :raw 0x0401
       accessList: []
       gasLimit: 1000000000000	
       maxPriorityFeePerGas: 1000
       maxFeePerGas:         1000
-      nonce: auto
+      nonce: 8
       secretKey: 41f6e321b31e72173f8ff2e292359e1862f24fba42fe6f97efaf641980eff298
       to: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
       value: 0x0
@@ -201,9 +222,22 @@ baseFee:
       gasLimit: 1000000000000	
       maxPriorityFeePerGas: 100000
       maxFeePerGas:           1000
-      nonce: auto
+      nonce: 9
       secretKey: 41f6e321b31e72173f8ff2e292359e1862f24fba42fe6f97efaf641980eff298
       to: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCD
+      value: 0x0
+
+  # Block 4 Valid
+  - blocknumber: "4"
+    transactions:
+    - data: :raw 0x0401
+      accessList: []
+      gasLimit: 1000000000000	
+      maxPriorityFeePerGas: 1000
+      maxFeePerGas:         1000
+      nonce: 8
+      secretKey: 41f6e321b31e72173f8ff2e292359e1862f24fba42fe6f97efaf641980eff298
+      to: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
       value: 0x0
 
     - data: :raw 0x0403
@@ -221,12 +255,10 @@ baseFee:
       gasLimit: 1000000000000	
       maxPriorityFeePerGas: 100000
       maxFeePerGas:         100000
-      nonce: auto
+      nonce: 10
       secretKey: 41f6e321b31e72173f8ff2e292359e1862f24fba42fe6f97efaf641980eff298
       to: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCD
       value: 0x0
-
-
 
 
   expect:
