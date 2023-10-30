@@ -29,7 +29,7 @@ const gasLimit = 'F00000000000'
 const userBalance = 'F000000000000000'
 
 // The forks supported by the test in order.
-const forks = ["Merge", "Shanghai"]
+const forks = ["Merge", "Shanghai", "Cancun"]
 
 
 
@@ -532,6 +532,36 @@ var opcodes = {
        "5B00"             //  8 JUMPDEST, END
    },
 
+   0x49: {  // BLOBHASH
+      test: "0x" +
+         "6001" +  //  0 PUSH1 1
+         "49"    + //  2 BLOBHASH
+         "6001" +  //  3 PUSH1 1
+         "49"    + //  5 BLOBHASH
+         "03"    + //  6 SUB
+         "600B"  + //  7 PUSH 0x0B (for a revert)
+         "57"    + //  9 JUMPI (if the value is not zero)
+         "00"    + // 10 STOP (if the value is zero)
+         "5B"    + // 11 JUMPDEST
+         "FD",     // 12 REVERT
+      fromFork: "Cancun"
+   },
+
+
+   0x4A: {  // BEACONROOT
+      test: "0x" +
+         "4A"    + //  0 BEACONROOT
+         "4A"    + //  1 BEACONROOT
+         "03"    + //  2 SUB
+         "6007"  + //  3 PUSH 0x07 (for a revert)
+         "57"    + //  5 JUMPI (if the value is not zero)
+         "00"    + //  6 STOP (if the value is zero)
+         "5B"    + //  7 JUMPDEST
+         "FD",     //  8 REVERT
+      fromFork: "Cancun"
+   },
+
+
    0x53: { // MSTORE8 (bits)
      test: "0x"        +
         "60FF"            +   //  0 PUSH1 0xFF (can be any value)
@@ -598,6 +628,96 @@ var opcodes = {
         "6007"          +   //  3 PUSH1 7
         "5700"          +   //  5 JUMPI, STOP
         "5BFD"              //  7 JUMPDEST, REVERT
+   },
+
+
+   0x5C: {   // TLOAD and TSTORE
+     test: "0x"        +
+        "36"           +  //  0 CALLDATASIZE (if >0, we're in the outer call)
+        "600C"         +  //  1 PUSH1 0x0C (= 12)
+        "57"           +  //  3 JUMPI
+                          // (if we're here, we're in the inner call)
+        "6010"         +  //  4 PUSH1 10
+        "60FF"         +  //  6 PUSH1 FF
+        "5D"           +  //  8 TSTORE
+        "5F"           +  //  9 PUSH0
+        "5F"           +  // 10 PUSH0
+        "F3"           +  // 11 RETURN
+        "5B"           +  // 12 JUMPDEST
+        "5F"           +  // 13 PUSH0
+        "5F"           +  // 14 PUSH0
+        "5F"           +  // 15 PUSH0
+        "5F"           +  // 16 PUSH0
+        "5F"           +  // 17 PUSH0
+        "30"           +  // 18 ADDRESS
+        "5A"           +  // 19 GAS
+        "F1"           +  // 20 CALL
+        "60FF"         +  // 21 PUSH1 FF
+        "5C"           +  // 23 TLOAD
+        "6010"         +  // 24 PUSH1 10
+        "03"           +  // 26 SUB
+        "601F"         +  // 27 PUSH1 0x1F (= 31)
+        "57"           +  // 29 JUMPI (should be zero and not jump)
+        "00"           +  // 30 STOP (success)
+        "5B"           +  // 31 JUMPDEST
+        "FE",             // 32 INVALID (REVERT)
+     fromFork: "Cancun"
+   },
+
+
+   0x5D: {   // TLOAD and TSTORE
+     test: "0x"        +
+        "36"           +  //  0 CALLDATASIZE (if >0, we're in the outer call)
+        "600C"         +  //  1 PUSH1 0x0C (= 12)
+        "57"           +  //  3 JUMPI
+                          // (if we're here, we're in the inner call)
+        "6010"         +  //  4 PUSH1 10
+        "60FF"         +  //  6 PUSH1 FF
+        "5D"           +  //  8 TSTORE
+        "5F"           +  //  9 PUSH0
+        "5F"           +  // 10 PUSH0
+        "F3"           +  // 11 RETURN
+        "5B"           +  // 12 JUMPDEST
+        "5F"           +  // 13 PUSH0
+        "5F"           +  // 14 PUSH0
+        "5F"           +  // 15 PUSH0
+        "5F"           +  // 16 PUSH0
+        "5F"           +  // 17 PUSH0
+        "30"           +  // 18 ADDRESS
+        "5A"           +  // 19 GAS
+        "F1"           +  // 20 CALL
+        "60FF"         +  // 21 PUSH1 FF
+        "5C"           +  // 23 TLOAD
+        "6010"         +  // 24 PUSH1 10
+        "03"           +  // 26 SUB
+        "601F"         +  // 27 PUSH1 0x1F (= 31)
+        "57"           +  // 29 JUMPI (should be zero and not jump)
+        "00"           +  // 30 STOP (success)
+        "5B"           +  // 31 JUMPDEST
+        "FE",             // 32 INVALID (REVERT)
+     fromFork: "Cancun"
+   },
+
+
+   0x5E: {    // MCOPY
+     test: "0x"        +
+           "60F0"      + //  0 PUSH1 0xF0
+           "601F"      + //  2 PUSH1 0x1F
+           "53"        + //  3 MSTORE8
+           "6001"      + //  4 PUSH1 1     (length)
+           "601F"      + //  6 PUSH1 0x1F  (src)
+           "601E"      + //  8 PUSH1 0x1E  (dest)
+           "5E"        + // 10 MCOPY
+           "5F"        + // 11 PUSH0
+           "51"        + // 12 MLOAD
+           "61F0F0"    + // 13 PUSH2 0xF0F0
+           "03"        + // 16 SUB
+           "6014"      + // 17 PUSH1 0x14 (= 20)
+           "57"        + // 18 JUMPI
+           "00"        + // 19 STOP
+           "5B"        + // 20 JUMPDEST
+           "FE",         // 21 INVALID
+     fromFork: "Cancun"
    },
 
 
