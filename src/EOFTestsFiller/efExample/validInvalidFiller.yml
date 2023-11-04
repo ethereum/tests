@@ -302,52 +302,59 @@ validInvalid:
   - data: |
      :label EOF1V0014 :raw 0x
       # EOF deployed code 
-      ef0001  # Magic followed by version
-      010014  # Four code segments
-      020005  # Four code segments
-        0001  #   code seg 0: 1 bytes
-        0005  #   code seg 1: 5 bytes
-        0005  #   code seg 2: 5 bytes
-        0001  #   code seg 3: 1 bytes
-        0001  #   code seg 4: 1 bytes
-      040004  # Four byte data segment
-      00      # End of header
-              # Code segment 0 header
-          00  # Zero inputs
-          80  # Non-Returning Function
-        0000  # Max stack height 0
-              # Code segment 1 header
-          00  # Zero inputs
-          80  # Non-Returning Function
-        0002  # Max stack height 0
-              # Code segment 2 header
-          00  # Zero inputs
-          80  # Non-Returning Function
-        0002  # Max stack height 0
-              # Code segment 3 header
-          00  # Zero inputs
-          80  # Non-Returning Function
-        0000  # Max stack height 0
-              # Code segment 4 header
-          00  # Zero inputs
-          00  # Zero outputs
-        0000  # Max stack height 0
-              # Code segment 0 code
-          00  # STOP
-              # Code segment 1 code
-        6000  # PUSH1 0
-        6000  # PUSH1 0
-          F3  # RETURN
-              # Code segment 2 code
-        6000  # PUSH1 0
-        6000  # PUSH1 0
-          FD  # REVERT
-              # Code segment 3 code
-          FE  # INVALID
-              # Code segment 4 code
-          E4  # RETF
-              # Data segment
-           0bad60A7  # 4 bytes (valid)
+      EF0001 # Magic and Version ( 1 )
+     010014 # Types length ( 20 )
+     020005 # Total code sections ( 5 )
+       0019 # Code section  0 , 25  bytes
+       0003 # Code section  1 , 3  bytes
+       0003 # Code section  2 , 3  bytes
+       0001 # Code section  3 , 1  bytes
+       0001 # Code section  4 , 1  bytes
+     040004 # Data section length ( 4 )
+         00 # Terminator (end of header)
+            # Code 0 types
+         00 # 0 inputs
+         80 # 0 outputs (Non-returning function)
+       0001 # max stack: 1
+            # Code 1 types
+         00 # 0 inputs
+         80 # 0 outputs (Non-returning function)
+       0002 # max stack: 2
+            # Code 2 types
+         00 # 0 inputs
+         80 # 0 outputs (Non-returning function)
+       0002 # max stack: 2
+            # Code 3 types
+         00 # 0 inputs
+         80 # 0 outputs (Non-returning function)
+       0000 # max stack: 0
+            # Code 4 types
+         00 # 0 inputs
+         00 # 0 outputs
+       0000 # max stack: 0
+            # Code section 0
+         5f # [0] PUSH0 
+         35 # [1] CALLDATALOAD 
+     e2030000000300060009 # [2] RJUMPV(0,3,6,9) 
+     e50001 # [12] JUMPF(1) 
+     e50002 # [15] JUMPF(2) 
+     e50003 # [18] JUMPF(3) 
+     e30004 # [21] CALLF(4) 
+         00 # [24] STOP 
+            # Code section 1
+         5f # [0] PUSH0 
+         5f # [1] PUSH0 
+         f3 # [2] RETURN 
+            # Code section 2
+         5f # [0] PUSH0 
+         5f # [1] PUSH0 
+         fd # [2] REVERT 
+            # Code section 3
+         fe # [0] INVALID 
+            # Code section 4
+         e4 # [0] RETF 
+            # Data section 
+     0bad60a7
     expectException:
       "Cancun" : "EOF_InvalidCode"
 
@@ -702,31 +709,32 @@ validInvalid:
   - data: |
      :label EOF1V0002 :raw 0x
       # EOF deployed code 
-      ef0001  # Magic followed by version
-      010008  # Two code segments
-      020002  # Two code segments
-        0003  #   code seg 0: 3 bytes
-        0003  #   code seg 1: 3 bytes
-      040004  # Four byte data segment
-      00      # End of header
-              # Code segment 0 header
-          00  # Zero inputs
-          80  # Non-Returning Function
-        0001  # Max stack height 1
-              # Code segment 1 header
-          01  # Zero inputs
-          01  # Zero outputs
-        0001  # Max stack height 1
-              # Code segment 0 code
-           30 #  1 ADDRESS 
-           50 #  2 POP
-           00 #  3 STOP
-              # Code segment 1 code
-           50 #  1 POP
-           30 #  2 ADDRESS
-           E4 #  3 RETF
-              # Data segment
-           0bad60A7  # 4 bytes (valid)
+      EF0001 # Magic and Version ( 1 )
+      010008 # Types length ( 8 )
+      020002 # Total code sections ( 2 )
+        0006 # Code section  0 , 6  bytes
+        0003 # Code section  1 , 3  bytes
+      040004 # Data section length ( 4 )
+          00 # Terminator (end of header)
+             # Code 0 types
+          00 # 0 inputs
+          80 # 0 outputs (Non-returning function)
+        0001 # max stack: 1
+             # Code 1 types
+          01 # 1 inputs
+          01 # 1 outputs
+        0001 # max stack: 1
+             # Code section 0
+          30 # [0] ADDRESS 
+      e30001 # [1] CALLF(1) 
+          50 # [4] POP 
+          00 # [5] STOP 
+             # Code section 1
+          50 # [0] POP 
+          30 # [1] ADDRESS 
+          e4 # [2] RETF 
+             # Data section 
+      0bad60a7
     expectException:
       "Cancun" : "EOF_InvalidCode"
 
@@ -968,49 +976,51 @@ validInvalid:
   - data: |
      :label EOF1V0003 :raw 0x
       # EOF deployed code 
-      ef0001  # Magic followed by version
-      010010  # Two code segments
-      020004  # Two code segments
-        0003  #   code seg 0: 3 bytes
-        0003  #   code seg 1: 3 bytes
-        0003  #   code seg 2: 3 bytes
-        0003  #   code seg 3: 3 bytes
-      040004  # Four byte data segment
-      00      # End of header
-              # Code segment 0 header
-          00  # Zero inputs
-          80  # Non-Returning Function
-        0001  # Max stack height 1
-              # Code segment 1 header
-          01  # Zero inputs
-          01  # Zero outputs
-        0001  # Max stack height 1
-              # Code segment 2 header
-          00  # Zero inputs
-          00  # Zero outputs
-        0001  # Max stack height 1
-              # Code segment 3 header
-          01  # Zero inputs
-          01  # Zero outputs
-        0001  # Max stack height 1
-              # Code segment 0 code
-           30 #  1 ADDRESS 
-           50 #  2 POP
-           00 #  3 STOP
-              # Code segment 1 code
-           50 #  1 POP
-           30 #  2 ADDRESS
-           E4 #  3 RETF
-              # Code segment 2 code
-           30 #  1 ADDRESS 
-           50 #  2 POP
-           E4 #  3 RETF
-              # Code segment 3 code
-           50 #  1 POP
-           30 #  2 ADDRESS
-           E4 #  3 RETF
-              # Data segment
-           0bad60A7  # 4 bytes (valid)
+      EF0001 # Magic and Version ( 1 )
+      010010 # Types length ( 16 )
+      020004 # Total code sections ( 4 )
+        000b # Code section  0 , 11  bytes
+        0003 # Code section  1 , 3  bytes
+        0003 # Code section  2 , 3  bytes
+        0003 # Code section  3 , 3  bytes
+      040004 # Data section length ( 4 )
+          00 # Terminator (end of header)
+             # Code 0 types
+          00 # 0 inputs
+          80 # 0 outputs (Non-returning function)
+        0001 # max stack: 1
+             # Code 1 types
+          01 # 1 inputs
+          01 # 1 outputs
+        0001 # max stack: 1
+             # Code 2 types
+          00 # 0 inputs
+          00 # 0 outputs
+        0001 # max stack: 1
+             # Code 3 types
+          01 # 1 inputs
+          01 # 1 outputs
+        0001 # max stack: 1
+             # Code section 0
+          30 # [0] ADDRESS 
+      e30001 # [1] CALLF(1) 
+      e30003 # [4] CALLF(3) 
+      e30002 # [7] CALLF(2) 
+          00 # [10] STOP 
+             # Code section 1
+          50 # [0] POP 
+          30 # [1] ADDRESS 
+          e4 # [2] RETF 
+             # Code section 2
+          30 # [0] ADDRESS 
+          50 # [1] POP 
+          e4 # [2] RETF 
+             # Code section 3
+          50 # [0] POP 
+          30 # [1] ADDRESS 
+          e4 # [2] RETF 
+             # Data section 
+      0bad60a7
     expectException:
       "Cancun" : "EOF_InvalidCode"
 
@@ -1020,59 +1030,64 @@ validInvalid:
   - data: |
      :label EOF1V0005 :raw 0x
       # EOF deployed code 
-      ef0001  # Magic followed by version
-      010010  # Four code segments
-      020004  # Four code segments
-        0003  #   code seg 0: 3 bytes
-        0005  #   code seg 1: 5 bytes
-        0007  #   code seg 2: 7 bytes
-        0007  #   code seg 3: 7 bytes
-      040004  # Four byte data segment
-      00      # End of header
-              # Code segment 0 header
-          00  # Zero inputs
-          80  # Non-Returning Function
-        0001  # Max stack height 1
-              # Code segment 1 header
-          00  # Zero inputs
-          80  # Non-Returning Function
-        0002  # Max stack height 2
-              # Code segment 2 header
-          00  # Zero inputs
-          80  # Non-Returning Function
-        0003  # Max stack height 3
-              # Code segment 3 header
-          00  # Zero inputs
-          80  # Non-Returning Function
-        0001  # Max stack height 1
-              # Code segment 0 code
-           30 #  1 ADDRESS 
-           50 #  2 POP
-           00 #  3 STOP
-              # Code segment 1 code
-           30 #  1 ADDRESS 
-           30 #  2 ADDRESS
-           50 #  3 POP
-           50 #  4 POP
-           00 #  5 STOP
-              # Code segment 2 code
-           30 #  1 ADDRESS 
-           30 #  2 ADDRESS
-           30 #  3 ADDRESS
-           50 #  4 POP
-           50 #  5 POP
-           50 #  6 POP
-           00 #  7 STOP
-              # Code segment 3 code
-           30 #  1 ADDRESS 
-           50 #  2 POP
-           30 #  3 ADDRESS
-           50 #  4 POP
-           30 #  5 ADDRESS
-           50 #  6 POP
-           00 #  7 STOP
-              # Data segment
-           0bad60A7  # 4 bytes (valid)
+      EF0001 # Magic and Version ( 1 )
+      010010 # Types length ( 16 )
+      020004 # Total code sections ( 4 )
+        0015 # Code section  0 , 21  bytes
+        0005 # Code section  1 , 5  bytes
+        0007 # Code section  2 , 7  bytes
+        0007 # Code section  3 , 7  bytes
+      040004 # Data section length ( 4 )
+          00 # Terminator (end of header)
+             # Code 0 types
+          00 # 0 inputs
+          80 # 0 outputs (Non-returning function)
+        0001 # max stack: 1
+             # Code 1 types
+          00 # 0 inputs
+          80 # 0 outputs (Non-returning function)
+        0002 # max stack: 2
+             # Code 2 types
+          00 # 0 inputs
+          80 # 0 outputs (Non-returning function)
+        0003 # max stack: 3
+             # Code 3 types
+          00 # 0 inputs
+          80 # 0 outputs (Non-returning function)
+        0001 # max stack: 1
+             # Code section 0
+          30 # [0] ADDRESS 
+          50 # [1] POP 
+          5f # [2] PUSH0 
+          35 # [3] CALLDATALOAD 
+      e202000000030006 # [4] RJUMPV(0,3,6) 
+      e50001 # [12] JUMPF(1) 
+      e50002 # [15] JUMPF(2) 
+      e50003 # [18] JUMPF(3) 
+             # Code section 1
+          30 # [0] ADDRESS 
+          30 # [1] ADDRESS 
+          50 # [2] POP 
+          50 # [3] POP 
+          00 # [4] STOP 
+             # Code section 2
+          30 # [0] ADDRESS 
+          30 # [1] ADDRESS 
+          30 # [2] ADDRESS 
+          50 # [3] POP 
+          50 # [4] POP 
+          50 # [5] POP 
+          00 # [6] STOP 
+             # Code section 3
+          30 # [0] ADDRESS 
+          50 # [1] POP 
+          30 # [2] ADDRESS 
+          50 # [3] POP 
+          30 # [4] ADDRESS 
+          50 # [5] POP 
+          00 # [6] STOP 
+             # Data section 
+      0bad60a7
     expectException:
       "Cancun" : "EOF_InvalidCode"
 
@@ -1081,149 +1096,156 @@ validInvalid:
   - data: |
      :label EOF1V0007 :raw 0x
       # EOF deployed code 
-      ef0001  # Magic followed by version
-      010010  # Four code segments
-      020004  # Four code segments
-        0003  #   code seg 0: 3 bytes
-        0005  #   code seg 1: 5 bytes
-        0007  #   code seg 2: 7 bytes
-        0007  #   code seg 3: 7 bytes
-      040004  # Four byte data segment
-      00      # End of header
-              # Code segment 0 header
-          00  # Zero inputs
-          80  # Non-Returning Function
-        0001  # Max stack height 1
-              # Code segment 1 header
-          00  # Zero inputs
-          00  # Zero outputs
-        0000  # Max stack height 2
-              # Code segment 2 header
-          00  # Zero inputs
-          00  # Zero outputs
-        0003  # Max stack height 3
-              # Code segment 3 header
-          00  # Zero inputs
-          00  # Zero outputs
-        0001  # Max stack height 1
-              # Code segment 0 code
-           30 #  0 ADDRESS 
-           50 #  1 POP
-           00 #  2 STOP
-              # Code segment 1 code
-       B00002 #  0 CALL code segment 02
-           00 #  3 STOP
-              # Code segment 2 code
-           30 #  0 ADDRESS 
-           30 #  1 ADDRESS
-           30 #  2 ADDRESS
-           50 #  3 POP
-           50 #  4 POP
-           50 #  5 POP
-           00 #  6 STOP
-              # Code segment 3 code
-           30 #  0 ADDRESS 
-           50 #  1 POP
-           30 #  2 ADDRESS
-           50 #  3 POP
-           30 #  4 ADDRESS
-           50 #  5 POP
-           00 #  6 STOP
-              # Data segment
-           0bad60A7  # 4 bytes (valid)
+      EF0001 # Magic and Version ( 1 )
+      010010 # Types length ( 16 )
+      020004 # Total code sections ( 4 )
+        0010 # Code section  0 , 16  bytes
+        0003 # Code section  1 , 3  bytes
+        0007 # Code section  2 , 7  bytes
+        0007 # Code section  3 , 7  bytes
+      040004 # Data section length ( 4 )
+          00 # Terminator (end of header)
+             # Code 0 types
+          00 # 0 inputs
+          80 # 0 outputs (Non-returning function)
+        0001 # max stack: 1
+             # Code 1 types
+          00 # 0 inputs
+          80 # 0 outputs (Non-returning function)
+        0000 # max stack: 0
+             # Code 2 types
+          00 # 0 inputs
+          80 # 0 outputs (Non-returning function)
+        0003 # max stack: 3
+             # Code 3 types
+          00 # 0 inputs
+          80 # 0 outputs (Non-returning function)
+        0001 # max stack: 1
+             # Code section 0
+          30 # [0] ADDRESS 
+          50 # [1] POP 
+          5f # [2] PUSH0 
+          35 # [3] CALLDATALOAD 
+      e20100000003 # [4] RJUMPV(0,3) 
+      e50001 # [10] JUMPF(1) 
+      e50003 # [13] JUMPF(3) 
+             # Code section 1
+      e50002 # [0] JUMPF(2) 
+             # Code section 2
+          30 # [0] ADDRESS 
+          30 # [1] ADDRESS 
+          30 # [2] ADDRESS 
+          50 # [3] POP 
+          50 # [4] POP 
+          50 # [5] POP 
+          00 # [6] STOP 
+             # Code section 3
+          30 # [0] ADDRESS 
+          50 # [1] POP 
+          30 # [2] ADDRESS 
+          50 # [3] POP 
+          30 # [4] ADDRESS 
+          50 # [5] POP 
+          00 # [6] STOP 
+             # Data section 
+      0bad60a7
     expectException:
       "Cancun" : "EOF_InvalidCode"
-      ">=Prague" : "EOF_InvalidContainerSize"
 
 
   # EOF1I0011 check that function calls to code sections that don't exist fail
   - data: |
      :label EOF1I0011 :raw 0x
       # EOF deployed code 
-      ef0001  # Magic followed by version
-      010010  # Four code segments
-      020004  # Four code segments
-        0003  #   code seg 0: 3 bytes
-        0005  #   code seg 1: 5 bytes
-        0007  #   code seg 2: 7 bytes
-        0007  #   code seg 3: 7 bytes
-      040004  # Four byte data segment
-      00      # End of header
-              # Code segment 0 header
-          00  # Zero inputs
-          80  # Non-Returning Function
-        0001  # Max stack height 1
-              # Code segment 1 header
-          00  # Zero inputs
-          00  # Zero outputs
-        0002  # Max stack height 2
-              # Code segment 2 header
-          00  # Zero inputs
-          00  # Zero outputs
-        0003  # Max stack height 3
-              # Code segment 3 header
-          00  # Zero inputs
-          00  # Zero outputs
-        0001  # Max stack height 1
-              # Code segment 0 code
-           30 #  0 ADDRESS 
-           50 #  1 POP
-           00 #  2 STOP
-              # Code segment 1 code
-       B0000F #  0 CALL code segment 15
-           00 #  3 STOP
-              # Code segment 2 code
-           30 #  0 ADDRESS 
-           30 #  1 ADDRESS
-           30 #  2 ADDRESS
-           50 #  3 POP
-           50 #  4 POP
-           50 #  5 POP
-           00 #  6 STOP
-              # Code segment 3 code
-           30 #  0 ADDRESS 
-           50 #  1 POP
-           30 #  2 ADDRESS
-           50 #  3 POP
-           30 #  4 ADDRESS
-           50 #  5 POP
-           00 #  6 STOP
-              # Data segment
-           0bad60A7  # 4 bytes (valid)
+      EF0001 # Magic and Version ( 1 )
+      010010 # Types length ( 16 )
+      020004 # Total code sections ( 4 )
+        0015 # Code section  0 , 21  bytes
+        0003 # Code section  1 , 3  bytes
+        0007 # Code section  2 , 7  bytes
+        0007 # Code section  3 , 7  bytes
+      040004 # Data section length ( 4 )
+          00 # Terminator (end of header)
+             # Code 0 types
+          00 # 0 inputs
+          80 # 0 outputs (Non-returning function)
+        0001 # max stack: 1
+             # Code 1 types
+          00 # 0 inputs
+          80 # 0 outputs (Non-returning function)
+        0000 # max stack: 0
+             # Code 2 types
+          00 # 0 inputs
+          80 # 0 outputs (Non-returning function)
+        0003 # max stack: 3
+             # Code 3 types
+          00 # 0 inputs
+          80 # 0 outputs (Non-returning function)
+        0001 # max stack: 1
+             # Code section 0
+          30 # [0] ADDRESS 
+          50 # [1] POP 
+          5f # [2] PUSH0 
+          35 # [3] CALLDATALOAD 
+      e202000000030006 # [4] RJUMPV(0,3,6) 
+      e50001 # [12] JUMPF(1) 
+      e50002 # [15] JUMPF(2) 
+      e50003 # [18] JUMPF(3) 
+             # Code section 1
+      e5000f # [0] JUMPF(15) 
+             # Code section 2
+          30 # [0] ADDRESS 
+          30 # [1] ADDRESS 
+          30 # [2] ADDRESS 
+          50 # [3] POP 
+          50 # [4] POP 
+          50 # [5] POP 
+          00 # [6] STOP 
+             # Code section 3
+          30 # [0] ADDRESS 
+          50 # [1] POP 
+          30 # [2] ADDRESS 
+          50 # [3] POP 
+          30 # [4] ADDRESS 
+          50 # [5] POP 
+          00 # [6] STOP 
+             # Data section 
+      0bad60a7
     expectException:
       "Cancun" : "EOF_InvalidCode"
-      ">=Prague" : "EOF_InvalidContainerSize"
+      ">=Prague": "EOF_InvalidCodeSectionIndex"
 
 
   # EOF1I0012 check that code sections that cause stack underflow fail
   - data: |
      :label EOF1I0012 :raw 0x
       # EOF deployed code 
-      ef0001  # Magic followed by version
-      010008  # Two code segments
-      020002  # Two code segments
-        0003  #   code seg 0: 3 bytes
-        0003  #   code seg 1: 3 bytes
-      040004  # Four byte data segment
-      00      # End of header
-              # Code segment 0 header
-          00  # Zero inputs
-          80  # Non-Returning Function
-        0001  # Max stack height 1
-              # Code segment 1 header
-          01  # Zero inputs
-          80  # Non-Returning Function
-        0001  # Max stack height 1
-              # Code segment 0 code
-           30 #  1 ADDRESS 
-           50 #  2 POP
-           00 #  3 STOP
-              # Code segment 1 code
-           50 #  1 POP
-           50 #  2 POP
-           00 #  3 STOP
-              # Data segment
-           0bad60A7  # 4 bytes (valid)
+      EF0001 # Magic and Version ( 1 )
+      010008 # Types length ( 8 )
+      020002 # Total code sections ( 2 )
+        0006 # Code section  0 , 6  bytes
+        0003 # Code section  1 , 3  bytes
+      040004 # Data section length ( 4 )
+          00 # Terminator (end of header)
+             # Code 0 types
+          00 # 0 inputs
+          80 # 0 outputs (Non-returning function)
+        0001 # max stack: 1
+             # Code 1 types
+          02 # 2 inputs
+          80 # 0 outputs (Non-returning function)
+        0002 # max stack: 2
+             # Code section 0
+          30 # [0] ADDRESS 
+          50 # [1] POP 
+      e50001 # [2] JUMPF(1) 
+          00 # [5] STOP 
+             # Code section 1
+          50 # [0] POP 
+          50 # [1] POP 
+          00 # [2] STOP 
+             # Data section 
+      0bad60a7
     expectException:
       "Cancun" : "EOF_InvalidCode"
       ">=Prague" : "EOF_StackUnderflow"
@@ -1233,31 +1255,32 @@ validInvalid:
   - data: |
      :label EOF1I0013 :raw 0x
       # EOF deployed code 
-      ef0001  # Magic followed by version
-      010008  # Two code segments
-      020002  # Two code segments
-        0003  #   code seg 0: 3 bytes
-        0003  #   code seg 1: 3 bytes
-      040004  # Four byte data segment
-      00      # End of header
-              # Code segment 0 header
-          00  # Zero inputs
-          80  # Non-Returning Function
-        0001  # Max stack height 1
-              # Code segment 1 header
-          00  # Zero input
-          01  # One output
-        0002  # Max stack height 2
-              # Code segment 0 code
-           30 #  1 ADDRESS 
-           50 #  2 POP
-           00 #  3 STOP
-              # Code segment 1 code
-           30 #  1 ADDRESS
-           30 #  2 ADDRESS
-           E4 #  3 RETF
-              # Data segment
-           0bad60A7  # 4 bytes (valid)
+      EF0001 # Magic and Version ( 1 )
+      010008 # Types length ( 8 )
+      020002 # Total code sections ( 2 )
+        0006 # Code section  0 , 6  bytes
+        0003 # Code section  1 , 3  bytes
+      040004 # Data section length ( 4 )
+          00 # Terminator (end of header)
+             # Code 0 types
+          00 # 0 inputs
+          80 # 0 outputs (Non-returning function)
+        0001 # max stack: 1
+             # Code 1 types
+          00 # 0 inputs
+          01 # 1 outputs
+        0002 # max stack: 2
+             # Code section 0
+          30 # [0] ADDRESS 
+          50 # [1] POP 
+      e30001 # [2] CALLF(1) 
+          00 # [5] STOP 
+             # Code section 1
+          30 # [0] ADDRESS 
+          30 # [1] ADDRESS 
+          e4 # [2] RETF 
+             # Data section 
+      0bad60a7
     expectException:
       "Cancun" : "EOF_InvalidCode"
       ">=Prague" : "EOF_InvalidNumberOfOutputs"
@@ -1266,31 +1289,32 @@ validInvalid:
   - data: |
      :label EOF1I0014 :raw 0x
       # EOF deployed code 
-      ef0001  # Magic followed by version
-      010008  # Two code segments
-      020002  # Two code segments
-        0003  #   code seg 0: 3 bytes
-        0003  #   code seg 1: 3 bytes
-      040004  # Four byte data segment
-      00      # End of header
-              # Code segment 0 header
-          00  # Zero inputs
-          80  # Non-Returning Function
-        0001  # Max stack height 1
-              # Code segment 1 header
-          01  # One input
-          01  # One output
-        0001  # Max stack height 1
-              # Code segment 0 code
-           30 #  1 ADDRESS 
-           50 #  2 POP
-           00 #  3 STOP
-              # Code segment 1 code
-           30 #  1 ADDRESS
-           91 #  2 SWAP2
-           E4 #  3 RETF
-              # Data segment
-           0bad60A7  # 4 bytes (valid)
+      EF0001 # Magic and Version ( 1 )
+      010008 # Types length ( 8 )
+      020002 # Total code sections ( 2 )
+      0006 # Code section  0 , 6  bytes
+      0003 # Code section  1 , 3  bytes
+      040004 # Data section length ( 4 )
+        00 # Terminator (end of header)
+           # Code 0 types
+        00 # 0 inputs
+        80 # 0 outputs (Non-returning function)
+      0001 # max stack: 1
+           # Code 1 types
+        01 # 1 inputs
+        01 # 1 outputs
+      0002 # max stack: 2
+           # Code section 0
+        30 # [0] ADDRESS 
+        50 # [1] POP 
+      e30001 # [2] CALLF(1) 
+        00 # [5] STOP 
+           # Code section 1
+        30 # [0] ADDRESS 
+        91 # [1] SWAP2 
+        e4 # [2] RETF 
+           # Data section 
+      0bad60a7
     expectException:
       "Cancun" : "EOF_InvalidCode"
       ">=Prague" : "EOF_StackUnderflow"
@@ -1324,31 +1348,31 @@ validInvalid:
   - data: |
      :label EOF1V0010 :raw 0x
       # EOF deployed code 
-      ef0001  # Magic followed by version
-      010008  # Two code segments
-      020002  # Two code segments
-        0003  #   code seg 0: 3 bytes
-        0003  #   code seg 1: 3 bytes
-      040004  # Four byte data segment
-      00      # End of header
-              # Code segment 0 header
-          00  # Zero inputs
-          80  # Non-Returning Function
-        0001  # Max stack height 1
-              # Code segment 1 header
-          02  # Two inputs
-          80  # Non-Returning Function
-        0002  # Max stack height 2
-              # Code segment 0 code
-           30 #  1 ADDRESS 
-           50 #  2 POP
-           00 #  3 STOP
-              # Code segment 1 code
-           50 #  1 POP
-           50 #  2 POP
-           00 #  3 STOP
-              # Data segment
-           0bad60A7  # 4 bytes (valid)
+      EF0001 # Magic and Version ( 1 )
+      010008 # Types length ( 8 )
+      020002 # Total code sections ( 2 )
+        0005 # Code section  0 , 5  bytes
+        0003 # Code section  1 , 3  bytes
+      040004 # Data section length ( 4 )
+          00 # Terminator (end of header)
+             # Code 0 types
+          00 # 0 inputs
+          80 # 0 outputs (Non-returning function)
+        0002 # max stack: 2
+             # Code 1 types
+          02 # 2 inputs
+          80 # 0 outputs (Non-returning function)
+        0002 # max stack: 2
+             # Code section 0
+          30 # [0] ADDRESS 
+          5f # [1] PUSH0 
+      e50001 # [2] JUMPF(1) 
+             # Code section 1
+          50 # [0] POP 
+          50 # [1] POP 
+          00 # [2] STOP 
+             # Data section 
+      0bad60a7
     expectException:
       "Cancun" : "EOF_InvalidCode"
 

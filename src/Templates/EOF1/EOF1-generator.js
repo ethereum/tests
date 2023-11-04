@@ -200,9 +200,9 @@ eof1BadList = [
 
 eof1GoodList = [[eof1Good, "EOF1V0001"]]
 
-// Multiple code segments are fine
-eof1GoodList.push([createEOF1Code(["305000", "3030505000"], [1, 2]), "EOF1V0002"])
-eof1GoodList.push([createEOF1Code(["305000", "305000", "305000", "305000"],
+// Multiple code segments are fine (only if all sections are called at least once)
+eof1GoodList.push([createEOF1Code(["3050E3000100", "30305050E4"], [1, 2]), "EOF1V0002"])
+eof1GoodList.push([createEOF1Code(["3050E3000100", "3050E30002E4", "3050E30003E4", "3050E4"],
                               [1,1,1,1]), "EOF1V0003"])
 
 // Create tests in groups. A good example, and bad examples that are related
@@ -258,22 +258,22 @@ temp.code[2].stackOutputs = 100
 
 
 // parameters are allowed except on section 0
-temp = createEOF1Code(["305000", "300150E4"], [1, 2])
+temp = createEOF1Code(["30E3000100", "300150E4"], [1, 2])
 temp.code[1].stackInputs = 1
 eof1GoodList.push([temp, "EOF1V0009"])
 
-temp = createEOF1Code(["30015000", "305000E4"], [2, 1])
+temp = createEOF1Code(["300150e3000100", "305000E4"], [2, 1])
 temp.code[0].stackInputs = 1
  eof1BadList.push([temp, "EOF1I0017"])
 
 
 // Return values are allowed, except on section 0, which should be marked as
 // Non-Returning Function (0x80)
-temp = createEOF1Code(["305000", "303001E4"], [1, 2])
+temp = createEOF1Code(["3050E300015000", "303001E4"], [1, 2])
 temp.code[1].stackOutputs = 1
 eof1GoodList.push([temp, "EOF1V0006"])
 
-temp = createEOF1Code(["30300100", "305000"], [2, 1])
+temp = createEOF1Code(["303001E50001", "305000"], [2, 1])
 temp.code[0].stackOutputs = 1
  eof1BadList.push([temp, "EOF1I0010"])
 
@@ -299,30 +299,35 @@ eof1GoodList.push([temp, "EOFV0010"])
 
 // We can't dig below our parameters
 // with POP
-temp = createEOF1Code(["00", "505050" + "E4"], [0, 0])
+temp = createEOF1Code(["5F80E3000100", "505050" + "E4"], [0, 0])
+temp.code[0].maxStack = 2
 temp.code[1].stackInputs = 2
 temp.code[1].stackOutputs = 0
  eof1BadList.push([temp, "EOF1I0014"])
 
 // DUP
-temp = createEOF1Code(["00", "81505050" + "E4"], [0, 3])
+temp = createEOF1Code(["5F80E3000100", "81505050" + "E4"], [0, 3])
+temp.code[0].maxStack = 2
 temp.code[1].stackInputs = 2
 temp.code[1].stackOutputs = 0
 eof1GoodList.push([temp, "EOF1I0014"])
 
-temp = createEOF1Code(["00", "82505050" + "E4"], [0, 3])
+temp = createEOF1Code(["5F80E3000100", "82505050" + "E4"], [0, 3])
+temp.code[0].maxStack = 2
 temp.code[1].stackInputs = 2
 temp.code[1].stackOutputs = 0
  eof1BadList.push([temp, "EOF1I0014"])
 
 
 // SWAP
-temp = createEOF1Code(["00", "905050" + "E4"], [0, 2])
+temp = createEOF1Code(["5F80E3000100", "905050" + "E4"], [0, 2])
+temp.code[0].maxStack = 2
 temp.code[1].stackInputs = 2
 temp.code[1].stackOutputs = 0
 eof1GoodList.push([temp, ""])
 
-temp = createEOF1Code(["00", "915050" + "E4"], [0, 2])
+temp = createEOF1Code(["5F80E3000100", "915050" + "E4"], [0, 2])
+temp.code[0].maxStack = 2
 temp.code[1].stackInputs = 2
 temp.code[1].stackOutputs = 0
  eof1BadList.push([temp, "EOF1I0014"])
@@ -331,10 +336,10 @@ temp.code[1].stackOutputs = 0
 
 // Removed opcodes
 // Try an old style jump, see it fails
- eof1BadList.push([createEOF1Code(["00", "5B600056"], [0, 1]), "EOF1I0015"])
+ eof1BadList.push([createEOF1Code(["E3000100", "5B600056E4"], [0, 1]), "EOF1I0015"])
 
 // Old style conditional jump
- eof1BadList.push([createEOF1Code(["00", "5B6001600057"], [0, 1]), "EOF1I0015"])
+ eof1BadList.push([createEOF1Code(["E3000100", "5B6001600057E4"], [0, 1]), "EOF1I0015"])
 
 
 // Suicidal code
@@ -348,50 +353,51 @@ temp.code[1].stackOutputs = 0
 
 // Jumps
 // New style jump
-eof1GoodList.push([createEOF1Code(["00", "E0000000"], [0, 0]), "EOF1V0008"])
+eof1GoodList.push([createEOF1Code(["E50001", "E0000000"], [0, 0]), "EOF1V0008"])
 
 // New style jump that actually does something
-eof1GoodList.push([createEOF1Code(["00", "E00001E4E0FFFC"], [0, 0]), "EOF1V0008"])
+eof1GoodList.push([createEOF1Code(["E3000100", "E00001E4E0FFFC"], [0, 0]), "EOF1V0008"])
 
-eof1GoodList.push([createEOF1Code(["00", "E00000E00000E4"], [0, 0]), "EOF1V0008"])
+eof1GoodList.push([createEOF1Code(["E3000100", "E00000E00000E4"], [0, 0]), "EOF1V0008"])
 
 
 // New style jump to hyperspace
- eof1BadList.push([createEOF1Code(["00", "E00010"], [0, 0]), "EOF1I0016"])
- eof1BadList.push([createEOF1Code(["00", "E0FF00"], [0, 0]), "EOF1I0016"])
+ eof1BadList.push([createEOF1Code(["E3000100", "E00010E4"], [0, 0]), "EOF1I0016"])
+ eof1BadList.push([createEOF1Code(["E3000100", "E0FF00E4"], [0, 0]), "EOF1I0016"])
 
 // Jump to just before or after the code (bug that got solved)
- eof1BadList.push([createEOF1Code(["00", "E00001", "00"], [0, 0, 0]), "EOF1I0016"])
- eof1BadList.push([createEOF1Code(["00", "E0FFFC", "00"], [0, 0, 0]), "EOF1I0016"])
+ eof1BadList.push([createEOF1Code(["E30001E50002", "E00001E4", "00"], [0, 0, 0]), "EOF1I0016"])
+ eof1BadList.push([createEOF1Code(["E30001E50002", "E0FFFCE4", "00"], [0, 0, 0]), "EOF1I0016"])
 
 
-temp = createEOF1Code(["00", "600160026003E4"], [0, 3])
+temp = createEOF1Code(["E30001505000", "600160026003E4"], [0, 3])
+temp.code[0].maxStack = 2
 temp.code[1].stackInputs = 0
 temp.code[1].stackOutputs = 2
  eof1BadList.push([temp, "EOF1I0013"])
 
 // New style jump into the middle of an instruction
- eof1BadList.push([createEOF1Code(["00", "E0000160FF60FFE4"], [0, 1]), "EOF1I0019"])
+ eof1BadList.push([createEOF1Code(["E3000100", "E0000160FF60FFE4"], [0, 1]), "EOF1I0019"])
 
 
 // New style conditional jump
-eof1GoodList.push([createEOF1Code(["00", "6000" + "E10000" + "30" + "00"], [0, 1]),
+eof1GoodList.push([createEOF1Code(["E50001", "6000" + "E10000" + "30" + "00"], [0, 1]),
 		"EOF1V0011"])
 
 // New style conditional jump that actually does something
-eof1GoodList.push([createEOF1Code(["00", "6000" + "E10002" + "3050" + "3000"], [0, 1]),
+eof1GoodList.push([createEOF1Code(["E50001", "6000" + "E10002" + "3050" + "3000"], [0, 1]),
 		"EOF1V0011"])
 
 // New style conditional jump into the middle of an instruction
- eof1BadList.push([createEOF1Code(["00", "6001E1000160FF50E4"], [0, 1]), "EOF1I0019"])
+ eof1BadList.push([createEOF1Code(["E3000100", "6001E1000160FF50E4"], [0, 1]), "EOF1I0019"])
 
 // Two different pathes to the same opcode, with the same stack height
-eof1GoodList.push([createEOF1Code(["00", "6000" + "E10002" + "3050" + "3000"], [0, 1]),
+eof1GoodList.push([createEOF1Code(["E50001", "6000" + "E10002" + "3050" + "3000"], [0, 1]),
 		"EOF1V0011"])
 
 
 // Two different pathes to the same opcode, with different stack heights
- eof1BadList.push([createEOF1Code(["00", "6000" + "E10001" + "30" + "3000"], [0, 2]),
+ eof1BadList.push([createEOF1Code(["E50001", "6000" + "E10001" + "30" + "3000"], [0, 2]),
 		"EOF1I0020"])
 
 
@@ -531,7 +537,7 @@ eof1GoodList.push([createEOF1Code(["6000600060006000FE"], [4]), "EOF1V0014"])
  eof1BadList.push([createEOF1Code(["600060006000600001"], [4]), "EOF1I0024"])
  eof1BadList.push([createEOF1Code(["600060006000600034"], [4]), "EOF1I0024"])
  eof1BadList.push([createEOF1Code(["600060006000600003"], [4]), "EOF1I0024"])
- eof1BadList.push([createEOF1Code(["6000600060006000A4"], [4]), "EOF1I0024"])
+ eof1BadList.push([createEOF1Code(["600060006000600060006000A4"], [6]), "EOF1I0024"])
  eof1BadList.push([createEOF1Code(["6000600060006000F5"], [4]), "EOF1I0024"])
  eof1BadList.push([createEOF1Code(["3050E4"], [1]), "EOF1I0024"])
 
@@ -585,12 +591,12 @@ EOF1ValidInvalid:
   transaction:
     data:
 ${badContracts.map((code, i) => `
-      # Data ${i}   implements ${code[1]}
+      ${code[1] == "" ? `# Data ${i}` : `# Data ${i} implements ${code[1]}`}
       - :label bad  :raw 0x${code[0]}
 `).reduce((a,b) => a+b)}
 
 ${goodContracts.map((code, i) => `
-      # Data ${i+badContracts.length} implements ${code[1]}
+      ${code[1] == "" ? `# Data ${i+badContracts.length}` : `# Data ${i+badContracts.length} implements ${code[1]}`}
       - :label good :raw 0x${code[0]}
 `).reduce((a,b) => a+b)}
 
