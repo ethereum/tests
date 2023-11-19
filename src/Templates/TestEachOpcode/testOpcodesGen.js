@@ -2,8 +2,10 @@
 
 
 // Generate a test that looks at all the opcodes and identifies if any
-// of them is not implemented correctly
-
+// of them is not implemented correctly.
+//
+// Note: This test does not use EOF, so it doesn't cover the 0xEn opcode block
+//
 // Directions:
 //
 // When a new fork is added, add it to the forks array. When a fork is no
