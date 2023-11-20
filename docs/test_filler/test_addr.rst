@@ -15,7 +15,7 @@
 
 - **storage**:
 
-  Values in the storage of the address
+  Values in the storage of the address. Can be **'ANY'** to explicitely state it can be any value.
 
   .. list-table::
      :header-rows: 1
@@ -30,7 +30,8 @@
 
             storage: {
 		"1": 5, 
-		"0x20": 0x10
+		"0x20": 0x10,
+                "10": "ANY"
 	    }
 
        -
@@ -40,4 +41,5 @@
             storage:
                1: 5
                0x20: 0x10
+               10: 'ANY'
 
