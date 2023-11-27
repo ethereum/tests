@@ -1,4 +1,8 @@
+
 #! /usr/bin/bash
+
+# The 0xEn opcode block requires EOF, so it needs to be tested by other means
+
 
 # Create the opcode tests
 ./testOpcodesGen.js 0x00 0x0F > ../../BlockchainTestsFiller/ValidBlocks/bcStateTests/testOpcode_00Filler.yml
@@ -15,5 +19,5 @@
 ./testOpcodesGen.js 0xb0 0xbF > ../../BlockchainTestsFiller/ValidBlocks/bcStateTests/testOpcode_b0Filler.yml
 ./testOpcodesGen.js 0xc0 0xcF > ../../BlockchainTestsFiller/ValidBlocks/bcStateTests/testOpcode_c0Filler.yml
 ./testOpcodesGen.js 0xd0 0xdF > ../../BlockchainTestsFiller/ValidBlocks/bcStateTests/testOpcode_d0Filler.yml
-./testOpcodesGen.js 0xe0 0xeF > ../../BlockchainTestsFiller/ValidBlocks/bcStateTests/testOpcode_e0Filler.yml
+# ./testOpcodesGen.js 0xe0 0xeF > ../../BlockchainTestsFiller/ValidBlocks/bcStateTests/testOpcode_e0Filler.yml
 ./testOpcodesGen.js 0xf0 0xfF > ../../BlockchainTestsFiller/ValidBlocks/bcStateTests/testOpcode_f0Filler.yml
