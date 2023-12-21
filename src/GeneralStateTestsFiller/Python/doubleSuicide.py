@@ -41,16 +41,15 @@ def env():  # noqa: D103
     )
 
 
-
 @pytest.mark.valid_from("Berlin")
-@pytest.mark.parametrize("firstSuicide", ["call", "callcode", "delegatecall"])
-@pytest.mark.parametrize("secondSuicide", ["call", "callcode", "delegatecall"])
+@pytest.mark.parametrize("first_suicide", [Op.CALL, Op.CALLCODE, Op.DELEGATECALL])
+@pytest.mark.parametrize("second_suicide", [Op.CALL, Op.CALLCODE, Op.DELEGATECALL])
 def test_doubleSuicide(
     env: Environment,
     yul: YulCompiler,
     fork: Fork,
-    firstSuicide: Any,
-    secondSuicide: Any,
+    first_suicide: Op,
+    second_suicide: Op,
     state_test: StateTestFiller,
 ):
     """
@@ -63,65 +62,43 @@ def test_doubleSuicide(
         It is expected the S is selfdestructed after the transaction.
     """
 
-    addressS = "0x1000000000000000000000000000000000000001"
-    addressR = "0x1000000000000000000000000000000000000002"
+    address_s = "0x1000000000000000000000000000000000000001"
+    address_r = "0x1000000000000000000000000000000000000002"
+    suicide_d = "0x00000000000000000000000000000000000003e8"
 
-    callS = ""
-    if firstSuicide == "callcode" or firstSuicide == "call":
-        callS = f"""{firstSuicide}(gas(), {addressS}, 0, 0, 0, 0, 0)"""
-    else:
-        callS = f"""{firstSuicide}(gas(), {addressS}, 0, 0, 0, 0)"""
-    callR = ""
-    if secondSuicide == "callcode" or secondSuicide == "call":
-        callR = f"""{secondSuicide}(gas(), {addressS}, 100, 0, 0, 0, 0)"""
-    else:
-        callR = f"""{secondSuicide}(gas(), {addressS}, 100, 0, 0, 0)"""
+    def construct_call_s(call_type: Op, money: int):
+        if call_type in [Op.CALLCODE, Op.CALL]:
+            return call_type(Op.GAS, Op.PUSH20(address_s), money, 0, 0, 0, 0)
+        else:
+            return call_type(Op.GAS, Op.PUSH20(address_s), money, 0, 0, 0)
+
 
     pre = {
         "0x095e7baea6a6c7c4c2dfeb977efac326af552d87": Account(
             balance=1000000000000000000,
             nonce=0,
-            code=yul(
-                """
-                    {
-                        let success := """f"""{callS}""""""
-                        sstore(1, success)
-
-                        let contractR := """f"""{addressR}""""""
-                        success := call(gas(), contractR, 0, 0, 0, 0, 0)
-                        sstore(2, success)
-                        if iszero(success)
-                        {
-                            returndatacopy(0, 0, returndatasize())
-                            sstore(3, mload(0))
-                        }
-                    }
-                """
-            ),
+            code = Op.SSTORE(1, construct_call_s(first_suicide, 0))
+                 + Op.SSTORE(2, Op.CALL(Op.GAS, Op.PUSH20(address_r), 0, 0, 0, 0, 0))
+                 + Op.RETURNDATACOPY(0, 0, Op.RETURNDATASIZE())
+                 + Op.SSTORE(3, Op.MLOAD(0)),
             storage={
-                "0x01" : "0x0100",
-                "0x02" : "0x0100",
-                "0x03" : "0x0100"
+                0x01 : 0x0100,
+                0x02 : 0x0100,
+                0x03 : 0x0100
             },
         ),
-        addressS: Account(
+        address_s: Account(
             balance=3000000000000000000,
             nonce=0,
             code=Op.SELFDESTRUCT(1000),
             storage={},
         ),
-        addressR: Account(
+        address_r: Account(
             balance=5000000000000000000,
             nonce=0,
-            code=yul(
-                """
-                    {
-                        let success := """f"""{callR}""""""
-                        mstore(0, 15)
-                        revert(0, 32)
-                    }
-                """
-            ),
+            # send money when calling it suicide second time to make sure the funds not transfered
+            code = Op.MSTORE(0, Op.ADD(15, construct_call_s(second_suicide, 100)))
+                 + Op.REVERT(0, 32),
             storage={},
         ),
         "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b": Account(
@@ -132,17 +109,23 @@ def test_doubleSuicide(
         ),
     }
 
-    post = {}
+    post = {
+        # Second caller unchanged as call gets reverted
+        address_r: Account(
+            balance=5000000000000000000,
+            storage={}
+        ),
+    }
 
 
-    if firstSuicide == "callcode" or firstSuicide == "delegatecall":
+    if first_suicide in [Op.CALLCODE, Op.DELEGATECALL]:
         if is_fork(fork, Cancun):
             # On Cancun even callcode/delegatecall does not remove the account, so the value remains
             post["0x095e7baea6a6c7c4c2dfeb977efac326af552d87"] = Account(
                 storage={
-                    "0x01" : "0x01",    # First call to contract S->suicide success
-                    "0x02" : "0x00",    # Second call to contract S->suicide reverted
-                    "0x03" : "15",      # Reverted value to check that revert really worked
+                    0x01 : 0x01,    # First call to contract S->suicide success
+                    0x02 : 0x00,    # Second call to contract S->suicide reverted
+                    0x03 : 16,      # Reverted value to check that revert really worked
                 },
             )
         else:
@@ -150,48 +133,39 @@ def test_doubleSuicide(
             post["0x095e7baea6a6c7c4c2dfeb977efac326af552d87"] = Account.NONEXISTENT
 
         # Original suicide account remains in state
-        post[addressS] = Account(
+        post[address_s] = Account(
             balance=3000000000000000000,
             storage={}
         )
-        # Second caller unchanged as call gets reverted
-        post[addressR] = Account(
-            balance=5000000000000000000,
-            storage={}
-        )
         # Suicide destination
-        post["0x00000000000000000000000000000000000003e8"]: Account (
+        post[suicide_d] = Account (
             balance=1000000000000000000,
         )
 
 
     # On Cancun suicide no longer destroys the account from state, just cleans the balance
-    if firstSuicide == "call":
+    if first_suicide in [Op.CALL]:
         post["0x095e7baea6a6c7c4c2dfeb977efac326af552d87"] = Account(
             storage={
-                "0x01" : "0x01",    # First call to contract S->suicide success
-                "0x02" : "0x00",    # Second call to contract S->suicide reverted
-                "0x03" : "15",      # Reverted value to check that revert really worked
+                0x01 : 0x01,    # First call to contract S->suicide success
+                0x02 : 0x00,    # Second call to contract S->suicide reverted
+                0x03 : 16,      # Reverted value to check that revert really worked
             },
-        )
-        # Suicide destination
-        post["0x00000000000000000000000000000000000003e8"]: Account (
-            balance=1000000000000000000,
-        )
-        # Second caller unchanged as call gets reverted
-        post[addressR] = Account(
-            balance=5000000000000000000,
-            storage={}
         )
         if is_fork(fork, Cancun):
             # On Cancun suicide does not remove the account, just sends the balance
-            post[addressS] = Account(
+            post[address_s] = Account(
                 balance=0,
                 code="0x6103e8ff",
                 storage={}
             )
         else:
-            post[addressS] = Account.NONEXISTENT
+            post[address_s] = Account.NONEXISTENT
+
+        # Suicide destination
+        post[suicide_d] = Account (
+            balance=3000000000000000000,
+        )
 
     tx = Transaction(
         ty=0x0,
