@@ -1,7 +1,9 @@
+# This test is a copy of eoaEmptyFiller.yml with the empty account at 0xBAD4 removed.
+
 # When an externally owned account empties itself by sending all its wei to a contract, what happens?
 # Based on https://github.com/ethereumjs/ethereumjs-monorepo/pull/2383
 
-eoaEmpty:
+eoaEmptyPostMerge:
   env:
     currentCoinbase: 2adc25665018aa1fe0e6bc666dac8fc2697ff9ba
     currentDifficulty: '0x020000'
@@ -42,15 +44,6 @@ eoaEmpty:
       nonce: 1
       storage: {}
 
-
-    # EOA with storage (shouldn't happen)
-    000000000000000000000000000000000000BAD4:
-      balance: 0
-      code: 0x
-      nonce: 0
-      storage:
-        0xDEAD: 0xBEEF
-
     # A suicidal contract that sends its value to the EOA
     000000000000000000000000000000000000DEAD:
       balance: 10000
@@ -77,7 +70,6 @@ eoaEmpty:
            sstore(0xBAD1, extcodehash(0xBAD1))
            sstore(0xBAD2, extcodehash(0xBAD2))
            sstore(0xBAD3, extcodehash(0xBAD3))
-           sstore(0xBAD4, extcodehash(0xBAD4))
 
            // The gas cost of calling the EOA (it should be warm)
            let gas0 := gas()
@@ -114,7 +106,7 @@ eoaEmpty:
        gas: !!int 0      # gasLimit*gasPrice = EOA balance
        value: !!int 0
       network:
-        - 'London'
+        - '>=Merge'
       result:
        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           nonce: 1
@@ -133,7 +125,6 @@ eoaEmpty:
             0xBAD1: 0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470 # Balance only
             0xBAD2: 0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470 # Nonce only
             0xBAD3: 0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470 # Balance and nonce
-            0xBAD4: 0 # Storage only, which can't happen in an EOA
 
 
     - indexes:
@@ -141,7 +132,7 @@ eoaEmpty:
        gas: !!int 0      # gasLimit*gasPrice = EOA balance
        value: !!int 0
       network:
-        - 'London'
+        - '>=Merge'
       result:
        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           nonce: 1
@@ -160,7 +151,6 @@ eoaEmpty:
             0xBAD1: 0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470 # Balance only
             0xBAD2: 0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470 # Nonce only
             0xBAD3: 0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470 # Balance and nonce
-            0xBAD4: 0 # Storage only, which can't happen in an EOA        
 
 
     - indexes:
@@ -168,10 +158,10 @@ eoaEmpty:
        gas: !!int 0      # gasLimit*gasPrice = EOA balance
        value: !!int 1    # But there is also a value, so this fails
       network:
-        - 'London'
+        - '>=Merge'
       result: {}
       expectException: 
-        'London': TR_NoFunds
+        '>=Merge': TR_NoFunds
 
 
 
@@ -180,7 +170,7 @@ eoaEmpty:
        gas: !!int 1      # gasLimit*gasPrice < EOA balance
        value: !!int 0
       network:
-        - 'London'
+        - '>=Merge'
       result:
        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           nonce: 1
@@ -199,7 +189,6 @@ eoaEmpty:
             0xBAD1: 0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470 # Balance only
             0xBAD2: 0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470 # Nonce only
             0xBAD3: 0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470 # Balance and nonce
-            0xBAD4: 0 # Storage only, which can't happen in an EOA
 
 
     - indexes:
@@ -207,7 +196,7 @@ eoaEmpty:
        gas: !!int 1      # gasLimit*gasPrice < EOA balance
        value: !!int 0
       network:
-        - 'London'
+        - '>=Merge'
       result:
        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           nonce: 1
@@ -226,15 +215,13 @@ eoaEmpty:
             0xBAD1: 0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470 # Balance only
             0xBAD2: 0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470 # Nonce only
             0xBAD3: 0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470 # Balance and nonce
-            0xBAD4: 0 # Storage only, which can't happen in an EOA
-        
 
     - indexes:
        data: !!int 0
        gas: !!int 1      # gasLimit*gasPrice + value = EOA balance
        value: !!int 1
       network:
-        - 'London'
+        - '>=Merge'
       result:
        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           nonce: 1
@@ -253,7 +240,6 @@ eoaEmpty:
             0xBAD1: 0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470 # Balance only
             0xBAD2: 0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470 # Nonce only
             0xBAD3: 0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470 # Balance and nonce
-            0xBAD4: 0 # Storage only, which can't happen in an EOA
 
 
     - indexes:
@@ -261,7 +247,7 @@ eoaEmpty:
        gas: !!int 1      # gasLimit*gasPrice + value = EOA balance
        value: !!int 1
       network:
-        - 'London'
+        - '>=Merge'
       result:
        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           nonce: 1
@@ -280,5 +266,4 @@ eoaEmpty:
             0xBAD1: 0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470 # Balance only
             0xBAD2: 0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470 # Nonce only
             0xBAD3: 0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470 # Balance and nonce
-            0xBAD4: 0 # Storage only, which can't happen in an EOA
 

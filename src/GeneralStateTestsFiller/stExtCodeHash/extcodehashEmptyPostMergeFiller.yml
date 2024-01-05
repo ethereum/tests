@@ -6,7 +6,7 @@
 #
 # This test was requested in issue https://github.com/ethereum/tests/issues/581
 
-extcodehashEmpty:
+extcodehashEmptyPostMerge:
   env:
     currentCoinbase: 2adc25665018aa1fe0e6bc666dac8fc2697ff9ba
     currentDifficulty: 0x20000
@@ -70,13 +70,13 @@ extcodehashEmpty:
       storage: {}
 
 
+    # Removed by EIP 7523
     # Really empty, the EXTCODEHASH is zero
-    0000000000000000000000000000000000000100:
-      balance: 0
-      code: 0x
-      nonce: 0
-      storage: {}
-
+    # 0000000000000000000000000000000000000100:
+    #   balance: 0
+    #   code: 0x
+    #   nonce: 0
+    #   storage: {}
 
     # If there is a balance, it's the hash of the empty string
     0000000000000000000000000000000000000101:
@@ -110,14 +110,15 @@ extcodehashEmpty:
       storage: {}
 
  
+    # Removed by EIP 7523
     # Storage doesn't make it look an account exists
-    0000000000000000000000000000000000000103:
-      balance: 0
-      code: 0x
-      nonce: 0
-      storage:
-        0x00: 0x01000000
-        0xFFFFFFF: 0xFFFFFFFF
+    # 0000000000000000000000000000000000000103:
+    #  balance: 0
+    #  code: 0x
+    #  nonce: 0
+    #  storage:
+    #    0x00: 0x01000000
+    #    0xFFFFFFF: 0xFFFFFFFF
 
     0000000000000000000000000000000000000104:
       balance: 0
@@ -252,8 +253,7 @@ extcodehashEmpty:
         gas:  !!int -1
         value: !!int -1
       network:
-        - 'Berlin'
-        - 'London'
+        - '>=Merge'
       result:
         cccccccccccccccccccccccccccccccccccccccc:
           storage:
@@ -289,8 +289,7 @@ extcodehashEmpty:
         gas:  !!int -1
         value: !!int -1
       network:
-        - 'Berlin'
-        - 'London'
+        - '>=Merge'
       result:
         cccccccccccccccccccccccccccccccccccccccc:
           storage:
@@ -325,8 +324,7 @@ extcodehashEmpty:
         gas:  !!int -1
         value: !!int -1
       network:
-        - 'Berlin'
-        - 'London'
+        - '>=Merge'
       result:
         cccccccccccccccccccccccccccccccccccccccc:
           storage:
@@ -361,8 +359,7 @@ extcodehashEmpty:
         gas:  !!int -1
         value: !!int -1
       network:
-        - 'Berlin'
-        - 'London'
+        - '>=Merge'
       result:
         cccccccccccccccccccccccccccccccccccccccc:
           storage:
@@ -396,9 +393,7 @@ extcodehashEmpty:
         gas:  !!int -1
         value: !!int -1
       network:
-        - 'Istanbul'
-        - 'Berlin'
-        - 'London'
+        - '>=Merge'
       result:
         # We don't care about C0EA7E (which obviously is not empty)
         # We care about the account it creates.
@@ -414,9 +409,7 @@ extcodehashEmpty:
         gas:  !!int -1
         value: !!int -1
       network:
-        - 'Istanbul'
-        - 'Berlin'
-        - 'London'
+        - '>=Merge'
       result:
         # We don't care about C0EA7E2 (which obviously is not empty)
         # We care about the account it creates.

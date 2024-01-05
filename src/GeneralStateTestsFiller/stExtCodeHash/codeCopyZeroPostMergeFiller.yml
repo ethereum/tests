@@ -1,6 +1,6 @@
 # https://github.com/ethereum/tests/issues/493,  CODECOPY and EXTCODECOPY where codesize = 0
 ---
-codeCopyZero:
+codeCopyZeroPostMerge:
   _info:
     comment: "https://github.com/ethereum/tests/issues/493,  CODECOPY and EXTCODECOPY where codesize = 0"
   env:
@@ -30,14 +30,6 @@ codeCopyZero:
           (SSTORE 0x21 (EXTCODESIZE 0xa200000000000000000000000000000000000000))
           (SSTORE 0x22 (EXTCODEHASH 0xa200000000000000000000000000000000000000))
           (SSTORE 0x23 (CALLCODE 50000 0xa200000000000000000000000000000000000000 0 0 0 0 0))
-
-
-          ;; EXTCODECOPY of empty account with empty code
-          (EXTCODECOPY 0xa300000000000000000000000000000000000000 0 0 32)
-          (SSTORE 0x30 (MLOAD 0))
-          (SSTORE 0x31 (EXTCODESIZE 0xa300000000000000000000000000000000000000))
-          (SSTORE 0x32 (EXTCODEHASH 0xa300000000000000000000000000000000000000))
-          (SSTORE 0x33 (CALLCODE 50000 0xa300000000000000000000000000000000000000 0 0 0 0 0))
 
           ;; CODECOPY of dynamic account which has empty code
           (CALL 550000 0xa100000000000000000000000000000000000000 0 0 0 0 32)
@@ -75,12 +67,6 @@ codeCopyZero:
       code: ''
       nonce: '0'
       storage: {}
-    #empty with empty code
-    a300000000000000000000000000000000000000:
-      balance: '0'
-      code: ''
-      nonce: '0'
-      storage: {}
     a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
       balance: '1000000000000000000'
       code: ''
@@ -92,16 +78,13 @@ codeCopyZero:
         gas:  !!int -1
         value: !!int -1
       network:
-        - 'Istanbul'
-        - 'Berlin'
-        - 'London'
+        - '>=Merge'
       result:
         a000000000000000000000000000000000000000:
           storage: {
              '0x13': '0x01',
              '0x22': '0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470',
              '0x23': '0x01',
-             '0x33': '0x01',
              '0x40': '0x64bc50092fd622c9cc47d658b99c1af75aaa3d68'
           }
         64bc50092fd622c9cc47d658b99c1af75aaa3d68:
