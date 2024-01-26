@@ -31,7 +31,7 @@ const gasLimit = 'F00000000000'
 const userBalance = 'F000000000000000'
 
 // The forks supported by the test in order.
-const forks = ["Merge", "Shanghai", "Cancun"]
+const forks = ["Paris", "Shanghai", "Cancun"]
 
 
 

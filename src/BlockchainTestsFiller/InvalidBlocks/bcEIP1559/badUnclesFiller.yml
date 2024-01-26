@@ -59,8 +59,8 @@ badUncles:
         gasLimit: 10230000
     expectException:
       'London': InvalidGasLimit2
-      'Merge': 3675PreMerge1559BlockRejected
-      '>=Shanghai': PostMergeUncleHashIsNotEmpty
+      'Paris': 3675PreParis1559BlockRejected
+      '>=Shanghai': PostParisUncleHashIsNotEmpty
 
   # Excessively high gasLimit in uncle
   - transactions: []
@@ -70,8 +70,8 @@ badUncles:
         gasLimit: 10250000
     expectException:
       'London': InvalidGasLimit2
-      'Merge': 3675PreMerge1559BlockRejected
-      '>=Shanghai': PostMergeUncleHashIsNotEmpty
+      'Paris': 3675PreParis1559BlockRejected
+      '>=Shanghai': PostParisUncleHashIsNotEmpty
 
 
   # Acceptable gasLimit (same as the previous one)
@@ -83,8 +83,8 @@ badUncles:
       - populateFromBlock: 1
         gasLimit: 10240000
     expectException:
-      'Merge': 3675PreMerge1559BlockRejected
-      '>=Shanghai': PostMergeUncleHashIsNotEmpty
+      'Paris': 3675PreParis1559BlockRejected
+      '>=Shanghai': PostParisUncleHashIsNotEmpty
 
 
   # Acceptable gasLimit (almost too low)
@@ -96,8 +96,8 @@ badUncles:
       - populateFromBlock: 1
         gasLimit: 10230001
     expectException:
-      'Merge': 3675PreMerge1559BlockRejected
-      '>=Shanghai': PostMergeUncleHashIsNotEmpty
+      'Paris': 3675PreParis1559BlockRejected
+      '>=Shanghai': PostParisUncleHashIsNotEmpty
 
 
   # Acceptable gasLimit (almost too high)
@@ -109,8 +109,8 @@ badUncles:
       - populateFromBlock: 1
         gasLimit: 10249999
     expectException:
-      'Merge': 3675PreMerge1559BlockRejected
-      '>=Shanghai': PostMergeUncleHashIsNotEmpty
+      'Paris': 3675PreParis1559BlockRejected
+      '>=Shanghai': PostParisUncleHashIsNotEmpty
 
   # Wrong baseFee
   - transactions: []
@@ -120,8 +120,8 @@ badUncles:
         baseFeePerGas: 670
     expectException:
       'London': 1559BlockImportImpossible_BaseFeeWrong
-      'Merge': 3675PreMerge1559BlockRejected
-      '>=Shanghai': PostMergeUncleHashIsNotEmpty
+      'Paris': 3675PreParis1559BlockRejected
+      '>=Shanghai': PostParisUncleHashIsNotEmpty
 
   # Wrong baseFee
   - transactions: []
@@ -131,8 +131,8 @@ badUncles:
         baseFeePerGas: 672
     expectException:
       'London': 1559BlockImportImpossible_BaseFeeWrong
-      'Merge': 3675PreMerge1559BlockRejected
-      '>=Shanghai': PostMergeUncleHashIsNotEmpty
+      'Paris': 3675PreParis1559BlockRejected
+      '>=Shanghai': PostParisUncleHashIsNotEmpty
 
 
   # Correct baseFee
@@ -153,8 +153,8 @@ badUncles:
       - populateFromBlock: 2
         baseFeePerGas: 671
     expectException:
-      'Merge': 3675PreMerge1559BlockRejected
-      '>=Shanghai': PostMergeUncleHashIsNotEmpty
+      'Paris': 3675PreParis1559BlockRejected
+      '>=Shanghai': PostParisUncleHashIsNotEmpty
 
 
 
