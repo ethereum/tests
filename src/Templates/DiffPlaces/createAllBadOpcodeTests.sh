@@ -26,17 +26,17 @@
 ./createBadOpcodeTest.sh 2D
 ./createBadOpcodeTest.sh 2E
 ./createBadOpcodeTest.sh 2F
-./createBadOpcodeTest.sh 49 London,Merge,Shanghai   # BLOBHASH
-./createBadOpcodeTest.sh 4A London,Merge,Shanghai   # BEACON_ROOT
+./createBadOpcodeTest.sh 49 London,Paris,Shanghai   # BLOBHASH
+./createBadOpcodeTest.sh 4A London,Paris,Shanghai   # BEACON_ROOT
 ./createBadOpcodeTest.sh 4B
 ./createBadOpcodeTest.sh 4C
 ./createBadOpcodeTest.sh 4D
 ./createBadOpcodeTest.sh 4E
 ./createBadOpcodeTest.sh 4F
-./createBadOpcodeTest.sh 5C London,Merge,Shanghai   # TLOAD
-./createBadOpcodeTest.sh 5D London,Merge,Shanghai   # TSTORE
-./createBadOpcodeTest.sh 5E London,Merge,Shanghai   # MCOPY
-./createBadOpcodeTest.sh 5F London,Merge            # PUSH0
+./createBadOpcodeTest.sh 5C London,Paris,Shanghai   # TLOAD
+./createBadOpcodeTest.sh 5D London,Paris,Shanghai   # TSTORE
+./createBadOpcodeTest.sh 5E London,Paris,Shanghai   # MCOPY
+./createBadOpcodeTest.sh 5F London,Paris            # PUSH0
 ./createBadOpcodeTest.sh A5
 ./createBadOpcodeTest.sh A6
 ./createBadOpcodeTest.sh A7
@@ -100,28 +100,28 @@
 ./createBadOpcodeTest.sh DE
 ./createBadOpcodeTest.sh DF
 
-./createBadOpcodeTest.sh E0 London,Merge,Shanghai    # RJUMP
-./createBadOpcodeTest.sh E1 London,Merge,Shanghai    # RJUMI
-./createBadOpcodeTest.sh E2 London,Merge,Shanghai    # RJUMV
-./createBadOpcodeTest.sh E3 London,Merge,Shanghai    # CALLF
-./createBadOpcodeTest.sh E4 London,Merge,Shanghai    # RETF
-./createBadOpcodeTest.sh E5 London,Merge,Shanghai    # JUMPF
-./createBadOpcodeTest.sh E6 London,Merge,Shanghai    # DUPN
-./createBadOpcodeTest.sh E7 London,Merge,Shanghai    # SWAPN
-./createBadOpcodeTest.sh E8 London,Merge,Shanghai    # DATALOAD
-./createBadOpcodeTest.sh E9 London,Merge,Shanghai    # DATALOADN
-./createBadOpcodeTest.sh EA London,Merge,Shanghai    # DATASIZE
-./createBadOpcodeTest.sh EB London,Merge,Shanghai    # DATACOPY
-./createBadOpcodeTest.sh EC London,Merge,Shanghai    # CREATE3
-./createBadOpcodeTest.sh ED London,Merge,Shanghai    # RETURNCONTRACT
+./createBadOpcodeTest.sh E0 London,Paris,Shanghai    # RJUMP
+./createBadOpcodeTest.sh E1 London,Paris,Shanghai    # RJUMI
+./createBadOpcodeTest.sh E2 London,Paris,Shanghai    # RJUMV
+./createBadOpcodeTest.sh E3 London,Paris,Shanghai    # CALLF
+./createBadOpcodeTest.sh E4 London,Paris,Shanghai    # RETF
+./createBadOpcodeTest.sh E5 London,Paris,Shanghai    # JUMPF
+./createBadOpcodeTest.sh E6 London,Paris,Shanghai    # DUPN
+./createBadOpcodeTest.sh E7 London,Paris,Shanghai    # SWAPN
+./createBadOpcodeTest.sh E8 London,Paris,Shanghai    # DATALOAD
+./createBadOpcodeTest.sh E9 London,Paris,Shanghai    # DATALOADN
+./createBadOpcodeTest.sh EA London,Paris,Shanghai    # DATASIZE
+./createBadOpcodeTest.sh EB London,Paris,Shanghai    # DATACOPY
+./createBadOpcodeTest.sh EC London,Paris,Shanghai    # CREATE3
+./createBadOpcodeTest.sh ED London,Paris,Shanghai    # RETURNCONTRACT
 ./createBadOpcodeTest.sh EE
 # Special case, because it's also the magic value for EOF1
 # ./createBadOpcodeTest.sh EF
 
-./createBadOpcodeTest.sh F6 London,Merge,Shanghai    # PAY
-./createBadOpcodeTest.sh F7 London,Merge,Shanghai    # CREATE4
-./createBadOpcodeTest.sh F8 London,Merge,Shanghai    # CALL2
-./createBadOpcodeTest.sh F9 London,Merge,Shanghai    # DELEGATECALL2
-./createBadOpcodeTest.sh FB London,Merge,Shanghai    # STATICCALL2
+./createBadOpcodeTest.sh F6 London,Paris,Shanghai    # PAY
+./createBadOpcodeTest.sh F7 London,Paris,Shanghai    # CREATE4
+./createBadOpcodeTest.sh F8 London,Paris,Shanghai    # CALL2
+./createBadOpcodeTest.sh F9 London,Paris,Shanghai    # DELEGATECALL2
+./createBadOpcodeTest.sh FB London,Paris,Shanghai    # STATICCALL2
 ./createBadOpcodeTest.sh FC
 ./createBadOpcodeTest.sh FE
