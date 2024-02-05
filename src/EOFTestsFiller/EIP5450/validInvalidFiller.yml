@@ -207,7 +207,7 @@ validInvalid:
          EOF1I5450_0103 (Invalid) Unreachable code after infinite loop
 
   forks:
-    - ">=Cancun"
+    - ">=Prague"
 
   vectors:
     # EOF1V5450_0001 (Valid) Code with branches having the same stack height - data index: 0
@@ -235,8 +235,6 @@ validInvalid:
           6004 # [14] PUSH1(4) 
             00 # [16] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0002 (Valid) Jump table - data index: 1
     # Code: PUSH1(0) RJUMPV(case1,case2) PUSH1(1) PUSH1(2) RJUMP(exit) case1: PUSH1(3) PUSH1(4) RJUMP(exit) case2: PUSH1(5) PUSH1(6) exit: STOP
@@ -266,8 +264,6 @@ validInvalid:
           6006 # [24] PUSH1(6) 
             00 # [26] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0003 (Valid) Infinite loop - data index: 2
     # Code: start: PUSH1(0) PUSH1(1) POP POP RJUMP(start)
@@ -291,8 +287,6 @@ validInvalid:
             50 # [5] POP 
         e0fff7 # [6] RJUMP(-9) 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0004 (Valid) Infinite loop using RJUMPV - data index: 3
     # Code: start: PUSH1(201) RJUMPV(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,start) STOP
@@ -314,8 +308,6 @@ validInvalid:
         e2c9000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000fe68 # [2] RJUMPV(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,-408) 
             00 # [408] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0005 (Valid) CALLF branches with the same total of outputs - data index: 4
       # Code[0](Types: 0:128): PUSH1(0) RJUMPI(label_true) label_false: CALLF(1) RJUMP(exit) label_true: CALLF(2) exit: STOP
@@ -358,8 +350,6 @@ validInvalid:
             38 # [0] CODESIZE 
             e4 # [1] RETF 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0006 (Valid) CALLF inputs - data index: 5
       # Code[0](Types: 0:128): PUSH0 CALLF(1) STOP
@@ -660,8 +650,6 @@ validInvalid:
             50 # [126] POP 
             e4 # [127] RETF 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0007 (Valid) Validate input for ADD opcode - data index: 6
     # Code: PUSH1(1) DUP1 ADD STOP
@@ -684,8 +672,6 @@ validInvalid:
             01 # [3] ADD 
             00 # [4] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0008 (Valid) Validate input for MUL opcode - data index: 7
     # Code: PUSH1(1) DUP1 MUL STOP
@@ -708,8 +694,6 @@ validInvalid:
             02 # [3] MUL 
             00 # [4] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0009 (Valid) Validate input for SUB opcode - data index: 8
     # Code: PUSH1(1) DUP1 SUB STOP
@@ -732,8 +716,6 @@ validInvalid:
             03 # [3] SUB 
             00 # [4] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0010 (Valid) Validate input for DIV opcode - data index: 9
     # Code: PUSH1(1) DUP1 DIV STOP
@@ -756,8 +738,6 @@ validInvalid:
             04 # [3] DIV 
             00 # [4] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0011 (Valid) Validate input for SDIV opcode - data index: 10
     # Code: PUSH1(1) DUP1 SDIV STOP
@@ -780,8 +760,6 @@ validInvalid:
             05 # [3] SDIV 
             00 # [4] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0012 (Valid) Validate input for MOD opcode - data index: 11
     # Code: PUSH1(1) DUP1 MOD STOP
@@ -804,8 +782,6 @@ validInvalid:
             06 # [3] MOD 
             00 # [4] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0013 (Valid) Validate input for SMOD opcode - data index: 12
     # Code: PUSH1(1) DUP1 SMOD STOP
@@ -828,8 +804,6 @@ validInvalid:
             07 # [3] SMOD 
             00 # [4] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0014 (Valid) Validate input for ADDMOD opcode - data index: 13
     # Code: PUSH1(1) DUP1 DUP1 ADDMOD STOP
@@ -853,8 +827,6 @@ validInvalid:
             08 # [4] ADDMOD 
             00 # [5] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0015 (Valid) Validate input for MULMOD opcode - data index: 14
     # Code: PUSH1(1) DUP1 DUP1 MULMOD STOP
@@ -878,8 +850,6 @@ validInvalid:
             09 # [4] MULMOD 
             00 # [5] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0016 (Valid) Validate input for EXP opcode - data index: 15
     # Code: PUSH1(1) DUP1 EXP STOP
@@ -902,8 +872,6 @@ validInvalid:
             0a # [3] EXP 
             00 # [4] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0017 (Valid) Validate input for SIGNEXTEND opcode - data index: 16
     # Code: PUSH1(1) DUP1 SIGNEXTEND STOP
@@ -926,8 +894,6 @@ validInvalid:
             0b # [3] SIGNEXTEND 
             00 # [4] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0018 (Valid) Validate input for LT opcode - data index: 17
     # Code: PUSH1(1) DUP1 LT STOP
@@ -950,8 +916,6 @@ validInvalid:
             10 # [3] LT 
             00 # [4] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0019 (Valid) Validate input for GT opcode - data index: 18
     # Code: PUSH1(1) DUP1 GT STOP
@@ -974,8 +938,6 @@ validInvalid:
             11 # [3] GT 
             00 # [4] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0020 (Valid) Validate input for SLT opcode - data index: 19
     # Code: PUSH1(1) DUP1 SLT STOP
@@ -998,8 +960,6 @@ validInvalid:
             12 # [3] SLT 
             00 # [4] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0021 (Valid) Validate input for SGT opcode - data index: 20
     # Code: PUSH1(1) DUP1 SGT STOP
@@ -1022,8 +982,6 @@ validInvalid:
             13 # [3] SGT 
             00 # [4] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0022 (Valid) Validate input for EQ opcode - data index: 21
     # Code: PUSH1(1) DUP1 EQ STOP
@@ -1046,8 +1004,6 @@ validInvalid:
             14 # [3] EQ 
             00 # [4] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0023 (Valid) Validate input for ISZERO opcode - data index: 22
     # Code: PUSH1(1) ISZERO STOP
@@ -1069,8 +1025,6 @@ validInvalid:
             15 # [2] ISZERO 
             00 # [3] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0024 (Valid) Validate input for AND opcode - data index: 23
     # Code: PUSH1(1) DUP1 AND STOP
@@ -1093,8 +1047,6 @@ validInvalid:
             16 # [3] AND 
             00 # [4] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0025 (Valid) Validate input for OR opcode - data index: 24
     # Code: PUSH1(1) DUP1 OR STOP
@@ -1117,8 +1069,6 @@ validInvalid:
             17 # [3] OR 
             00 # [4] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0026 (Valid) Validate input for XOR opcode - data index: 25
     # Code: PUSH1(1) DUP1 XOR STOP
@@ -1141,8 +1091,6 @@ validInvalid:
             18 # [3] XOR 
             00 # [4] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0027 (Valid) Validate input for NOT opcode - data index: 26
     # Code: PUSH1(1) NOT STOP
@@ -1164,8 +1112,6 @@ validInvalid:
             19 # [2] NOT 
             00 # [3] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0028 (Valid) Validate input for BYTE opcode - data index: 27
     # Code: PUSH1(1) DUP1 BYTE STOP
@@ -1188,8 +1134,6 @@ validInvalid:
             1a # [3] BYTE 
             00 # [4] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0029 (Valid) Validate input for SHL opcode - data index: 28
     # Code: PUSH1(1) DUP1 SHL STOP
@@ -1212,8 +1156,6 @@ validInvalid:
             1b # [3] SHL 
             00 # [4] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0030 (Valid) Validate input for SHR opcode - data index: 29
     # Code: PUSH1(1) DUP1 SHR STOP
@@ -1236,8 +1178,6 @@ validInvalid:
             1c # [3] SHR 
             00 # [4] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0031 (Valid) Validate input for SAR opcode - data index: 30
     # Code: PUSH1(1) DUP1 SAR STOP
@@ -1260,8 +1200,6 @@ validInvalid:
             1d # [3] SAR 
             00 # [4] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0032 (Valid) Validate input for SHA3 opcode - data index: 31
     # Code: PUSH1(1) DUP1 SHA3 STOP
@@ -1284,8 +1222,6 @@ validInvalid:
             20 # [3] SHA3 
             00 # [4] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0033 (Valid) Validate input for BALANCE opcode - data index: 32
     # Code: PUSH1(1) BALANCE STOP
@@ -1307,8 +1243,6 @@ validInvalid:
             31 # [2] BALANCE 
             00 # [3] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0034 (Valid) Validate input for CALLDATALOAD opcode - data index: 33
     # Code: PUSH1(1) CALLDATALOAD STOP
@@ -1330,8 +1264,6 @@ validInvalid:
             35 # [2] CALLDATALOAD 
             00 # [3] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0035 (Valid) Validate input for CALLDATACOPY opcode - data index: 34
     # Code: PUSH1(1) DUP1 DUP1 CALLDATACOPY STOP
@@ -1355,8 +1287,6 @@ validInvalid:
             37 # [4] CALLDATACOPY 
             00 # [5] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0036 (Valid) Validate input for CODECOPY opcode - data index: 35
     # Code: PUSH1(1) DUP1 DUP1 CODECOPY STOP
@@ -1380,8 +1310,6 @@ validInvalid:
             39 # [4] CODECOPY 
             00 # [5] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0037 (Valid) Validate input for EXTCODESIZE opcode - data index: 36
     # Code: PUSH1(1) EXTCODESIZE STOP
@@ -1403,8 +1331,6 @@ validInvalid:
             3b # [2] EXTCODESIZE 
             00 # [3] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0038 (Valid) Validate input for EXTCODECOPY opcode - data index: 37
     # Code: PUSH1(1) DUP1 DUP1 DUP1 EXTCODECOPY STOP
@@ -1429,8 +1355,6 @@ validInvalid:
             3c # [5] EXTCODECOPY 
             00 # [6] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0039 (Valid) Validate input for RETURNDATACOPY opcode - data index: 38
     # Code: PUSH1(1) DUP1 DUP1 RETURNDATACOPY STOP
@@ -1454,8 +1378,6 @@ validInvalid:
             3e # [4] RETURNDATACOPY 
             00 # [5] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0040 (Valid) Validate input for EXTCODEHASH opcode - data index: 39
     # Code: PUSH1(1) EXTCODEHASH STOP
@@ -1477,8 +1399,6 @@ validInvalid:
             3f # [2] EXTCODEHASH 
             00 # [3] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0041 (Valid) Validate input for BLOCKHASH opcode - data index: 40
     # Code: PUSH1(1) BLOCKHASH STOP
@@ -1500,8 +1420,6 @@ validInvalid:
             40 # [2] BLOCKHASH 
             00 # [3] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0042 (Valid) Validate input for POP opcode - data index: 41
     # Code: PUSH1(1) POP STOP
@@ -1523,8 +1441,6 @@ validInvalid:
             50 # [2] POP 
             00 # [3] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0043 (Valid) Validate input for MLOAD opcode - data index: 42
     # Code: PUSH1(1) MLOAD STOP
@@ -1546,8 +1462,6 @@ validInvalid:
             51 # [2] MLOAD 
             00 # [3] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0044 (Valid) Validate input for MSTORE opcode - data index: 43
     # Code: PUSH1(1) DUP1 MSTORE STOP
@@ -1570,8 +1484,6 @@ validInvalid:
             52 # [3] MSTORE 
             00 # [4] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0045 (Valid) Validate input for MSTORE8 opcode - data index: 44
     # Code: PUSH1(1) DUP1 MSTORE8 STOP
@@ -1594,8 +1506,6 @@ validInvalid:
             53 # [3] MSTORE8 
             00 # [4] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0046 (Valid) Validate input for SLOAD opcode - data index: 45
     # Code: PUSH1(1) SLOAD STOP
@@ -1617,8 +1527,6 @@ validInvalid:
             54 # [2] SLOAD 
             00 # [3] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0047 (Valid) Validate input for SSTORE opcode - data index: 46
     # Code: PUSH1(1) DUP1 SSTORE STOP
@@ -1641,8 +1549,6 @@ validInvalid:
             55 # [3] SSTORE 
             00 # [4] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0048 (Valid) Validate input for DUP1 opcode - data index: 47
     # Code: PUSH1(1) DUP1 STOP
@@ -1664,8 +1570,6 @@ validInvalid:
             80 # [2] DUP1 
             00 # [3] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0049 (Valid) Validate input for DUP2 opcode - data index: 48
     # Code: PUSH1(1) DUP1 DUP2 STOP
@@ -1688,8 +1592,6 @@ validInvalid:
             81 # [3] DUP2 
             00 # [4] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0050 (Valid) Validate input for DUP3 opcode - data index: 49
     # Code: PUSH1(1) DUP1 DUP1 DUP3 STOP
@@ -1713,8 +1615,6 @@ validInvalid:
             82 # [4] DUP3 
             00 # [5] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0051 (Valid) Validate input for DUP4 opcode - data index: 50
     # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP4 STOP
@@ -1739,8 +1639,6 @@ validInvalid:
             83 # [5] DUP4 
             00 # [6] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0052 (Valid) Validate input for DUP5 opcode - data index: 51
     # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP5 STOP
@@ -1766,8 +1664,6 @@ validInvalid:
             84 # [6] DUP5 
             00 # [7] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0053 (Valid) Validate input for DUP6 opcode - data index: 52
     # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP6 STOP
@@ -1794,8 +1690,6 @@ validInvalid:
             85 # [7] DUP6 
             00 # [8] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0054 (Valid) Validate input for DUP7 opcode - data index: 53
     # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP7 STOP
@@ -1823,8 +1717,6 @@ validInvalid:
             86 # [8] DUP7 
             00 # [9] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0055 (Valid) Validate input for DUP8 opcode - data index: 54
     # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP8 STOP
@@ -1853,8 +1745,6 @@ validInvalid:
             87 # [9] DUP8 
             00 # [10] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0056 (Valid) Validate input for DUP9 opcode - data index: 55
     # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP9 STOP
@@ -1884,8 +1774,6 @@ validInvalid:
             88 # [10] DUP9 
             00 # [11] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0057 (Valid) Validate input for DUP10 opcode - data index: 56
     # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP10 STOP
@@ -1916,8 +1804,6 @@ validInvalid:
             89 # [11] DUP10 
             00 # [12] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0058 (Valid) Validate input for DUP11 opcode - data index: 57
     # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP11 STOP
@@ -1949,8 +1835,6 @@ validInvalid:
             8a # [12] DUP11 
             00 # [13] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0059 (Valid) Validate input for DUP12 opcode - data index: 58
     # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP12 STOP
@@ -1983,8 +1867,6 @@ validInvalid:
             8b # [13] DUP12 
             00 # [14] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0060 (Valid) Validate input for DUP13 opcode - data index: 59
     # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP13 STOP
@@ -2018,8 +1900,6 @@ validInvalid:
             8c # [14] DUP13 
             00 # [15] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0061 (Valid) Validate input for DUP14 opcode - data index: 60
     # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP14 STOP
@@ -2054,8 +1934,6 @@ validInvalid:
             8d # [15] DUP14 
             00 # [16] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0062 (Valid) Validate input for DUP15 opcode - data index: 61
     # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP15 STOP
@@ -2091,8 +1969,6 @@ validInvalid:
             8e # [16] DUP15 
             00 # [17] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0063 (Valid) Validate input for DUP16 opcode - data index: 62
     # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP16 STOP
@@ -2129,8 +2005,6 @@ validInvalid:
             8f # [17] DUP16 
             00 # [18] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0064 (Valid) Validate input for SWAP1 opcode - data index: 63
     # Code: PUSH1(1) DUP1 SWAP1 STOP
@@ -2153,8 +2027,6 @@ validInvalid:
             90 # [3] SWAP1 
             00 # [4] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0065 (Valid) Validate input for SWAP2 opcode - data index: 64
     # Code: PUSH1(1) DUP1 DUP1 SWAP2 STOP
@@ -2178,8 +2050,6 @@ validInvalid:
             91 # [4] SWAP2 
             00 # [5] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0066 (Valid) Validate input for SWAP3 opcode - data index: 65
     # Code: PUSH1(1) DUP1 DUP1 DUP1 SWAP3 STOP
@@ -2204,8 +2074,6 @@ validInvalid:
             92 # [5] SWAP3 
             00 # [6] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0067 (Valid) Validate input for SWAP4 opcode - data index: 66
     # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 SWAP4 STOP
@@ -2231,8 +2099,6 @@ validInvalid:
             93 # [6] SWAP4 
             00 # [7] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0068 (Valid) Validate input for SWAP5 opcode - data index: 67
     # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 SWAP5 STOP
@@ -2259,8 +2125,6 @@ validInvalid:
             94 # [7] SWAP5 
             00 # [8] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0069 (Valid) Validate input for SWAP6 opcode - data index: 68
     # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 SWAP6 STOP
@@ -2288,8 +2152,6 @@ validInvalid:
             95 # [8] SWAP6 
             00 # [9] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0070 (Valid) Validate input for SWAP7 opcode - data index: 69
     # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 SWAP7 STOP
@@ -2318,8 +2180,6 @@ validInvalid:
             96 # [9] SWAP7 
             00 # [10] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0071 (Valid) Validate input for SWAP8 opcode - data index: 70
     # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 SWAP8 STOP
@@ -2349,8 +2209,6 @@ validInvalid:
             97 # [10] SWAP8 
             00 # [11] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0072 (Valid) Validate input for SWAP9 opcode - data index: 71
     # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 SWAP9 STOP
@@ -2381,8 +2239,6 @@ validInvalid:
             98 # [11] SWAP9 
             00 # [12] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0073 (Valid) Validate input for SWAP10 opcode - data index: 72
     # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 SWAP10 STOP
@@ -2414,8 +2270,6 @@ validInvalid:
             99 # [12] SWAP10 
             00 # [13] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0074 (Valid) Validate input for SWAP11 opcode - data index: 73
     # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 SWAP11 STOP
@@ -2448,8 +2302,6 @@ validInvalid:
             9a # [13] SWAP11 
             00 # [14] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0075 (Valid) Validate input for SWAP12 opcode - data index: 74
     # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 SWAP12 STOP
@@ -2483,8 +2335,6 @@ validInvalid:
             9b # [14] SWAP12 
             00 # [15] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0076 (Valid) Validate input for SWAP13 opcode - data index: 75
     # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 SWAP13 STOP
@@ -2519,8 +2369,6 @@ validInvalid:
             9c # [15] SWAP13 
             00 # [16] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0077 (Valid) Validate input for SWAP14 opcode - data index: 76
     # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 SWAP14 STOP
@@ -2556,8 +2404,6 @@ validInvalid:
             9d # [16] SWAP14 
             00 # [17] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0078 (Valid) Validate input for SWAP15 opcode - data index: 77
     # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 SWAP15 STOP
@@ -2594,8 +2440,6 @@ validInvalid:
             9e # [17] SWAP15 
             00 # [18] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0079 (Valid) Validate input for SWAP16 opcode - data index: 78
     # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 SWAP16 STOP
@@ -2633,8 +2477,6 @@ validInvalid:
             9f # [18] SWAP16 
             00 # [19] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0080 (Valid) Validate input for LOG0 opcode - data index: 79
     # Code: PUSH1(1) DUP1 LOG0 STOP
@@ -2657,8 +2499,6 @@ validInvalid:
             a0 # [3] LOG0 
             00 # [4] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0081 (Valid) Validate input for LOG1 opcode - data index: 80
     # Code: PUSH1(1) DUP1 DUP1 LOG1 STOP
@@ -2682,8 +2522,6 @@ validInvalid:
             a1 # [4] LOG1 
             00 # [5] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0082 (Valid) Validate input for LOG2 opcode - data index: 81
     # Code: PUSH1(1) DUP1 DUP1 DUP1 LOG2 STOP
@@ -2708,8 +2546,6 @@ validInvalid:
             a2 # [5] LOG2 
             00 # [6] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0083 (Valid) Validate input for LOG3 opcode - data index: 82
     # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 LOG3 STOP
@@ -2735,8 +2571,6 @@ validInvalid:
             a3 # [6] LOG3 
             00 # [7] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0084 (Valid) Validate input for LOG4 opcode - data index: 83
     # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 LOG4 STOP
@@ -2763,8 +2597,6 @@ validInvalid:
             a4 # [7] LOG4 
             00 # [8] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0085 (Valid) Validate input for CREATE opcode - data index: 84
     # Code: PUSH1(1) DUP1 DUP1 CREATE STOP
@@ -2788,8 +2620,6 @@ validInvalid:
             f0 # [4] CREATE 
             00 # [5] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0086 (Valid) Validate input for CALL opcode - data index: 85
     # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 CALL STOP
@@ -2817,8 +2647,6 @@ validInvalid:
             f1 # [8] CALL 
             00 # [9] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0087 (Valid) Validate input for RETURN opcode - data index: 86
     # Code: PUSH1(1) DUP1 RETURN
@@ -2840,8 +2668,6 @@ validInvalid:
             80 # [2] DUP1 
             f3 # [3] RETURN 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0088 (Valid) Validate input for DELEGATECALL opcode - data index: 87
     # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DELEGATECALL STOP
@@ -2868,8 +2694,6 @@ validInvalid:
             f4 # [7] DELEGATECALL 
             00 # [8] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0089 (Valid) Validate input for CREATE2 opcode - data index: 88
     # Code: PUSH1(1) DUP1 DUP1 DUP1 CREATE2 STOP
@@ -2894,8 +2718,6 @@ validInvalid:
             f5 # [5] CREATE2 
             00 # [6] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0090 (Valid) Validate input for STATICCALL opcode - data index: 89
     # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 STATICCALL STOP
@@ -2922,8 +2744,6 @@ validInvalid:
             fa # [7] STATICCALL 
             00 # [8] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0091 (Valid) Validate input for REVERT opcode - data index: 90
     # Code: PUSH1(1) DUP1 REVERT
@@ -2945,8 +2765,6 @@ validInvalid:
             80 # [2] DUP1 
             fd # [3] REVERT 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0092 (Valid) Containing terminating opcode RETURN at the end - data index: 91
     # Code: PUSH1(1) POP PUSH1(0) DUP1 RETURN
@@ -2970,8 +2788,6 @@ validInvalid:
             80 # [5] DUP1 
             f3 # [6] RETURN 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0093 (Valid) Containing terminating opcode REVERT at the end - data index: 92
     # Code: PUSH1(1) POP PUSH1(0) DUP1 REVERT
@@ -2995,8 +2811,6 @@ validInvalid:
             80 # [5] DUP1 
             fd # [6] REVERT 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0094 (Valid) Loop ending with unconditional RJUMP (a) - data index: 93
     # Code: start: RJUMP(start)
@@ -3016,8 +2830,6 @@ validInvalid:
                # Code section 0
         e0fffd # [0] RJUMP(-3) 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0095 (Valid) Loop ending with unconditional RJUMP (b) - data index: 94
     # Code: PUSH1(10) start: PUSH1(1) SWAP1 SUB DUP1 RJUMPI(end) STOP end: RJUMP(start)
@@ -3044,8 +2856,6 @@ validInvalid:
             00 # [10] STOP 
         e0fff4 # [11] RJUMP(-12) 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0096 (Valid) Functions ending with RETF - data index: 95
       # Code[0](Types: 0:128): PUSH1(0) CALLF(1) STOP
@@ -3088,8 +2898,6 @@ validInvalid:
         610000 # [2] PUSH2(0) 
             e4 # [5] RETF 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0097 (Valid) Stack is not required to be empty on terminating instruction RETURN - data index: 96
     # Code: PUSH1(0) DUP1 DUP1 DUP1 DUP1 RETURN
@@ -3114,8 +2922,6 @@ validInvalid:
             80 # [5] DUP1 
             f3 # [6] RETURN 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0098 (Valid) Stack is not required to be empty on terminating instruction REVERT - data index: 97
     # Code: PUSH1(0) DUP1 DUP1 DUP1 DUP1 REVERT
@@ -3140,8 +2946,6 @@ validInvalid:
             80 # [5] DUP1 
             fd # [6] REVERT 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1V5450_0099 (Valid) RETF returning maximum number of outputs (127) - data index: 98
       # Code[0](Types: 0:128): CALLF(1) STOP
@@ -3297,8 +3101,6 @@ validInvalid:
             80 # [127] DUP1 
             e4 # [128] RETF 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1I5450_0001 (Valid) Calling function without enough stack items: Function 1 calls Function 2 with enough parameters - data index: 99
       # Code[0](Types: 0:128): PUSH1(0) CALLF(1) STOP
@@ -3340,8 +3142,6 @@ validInvalid:
             50 # [1] POP 
             e4 # [2] RETF 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
 
     # EOF1I5450_0002 (Invalid) Stack height mismatch for different paths (a) - data index: 100
     # Code: PUSH1(0) RJUMPI(label_true) PUSH1(1) label_true: PUSH1(2) STOP
@@ -3365,9 +3165,6 @@ validInvalid:
           6002 # [7] PUSH1(2) 
             00 # [9] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
-        ">=Prague" : "EOF_StackHeightMismatch"
 
     # EOF1I5450_0003 (Invalid) Stack height mismatch for different paths (b) - data index: 101
     # Code: PUSH1(0) RJUMPI(label_true) label_false: PUSH1(1) RJUMP(exit) label_true: PUSH1(2) PUSH1(3) exit: STOP
@@ -3393,9 +3190,6 @@ validInvalid:
           6003 # [12] PUSH1(3) 
             00 # [14] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
-        ">=Prague" : "EOF_StackHeightMismatch"
 
     # EOF1I5450_0004 (Invalid) Calls returning different number of outputs - data index: 102
       # Code[0](Types: 0:128): PUSH1(0) RJUMPI(label_true) label_false: CALLF(1) RJUMP(exit) label_true: CALLF(2) exit: STOP
@@ -3439,9 +3233,6 @@ validInvalid:
             80 # [2] DUP1 
             e4 # [3] RETF 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
-        ">=Prague" : "EOF_StackHeightMismatch"
 
     # EOF1I5450_0005 (Invalid) Pushing loop - data index: 103
     # Code: start: PUSH1(0) RJUMP(start)
@@ -3463,7 +3254,6 @@ validInvalid:
         e0fffb # [2] RJUMP(-5) 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackHeightMismatch"
 
     # EOF1I5450_0006 (Invalid) Popping loop - data index: 104
@@ -3489,7 +3279,6 @@ validInvalid:
         e0fffc # [5] RJUMP(-4) 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackHeightMismatch"
 
     # EOF1I5450_0007 (Invalid) Jump table with different stack heights - data index: 105
@@ -3520,9 +3309,7 @@ validInvalid:
           6005 # [24] PUSH1(5) 
             00 # [26] STOP 
                # Data section (empty)
-      expectException:
-        "Cancun" : "EOF_InvalidCode"
-        ">=Prague" : "EOF_StackHeightMismatch"
+        # ">=Prague" : "EOF_StackHeightMismatch"
 
     # EOF1I5450_0008 (Invalid) Stack underflow for opcode ADD - data index: 106
     # Code: PUSH1(1) ADD STOP
@@ -3545,7 +3332,6 @@ validInvalid:
             00 # [3] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0009 (Invalid) Stack underflow for opcode MUL - data index: 107
@@ -3569,7 +3355,6 @@ validInvalid:
             00 # [3] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0010 (Invalid) Stack underflow for opcode SUB - data index: 108
@@ -3593,7 +3378,6 @@ validInvalid:
             00 # [3] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0011 (Invalid) Stack underflow for opcode DIV - data index: 109
@@ -3617,7 +3401,6 @@ validInvalid:
             00 # [3] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0012 (Invalid) Stack underflow for opcode SDIV - data index: 110
@@ -3641,7 +3424,6 @@ validInvalid:
             00 # [3] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0013 (Invalid) Stack underflow for opcode MOD - data index: 111
@@ -3665,7 +3447,6 @@ validInvalid:
             00 # [3] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0014 (Invalid) Stack underflow for opcode SMOD - data index: 112
@@ -3689,7 +3470,6 @@ validInvalid:
             00 # [3] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0015 (Invalid) Stack underflow for opcode ADDMOD - data index: 113
@@ -3714,7 +3494,6 @@ validInvalid:
             00 # [5] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0016 (Invalid) Stack underflow for opcode MULMOD - data index: 114
@@ -3739,7 +3518,6 @@ validInvalid:
             00 # [5] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0017 (Invalid) Stack underflow for opcode EXP - data index: 115
@@ -3763,7 +3541,6 @@ validInvalid:
             00 # [3] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0018 (Invalid) Stack underflow for opcode SIGNEXTEND - data index: 116
@@ -3787,7 +3564,6 @@ validInvalid:
             00 # [3] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0019 (Invalid) Stack underflow for opcode LT - data index: 117
@@ -3811,7 +3587,6 @@ validInvalid:
             00 # [3] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0020 (Invalid) Stack underflow for opcode GT - data index: 118
@@ -3835,7 +3610,6 @@ validInvalid:
             00 # [3] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0021 (Invalid) Stack underflow for opcode SLT - data index: 119
@@ -3859,7 +3633,6 @@ validInvalid:
             00 # [3] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0022 (Invalid) Stack underflow for opcode SGT - data index: 120
@@ -3883,7 +3656,6 @@ validInvalid:
             00 # [3] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0023 (Invalid) Stack underflow for opcode EQ - data index: 121
@@ -3907,7 +3679,6 @@ validInvalid:
             00 # [3] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0024 (Invalid) Stack underflow for opcode ISZERO - data index: 122
@@ -3930,7 +3701,6 @@ validInvalid:
             00 # [1] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0025 (Invalid) Stack underflow for opcode AND - data index: 123
@@ -3954,7 +3724,6 @@ validInvalid:
             00 # [3] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0026 (Invalid) Stack underflow for opcode OR - data index: 124
@@ -3978,7 +3747,6 @@ validInvalid:
             00 # [3] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0027 (Invalid) Stack underflow for opcode XOR - data index: 125
@@ -4002,7 +3770,6 @@ validInvalid:
             00 # [3] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0028 (Invalid) Stack underflow for opcode NOT - data index: 126
@@ -4025,7 +3792,6 @@ validInvalid:
             00 # [1] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0029 (Invalid) Stack underflow for opcode BYTE - data index: 127
@@ -4049,7 +3815,6 @@ validInvalid:
             00 # [3] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0030 (Invalid) Stack underflow for opcode SHL - data index: 128
@@ -4073,7 +3838,6 @@ validInvalid:
             00 # [3] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0031 (Invalid) Stack underflow for opcode SHR - data index: 129
@@ -4097,7 +3861,6 @@ validInvalid:
             00 # [3] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0032 (Invalid) Stack underflow for opcode SAR - data index: 130
@@ -4121,7 +3884,6 @@ validInvalid:
             00 # [3] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0033 (Invalid) Stack underflow for opcode SHA3 - data index: 131
@@ -4145,7 +3907,6 @@ validInvalid:
             00 # [3] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0034 (Invalid) Stack underflow for opcode BALANCE - data index: 132
@@ -4168,7 +3929,6 @@ validInvalid:
             00 # [1] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0035 (Invalid) Stack underflow for opcode CALLDATALOAD - data index: 133
@@ -4191,7 +3951,6 @@ validInvalid:
             00 # [1] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0036 (Invalid) Stack underflow for opcode CALLDATACOPY - data index: 134
@@ -4216,7 +3975,6 @@ validInvalid:
             00 # [5] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0037 (Invalid) Stack underflow for opcode CODECOPY - data index: 135
@@ -4241,7 +3999,6 @@ validInvalid:
             00 # [5] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0038 (Invalid) Stack underflow for opcode EXTCODESIZE - data index: 136
@@ -4264,7 +4021,6 @@ validInvalid:
             00 # [1] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0039 (Invalid) Stack underflow for opcode EXTCODECOPY - data index: 137
@@ -4290,7 +4046,6 @@ validInvalid:
             00 # [7] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0040 (Invalid) Stack underflow for opcode RETURNDATACOPY - data index: 138
@@ -4315,7 +4070,6 @@ validInvalid:
             00 # [5] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0041 (Invalid) Stack underflow for opcode EXTCODEHASH - data index: 139
@@ -4338,7 +4092,6 @@ validInvalid:
             00 # [1] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0042 (Invalid) Stack underflow for opcode BLOCKHASH - data index: 140
@@ -4361,7 +4114,6 @@ validInvalid:
             00 # [1] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0043 (Invalid) Stack underflow for opcode POP - data index: 141
@@ -4384,7 +4136,6 @@ validInvalid:
             00 # [1] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0044 (Invalid) Stack underflow for opcode MLOAD - data index: 142
@@ -4407,7 +4158,6 @@ validInvalid:
             00 # [1] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0045 (Invalid) Stack underflow for opcode MSTORE - data index: 143
@@ -4431,7 +4181,6 @@ validInvalid:
             00 # [3] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0046 (Invalid) Stack underflow for opcode MSTORE8 - data index: 144
@@ -4455,7 +4204,6 @@ validInvalid:
             00 # [3] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0047 (Invalid) Stack underflow for opcode SLOAD - data index: 145
@@ -4478,7 +4226,6 @@ validInvalid:
             00 # [1] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0048 (Invalid) Stack underflow for opcode SSTORE - data index: 146
@@ -4502,7 +4249,6 @@ validInvalid:
             00 # [3] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0049 (Invalid) Stack underflow for opcode DUP1 - data index: 147
@@ -4525,7 +4271,6 @@ validInvalid:
             00 # [1] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0050 (Invalid) Stack underflow for opcode DUP2 - data index: 148
@@ -4549,7 +4294,6 @@ validInvalid:
             00 # [3] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0051 (Invalid) Stack underflow for opcode DUP3 - data index: 149
@@ -4574,7 +4318,6 @@ validInvalid:
             00 # [5] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0052 (Invalid) Stack underflow for opcode DUP4 - data index: 150
@@ -4600,7 +4343,6 @@ validInvalid:
             00 # [7] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0053 (Invalid) Stack underflow for opcode DUP5 - data index: 151
@@ -4627,7 +4369,6 @@ validInvalid:
             00 # [9] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0054 (Invalid) Stack underflow for opcode DUP6 - data index: 152
@@ -4655,7 +4396,6 @@ validInvalid:
             00 # [11] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0055 (Invalid) Stack underflow for opcode DUP7 - data index: 153
@@ -4684,7 +4424,6 @@ validInvalid:
             00 # [13] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0056 (Invalid) Stack underflow for opcode DUP8 - data index: 154
@@ -4714,7 +4453,6 @@ validInvalid:
             00 # [15] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0057 (Invalid) Stack underflow for opcode DUP9 - data index: 155
@@ -4745,7 +4483,6 @@ validInvalid:
             00 # [17] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0058 (Invalid) Stack underflow for opcode DUP10 - data index: 156
@@ -4777,7 +4514,6 @@ validInvalid:
             00 # [19] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0059 (Invalid) Stack underflow for opcode DUP11 - data index: 157
@@ -4810,7 +4546,6 @@ validInvalid:
             00 # [21] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0060 (Invalid) Stack underflow for opcode DUP12 - data index: 158
@@ -4844,7 +4579,6 @@ validInvalid:
             00 # [23] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0061 (Invalid) Stack underflow for opcode DUP13 - data index: 159
@@ -4879,7 +4613,6 @@ validInvalid:
             00 # [25] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0062 (Invalid) Stack underflow for opcode DUP14 - data index: 160
@@ -4915,7 +4648,6 @@ validInvalid:
             00 # [27] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0063 (Invalid) Stack underflow for opcode DUP15 - data index: 161
@@ -4952,7 +4684,6 @@ validInvalid:
             00 # [29] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0064 (Invalid) Stack underflow for opcode DUP16 - data index: 162
@@ -4990,7 +4721,6 @@ validInvalid:
             00 # [31] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0065 (Invalid) Stack underflow for opcode SWAP1 - data index: 163
@@ -5014,7 +4744,6 @@ validInvalid:
             00 # [3] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0066 (Invalid) Stack underflow for opcode SWAP2 - data index: 164
@@ -5039,7 +4768,6 @@ validInvalid:
             00 # [5] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0067 (Invalid) Stack underflow for opcode SWAP3 - data index: 165
@@ -5065,7 +4793,6 @@ validInvalid:
             00 # [7] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0068 (Invalid) Stack underflow for opcode SWAP4 - data index: 166
@@ -5092,7 +4819,6 @@ validInvalid:
             00 # [9] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0069 (Invalid) Stack underflow for opcode SWAP5 - data index: 167
@@ -5120,7 +4846,6 @@ validInvalid:
             00 # [11] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0070 (Invalid) Stack underflow for opcode SWAP6 - data index: 168
@@ -5149,7 +4874,6 @@ validInvalid:
             00 # [13] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0071 (Invalid) Stack underflow for opcode SWAP7 - data index: 169
@@ -5179,7 +4903,6 @@ validInvalid:
             00 # [15] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0072 (Invalid) Stack underflow for opcode SWAP8 - data index: 170
@@ -5210,7 +4933,6 @@ validInvalid:
             00 # [17] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0073 (Invalid) Stack underflow for opcode SWAP9 - data index: 171
@@ -5242,7 +4964,6 @@ validInvalid:
             00 # [19] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0074 (Invalid) Stack underflow for opcode SWAP10 - data index: 172
@@ -5275,7 +4996,6 @@ validInvalid:
             00 # [21] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0075 (Invalid) Stack underflow for opcode SWAP11 - data index: 173
@@ -5309,7 +5029,6 @@ validInvalid:
             00 # [23] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0076 (Invalid) Stack underflow for opcode SWAP12 - data index: 174
@@ -5344,7 +5063,6 @@ validInvalid:
             00 # [25] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0077 (Invalid) Stack underflow for opcode SWAP13 - data index: 175
@@ -5380,7 +5098,6 @@ validInvalid:
             00 # [27] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0078 (Invalid) Stack underflow for opcode SWAP14 - data index: 176
@@ -5417,7 +5134,6 @@ validInvalid:
             00 # [29] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0079 (Invalid) Stack underflow for opcode SWAP15 - data index: 177
@@ -5455,7 +5171,6 @@ validInvalid:
             00 # [31] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0080 (Invalid) Stack underflow for opcode SWAP16 - data index: 178
@@ -5494,7 +5209,6 @@ validInvalid:
             00 # [33] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0081 (Invalid) Stack underflow for opcode LOG0 - data index: 179
@@ -5518,7 +5232,6 @@ validInvalid:
             00 # [3] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0082 (Invalid) Stack underflow for opcode LOG1 - data index: 180
@@ -5543,7 +5256,6 @@ validInvalid:
             00 # [5] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0083 (Invalid) Stack underflow for opcode LOG2 - data index: 181
@@ -5569,7 +5281,6 @@ validInvalid:
             00 # [7] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0084 (Invalid) Stack underflow for opcode LOG3 - data index: 182
@@ -5596,7 +5307,6 @@ validInvalid:
             00 # [9] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0085 (Invalid) Stack underflow for opcode LOG4 - data index: 183
@@ -5624,7 +5334,6 @@ validInvalid:
             00 # [11] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0086 (Invalid) Stack underflow for opcode CREATE - data index: 184
@@ -5649,7 +5358,6 @@ validInvalid:
             00 # [5] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0087 (Invalid) Stack underflow for opcode CALL - data index: 185
@@ -5678,7 +5386,6 @@ validInvalid:
             00 # [13] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0088 (Invalid) Stack underflow for opcode RETURN - data index: 186
@@ -5701,7 +5408,6 @@ validInvalid:
             f3 # [2] RETURN 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0089 (Invalid) Stack underflow for opcode DELEGATECALL - data index: 187
@@ -5729,7 +5435,6 @@ validInvalid:
             00 # [11] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0090 (Invalid) Stack underflow for opcode CREATE2 - data index: 188
@@ -5755,7 +5460,6 @@ validInvalid:
             00 # [7] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0091 (Invalid) Stack underflow for opcode STATICCALL - data index: 189
@@ -5783,7 +5487,6 @@ validInvalid:
             00 # [11] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0092 (Invalid) Stack underflow for opcode REVERT - data index: 190
@@ -5806,7 +5509,6 @@ validInvalid:
             fd # [2] REVERT 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0093 (Invalid) Calling function without enough stack items: Function 0 calls Function 1 without enough parameters - data index: 191
@@ -5850,7 +5552,6 @@ validInvalid:
             e4 # [2] RETF 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0094 (Invalid) Calling function without enough stack items: Function 0 calls Function 1 without enought parameters, Function 1 calls Function 2 without enough parameers - data index: 192
@@ -5894,7 +5595,6 @@ validInvalid:
             e4 # [5] RETF 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_StackUnderflow"
 
     # EOF1I5450_0095 (Invalid) Stack Overflow: Function pushing more than 1024 items to the stack - data index: 193
@@ -5902,7 +5602,6 @@ validInvalid:
     - data: |
        :label EOF1I5450_0095 :raw 0xef0001010004020001080004000000008004006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_MaxStackHeightExceeded"
 
     # EOF1I5450_0096 (Invalid) Stack Overflow: Function 1 when called by Function 0 pushes more than 1024 items to the stack - data index: 194
@@ -5911,7 +5610,6 @@ validInvalid:
     - data: |
        :label EOF1I5450_0096 :raw 0xef000101000802000207fb000b040000000080040100050005600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000600060006000e3000160006000600060006000e4
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_MaxStackHeightExceeded"
 
     # EOF1I5450_0097 (Invalid) Function ending with non-terminating instruction (a) - data index: 195
@@ -5933,7 +5631,6 @@ validInvalid:
           6000 # [0] PUSH1(0) 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_InvalidCodeTermination"
 
     # EOF1I5450_0098 (Invalid) Function ending with non-terminating instruction (b) - data index: 196
@@ -5958,7 +5655,6 @@ validInvalid:
             5b # [6] NOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_InvalidCodeTermination"
 
     # EOF1I5450_0099 (Invalid) Function ending with non-terminating instruction (c) - data index: 197
@@ -5984,7 +5680,6 @@ validInvalid:
             5b # [10] NOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_InvalidCodeTermination"
 
     # EOF1I5450_0100 (Invalid) Function containing unreachable code after RETURN - data index: 198
@@ -6009,7 +5704,6 @@ validInvalid:
             00 # [5] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_UnreachableCode"
 
     # EOF1I5450_0101 (Invalid) Function containing unreachable code after REVERT - data index: 199
@@ -6034,7 +5728,6 @@ validInvalid:
             00 # [5] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_UnreachableCode"
 
     # EOF1I5450_0102 (Invalid) Unreachable code after RJUMP - data index: 200
@@ -6059,7 +5752,6 @@ validInvalid:
             00 # [7] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_UnreachableCode"
 
     # EOF1I5450_0103 (Invalid) Unreachable code after infinite loop - data index: 201
@@ -6086,6 +5778,5 @@ validInvalid:
             00 # [11] STOP 
                # Data section (empty)
       expectException:
-        "Cancun" : "EOF_InvalidCode"
         ">=Prague" : "EOF_UnreachableCode"
 

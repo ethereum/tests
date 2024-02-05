@@ -44,7 +44,7 @@ validInvalid:
          EOF1V0015 data stack height of 1023 is valid
 
   forks:
-    - ">=Cancun"
+    - ">=Prague"
 
   vectors:
 
@@ -69,9 +69,6 @@ validInvalid:
            00 #  3 STOP
               # Data segment
            ef
-    expectException:
-      "Cancun" : "EOF_InvalidCode"
-
 
   # Data 1
   # EOF1I0006 check that EOF1 with too many or too few bytes fails
@@ -95,7 +92,6 @@ validInvalid:
               # Data segment
            0bad  # 2 bytes instead of four
     expectException:
-      "Cancun" : "EOF_InvalidCode"
       ">=Prague" : "EOF_InvalidContainerSize"
 
 
@@ -121,7 +117,6 @@ validInvalid:
               # Data segment
            0bad60A70BAD  # 6 bytes instead of four
     expectException:
-      "Cancun" : "EOF_InvalidCode"
       ">=Prague" : "EOF_InvalidContainerSize"
 
   # Data 3
@@ -145,9 +140,6 @@ validInvalid:
            00 #  3 STOP
               # Data segment
            0bad60A7  # 4 bytes (valid)
-    expectException:
-      "Cancun" : "EOF_InvalidCode"
-
 
   # Data 4
   # EOF1I0008 check that EOF1 with an illegal opcode fails
@@ -171,7 +163,6 @@ validInvalid:
               # Data segment
            0bad60A7  # 4 bytes (valid)
     expectException:
-      "Cancun" : "EOF_InvalidCode"
       ">=Prague" : "EOF_UndefinedInstruction"
 
 
@@ -196,10 +187,8 @@ validInvalid:
            FE #  3 Designated invalid opcode
               # Data segment
            0bad60A7  # 4 bytes (valid)
-    expectException:
-      "Cancun" : "EOF_InvalidCode"
 
-
+  # Data 6
   # EOF1I0005 check that EOF1 with a bad end of sections number fails
   - data: |
      :label EOF1I0005 :raw 0x
@@ -221,34 +210,34 @@ validInvalid:
               # Data segment
            ef
     expectException:
-      "Cancun" : "EOF_InvalidCode"
       ">=Prague" : "EOF_MissingHeaderTerminator"
 
 
-  # EOF1V0008 check that code that uses a new style relative jump (5C) succeeds
+  # Data 7
+  # EOF1V0008 check that code that uses a new style relative jump (E0) succeeds
   - data: |
      :label EOF1V0008 :raw 0x
       # EOF deployed code 
       ef0001  # Magic followed by version
       010004  # One code segment
       020001  # One code segment
-        000A  #   code seg 0: 10 bytes
+        000E  #   code seg 0: 14 bytes
       040004  # Four byte data segment
       00      # End of header
               # Code segment 0 header
           00  # Zero inputs
           80  # Non-Returning Function
-        0000  # Max stack height 0
+        0001  # Max stack height 1
               # Code segment 0 code
-      E00003  #  0   RJUMP +3
-      E00003  #  3   RJUMP +3
-      E0FFFA  #  6   RJUMP -6
-          00  #  9   STOP
+           5F # 0 PUSH0
+      E10003  #  1   RJUMPI +3
+      E00003  #  4   RJUMP +3
+      E00003  #  7   RJUMP +3
+      E0FFFA  #  10  RJUMP -6
+          00  #  13  STOP
               # Data segment
            0bad60A7  # 4 bytes (valid)
-    expectException:
-      "Cancun" : "EOF_InvalidCode"
-
+  # Data 8
   # EOF1I0023 sections with unreachable code fail
   - data: |
      :label EOF1I0023 :raw 0x
@@ -270,9 +259,9 @@ validInvalid:
               # Data segment
            0bad60A7  # 4 bytes (valid)
     expectException:
-      "Cancun" : "EOF_InvalidCode"
       ">=Prague" : "EOF_UnreachableCode"
 
+  # Data 9
   # EOF1V0011 check that code that uses a new style conditional jump (5D) succeeds
   - data: |
      :label EOF1V0011 :raw 0x
@@ -294,10 +283,8 @@ validInvalid:
           00  #  6   STOP
               # Data segment
            0bad60A7  # 4 bytes (valid)
-    expectException:
-      "Cancun" : "EOF_InvalidCode"
 
-
+  # Data 10
   # EOF1V0014 sections that end with a legit terminating opcode are OK
   - data: |
      :label EOF1V0014 :raw 0x
@@ -355,10 +342,8 @@ validInvalid:
          e4 # [0] RETF 
             # Data section 
      0bad60a7
-    expectException:
-      "Cancun" : "EOF_InvalidCode"
 
-
+  # Data 11
   # EOF1V0013 jump tables work
   - data: |
      :label EOF1V0013 :raw 0x
@@ -383,11 +368,9 @@ validInvalid:
           00  # 12   STOP
               # Data segment
            0bad60A7  # 4 bytes (valid)
-    expectException:
-      "Cancun" : "EOF_InvalidCode"
 
 
-
+  # Data 12
   # EOF1I0019 check that jumps into the middle on an opcode are not allowed
   - data: |
      :label EOF1I0019 :raw 0x
@@ -413,12 +396,12 @@ validInvalid:
               # Data segment
            0bad60A7  # 4 bytes (valid)
     expectException:
-      "Cancun" : "EOF_InvalidCode"
       ">=Prague" : "EOF_InvalidJumpDestination"
 
 
 
 
+  # Data 13
   # EOF1I0020 check that you can't get to the same opcode with two different stack heights
   - data: |
      :label EOF1I0020 :raw 0x
@@ -432,7 +415,7 @@ validInvalid:
               # Code segment 0 header
           00  # Zero inputs
           80  # Non-Returning Function
-        0002  # Max stack height 2
+        0001  # Max stack height 1
               # Code segment 0 code
         6001  #  0   PUSH1 1
       E10001  #  2   RJUMPI +1
@@ -441,12 +424,11 @@ validInvalid:
           00  #  7   STOP
               # Data segment
            0bad60A7  # 4 bytes (valid)
-    expectException:
-      "Cancun" : "EOF_InvalidCode"
-      ">=Prague" : "EOF_ConflictingStackHeight"
+    # expectException:
 
 
 
+  # Data 14
   # EOF1I0019 check that jumps into the middle on an opcode are not allowed
   - data: |
      :label EOF1I0019 :raw 0x
@@ -469,9 +451,9 @@ validInvalid:
               # Data segment
            0bad60A7  # 4 bytes (valid)
     expectException:
-      "Cancun" : "EOF_InvalidCode"
       ">=Prague" : "EOF_InvalidJumpDestination"
 
+  # Data 15
   # EOF1I0019 check that jumps into the middle on an opcode are not allowed
   - data: |
      :label EOF1I0019 :raw 0x
@@ -497,11 +479,11 @@ validInvalid:
               # Data segment
            0bad60A7  # 4 bytes (valid)
     expectException:
-      "Cancun" : "EOF_InvalidCode"
       ">=Prague" : "EOF_InvalidJumpDestination"
 
 
 
+  # Data 16
   # EOF1I0018 inconsistent number of code sections (between types and code)
   - data: |
      :label EOF1I0018 :raw 0x
@@ -527,9 +509,9 @@ validInvalid:
               # Data segment
            0bad60A7  # 4 bytes (valid)
     expectException:
-      "Cancun" : "EOF_InvalidCode"
       ">=Prague" : "EOF_InvalidTypeSectionSize"
 
+  # Data 17
   # EOF1I0018 inconsistent number of code sections (between types and code)
   - data: |
      :label EOF1I0018 :raw 0x
@@ -551,9 +533,9 @@ validInvalid:
               # Data segment
            0bad60A7  # 4 bytes (valid)
     expectException:
-      "Cancun" : "EOF_InvalidCode"
       ">=Prague" : "EOF_InvalidSectionBodiesSize"
 
+  # Data 18
   # EOF1I0015 check that code that uses removed opcodes fails
   - data: |
      :label EOF1I0015 :raw 0x
@@ -576,9 +558,9 @@ validInvalid:
               # Data segment
            ef
     expectException:
-      "Cancun" : "EOF_InvalidCode"
       ">=Prague" : "EOF_UndefinedInstruction"
 
+  # Data 19
   # EOF1I0015 check that code that uses removed opcodes fails
   - data: |
      :label EOF1I0015 :raw 0x
@@ -602,9 +584,9 @@ validInvalid:
               # Data segment
            ef
     expectException:
-      "Cancun" : "EOF_InvalidCode"
       ">=Prague" : "EOF_UndefinedInstruction"
 
+  # Data 20
   # EOF1I0015 check that code that uses removed opcodes fails
   - data: |
      :label EOF1I0015 :raw 0x
@@ -626,9 +608,9 @@ validInvalid:
               # Data segment
            ef
     expectException:
-      "Cancun" : "EOF_InvalidCode"
       ">=Prague" : "EOF_UndefinedInstruction"
 
+  # Data 21
   # EOF1I0015 check that code that uses removed opcodes fails
   - data: |
      :label EOF1I0015 :raw 0x
@@ -645,9 +627,9 @@ validInvalid:
         0007  # Max stack height 1
               # Code segment 0 code
     expectException:
-      "Cancun" : "EOF_InvalidCode"
       ">=Prague" : "EOF_InvalidContainerSize"
 
+  # Data 22
   # EOF1I0015 check that code that uses removed opcodes fails
   - data: |
      :label EOF1I0015 :raw 0x
@@ -675,9 +657,9 @@ validInvalid:
               # Data segment
            ef
     expectException:
-      "Cancun" : "EOF_InvalidCode"
       ">=Prague" : "EOF_UndefinedInstruction"
 
+  # Data 23
   # EOF1I0016 check that code that uses new relative jumps to outside the section fails
   - data: |
      :label EOF1I0016 :raw 0x
@@ -700,10 +682,10 @@ validInvalid:
               # Data segment
            ef
     expectException:
-      "Cancun" : "EOF_InvalidCode"
       ">=Prague" : "EOF_UndefinedInstruction"
 
 
+  # Data 24
   # EOF1V0002 check that valid EOF1 with two code sections deploys
   # EOF1V0006 check that return values are allowed on code sections that aren't zero
   - data: |
@@ -735,9 +717,7 @@ validInvalid:
           e4 # [2] RETF 
              # Data section 
       0bad60a7
-    expectException:
-      "Cancun" : "EOF_InvalidCode"
-
+  # Data 25
   # EOF1V0012 return values on code sections affect maxStackHeight of the caller
   - data: |
      :label EOF1V0012 :raw 0x
@@ -765,9 +745,7 @@ validInvalid:
           E4  #  1 RETF
               # Data segment
            0bad60A7  # 4 bytes (valid)
-    expectException:
-      "Cancun" : "EOF_InvalidCode"
-
+  # Data 26
   # EOF1I0024 sections that end with a non-terminator opcode fail
   - data: |
      :label EOF1I0024 :raw 0x
@@ -794,10 +772,10 @@ validInvalid:
               # Data segment
            0bad60A7  # 4 bytes (valid)
     expectException:
-      "Cancun" : "EOF_InvalidCode"
       ">=Prague" : "EOF_InvalidCodeTermination"
 
 
+  # Data 27
   # EOF1I0022 stack underflow caused by a function call
   - data: |
      :label EOF1I0022 :raw 0x
@@ -826,10 +804,10 @@ validInvalid:
               # Data segment
            0bad60A7  # 4 bytes (valid)
     expectException:
-      "Cancun" : "EOF_InvalidCode"
       ">=Prague" : "EOF_StackUnderflow"
 
 
+  # Data 28
   # EOF1V0015 data stack height of 1023 is valid
   - data: |
      :label EOF1V0015 :raw 0x
@@ -897,9 +875,7 @@ validInvalid:
           E4      # 1E RETF
               # Data segment
            0bad60A7  # 4 bytes (valid)
-    expectException:
-      "Cancun" : "EOF_InvalidCode"
-
+  # Data 29
   # EOF1I0025 data stack height of 1024 is invalid
   - data: |
      :label EOF1I0025 :raw 0x
@@ -969,9 +945,9 @@ validInvalid:
               # Data segment
            0bad60A7  # 4 bytes (valid)
     expectException:
-      "Cancun" : "EOF_InvalidCode"
       ">=Prague" : "EOF_MaxStackHeightExceeded"
 
+  # Data 30
   # EOF1V0003 check that valid EOF1 with four code sections deploys
   - data: |
      :label EOF1V0003 :raw 0x
@@ -1021,11 +997,9 @@ validInvalid:
           e4 # [2] RETF 
              # Data section 
       0bad60a7
-    expectException:
-      "Cancun" : "EOF_InvalidCode"
 
 
-
+  # Data 31
   # EOF1V0005 check that EOF1 with the right maxStackDepth deploys
   - data: |
      :label EOF1V0005 :raw 0x
@@ -1088,10 +1062,8 @@ validInvalid:
           00 # [6] STOP 
              # Data section 
       0bad60a7
-    expectException:
-      "Cancun" : "EOF_InvalidCode"
 
-
+  # Data 32
   # EOF1V0007 check that function calls to code sections that exist are allowed
   - data: |
      :label EOF1V0007 :raw 0x
@@ -1149,10 +1121,8 @@ validInvalid:
           00 # [6] STOP 
              # Data section 
       0bad60a7
-    expectException:
-      "Cancun" : "EOF_InvalidCode"
 
-
+  # Data 33
   # EOF1I0011 check that function calls to code sections that don't exist fail
   - data: |
      :label EOF1I0011 :raw 0x
@@ -1212,10 +1182,11 @@ validInvalid:
              # Data section 
       0bad60a7
     expectException:
-      "Cancun" : "EOF_InvalidCode"
+    #   "Cancun" : "EOF_InvalidCode"
       ">=Prague": "EOF_InvalidCodeSectionIndex"
 
 
+  # Data 34
   # EOF1I0012 check that code sections that cause stack underflow fail
   - data: |
      :label EOF1I0012 :raw 0x
@@ -1247,10 +1218,10 @@ validInvalid:
              # Data section 
       0bad60a7
     expectException:
-      "Cancun" : "EOF_InvalidCode"
       ">=Prague" : "EOF_StackUnderflow"
 
 
+  # Data 35
   # EOF1I0013 check that we can't return more values than we declare
   - data: |
      :label EOF1I0013 :raw 0x
@@ -1282,9 +1253,9 @@ validInvalid:
              # Data section 
       0bad60a7
     expectException:
-      "Cancun" : "EOF_InvalidCode"
       ">=Prague" : "EOF_InvalidNumberOfOutputs"
 
+  # Data 36
   # EOF1I0014 check that code that looks deeper in the stack than the parameters fails
   - data: |
      :label EOF1I0014 :raw 0x
@@ -1316,9 +1287,9 @@ validInvalid:
            # Data section 
       0bad60a7
     expectException:
-      "Cancun" : "EOF_InvalidCode"
       ">=Prague" : "EOF_StackUnderflow"
 
+  # Data 37
   # EOF1I0010 check that return values are not allowed on section 0
   - data: |
      :label EOF1I0010 :raw 0x
@@ -1340,9 +1311,9 @@ validInvalid:
               # Data segment
            0bad60A7  # 4 bytes (valid)
     expectException:
-      "Cancun" : "EOF_InvalidCode"
       ">=Prague" : "EOF_InvalidFirstSectionType"
 
+  # Data 38
   # EOF1V0009 check that parameters are allowed on code sections that aren't zero
   # EOF1V0010 parameters are part of the max stack height
   - data: |
@@ -1373,9 +1344,7 @@ validInvalid:
           00 # [2] STOP 
              # Data section 
       0bad60a7
-    expectException:
-      "Cancun" : "EOF_InvalidCode"
-
+  # Data 39
   # EOF1I0017 check that parameters are not allowed on section 0
   - data: |
      :label EOF1I0017 :raw 0x
@@ -1397,10 +1366,10 @@ validInvalid:
               # Data segment
            0bad60A7  # 4 bytes (valid)
     expectException:
-      "Cancun" : "EOF_InvalidCode"
       ">=Prague" : "EOF_InvalidFirstSectionType"
 
 
+  # Data 40
   # EOF1I0009 check that EOF1 with the wrong maxStackDepth fails
   - data: |
      :label EOF1I0009 :raw 0x
@@ -1422,9 +1391,9 @@ validInvalid:
               # Data segment
            0bad60A7  # 4 bytes (valid)
     expectException:
-      "Cancun" : "EOF_InvalidCode"
       ">=Prague" : "EOF_InvalidMaxStackHeight"
 
+  # Data 41
   # EOF1I0009 check that EOF1 with the wrong maxStackDepth fails
   - data: |
      :label EOF1I0009 :raw 0x
@@ -1448,9 +1417,9 @@ validInvalid:
               # Data segment
            0bad60A7  # 4 bytes (valid)
     expectException:
-      "Cancun" : "EOF_InvalidCode"
       ">=Prague" : "EOF_InvalidContainerSize"
 
+  # Data 42
   # EOF1I0007 check that EOF1 with a malformed code section fails
   - data: |
      :label EOF1I0007 :raw 0x
@@ -1472,10 +1441,10 @@ validInvalid:
               # Data segment
            0bad60A7  # 4 bytes (valid)
     expectException:
-      "Cancun" : "EOF_InvalidCode"
       ">=Prague" : "EOF_TruncatedImmediate"
 
 
+  # Data 43
   # check that EOF1 with a bad end of sections number fails
   - data: |
      :label badsectionnumber :raw 0x
@@ -1497,10 +1466,10 @@ validInvalid:
               # Data segment
            ef
     expectException:
-      "Cancun" : "EOF_InvalidCode"
       ">=Prague" : "EOF_MissingHeaderTerminator"
 
 
+  # Data 44
   # EOF1I0001 check that EOF1 with a bad magic number fails
   - data: |
       :label EOF1I0001 :raw 0x
@@ -1522,9 +1491,9 @@ validInvalid:
               # Data segment
            ef
     expectException:
-      "Cancun" : "EOF_InvalidCode"
       ">=Prague" : "EOF_InvalidMagic"
 
+  # Data 45
   # EOF1I0002 check that EOF1 with a bad version number fails (ver 0)
   - data: |
      :label EOF1I0002 :raw 0x
@@ -1546,7 +1515,6 @@ validInvalid:
               # Data segment
            ef
     expectException:
-      "Cancun" : "EOF_InvalidCode"
       ">=Prague" : "EOF_InvalidVersion"
 
   # EOF1I0002 check that EOF1 with a bad version number fails (ver 2)
@@ -1570,7 +1538,6 @@ validInvalid:
               # Data segment
            ef
     expectException:
-      "Cancun" : "EOF_InvalidCode"
       ">=Prague" : "EOF_InvalidVersion"
 
   # EOF1I0003 check that EOF1 with a bad section order fails
@@ -1594,7 +1561,6 @@ validInvalid:
               # Data segment
            ef
     expectException:
-      "Cancun" : "EOF_InvalidCode"
       ">=Prague" : "EOF_TypeSectionMissing"
 
   # EOF1I0003 check that EOF1 with a bad section order fails
@@ -1618,7 +1584,6 @@ validInvalid:
               # Data segment
            ef
     expectException:
-      "Cancun" : "EOF_InvalidCode"
       ">=Prague" : "EOF_TypeSectionMissing"
 
 
@@ -1642,7 +1607,6 @@ validInvalid:
               # Data segment
            ef
     expectException:
-      "Cancun" : "EOF_InvalidCode"
       ">=Prague" : "EOF_TypeSectionMissing"
 
   # EOF1I0004 check that EOF1 missing a section fails
@@ -1664,7 +1628,6 @@ validInvalid:
               # Data segment
            ef
     expectException:
-      "Cancun" : "EOF_InvalidCode"
       ">=Prague" : "EOF_CodeSectionMissing"
 
   # EOF1I0004 check that EOF1 missing a section fails
@@ -1687,7 +1650,6 @@ validInvalid:
               # Data segment
            ef
     expectException:
-      "Cancun" : "EOF_InvalidCode"
       ">=Prague" : "EOF_DataSectionMissing"
 
 
@@ -1733,12 +1695,8 @@ validInvalid:
             38 # CODESIZE
             50 # POP
             00 # STOP
-    expectException:
-      "Cancun" : "EOF_InvalidCode"
-
   # Init code which doesn't create a contract
   - data: :label bad :raw 0x610BADFE
     expectException:
-      "Cancun" : "EOF_InvalidCode"
       ">=Prague" : "EOF_InvalidMagic"
 
