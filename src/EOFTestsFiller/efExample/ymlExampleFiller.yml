@@ -3,7 +3,7 @@ ymlExample:
      comment: EOF example test
 
   forks:
-    - ">=Cancun"
+    - ">=Prague"
 
   vectors:
 
@@ -11,7 +11,6 @@ ymlExample:
   - data: |
      :raw 0x60016000F3
     expectException:
-      "Cancun" : "EOF_InvalidCode"
       ">=Prague" : "EOF_InvalidMagic"
 
   # EOF1 constructor returning an EOF1 contract
@@ -56,15 +55,12 @@ ymlExample:
             38 # CODESIZE
             50 # POP
             00 # STOP
-    expectException:
-      "Cancun" : "EOF_InvalidCode"
 
     # Invalid init code
   # Not EOF1
   - data: |
      :raw 0xEFFFFF
     expectException:
-      "Cancun" : "EOF_InvalidCode"
       ">=Prague" : "EOF_InvalidMagic"
 
 
@@ -73,7 +69,6 @@ ymlExample:
   - data: |
      :raw 0x610BADFE
     expectException:
-      "Cancun" : "EOF_InvalidCode"
       ">=Prague" : "EOF_InvalidMagic"
 
 
