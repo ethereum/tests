@@ -38,16 +38,26 @@ ValueOverflow:
 
   expect:
     - network:
-        - '>=EIP158'
+        - 'EIP158'
+        - 'Byzantium'
+        - 'Constantinople'
+        - 'ConstantinopleFix'
+        - 'Istanbul'
+        - 'Berlin'
+        - 'London'
       expectException:
         ">=EIP158" : "TR_RLP_WRONGVALUE"
-      result: {}
+      result:
+        d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0:
+            nonce: "0"
     - network:
         - '<EIP158'
       expectException:
         "<EIP158" : "TR_RLP_WRONGVALUE"
-      result: {}
+      result:
         # 0 reward touch on state still creates an account pre eip158
        # 2adc25665018aa1fe0e6bc666dac8fc2697ff9ba:
        #    nonce: "0"
+        d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0d0:
+            nonce: "0"
 
