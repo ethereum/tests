@@ -1153,8 +1153,8 @@ def test_invalid_blob_tx_contract_creation(
         blocks=[
             Block(
                 txs=txs,
-                exception=TransactionException.TYPE_3_TX_CONTRACT_CREATION
-                | BlockException.RLP_ENCODING,
+                exception=(TransactionException.TYPE_3_TX_CONTRACT_CREATION
+                | BlockException.RLP_STRUCTURES_ENCODING),
                 header_verify=header_verify,
             )
         ],
