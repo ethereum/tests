@@ -356,7 +356,7 @@ temp.code[1].stackOutputs = 0
 eof1GoodList.push([createEOF1Code(["E50001", "E0000000"], [0, 0]), "EOF1V0008"])
 
 // New style jump that actually does something
-eof1GoodList.push([createEOF1Code(["E3000100", "E00001E4E0FFFC"], [0, 0]), "EOF1V0008"])
+eof1GoodList.push([createEOF1Code(["E3000100", "6001E10001E4E0FFFC"], [0, 1]), "EOF1V0008"])
 
 eof1GoodList.push([createEOF1Code(["E3000100", "E00000E00000E4"], [0, 0]), "EOF1V0008"])
 
@@ -397,7 +397,7 @@ eof1GoodList.push([createEOF1Code(["E50001", "6000" + "E10002" + "3050" + "3000"
 
 
 // Two different pathes to the same opcode, with different stack heights
- eof1BadList.push([createEOF1Code(["E50001", "6000" + "E10001" + "30" + "3000"], [0, 2]),
+ eof1GoodList.push([createEOF1Code(["E50001", "6000" + "E10001" + "30" + "3000"], [0, 2]),
 		"EOF1I0020"])
 
 
