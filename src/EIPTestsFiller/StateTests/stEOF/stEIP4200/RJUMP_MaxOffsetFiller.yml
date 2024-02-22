@@ -6,7 +6,6 @@ RJUMP_MaxOffset:
     currentBaseFee: '10'
     currentNumber: '1'
     currentTimestamp: '1000'
-    previousHash: 5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6
 
   pre:
     a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
@@ -16,42 +15,45 @@ RJUMP_MaxOffset:
       storage: {}
     b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
       balance: 0
-      code: |
-        :yul 
-        {
-          // This constructs EOF initcode:
-          // RJUMP(3) RJUMP(32767) PUSH1(0) RJUMPI(-8) NOP * 32768 PUSH32(ef000101000402000100010400000000800000fe000000000000000000000000) PUSH1(0) MSTORE PUSH1(20) PUSH1(0) RET
-          // NOP series is preceded with RJUMPI to make it reachable.
+      code: ''        
+        # TODO this approach is not possible with code non-observability.
+        # The test should be rewritten with different approach, maybe constructing the code in python spec tests.
 
-          // eof prefix
-          mstore(0,  0xef00010100040200018034040000000080000200000000000000000000000000) // 19 bytes
-          let offset := 19
+        # :yul 
+        # {
+        #   // This constructs EOF initcode:
+        #   // RJUMP(3) RJUMP(32767) PUSH1(0) RJUMPI(-8) NOP * 32768 PUSH32(ef000101000402000100010400000000800000fe000000000000000000000000) PUSH1(0) MSTORE PUSH1(20) PUSH1(0) RET
+        #   // NOP series is preceded with RJUMPI to make it reachable.
 
-          // start of code section: RJUMP(3) RJUMP(32767) PUSH1(0) RJUMPI(-8)
-          mstore(offset, 0xe00003e07fff6000e1fff8000000000000000000000000000000000000000000) // 11 bytes
-          offset := add(offset, 11)
+        #   // eof prefix
+        #   mstore(0,  0xef00010100040200018034040000000080000200000000000000000000000000) // 19 bytes
+        #   let offset := 19
 
-          // loop to add 32768 = 1024 * 32 NOPs
+        #   // start of code section: RJUMP(3) RJUMP(32767) PUSH1(0) RJUMPI(-8)
+        #   mstore(offset, 0xe00003e07fff6000e1fff8000000000000000000000000000000000000000000) // 11 bytes
+        #   offset := add(offset, 11)
+
+        #   // loop to add 32768 = 1024 * 32 NOPs
           
-          for { let end_offset := add(offset, 32768) } lt(offset, end_offset) { offset := add(offset, 32) } 
-          { 
-            mstore(offset, 0x5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b)
-          }
+        #   for { let end_offset := add(offset, 32768) } lt(offset, end_offset) { offset := add(offset, 32) } 
+        #   { 
+        #     mstore(offset, 0x5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b5b)
+        #   }
 
-          // end of code section: 
-          // PUSH32(ef000101000402000100010300000000000000fe000000000000000000000000) PUSH1(0) MSTORE PUSH1(20) PUSH1(0) RET
-          // (41 bytes)
-          mstore(offset, 0x7fef000101000402000100010400000000800000fe0000000000000000000000)
-          offset := add(offset, 32)
-          mstore(offset, 0x0060005260146000f30000000000000000000000000000000000000000000000) // 9 bytes
-          offset := add(offset, 9)
+        #   // end of code section: 
+        #   // PUSH32(ef000101000402000100010300000000000000fe000000000000000000000000) PUSH1(0) MSTORE PUSH1(20) PUSH1(0) RET
+        #   // (41 bytes)
+        #   mstore(offset, 0x7fef000101000402000100010400000000800000fe0000000000000000000000)
+        #   offset := add(offset, 32)
+        #   mstore(offset, 0x0060005260146000f30000000000000000000000000000000000000000000000) // 9 bytes
+        #   offset := add(offset, 9)
 
-          // total size of code section: 11 + 32768 + 41 = 32820 = 0x8034
+        #   // total size of code section: 11 + 32768 + 41 = 32820 = 0x8034
 
-          sstore(0, create(0, 0, offset))
-          sstore(1, 1)
-        }
-      nonce: 0
+        #   sstore(0, create(0, 0, offset))
+        #   sstore(1, 1)
+        # }
+      nonce: 1
       storage: {}
 
   transaction:
@@ -73,12 +75,12 @@ RJUMP_MaxOffset:
       result:
        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           nonce: 1
-       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
-          nonce: 1
-          storage:
-            '0': 'f1ecf98489fa9ed60a664fc4998db699cfa39d40'
-            '1': '1'
-       f1ecf98489fa9ed60a664fc4998db699cfa39d40:
-          nonce: 1
-          code: '0xef000101000402000100010400000000800000fe'
-          storage: {}
+      #  b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      #     nonce: 1
+      #     storage:
+      #      '0': 'f1ecf98489fa9ed60a664fc4998db699cfa39d40'
+      #      '1': '1'
+      #  f1ecf98489fa9ed60a664fc4998db699cfa39d40:
+      #     nonce: 1
+      #     code: '0xef000101000402000100010400000000800000fe'
+      #     storage: {}
