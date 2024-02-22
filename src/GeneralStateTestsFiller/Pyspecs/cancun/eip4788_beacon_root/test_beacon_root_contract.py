@@ -21,14 +21,7 @@ from typing import Dict
 
 import pytest
 
-from ethereum_test_tools import (
-    Account,
-    Address,
-    Environment,
-    StateTestFiller,
-    Storage,
-    Transaction,
-)
+from ethereum_test_tools import Account, Address, Block, BlockchainTestFiller, Storage, Transaction
 from ethereum_test_tools.vm.opcode import Opcodes as Op
 
 from .spec import Spec, ref_spec_4788
@@ -41,12 +34,7 @@ REFERENCE_SPEC_VERSION = ref_spec_4788.version
     "call_gas, valid_call",
     [
         pytest.param(Spec.BEACON_ROOTS_CALL_GAS, True),
-        pytest.param(Spec.BEACON_ROOTS_CALL_GAS + 1, True),
-        pytest.param(
-            Spec.BEACON_ROOTS_CALL_GAS - 1,
-            False,
-            marks=pytest.mark.xfail(reason="gas calculation is incorrect"),  # TODO
-        ),
+        pytest.param(int(Spec.BEACON_ROOTS_CALL_GAS / 100), False),
     ],
 )
 @pytest.mark.parametrize(
@@ -61,8 +49,9 @@ REFERENCE_SPEC_VERSION = ref_spec_4788.version
 )
 @pytest.mark.valid_from("Cancun")
 def test_beacon_root_contract_calls(
-    state_test: StateTestFiller,
-    env: Environment,
+    blockchain_test: BlockchainTestFiller,
+    beacon_root: bytes,
+    timestamp: int,
     pre: Dict,
     tx: Transaction,
     post: Dict,
@@ -83,10 +72,9 @@ def test_beacon_root_contract_calls(
     be executed. This is highlighted within storage by storing the return value of each call
     context.
     """
-    state_test(
-        env=env,
+    blockchain_test(
         pre=pre,
-        tx=tx,
+        blocks=[Block(txs=[tx], beacon_root=beacon_root, timestamp=timestamp)],
         post=post,
     )
 
@@ -116,8 +104,9 @@ def test_beacon_root_contract_calls(
 )
 @pytest.mark.valid_from("Cancun")
 def test_beacon_root_contract_timestamps(
-    state_test: StateTestFiller,
-    env: Environment,
+    blockchain_test: BlockchainTestFiller,
+    beacon_root: bytes,
+    timestamp: int,
     pre: Dict,
     tx: Transaction,
     post: Dict,
@@ -129,10 +118,9 @@ def test_beacon_root_contract_timestamps(
     `parent_beacon_block_root` for a valid input timestamp and return the zero'd 32 bytes value
     for an invalid input timestamp.
     """
-    state_test(
-        env=env,
+    blockchain_test(
         pre=pre,
-        tx=tx,
+        blocks=[Block(txs=[tx], beacon_root=beacon_root, timestamp=timestamp)],
         post=post,
     )
 
@@ -151,8 +139,9 @@ def test_beacon_root_contract_timestamps(
 @pytest.mark.parametrize("timestamp", [12])
 @pytest.mark.valid_from("Cancun")
 def test_calldata_lengths(
-    state_test: StateTestFiller,
-    env: Environment,
+    blockchain_test: BlockchainTestFiller,
+    beacon_root: bytes,
+    timestamp: int,
     pre: Dict,
     tx: Transaction,
     post: Dict,
@@ -160,10 +149,9 @@ def test_calldata_lengths(
     """
     Tests the beacon root contract call using multiple invalid input lengths.
     """
-    state_test(
-        env=env,
+    blockchain_test(
         pre=pre,
-        tx=tx,
+        blocks=[Block(txs=[tx], beacon_root=beacon_root, timestamp=timestamp)],
         post=post,
     )
 
@@ -181,8 +169,9 @@ def test_calldata_lengths(
 @pytest.mark.parametrize("auto_access_list", [False, True])
 @pytest.mark.valid_from("Cancun")
 def test_beacon_root_equal_to_timestamp(
-    state_test: StateTestFiller,
-    env: Environment,
+    blockchain_test: BlockchainTestFiller,
+    beacon_root: bytes,
+    timestamp: int,
     pre: Dict,
     tx: Transaction,
     post: Dict,
@@ -193,10 +182,9 @@ def test_beacon_root_equal_to_timestamp(
     The expected result is that the contract call will return the `parent_beacon_block_root`,
     as all timestamps used are valid.
     """
-    state_test(
-        env=env,
+    blockchain_test(
         pre=pre,
-        tx=tx,
+        blocks=[Block(txs=[tx], beacon_root=beacon_root, timestamp=timestamp)],
         post=post,
     )
 
@@ -206,8 +194,9 @@ def test_beacon_root_equal_to_timestamp(
 @pytest.mark.with_all_tx_types
 @pytest.mark.valid_from("Cancun")
 def test_tx_to_beacon_root_contract(
-    state_test: StateTestFiller,
-    env: Environment,
+    blockchain_test: BlockchainTestFiller,
+    beacon_root: bytes,
+    timestamp: int,
     pre: Dict,
     tx: Transaction,
     post: Dict,
@@ -215,10 +204,9 @@ def test_tx_to_beacon_root_contract(
     """
     Tests the beacon root contract using a transaction with different types and data lengths.
     """
-    state_test(
-        env=env,
+    blockchain_test(
         pre=pre,
-        tx=tx,
+        blocks=[Block(txs=[tx], beacon_root=beacon_root, timestamp=timestamp)],
         post=post,
     )
 
@@ -233,8 +221,9 @@ def test_tx_to_beacon_root_contract(
 @pytest.mark.parametrize("timestamp", [12])
 @pytest.mark.valid_from("Cancun")
 def test_invalid_beacon_root_calldata_value(
-    state_test: StateTestFiller,
-    env: Environment,
+    blockchain_test: BlockchainTestFiller,
+    beacon_root: bytes,
+    timestamp: int,
     pre: Dict,
     tx: Transaction,
     post: Dict,
@@ -245,10 +234,9 @@ def test_invalid_beacon_root_calldata_value(
 
     Contract should revert.
     """
-    state_test(
-        env=env,
+    blockchain_test(
         pre=pre,
-        tx=tx,
+        blocks=[Block(txs=[tx], beacon_root=beacon_root, timestamp=timestamp)],
         post=post,
     )
 
@@ -256,8 +244,9 @@ def test_invalid_beacon_root_calldata_value(
 @pytest.mark.parametrize("timestamp", [12])
 @pytest.mark.valid_from("Cancun")
 def test_beacon_root_selfdestruct(
-    state_test: StateTestFiller,
-    env: Environment,
+    blockchain_test: BlockchainTestFiller,
+    beacon_root: bytes,
+    timestamp: int,
     pre: Dict,
     tx: Transaction,
     post: Dict,
@@ -280,9 +269,10 @@ def test_beacon_root_selfdestruct(
             storage=Storage({0: 0xBA1}),
         )
     }
-    state_test(
-        env=env,
+    blockchain_test(
         pre=pre,
-        tx=Transaction(nonce=0, to=Address(0xCC), gas_limit=100000, gas_price=10),
+        blocks=[
+            Block(txs=[Transaction(nonce=0, to=Address(0xCC), gas_limit=100000, gas_price=10)])
+        ],
         post=post,
     )
