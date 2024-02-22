@@ -117,7 +117,7 @@ Fields
 
 - **secretKey**:
   The secret key for the sending address. That address is derived from the
-  secret key and therefore does not need to be specified explicitely
+  secret key and therefore does not need to be specified explicitly
   (`see here 
   <https://www.freecodecamp.org/news/how-to-create-an-ethereum-wallet-address-from-a-private-key-ae72b0eee27b/>`_). 
 

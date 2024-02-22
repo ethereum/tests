@@ -238,7 +238,7 @@ Sample Request
       "id": 2
     }
 
-Change the timestamp to 1000. This value is a `Unix timetamp
+Change the timestamp to 1000. This value is a `Unix timestamp
 <https://www.unixtimestamp.com/>`_, 1000 second after midnight
 on January 1st, 1970, GMT.
 

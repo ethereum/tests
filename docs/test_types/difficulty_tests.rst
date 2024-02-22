@@ -46,7 +46,7 @@ Test Structure
 		}
 	}
 
-**Fileds**
+**Fields**
 
 ======================== ==================================================
 ``parentTimestamp``      indicates the timestamp of a previous block

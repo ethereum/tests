@@ -124,7 +124,7 @@ specifications uses any of these options:
 
      - a-b
 
-     - Everthing from the a'th value to the b'th value (counting from zero)
+     - Everything from the a'th value to the b'th value (counting from zero)
 
    * - ":label foo"
 

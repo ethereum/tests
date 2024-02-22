@@ -30,7 +30,7 @@
 - ID: **BSHB0019** withdrawal happens to account that suicide in the same block
 - ID: **BSHB0020** withdrawal happens to account that receive funds in the same block
 - ID: **BSHB0021** check the balance instruction on withdrawal received account before block fin
-- ID: **BSHB0022** withdrawal receiving account trys to send value before block fin
+- ID: **BSHB0022** withdrawal receiving account tries to send value before block fin
 - ID: **BSHB0023,b** account suicide, then receive funds, then receive withdrawal
 - ID: **BSHB0024,b** account created, then reverted, then receive withdrawals
 - ID: **BSHB0025** check staticcall is fine with withdrawals
@@ -220,7 +220,7 @@
 - ID: **EOF1I5450_0091** Stack underflow for opcode REVERT
 - ID: **EOF1I5450_0092** Calling function without enough stack items: Function 0 calls Function 1 without enough parameters
 - ID: **EOF1I5450_0093** Calling function without enough stack items: Function 1 calls Function 2 with enough parameters
-- ID: **EOF1I5450_0094** Calling function without enough stack items: Function 0 calls Function 1 without enought parameters, Function 1 calls Function 2 without enough parameers
+- ID: **EOF1I5450_0094** Calling function without enough stack items: Function 0 calls Function 1 without enough parameters, Function 1 calls Function 2 without enough parameters
 - ID: **EOF1I5450_0095** Stack Overflow: Function pushing more than 1024 items to the stack
 - ID: **EOF1I5450_0096** Stack Overflow: Function 1 when called by Function 0 pushes more than 1024 items to the stack
 - ID: **EOF1I5450_0097** Function ending with non-terminating instruction (a)
@@ -413,12 +413,12 @@
 
 
 ## SELFDESTRUCT and how it affects balances
-- ID: **SUC000** contractA is called to perform suicide to dest1 (3 must immidiately(check that it is immidiately and not by the end of tx) go to dest1)
+- ID: **SUC000** contractA is called to perform suicide to dest1 (3 must immediately(check that it is immediately and not by the end of tx) go to dest1)
 - ID: **SUC001** does not suicide, just receive more funds via call. check the balance of contractA (must be 0, the second transfer funds erased)
 - ID: **SUC002** does another suicide to dest1 (so dest1 now have 3 + x)
 - ID: **SUC003** does another suicide to dest2 (so both dest1 and dest2 has some balance)
-- ID: **SUC004** tries to make value transfer but fails because initial suicide 0ed the balance (answering this (check that it is immidiately and not by the end of tx))
-- ID: **SUC005** receives more funds and try to transder it (same as SUC004, but this time work because it received funds via 2nd call)
+- ID: **SUC004** tries to make value transfer but fails because initial suicide 0ed the balance (answering this (check that it is immediately and not by the end of tx))
+- ID: **SUC005** receives more funds and try to transfer it (same as SUC004, but this time work because it received funds via 2nd call)
 - ID: **SUC006** receive funds post-transaction, create a mostly empty address
 - ID: **SUC007.0** Same txn, same addr, different frames. Frame1 CALLs frame2, frame2 SELFDESTRUCTs into an address, and then frame1 SELFDESTRUCTs into another address. Balance ends up where frame2 sent it.
 - ID: **SUC007.1** Same txn, same addr, different frames. Frame1 CALLCODEs frame2, frame2 SELFDESTRUCTs into an address, and then frame1 SELFDESTRUCTs into another address. Balance ends up where frame2 sent it.

@@ -94,7 +94,7 @@ Each **data** value uses one of these formats:
 
      - a-b
 
-     - Everthing from the a'th value to the b'th value (counting from zero)
+     - Everything from the a'th value to the b'th value (counting from zero)
 
    * - ":label foo"
 

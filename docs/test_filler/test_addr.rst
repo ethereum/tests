@@ -15,7 +15,7 @@
 
 - **storage**:
 
-  Values in the storage of the address. Can be **'ANY'** to explicitely state it can be any value.
+  Values in the storage of the address. Can be **'ANY'** to explicitly state it can be any value.
 
   .. list-table::
      :header-rows: 1

@@ -7,7 +7,7 @@
 
    When a value is numeric, such as a value 
    in storage or an address's balance, it can be specified either in 
-   hexademical (starting with **0x**), or in decimal (starting with a digit).
+   hexadecimal (starting with **0x**), or in decimal (starting with a digit).
    For the sake of legibility, numeric values can also have underscores. For 
    example, you can use **1_000_000_000** for 10^9, which is a lot more readable
    than **1000000000**.

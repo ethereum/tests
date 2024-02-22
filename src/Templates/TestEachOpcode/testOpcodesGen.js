@@ -843,7 +843,7 @@ var opcodes = {
                                     //              to compensate for the
                                     //              fact we don't need to
                                     //              send Value, and I am
-                                    //              too lazy to recalcualte
+                                    //              too lazy to recalculate
                                     //              addresses
         "6004"                    + // 22 PUSH1 4   Length of return data
         "6000"                    + // 24 PUSH1 0   Memory location for return data
@@ -877,7 +877,7 @@ var opcodes = {
                                     //              to compensate for the
                                     //              fact we don't need to
                                     //              send Value, and I am
-                                    //              too lazy to recalcualte
+                                    //              too lazy to recalculate
                                     //              addresses
         "6004"                    + // 22 PUSH1 4   Length of return data
         "6000"                    + // 24 PUSH1 0   Memory location for return data

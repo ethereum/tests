@@ -391,12 +391,12 @@ eof1GoodList.push([createEOF1Code(["E50001", "6000" + "E10002" + "3050" + "3000"
 // New style conditional jump into the middle of an instruction
  eof1BadList.push([createEOF1Code(["E3000100", "6001E1000160FF50E4"], [0, 1]), "EOF1I0019"])
 
-// Two different pathes to the same opcode, with the same stack height
+// Two different paths to the same opcode, with the same stack height
 eof1GoodList.push([createEOF1Code(["E50001", "6000" + "E10002" + "3050" + "3000"], [0, 1]),
 		"EOF1V0011"])
 
 
-// Two different pathes to the same opcode, with different stack heights
+// Two different paths to the same opcode, with different stack heights
  eof1BadList.push([createEOF1Code(["E50001", "6000" + "E10001" + "30" + "3000"], [0, 2]),
 		"EOF1I0020"])
 

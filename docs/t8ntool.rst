@@ -58,7 +58,7 @@ If **t8ntool** is called with **-v**:
 - This string goes into **<test>._info.filling-rpc-server** in the filled test files.
 
 
-Otherwise, you are supposed to run an actal test (or part of one). In that case your parameters 
+Otherwise, you are supposed to run an actual test (or part of one). In that case your parameters 
 depends on the exact test type.
 
 
@@ -131,7 +131,7 @@ Parameter name       Value                                   More details
 
 Traces
 ^^^^^^
-If **-\\-trace** is specified, you need to reate a file (or files) called 
+If **-\\-trace** is specified, you need to create a file (or files) called 
 trace-<transaction number>-<transaction hash>.jsonl. The format of this file is specified in 
 `EIP 3155 <https://github.com/ethereum/EIPs/blob/master/EIPS/eip-3155.md>`_.
 
