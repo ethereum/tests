@@ -448,9 +448,11 @@ def test_beacon_root_contract_deploy(
             blocks.append(
                 Block(  # Deployment block
                     txs=[deploy_tx],
-                    beacon_root=beacon_root
-                    if fork.header_beacon_root_required(1, current_timestamp)
-                    else None,
+                    beacon_root=(
+                        beacon_root
+                        if fork.header_beacon_root_required(1, current_timestamp)
+                        else None
+                    ),
                     timestamp=timestamp // 2,
                     withdrawals=[
                         # Also withdraw to the beacon root contract and the system address
@@ -505,7 +507,7 @@ def test_beacon_root_contract_deploy(
         else:
             assert False, "This test should only have two blocks"
 
-    expected_code = fork.pre_allocation(1, timestamp)[Spec.BEACON_ROOTS_ADDRESS]["code"]
+    expected_code = fork.pre_allocation_blockchain()[Spec.BEACON_ROOTS_ADDRESS]["code"]
     pre[Spec.BEACON_ROOTS_ADDRESS] = Account(
         code=b"",  # Remove the code that is automatically allocated on Cancun fork
         nonce=0,
