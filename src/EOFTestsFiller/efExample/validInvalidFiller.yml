@@ -42,6 +42,7 @@ validInvalid:
          EOF1V0013 jump tables work
          EOF1V0014 sections that end with a legit terminating opcode are OK
          EOF1V0015 data stack height of 1023 is valid
+         EOF1V0016 check that data section size can be less than the declared size
 
   forks:
     - ">=Prague"
@@ -71,9 +72,9 @@ validInvalid:
            ef
 
   # Data 1
-  # EOF1I0006 check that EOF1 with too many or too few bytes fails
+  # EOF1V0016 check that EOF1 with too many or too few bytes fails
   - data: |
-     :label EOF1I0006 :raw 0x
+     :label EOF1V0016 :raw 0x
       # EOF deployed code 
       ef0001  # Magic followed by version
       010004  # One code segment
@@ -91,8 +92,6 @@ validInvalid:
            00 #  3 STOP
               # Data segment
            0bad  # 2 bytes instead of four
-    expectException:
-      ">=Prague" : "EOF_InvalidContainerSize"
 
 
   # Data 2
@@ -117,7 +116,7 @@ validInvalid:
               # Data segment
            0bad60A70BAD  # 6 bytes instead of four
     expectException:
-      ">=Prague" : "EOF_InvalidContainerSize"
+      ">=Prague" : "EOF_InvalidSectionBodiesSize"
 
   # Data 3
   # EOF1V0001 Valid
@@ -210,7 +209,7 @@ validInvalid:
               # Data segment
            ef
     expectException:
-      ">=Prague" : "EOF_MissingHeaderTerminator"
+      ">=Prague" : "EOF_HeaderTerminatorMissing"
 
 
   # Data 7
@@ -424,7 +423,6 @@ validInvalid:
           00  #  7   STOP
               # Data segment
            0bad60A7  # 4 bytes (valid)
-    # expectException:
 
 
 
@@ -533,7 +531,7 @@ validInvalid:
               # Data segment
            0bad60A7  # 4 bytes (valid)
     expectException:
-      ">=Prague" : "EOF_InvalidSectionBodiesSize"
+      ">=Prague" : "EOF_InvalidTypeSectionSize"
 
   # Data 18
   # EOF1I0015 check that code that uses removed opcodes fails
@@ -627,7 +625,7 @@ validInvalid:
         0007  # Max stack height 1
               # Code segment 0 code
     expectException:
-      ">=Prague" : "EOF_InvalidContainerSize"
+      ">=Prague" : "EOF_InvalidSectionBodiesSize"
 
   # Data 22
   # EOF1I0015 check that code that uses removed opcodes fails
@@ -1182,7 +1180,6 @@ validInvalid:
              # Data section 
       0bad60a7
     expectException:
-    #   "Cancun" : "EOF_InvalidCode"
       ">=Prague": "EOF_InvalidCodeSectionIndex"
 
 
@@ -1417,7 +1414,7 @@ validInvalid:
               # Data segment
            0bad60A7  # 4 bytes (valid)
     expectException:
-      ">=Prague" : "EOF_InvalidContainerSize"
+      ">=Prague" : "EOF_InvalidSectionBodiesSize"
 
   # Data 42
   # EOF1I0007 check that EOF1 with a malformed code section fails
@@ -1466,7 +1463,7 @@ validInvalid:
               # Data segment
            ef
     expectException:
-      ">=Prague" : "EOF_MissingHeaderTerminator"
+      ">=Prague" : "EOF_HeaderTerminatorMissing"
 
 
   # Data 44
