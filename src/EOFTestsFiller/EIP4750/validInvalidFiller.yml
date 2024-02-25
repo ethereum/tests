@@ -34,8 +34,10 @@ validInvalid:
          EOF1I4750_0021 (Invalid) EOF code containing function trying to return more items than specified in type section - Data index: 28
          EOF1I4750_0022 (Invalid) EOF code containing function exceeding max stack items - Data index: 29
          EOF1I4750_0023 (Invalid) EOF code containing function which max stack height causes to exceed max stack items (stack overflow) - Data index: 30
-         EOF1I4750_0024 (Invalid) EOF code containing RETF as terminating instruction in first code section - Data index: 31
-         EOF1I4750_0025 (Invalid) EOF code containing RETF as terminating instruction in first code section, containing data section - Data index: 32
+         EOF1I4750_0024 (Invalid) EOF code containing RETF as terminating instruction in first code section (a) Marking first section as returning - Data index: 31
+         EOF1I4750_0025 (Invalid) EOF code containing RETF as terminating instruction in first code section (b) Marking first section as non-returning - Data index: 32
+         EOF1I4750_0026 (Invalid) EOF code containing RETF as terminating instruction in first code section, containing data section (a) Marking first section as returning - Data index: 33
+         EOF1I4750_0027 (Invalid) EOF code containing RETF as terminating instruction in first code section, containing data section (b) Marking first section as non-returning - Data index: 34
   forks:
     - ">=Prague"
 
@@ -636,7 +638,7 @@ validInvalid:
       expectException:
         ">=Prague" : "EOF_StackOverflow"
 
-    # EOF1I4750_0024 (Invalid) EOF code containing RETF as terminating instruction in first code section - Data index: 31
+    # EOF1I4750_0024 (Invalid) EOF code containing RETF as terminating instruction in first code section (a) Marking first section as returning - Data index: 31
     # Code: RETF
     - data: |
        :label EOF1I4750_0024 :raw 0x
@@ -656,11 +658,18 @@ validInvalid:
       expectException:
         ">=Prague" : "EOF_InvalidFirstSectionType"
 
-    # EOF1I4750_0025 (Invalid) EOF code containing RETF as terminating instruction in first code section, containing data section - Data index: 32
+    # EOF1I4750_0025 (Invalid) EOF code containing RETF as terminating instruction in first code section (b) Marking first section as non-returning - Data index: 32
+    # Code: ef000101000402000100010400000000800000e4
+    - data: |
+       :label EOF1I4750_0025 :raw 0xef000101000402000100010400000000800000e4
+      expectException:
+        ">=Prague" : "EOF_InvalidNonReturningFlag"
+
+    # EOF1I4750_0026 (Invalid) EOF code containing RETF as terminating instruction in first code section, containing data section (a) Marking first section as returning - Data index: 33
     # Code: RETF
     # Data: DA
     - data: |
-       :label EOF1I4750_0025 :raw 0x
+       :label EOF1I4750_0026 :raw 0x
         EF0001 # Magic and Version ( 1 )
         010004 # Types length ( 4 )
         020001 # Total code sections ( 1 )
@@ -677,4 +686,11 @@ validInvalid:
         da
       expectException:
         ">=Prague" : "EOF_InvalidFirstSectionType"
+
+    # EOF1I4750_0027 (Invalid) EOF code containing RETF as terminating instruction in first code section, containing data section (b) Marking first section as non-returning - Data index: 34
+    # Code: ef000101000402000100010400000000800000e4
+    - data: |
+       :label EOF1I4750_0027 :raw 0xef000101000402000100010400000000800000e4
+      expectException:
+        ">=Prague" : "EOF_InvalidNonReturningFlag"
 
