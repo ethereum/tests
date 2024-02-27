@@ -109,12 +109,16 @@ validInvalid:
     - data: |
        :label EOF1V3540_0003 :raw 0xef000101000402000100010400020000800000fe
       # "Prague" : "ok."
+      expectException:
+        "Prague" : "EOF_InvalidSectionBodiesSize"
 
     # EOF1V3540_0004 (Valid) Data section contents incomplete (valid according to relaxed stack validation) - Data index: 3
     # Code: ef000101000402000100010400020000800000feaa
     - data: |
        :label EOF1V3540_0004 :raw 0xef000101000402000100010400020000800000feaa
       # "Prague" : "ok."
+      expectException:
+        "Prague" : "EOF_InvalidSectionBodiesSize"
 
     # EOF1I3540_0001 (Invalid) No magic - Data index: 4
     # Code: ef

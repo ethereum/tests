@@ -92,6 +92,8 @@ validInvalid:
            00 #  3 STOP
               # Data segment
            0bad  # 2 bytes instead of four
+    expectException:
+      "Prague" : "EOF_InvalidSectionBodiesSize"
 
 
   # Data 2
@@ -531,7 +533,7 @@ validInvalid:
               # Data segment
            0bad60A7  # 4 bytes (valid)
     expectException:
-      ">=Prague" : "EOF_InvalidTypeSectionSize"
+      ">=Prague" : "EOF_InvalidSectionBodiesSize"
 
   # Data 18
   # EOF1I0015 check that code that uses removed opcodes fails
