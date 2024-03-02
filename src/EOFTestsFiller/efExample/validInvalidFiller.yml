@@ -1488,7 +1488,7 @@ validInvalid:
               # Data segment
            ef
     expectException:
-      ">=Prague" : "EOF_InvalidMagic"
+      ">=Prague" : "EOF_InvalidPrefix"
 
   # Data 45
   # EOF1I0002 check that EOF1 with a bad version number fails (ver 0)
@@ -1512,7 +1512,7 @@ validInvalid:
               # Data segment
            ef
     expectException:
-      ">=Prague" : "EOF_InvalidVersion"
+      ">=Prague" : "EOF_UnknownVersion"
 
   # EOF1I0002 check that EOF1 with a bad version number fails (ver 2)
   - data: |
@@ -1535,7 +1535,7 @@ validInvalid:
               # Data segment
            ef
     expectException:
-      ">=Prague" : "EOF_InvalidVersion"
+      ">=Prague" : "EOF_UnknownVersion"
 
   # EOF1I0003 check that EOF1 with a bad section order fails
   - data: |
@@ -1695,5 +1695,5 @@ validInvalid:
   # Init code which doesn't create a contract
   - data: :label bad :raw 0x610BADFE
     expectException:
-      ">=Prague" : "EOF_InvalidMagic"
+      ">=Prague" : "EOF_InvalidPrefix"
 
