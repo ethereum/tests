@@ -59,8 +59,12 @@ timestampPerBlock:
 
     #Increase the parent timestamp by 50. 1950+50=2000.
   - blockHeader:
-      RelTimestamp: 50
-      stateRoot: 0x8d36e8e17da05467072716efb7bdf65ea2a5d66443c52e21fc43ebac92a6dba4
+      "<=Shanghai":
+          RelTimestamp: 50
+          stateRoot: 0x8d36e8e17da05467072716efb7bdf65ea2a5d66443c52e21fc43ebac92a6dba4
+      ">=Cancun":
+          RelTimestamp: 50
+          stateRoot: 0xcb2ee545d9c8a95804dfc235142e1e8e18bd0eaa1a1bb88435e12bd5352b1b3f
     transactions:
     - data: ''
       accessList: []
@@ -74,8 +78,12 @@ timestampPerBlock:
 
     #Force a custom timestamp value into the block header.
   - blockHeader:
-      timestamp: 4000
-      stateRoot: 0x132f342df6f8c2c643414721f5f8bb36697852aeb25dfa90eee8b637de0f5a0c
+      "<=Shanghai":
+          timestamp: 4000
+          stateRoot: 0x132f342df6f8c2c643414721f5f8bb36697852aeb25dfa90eee8b637de0f5a0c
+      ">=Cancun":
+          timestamp: 4000
+          stateRoot: 0xfa03574fece56b595e9c7d145e796030e4f4f75549de0130a6bdcccfaee093f1
     transactions:
     - data: ''
       accessList: []

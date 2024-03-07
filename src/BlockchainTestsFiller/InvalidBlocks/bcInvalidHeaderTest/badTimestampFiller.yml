@@ -61,8 +61,13 @@ badTimestamp:
           #
           # Therefore if timediff < 9, we need to specify the difficulty manually
           difficulty: 131136
-       '>=Paris':
+       'Paris':
           timestamp: 1620000001
+       'Shanghai':
+          timestamp: 1620000001
+       '>=Cancun':
+          timestamp: 1620000001
+          stateRoot: 0x99b87aca0f8d73383f78167c3dcb530b68ce6847e61dd7c1792c12fc41a03283
     blocknumber: 1
     transactions: []
 
@@ -71,14 +76,24 @@ badTimestamp:
        'London':
           timestamp: 1620000002
           difficulty: 131200
-       '>=Paris':
+       'Paris':
           timestamp: 1620000002
+       'Shanghai':
+          timestamp: 1620000002
+       '>=Cancun':
+          timestamp: 1620000002
+          stateRoot: 0x46284ec922d871c00d5175d0838a414919e62d72c730d11b104884bbd99dca0c
+
     blocknumber: 2
     transactions: []
 
   # A minute after the beginning
   - blockHeader:
-      timestamp: 1620000060
+      '<Cancun':
+        timestamp: 1620000060
+      '>=Cancun':
+        timestamp: 1620000060
+        stateRoot: 0x2164afe03d4429683d8919209bddbbc2b2b67f27606d34a7aee013aac08961fc
     blocknumber: 3
     transactions: []
 
@@ -93,7 +108,11 @@ badTimestamp:
 
   # Another legitimate block
   - blockHeader:
-      timestamp: 1620003600
+      '<Cancun':
+        timestamp: 1620003600
+      '>=Cancun':
+        timestamp: 1620003600
+        stateRoot: 0x893e444bee7bf7a6a601d95fa6e1e82185eb95424ac97ea5d0ff7f65ddc0bf24
     blocknumber: 4
     transactions: []
 
@@ -120,22 +139,36 @@ badTimestamp:
        'London':
           timestamp: 1620007200
           difficulty: 131072
-       '>=Paris':
+       'Paris':
           timestamp: 1620007200
+       'Shanghai':
+          timestamp: 1620007200
+       '>=Cancun':
+          timestamp: 1620007200
+          stateRoot: 0x891a95155f0bb2787437b1218140afa15ea885b8185d8efcdde322d7972514f4
     blocknumber: 5
     transactions: []
 
 
   # A day without blocks (24 hours from previous block)
   - blockHeader:
-      timestamp: 1620093600
+       '<Cancun':
+          timestamp: 1620093600
+       '>=Cancun':
+          timestamp: 1620093600
+          stateRoot: 0x008b248aeb6683b4b3edb98d68570f623012e0ecb2b7db695ea81ca36fdf2d2f
+
     blocknumber: 6
     transactions: []
 
 
   # A month without blocks (30 days from previous block)
   - blockHeader:
-      timestamp: 1622685600
+       '<Cancun':
+          timestamp: 1622685600
+       '>=Cancun':
+          timestamp: 1622685600
+          stateRoot: 0x9f42196b06624cce6c765c3cb06004bb0f52ba3ef8057a592a4d59ff691cbc96
     blocknumber: 7
     transactions: []
 
