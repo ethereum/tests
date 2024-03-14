@@ -136,10 +136,10 @@ validInvalid:
           EOFV3670_0131 (Valid) Code containing the LOG2 opcode - Data Section 130
           EOFV3670_0132 (Valid) Code containing the LOG3 opcode - Data Section 131
           EOFV3670_0133 (Valid) Code containing the LOG4 opcode - Data Section 132
-          EOFV3670_0134 (Valid) Code containing the CALL opcode - Data Section 133
+          EOFV3670_0134 (Valid) Code containing the EXTCALL opcode - Data Section 133
           EOFV3670_0135 (Valid) Code containing the RETURN opcode - Data Section 134
-          EOFV3670_0136 (Valid) Code containing the DELEGATECALL opcode - Data Section 135
-          EOFV3670_0137 (Valid) Code containing the STATICCALL opcode - Data Section 136
+          EOFV3670_0136 (Valid) Code containing the EXTDELEGATECALL opcode - Data Section 135
+          EOFV3670_0137 (Valid) Code containing the EXTSTATICCALL opcode - Data Section 136
           EOFV3670_0138 (Valid) Code containing the REVERT opcode - Data Section 137
           EOFV3670_0139 (Valid) Code containing the INVALID opcode - Data Section 138
           EOFI3670_0140 (Invalid) Code containing undefined instruction 0x0c - Data Section 139
@@ -3394,30 +3394,27 @@ validInvalid:
       #expectException:
         #">=Prague": "ok."
 
-    # EOFV3670_0134 (Valid) Code containing the CALL opcode - Data Section 133
-    # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1  CALL STOP
+    # EOFV3670_0134 (Valid) Code containing the EXTCALL opcode - Data Section 133
+    # Code: PUSH1(1) DUP1 DUP1 DUP1 EXTCALL STOP
     - data: |
        :label EOFV3670_0134 :raw 0x
         EF0001 # Magic and Version ( 1 )
         010004 # Types length ( 4 )
         020001 # Total code sections ( 1 )
-          000a # Code section  0 , 10  bytes
+          0007 # Code section  0 , 7  bytes
         040000 # Data section length ( 0 )
             00 # Terminator (end of header)
                # Code 0 types
             00 # 0 inputs
             80 # 0 outputs (Non-returning function)
-          0007 # max stack: 7
+          0004 # max stack: 4
                # Code section 0
           6001 # [0] PUSH1(1) 
             80 # [2] DUP1 
             80 # [3] DUP1 
             80 # [4] DUP1 
-            80 # [5] DUP1 
-            80 # [6] DUP1 
-            80 # [7] DUP1 
-            f1 # [8] CALL 
-            00 # [9] STOP 
+            f8 # [5] EXTCALL 
+            00 # [6] STOP 
                # Data section (empty)
       #expectException:
         #">=Prague": "ok."
@@ -3444,56 +3441,50 @@ validInvalid:
       #expectException:
         #">=Prague": "ok."
 
-    # EOFV3670_0136 (Valid) Code containing the DELEGATECALL opcode - Data Section 135
-    # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1  DELEGATECALL STOP
+    # EOFV3670_0136 (Valid) Code containing the EXTDELEGATECALL opcode - Data Section 135
+    # Code: PUSH1(1) DUP1 DUP1 EXTDELEGATECALL STOP
     - data: |
        :label EOFV3670_0136 :raw 0x
         EF0001 # Magic and Version ( 1 )
         010004 # Types length ( 4 )
         020001 # Total code sections ( 1 )
-          0009 # Code section  0 , 9  bytes
+          0006 # Code section  0 , 6  bytes
         040000 # Data section length ( 0 )
             00 # Terminator (end of header)
                # Code 0 types
             00 # 0 inputs
             80 # 0 outputs (Non-returning function)
-          0006 # max stack: 6
+          0003 # max stack: 3
                # Code section 0
           6001 # [0] PUSH1(1) 
             80 # [2] DUP1 
             80 # [3] DUP1 
-            80 # [4] DUP1 
-            80 # [5] DUP1 
-            80 # [6] DUP1 
-            f4 # [7] DELEGATECALL 
-            00 # [8] STOP 
+            f9 # [4] EXTDELEGATECALL 
+            00 # [5] STOP 
                # Data section (empty)
       #expectException:
         #">=Prague": "ok."
 
-    # EOFV3670_0137 (Valid) Code containing the STATICCALL opcode - Data Section 136
-    # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1  STATICCALL STOP
+    # EOFV3670_0137 (Valid) Code containing the EXTSTATICCALL opcode - Data Section 136
+    # Code: PUSH1(1) DUP1 DUP1  EXTSTATICCALL STOP
     - data: |
        :label EOFV3670_0137 :raw 0x
         EF0001 # Magic and Version ( 1 )
         010004 # Types length ( 4 )
         020001 # Total code sections ( 1 )
-          0009 # Code section  0 , 9  bytes
+          0006 # Code section  0 , 6  bytes
         040000 # Data section length ( 0 )
             00 # Terminator (end of header)
                # Code 0 types
             00 # 0 inputs
             80 # 0 outputs (Non-returning function)
-          0006 # max stack: 6
+          0003 # max stack: 3
                # Code section 0
           6001 # [0] PUSH1(1) 
             80 # [2] DUP1 
             80 # [3] DUP1 
-            80 # [4] DUP1 
-            80 # [5] DUP1 
-            80 # [6] DUP1 
-            fa # [7] STATICCALL 
-            00 # [8] STOP 
+            fb # [4] EXTSTATICCALL 
+            00 # [5] STOP 
                # Data section (empty)
       #expectException:
         #">=Prague": "ok."
