@@ -1490,7 +1490,7 @@ validInvalid:
               # Data segment
            ef
     expectException:
-      ">=Prague" : "EOF_InvalidMagic"
+      ">=Prague" : "EOF_InvalidPrefix"
 
   # Data 45
   # EOF1I0002 check that EOF1 with a bad version number fails (ver 0)
@@ -1514,7 +1514,7 @@ validInvalid:
               # Data segment
            ef
     expectException:
-      ">=Prague" : "EOF_InvalidVersion"
+      ">=Prague" : "EOF_UnknownVersion"
 
   # EOF1I0002 check that EOF1 with a bad version number fails (ver 2)
   - data: |
@@ -1537,7 +1537,7 @@ validInvalid:
               # Data segment
            ef
     expectException:
-      ">=Prague" : "EOF_InvalidVersion"
+      ">=Prague" : "EOF_UnknownVersion"
 
   # EOF1I0003 check that EOF1 with a bad section order fails
   - data: |
@@ -1653,49 +1653,50 @@ validInvalid:
 
 
   # EOF1 constructor returning an EOF1 contract
-  - data: |
-      :label eofreof1 :raw 
-      0xEF0001  # Magic and version
-        010004  # One code segment
-        020001  # One code segment
-          000a  # Code segment zero length: 10 bytes
-        040016  # Data segment length (the code being deployed): 0x16=22 bytes
-        00      # End of header 
+  # TODO: rewrite to EOFCREATE, when it's ready
+  # - data: |
+  #     :label eofreof1 :raw 
+  #     0xEF0001  # Magic and version
+  #       010004  # One code segment
+  #       020001  # One code segment
+  #         000a  # Code segment zero length: 10 bytes
+  #       040016  # Data segment length (the code being deployed): 0x16=22 bytes
+  #       00      # End of header 
 
-        # Code segment zero (header)
-            00 # No inputs
-            80  # Non-Returning Function
-          0003 # Max stack height 3
+  #       # Code segment zero (header)
+  #           00 # No inputs
+  #           80  # Non-Returning Function
+  #         0003 # Max stack height 3
 
 
-        # Code segment zero (actual code)
-        38    #  0   CODESIZE   <codesize>
-        6000  #  1   PUSH1 0    0,<codesize>
-        6000  #  3   PUSH1 0    0,0,<codesize>
-        39    #  5   CODECOPY (from the code to memory, copy everything)
-        38    #  6   CODESIZE  <codesize>
-        601D  #  7   PUSH1 0x1d (= 22)  <codesize>,0x1d 
-        F3    #  9   RETURN   (the deployed code is code size long, starting at byte 22)
-              # 10        
+  #       # Code segment zero (actual code)
+  #       38    #  0   CODESIZE   <codesize>
+  #       6000  #  1   PUSH1 0    0,<codesize>
+  #       6000  #  3   PUSH1 0    0,0,<codesize>
+  #       39    #  5   CODECOPY (from the code to memory, copy everything)
+  #       38    #  6   CODESIZE  <codesize>
+  #       601D  #  7   PUSH1 0x1d (= 22)  <codesize>,0x1d 
+  #       F3    #  9   RETURN   (the deployed code is code size long, starting at byte 22)
+  #             # 10        
 
-        # Data segment (which happens to also be EOF1 code)
-        EF0001 # Magic and version
-        010004 # One code segment
-        020001 # One code segment
-          0003 # Code segment zero's length: 3 bytes 
-        04001d # Data segment length: 22 bytes 
-               # (not specified here, but part of the buffer returned by the init code)
-        00     # End of header
-        # Code segment 0 header         
-            00 # No inputs
-            00 # No outputs
-          0001 # Max stack height 1
-        # Code segment 0 code
-            38 # CODESIZE
-            50 # POP
-            00 # STOP
-  # Init code which doesn't create a contract
-  - data: :label bad :raw 0x610BADFE
-    expectException:
-      ">=Prague" : "EOF_InvalidMagic"
+  #       # Data segment (which happens to also be EOF1 code)
+  #       EF0001 # Magic and version
+  #       010004 # One code segment
+  #       020001 # One code segment
+  #         0003 # Code segment zero's length: 3 bytes 
+  #       04001d # Data segment length: 22 bytes 
+  #              # (not specified here, but part of the buffer returned by the init code)
+  #       00     # End of header
+  #       # Code segment 0 header         
+  #           00 # No inputs
+  #           00 # No outputs
+  #         0001 # Max stack height 1
+  #       # Code segment 0 code
+  #           38 # CODESIZE
+  #           50 # POP
+  #           00 # STOP
+  # # Init code which doesn't create a contract
+  # - data: :label bad :raw 0x610BADFE
+  #   expectException:
+  #     ">=Prague" : "EOF_InvalidMagic"
 
