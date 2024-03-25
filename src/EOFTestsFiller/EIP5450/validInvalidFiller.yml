@@ -85,10 +85,10 @@ validInvalid:
          EOF1V5450_0084 (Valid) Validate input for LOG2 opcode - Data index: 79
          EOF1V5450_0085 (Valid) Validate input for LOG3 opcode - Data index: 80
          EOF1V5450_0086 (Valid) Validate input for LOG4 opcode - Data index: 81
-         EOF1V5450_0087 (Valid) Validate input for CALL opcode - Data index: 82
+         EOF1V5450_0087 (Valid) Validate input for EXTCALL opcode - Data index: 82
          EOF1V5450_0088 (Valid) Validate input for RETURN opcode - Data index: 83
-         EOF1V5450_0089 (Valid) Validate input for DELEGATECALL opcode - Data index: 84
-         EOF1V5450_0090 (Valid) Validate input for STATICCALL opcode - Data index: 85
+         EOF1V5450_0089 (Valid) Validate input for EXTDELEGATECALL opcode - Data index: 84
+         EOF1V5450_0090 (Valid) Validate input for EXTSTATICCALL opcode - Data index: 85
          EOF1V5450_0091 (Valid) Validate input for REVERT opcode - Data index: 86
          EOF1V5450_0092 (Valid) Containing terminating opcode RETURN at the end - Data index: 87
          EOF1V5450_0093 (Valid) Containing terminating opcode REVERT at the end - Data index: 88
@@ -181,10 +181,10 @@ validInvalid:
          EOF1I5450_0080 (Invalid) Stack underflow for opcode LOG2 - Data index: 175
          EOF1I5450_0081 (Invalid) Stack underflow for opcode LOG3 - Data index: 176
          EOF1I5450_0082 (Invalid) Stack underflow for opcode LOG4 - Data index: 177
-         EOF1I5450_0083 (Invalid) Stack underflow for opcode CALL - Data index: 178
+         EOF1I5450_0083 (Invalid) Stack underflow for opcode EXTCALL - Data index: 178
          EOF1I5450_0084 (Invalid) Stack underflow for opcode RETURN - Data index: 179
-         EOF1I5450_0085 (Invalid) Stack underflow for opcode DELEGATECALL - Data index: 180
-         EOF1I5450_0086 (Invalid) Stack underflow for opcode STATICCALL - Data index: 181
+         EOF1I5450_0085 (Invalid) Stack underflow for opcode EXTDELEGATECALL - Data index: 180
+         EOF1I5450_0086 (Invalid) Stack underflow for opcode EXTSTATICCALL - Data index: 181
          EOF1I5450_0087 (Invalid) Stack underflow for opcode REVERT - Data index: 182
          EOF1I5450_0088 (Invalid) Calling function without enough stack items: Function 0 calls Function 1 without enough parameters - Data index: 183
          EOF1I5450_0089 (Invalid) Calling function without enough stack items: Function 0 calls Function 1 without enought parameters, Function 1 calls Function 2 without enough parameers - Data index: 184
@@ -2545,30 +2545,27 @@ validInvalid:
                # Data section (empty)
       # "Prague" : "ok."
 
-    # EOF1V5450_0087 (Valid) Validate input for CALL opcode - Data Index: 82
-    # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 CALL STOP
+    # EOF1V5450_0087 (Valid) Validate input for EXTCALL opcode - Data index: 82
+    # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DUP1 EXTCALL STOP
     - data: |
        :label EOF1V5450_0087 :raw 0x
         EF0001 # Magic and Version ( 1 )
         010004 # Types length ( 4 )
         020001 # Total code sections ( 1 )
-          000a # Code section  0 , 10  bytes
+          0007 # Code section  0 , 7  bytes
         040000 # Data section length ( 0 )
             00 # Terminator (end of header)
                # Code 0 types
             00 # 0 inputs
             80 # 0 outputs (Non-returning function)
-          0007 # max stack: 7
+          0004 # max stack: 4
                # Code section 0
           6001 # [0] PUSH1(1) 
             80 # [2] DUP1 
             80 # [3] DUP1 
             80 # [4] DUP1 
-            80 # [5] DUP1 
-            80 # [6] DUP1 
-            80 # [7] DUP1 
-            f1 # [8] CALL 
-            00 # [9] STOP 
+            f8 # [5] CALL 
+            00 # [6] STOP 
                # Data section (empty)
       # "Prague" : "ok."
 
@@ -2593,55 +2590,49 @@ validInvalid:
                # Data section (empty)
       # "Prague" : "ok."
 
-    # EOF1V5450_0089 (Valid) Validate input for DELEGATECALL opcode - Data Index: 84
-    # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 DELEGATECALL STOP
+    # EOF1V5450_0089 (Valid) Validate input for EXTDELEGATECALL opcode - Data index: 84
+    # Code: PUSH1(1) DUP1 DUP1 EXTDELEGATECALL STOP
     - data: |
        :label EOF1V5450_0089 :raw 0x
         EF0001 # Magic and Version ( 1 )
         010004 # Types length ( 4 )
         020001 # Total code sections ( 1 )
-          0009 # Code section  0 , 9  bytes
+          0006 # Code section  0 , 6  bytes
         040000 # Data section length ( 0 )
             00 # Terminator (end of header)
                # Code 0 types
             00 # 0 inputs
             80 # 0 outputs (Non-returning function)
-          0006 # max stack: 6
+          0003 # max stack: 3
                # Code section 0
           6001 # [0] PUSH1(1) 
             80 # [2] DUP1 
             80 # [3] DUP1 
-            80 # [4] DUP1 
-            80 # [5] DUP1 
-            80 # [6] DUP1 
-            f4 # [7] DELEGATECALL 
-            00 # [8] STOP 
+            f9 # [4] EXTDELEGATECALL 
+            00 # [5] STOP 
                # Data section (empty)
       # "Prague" : "ok."
 
-    # EOF1V5450_0090 (Valid) Validate input for STATICCALL opcode - Data Index: 85
-    # Code: PUSH1(1) DUP1 DUP1 DUP1 DUP1 DUP1 STATICCALL STOP
+    # EOF1V5450_0090 (Valid) Validate input for EXTSTATICCALL opcode - Data index: 85
+    # Code: PUSH1(1) DUP1 DUP1 EXTSTATICCALL STOP
     - data: |
        :label EOF1V5450_0090 :raw 0x
         EF0001 # Magic and Version ( 1 )
         010004 # Types length ( 4 )
         020001 # Total code sections ( 1 )
-          0009 # Code section  0 , 9  bytes
+          0006 # Code section  0 , 6  bytes
         040000 # Data section length ( 0 )
             00 # Terminator (end of header)
                # Code 0 types
             00 # 0 inputs
             80 # 0 outputs (Non-returning function)
-          0006 # max stack: 6
+          0003 # max stack: 3
                # Code section 0
           6001 # [0] PUSH1(1) 
             80 # [2] DUP1 
             80 # [3] DUP1 
-            80 # [4] DUP1 
-            80 # [5] DUP1 
-            80 # [6] DUP1 
-            fa # [7] STATICCALL 
-            00 # [8] STOP 
+            fb # [4] EXTSTATICCALL 
+            00 # [5] STOP 
                # Data section (empty)
       # "Prague" : "ok."
 
@@ -5110,29 +5101,26 @@ validInvalid:
       expectException:
         ">=Prague" : "EOF_StackUnderflow"
 
-    # EOF1I5450_0083 (Invalid) Stack underflow for opcode CALL - Data Index: 178
-    # Code: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) CALL STOP
+    # EOF1I5450_0083 (Invalid) Stack underflow for opcode EXTCALL - Data index: 178
+    # Code: PUSH1(1) PUSH1(1) PUSH1(1) EXTCALL STOP
     - data: |
        :label EOF1I5450_0083 :raw 0x
         EF0001 # Magic and Version ( 1 )
         010004 # Types length ( 4 )
         020001 # Total code sections ( 1 )
-          000e # Code section  0 , 14  bytes
+          0008 # Code section  0 , 8  bytes
         040000 # Data section length ( 0 )
             00 # Terminator (end of header)
                # Code 0 types
             00 # 0 inputs
             80 # 0 outputs (Non-returning function)
-          0006 # max stack: 6
+          0003 # max stack: 3
                # Code section 0
           6001 # [0] PUSH1(1) 
           6001 # [2] PUSH1(1) 
           6001 # [4] PUSH1(1) 
-          6001 # [6] PUSH1(1) 
-          6001 # [8] PUSH1(1) 
-          6001 # [10] PUSH1(1) 
-            f1 # [12] CALL 
-            00 # [13] STOP 
+            f8 # [6] EXTCALL 
+            00 # [7] STOP 
                # Data section (empty)
       expectException:
         ">=Prague" : "EOF_StackUnderflow"
@@ -5158,54 +5146,49 @@ validInvalid:
       expectException:
         ">=Prague" : "EOF_StackUnderflow"
 
-    # EOF1I5450_0085 (Invalid) Stack underflow for opcode DELEGATECALL - Data Index: 180
-    # Code: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) DELEGATECALL STOP
+
+    # EOF1I5450_0085 (Invalid) Stack underflow for opcode EXTDELEGATECALL - Data index: 180
+    # Code: PUSH1(1) PUSH1(1) EXTDELEGATECALL STOP
     - data: |
        :label EOF1I5450_0085 :raw 0x
         EF0001 # Magic and Version ( 1 )
         010004 # Types length ( 4 )
         020001 # Total code sections ( 1 )
-          000c # Code section  0 , 12  bytes
+          0006 # Code section  0 , 6  bytes
         040000 # Data section length ( 0 )
             00 # Terminator (end of header)
                # Code 0 types
             00 # 0 inputs
             80 # 0 outputs (Non-returning function)
-          0005 # max stack: 5
+          0002 # max stack: 2
                # Code section 0
           6001 # [0] PUSH1(1) 
           6001 # [2] PUSH1(1) 
-          6001 # [4] PUSH1(1) 
-          6001 # [6] PUSH1(1) 
-          6001 # [8] PUSH1(1) 
-            f4 # [10] DELEGATECALL 
-            00 # [11] STOP 
+            f9 # [4] EXTDELEGATECALL 
+            00 # [5] STOP 
                # Data section (empty)
       expectException:
         ">=Prague" : "EOF_StackUnderflow"
 
-    # EOF1I5450_0086 (Invalid) Stack underflow for opcode STATICCALL - Data Index: 181
-    # Code: PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) PUSH1(1) STATICCALL STOP
+    # EOF1I5450_0086 (Invalid) Stack underflow for opcode EXTSTATICCALL - Data index: 181
+    # Code: PUSH1(1) PUSH1(1) EXTSTATICCALL STOP
     - data: |
        :label EOF1I5450_0086 :raw 0x
         EF0001 # Magic and Version ( 1 )
         010004 # Types length ( 4 )
         020001 # Total code sections ( 1 )
-          000c # Code section  0 , 12  bytes
+          0006 # Code section  0 , 6  bytes
         040000 # Data section length ( 0 )
             00 # Terminator (end of header)
                # Code 0 types
             00 # 0 inputs
             80 # 0 outputs (Non-returning function)
-          0005 # max stack: 5
+          0002 # max stack: 2
                # Code section 0
           6001 # [0] PUSH1(1) 
           6001 # [2] PUSH1(1) 
-          6001 # [4] PUSH1(1) 
-          6001 # [6] PUSH1(1) 
-          6001 # [8] PUSH1(1) 
-            fa # [10] STATICCALL 
-            00 # [11] STOP 
+            fb # [4] EXTSTATICCALL 
+            00 # [5] STOP 
                # Data section (empty)
       expectException:
         ">=Prague" : "EOF_StackUnderflow"
