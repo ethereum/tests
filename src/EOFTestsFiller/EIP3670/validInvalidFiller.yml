@@ -38,14 +38,14 @@ validInvalid:
           EOFV3670_0033 (Valid) Code containing the CALLDATALOAD opcode - Data Section 32
           EOFV3670_0034 (Valid) Code containing the CALLDATASIZE opcode - Data Section 33
           EOFV3670_0035 (Valid) Code containing the CALLDATACOPY opcode - Data Section 34
-          EOFV3670_0036 (Valid) Code containing the CODESIZE opcode - Data Section 35
-          EOFV3670_0037 (Valid) Code containing the CODECOPY opcode - Data Section 36
+          EOFV3670_0036 (Invalid) Code containing the CODESIZE opcode - Data Section 35
+          EOFV3670_0037 (Invalid) Code containing the CODECOPY opcode - Data Section 36
           EOFV3670_0038 (Valid) Code containing the GASPRICE opcode - Data Section 37
-          EOFV3670_0039 (Valid) Code containing the EXTCODESIZE opcode - Data Section 38
-          EOFV3670_0040 (Valid) Code containing the EXTCODECOPY opcode - Data Section 39
+          EOFV3670_0039 (Invalid) Code containing the EXTCODESIZE opcode - Data Section 38
+          EOFV3670_0040 (Invalid) Code containing the EXTCODECOPY opcode - Data Section 39
           EOFV3670_0041 (Valid) Code containing the RETURNDATASIZE opcode - Data Section 40
           EOFV3670_0042 (Valid) Code containing the RETURNDATACOPY opcode - Data Section 41
-          EOFV3670_0043 (Valid) Code containing the EXTCODEHASH opcode - Data Section 42
+          EOFV3670_0043 (Invalid) Code containing the EXTCODEHASH opcode - Data Section 42
           EOFV3670_0044 (Valid) Code containing the BLOCKHASH opcode - Data Section 43
           EOFV3670_0045 (Valid) Code containing the COINBASE opcode - Data Section 44
           EOFV3670_0046 (Valid) Code containing the TIMESTAMP opcode - Data Section 45
@@ -63,7 +63,7 @@ validInvalid:
           EOFV3670_0058 (Valid) Code containing the SLOAD opcode - Data Section 57
           EOFV3670_0059 (Valid) Code containing the SSTORE opcode - Data Section 58
           EOFV3670_0060 (Valid) Code containing the MSIZE opcode - Data Section 59
-          EOFV3670_0061 (Valid) Code containing the GAS opcode - Data Section 60
+          EOFV3670_0061 (Invalid) Code containing the GAS opcode - Data Section 60
           EOFV3670_0062 (Valid) Code containing the NOP opcode - Data Section 61
           EOFV3670_0063 (Valid) Code containing the MCOPY opcode - Data Section 62
           EOFV3670_0064 (Valid) Code containing the PUSH0 opcode - Data Section 63
@@ -1097,50 +1097,19 @@ validInvalid:
       #expectException:
         #">=Prague": "ok."
 
-    # EOFV3670_0036 (Valid) Code containing the CODESIZE opcode - Data Section 35
+    # EOFV3670_0036 (Invalid) Code containing the CODESIZE opcode - Data Section 35
     # Code: CODESIZE STOP
     - data: |
-       :label EOFV3670_0036 :raw 0x
-        EF0001 # Magic and Version ( 1 )
-        010004 # Types length ( 4 )
-        020001 # Total code sections ( 1 )
-          0002 # Code section  0 , 2  bytes
-        040000 # Data section length ( 0 )
-            00 # Terminator (end of header)
-               # Code 0 types
-            00 # 0 inputs
-            80 # 0 outputs (Non-returning function)
-          0001 # max stack: 1
-               # Code section 0
-            38 # [0] CODESIZE 
-            00 # [1] STOP 
-               # Data section (empty)
-      #expectException:
-        #">=Prague": "ok."
+       :label EOFV3670_0036 :raw 0xef0001010004020001000204000000008000013800
+      expectException:
+        ">=Prague": "EOF_UndefinedInstruction"
 
-    # EOFV3670_0037 (Valid) Code containing the CODECOPY opcode - Data Section 36
+    # EOFV3670_0037 (Invalid) Code containing the CODECOPY opcode - Data Section 36
     # Code: PUSH1(1) DUP1 DUP1  CODECOPY STOP
     - data: |
-       :label EOFV3670_0037 :raw 0x
-        EF0001 # Magic and Version ( 1 )
-        010004 # Types length ( 4 )
-        020001 # Total code sections ( 1 )
-          0006 # Code section  0 , 6  bytes
-        040000 # Data section length ( 0 )
-            00 # Terminator (end of header)
-               # Code 0 types
-            00 # 0 inputs
-            80 # 0 outputs (Non-returning function)
-          0003 # max stack: 3
-               # Code section 0
-          6001 # [0] PUSH1(1) 
-            80 # [2] DUP1 
-            80 # [3] DUP1 
-            39 # [4] CODECOPY 
-            00 # [5] STOP 
-               # Data section (empty)
-      #expectException:
-        #">=Prague": "ok."
+       :label EOFV3670_0037 :raw 0xef000101000402000100060400000000800003600180803900
+      expectException:
+        ">=Prague": "EOF_UndefinedInstruction"
 
     # EOFV3670_0038 (Valid) Code containing the GASPRICE opcode - Data Section 37
     # Code: GASPRICE STOP
@@ -1163,52 +1132,19 @@ validInvalid:
       #expectException:
         #">=Prague": "ok."
 
-    # EOFV3670_0039 (Valid) Code containing the EXTCODESIZE opcode - Data Section 38
+    # EOFV3670_0039 (Invalid) Code containing the EXTCODESIZE opcode - Data Section 38
     # Code: PUSH1(1) EXTCODESIZE STOP
     - data: |
-       :label EOFV3670_0039 :raw 0x
-        EF0001 # Magic and Version ( 1 )
-        010004 # Types length ( 4 )
-        020001 # Total code sections ( 1 )
-          0004 # Code section  0 , 4  bytes
-        040000 # Data section length ( 0 )
-            00 # Terminator (end of header)
-               # Code 0 types
-            00 # 0 inputs
-            80 # 0 outputs (Non-returning function)
-          0001 # max stack: 1
-               # Code section 0
-          6001 # [0] PUSH1(1) 
-            3b # [2] EXTCODESIZE 
-            00 # [3] STOP 
-               # Data section (empty)
-      #expectException:
-        #">=Prague": "ok."
+       :label EOFV3670_0039 :raw 0xef00010100040200010004040000000080000160013b00
+      expectException:
+        ">=Prague": "EOF_UndefinedInstruction"
 
-    # EOFV3670_0040 (Valid) Code containing the EXTCODECOPY opcode - Data Section 39
+    # EOFV3670_0040 (Invalid) Code containing the EXTCODECOPY opcode - Data Section 39
     # Code: PUSH1(1) DUP1 DUP1 DUP1  EXTCODECOPY STOP
     - data: |
-       :label EOFV3670_0040 :raw 0x
-        EF0001 # Magic and Version ( 1 )
-        010004 # Types length ( 4 )
-        020001 # Total code sections ( 1 )
-          0007 # Code section  0 , 7  bytes
-        040000 # Data section length ( 0 )
-            00 # Terminator (end of header)
-               # Code 0 types
-            00 # 0 inputs
-            80 # 0 outputs (Non-returning function)
-          0004 # max stack: 4
-               # Code section 0
-          6001 # [0] PUSH1(1) 
-            80 # [2] DUP1 
-            80 # [3] DUP1 
-            80 # [4] DUP1 
-            3c # [5] EXTCODECOPY 
-            00 # [6] STOP 
-               # Data section (empty)
-      #expectException:
-        #">=Prague": "ok."
+       :label EOFV3670_0040 :raw 0xef00010100040200010007040000000080000460018080803c00
+      expectException:
+        ">=Prague": "EOF_UndefinedInstruction"
 
     # EOFV3670_0041 (Valid) Code containing the RETURNDATASIZE opcode - Data Section 40
     # Code: RETURNDATASIZE STOP
@@ -1255,27 +1191,12 @@ validInvalid:
       #expectException:
         #">=Prague": "ok."
 
-    # EOFV3670_0043 (Valid) Code containing the EXTCODEHASH opcode - Data Section 42
+    # EOFV3670_0043 (Invalid) Code containing the EXTCODEHASH opcode - Data Section 42
     # Code: PUSH1(1) EXTCODEHASH STOP
     - data: |
-       :label EOFV3670_0043 :raw 0x
-        EF0001 # Magic and Version ( 1 )
-        010004 # Types length ( 4 )
-        020001 # Total code sections ( 1 )
-          0004 # Code section  0 , 4  bytes
-        040000 # Data section length ( 0 )
-            00 # Terminator (end of header)
-               # Code 0 types
-            00 # 0 inputs
-            80 # 0 outputs (Non-returning function)
-          0001 # max stack: 1
-               # Code section 0
-          6001 # [0] PUSH1(1) 
-            3f # [2] EXTCODEHASH 
-            00 # [3] STOP 
-               # Data section (empty)
-      #expectException:
-        #">=Prague": "ok."
+       :label EOFV3670_0043 :raw 0xef00010100040200010004040000000080000160013f00
+      expectException:
+        ">=Prague": "EOF_UndefinedInstruction"
 
     # EOFV3670_0044 (Valid) Code containing the BLOCKHASH opcode - Data Section 43
     # Code: PUSH1(1) BLOCKHASH STOP
@@ -1643,26 +1564,12 @@ validInvalid:
       #expectException:
         #">=Prague": "ok."
 
-    # EOFV3670_0061 (Valid) Code containing the GAS opcode - Data Section 60
+    # EOFV3670_0061 (Invalid) Code containing the GAS opcode - Data Section 60
     # Code: GAS STOP
     - data: |
-       :label EOFV3670_0061 :raw 0x
-        EF0001 # Magic and Version ( 1 )
-        010004 # Types length ( 4 )
-        020001 # Total code sections ( 1 )
-          0002 # Code section  0 , 2  bytes
-        040000 # Data section length ( 0 )
-            00 # Terminator (end of header)
-               # Code 0 types
-            00 # 0 inputs
-            80 # 0 outputs (Non-returning function)
-          0001 # max stack: 1
-               # Code section 0
-            5a # [0] GAS 
-            00 # [1] STOP 
-               # Data section (empty)
-      #expectException:
-        #">=Prague": "ok."
+       :label EOFV3670_0061 :raw 0xef0001010004020001000204000000008000015a00
+      expectException:
+        ">=Prague": "EOF_UndefinedInstruction"
 
     # EOFV3670_0062 (Valid) Code containing the NOP opcode - Data Section 61
     # Code: NOP STOP
