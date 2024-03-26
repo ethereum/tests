@@ -1,0 +1,112 @@
+CREATE3_EOF1_contract_template:
+  env:
+    currentCoinbase: 2adc25665018aa1fe0e6bc666dac8fc2697ff9ba
+    currentDifficulty: '0x020000'
+    currentGasLimit: '89128960'
+    currentBaseFee: '10'
+    currentNumber: '1'
+    currentTimestamp: '1000'
+    previousHash: 5e20a0453cecd065ea59c37ac63e079ee08998b6045136a8ce6635c7912ec0b6
+
+  pre:
+    a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: 200000000
+      code: ''
+      nonce: 0
+      storage: {}
+    b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+      balance: 0
+      code: |
+        :label factory_contract :raw 0x
+        # EOF deployed code 
+        ef0001 # Magic followed by version
+        010004 # One type section (size 4)
+        020001 # One code segment
+          0013 # code seg 0: 19 bytes
+        030001 # One subcontainer segments
+          0043 # Size of subcontainer 0 is 63 bytes (init)
+        040000 # Zero byte data segment
+            00 # End of header
+            00 # Zero inputs
+            00 # Non-Returning Function
+          0004 # Max stack height 4
+            36 # CALLDATASIZE
+          6000 # PUSH(0)
+          6000 # PUSH(0)
+            37 # CALLDATACOPY
+            36 # CALLDATASIZE
+          6000 # PUSH(0)
+          6000 # PUSH(0)
+          6000 # PUSH(0)
+          ec00 # CREATE3<0>
+          6000 # PUSH(0)
+            55 # SSTORE
+            00 # STOP
+                   # Init subcontainer
+                   # Subcontainer 0 starts here
+            ef0001 # Magic followed by version
+            010004 # One type section (size 4)
+            020001 # One code segment
+              000b # code seg 0:5 bytes
+            030001 # One subcontainer segments
+              0020 # Size of subcoitaner 0 (template)
+            040000 # Zero byte data segment
+                00 # End of header
+                00 # Zero inputs
+                00 # Non-Returning Function
+              0003 # Max stack height 2
+                36 # CALLDATASIZE
+              6000 # PUSH(0)
+              6000 # PUSH(0)
+                37 # CALLDATACOPY
+                36 # CALLDATASIZE
+              6000 # PUSH(0)
+              ee00 # RETURNCONTRACT<0>
+                           # Contract template subcontainer
+                           # Subcontainer 0 starts here
+                    ef0001 # Magic followed by version
+                    010004 # One type section (size 4)
+                    020001 # One code segment
+                      000d # code seg 0: 13 bytes
+                    040040 # 64 bytes expected data segment declared but data section empty
+                        00 # End of header
+                        00 # Zero inputs
+                        00 # Non-Returning Function
+                      0002 # Max stack height 2
+                    e90000 # DATALOADN<0>
+                      6000 # PUSH(0)
+                        55 # SSTORE
+                    e90020 # DATALOADN<32>
+                      6001 # PUSH(1)
+                        55 # SSTORE
+                        00 # STOP
+      nonce: 0
+      storage: {}
+
+  transaction:
+    data: 
+      - ':label init_3_4 :raw 0x00000000000000000000000000000000000000000000000000000000000000030000000000000000000000000000000000000000000000000000000000000004'
+    gasLimit:
+      - 15000000
+    gasPrice: 10
+    nonce: 0
+    secretKey: 45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8
+    to: 'b94f5374fce5edbc8e2a8697c15331677e6ebf0b'
+    value:
+    - 0
+
+  expect:
+    - indexes:
+       data: ':label init_3_4'
+      network:
+        - 'Prague'
+      result:
+        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
+          nonce: 1
+          storage:
+            '0': '09261b2c1415e7ff6b900c17b95a20c00c09cc2a'
+        09261b2c1415e7ff6b900c17b95a20c00c09cc2a:
+          nonce: 1
+          code: '0xef0001010004020001000d0400400000000002e90000600055e900206001550000000000000000000000000000000000000000000000000000000000000000030000000000000000000000000000000000000000000000000000000000000004'
