@@ -31,7 +31,7 @@ REFERENCE_SPEC_VERSION = "2f8299df31bb8173618901a03a8366a3183479b0"
 @pytest.fixture
 def env():  # noqa: D103
     return Environment(
-        coinbase="0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba",
+        fee_recipient="0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba",
         difficulty=0x020000,
         gas_limit=71794957647893862,
         number=1,
@@ -414,7 +414,7 @@ def test_dynamic_create2_selfdestruct_collision_two_different_transactions(
         sendall_destination_balance += pre_existing_create2_balance
         if fork >= Cancun:
             # first create2 fails, but first calls ok. the account is not removed on cancun
-            # therefor with the second create2 it is not successful
+            # therefore with the second create2 it is not successful
             sendall_destination_balance += first_call_value
         else:
             # first create2 fails, first calls totally removes the account
