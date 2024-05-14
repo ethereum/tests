@@ -13,14 +13,14 @@ variedContext:
     comment: Ori Pomerantz qbzzt1@gmail.com
 
 
-  pre:  
+  pre:
     # Use delegatecall to C057, to check that the cost is lower when the caller
     # account is the one in the access list
     #
-    0000000000000000000000000000000000000100:
+    0000000000000000000000000000000000001000:
       balance: '1000000000000000000'
       code: |
-       { 
+       {
           ; DELEGATE_VALID   DELEGATE_INVALID
 
           (delegatecall (gas) 0xC057 0 0 0 0)
@@ -31,10 +31,10 @@ variedContext:
 
     # Use call to C057, to check that the cost is lower when the callee
     # account is the one in the access list
-    0000000000000000000000000000000000000101:
+    0000000000000000000000000000000000001001:
       balance: '1000000000000000000'
       code: |
-       { 
+       {
           ; CALL_VALID    CALL_INVALID
           (call (gas) 0xC057 0 0 0 0 0)
        }
@@ -44,10 +44,10 @@ variedContext:
 
     # Use callcode to C057, to check that the cost is lower when the caller
     # account is the one in the access list
-    0000000000000000000000000000000000000102:
+    0000000000000000000000000000000000001002:
       balance: '1000000000000000000'
       code: |
-       { 
+       {
           ; CALLCODE_VALID       CALLCODE_INVALID
           (callcode (gas) 0xC057 0 0 0 0 0)
        }
@@ -56,11 +56,11 @@ variedContext:
 
 
     # Write to @@0, to verify the write cost is correct
-    # Then read 0x60A7, to verify the read cost is correct    
+    # Then read 0x60A7, to verify the read cost is correct
     000000000000000000000000000000000000C057:
       balance: '1000000000000000000'
       code: |
-       { 
+       {
           ; 0xC057: DELEGATE_VALID DELEGATE_INVALID
           ;         CALL_INVALID CALL_VALID
           ;         CALLCODE_VALID CALLCODE_INVALID
@@ -69,7 +69,7 @@ variedContext:
         ; Write to [[0]], and see how much gas that cost. It should
         ; cost more when it is not declared storage
           [0]   (gas)
-         [[0]]  0x02 
+         [[0]]  0x02
           [0]   (- @0 (gas) 17)
          [[1]] @0
 
@@ -95,10 +95,10 @@ variedContext:
 
     # Use staticcall to EAD0C057, to check that the cost is lower when the callee
     # account is the one in the access list
-    0000000000000000000000000000000000000103:
+    0000000000000000000000000000000000001003:
       balance: '1000000000000000000'
       code: |
-       { 
+       {
           ; STATICCALL_VALID  STATICCALL_INVALID
 
           ; Need to store the result here, because static call is, well, static
@@ -116,7 +116,7 @@ variedContext:
     00000000000000000000000000000000EAD0C057:
       balance: '1000000000000000000'
       code: |
-       { 
+       {
         ;   STATICCALL_VALID  STATICCALL_INVALID
 
 
@@ -137,16 +137,16 @@ variedContext:
 
     # CALLed, read and writes storage, and then REVERTs
     # (the call is from 0xCCC...CCC)
-    0000000000000000000000000000000000000110:
+    0000000000000000000000000000000000001010:
       balance: '1000000000000000000'
       code: |
-       { 
+       {
         ;   CALL_REVERT_VALID     CALL_REVERT_INVALID
 
         ; Write to [[0]], and see how much gas that cost. It should
         ; cost more when it is not declared storage
           [0]   (gas)
-         [[0]]  0x02 
+         [[0]]  0x02
           [0]   (- @0 (gas) 17)
 
         ; The 17 is the cost of the extra opcodes:
@@ -173,10 +173,10 @@ variedContext:
 
 
     # Call an contract that writes to storage and then commits suicide
-    0000000000000000000000000000000000000111:
+    0000000000000000000000000000000000001011:
       balance: '1000000000000000000'
       code: |
-       { 
+       {
           ; CALL_WRITE_SUICIDE_VALID      CALL_WRITE_SUICIDE_INVALID
           [0] (gas)
           (call (gas) 0xDEAD0111 0 0 0 0 0)
@@ -190,7 +190,7 @@ variedContext:
     00000000000000000000000000000000DEAD0111:
       balance: '1000000000000000000'
       code: |
-       { 
+       {
           ; CALL_WRITE_SUICIDE_VALID      CALL_WRITE_SUICIDE_INVALID
           [[0]] 0xDEAD
 
@@ -202,10 +202,10 @@ variedContext:
 
 
     # Call an contract that reads storage and then commits suicide
-    0000000000000000000000000000000000000112:
+    0000000000000000000000000000000000001012:
       balance: '1000000000000000000'
       code: |
-       { 
+       {
           ; CALL_READ_SUICIDE_VALID      CALL_READ_SUICIDE_INVALID
           [0] (gas)
           (call (gas) 0xDEAD0112 0 0 0 0 0)
@@ -219,7 +219,7 @@ variedContext:
     00000000000000000000000000000000DEAD0112:
       balance: '1000000000000000000'
       code: |
-       { 
+       {
           ; CALL_READ_SUICIDE_VALID      CALL_READ_SUICIDE_INVALID
           @@0
 
@@ -229,10 +229,10 @@ variedContext:
       storage:
         0x00: 0xDEAD0060A7
 
-  
+
 
     # Do a static call, see if it fails on the write using what it returns
-    0000000000000000000000000000000000000113:
+    0000000000000000000000000000000000001013:
       balance: '1000000000000000000'
       code: |
        {  ; STATIC_WRITE_VALID     STATIC_WRITE_INVALID
@@ -267,16 +267,16 @@ variedContext:
 
     # Check an SSTORE that only happens when the access list is valid
     # (otherwise OOG)
-    0000000000000000000000000000000000000114:
+    0000000000000000000000000000000000001014:
       balance: '1000000000000000000'
       code: |
        {  ; WRITE_INVALID_OOG    WRITE_VALID_NO_OOG
           (call 0x0B65 0xF114 0 0 0 0 0x20)
-       } 
+       }
       nonce: '0'
       storage: {}
 
-    
+
     # Check an SSTORE that only happens when the access list is valid
     # (otherwise OOG)
     000000000000000000000000000000000000F114:
@@ -294,16 +294,16 @@ variedContext:
 
     # Check an SSLOAD that only happens when the access list is valid
     # (otherwise OOG)
-    0000000000000000000000000000000000000115:
+    0000000000000000000000000000000000001015:
       balance: '1000000000000000000'
       code: |
        {  ; READ_INVALID_OOG    READ_VALID_NO_OOG
           (call 0x1800 0xF115 0 0 0 0 0x20)
-       } 
+       }
       nonce: '0'
       storage: {}
 
-    
+
     # Check an SLOAD that only happens when the access list is valid
     # (otherwise OOG)
     000000000000000000000000000000000000F115:
@@ -321,7 +321,7 @@ variedContext:
 
     # Run recursively to see that it doesn't matter if we are doing the
     # access one, two, or ten levels deep
-    0000000000000000000000000000000000000116:
+    0000000000000000000000000000000000001016:
       balance: '1000000000000000000'
       code: |
        {  ; RECURSE_VALID   RECURSE_INVALID
@@ -334,7 +334,7 @@ variedContext:
           ; Write to [[0xBEEF]], and see how much gas that cost. It should
           ; cost more when it is not declared storage
             [0]   (gas)
-           [[0xBEEF]]  0x02 
+           [[0xBEEF]]  0x02
             [0]   (- @0 (gas) 17)
 
           ; Read [[0x60A7]], and see how much gas that cost. It should
@@ -342,7 +342,7 @@ variedContext:
           [0x20] (gas)
           [0xA0] @@0x60A7
           [0x20] (- @0x20 (gas) 35)
-  
+
           ; Write to a different cell each time
           [0x40] (gas)
           [[(+ 0xF000 @@0)]] 0xBEEF
@@ -350,7 +350,7 @@ variedContext:
 
           ; Read from a different cell each time
           [0x60] (gas)
-          @@(+ 0xF010 @@0)  
+          @@(+ 0xF010 @@0)
           [0x60] (- @0x60 (gas) 0x7a)
 
 
@@ -361,22 +361,22 @@ variedContext:
           [[ (+ 0x400 @@0x00 ) ]] @0x60
 
 
-          ; Recursion, call yourself unless @@0 == 0 
+          ; Recursion, call yourself unless @@0 == 0
           (if (> @@0 0) {
                 [[0]] (- @@0 1)
-                (call (gas) 0x0116 0 0 0 0 0) 
+                (call (gas) 0x01016 0 0 0 0 0)
              } NOP)
-       } 
+       }
       nonce: '0'
       storage:
         0x0000: 0x000F    # Max depth
-        0x60A7: 0xDEAD 
+        0x60A7: 0xDEAD
 
 
 
-    # CREATE a contract, access storage in the constructor, see 
+    # CREATE a contract, access storage in the constructor, see
     # what happens
-    0000000000000000000000000000000000000120:
+    0000000000000000000000000000000000001020:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
         {
@@ -393,7 +393,7 @@ variedContext:
           (def 'bufLength         0x100)
 
           ; Create the contract code
-          [contractLength] 
+          [contractLength]
             (lll
               {
                  [[0]] 0xFF
@@ -422,15 +422,15 @@ variedContext:
             ; actually create the contract
             [addr] (create 0 constructorCode (+ bufLength @contractLength))
             [[1]] @addr
-        }    
+        }
       nonce: '0'
       storage: {}
 
 
 
-    # CREATE2 a contract, access storage in the constructor, see 
+    # CREATE2 a contract, access storage in the constructor, see
     # what happens
-    0000000000000000000000000000000000000121:
+    0000000000000000000000000000000000001021:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
         {
@@ -447,7 +447,7 @@ variedContext:
           (def 'bufLength         0x100)
 
           ; Create the contract code
-          [contractLength] 
+          [contractLength]
             (lll
               {
                  [[0]] 0xFF
@@ -476,7 +476,7 @@ variedContext:
             ; actually create the contract
             [addr] (create2 0 constructorCode (+ bufLength @contractLength) 0x5a17)
             [[1]] @addr
-        }    
+        }
       nonce: '0'
       storage: {}
 
@@ -484,7 +484,7 @@ variedContext:
 
     # CREATE a contract, then CALL it. See how the this interacts with the
     # access list.
-    0000000000000000000000000000000000000122:
+    0000000000000000000000000000000000001022:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
         {
@@ -502,7 +502,7 @@ variedContext:
           (def 'bufLength         0x100)
 
           ; Create the contract code
-          [contractLength] 
+          [contractLength]
             (lll
               {
                  ; write to storage
@@ -529,14 +529,14 @@ variedContext:
             [addr] (create 0 constructorCode (+ bufLength @contractLength))
             (call (gas) @addr 0 0 0 0 0)
             [[1]] @addr
-        }    
+        }
       nonce: '0'
       storage: {}
 
 
 
     # CREATE2 a contract, then CALL it. See the effects on the access list
-    0000000000000000000000000000000000000123:
+    0000000000000000000000000000000000001023:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
         {
@@ -554,7 +554,7 @@ variedContext:
           (def 'bufLength         0x100)
 
           ; Create the contract code
-          [contractLength] 
+          [contractLength]
             (lll
               {
                  ; write to storage
@@ -581,14 +581,14 @@ variedContext:
             [addr] (create2 0 constructorCode (+ bufLength @contractLength) 0x5a17)
             (call (gas) @addr 0 0 0 0 0)
             [[1]] @addr
-        }    
+        }
       nonce: '0'
       storage: {}
 
 
     # CREATE a contract, then CALL it. Both times access the same storage cell,
     # see you are still only charged a high cost the first time
-    0000000000000000000000000000000000000124:
+    0000000000000000000000000000000000001024:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
         {
@@ -605,7 +605,7 @@ variedContext:
           (def 'bufLength         0x100)
 
           ; Create the contract code
-          [contractLength] 
+          [contractLength]
             (lll
               {
                  ; write to storage
@@ -638,7 +638,7 @@ variedContext:
             [addr] (create 0 constructorCode (+ bufLength @contractLength))
             (call (gas) @addr 0 0 0 0 0)
             [[1]] @addr
-        }    
+        }
       nonce: '0'
       storage: {}
 
@@ -647,7 +647,7 @@ variedContext:
 
     # CREATE2 a contract, then CALL it. Both times access the same storage cell,
     # see you are still only charged a high cost the first time
-    0000000000000000000000000000000000000125:
+    0000000000000000000000000000000000001025:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
         {
@@ -664,7 +664,7 @@ variedContext:
           (def 'bufLength         0x100)
 
           ; Create the contract code
-          [contractLength] 
+          [contractLength]
             (lll
               {
                  ; write to storage
@@ -697,21 +697,21 @@ variedContext:
             [addr] (create2 0 constructorCode (+ bufLength @contractLength) 0x5a17)
             (call (gas) @addr 0 0 0 0 0)
             [[1]] @addr
-        }    
+        }
       nonce: '0'
       storage: {}
 
 
-    # Call a contract twice, see the high storage cost is only for 
+    # Call a contract twice, see the high storage cost is only for
     # the first time
-    0000000000000000000000000000000000000126:
+    0000000000000000000000000000000000001026:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
         {
           ; CALL_TWICE_VALID     CALL_TWICE_INVALID
           (call (gas) 0xF126 0 0 0 0 0)
           (call (gas) 0xF126 0 0 0 0 0)
-        }    
+        }
       nonce: '0'
       storage: {}
 
@@ -729,7 +729,7 @@ variedContext:
           ; If @@1 is empty, write to it. Otherwise, write to @@2
           (if (= @@1 0) {[[1]] @0} {[[2]] @0})
 
-        }    
+        }
       nonce: '0'
       storage: {}
 
@@ -741,14 +741,14 @@ variedContext:
     # Call different contracts depending on the parameter
     cccccccccccccccccccccccccccccccccccccccc:
       code: |
-        {  
-            ; ccc...ccc  revert and suicide contract 
-            (call (gas) (+ 0x100 $4) 0 0 0 0 0x40)
+        {
+            ; ccc...ccc  revert and suicide contract
+            (call (gas) (+ 0x1000 $4) 0 0 0 0 0x40)
 
             ; Write the returned results, if any
             [[0]] @0x00
             [[1]] @0x20
-        }  
+        }
       nonce: '0'
       storage: {}
       balance: 0
@@ -767,7 +767,7 @@ variedContext:
     # DELEGATE_VALID
     - data: :label delegateCallerInAccessList :abi f(uint) 0
       accessList:
-      - address: 0x0000000000000000000000000000000000000100
+      - address: 0x0000000000000000000000000000000000001000
         storageKeys:
         - 0x00
         - 0x60A7
@@ -784,7 +784,7 @@ variedContext:
     # CALLCODE_VALID
     - data: :label callcodeCallerInAccessList :abi f(uint) 2
       accessList:
-      - address: 0x0000000000000000000000000000000000000102
+      - address: 0x0000000000000000000000000000000000001002
         storageKeys:
         - 0x00
         - 0x60A7
@@ -802,7 +802,7 @@ variedContext:
     # CALL_INVALID
     - data: :label callCallerInAccessList :abi f(uint) 1
       accessList:
-      - address: 0x0000000000000000000000000000000000000101
+      - address: 0x0000000000000000000000000000000000001001
         storageKeys:
         - 0x00
         - 0x60A7
@@ -819,7 +819,7 @@ variedContext:
     # STATICCALL_INVALID
     - data: :label staticcallCallerInAccessList :abi f(uint) 3
       accessList:
-      - address: 0x0000000000000000000000000000000000000103
+      - address: 0x0000000000000000000000000000000000001003
         storageKeys:
         - 0x00
         - 0x60A7
@@ -835,7 +835,7 @@ variedContext:
     # CALL_REVERT_VALID
     - data: :label callRevertCalleeInAccessList :abi f(uint) 0x10
       accessList:
-      - address: 0x0000000000000000000000000000000000000110
+      - address: 0x0000000000000000000000000000000000001010
         storageKeys:
         - 0x00
         - 0x60A7
@@ -860,7 +860,7 @@ variedContext:
     # CALL_WRITE_SUICIDE_INVALID
     - data: :label callWriteSuicideInvalid :abi f(uint) 0x11
       accessList:
-      - address: 0x0000000000000000000000000000000000000111
+      - address: 0x0000000000000000000000000000000000001011
         storageKeys:
         - 0x00
 
@@ -877,7 +877,7 @@ variedContext:
     # CALL_READ_SUICIDE_INVALID
     - data: :label callReadSuicideInvalid :abi f(uint) 0x12
       accessList:
-      - address: 0x0000000000000000000000000000000000000112
+      - address: 0x0000000000000000000000000000000000001012
         storageKeys:
         - 0x00
 
@@ -910,7 +910,7 @@ variedContext:
     # WRITE_INVALID_OOG
     - data: :label writeInvalidOOG :abi f(uint) 0x14
       accessList:
-      - address: 0x0000000000000000000000000000000000000114
+      - address: 0x0000000000000000000000000000000000001014
         storageKeys:
         - 0x00
 
@@ -926,16 +926,16 @@ variedContext:
     # READ_INVALID_OOG
     - data: :label readInvalidOOG :abi f(uint) 0x15
       accessList:
-      - address: 0x0000000000000000000000000000000000000115
+      - address: 0x0000000000000000000000000000000000001015
         storageKeys:
         - 0x60A7
 
 
 
-    # RECURSE_VALID   
+    # RECURSE_VALID
     - data: :label recurseValid :abi f(uint) 0x16
       accessList:
-      - address: 0x0000000000000000000000000000000000000116
+      - address: 0x0000000000000000000000000000000000001016
         storageKeys:
         - 0x60A7     # Read one cell
         - 0xBEEF     # Write once cell
@@ -990,7 +990,7 @@ variedContext:
     # CREATE_VALID
     - data: :label createValid :abi f(uint) 0x20
       accessList:
-      - address: 0xb3cd7ba32badf538e31cff49e429845e01d02e1e
+      - address: 0xf342e57f24e0333f3af34af08fdbbe9c72cbd37c
         storageKeys:
         - 0x00
 
@@ -998,7 +998,7 @@ variedContext:
     # CREATE_INVALID
     - data: :label createInvalid :abi f(uint) 0x20
       accessList:
-      - address: 0xb3cd7ba32badf538e31cff49e429845e01d02e1e
+      - address: 0xf342e57f24e0333f3af34af08fdbbe9c72cbd37c
         storageKeys:
         - 0x01
 
@@ -1014,7 +1014,7 @@ variedContext:
     # CREATE2_INVALID
     - data: :label create2Invalid :abi f(uint) 0x21
       accessList:
-      - address: 0xb3cd7ba32badf538e31cff49e429845e01d02e1e
+      - address: 0xf342e57f24e0333f3af34af08fdbbe9c72cbd37c
         storageKeys:
         - 0x00
 
@@ -1131,7 +1131,7 @@ variedContext:
     network:
     - ">=Berlin"
     result:
-      0000000000000000000000000000000000000100:
+      0000000000000000000000000000000000001000:
         storage:
           0x00: 0x02
           0x01: 0x4e23
@@ -1146,7 +1146,7 @@ variedContext:
     network:
     - ">=Berlin"
     result:
-      0000000000000000000000000000000000000100:
+      0000000000000000000000000000000000001000:
         storage:
           0x00: 0x02
           0x01: 0x5657
@@ -1161,7 +1161,7 @@ variedContext:
     network:
     - ">=Berlin"
     result:
-      0000000000000000000000000000000000000102:
+      0000000000000000000000000000000000001002:
         storage:
           0x00: 0x02
           0x01: 0x4e23
@@ -1176,7 +1176,7 @@ variedContext:
     network:
     - ">=Berlin"
     result:
-      0000000000000000000000000000000000000102:
+      0000000000000000000000000000000000001002:
         storage:
           0x00: 0x02
           0x01: 0x5657
@@ -1226,7 +1226,7 @@ variedContext:
     network:
     - ">=Berlin"
     result:
-      0000000000000000000000000000000000000103:
+      0000000000000000000000000000000000001003:
         storage:
           0x00: 0x083B
 
@@ -1239,7 +1239,7 @@ variedContext:
     network:
     - ">=Berlin"
     result:
-      0000000000000000000000000000000000000103:
+      0000000000000000000000000000000000001003:
         storage:
           0x00:   0x6B
 
@@ -1281,7 +1281,7 @@ variedContext:
     network:
     - ">=Berlin"
     result:
-      0000000000000000000000000000000000000111:
+      0000000000000000000000000000000000001011:
         storage:
           0x00: 0x4E21
 
@@ -1298,7 +1298,7 @@ variedContext:
     network:
     - ">=Berlin"
     result:
-      0000000000000000000000000000000000000111:
+      0000000000000000000000000000000000001011:
         storage:
           0x00: 0x6019
 
@@ -1312,7 +1312,7 @@ variedContext:
     network:
     - ">=Berlin"
     result:
-      0000000000000000000000000000000000000112:
+      0000000000000000000000000000000000001012:
         storage:
           0x00: 0x64
 
@@ -1329,7 +1329,7 @@ variedContext:
     network:
     - ">=Berlin"
     result:
-      0000000000000000000000000000000000000112:
+      0000000000000000000000000000000000001012:
         storage:
           0x00: 0x11F8
 
@@ -1338,7 +1338,7 @@ variedContext:
   # STATIC_WRITE_INVALID
   # STATIC_WRITE_VALID
   - indexes:
-      data: 
+      data:
       - :label staticWriteInvalid
       - :label staticWriteValid
       gas: !!int -1
@@ -1346,7 +1346,7 @@ variedContext:
     network:
     - ">=Berlin"
     result:
-      0000000000000000000000000000000000000113:
+      0000000000000000000000000000000000001013:
         storage:
           0x00: 0x0BAD
 
@@ -1357,7 +1357,7 @@ variedContext:
 
   # WRITE_VALID_NO_OOG
   - indexes:
-      data: 
+      data:
       - :label writeValidGas
       gas: !!int -1
       value: !!int -1
@@ -1372,7 +1372,7 @@ variedContext:
 
   # WRITE_INVALID_OOG
   - indexes:
-      data: 
+      data:
       - :label writeInvalidOOG
       gas: !!int -1
       value: !!int -1
@@ -1390,7 +1390,7 @@ variedContext:
 
   # READ_VALID_NO_OOG
   - indexes:
-      data: 
+      data:
       - :label readValidGas
       gas: !!int -1
       value: !!int -1
@@ -1405,7 +1405,7 @@ variedContext:
 
   # READ_INVALID_OOG
   - indexes:
-      data: 
+      data:
       - :label readInvalidOOG
       gas: !!int -1
       value: !!int -1
@@ -1422,14 +1422,14 @@ variedContext:
 
   # RECURSE_VALID
   - indexes:
-      data: 
+      data:
       - :label recurseValid
       gas: !!int -1
       value: !!int -1
     network:
     - ">=Berlin"
     result:
-      0000000000000000000000000000000000000116:
+      0000000000000000000000000000000000001016:
         storage:
           0x0000: 0x0000
 
@@ -1533,14 +1533,14 @@ variedContext:
 
   # RECURSE_INVALID
   - indexes:
-      data: 
+      data:
       - :label recurseInvalid
       gas: !!int -1
       value: !!int -1
     network:
     - ">=Berlin"
     result:
-      0000000000000000000000000000000000000116:
+      0000000000000000000000000000000000001016:
         storage:
           0x0000: 0x0000
 
@@ -1649,7 +1649,7 @@ variedContext:
     network:
     - ">=Berlin"
     result:
-      b3cd7ba32badf538e31cff49e429845e01d02e1e:
+      f342e57f24e0333f3af34af08fdbbe9c72cbd37c:
         storage:
           0x00: 0xFFFF
           0x01: 0x4e31
@@ -1664,7 +1664,7 @@ variedContext:
     network:
     - ">=Berlin"
     result:
-      b3cd7ba32badf538e31cff49e429845e01d02e1e:
+      f342e57f24e0333f3af34af08fdbbe9c72cbd37c:
         storage:
           0x00: 0xFFFF
           0x01: 0x5665
