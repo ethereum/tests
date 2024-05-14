@@ -26,7 +26,7 @@ extcodehashEmpty_Paris:
            (def 'addr $4)
            (def 'NOP   0)
 
-           ; If the address is above 0x2000, we should call it first 
+           ; If the address is above 0x2000, we should call it first
            ; and then check the extcodehash
            (if (> addr 0x2000)
              (call (gas) addr 0 0 0 0 0)
@@ -70,7 +70,7 @@ extcodehashEmpty_Paris:
 
 
     # Really empty, the EXTCODEHASH is zero
-    # 0000000000000000000000000000000000000100:
+    # 0000000000000000000000000000000000001000:
     #  balance: 0
     #  code: 0x
     #  nonce: 0
@@ -78,7 +78,7 @@ extcodehashEmpty_Paris:
 
 
     # If there is a balance, it's the hash of the empty string
-    0000000000000000000000000000000000000101:
+    0000000000000000000000000000000000001001:
       balance: 1
       code: 0x
       nonce: 0
@@ -95,7 +95,7 @@ extcodehashEmpty_Paris:
 
 
     # If there is a nonce, it's also the hash of the empty string
-    0000000000000000000000000000000000000102:
+    0000000000000000000000000000000000001002:
       balance: 0
       code: 0x
       nonce: 1
@@ -108,9 +108,9 @@ extcodehashEmpty_Paris:
       nonce: 1000000000000
       storage: {}
 
- 
+
     # Storage doesn't make it look an account exists
-    0000000000000000000000000000000000000103:
+    0000000000000000000000000000000000001003:
       balance: 10
       code: 0x
       nonce: 0
@@ -118,7 +118,7 @@ extcodehashEmpty_Paris:
         0x00: 0x01000000
         0xFFFFFFF: 0xFFFFFFFF
 
-    0000000000000000000000000000000000000104:
+    0000000000000000000000000000000000001004:
       balance: 0
       code: :raw 0x00
       nonce: 0
@@ -147,9 +147,9 @@ extcodehashEmpty_Paris:
             (def 'constructorLength 0x020)
             (def 'addr              0x040)
 
-            [constructorLength] (lll   
-                { 
-                   ; The constructor code, nothing happens 
+            [constructorLength] (lll
+                {
+                   ; The constructor code, nothing happens
                    ; except we return an empty buffer with "all"
                    ; the code of the created contract
                    (return 0 0)
@@ -178,9 +178,9 @@ extcodehashEmpty_Paris:
             (def 'constructorLength 0x020)
             (def 'addr              0x040)
 
-            [constructorLength] (lll   
-                { 
-                   ; The constructor code, nothing happens 
+            [constructorLength] (lll
+                {
+                   ; The constructor code, nothing happens
                    ; except we return an empty buffer with "all"
                    ; the code of the created contract
                    (return 0 0)
@@ -194,7 +194,7 @@ extcodehashEmpty_Paris:
         }
       nonce: 0
       storage: {}
-    
+
 
 
     a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
@@ -203,22 +203,22 @@ extcodehashEmpty_Paris:
       nonce: 0
       storage: {}
 
-      
+
   transaction:
     data:
     # These give an EXTCODEHASH of zero
-    - :label empty   :abi f(uint) 0x0100
-    - :label storage :abi f(uint) 0x0103
+    - :label empty   :abi f(uint) 0x1000
+    - :label storage :abi f(uint) 0x1003
 
     # These give an EXTCODEHASH of the empty string
-    - :label balance :abi f(uint) 0x0101
+    - :label balance :abi f(uint) 0x1001
     - :label balance :abi f(uint) 0x1101
-    - :label nonce   :abi f(uint) 0x0102
+    - :label nonce   :abi f(uint) 0x1002
     - :label nonce   :abi f(uint) 0x1102
 
-    # There is a difference between not having code, and having 
+    # There is a difference between not having code, and having
     # a single byte of 00 as the code
-    - :label hasCode :abi f(uint) 0x0104
+    - :label hasCode :abi f(uint) 0x1004
 
 
     # This contract commits suicide and then we EXTCODEHASH it
@@ -240,8 +240,8 @@ extcodehashEmpty_Paris:
     value:
     - '1'
     secretKey: "45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8"
-    
-    
+
+
   expect:
 
     - indexes:
