@@ -18,15 +18,15 @@ push0Gas2:
     b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
       balance: 0
       code: |
-        :yul berlin 
-        { 
-           sstore(0, call(100000, shr(96, calldataload(0)), 0, 0, 0, 0, 0)) 
-           sstore(1, 1) 
+        :yul berlin
+        {
+           sstore(0, call(100000, shr(96, calldataload(0)), 0, 0, 0, 0, 0))
+           sstore(1, 1)
         }
       nonce: 0
       storage: {}
 
-    0000000000000000000000000000000000000100:
+    0000000000000000000000000000000000001000:
       balance: 0
       # Calculates the difference between initial gas and gas after using
       # PUSH0, stores the result in storage key 0x00
@@ -46,7 +46,7 @@ push0Gas2:
 
   transaction:
     data:
-      - ':label use_push0 :raw 0x0000000000000000000000000000000000000100'
+      - ':label use_push0 :raw 0x0000000000000000000000000000000000001000'
       - ':label use_push1_00 :raw 0x0000000000000000000000000000000000000200'
     gasLimit:
       - 300000
@@ -56,14 +56,14 @@ push0Gas2:
     to: 'b94f5374fce5edbc8e2a8697c15331677e6ebf0b'
     value:
     - 0
-        
+
   expect:
     - indexes:
         data: ':label use_push0'
       network:
         - 'Paris'
       result:
-        0000000000000000000000000000000000000100:
+        0000000000000000000000000000000000001000:
           balance: 0
           storage: {} # Nothing is stored, PUSH0 (0x5f) is undefined/invalid in Paris
         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
@@ -75,7 +75,7 @@ push0Gas2:
       network:
         - '>=Shanghai'
       result:
-        0000000000000000000000000000000000000100:
+        0000000000000000000000000000000000001000:
           balance: 0
           storage:  # GAS PUSH0
             0x00: 4 #  2 + 2

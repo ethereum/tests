@@ -18,21 +18,21 @@ push0:
     b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
       balance: 0
       code: |
-        :yul berlin 
-          { 
-            sstore(0, call(100000, shr(96, calldataload(0)), 0, 0, 0, 0, 0)) 
-            sstore(1, 1) 
+        :yul berlin
+          {
+            sstore(0, call(100000, shr(96, calldataload(0)), 0, 0, 0, 0, 0))
+            sstore(1, 1)
           }
       nonce: 0
       storage: {}
 
-    0000000000000000000000000000000000000100:
+    0000000000000000000000000000000000001000:
       balance: 0
       # push1(01) push0 sstore
       code: ':raw 0x60015f55'
       nonce: '0'
       storage: {}
-      
+
     0000000000000000000000000000000000000200:
       balance: 0
       # 1024 push0's, 1023 or's, push1(01) swap1 sstore
@@ -108,13 +108,13 @@ push0:
     0000000000000000000000000000000000000500:
       balance: 0
       code: |
-        :yul berlin 
-        { 
-           sstore(0, 
+        :yul berlin
+        {
+           sstore(0,
              staticcall(100000, 0x0000000000000000000000000000000000000600, 0, 0, 0, 0))
-           sstore(1, 1) 
-           returndatacopy(0x1f, 0x0, 0x1) 
-           sstore(0x2, mload(0x00)) 
+           sstore(1, 1)
+           returndatacopy(0x1f, 0x0, 0x1)
+           sstore(0x2, mload(0x00))
         }
       nonce: 0
       storage: {}
@@ -135,7 +135,7 @@ push0:
 
   transaction:
     data:
-      - ':label single_push0 :raw 0x0000000000000000000000000000000000000100'
+      - ':label single_push0 :raw 0x0000000000000000000000000000000000001000'
       - ':label 1024_push0   :raw 0x0000000000000000000000000000000000000200'
       - ':label 1025_push0   :raw 0x0000000000000000000000000000000000000300'
       - ':label push0_upd_storage :raw 0x0000000000000000000000000000000000000400'
@@ -149,14 +149,14 @@ push0:
     to: 'b94f5374fce5edbc8e2a8697c15331677e6ebf0b'
     value:
     - 0
-        
+
   expect:
     - indexes:
         data: ':label single_push0'
       network:
         - 'Paris'
       result:
-        0000000000000000000000000000000000000100:
+        0000000000000000000000000000000000001000:
           storage: {}
         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           storage:      # Key 0 is empty, indicating call to contract 0x0...100 failed
@@ -166,7 +166,7 @@ push0:
       network:
         - '>=Shanghai'
       result:
-        0000000000000000000000000000000000000100:
+        0000000000000000000000000000000000001000:
           storage:
             0x00: 0x01 # Contract executed correctly and saved data to storage
         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
@@ -205,7 +205,7 @@ push0:
         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           storage:     # Key 0 remained empty, contract 0x0..300 failed
             0x01: 0x01 # Key 1 filled after the call as the contract 0xb94... continued executing
-    # Same expectation, but for London execution fails on 5f opcode, for 3855 it fails with stack overflow     
+    # Same expectation, but for London execution fails on 5f opcode, for 3855 it fails with stack overflow
     - indexes:
         data: ':label 1025_push0'
       network:
@@ -261,7 +261,7 @@ push0:
           storage:
             0x00: 0x01 # Call to contract 0x0..0600 succeeded
             0x01: 0x01 # Contract 0x0..500 continued executed and stored value 1.
-            0x02: 0xff # Value returned by contract 0x0..0600 
+            0x02: 0xff # Value returned by contract 0x0..0600
         0000000000000000000000000000000000000600:
           storage: {}
         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
@@ -295,4 +295,3 @@ push0:
           storage:
             0x00: 0x01 # Call to contract 0x0..700 succeeded
             0x01: 0x01 # Contract 0xb94f... continued executing and stored value 1.
-

@@ -15,7 +15,7 @@ jump:
   pre:
 
     # This should fail (jump to something that isn't a JUMPDEST)
-    0000000000000000000000000000000000000100:
+    0000000000000000000000000000000000001000:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
         {
@@ -27,7 +27,7 @@ jump:
 
 
     # This should fail (jumpi to something that isn't a JUMPDEST)
-    0000000000000000000000000000000000000101:
+    0000000000000000000000000000000000001001:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
         {
@@ -39,7 +39,7 @@ jump:
 
 
     # Jump to after the STOP. Shouldn't be a problem
-    0000000000000000000000000000000000000102:
+    0000000000000000000000000000000000001002:
       balance: '0x0ba1a9ce0ba1a9ce'
       # 0  PUSH1 0x04
       # 2  JUMP
@@ -48,14 +48,14 @@ jump:
       # 5  PUSH2 0x600D
       # 8  PUSH1 0x00
       # A  SSTORE
-      # B  STOP  
+      # B  STOP
       code: :raw 0x600456005B61600D60005500
       nonce: '0'
       storage: {}
 
 
     # This should fail (the old jumpHigh)
-    0000000000000000000000000000000000000103:
+    0000000000000000000000000000000000001003:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
         {
@@ -67,7 +67,7 @@ jump:
 
 
     # The old jump0_AfterJumpdest
-    0000000000000000000000000000000000000104:
+    0000000000000000000000000000000000001004:
       balance: '0x0ba1a9ce0ba1a9ce'
       #  0  PUSH1 0x23
       #  2  PUSH1 0x08
@@ -82,7 +82,7 @@ jump:
 
 
     # Endless loop (well, endless until it runs out of gas, so mostly endless)
-    0000000000000000000000000000000000000105:
+    0000000000000000000000000000000000001005:
       balance: '0x0ba1a9ce0ba1a9ce'
       #  0  PUSH2 0x600D
       #  3  PUSH1 0x00
@@ -96,7 +96,7 @@ jump:
 
 
     # Skip an opcode with jump, see it doesn't run
-    0000000000000000000000000000000000000106:
+    0000000000000000000000000000000000001006:
       balance: '0x0ba1a9ce0ba1a9ce'
       #  0  PUSH2 0x600D
       #  3  PUSH1 0x08
@@ -112,7 +112,7 @@ jump:
 
 
     # Jump backwards, see that works too
-    0000000000000000000000000000000000000107:
+    0000000000000000000000000000000000001007:
       balance: '0x0ba1a9ce0ba1a9ce'
       #  0  PUSH1 0x0B
       #  2  JUMP
@@ -131,7 +131,7 @@ jump:
 
 
     # Dynamic jump
-    0000000000000000000000000000000000000108:
+    0000000000000000000000000000000000001008:
       balance: '0x0ba1a9ce0ba1a9ce'
       #  0  PUSH1 0x05
       #  2  PUSH1 0x02
@@ -149,9 +149,9 @@ jump:
 
     # Jump to the data of a push, when it just happens to be
     # 0x5B (jumpdest)
-    # 
+    #
     # Amazingly, but correctly, this fails
-    0000000000000000000000000000000000000109:
+    0000000000000000000000000000000000001009:
       balance: '0x0ba1a9ce0ba1a9ce'
       #  0  PUSH1 0x05
       #  2  JUMP
@@ -167,7 +167,7 @@ jump:
 
 
     # Jump to the data of a push, when it isn't a 0x5B (JUMPDEST)
-    000000000000000000000000000000000000010A:
+    000000000000000000000000000000000000100A:
       balance: '0x0ba1a9ce0ba1a9ce'
       #  0  PUSH1 0x05
       #  2  JUMP
@@ -182,7 +182,7 @@ jump:
 
 
     # Jump one instruction after the JUMPDEST
-    000000000000000000000000000000000000010B:
+    000000000000000000000000000000000000100B:
       balance: '0x0ba1a9ce0ba1a9ce'
       #  0  PUSH2 0x600D
       #  3  PUSH1 0x00
@@ -200,7 +200,7 @@ jump:
 
 
     # Jump one instruction before the JUMPDEST
-    000000000000000000000000000000000000010C:
+    000000000000000000000000000000000000100C:
       balance: '0x0ba1a9ce0ba1a9ce'
       #  0  PUSH2 0x600D
       #  3  PUSH1 0x00
@@ -219,7 +219,7 @@ jump:
 
     # Another jump into hyperspace
     # The old jumpToUint64maxPlus1
-    000000000000000000000000000000000000010D:
+    000000000000000000000000000000000000100D:
       balance: '0x0ba1a9ce0ba1a9ce'
       # [ 0] PUSH9 0x01000000000000000b
       # [ A] JUMP
@@ -235,7 +235,7 @@ jump:
 
     # Another jump into hyperspace
     # The old jumpToUintmaxPlus1
-    000000000000000000000000000000000000010E:
+    000000000000000000000000000000000000100E:
       balance: '0x0ba1a9ce0ba1a9ce'
       # [ 0] PUSH5 0x0100000007
       # [ 6] JUMP
@@ -250,7 +250,7 @@ jump:
 
 
     # The furthest into hyperspace jump imaginable: to -1
-    000000000000000000000000000000000000010F:
+    000000000000000000000000000000000000100F:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
         {
@@ -262,10 +262,10 @@ jump:
 
 
     # Jump into a big list of JUMPDESTs
-    0000000000000000000000000000000000000110:
+    0000000000000000000000000000000000001010:
       balance: '0x0ba1a9ce0ba1a9ce'
-      #  0 PUSH1 0x0e 
-      #  2 JUMP 
+      #  0 PUSH1 0x0e
+      #  2 JUMP
       #  3 JUMPDEST
       #  4 JUMPDEST
       #  .
@@ -286,9 +286,9 @@ jump:
     cccccccccccccccccccccccccccccccccccccccc:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-        {  
+        {
             ; limited gas because of the endless loop
-            (delegatecall 0x10000 (+ 0x100 $4) 0 0 0 0)
+            (delegatecall 0x10000 (+ 0x1000 $4) 0 0 0 0)
         }
       nonce: '0'
       storage:
@@ -300,13 +300,13 @@ jump:
       code: '0x'
       nonce: '0'
       storage: {}
-      
+
 
 
 
   transaction:
     data:
-    # The two old bad_indirect_jump tests 
+    # The two old bad_indirect_jump tests
     - :label jump-hyperspace    :abi f(uint) 0
     - :label jump-hyperspace    :abi f(uint) 1
 
@@ -359,11 +359,11 @@ jump:
     value:
     - '1'
     secretKey: "45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8"
-    
-    
+
+
   expect:
     - indexes:
-        data: 
+        data:
         - :label jump-hyperspace
         - :label jump-not-jumpdest
         - :label endless-loop
@@ -380,7 +380,7 @@ jump:
 
 
     - indexes:
-        data: 
+        data:
         - :label jump-stop-dest
         - :label jump-dest
         - :label jump-dynamic
@@ -393,4 +393,3 @@ jump:
         cccccccccccccccccccccccccccccccccccccccc:
           storage:
             0x00: 0x600D
-

@@ -18,10 +18,10 @@ envInfo:
 
   pre:
 
-    0000000000000000000000000000000000000100:
+    0000000000000000000000000000000000001000:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-        {   
+        {
            [[0]] (address)
         }
       nonce: '0'
@@ -29,7 +29,7 @@ envInfo:
 
 
 
-    0000000000000000000000000000000000000101:
+    0000000000000000000000000000000000001001:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
         {   ; Copy first seven bytes of code to memory
@@ -41,11 +41,11 @@ envInfo:
       storage: {}
 
 
-    
-    0000000000000000000000000000000000000102:
+
+    0000000000000000000000000000000000001002:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-        { 
+        {
            ; codecopy zero bytes
            (codecopy 0 0 0)
            [[0]] @0
@@ -55,13 +55,13 @@ envInfo:
 
 
 
-    0000000000000000000000000000000000000103:
+    0000000000000000000000000000000000001003:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-        { 
-           ; codecopy from unrealistically high in the code 
+        {
+           ; codecopy from unrealistically high in the code
            ; segment (so high you wrap around)
-           (def 'neg6 
+           (def 'neg6
               0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffa)
            (codecopy 0 neg6 8)
            [[0]] @0
@@ -70,10 +70,10 @@ envInfo:
       storage: {}
 
 
-    0000000000000000000000000000000000000104:
+    0000000000000000000000000000000000001004:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-        {   
+        {
            [[0]] (caller)
         }
       nonce: '0'
@@ -81,10 +81,10 @@ envInfo:
 
 
 
-    0000000000000000000000000000000000000105:
+    0000000000000000000000000000000000001005:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-        {   
+        {
            [[0]] (callvalue)
         }
       nonce: '0'
@@ -92,10 +92,10 @@ envInfo:
 
 
 
-    0000000000000000000000000000000000000106:
+    0000000000000000000000000000000000001006:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-        {   
+        {
            [[0]] (codesize)
         }
       nonce: '0'
@@ -103,46 +103,46 @@ envInfo:
 
 
 
-    0000000000000000000000000000000000000107:
+    0000000000000000000000000000000000001007:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-        {   
+        {
            [[0]] (gasprice)
         }
       nonce: '0'
       storage: {}
 
 
-    0000000000000000000000000000000000000108:
+    0000000000000000000000000000000000001008:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-        {   
+        {
            [[0]] (origin)
         }
       nonce: '0'
       storage: {}
 
 
-      
-    0000000000000000000000000000000000000109:
+
+    0000000000000000000000000000000000001009:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-        {   
+        {
            [[0]] (calldatasize)
         }
       nonce: '0'
       storage: {}
 
 
-      
+
 
 
 
     cccccccccccccccccccccccccccccccccccccccc:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-        {  
-            (call 0xffffff (+ 0x100 $4) 0x10 0 0 0 0)
+        {
+            (call 0xffffff (+ 0x1000 $4) 0x10 0 0 0 0)
         }
       nonce: '0'
       storage: {}
@@ -153,7 +153,7 @@ envInfo:
       code: '0x'
       nonce: '0'
       storage: {}
-      
+
   transaction:
     data:
     - :label address             :abi f(uint) 0
@@ -174,8 +174,8 @@ envInfo:
     value:
     - '1'
     secretKey: "45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8"
-    
-    
+
+
   expect:
   - indexes:
       data: :label address
@@ -184,9 +184,9 @@ envInfo:
     network:
       - '>=Istanbul'
     result:
-      0000000000000000000000000000000000000100:
+      0000000000000000000000000000000000001000:
         storage:
-          0: 0x100
+          0: 0x1000
 
 
   - indexes:
@@ -196,7 +196,7 @@ envInfo:
     network:
       - '>=Istanbul'
     result:
-      0000000000000000000000000000000000000101:
+      0000000000000000000000000000000000001001:
         storage:
           #  0 PUSH1 0x07
           #  2 PUSH1 0x00
@@ -213,7 +213,7 @@ envInfo:
     network:
       - '>=Istanbul'
     result:
-      0000000000000000000000000000000000000102:
+      0000000000000000000000000000000000001002:
         storage:
           0: 0x00
 
@@ -225,7 +225,7 @@ envInfo:
     network:
       - '>=Istanbul'
     result:
-      0000000000000000000000000000000000000103:
+      0000000000000000000000000000000000001003:
         storage:
           0: 0x00
 
@@ -238,7 +238,7 @@ envInfo:
     network:
       - '>=Istanbul'
     result:
-      0000000000000000000000000000000000000104:
+      0000000000000000000000000000000000001004:
         storage:
           0: 0xcccccccccccccccccccccccccccccccccccccccc
 
@@ -251,7 +251,7 @@ envInfo:
     network:
       - '>=Istanbul'
     result:
-      0000000000000000000000000000000000000105:
+      0000000000000000000000000000000000001005:
         storage:
           0: 0x10
 
@@ -265,7 +265,7 @@ envInfo:
     network:
       - '>=Istanbul'
     result:
-      0000000000000000000000000000000000000106:
+      0000000000000000000000000000000000001006:
         storage:
           0: 0x05
 
@@ -279,7 +279,7 @@ envInfo:
     network:
       - '>=Istanbul'
     result:
-      0000000000000000000000000000000000000107:
+      0000000000000000000000000000000000001007:
         storage:
           0: 0x1234
 
@@ -292,7 +292,7 @@ envInfo:
     network:
       - '>=Istanbul'
     result:
-      0000000000000000000000000000000000000108:
+      0000000000000000000000000000000000001008:
         storage:
           0: 0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b
 
@@ -305,6 +305,6 @@ envInfo:
     network:
       - '>=Istanbul'
     result:
-      0000000000000000000000000000000000000109:
+      0000000000000000000000000000000000001009:
         storage:
           0: 0x00

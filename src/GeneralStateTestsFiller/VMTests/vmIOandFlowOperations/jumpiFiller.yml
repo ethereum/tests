@@ -18,7 +18,7 @@ jumpi:
   pre:
 
     # This should fail (jump to something that isn't a JUMPDEST)
-    0000000000000000000000000000000000000100:
+    0000000000000000000000000000000000001000:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
         {
@@ -30,7 +30,7 @@ jumpi:
 
 
     # This should fail (jumpi to something that isn't a JUMPDEST)
-    0000000000000000000000000000000000000101:
+    0000000000000000000000000000000000001001:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
         {
@@ -66,7 +66,7 @@ jumpi:
 
 
     # Jump to after the STOP. Shouldn't be a problem
-    0000000000000000000000000000000000000102:
+    0000000000000000000000000000000000001002:
       balance: '0x0ba1a9ce0ba1a9ce'
       # 0  PUSH1 0x01
       # 2  PUSH1 0x06
@@ -76,7 +76,7 @@ jumpi:
       # 7  PUSH2 0x600D
       # A  PUSH1 0x00
       # C  SSTORE
-      # D  STOP  
+      # D  STOP
       code: :raw 0x6001600657005B61600D60005500
       nonce: '0'
       storage: {}
@@ -93,7 +93,7 @@ jumpi:
       # 7  PUSH2 0x600D
       # A  PUSH1 0x00
       # C  SSTORE
-      # D  STOP  
+      # D  STOP
       code: :raw 0x6000600657005B61600D60005500
       nonce: '0'
       storage: {}
@@ -103,7 +103,7 @@ jumpi:
 
 
     # This should fail (the old jumpHigh)
-    0000000000000000000000000000000000000103:
+    0000000000000000000000000000000000001003:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
         {
@@ -127,7 +127,7 @@ jumpi:
 
 
     # The old jump0_AfterJumpdest
-    0000000000000000000000000000000000000104:
+    0000000000000000000000000000000000001004:
       balance: '0x0ba1a9ce0ba1a9ce'
       #  0  PUSH1 0x23
       #  2  PUSH1 0x01
@@ -143,7 +143,7 @@ jumpi:
 
 
     # Endless loop (well, endless until it runs out of gas, so mostly endless)
-    0000000000000000000000000000000000000105:
+    0000000000000000000000000000000000001005:
       balance: '0x0ba1a9ce0ba1a9ce'
       #  0  PUSH2 0x600D
       #  3  PUSH1 0x00
@@ -158,7 +158,7 @@ jumpi:
 
 
     # Skip an opcode with jump, see it doesn't run
-    0000000000000000000000000000000000000106:
+    0000000000000000000000000000000000001006:
       balance: '0x0ba1a9ce0ba1a9ce'
       #  0  PUSH2 0x600D
       #  3  PUSH1 0x01
@@ -175,7 +175,7 @@ jumpi:
 
 
     # Jump backwards, see that works too
-    0000000000000000000000000000000000000107:
+    0000000000000000000000000000000000001007:
       balance: '0x0ba1a9ce0ba1a9ce'
       #  0  PUSH1 0x0B
       #  2  JUMP
@@ -195,7 +195,7 @@ jumpi:
 
 
     # Dynamic jump
-    0000000000000000000000000000000000000108:
+    0000000000000000000000000000000000001008:
       balance: '0x0ba1a9ce0ba1a9ce'
       #  0  PUSH1 0x01
       #  2  PUSH1 0x04
@@ -233,9 +233,9 @@ jumpi:
 
     # Jump to the data of a push, when it just happens to be
     # 0x5B (jumpdest)
-    # 
+    #
     # Amazingly, but correctly, this fails
-    0000000000000000000000000000000000000109:
+    0000000000000000000000000000000000001009:
       balance: '0x0ba1a9ce0ba1a9ce'
       #  0  PUSH1 0x01
       #  2  PUSH1 0x07
@@ -252,7 +252,7 @@ jumpi:
 
 
     # Jump to the data of a push, when it isn't a 0x5B (JUMPDEST)
-    000000000000000000000000000000000000010A:
+    000000000000000000000000000000000000100A:
       balance: '0x0ba1a9ce0ba1a9ce'
       #  0  PUSH1 0xFF
       #  2  PUSH1 0x09
@@ -268,7 +268,7 @@ jumpi:
 
 
     # Jump one instruction after the JUMPDEST
-    000000000000000000000000000000000000010B:
+    000000000000000000000000000000000000100B:
       balance: '0x0ba1a9ce0ba1a9ce'
       #  0  PUSH2 0x600D
       #  3  PUSH1 0x00
@@ -287,7 +287,7 @@ jumpi:
 
 
     # Jump one instruction before the JUMPDEST
-    000000000000000000000000000000000000010C:
+    000000000000000000000000000000000000100C:
       balance: '0x0ba1a9ce0ba1a9ce'
       #  0  PUSH2 0x600D
       #  3  PUSH1 0x00
@@ -307,7 +307,7 @@ jumpi:
 
     # Another jump into hyperspace
     # The old jumpToUint64maxPlus1
-    000000000000000000000000000000000000010D:
+    000000000000000000000000000000000000100D:
       balance: '0x0ba1a9ce0ba1a9ce'
       # [ 0] PUSH1 0x11
       # [ 2] PUSH9 0x01000000000000000d
@@ -339,7 +339,7 @@ jumpi:
 
     # Another jump into hyperspace
     # The old jumpToUintmaxPlus1
-    000000000000000000000000000000000000010E:
+    000000000000000000000000000000000000100E:
       balance: '0x0ba1a9ce0ba1a9ce'
       # [ 0] PUSH1 0x11
       # [ 2] PUSH5 0x0100000009
@@ -373,7 +373,7 @@ jumpi:
 
 
     # The furthest into hyperspace jump imaginable: to -1
-    000000000000000000000000000000000000010F:
+    000000000000000000000000000000000000100F:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
         {
@@ -402,8 +402,8 @@ jumpi:
     0000000000000000000000000000000000000110:
       balance: '0x0ba1a9ce0ba1a9ce'
       #  0 PUSH1 0x01
-      #  2 PUSH1 0x0e 
-      #  4 JUMPI 
+      #  2 PUSH1 0x0e
+      #  4 JUMPI
       #  5 JUMPDEST
       #  6 JUMPDEST
       #  .
@@ -448,7 +448,7 @@ jumpi:
     cccccccccccccccccccccccccccccccccccccccc:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-        {  
+        {
             ; limited gas because of the endless loop
             (delegatecall 0x10000 $4 0 0 0 0)
         }
@@ -462,67 +462,67 @@ jumpi:
       code: '0x'
       nonce: '0'
       storage: {}
-      
+
 
 
 
   transaction:
     data:
-    # The two old bad_indirect_jump tests 
-    - :label jump-hyperspace    :abi f(uint) 0x0100
-    - :label jump-hyperspace    :abi f(uint) 0x0101
+    # The two old bad_indirect_jump tests
+    - :label jump-hyperspace    :abi f(uint) 0x1000
+    - :label jump-hyperspace    :abi f(uint) 0x1001
 
-    # The two old bad_indirect_jump tests, except without the jump 
+    # The two old bad_indirect_jump tests, except without the jump
     - :label not-jump-hyperspace    :abi f(uint) 0x0200
     - :label not-jump-hyperspace    :abi f(uint) 0x0201
 
     # The old jump to after the STOP
-    - :label jump-stop-dest      :abi f(uint) 0x0102
+    - :label jump-stop-dest      :abi f(uint) 0x1002
     - :label not-jump-stop-dest  :abi f(uint) 0x0202
 
     # The old jumpHigh
-    - :label jump-hyperspace      :abi f(uint) 0x0103
+    - :label jump-hyperspace      :abi f(uint) 0x1003
     - :label not-jump-hyperspace  :abi f(uint) 0x0203
 
 
     # The old jump0_AfterJumpdest
-    - :label jump-not-jumpdest  :abi f(uint) 0x0104
+    - :label jump-not-jumpdest  :abi f(uint) 0x1004
 
     # "Endless" loop  (not really endless, it just runs out of gas)
-    - :label endless-loop       :abi f(uint) 0x0105
+    - :label endless-loop       :abi f(uint) 0x1005
 
 
     # Just checking JUMP / JUMPDEST is various ways
-    - :label jump-dest          :abi f(uint) 0x0106
-    - :label jump-dest          :abi f(uint) 0x0107
+    - :label jump-dest          :abi f(uint) 0x1006
+    - :label jump-dest          :abi f(uint) 0x1007
 
 
     # A dynamic jump
-    - :label jump-dynamic       :abi f(uint) 0x0108
+    - :label jump-dynamic       :abi f(uint) 0x1008
     - :label not-jump-dynamic   :abi f(uint) 0x0208
 
 
     # Jump into push (this fails, even if you jump to a 0x5B)
-    - :label jump-2-push        :abi f(uint) 0x0109
-    - :label jump-2-push        :abi f(uint) 0x010A
+    - :label jump-2-push        :abi f(uint) 0x1009
+    - :label jump-2-push        :abi f(uint) 0x100A
 
 
     # JUMP one instruction before or after the JUMPDEST
-    - :label jump-not-jumpdest  :abi f(uint) 0x010B
-    - :label jump-not-jumpdest  :abi f(uint) 0x010C
+    - :label jump-not-jumpdest  :abi f(uint) 0x100B
+    - :label jump-not-jumpdest  :abi f(uint) 0x100C
 
 
     # The old jumpToUint64maxPlus1
-    - :label jump-hyperspace      :abi f(uint) 0x010D
+    - :label jump-hyperspace      :abi f(uint) 0x100D
     - :label not-jump-hyperspace  :abi f(uint) 0x020D
 
 
     # The old jumpToUintmaxPlus1
-    - :label jump-hyperspace      :abi f(uint) 0x010E
+    - :label jump-hyperspace      :abi f(uint) 0x100E
     - :label not-jump-hyperspace  :abi f(uint) 0x020E
 
     # Jump to -1  (aka 0xfff...ffff)
-    - :label jump-hyperspace      :abi f(uint) 0x010F
+    - :label jump-hyperspace      :abi f(uint) 0x100F
     - :label not-jump-hyperspace  :abi f(uint) 0x020F
 
     # Jump to the middle of a JUMPDEST list
@@ -540,11 +540,11 @@ jumpi:
     value:
     - '1'
     secretKey: "45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8"
-    
-    
+
+
   expect:
     - indexes:
-        data: 
+        data:
         - :label jump-hyperspace
         - :label jump-not-jumpdest
         - :label endless-loop
@@ -563,7 +563,7 @@ jumpi:
 
 
     - indexes:
-        data: 
+        data:
         - :label jump-stop-dest
         - :label jump-dest
         - :label jump-dynamic
@@ -578,4 +578,3 @@ jumpi:
         cccccccccccccccccccccccccccccccccccccccc:
           storage:
             0x00: 0x600D
-

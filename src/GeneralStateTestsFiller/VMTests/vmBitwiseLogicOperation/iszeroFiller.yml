@@ -14,11 +14,11 @@ iszero:
 
   pre:
 
-    0000000000000000000000000000000000000100:
+    0000000000000000000000000000000000001000:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-        {  
-           (def 'pow_2_256_min1 
+        {
+           (def 'pow_2_256_min1
                 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff)
            [[0]] (iszero pow_2_256_min1)
         }
@@ -26,20 +26,20 @@ iszero:
       storage: {}
 
 
-    0000000000000000000000000000000000000101:
+    0000000000000000000000000000000000001001:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-        {  
+        {
             [[0]] (iszero 0)
         }
       nonce: '0'
       storage: {}
 
 
-    0000000000000000000000000000000000000102:
+    0000000000000000000000000000000000001002:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-        {  
+        {
             [[0]] (iszero (- 0 2))
         }
       nonce: '0'
@@ -51,8 +51,8 @@ iszero:
     cccccccccccccccccccccccccccccccccccccccc:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-        {  
-            (call 0xffffff (+ 0x100 $4) 0 0 0 0 0)
+        {
+            (call 0xffffff (+ 0x1000 $4) 0 0 0 0 0)
         }
       nonce: '0'
       storage: {}
@@ -63,7 +63,7 @@ iszero:
       code: '0x'
       nonce: '0'
       storage: {}
-      
+
   transaction:
     data:
     - :label iszero_neg1    :abi f(uint) 0
@@ -77,8 +77,8 @@ iszero:
     value:
     - '1'
     secretKey: "45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8"
-    
-    
+
+
   expect:
 
     - indexes:
@@ -89,7 +89,7 @@ iszero:
       network:
         - '>=Istanbul'
       result:
-        0000000000000000000000000000000000000100:
+        0000000000000000000000000000000000001000:
           storage:
             0: 0x00
 
@@ -103,7 +103,7 @@ iszero:
       network:
         - '>=Istanbul'
       result:
-        0000000000000000000000000000000000000101:
+        0000000000000000000000000000000000001001:
           storage:
             0: 0x01
 
@@ -112,12 +112,12 @@ iszero:
 
     - indexes:
         data:
-        - :label iszero_neg2  
+        - :label iszero_neg2
         gas:  !!int -1
         value: !!int -1
       network:
         - '>=Istanbul'
       result:
-        0000000000000000000000000000000000000102:
+        0000000000000000000000000000000000001002:
           storage:
             0: 0x00

@@ -14,26 +14,26 @@ sstore_sload:
 
   pre:
 
-    0000000000000000000000000000000000000100:
+    0000000000000000000000000000000000001000:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
         {
-           (sstore 0 0xff) 
-           (sstore 10 0xee)  
-           [[ 20 ]] (sload 0) 
+           (sstore 0 0xff)
+           (sstore 10 0xee)
+           [[ 20 ]] (sload 0)
         }
       nonce: '0'
       storage: {}
 
 
 
-    0000000000000000000000000000000000000101:
+    0000000000000000000000000000000000001001:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
         {
-           (sstore 0 0xff) 
-           (sstore 10 0xee)  
-           [[ 20 ]] (sload 100) 
+           (sstore 0 0xff)
+           (sstore 10 0xee)
+           [[ 20 ]] (sload 100)
         }
       nonce: '0'
       storage: {}
@@ -41,7 +41,7 @@ sstore_sload:
 
 
 
-    0000000000000000000000000000000000000102:
+    0000000000000000000000000000000000001002:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
         {
@@ -62,8 +62,8 @@ sstore_sload:
     cccccccccccccccccccccccccccccccccccccccc:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-        {  
-            (delegatecall (gas) (+ 0x100 $4) 0 0 0 0)
+        {
+            (delegatecall (gas) (+ 0x1000 $4) 0 0 0 0)
         }
       nonce: '0'
       storage:
@@ -75,7 +75,7 @@ sstore_sload:
       code: '0x'
       nonce: '0'
       storage: {}
-      
+
 
 
 
@@ -92,11 +92,11 @@ sstore_sload:
     value:
     - '1'
     secretKey: "45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8"
-    
-    
+
+
   expect:
     - indexes:
-        data: 
+        data:
         - :label sstore_sload_3
         gas:  !!int -1
         value: !!int -1
@@ -114,7 +114,7 @@ sstore_sload:
 
 
     - indexes:
-        data: 
+        data:
         - :label sstore_sload_noinit
         gas:  !!int -1
         value: !!int -1
@@ -130,7 +130,7 @@ sstore_sload:
 
 
     - indexes:
-        data: 
+        data:
         - :label sstore_sload_4
         gas:  !!int -1
         value: !!int -1
