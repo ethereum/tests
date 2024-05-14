@@ -13,10 +13,10 @@ sha3:
   pre:
 
 
-    0000000000000000000000000000000000000100:
+    0000000000000000000000000000000000001000:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-        {  
+        {
             [[0]] (sha3 0 0)
         }
       nonce: '0'
@@ -25,10 +25,10 @@ sha3:
 
 
 
-    0000000000000000000000000000000000000101:
+    0000000000000000000000000000000000001001:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-        {  
+        {
             [[0]] (sha3 4 5)
         }
       nonce: '0'
@@ -37,10 +37,10 @@ sha3:
 
 
 
-    0000000000000000000000000000000000000102:
+    0000000000000000000000000000000000001002:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-        {  
+        {
             [[0]] (sha3 10 10)
         }
       nonce: '0'
@@ -48,10 +48,10 @@ sha3:
 
 
 
-    0000000000000000000000000000000000000103:
+    0000000000000000000000000000000000001003:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-        {  
+        {
             [[0]] (sha3 1000 0xFFFFF)
         }
       nonce: '0'
@@ -59,10 +59,10 @@ sha3:
 
 
 
-    0000000000000000000000000000000000000104:
+    0000000000000000000000000000000000001004:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-        {  
+        {
             ; The result here is zero, because we run out of gas
             [[0]] (sha3 0xfffffffff  100)
         }
@@ -71,10 +71,10 @@ sha3:
 
 
 
-    0000000000000000000000000000000000000105:
+    0000000000000000000000000000000000001005:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-        {  
+        {
             ; The result here is zero, because we run out of gas
             [[0]] (sha3 10000 0xfffffffff)
         }
@@ -85,10 +85,10 @@ sha3:
 
 
 
-    0000000000000000000000000000000000000106:
+    0000000000000000000000000000000000001006:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-        {  
+        {
             (def 'neg1 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff)
             [[0]] (sha3 neg1 neg1)
         }
@@ -99,10 +99,10 @@ sha3:
 
 
 
-    0000000000000000000000000000000000000107:
+    0000000000000000000000000000000000001007:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-        {  
+        {
             (def 'neg1 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff)
             [[0]] (sha3 neg1 2)
         }
@@ -111,17 +111,17 @@ sha3:
 
 
 
-    0000000000000000000000000000000000000108:
+    0000000000000000000000000000000000001008:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-        {  
+        {
             [[0]] (sha3 0x1000000 2)
         }
       nonce: '0'
       storage: {}
 
     # memSizeNoQuadraticCost31
-    0000000000000000000000000000000000000109:
+    0000000000000000000000000000000000001009:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
         {
@@ -132,7 +132,7 @@ sha3:
 
 
     # memSizeQuadraticCost32
-    000000000000000000000000000000000000010a:
+    000000000000000000000000000000000000100a:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
         {
@@ -144,7 +144,7 @@ sha3:
 
 
     # memSizeQuadraticCost33
-    000000000000000000000000000000000000010b:
+    000000000000000000000000000000000000100b:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
         {
@@ -155,7 +155,7 @@ sha3:
 
 
     # memSizeQuadraticCost63
-    000000000000000000000000000000000000010c:
+    000000000000000000000000000000000000100c:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
         {
@@ -167,7 +167,7 @@ sha3:
 
 
     # memSizeQuadraticCost64
-    000000000000000000000000000000000000010d:
+    000000000000000000000000000000000000100d:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
         {
@@ -180,7 +180,7 @@ sha3:
 
 
     # memSizeQuadraticCost65
-    000000000000000000000000000000000000010e:
+    000000000000000000000000000000000000100e:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
         {
@@ -192,7 +192,7 @@ sha3:
 
 
     # memSizeQuadraticCost32_zeroSize
-    000000000000000000000000000000000000010f:
+    000000000000000000000000000000000000100f:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
         {
@@ -204,7 +204,7 @@ sha3:
 
 
     # memSizeQuadraticCost64_2
-    0000000000000000000000000000000000000110:
+    0000000000000000000000000000000000001010:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
         {
@@ -220,10 +220,10 @@ sha3:
     cccccccccccccccccccccccccccccccccccccccc:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-        {  
-            (call (- 0 1) (+ 0x100 $4) 0 
+        {
+            (call (- 0 1) (+ 0x1000 $4) 0
                0x0F 0x10   ; arg offset and length to get the 0x1234...f0 value
-               0x20 0x40)  ; return offset and length 
+               0x20 0x40)  ; return offset and length
         }
       nonce: '0'
       storage: {}
@@ -234,7 +234,7 @@ sha3:
       code: '0x'
       nonce: '0'
       storage: {}
-      
+
 
 
 
@@ -276,8 +276,8 @@ sha3:
     - :label sha3_2016_1      :abi f(uint) 0x0d
     # sha3_memSizeQuadraticCost64_2
     - :label sha3_2016_32     :abi f(uint) 0x10
-    
- 
+
+
 
     # sha3_memSizeQuadraticCost65
     - :label sha3_2048_1      :abi f(uint) 0x0e
@@ -297,8 +297,8 @@ sha3:
     value:
     - '1'
     secretKey: "45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8"
-    
-    
+
+
   expect:
     - indexes:
         data: :label sha3_nodata
@@ -307,7 +307,7 @@ sha3:
       network:
         - '>=Istanbul'
       result:
-        0000000000000000000000000000000000000100:
+        0000000000000000000000000000000000001000:
           storage:
             0: 0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470
 
@@ -320,7 +320,7 @@ sha3:
       network:
         - '>=Istanbul'
       result:
-        0000000000000000000000000000000000000101:
+        0000000000000000000000000000000000001001:
           storage:
             0: 0xc41589e7559804ea4a2080dad19d876a024ccb05117835447d72ce08c1d020ec
 
@@ -332,7 +332,7 @@ sha3:
       network:
         - '>=Istanbul'
       result:
-        0000000000000000000000000000000000000102:
+        0000000000000000000000000000000000001002:
           storage:
             0: 0x6bd2dd6bd408cbee33429358bf24fdc64612fbf8b1b4db604518f40ffd34b607
 
@@ -346,7 +346,7 @@ sha3:
       network:
         - '>=Istanbul'
       result:
-        0000000000000000000000000000000000000103:
+        0000000000000000000000000000000000001003:
           storage:
             0: 0xbe6f1b42b34644f918560a07f959d23e532dea5338e4b9f63db0caeb608018fa
 
@@ -360,7 +360,7 @@ sha3:
       network:
         - '>=Istanbul'
       result:
-        0000000000000000000000000000000000000104:
+        0000000000000000000000000000000000001004:
           storage:
             # Because of the costs of accessing such high
             # memory this operation runs out of gas
@@ -376,7 +376,7 @@ sha3:
       network:
         - '>=Istanbul'
       result:
-        0000000000000000000000000000000000000105:
+        0000000000000000000000000000000000001005:
           storage:
             # Run out of gas
             0: 0
@@ -391,7 +391,7 @@ sha3:
       network:
         - '>=Istanbul'
       result:
-        0000000000000000000000000000000000000106:
+        0000000000000000000000000000000000001006:
           storage:
             # Run out of gas
             0: 0
@@ -404,7 +404,7 @@ sha3:
       network:
         - '>=Istanbul'
       result:
-        0000000000000000000000000000000000000107:
+        0000000000000000000000000000000000001007:
           storage:
             # Run out of gas
             0: 0
@@ -419,7 +419,7 @@ sha3:
         - '>=Istanbul'
       result:
         # Run out of gas
-        0000000000000000000000000000000000000108:
+        0000000000000000000000000000000000001008:
           storage:
             0: 0
 
@@ -434,7 +434,7 @@ sha3:
       network:
         - Istanbul
       result:
-        0000000000000000000000000000000000000109:
+        0000000000000000000000000000000000001009:
           storage:
             0: 0xbc36789e7a1e281436464229828f817d6612f7b477d66591ff96a9e064bcc98a
 
@@ -445,55 +445,55 @@ sha3:
       network:
         - '>=Berlin'
       result:
-        0000000000000000000000000000000000000109:
+        0000000000000000000000000000000000001009:
           storage:
             0: 0xbc36789e7a1e281436464229828f817d6612f7b477d66591ff96a9e064bcc98a
 
 
 
     - indexes:
-        data: :label sha3_992_1 
-        gas: !!int -1 
+        data: :label sha3_992_1
+        gas: !!int -1
         value: !!int -1
       network:
         - Istanbul
       result:
-        000000000000000000000000000000000000010a:
+        000000000000000000000000000000000000100a:
           storage:
             0: 0xbc36789e7a1e281436464229828f817d6612f7b477d66591ff96a9e064bcc98a
 
     - indexes:
-        data: :label sha3_992_1 
-        gas: !!int -1 
+        data: :label sha3_992_1
+        gas: !!int -1
         value: !!int -1
       network:
         - '>=Berlin'
       result:
-        000000000000000000000000000000000000010a:
+        000000000000000000000000000000000000100a:
           storage:
             0: 0xbc36789e7a1e281436464229828f817d6612f7b477d66591ff96a9e064bcc98a
 
 
 
     - indexes:
-        data: :label sha3_1024_1 
-        gas: !!int -1 
+        data: :label sha3_1024_1
+        gas: !!int -1
         value: !!int -1
       network:
         - Istanbul
       result:
-        000000000000000000000000000000000000010b:
+        000000000000000000000000000000000000100b:
           storage:
             0: 0xbc36789e7a1e281436464229828f817d6612f7b477d66591ff96a9e064bcc98a
 
     - indexes:
-        data: :label sha3_1024_1 
-        gas: !!int -1 
+        data: :label sha3_1024_1
+        gas: !!int -1
         value: !!int -1
       network:
         - '>=Berlin'
       result:
-        000000000000000000000000000000000000010b:
+        000000000000000000000000000000000000100b:
           storage:
             0: 0xbc36789e7a1e281436464229828f817d6612f7b477d66591ff96a9e064bcc98a
 
@@ -501,24 +501,24 @@ sha3:
 
 
     - indexes:
-        data: :label sha3_1984_1 
-        gas: !!int -1 
+        data: :label sha3_1984_1
+        gas: !!int -1
         value: !!int -1
       network:
         - Istanbul
       result:
-        000000000000000000000000000000000000010c:
+        000000000000000000000000000000000000100c:
           storage:
             0: 0xbc36789e7a1e281436464229828f817d6612f7b477d66591ff96a9e064bcc98a
 
     - indexes:
-        data: :label sha3_1984_1 
-        gas: !!int -1 
+        data: :label sha3_1984_1
+        gas: !!int -1
         value: !!int -1
       network:
         - '>=Berlin'
       result:
-        000000000000000000000000000000000000010c:
+        000000000000000000000000000000000000100c:
           storage:
             0: 0xbc36789e7a1e281436464229828f817d6612f7b477d66591ff96a9e064bcc98a
 
@@ -527,24 +527,24 @@ sha3:
 
 
     - indexes:
-        data: :label sha3_2016_1 
-        gas: !!int -1 
+        data: :label sha3_2016_1
+        gas: !!int -1
         value: !!int -1
       network:
         - Istanbul
       result:
-        000000000000000000000000000000000000010d:
+        000000000000000000000000000000000000100d:
           storage:
             0: 0xbc36789e7a1e281436464229828f817d6612f7b477d66591ff96a9e064bcc98a
 
     - indexes:
-        data: :label sha3_2016_1 
-        gas: !!int -1 
+        data: :label sha3_2016_1
+        gas: !!int -1
         value: !!int -1
       network:
         - '>=Berlin'
       result:
-        000000000000000000000000000000000000010d:
+        000000000000000000000000000000000000100d:
           storage:
             0: 0xbc36789e7a1e281436464229828f817d6612f7b477d66591ff96a9e064bcc98a
 
@@ -552,24 +552,24 @@ sha3:
 
 
     - indexes:
-        data: :label sha3_2048_1 
-        gas: !!int -1 
+        data: :label sha3_2048_1
+        gas: !!int -1
         value: !!int -1
       network:
         - Istanbul
       result:
-        000000000000000000000000000000000000010e:
+        000000000000000000000000000000000000100e:
           storage:
             0: 0xbc36789e7a1e281436464229828f817d6612f7b477d66591ff96a9e064bcc98a
 
     - indexes:
-        data: :label sha3_2048_1 
-        gas: !!int -1 
+        data: :label sha3_2048_1
+        gas: !!int -1
         value: !!int -1
       network:
         - '>=Berlin'
       result:
-        000000000000000000000000000000000000010e:
+        000000000000000000000000000000000000100e:
           storage:
             0: 0xbc36789e7a1e281436464229828f817d6612f7b477d66591ff96a9e064bcc98a
 
@@ -577,23 +577,23 @@ sha3:
     # Different cost from sha3_1024_1
     - indexes:
         data: :label sha3_1024_0
-        gas: !!int -1 
+        gas: !!int -1
         value: !!int -1
       network:
         - Istanbul
       result:
-        000000000000000000000000000000000000010f:
+        000000000000000000000000000000000000100f:
           storage:
             0: 0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470
 
     - indexes:
-        data: :label sha3_1024_0 
-        gas: !!int -1 
+        data: :label sha3_1024_0
+        gas: !!int -1
         value: !!int -1
       network:
         - '>=Berlin'
       result:
-        000000000000000000000000000000000000010f:
+        000000000000000000000000000000000000100f:
           storage:
             0: 0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470
 
@@ -601,24 +601,22 @@ sha3:
     # Same cost as sha3_2016_1
     - indexes:
         data: :label sha3_2016_32
-        gas: !!int -1 
+        gas: !!int -1
         value: !!int -1
       network:
         - Istanbul
       result:
-        0000000000000000000000000000000000000110:
+        0000000000000000000000000000000000001010:
           storage:
             0: 0x290decd9548b62a8d60345a988386fc84ba6bc95484008f6362f93160ef3e563
 
     - indexes:
         data: :label sha3_2016_32
-        gas: !!int -1 
+        gas: !!int -1
         value: !!int -1
       network:
         - '>=Berlin'
       result:
-        0000000000000000000000000000000000000110:
+        0000000000000000000000000000000000001010:
           storage:
             0: 0x290decd9548b62a8d60345a988386fc84ba6bc95484008f6362f93160ef3e563
-
-

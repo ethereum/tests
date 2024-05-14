@@ -14,37 +14,37 @@ blockInfo:
 
   pre:
 
-    0000000000000000000000000000000000000100:
+    0000000000000000000000000000000000001000:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-        {  
+        {
             [[0]] (coinbase)
         }
       nonce: '0'
       storage: {}
 
 
-    0000000000000000000000000000000000000101:
+    0000000000000000000000000000000000001001:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-        {  
+        {
              [[0]] (difficulty)
         }
       nonce: '0'
       storage: {}
 
 
-    0000000000000000000000000000000000000102:
+    0000000000000000000000000000000000001002:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-        {  
+        {
            [[0]] (gaslimit)
         }
       nonce: '0'
       storage: {}
 
 
-    0000000000000000000000000000000000000103:
+    0000000000000000000000000000000000001003:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
         {  ; The blocknumber
@@ -54,10 +54,10 @@ blockInfo:
       storage: {}
 
 
-    0000000000000000000000000000000000000104:
+    0000000000000000000000000000000000001004:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-        {  
+        {
               [[0]] (timestamp)
         }
       nonce: '0'
@@ -65,13 +65,13 @@ blockInfo:
 
 
 
-      
+
 
     cccccccccccccccccccccccccccccccccccccccc:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-        {  
-            (call 0xffffff (+ 0x100 $4) 0 0 0 0 0)
+        {
+            (call 0xffffff (+ 0x1000 $4) 0 0 0 0 0)
         }
       nonce: '0'
       storage: {}
@@ -82,7 +82,7 @@ blockInfo:
       code: '0x'
       nonce: '0'
       storage: {}
-      
+
   transaction:
     data:
     - :label coinbase     :abi f(uint) 0
@@ -98,8 +98,8 @@ blockInfo:
     value:
     - '1'
     secretKey: "45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8"
-    
-    
+
+
   expect:
     - indexes:
         data:
@@ -109,8 +109,8 @@ blockInfo:
       network:
         - '>=Istanbul'
       result:
-        0000000000000000000000000000000000000100:
-          storage: 
+        0000000000000000000000000000000000001000:
+          storage:
             0: 0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba
 
 
@@ -122,8 +122,8 @@ blockInfo:
       network:
         - '>=Istanbul'
       result:
-        0000000000000000000000000000000000000101:
-          storage: 
+        0000000000000000000000000000000000001001:
+          storage:
             0: 0x20000
 
 
@@ -135,8 +135,8 @@ blockInfo:
       network:
         - '>=Istanbul'
       result:
-        0000000000000000000000000000000000000102:
-          storage: 
+        0000000000000000000000000000000000001002:
+          storage:
             0: 100000000
 
 
@@ -150,8 +150,8 @@ blockInfo:
       network:
         - '>=Istanbul'
       result:
-        0000000000000000000000000000000000000103:
-          storage: 
+        0000000000000000000000000000000000001003:
+          storage:
             0: 1
 
 
@@ -159,14 +159,12 @@ blockInfo:
 
     - indexes:
         data:
-        - :label timestamp   
+        - :label timestamp
         gas:  !!int -1
         value: !!int -1
       network:
         - '>=Istanbul'
       result:
-        0000000000000000000000000000000000000104:
-          storage: 
+        0000000000000000000000000000000000001004:
+          storage:
             0: 1000
-
-

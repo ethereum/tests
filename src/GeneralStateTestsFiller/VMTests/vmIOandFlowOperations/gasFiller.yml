@@ -17,19 +17,19 @@ gas:
 
   pre:
 
-    0000000000000000000000000000000000000100:
+    0000000000000000000000000000000000001000:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
         {
-           [0]  0xffffffffff  
-           [90] 0xeeee 
+           [0]  0xffffffffff
+           [90] 0xeeee
            [[0]] (gas)
         }
       nonce: '0'
       storage: {}
 
 
-    0000000000000000000000000000000000000101:
+    0000000000000000000000000000000000001001:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
         {
@@ -45,8 +45,8 @@ gas:
     cccccccccccccccccccccccccccccccccccccccc:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-        {  
-            (delegatecall (gas) (+ 0x100 $4) 0 0 0 0)
+        {
+            (delegatecall (gas) (+ 0x1000 $4) 0 0 0 0)
         }
       nonce: '0'
       storage:
@@ -58,7 +58,7 @@ gas:
       code: '0x'
       nonce: '0'
       storage: {}
-      
+
 
 
 
@@ -74,8 +74,8 @@ gas:
     value:
     - '1'
     secretKey: "45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8"
-    
-    
+
+
   expect:
     # gas1 has a different cost because the cost of memory access changed
     # between Istanbul and Berlin
@@ -83,7 +83,7 @@ gas:
     # The change in the cost of SSTORE doesn't matter, because it happens
     # AFTER the (gas)
     - indexes:
-        data: 
+        data:
         - :label gas1
         gas:  !!int -1
         value: !!int -1
@@ -96,7 +96,7 @@ gas:
 
 
     - indexes:
-        data: 
+        data:
         - :label gas1
         gas:  !!int -1
         value: !!int -1
@@ -110,7 +110,7 @@ gas:
 
 
     - indexes:
-        data: 
+        data:
         - :label gas2
         gas:  !!int -1
         value: !!int -1
@@ -120,4 +120,3 @@ gas:
         cccccccccccccccccccccccccccccccccccccccc:
           storage:
             0x00: 0x04b1458d
-

@@ -14,23 +14,23 @@ return:
 
 
     # Return a normal value
-    0000000000000000000000000000000000000100:
+    0000000000000000000000000000000000001000:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-        {  
+        {
            [0] 0x0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
            [[0xFF]] 0x600D
-           (return 0x00 0x40)            
+           (return 0x00 0x40)
         }
       nonce: '0'
       storage: {}
 
 
     # "Infinite" (-1 = 0xfff..ffff) buffer
-    0000000000000000000000000000000000000101:
+    0000000000000000000000000000000000001001:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-        {  
+        {
            [0] 0x0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
            [[0xFF]] 0x600D
            (return 0x00 (- 0 1))
@@ -40,10 +40,10 @@ return:
 
 
     # Big but reasonable buffer
-    0000000000000000000000000000000000000102:
+    0000000000000000000000000000000000001002:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-        {  
+        {
            [0] 0x0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
            [[0xFF]] 0x600D
            (return 0x00 0x1000)
@@ -53,10 +53,10 @@ return:
 
 
     # Return at an offset
-    0000000000000000000000000000000000000103:
+    0000000000000000000000000000000000001003:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-        {  
+        {
            [0] 0x0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef
            [[0xFF]] 0x600D
            (return 0x05 0x20)
@@ -99,7 +99,7 @@ return:
     #[42] MSTORE
     #[43] JUMPDEST
     # [44] STOP
-    0000000000000000000000000000000000000104:
+    0000000000000000000000000000000000001004:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: :raw 0x6001608052600060805111601b57600160005260206000f3602b565b602760005260206000f360026080525b00
       nonce: '0'
@@ -111,15 +111,15 @@ return:
     cccccccccccccccccccccccccccccccccccccccc:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-        {  
+        {
             ; read 0x40 bytes of return data
-            (delegatecall 0xffffff (+ 0x100 $4) 0 0 0x00 0x40)
+            (delegatecall 0xffffff (+ 0x1000 $4) 0 0 0x00 0x40)
 
             [[0]] @0x00
             [[1]] @0x20
         }
       nonce: '0'
-      storage: 
+      storage:
         0xFF: 0x0BAD
 
 
@@ -128,7 +128,7 @@ return:
       code: '0x'
       nonce: '0'
       storage: {}
-      
+
 
 
 
@@ -139,7 +139,7 @@ return:
     - :label returnBigBuff :abi f(uint) 2
     - :label returnOffset  :abi f(uint) 3
     - :label returnOld     :abi f(uint) 4
- 
+
     gasLimit:
     - '80000000'
     gasPrice: '10'
@@ -148,12 +148,12 @@ return:
     value:
     - '1'
     secretKey: "45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8"
-    
-    
+
+
   expect:
 
     - indexes:
-        data: 
+        data:
         - :label return
         - :label returnBigBuff
         gas:  !!int -1
@@ -169,7 +169,7 @@ return:
 
 
     - indexes:
-        data: 
+        data:
         - :label returnInfBuff
         gas:  !!int -1
         value: !!int -1
@@ -182,7 +182,7 @@ return:
 
 
     - indexes:
-        data: 
+        data:
         - :label returnOffset
         gas:  !!int -1
         value: !!int -1
@@ -198,7 +198,7 @@ return:
 
 
     - indexes:
-        data: 
+        data:
         - :label returnOld
         gas:  !!int -1
         value: !!int -1
@@ -206,6 +206,6 @@ return:
         - '>=Istanbul'
       result:
         cccccccccccccccccccccccccccccccccccccccc:
-          storage: 
+          storage:
             0x00: 0x0027
             0xFF: 0x0BAD

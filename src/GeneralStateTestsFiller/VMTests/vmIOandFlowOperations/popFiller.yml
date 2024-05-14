@@ -14,7 +14,7 @@ pop:
 
   pre:
 
-    0000000000000000000000000000000000000100:
+    0000000000000000000000000000000000001000:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: :raw 0x6002600360045055
         # PUSH1 2
@@ -26,13 +26,13 @@ pop:
       storage: {}
 
 
-    0000000000000000000000000000000000000101:
+    0000000000000000000000000000000000001001:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: :raw 0x5060026003600455
         # POP    (which should abort, stack underflow)
         # PUSH1 2
         # PUSH1 3
-        # PUSH1 4  
+        # PUSH1 4
         # SSTORE    ([[4]] 3, except we never get here)
       nonce: '0'
       storage: {}
@@ -44,8 +44,8 @@ pop:
     cccccccccccccccccccccccccccccccccccccccc:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-        {  
-            (delegatecall (gas) (+ 0x100 $4) 0 0 0 0)
+        {
+            (delegatecall (gas) (+ 0x1000 $4) 0 0 0 0)
         }
       nonce: '0'
       storage: {}
@@ -56,7 +56,7 @@ pop:
       code: '0x'
       nonce: '0'
       storage: {}
-      
+
 
 
 
@@ -72,11 +72,11 @@ pop:
     value:
     - '1'
     secretKey: "45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8"
-    
-    
+
+
   expect:
     - indexes:
-        data: 
+        data:
         - :label pop1
         gas:  !!int -1
         value: !!int -1
@@ -89,7 +89,7 @@ pop:
 
 
     - indexes:
-        data: 
+        data:
         - :label pop2
         gas:  !!int -1
         value: !!int -1

@@ -14,40 +14,40 @@ or:
 
   pre:
 
-    0000000000000000000000000000000000000100:
+    0000000000000000000000000000000000001000:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-        {  
+        {
             [[0]] (or 2 2)
         }
       nonce: '0'
       storage: {}
 
 
-    0000000000000000000000000000000000000101:
+    0000000000000000000000000000000000001001:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-        {  
+        {
             [[0]] (or 2 1)
         }
       nonce: '0'
       storage: {}
 
 
-    0000000000000000000000000000000000000102:
+    0000000000000000000000000000000000001002:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-        {  
+        {
             [[0]] (or 3 1)
         }
       nonce: '0'
       storage: {}
 
 
-    0000000000000000000000000000000000000103:
+    0000000000000000000000000000000000001003:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-        {  
+        {
             ; "or 0xfff..fff" gives you 0xfff..fff
             [[0]] (or
                      0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
@@ -59,10 +59,10 @@ or:
 
 
 
-    0000000000000000000000000000000000000104:
+    0000000000000000000000000000000000001004:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-        {  
+        {
             ; "or 0xfff..fff" gives you 0xfff..fff
             [[0]] (or
                      0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
@@ -74,10 +74,10 @@ or:
 
 
 
-    0000000000000000000000000000000000000105:
+    0000000000000000000000000000000000001005:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-        {  
+        {
             ; "or 0xfff..fff" gives you 0xfff..fff
             [[0]] (or
                      0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeefeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
@@ -92,8 +92,8 @@ or:
     cccccccccccccccccccccccccccccccccccccccc:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-        {  
-            (call 0xffffff (+ 0x100 $4) 0 0 0 0 0)
+        {
+            (call 0xffffff (+ 0x1000 $4) 0 0 0 0 0)
         }
       nonce: '0'
       storage: {}
@@ -104,7 +104,7 @@ or:
       code: '0x'
       nonce: '0'
       storage: {}
-      
+
   transaction:
     data:
     - :label or_2_2            :abi f(uint) 0
@@ -121,8 +121,8 @@ or:
     value:
     - '1'
     secretKey: "45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8"
-    
-    
+
+
   expect:
     - indexes:
         data: :label or_2_2
@@ -131,7 +131,7 @@ or:
       network:
         - '>=Istanbul'
       result:
-        0000000000000000000000000000000000000100:
+        0000000000000000000000000000000000001000:
           storage:
             0: 0x02
 
@@ -143,7 +143,7 @@ or:
       network:
         - '>=Istanbul'
       result:
-        0000000000000000000000000000000000000101:
+        0000000000000000000000000000000000001001:
           storage:
             0: 0x03
 
@@ -155,7 +155,7 @@ or:
       network:
         - '>=Istanbul'
       result:
-        0000000000000000000000000000000000000102:
+        0000000000000000000000000000000000001002:
           storage:
             0: 0x03
 
@@ -167,7 +167,7 @@ or:
       network:
         - '>=Istanbul'
       result:
-        0000000000000000000000000000000000000103:
+        0000000000000000000000000000000000001003:
           storage:
             0: 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
 
@@ -179,7 +179,7 @@ or:
       network:
         - '>=Istanbul'
       result:
-        0000000000000000000000000000000000000104:
+        0000000000000000000000000000000000001004:
           storage:
             0: 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
 
@@ -192,7 +192,6 @@ or:
       network:
         - '>=Istanbul'
       result:
-        0000000000000000000000000000000000000105:
+        0000000000000000000000000000000000001005:
           storage:
             0: 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
-

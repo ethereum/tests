@@ -14,7 +14,7 @@ mstore8:
 
   pre:
 
-    0000000000000000000000000000000000000100:
+    0000000000000000000000000000000000001000:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
         {
@@ -26,7 +26,7 @@ mstore8:
       storage: {}
 
 
-    0000000000000000000000000000000000000101:
+    0000000000000000000000000000000000001001:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
         {
@@ -38,7 +38,7 @@ mstore8:
       storage: {}
 
 
-    0000000000000000000000000000000000000102:
+    0000000000000000000000000000000000001002:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
         {
@@ -57,8 +57,8 @@ mstore8:
     cccccccccccccccccccccccccccccccccccccccc:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-        {  
-            (delegatecall (gas) (+ 0x100 $4) 0 0 0 0)
+        {
+            (delegatecall (gas) (+ 0x1000 $4) 0 0 0 0)
         }
       nonce: '0'
       storage:
@@ -70,7 +70,7 @@ mstore8:
       code: '0x'
       nonce: '0'
       storage: {}
-      
+
 
 
 
@@ -87,11 +87,11 @@ mstore8:
     value:
     - '1'
     secretKey: "45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8"
-    
-    
+
+
   expect:
     - indexes:
-        data: 
+        data:
         - :label mstore8_onebyte
         - :label mstore8_neg1
         gas:  !!int -1
@@ -106,7 +106,7 @@ mstore8:
 
 
     - indexes:
-        data: 
+        data:
         - :label mstore8_twobytes
         gas:  !!int -1
         value: !!int -1
@@ -116,4 +116,3 @@ mstore8:
         cccccccccccccccccccccccccccccccccccccccc:
           storage:
             0x00: 0x00ffee0000000000000000000000000000000000000000000000000000000000
-
