@@ -41,6 +41,7 @@ The following clients make use of the tests from this library. You can use these
 - [Nethermind](https://github.com/NethermindEth/nethermind) (C#) [Docs](https://nethermind.readthedocs.io), Test Location: ``src/tests``
 - [Nimbus-eth1](https://github.com/status-im/nimbus-eth1) (Nim) [Docs](https://github.com/status-im/nimbus-eth1/wiki/Understanding-and-debugging-Nimbus-EVM-JSON-tests), Test location: ``tests/fixtures``
 - [Mantis](https://github.com/input-output-hk/mantis) (Scala) [Docs](https://docs.mantisclient.io/), Test Location: ``https://github.com/input-output-hk/mantis/tree/develop/ets``
+- [KEVM](https://github.com/runtimeverification/evm-semantics/) (Python) [Docs](https://github.com/runtimeverification/evm-semantics/?tab=readme-ov-file#documentationsupport), Test Location: ``tests/ethereum-tests``
 
 Using the Tests
 ---------------
