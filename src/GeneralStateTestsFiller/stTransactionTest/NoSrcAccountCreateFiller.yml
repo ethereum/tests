@@ -59,7 +59,7 @@ NoSrcAccountCreate:
   expect:
     # Not enough ETH for executing the transaction
     - network:
-        - '>=Frontier'
+        - '>=Cancun'
       indexes:
         data: !!int 0
         gas: !!int 0
@@ -69,7 +69,7 @@ NoSrcAccountCreate:
         "<Homestead" : "TR_NoFunds"
       result: {}
     - network:
-        - '>=Frontier'
+        - '>=Cancun'
       indexes:
         data: !!int 1
         gas: !!int 0
@@ -78,7 +78,7 @@ NoSrcAccountCreate:
         ">=Frontier" : "TR_NoFundsOrGas"    #nimbus have different exception type here
       result: {}
     - network:
-        - '>=Frontier'
+        - '>=Cancun'
       indexes:
         data: 0-1
         gas: !!int 1
@@ -90,7 +90,7 @@ NoSrcAccountCreate:
 
     # Not enough ETH for the value we transfer
     - network:
-        - '>=Frontier'
+        - '>=Cancun'
       indexes:
         data: 0-1
         gas: !!int 2
@@ -103,7 +103,7 @@ NoSrcAccountCreate:
 
     # Gas limit of zero, should be at least 21000
     - network:
-        - '>=Frontier'
+        - '>=Cancun'
       indexes:
         data: 0-1
         gas: !!int 2
@@ -117,36 +117,36 @@ NoSrcAccountCreate:
 
     # Not enough ETH for executing the transaction
     - network:
-        - '>=Frontier'
+        - '>=Cancun'
       indexes:
         data: 2-4
         gas: !!int 0
         value: !!int -1
       expectException:
-        ">=Berlin" : "TR_NoFundsOrGas"
+        ">=Cancun" : "TR_NoFundsOrGas"
         "<Berlin" : "TR_TypeNotSupported"
       result: {}
     - network:
-        - '>=Frontier'
+        - '>=Cancun'
       indexes:
         data: 2-4
         gas: !!int 1
         value: !!int -1
       expectException:
-        ">=Berlin" : "TR_NoFunds"
+        ">=Cancun" : "TR_NoFunds"
         "<Berlin" : "TR_TypeNotSupported"
       result: {}
 
 
     # Not enough ETH for the value we transfer
     - network:
-        - '>=Frontier'
+        - '>=Cancun'
       indexes:
         data: 2-4
         gas: !!int 2
         value: !!int 1
       expectException:
-        ">=Berlin" : "TR_NoFundsOrGas"
+        ">=Cancun" : "TR_NoFundsOrGas"
         "<Berlin" : "TR_TypeNotSupported"
       result: {}
 
@@ -154,13 +154,13 @@ NoSrcAccountCreate:
 
     # Gas limit of zero, should be at least 21000
     - network:
-        - '>=Frontier'
+        - '>=Cancun'
       indexes:
         data: 2-4
         gas: !!int 2
         value: !!int 0
       expectException:
-        ">=Berlin" : "IntrinsicGas"
+        ">=Cancun" : "IntrinsicGas"
         "<Berlin" : "TR_TypeNotSupported"
       result: {}
 

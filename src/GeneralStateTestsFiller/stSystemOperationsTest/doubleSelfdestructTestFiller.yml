@@ -101,7 +101,7 @@ doubleSelfdestructTest:
       data:
       - :label called-self-destruct
     network:
-    - '>=Istanbul'
+    - '>=Cancun'
     result:
       # Caller self destruct
       0000000000000000000000000000000000001001:
@@ -112,25 +112,7 @@ doubleSelfdestructTest:
 
 
 
-  - indexes:
-      data:
-      - :label caller-self-destruct
-    network:
-    - 'Istanbul'
-    - 'Berlin'
-    - 'London'
-    - 'Paris'
-    - 'Shanghai'
-    result:
-      # Caller self destruct
-      0000000000000000000000000000000000001001:
-        balance: 1_000_001
-      # Called self destruct
-      0000000000000000000000000000000000001002:
-        shouldnotexist: 1
-      # The code itself
-      000000000000000000000000000000000000c0de:
-        shouldnotexist: 1
+
   - indexes:
       data:
       - :label caller-self-destruct
@@ -150,22 +132,6 @@ doubleSelfdestructTest:
 
 
 
-  - indexes:
-      data:
-      - :label code-self-destruct
-    network:
-    - 'Istanbul'
-    - 'Berlin'
-    - 'London'
-    - 'Paris'
-    - 'Shanghai'
-    result:
-      # Caller self destruct
-      0000000000000000000000000000000000001001:
-        shouldnotexist: 1
-      # Called self destruct
-      000000000000000000000000000000000000c0de:
-        shouldnotexist: 1
   - indexes:
       data:
       - :label code-self-destruct

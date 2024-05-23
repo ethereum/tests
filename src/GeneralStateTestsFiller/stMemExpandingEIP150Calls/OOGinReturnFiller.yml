@@ -102,25 +102,6 @@ OOGinReturn:
 
   expect:
 
-    # Calls that don't return data
-    - indexes:
-        data:
-        - !!int 2
-        - !!int 3
-        - !!int 4
-        - !!int 5
-        gas:  !!int 0
-        value: !!int 0
-      network:
-        - 'Istanbul'
-      result:
-
-        cccccccccccccccccccccccccccccccccccccccc:
-          storage:
-            0x00: 0x60A760A7
-
-
-
 
     # Calls that return data
     - indexes:
@@ -130,10 +111,30 @@ OOGinReturn:
         gas:  !!int 0
         value: !!int 0
       network:
-        - '>=Istanbul'
+        - '>=Cancun'
       result:
         cccccccccccccccccccccccccccccccccccccccc:
           storage:
             0x00: 0xDEAD60A7
             0x01: 0xDEAD60A7
+
+
+    # Calls that return data
+    - indexes:
+        data:
+        - !!int 2
+        - !!int 3
+        - !!int 4
+        - !!int 5
+        gas:  !!int 0
+        value: !!int 0
+      network:
+        - '>=Cancun'
+      result:
+        cccccccccccccccccccccccccccccccccccccccc:
+          storage:
+            0x00: 0x60a760a7
+
+
+
 

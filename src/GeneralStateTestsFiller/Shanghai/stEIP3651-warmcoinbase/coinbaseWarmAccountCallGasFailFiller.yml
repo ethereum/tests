@@ -125,18 +125,9 @@ coinbaseWarmAccountCallGasFail:
 
   expect:
     - network:
-        - '>=Shanghai'
+        - '>=Cancun'
       result:
         cccccccccccccccccccccccccccccccccccccccc:
           storage:
             # Coinbase access post-Shanghai is warm, hence subcall has enough gas and succeeds
             0x0:  1
-    - network:
-        - 'Berlin'
-        - 'London'
-        - 'Paris'
-      result:
-        cccccccccccccccccccccccccccccccccccccccc:
-          storage:
-            # Coinbase access pre-Shanghai is cold, hence subcall fails
-            0x0:  0

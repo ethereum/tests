@@ -798,20 +798,46 @@ opc5CDiffPlaces:
 
   expect:
     - indexes:
-        data: !!int -1
+        data: 
+            - !!int 0
+            - !!int 21
+            - !!int 22
+            - !!int 23
         gas:  !!int -1
         value: !!int -1
 
       network:
-        - 'London'
-        - 'Paris'
-        - 'Shanghai'
+        - '>=Cancun'
 
       result:
         cccccccccccccccccccccccccccccccccccccccc:
           storage:
             # The result we expect
             0x00: 0x60A7
+
+        000000000000000000000000000000000060BACC:
+          storage:
+            0x00: 0x60A7  # Anything that happens should be reverted out of
+
+        0000000000000000000000000000000000060006:
+          storage:
+            0x00: 0x60A7  # Anything that happens should be reverted out of
+
+    - indexes:
+        data: 
+            - "1-20"
+            - "24-100"
+        gas:  !!int -1
+        value: !!int -1
+
+      network:
+        - '>=Cancun'
+
+      result:
+        cccccccccccccccccccccccccccccccccccccccc:
+          storage:
+            # The result we expect
+            0x00: 0xdead60a700000000000000000000000000000000000000000000000000000000
 
         000000000000000000000000000000000060BACC:
           storage:

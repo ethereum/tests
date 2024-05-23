@@ -160,27 +160,6 @@ multiSelfdestruct:
         data: !!int 0
 
       network:
-        - 'London'
-        - 'Paris'
-        - 'Shanghai'
-      result:
-        cccccccccccccccccccccccccccccccccccccccc:
-          storage:
-            0x00: 1   # Call to 0xDEAD was successful
-            0x01: 3   # All wei transferred to 0x1000
-            0x02: 0   # 0xDEAD didn't keep any
-            0x10: 1   # Second call to 0xDEAD was successful
-            0x11: 3   # WEI balance of 0x1000, unchanged
-            0x12: 2   # WEI balance of 0xDEAD, not zeroed out yet
-
-        # Now (post tx) 0xDEAD no longer exists, so balance=0
-        000000000000000000000000000000000000dead:
-          shouldnotexist: 1
-
-    - indexes:
-        data: !!int 0
-
-      network:
         - '>=Cancun'
       result:
         cccccccccccccccccccccccccccccccccccccccc:
@@ -200,27 +179,6 @@ multiSelfdestruct:
 
 
     # SUC002
-    - indexes:
-        data: !!int 1
-
-      network:
-        - 'London'
-        - 'Paris'
-        - 'Shanghai'
-      result:
-        cccccccccccccccccccccccccccccccccccccccc:
-          storage:
-            0x00: 1   # Call to 0xDEAD was successful
-            0x01: 3   # All wei transferred to 0x1000
-            0x02: 0   # 0xDEAD didn't keep any
-            0x10: 1   # Second call to 0xDEAD was successful
-            0x11: 5   # WEI balance of 0x1000, two more WEI transferred
-            0x12: 0   # WEI balance of 0xDEAD, zeroed by second selfdestruct
-
-        # Now (post tx) 0xDEAD no longer exists, so balance=0
-        000000000000000000000000000000000000dead:
-          shouldnotexist: 1
-
     - indexes:
         data: !!int 1
 
@@ -247,28 +205,6 @@ multiSelfdestruct:
     # SUC003
     - indexes:
         data: !!int 2
-
-      network:
-        - 'London'
-        - 'Paris'
-        - 'Shanghai'
-      result:
-        cccccccccccccccccccccccccccccccccccccccc:
-          storage:
-            0x00: 1   # Call to 0xDEAD was successful
-            0x01: 3   # All wei transferred to 0x1000
-            0x02: 0   # 0xDEAD didn't keep any
-            0x10: 1   # Second call to 0xDEAD was successful
-            0x11: 3   # WEI balance of 0x1000
-            0x12: 0   # WEI balance of 0xDEAD, zeroed by second selfdestruct
-            0x13: 2   # WEI balance of 0x1001
-
-        # Now (post tx) 0xDEAD no longer exists, so balance=0
-        000000000000000000000000000000000000dead:
-          shouldnotexist: 1
-    - indexes:
-        data: !!int 2
-
       network:
         - '>=Cancun'
       result:
@@ -292,28 +228,6 @@ multiSelfdestruct:
     # SUC004
     - indexes:
         data: !!int 3
-
-      network:
-        - 'London'
-        - 'Paris'
-        - 'Shanghai'
-      result:
-        cccccccccccccccccccccccccccccccccccccccc:
-          storage:
-            0x00: 1   # Call to 0xDEAD was successful
-            0x01: 3   # All wei transferred to 0x1000
-            0x02: 0   # 0xDEAD didn't keep any
-            0x10: 0   # Second call to 0xDEAD failed
-            0x11: 3   # WEI balance of 0x1000
-            0x12: 0   # WEI balance of 0xDEAD, still zero
-            0x13: 0   # WEI balance of 0x1001, zero because the transfer failed
-
-        # Now (post tx) 0xDEAD no longer exists, so balance=0
-        000000000000000000000000000000000000dead:
-          shouldnotexist: 1
-    - indexes:
-        data: !!int 3
-
       network:
         - '>=Cancun'
       result:
@@ -337,28 +251,6 @@ multiSelfdestruct:
     # SUC005
     - indexes:
         data: !!int 4
-
-      network:
-        - 'London'
-        - 'Paris'
-        - 'Shanghai'
-      result:
-        cccccccccccccccccccccccccccccccccccccccc:
-          storage:
-            0x00: 1   # Call to 0xDEAD was successful
-            0x01: 3   # All wei transferred to 0x1000
-            0x02: 0   # 0xDEAD didn't keep any
-            0x10: 1   # Second call to 0xDEAD successful
-            0x11: 3   # WEI balance of 0x1000
-            0x12: 1   # WEI balance of 0xDEAD, one (2-1)
-            0x13: 1   # WEI balance of 0x1001, one (because that's how much we transfer)
-
-        # Now (post tx) 0xDEAD no longer exists, so balance=0
-        000000000000000000000000000000000000dead:
-          shouldnotexist: 1
-    - indexes:
-        data: !!int 4
-
       network:
         - '>=Cancun'
       result:

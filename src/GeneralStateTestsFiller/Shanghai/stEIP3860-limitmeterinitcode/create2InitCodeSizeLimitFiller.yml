@@ -62,49 +62,7 @@ create2InitCodeSizeLimit:
     - indexes:
        data: ':label valid'
       network:
-        - 'Paris'
-      result:
-       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
-          nonce: 1
-       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
-          storage:
-              '0': 1 # subcall successful
-              '1': 1 # test successful, no OOG
-       c94f5374fce5edbc8e2a8697c15331677e6ebf0b:
-          storage:
-              '0': '9e7a3337d18c31fe4c1fe51ab2da6cfd3629923d' # created account
-              '10': 52467                                     # gas used by CREATE
-       9e7a3337d18c31fe4c1fe51ab2da6cfd3629923d:
-          balance: 0
-          code: '0x600a80600080396000f3'
-          nonce: 1
-          storage: {}
-
-    - indexes:
-       data: ':label invalid'
-      network:
-        - 'Paris'
-      result:
-       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
-          nonce: 1
-       b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
-          storage:
-              '0': 1 # subcall successful
-              '1': 1 # test successful, no OOG
-       c94f5374fce5edbc8e2a8697c15331677e6ebf0b:
-          storage:
-              '0': '67d49ae27e912b3b508d62ce1e463298db6edf32' # created account
-              '10': 52482                                     # gas used by CREATE
-       67d49ae27e912b3b508d62ce1e463298db6edf32:
-          balance: 0
-          code: '0x600a80600080396000f3'
-          nonce: 1
-          storage: {}
-
-    - indexes:
-       data: ':label valid'
-      network:
-        - 'Shanghai'
+        - '>=Cancun'
       result:
        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           nonce: 1
@@ -126,7 +84,7 @@ create2InitCodeSizeLimit:
     - indexes:
        data: ':label invalid'
       network:
-        - 'Shanghai'
+        - '>=Cancun'
       result:
        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           nonce: 1

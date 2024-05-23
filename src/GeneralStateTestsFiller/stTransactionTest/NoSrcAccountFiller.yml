@@ -59,7 +59,7 @@ NoSrcAccount:
 
     # Not enough ETH for executing the transaction
     - network:
-        - '>=Frontier'
+        - '>=Cancun'
       indexes:
         data: !!int 0
         gas: 0-1
@@ -70,7 +70,7 @@ NoSrcAccount:
 
 
     - network:
-        - '>=Frontier'
+        - '>=Cancun'
       indexes:
         data: !!int 1
         gas: !!int 0
@@ -80,7 +80,7 @@ NoSrcAccount:
       result: {}
 
     - network:
-        - '>=Frontier'
+        - '>=Cancun'
       indexes:
         data: !!int 1
         gas: !!int 1
@@ -93,7 +93,7 @@ NoSrcAccount:
 
     # Not enough ETH for the value we transfer
     - network:
-        - '>=Frontier'
+        - '>=Cancun'
       indexes:
         data: 0-1
         gas: !!int 2
@@ -106,7 +106,7 @@ NoSrcAccount:
 
     # Gas limit of zero, should be at least 21000
     - network:
-        - '>=Frontier'
+        - '>=Cancun'
       indexes:
         data: 0-1
         gas: !!int 2
@@ -120,76 +120,76 @@ NoSrcAccount:
 
     # Not enough ETH for executing the transaction
     - network:
-        - '>=Frontier'
+        - '>=Cancun'
       indexes:
         data: !!int 2
         gas: !!int 0
         value: !!int -1
       expectException:
-        ">=Berlin" : "TR_NoFundsOrGas"  # Nimbus check triggers a different exception in this case
+        ">=Cancun" : "TR_NoFundsOrGas"  # Nimbus check triggers a different exception in this case
         "<Berlin" : "TR_TypeNotSupported"
       result: {}
     - network:
-        - '>=Frontier'
+        - '>=Cancun'
       indexes:
         data: !!int 2
         gas: !!int 1
         value: !!int -1
       expectException:
-        ">=Berlin" : "TR_NoFunds"
+        ">=Cancun" : "TR_NoFunds"
         "<Berlin" : "TR_TypeNotSupported"
       result: {}
     - network:
-        - '>=Frontier'
+        - '>=Cancun'
       indexes:
         data: !!int 3
         gas: !!int 0
         value: !!int -1
       expectException:
-        ">=Berlin" : "TR_NoFundsOrGas" # Nimbus check triggers a different exception in this case
+        ">=Cancun" : "TR_NoFundsOrGas" # Nimbus check triggers a different exception in this case
         "<Berlin" : "TR_TypeNotSupported"
       result: {}
     - network:
-        - '>=Frontier'
+        - '>=Cancun'
       indexes:
         data: !!int 3
         gas: !!int 1
         value: !!int -1
       expectException:
-        ">=Berlin" : "TR_NoFunds"
+        ">=Cancun" : "TR_NoFunds"
         "<Berlin" : "TR_TypeNotSupported"
       result: {}
     - network:
-        - '>=Frontier'
+        - '>=Cancun'
       indexes:
         data: !!int 4
         gas: !!int 0
         value: !!int -1
       expectException:
-        ">=Berlin" : "TR_NoFundsOrGas" # Nimbus check triggers a different exception in this case
+        ">=Cancun" : "TR_NoFundsOrGas" # Nimbus check triggers a different exception in this case
         "<Berlin" : "TR_TypeNotSupported"
       result: {}
     - network:
-        - '>=Frontier'
+        - '>=Cancun'
       indexes:
         data: !!int 4
         gas: !!int 1
         value: !!int -1
       expectException:
-        ">=Berlin" : "TR_NoFunds"
+        ">=Cancun" : "TR_NoFunds"
         "<Berlin" : "TR_TypeNotSupported"
       result: {}
 
 
     # Not enough ETH for the value we transfer
     - network:
-        - '>=Frontier'
+        - '>=Cancun'
       indexes:
         data: 2-4
         gas: !!int 2
         value: !!int 1
       expectException:
-        ">=Berlin" : "TR_NoFundsOrGas"
+        ">=Cancun" : "TR_NoFundsOrGas"
         "<Berlin" : "TR_TypeNotSupported"
       result: {}
 
@@ -197,13 +197,13 @@ NoSrcAccount:
 
     # Gas limit of zero, should be at least 21000
     - network:
-        - '>=Frontier'
+        - '>=Cancun'
       indexes:
         data: 2-4
         gas: !!int 2
         value: !!int 0
       expectException:
-        ">=Berlin" : "IntrinsicGas"
+        ">=Cancun" : "IntrinsicGas"
         "<Berlin" : "TR_TypeNotSupported"
       result: {}
 

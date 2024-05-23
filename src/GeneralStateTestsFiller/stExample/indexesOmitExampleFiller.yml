@@ -11,19 +11,12 @@ indexesOmitExample:
 
   expect:
     #indexes section can be omited, the default value is set to -1 for all tx vectors
-    - network:
-        - 'Berlin'
-      result:
-        095e7baea6a6c7c4c2dfeb977efac326af552d87:
-          code: '0x600160010160005500'
-          storage:
-            0x00: 2
     - indexes:
         data: !!int -1
         # default value for gas vector is set to -1
         value: !!int -1
       network:
-        - '>=Shanghai'
+        - '>=Cancun'
       result:
         095e7baea6a6c7c4c2dfeb977efac326af552d87:
           code: '0x600160010160005500'
