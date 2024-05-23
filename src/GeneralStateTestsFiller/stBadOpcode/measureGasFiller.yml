@@ -224,18 +224,6 @@ measureGas:
     - 0
 
   expect:
-    # CREATE
-    - indexes:
-        data: 
-        - :label CREATE
-      network:
-        - London
-        - Paris
-      result:
-        cccccccccccccccccccccccccccccccccccccccc:
-          storage:
-            0: 32057
-
 
     # CREATE
     # Starting the Shanghai the cost of a CREATE[2] transaction 
@@ -244,24 +232,13 @@ measureGas:
         data: 
         - :label CREATE
       network:
-        - '>=Shanghai'
+        - '>=Cancun'
       result:
         cccccccccccccccccccccccccccccccccccccccc:
           storage:
             0: 32089
 
 
-    # CREATE2
-    - indexes:
-        data: 
-        - :label CREATE2
-      network:
-        - London
-        - Paris
-      result:
-        cccccccccccccccccccccccccccccccccccccccc:
-          storage:
-            0: 32161
 
 
     # CREATE2
@@ -269,7 +246,7 @@ measureGas:
         data: 
         - :label CREATE2
       network:
-        - '>=Shanghai'
+        - '>=Cancun'
       result:
         cccccccccccccccccccccccccccccccccccccccc:
           storage:
@@ -281,7 +258,7 @@ measureGas:
         - :label CALL
         - :label CALLCODE
       network:
-        - '>=London'
+        - '>=Cancun'
       result:
         cccccccccccccccccccccccccccccccccccccccc:
           storage:
@@ -293,7 +270,7 @@ measureGas:
         - :label DELEGATECALL
         - :label STATICCALL
       network:
-        - '>=London'
+        - '>=Cancun'
       result:
         cccccccccccccccccccccccccccccccccccccccc:
           storage:
@@ -303,7 +280,7 @@ measureGas:
         data: 
         - :label MLOAD
       network:
-        - '>=London'
+        - '>=Cancun'
       result:
         cccccccccccccccccccccccccccccccccccccccc:
           storage:
@@ -315,7 +292,7 @@ measureGas:
         - :label MSTORE
         - :label MSTORE8
       network:
-        - '>=London'
+        - '>=Cancun'
       result:
         cccccccccccccccccccccccccccccccccccccccc:
           storage:
@@ -325,7 +302,7 @@ measureGas:
         data: 
         - :label EXTCODE
       network:
-        - '>=London'
+        - '>=Cancun'
       result:
         cccccccccccccccccccccccccccccccccccccccc:
           storage:
@@ -334,7 +311,7 @@ measureGas:
     - indexes:
         data: :label SHA3
       network:
-        - '>=London'
+        - '>=Cancun'
       result:
         cccccccccccccccccccccccccccccccccccccccc:
           storage:

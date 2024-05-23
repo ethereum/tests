@@ -32,24 +32,11 @@ creationTxInitCodeSizeLimit:
     - 0
 
   expect:
-    - indexes:
-       data: ':label valid'
-      network:
-        - 'Paris'
-      result:
-       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
-          balance: 195600160
-          nonce: 1
-       6295ee1b4f6dd65047762f924ecd367c17eabf8f:
-          balance: 0
-          nonce: 1
-          code: '0x60606040523615610074576000357c01'
-          storage: {}
 
     - indexes:
        data: ':label valid'
       network:
-        - 'Shanghai'
+        - '>=Cancun'
       result:
        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           # Difference with Paris is the charge for initcode 49152 // 32 * 2 = 3072 gas
@@ -64,23 +51,9 @@ creationTxInitCodeSizeLimit:
     - indexes:
        data: ':label invalid'
       network:
-        - 'Paris'
-      result:
-       a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
-          balance: 195600120
-          nonce: 1
-       6295ee1b4f6dd65047762f924ecd367c17eabf8f:
-          balance: 0
-          nonce: 1
-          code: '0x60606040523615610074576000357c01'
-          storage: {}
-
-    - indexes:
-       data: ':label invalid'
-      network:
-        - 'Shanghai'
+        - '>=Cancun'
       expectException:
-        'Shanghai' : 'TR_InitCodeLimitExceeded'
+        '>=Cancun' : 'TR_InitCodeLimitExceeded'
       result:
        a94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           nonce: 0

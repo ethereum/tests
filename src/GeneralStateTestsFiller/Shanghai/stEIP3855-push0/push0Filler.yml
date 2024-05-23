@@ -154,17 +154,7 @@ push0:
     - indexes:
         data: ':label single_push0'
       network:
-        - 'Paris'
-      result:
-        0000000000000000000000000000000000001000:
-          storage: {}
-        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
-          storage:      # Key 0 is empty, indicating call to contract 0x0...100 failed
-            0x01: 0x01  # Key 1 is filled after the call, indicating contract 0xb94... continued executing
-    - indexes:
-        data: ':label single_push0'
-      network:
-        - '>=Shanghai'
+        - '>=Cancun'
       result:
         0000000000000000000000000000000000001000:
           storage:
@@ -173,21 +163,10 @@ push0:
           storage:
             0x00: 0x01 # Call to contract containing opcode PUSH0 (0x0..100) succeeded
             0x01: 0x01 # Key 1 is filled after the call, indicating contract 0xb94... continued executing
-
     - indexes:
         data: ':label 1024_push0'
       network:
-        - 'Paris'
-      result:
-        0000000000000000000000000000000000000200:
-          storage: {}
-        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
-          storage:      # Key 0 is empty, indicating call to contract 0x0...200 failed
-            0x01: 0x01  # Key 1 is filled after the call, indicating contract 0xb94... continued executing
-    - indexes:
-        data: ':label 1024_push0'
-      network:
-        - '>=Shanghai'
+        - '>=Cancun'
       result:
         0000000000000000000000000000000000000200:
           storage:
@@ -196,20 +175,11 @@ push0:
           storage:
             0x00: 0x01 # Call to contract containing opcode PUSH0 (0x0..200) succeeded
             0x01: 0x01 # Key 1 is filled after the call, indicating contract 0xb94... continued executing
-
-    - indexes:
-        data: ':label 1025_push0'
-      network:
-        - 'Paris'
-      result:
-        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
-          storage:     # Key 0 remained empty, contract 0x0..300 failed
-            0x01: 0x01 # Key 1 filled after the call as the contract 0xb94... continued executing
     # Same expectation, but for London execution fails on 5f opcode, for 3855 it fails with stack overflow
     - indexes:
         data: ':label 1025_push0'
       network:
-        - '>=Shanghai'
+        - '>=Cancun'
       result:
         b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
           storage:      # Key 0 remained empty, contract 0x0..300 failed
@@ -217,19 +187,7 @@ push0:
     - indexes:
         data: ':label push0_upd_storage'
       network:
-        - 'Paris'
-      result:
-        0000000000000000000000000000000000000400:
-          storage: # Contract failed to execute due to invalid 0x5f opcode, storage remained untouched
-            0x00: 0x0a
-            0x01: 0x0a
-        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
-          storage:     # Key 0 is empty, indicating call to contract 0x0..400 failed
-            0x01: 0x01 # Key 1 filled after the call, indicating contract 0xb94.. continued executing
-    - indexes:
-        data: ':label push0_upd_storage'
-      network:
-        - '>=Shanghai'
+        - '>=Cancun'
       result:
         0000000000000000000000000000000000000400:
           storage:     # Contract executed and changed initial storage
@@ -242,20 +200,7 @@ push0:
     - indexes:
         data: ':label push0_upd_storage_sc'
       network:
-        - 'Paris'
-      result:
-        0000000000000000000000000000000000000500:
-          storage:
-            0x00: 0x00 # Call to contract 0x0600 fails, it contains invalid 0x5f opcode
-            0x01: 0x00 # Remains empty, after attempt to call contract containing invalid opxode 0x5f not enough gas to continue saving to storage
-        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
-          storage:
-            0x00: 0x00
-            0x01: 0x01
-    - indexes:
-        data: ':label push0_upd_storage_sc'
-      network:
-        - '>=Shanghai'
+        - '>=Cancun'
       result:
         0000000000000000000000000000000000000500:
           storage:
@@ -273,20 +218,7 @@ push0:
         gas:  !!int -1
         value: !!int -1
       network:
-        - 'Paris'
-      result:
-        0000000000000000000000000000000000000700:
-          storage: {} # Contract fails, nothing stored
-        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
-          storage:
-            0x00: 0x00
-            0x01: 0x01
-    - indexes:
-        data: ':label jumpdest'
-        gas:  !!int -1
-        value: !!int -1
-      network:
-        - '>=Shanghai'
+        - '>=Cancun'
       result:
         0000000000000000000000000000000000000700:
           storage:

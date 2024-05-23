@@ -61,19 +61,7 @@ push0Gas2:
     - indexes:
         data: ':label use_push0'
       network:
-        - 'Paris'
-      result:
-        0000000000000000000000000000000000001000:
-          balance: 0
-          storage: {} # Nothing is stored, PUSH0 (0x5f) is undefined/invalid in Paris
-        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
-          storage:
-            0x00: 0  # Subcall fails with unknown instruction
-            0x01: 1  # Transaction call successfull
-    - indexes:
-        data: ':label use_push0'
-      network:
-        - '>=Shanghai'
+        - '>=Cancun'
       result:
         0000000000000000000000000000000000001000:
           balance: 0
@@ -83,24 +71,11 @@ push0Gas2:
           storage:
             0x00: 1  #Subcall successfull
             0x01: 1
-    - indexes:
-        data: ':label use_push1_00'
-      network:
-        - 'Paris'
-      result:
-        0000000000000000000000000000000000000200:
-          balance: 0
-          storage:  # GAS   PUSH1(0)
-            0x00: 5 # 2   +   3
-        b94f5374fce5edbc8e2a8697c15331677e6ebf0b:
-          storage:
-            0x00: 1  #Subcall successfull
-            0x01: 1
 
     - indexes:
         data: ':label use_push1_00'
       network:
-        - '>=Shanghai'
+        - '>=Cancun'
       result:
         0000000000000000000000000000000000000200:
           balance: 0

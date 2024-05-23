@@ -337,15 +337,72 @@ gasCost:
 
   expect:
     - indexes:
-        data: !!int -1
+        data:
+          - "0-22"
+          - "24-30"
+          - "32-38"
+          - "41-44"
+          - "46-200"
         gas:  !!int -1
         value: !!int -1
       network:
-        - 'Istanbul'
+        - '>=Cancun'
       result:
         095e7baea6a6c7c4c2dfeb977efac326af552d87:
           storage:
-            0x00: 0
+            0x00: 0xfffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffda8
             0x01: 'ANY'
 
+    - indexes:
+        data: 
+           - !!int 39
+        gas:  !!int -1
+        value: !!int -1
+      network:
+        - '>=Cancun'
+      result:
+        095e7baea6a6c7c4c2dfeb977efac326af552d87:
+          storage:
+            0x00: 700
+            0x01: 'ANY'
+
+    - indexes:
+        data: 
+           - !!int 40
+        gas:  !!int -1
+        value: !!int -1
+      network:
+        - '>=Cancun'
+      result:
+        095e7baea6a6c7c4c2dfeb977efac326af552d87:
+          storage:
+            0x00: 1500
+            0x01: 'ANY'
+
+    - indexes:
+        data: 
+           - !!int 45
+        gas:  !!int -1
+        value: !!int -1
+      network:
+        - '>=Cancun'
+      result:
+        095e7baea6a6c7c4c2dfeb977efac326af552d87:
+          storage:
+            0x00: 2000
+            0x01: 'ANY'
+
+    - indexes:
+        data: 
+           - !!int 23
+           - !!int 31
+        gas:  !!int -1
+        value: !!int -1
+      network:
+        - '>=Cancun'
+      result:
+        095e7baea6a6c7c4c2dfeb977efac326af552d87:
+          storage:
+            0x00: 0x0514
+            0x01: 'ANY'
 

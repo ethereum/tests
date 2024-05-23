@@ -55,37 +55,37 @@ NoSrcAccount1559:
 
     # Not enough ETH for executing the transaction
     - network:
-        - '>=Frontier'
+        - '>=Cancun'
       indexes:
         data: !!int -1
         gas: !!int 0
         value: !!int -1
       expectException:
-        ">=London" : "TR_NoFundsOrGas"        #Nimbus get different exception type here
+        ">=Cancun" : "TR_NoFundsOrGas"        #Nimbus get different exception type here
         "<London" : "TR_TypeNotSupported"
       result: {}
 
     - network:
-        - '>=Frontier'
+        - '>=Cancun'
       indexes:
         data: !!int -1
         gas: !!int 1
         value: !!int -1
       expectException:
-        ">=London" : "TR_NoFunds"
+        ">=Cancun" : "TR_NoFunds"
         "<London" : "TR_TypeNotSupported"
       result: {}
 
 
     # Not enough ETH for the value we transfer
     - network:
-        - '>=Frontier'
+        - '>=Cancun'
       indexes:
         data: !!int -1
         gas: !!int 2
         value: !!int 1
       expectException:
-        ">=London" : "TR_NoFundsOrGas"
+        ">=Cancun" : "TR_NoFundsOrGas"
         "<London" : "TR_TypeNotSupported"
       result: {}
 
@@ -93,13 +93,13 @@ NoSrcAccount1559:
 
     # Gas limit of zero, should be at least 21000
     - network:
-        - '>=Frontier'
+        - '>=Cancun'
       indexes:
         data: !!int -1
         gas: !!int 2
         value: !!int 0
       expectException:
-        ">=London" : "IntrinsicGas"
+        ">=Cancun" : "IntrinsicGas"
         "<London" : "TR_TypeNotSupported"
       result: {}
 

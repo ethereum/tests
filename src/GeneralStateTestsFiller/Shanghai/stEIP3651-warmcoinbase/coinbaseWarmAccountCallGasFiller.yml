@@ -143,20 +143,9 @@ coinbaseWarmAccountCallGas:
 
   expect:
     - network:
-        - '>=Shanghai'
+        - '>=Cancun'
       result:
         cccccccccccccccccccccccccccccccccccccccc:
           storage:
             # Coinbase access post-Shanghai is warm
             0x0:  100
-
-
-    - network:
-        - Berlin
-        - London
-        - Paris
-      result:
-        cccccccccccccccccccccccccccccccccccccccc:
-          storage:
-            # Coinbase access pre-Shanghai is cold
-            0x0:  2600
