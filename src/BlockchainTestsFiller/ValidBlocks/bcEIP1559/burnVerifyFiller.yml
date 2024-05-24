@@ -418,59 +418,9 @@ burnVerify:
 
 
   expect:
-  - network:
-    - Paris
-    result:
-      # Number of wei "missing" because they were burned
-      0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC:
-        storage:
-          # Block one
-          0x0001:  68195750   # Wei burned (in all blocks so far)
-          0x1001:     77938   # Gas used (<wei burned> / <baseFee>)
-
-          # Block two
-          0x0002: 160527858   # Wei burned in this block:  92349726
-          0x1002:    120538   # 92355854 / 766
- 
-          # Block three (same transactions as block two, lower baseFee)          
-          0x0003: 241408856   # Wei burned in this block:  80896431
-          0x1003:    120538   # 80901799 / 671
-          
-          # Block four (new transactions)
-          0x0004: 395786492   # Wei burned in this block: 154391160
-          0x1004:    262547   # 154391160 / 588
-
-          # Block five (same transactions as block four, but with tips)
-          0x0005: 530998197   # Wei burned in this block: 135223550
-          0x1005:    262547   # 135223550 / 515
-
-          # Block six (still the same transactions as block four, but
-          # tips calculated based on maxFeePerGas 
-          # rather than maxPriorityFeePerGas
-          0x0006: 649406894   # Wei burned in this block: 118419070
-          0x1006:    262547   # 118419070 / 451
-
-          # Temporary value is it easiest not to erase
-          0xffffff: 0x018b
-
-
-      # The base fees at the different blocks
-      0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCD:
-        storage:
-          0x01: 875
-          0x02: 766
-          0x03: 671
-          0x04: 588
-          0x05: 515
-          0x06: 451
-
-
-
-
-
 
   - network:
-    - '>=Shanghai'
+    - '>=Cancun'
     result:
       # This data is affected by solc version, latest fetch solc21
       # Number of wei "missing" because they were burned

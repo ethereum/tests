@@ -129,32 +129,6 @@ extcodehashEmptySuicide:
 
   expect:
   - network:
-    - "Istanbul"
-    - "Berlin"
-    - "London"
-    - "Paris"
-    - "Shanghai"
-    result:
-      0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC:
-        storage:
-          0x0000: 0x05
-
-          # Before SELFDESTRUCT
-          0x0001: 0x2951f94cc6db6e9b3de9e43ccbd2c84491c46fc3be255c6634299f82b37baaf8
-          0x0101: 0x00
-
-          # After SELFDESTRUCT, same block
-          0x0002: 0x00
-          0x0102: 0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470
-
-          # After SELFDESTRUCT, next block
-          0x0003: 0x00
-          0x0103: 0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470
-
-          # After the dead account is given 1 wei
-          0x0004: 0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470
-          0x0104: 0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470
-  - network:
     - ">=Cancun"
     result:
       0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC:

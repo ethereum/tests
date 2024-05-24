@@ -23,22 +23,7 @@
 	    "sealEngine" : "NoProof",
         "expect" : [
 	        {
-                "network" : ["Istanbul", "Berlin"],
-                "result" : {
-                    "0x095e7baea6a6c7c4c2dfeb977efac326af552d87" : {
-                        "balance" : "0",
-                        "storage" : {
-                        }
-                    },
-                    "0x195e7baea6a6c7c4c2dfeb977efac326af552d87" : {
-                        "balance" : "200000",
-                        "storage" : {
-                        }
-                    }
-                }
-            },
-	        {
-                "network" : [">=London"],
+                "network" : [">=Cancun"],
                 "result" : {
                     "0x095e7baea6a6c7c4c2dfeb977efac326af552d87" : {
                         "balance" : "0",
@@ -82,14 +67,14 @@
                 "expectException" : {
                     "Istanbul" : "TR_GasLimitReached",
                     "Berlin" : "TR_GasLimitReached",
-                    ">=London" : "TR_FeeCapLessThanBlocksORGasLimitReached"
+                    ">=Cancun" : "TR_FeeCapLessThanBlocksORGasLimitReached"
                 },
                 "transactions" : [
                      {
                         "expectException" : {
                             "Istanbul" : "TR_GasLimitReached",
                             "Berlin" : "TR_GasLimitReached",
-                            ">=London" : "TR_FeeCapLessThanBlocksORGasLimitReached"
+                            ">=Cancun" : "TR_FeeCapLessThanBlocksORGasLimitReached"
                         },
                         "data" : "",
                         "gasLimit" : "1100000",
@@ -122,12 +107,12 @@
            {
                "blocknumber" : "2",
                "expectException" : {
-                    ">=London" : "TR_FeeCapLessThanBlocks"
+                    ">=Cancun" : "TR_FeeCapLessThanBlocks"
                 },
                 "transactions" : [
                      {
                         "expectException" : {
-                            ">=London" : "TR_FeeCapLessThanBlocks"
+                            ">=Cancun" : "TR_FeeCapLessThanBlocks"
                         },
                         "data" : "",
                         "gasLimit" : "100000",

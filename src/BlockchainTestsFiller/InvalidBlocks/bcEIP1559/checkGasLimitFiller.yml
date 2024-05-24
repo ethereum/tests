@@ -53,7 +53,7 @@ checkGasLimit:
       gasLimit: 4000000  # 4m gas
     blocknumber: "1"
     expectException:
-      ">=London": TR_GasLimitReached
+      ">=Cancun": TR_GasLimitReached
     transactions:
     - data: ''
       accessList: []
@@ -84,7 +84,7 @@ checkGasLimit:
       value: 0x0
     - data: ''
       expectException:
-        ">=London": TR_GasLimitReached
+        ">=Cancun": TR_GasLimitReached
       accessList: []
       gasLimit: 1000000  # 1m gas
       maxPriorityFeePerGas: 0x00
@@ -192,11 +192,11 @@ checkGasLimit:
       gasLimit: 4000000  # 4m gas
     blocknumber: "4"
     expectException:
-      ">=London": TR_GasLimitReached
+      ">=Cancun": TR_GasLimitReached
     transactions:
     - data: ''
       expectException:
-        ">=London": TR_GasLimitReached
+        ">=Cancun": TR_GasLimitReached
       accessList: []
       gasLimit: 4000001
       maxPriorityFeePerGas: 0x00
@@ -212,7 +212,7 @@ checkGasLimit:
 
   expect:
   - network:
-    - ">=London"
+    - ">=Cancun"
     # No real result, this test is based on whether transactions are 
     # considered valid or not. But at least we can count transactions
     result:

@@ -60,7 +60,7 @@ badUncles:
     expectException:
       'London': InvalidGasLimit2
       'Paris': 3675PreParis1559BlockRejected
-      '>=Shanghai': PostParisUncleHashIsNotEmpty
+      '>=Cancun': PostParisUncleHashIsNotEmpty
 
   # Excessively high gasLimit in uncle
   - transactions: []
@@ -71,7 +71,7 @@ badUncles:
     expectException:
       'London': InvalidGasLimit2
       'Paris': 3675PreParis1559BlockRejected
-      '>=Shanghai': PostParisUncleHashIsNotEmpty
+      '>=Cancun': PostParisUncleHashIsNotEmpty
 
 
   # Acceptable gasLimit (same as the previous one)
@@ -84,7 +84,7 @@ badUncles:
         gasLimit: 10240000
     expectException:
       'Paris': 3675PreParis1559BlockRejected
-      '>=Shanghai': PostParisUncleHashIsNotEmpty
+      '>=Cancun': PostParisUncleHashIsNotEmpty
 
 
   # Acceptable gasLimit (almost too low)
@@ -97,7 +97,7 @@ badUncles:
         gasLimit: 10230001
     expectException:
       'Paris': 3675PreParis1559BlockRejected
-      '>=Shanghai': PostParisUncleHashIsNotEmpty
+      '>=Cancun': PostParisUncleHashIsNotEmpty
 
 
   # Acceptable gasLimit (almost too high)
@@ -110,7 +110,7 @@ badUncles:
         gasLimit: 10249999
     expectException:
       'Paris': 3675PreParis1559BlockRejected
-      '>=Shanghai': PostParisUncleHashIsNotEmpty
+      '>=Cancun': PostParisUncleHashIsNotEmpty
 
   # Wrong baseFee
   - transactions: []
@@ -121,7 +121,7 @@ badUncles:
     expectException:
       'London': 1559BlockImportImpossible_BaseFeeWrong
       'Paris': 3675PreParis1559BlockRejected
-      '>=Shanghai': PostParisUncleHashIsNotEmpty
+      '>=Cancun': PostParisUncleHashIsNotEmpty
 
   # Wrong baseFee
   - transactions: []
@@ -132,7 +132,7 @@ badUncles:
     expectException:
       'London': 1559BlockImportImpossible_BaseFeeWrong
       'Paris': 3675PreParis1559BlockRejected
-      '>=Shanghai': PostParisUncleHashIsNotEmpty
+      '>=Cancun': PostParisUncleHashIsNotEmpty
 
 
   # Correct baseFee
@@ -154,7 +154,7 @@ badUncles:
         baseFeePerGas: 671
     expectException:
       'Paris': 3675PreParis1559BlockRejected
-      '>=Shanghai': PostParisUncleHashIsNotEmpty
+      '>=Cancun': PostParisUncleHashIsNotEmpty
 
 
 
@@ -165,7 +165,7 @@ badUncles:
 
   expect:
   - network:
-    - ">=London"
+    - ">=Cancun"
     # No real result, this test is based on exceptions
     # No transactions, so no need to check the nonces either
     result: {}

@@ -159,7 +159,7 @@ transFail:
     # Transaction type 2, maxPriorityFeePerGas > maxFeePerGas (by one)
     - data: :abi f(uint) 0x0105
       expectException:
-        ">=London": TR_TipGtFeeCap
+        ">=Cancun": TR_TipGtFeeCap
       accessList: []
       gasLimit: 50000   
       maxPriorityFeePerGas: 1001
@@ -173,7 +173,7 @@ transFail:
     # Transaction type 2, maxPriorityFeePerGas > maxFeePerGas
     - data: :abi f(uint) 0x0106
       expectException:
-        ">=London": TR_TipGtFeeCap
+        ">=Cancun": TR_TipGtFeeCap
       accessList: []
       gasLimit: 50000   
       maxPriorityFeePerGas: 10000
@@ -236,7 +236,7 @@ transFail:
     # Transaction type 2, maxPriorityFeePerGas > maxFeePerGas (by one)
     - data: :abi f(uint) 0x0205
       expectException:
-        ">=London": TR_TipGtFeeCap
+        ">=Cancun": TR_TipGtFeeCap
       accessList: []
       gasLimit: 50000   
       maxPriorityFeePerGas: 1001
@@ -250,7 +250,7 @@ transFail:
     # Transaction type 2, maxPriorityFeePerGas > maxFeePerGas
     - data: :abi f(uint) 0x0206
       expectException:
-        ">=London": TR_TipGtFeeCap
+        ">=Cancun": TR_TipGtFeeCap
       accessList: []
       gasLimit: 50000   
       maxPriorityFeePerGas: 10000
@@ -279,7 +279,7 @@ transFail:
     # Transaction type 2, maxFeePerGas * gasLimit > account balance
     - data: :abi f(uint) 0x0302
       expectException:
-        ">=London": TR_NoFunds
+        ">=Cancun": TR_NoFunds
       accessList: []
       gasLimit: 1000000000
       maxPriorityFeePerGas:   0
@@ -305,7 +305,7 @@ transFail:
     # spent some of it)
     - data: :abi f(uint) 0x0304
       expectException:
-        ">=London": TR_NoFunds
+        ">=Cancun": TR_NoFunds
       accessList: []
       gasLimit: 100000000
       maxPriorityFeePerGas:   0
@@ -320,7 +320,7 @@ transFail:
     # but only by 1 wei
     - data: :abi f(uint) 0x0305
       expectException:
-        ">=London": TR_NoFunds
+        ">=Cancun": TR_NoFunds
       accessList: []
       gasLimit: 100000000
       maxPriorityFeePerGas:   0
@@ -345,7 +345,7 @@ transFail:
     # because we spent some
     - data: :abi f(uint) 0x0307
       expectException:
-        ">=London": TR_NoFunds
+        ">=Cancun": TR_NoFunds
       accessList: []
       gasLimit: 100000000
       gasPrice:      1000
@@ -368,7 +368,7 @@ transFail:
     # because we spent some
     - data: :abi f(uint) 0x0309
       expectException:
-        ">=London": TR_NoFunds
+        ">=Cancun": TR_NoFunds
       gasLimit: 100000000
       gasPrice:      1000
       nonce: auto
@@ -385,7 +385,7 @@ transFail:
 
   expect:
   - network:
-    - ">=London"
+    - ">=Cancun"
 
     # The test here is the number of valid transactions
     result:

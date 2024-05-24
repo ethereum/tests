@@ -103,7 +103,7 @@ badTimestamp:
     blocknumber: 4
     transactions: []
     expectException:
-      '>=London': InvalidTimestampOlderParent
+      '>=Cancun': InvalidTimestampOlderParent
 
 
   # Another legitimate block
@@ -123,7 +123,7 @@ badTimestamp:
     blocknumber: 5
     transactions: []
     expectException:
-      '>=London': InvalidTimestampOlderParent
+      '>=Cancun': InvalidTimestampOlderParent
 
   # Time stands still?
   - blockHeader:
@@ -131,7 +131,7 @@ badTimestamp:
     blocknumber: 5
     transactions: []
     expectException:
-      '>=London': InvalidTimestampOlderParent
+      '>=Cancun': InvalidTimestampOlderParent
 
 
   # Finally a legitimate block
@@ -188,7 +188,7 @@ badTimestamp:
 
   expect:
   - network:
-    - ">=London"
+    - ">=Cancun"
     # No real result, this test is based on exceptions
     # No transactions, so no need to check the nonces either
     result: {}

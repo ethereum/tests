@@ -74,13 +74,13 @@ badBlocks:
       baseFeePerGas: 0x36c
     blocknumber: 1
     expectException:
-      '>=London': 1559BlockImportImpossible_BaseFeeWrong
+      '>=Cancun': 1559BlockImportImpossible_BaseFeeWrong
     transactions: []
   - blockHeader:
       baseFeePerGas: 0x36a
     blocknumber: 1
     expectException:
-      '>=London': 1559BlockImportImpossible_BaseFeeWrong
+      '>=Cancun': 1559BlockImportImpossible_BaseFeeWrong
     transactions: []
   - blockHeader:
       baseFeePerGas: 0x36b
@@ -99,13 +99,13 @@ badBlocks:
       gasLimit: 2072693247
     blocknumber: 2
     expectException:
-      '>=London': InvalidGasLimit2
+      '>=Cancun': InvalidGasLimit2
     transactions: []
   - blockHeader:
       gasLimit: 1072693248 # block.gas_limit = parent_gas_limit - parent_gas_limit // 1024
     blocknumber: 2
     expectException:
-      '>=London': InvalidGasLimit2
+      '>=Cancun': InvalidGasLimit2
     transactions: []
   - blockHeader:
       gasLimit: 1072693249    # 1024*1024*1023 (1023/1024 of the previous gasLimit)
@@ -125,13 +125,13 @@ badBlocks:
       gasLimit: 2073740801
     blocknumber: 3	
     expectException:
-      '>=London': InvalidGasLimit2
+      '>=Cancun': InvalidGasLimit2
     transactions: []
   - blockHeader:
       gasLimit: 1073740801  # block.gas_limit = parent_gas_limit + parent_gas_limit // 1024
     blocknumber: 3
     expectException:
-      '>=London': InvalidGasLimit2
+      '>=Cancun': InvalidGasLimit2
     transactions: []
   - blockHeader:
       # 1024*1023*1025 (1025/1024 of the previous limit) plus one. The one is accepted
@@ -147,7 +147,7 @@ badBlocks:
 
   expect:
   - network:
-    - ">=London"
+    - ">=Cancun"
     # No real result, this test is based on exceptions
     # No transactions, so no need to check the nonces either
     result: {}
