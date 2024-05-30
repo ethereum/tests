@@ -8,6 +8,11 @@ branches:
     - develop
 sudo: false
 install:
+# fix travis issues
+- sudo apt-key del 656408E390CFB1F5
+- wget -qO - https://www.mongodb.org/static/pgp/server-4.4.asc | sudo apt-key add -
+
+# install deps
 - pip install pyyaml jsonschema pysha3 
 - sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
 - sudo apt-get update
