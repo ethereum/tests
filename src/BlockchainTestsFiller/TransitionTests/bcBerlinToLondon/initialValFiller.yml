@@ -141,7 +141,7 @@ initialVal:
     - data: :abi f(uint) 0x4030
       accessList: []
       expectException:
-        BerlinToLondonAt5: TR_TypeNotSupported
+        BerlinToLondonAt5: TransactionException.TYPE_NOT_SUPPORTED
       gasLimit: 500000
       maxFeePerGas:  10000000000
       maxPriorityFeePerGas: 1000
@@ -154,7 +154,7 @@ initialVal:
     - data: :abi f(uint) 0x4030
       accessList: []
       expectException:
-        BerlinToLondonAt5: TR_TypeNotSupported
+        BerlinToLondonAt5: TransactionException.TYPE_NOT_SUPPORTED
       gasLimit: 500000
       maxFeePerGas:  10000000000
       maxPriorityFeePerGas: 1000
@@ -285,7 +285,7 @@ initialVal:
     # with otherwise unused accounts  
     - data: :abi f(uint) 0x6060
       expectException:
-        BerlinToLondonAt5: TR_FeeCapLessThanBlocks
+        BerlinToLondonAt5: TransactionException.INSUFFICIENT_MAX_FEE_PER_GAS
       gasLimit: 1000000
       gasPrice: 875000043
       nonce: auto
@@ -320,7 +320,7 @@ initialVal:
     # with otherwise unused accounts  
     - data: :abi f(uint) 0x6090
       expectException:
-        BerlinToLondonAt5: TR_FeeCapLessThanBlocks
+        BerlinToLondonAt5: TransactionException.INSUFFICIENT_MAX_FEE_PER_GAS
       gasLimit: 1000000
       gasPrice: 875000043
       nonce: auto
@@ -356,7 +356,7 @@ initialVal:
     # with otherwise unused accounts  
     - data: :abi f(uint) 0x60C0
       expectException:
-        BerlinToLondonAt5: TR_FeeCapLessThanBlocks
+        BerlinToLondonAt5: TransactionException.INSUFFICIENT_MAX_FEE_PER_GAS
       gasLimit: 1000000
       gasPrice: 875000043
       nonce: auto
@@ -371,7 +371,7 @@ initialVal:
       gasLimit: 0x20000000000
     blocknumber: 7
     expectException:
-      BerlinToLondonAt5: LegacyBlockImportImpossible2
+      BerlinToLondonAt5: BlockException.IMPORT_IMPOSSIBLE_LEGACY_WRONG_PARENT
   - transactions: []
 
   # The real block 7

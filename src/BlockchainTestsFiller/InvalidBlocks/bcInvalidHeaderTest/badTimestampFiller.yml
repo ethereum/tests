@@ -103,7 +103,7 @@ badTimestamp:
     blocknumber: 4
     transactions: []
     expectException:
-      '>=Cancun': InvalidTimestampOlderParent
+      '>=Cancun': BlockException.INVALID_BLOCK_TIMESTAMP_OLDER_THAN_PARENT
 
 
   # Another legitimate block
@@ -123,7 +123,7 @@ badTimestamp:
     blocknumber: 5
     transactions: []
     expectException:
-      '>=Cancun': InvalidTimestampOlderParent
+      '>=Cancun': BlockException.INVALID_BLOCK_TIMESTAMP_OLDER_THAN_PARENT
 
   # Time stands still?
   - blockHeader:
@@ -131,7 +131,7 @@ badTimestamp:
     blocknumber: 5
     transactions: []
     expectException:
-      '>=Cancun': InvalidTimestampOlderParent
+      '>=Cancun': BlockException.INVALID_BLOCK_TIMESTAMP_OLDER_THAN_PARENT
 
 
   # Finally a legitimate block

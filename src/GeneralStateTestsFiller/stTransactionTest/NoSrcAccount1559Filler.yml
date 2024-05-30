@@ -61,8 +61,8 @@ NoSrcAccount1559:
         gas: !!int 0
         value: !!int -1
       expectException:
-        ">=Cancun" : "TR_NoFundsOrGas"        #Nimbus get different exception type here
-        "<London" : "TR_TypeNotSupported"
+        ">=Cancun" : "TransactionException.INSUFFICIENT_ACCOUNT_FUNDS|TransactionException.INTRINSIC_GAS_TOO_LOW"        #Nimbus get different exception type here
+        "<London" : "TransactionException.TYPE_NOT_SUPPORTED"
       result: {}
 
     - network:
@@ -72,8 +72,8 @@ NoSrcAccount1559:
         gas: !!int 1
         value: !!int -1
       expectException:
-        ">=Cancun" : "TR_NoFunds"
-        "<London" : "TR_TypeNotSupported"
+        ">=Cancun" : "TransactionException.INSUFFICIENT_ACCOUNT_FUNDS"
+        "<London" : "TransactionException.TYPE_NOT_SUPPORTED"
       result: {}
 
 
@@ -85,8 +85,8 @@ NoSrcAccount1559:
         gas: !!int 2
         value: !!int 1
       expectException:
-        ">=Cancun" : "TR_NoFundsOrGas"
-        "<London" : "TR_TypeNotSupported"
+        ">=Cancun" : "TransactionException.INSUFFICIENT_ACCOUNT_FUNDS|TransactionException.INTRINSIC_GAS_TOO_LOW"
+        "<London" : "TransactionException.TYPE_NOT_SUPPORTED"
       result: {}
 
 
@@ -99,7 +99,7 @@ NoSrcAccount1559:
         gas: !!int 2
         value: !!int 0
       expectException:
-        ">=Cancun" : "IntrinsicGas"
-        "<London" : "TR_TypeNotSupported"
+        ">=Cancun" : "TransactionException.INTRINSIC_GAS_TOO_LOW"
+        "<London" : "TransactionException.TYPE_NOT_SUPPORTED"
       result: {}
 

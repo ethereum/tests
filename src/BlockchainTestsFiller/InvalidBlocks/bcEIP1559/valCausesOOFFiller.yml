@@ -165,7 +165,7 @@ valCausesOOF:
       to: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
       value: 0
       expectException:
-        '>=Cancun': TR_NoFunds
+        '>=Cancun': TransactionException.INSUFFICIENT_ACCOUNT_FUNDS
 
 
     # Max fee 1000, gas limit 100k, should work
@@ -192,7 +192,7 @@ valCausesOOF:
       to: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
       value: 0
       expectException:
-        '>=Cancun': TR_NoFunds
+        '>=Cancun': TransactionException.INSUFFICIENT_ACCOUNT_FUNDS
 
 
     # Max fee 1000, gas limit 100k, but value=1 so it fails
@@ -206,7 +206,7 @@ valCausesOOF:
       to: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
       value: 1
       expectException:
-        '>=Cancun': TR_NoFunds
+        '>=Cancun': TransactionException.INSUFFICIENT_ACCOUNT_FUNDS
 
 
 
@@ -233,7 +233,7 @@ valCausesOOF:
       to: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
       value: 50_000_001
       expectException:
-        '>=Cancun': TR_NoFunds
+        '>=Cancun': TransactionException.INSUFFICIENT_ACCOUNT_FUNDS
 
 
     # Max fee 1400, gas limit 100k, value 50M+1, balance 200M, should work
@@ -259,7 +259,7 @@ valCausesOOF:
       to: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
       value: 90_000_001
       expectException:
-        '>=Cancun': TR_NoFunds
+        '>=Cancun': TransactionException.INSUFFICIENT_ACCOUNT_FUNDS
 
 
 
@@ -286,7 +286,7 @@ valCausesOOF:
       to: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
       value: 10_000_001
       expectException:
-        '>=Cancun': TR_NoFunds
+        '>=Cancun': TransactionException.INSUFFICIENT_ACCOUNT_FUNDS
 
 
 
@@ -314,7 +314,7 @@ valCausesOOF:
       to: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
       value: 10_000_001
       expectException:
-        '>=Cancun': TR_NoFunds
+        '>=Cancun': TransactionException.INSUFFICIENT_ACCOUNT_FUNDS
 
 
 
@@ -367,7 +367,7 @@ valCausesOOF:
       to: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
       value: 300_000_000
       expectException:
-        '>=Cancun': TR_NoFundsOrGas
+        '>=Cancun': TransactionException.INSUFFICIENT_ACCOUNT_FUNDS|TransactionException.INTRINSIC_GAS_TOO_LOW
 
 
     # Fail because value > balance, type 1
@@ -380,7 +380,7 @@ valCausesOOF:
       to: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
       value: 300_000_000
       expectException:
-        '>=Cancun': TR_NoFundsOrGas
+        '>=Cancun': TransactionException.INSUFFICIENT_ACCOUNT_FUNDS|TransactionException.INTRINSIC_GAS_TOO_LOW
 
 
 
@@ -395,7 +395,7 @@ valCausesOOF:
       to: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
       value: 300_000_000
       expectException:
-        '>=Cancun': TR_NoFundsOrGas
+        '>=Cancun': TransactionException.INSUFFICIENT_ACCOUNT_FUNDS|TransactionException.INTRINSIC_GAS_TOO_LOW
 
 
 

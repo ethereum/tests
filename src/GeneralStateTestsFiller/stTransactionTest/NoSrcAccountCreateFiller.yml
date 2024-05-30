@@ -65,8 +65,8 @@ NoSrcAccountCreate:
         gas: !!int 0
         value: !!int -1
       expectException:
-        ">=Homestead" : "TR_NoFundsOrGas"    #nimbus have different exception type here
-        "<Homestead" : "TR_NoFunds"
+        ">=Homestead" : "TransactionException.INSUFFICIENT_ACCOUNT_FUNDS|TransactionException.INTRINSIC_GAS_TOO_LOW"    #nimbus have different exception type here
+        "<Homestead" : "TransactionException.INSUFFICIENT_ACCOUNT_FUNDS"
       result: {}
     - network:
         - '>=Cancun'
@@ -75,7 +75,7 @@ NoSrcAccountCreate:
         gas: !!int 0
         value: !!int -1
       expectException:
-        ">=Frontier" : "TR_NoFundsOrGas"    #nimbus have different exception type here
+        ">=Frontier" : "TransactionException.INSUFFICIENT_ACCOUNT_FUNDS|TransactionException.INTRINSIC_GAS_TOO_LOW"    #nimbus have different exception type here
       result: {}
     - network:
         - '>=Cancun'
@@ -84,7 +84,7 @@ NoSrcAccountCreate:
         gas: !!int 1
         value: !!int -1
       expectException:
-        ">=Frontier" : "TR_NoFunds"
+        ">=Frontier" : "TransactionException.INSUFFICIENT_ACCOUNT_FUNDS"
       result: {}
 
 
@@ -96,7 +96,7 @@ NoSrcAccountCreate:
         gas: !!int 2
         value: !!int 1
       expectException:
-        ">=Frontier" : "TR_NoFundsOrGas"        #nimbus have different exception type here
+        ">=Frontier" : "TransactionException.INSUFFICIENT_ACCOUNT_FUNDS|TransactionException.INTRINSIC_GAS_TOO_LOW"        #nimbus have different exception type here
       result: {}
 
 
@@ -109,7 +109,7 @@ NoSrcAccountCreate:
         gas: !!int 2
         value: !!int 0
       expectException:
-        ">=Frontier" : "IntrinsicGas"
+        ">=Frontier" : "TransactionException.INTRINSIC_GAS_TOO_LOW"
       result: {}
 
 
@@ -123,8 +123,8 @@ NoSrcAccountCreate:
         gas: !!int 0
         value: !!int -1
       expectException:
-        ">=Cancun" : "TR_NoFundsOrGas"
-        "<Berlin" : "TR_TypeNotSupported"
+        ">=Cancun" : "TransactionException.INSUFFICIENT_ACCOUNT_FUNDS|TransactionException.INTRINSIC_GAS_TOO_LOW"
+        "<Berlin" : "TransactionException.TYPE_NOT_SUPPORTED"
       result: {}
     - network:
         - '>=Cancun'
@@ -133,8 +133,8 @@ NoSrcAccountCreate:
         gas: !!int 1
         value: !!int -1
       expectException:
-        ">=Cancun" : "TR_NoFunds"
-        "<Berlin" : "TR_TypeNotSupported"
+        ">=Cancun" : "TransactionException.INSUFFICIENT_ACCOUNT_FUNDS"
+        "<Berlin" : "TransactionException.TYPE_NOT_SUPPORTED"
       result: {}
 
 
@@ -146,8 +146,8 @@ NoSrcAccountCreate:
         gas: !!int 2
         value: !!int 1
       expectException:
-        ">=Cancun" : "TR_NoFundsOrGas"
-        "<Berlin" : "TR_TypeNotSupported"
+        ">=Cancun" : "TransactionException.INSUFFICIENT_ACCOUNT_FUNDS|TransactionException.INTRINSIC_GAS_TOO_LOW"
+        "<Berlin" : "TransactionException.TYPE_NOT_SUPPORTED"
       result: {}
 
 
@@ -160,7 +160,7 @@ NoSrcAccountCreate:
         gas: !!int 2
         value: !!int 0
       expectException:
-        ">=Cancun" : "IntrinsicGas"
-        "<Berlin" : "TR_TypeNotSupported"
+        ">=Cancun" : "TransactionException.INTRINSIC_GAS_TOO_LOW"
+        "<Berlin" : "TransactionException.TYPE_NOT_SUPPORTED"
       result: {}
 

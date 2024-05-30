@@ -602,7 +602,7 @@ intrinsicOrFail:
     # Empty access list and no call data
     - data: ''
       expectException:
-        ">=Cancun": TR_IntrinsicGas
+        ">=Cancun": TransactionException.INTRINSIC_GAS_TOO_LOW
       accessList: []
       gasLimit: 20999	
       maxPriorityFeePerGas: 0x00
@@ -628,7 +628,7 @@ intrinsicOrFail:
     # Empty access list and one call data byte (stored in #1)
     - data: :raw 0x11
       expectException:
-        ">=Cancun": TR_IntrinsicGas
+        ">=Cancun": TransactionException.INTRINSIC_GAS_TOO_LOW
       accessList: []
       gasLimit: 21015
       maxPriorityFeePerGas: 0x00
@@ -654,7 +654,7 @@ intrinsicOrFail:
     # Empty access list and two call data bytes, (stored in #2)
     - data: :raw 0x1122
       expectException:
-        ">=Cancun": TR_IntrinsicGas
+        ">=Cancun": TransactionException.INTRINSIC_GAS_TOO_LOW
       accessList: []
       gasLimit: 21031
       maxPriorityFeePerGas: 0x00
@@ -681,7 +681,7 @@ intrinsicOrFail:
     # Empty access list and two call data bytes, one of them zero (stored in #3)
     - data: :raw 0x0011
       expectException:
-        ">=Cancun": TR_IntrinsicGas
+        ">=Cancun": TransactionException.INTRINSIC_GAS_TOO_LOW
       accessList: []
       gasLimit: 21019
       maxPriorityFeePerGas: 0x00
@@ -706,7 +706,7 @@ intrinsicOrFail:
 
     - data: :raw 0x0000
       expectException:
-        ">=Cancun": TR_IntrinsicGas
+        ">=Cancun": TransactionException.INTRINSIC_GAS_TOO_LOW
       accessList: []
       gasLimit: 21007	
       maxPriorityFeePerGas: 0x00
@@ -730,7 +730,7 @@ intrinsicOrFail:
 
     - data: :raw 0x01020304050607080910111213141516171819202122232425262728293031
       expectException:
-        ">=Cancun": TR_IntrinsicGas
+        ">=Cancun": TransactionException.INTRINSIC_GAS_TOO_LOW
       accessList: []
       gasLimit: 21495	
       maxPriorityFeePerGas: 0x00
@@ -755,7 +755,7 @@ intrinsicOrFail:
     - data: :raw 0x0102030405060708091011121314151617181920212223242526272829303132
       accessList: []
       expectException:
-        ">=Cancun": TR_IntrinsicGas
+        ">=Cancun": TransactionException.INTRINSIC_GAS_TOO_LOW
       gasLimit: 21511	
       maxPriorityFeePerGas: 0x00
       maxFeePerGas: 100000
@@ -778,7 +778,7 @@ intrinsicOrFail:
 
     - data: :raw 0x010203040506070809101112131415161718192021222324252627282930313233
       expectException:
-        ">=Cancun": TR_IntrinsicGas
+        ">=Cancun": TransactionException.INTRINSIC_GAS_TOO_LOW
       accessList: []
       gasLimit: 21527	
       maxPriorityFeePerGas: 0x00
@@ -804,7 +804,7 @@ intrinsicOrFail:
     - data: :raw 0x000000000000000000000000000000000000000000000000000000000000000000
 #                  010203040506070809101112131415161718192021222324252627282930313233
       expectException:
-        ">=Cancun": TR_IntrinsicGas
+        ">=Cancun": TransactionException.INTRINSIC_GAS_TOO_LOW
       accessList: []
       gasLimit: 21131	
       maxPriorityFeePerGas: 0x00
@@ -829,7 +829,7 @@ intrinsicOrFail:
 
     - data: :raw 0x000000000000000000000000000000000000000000000000000000000000000000010203040506070809101112131415161718192021222324252627282930313233
       expectException:
-        ">=Cancun": TR_IntrinsicGas
+        ">=Cancun": TransactionException.INTRINSIC_GAS_TOO_LOW
       accessList: []
       gasLimit: 21659	
       maxPriorityFeePerGas: 0x00
@@ -856,7 +856,7 @@ intrinsicOrFail:
 
     - data: ''
       expectException:
-        ">=Cancun": TR_IntrinsicGas
+        ">=Cancun": TransactionException.INTRINSIC_GAS_TOO_LOW
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys: []
@@ -884,7 +884,7 @@ intrinsicOrFail:
 
     - data: :raw 0x11
       expectException:
-        ">=Cancun": TR_IntrinsicGas
+        ">=Cancun": TransactionException.INTRINSIC_GAS_TOO_LOW
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys: []
@@ -914,7 +914,7 @@ intrinsicOrFail:
 
     - data: :raw 0x1122
       expectException:
-        ">=Cancun": TR_IntrinsicGas
+        ">=Cancun": TransactionException.INTRINSIC_GAS_TOO_LOW
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys: []
@@ -945,7 +945,7 @@ intrinsicOrFail:
 
     - data: :raw 0x0011
       expectException:
-        ">=Cancun": TR_IntrinsicGas
+        ">=Cancun": TransactionException.INTRINSIC_GAS_TOO_LOW
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys: []
@@ -973,7 +973,7 @@ intrinsicOrFail:
 
     - data: :raw 0x0000
       expectException:
-        ">=Cancun": TR_IntrinsicGas
+        ">=Cancun": TransactionException.INTRINSIC_GAS_TOO_LOW
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys: []
@@ -1003,7 +1003,7 @@ intrinsicOrFail:
 
     - data: :raw 0x01020304050607080910111213141516171819202122232425262728293031
       expectException:
-        ">=Cancun": TR_IntrinsicGas
+        ">=Cancun": TransactionException.INTRINSIC_GAS_TOO_LOW
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys: []
@@ -1031,7 +1031,7 @@ intrinsicOrFail:
 
     - data: :raw 0x0102030405060708091011121314151617181920212223242526272829303132
       expectException:
-        ">=Cancun": TR_IntrinsicGas
+        ">=Cancun": TransactionException.INTRINSIC_GAS_TOO_LOW
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys: []
@@ -1059,7 +1059,7 @@ intrinsicOrFail:
 
     - data: :raw 0x010203040506070809101112131415161718192021222324252627282930313233
       expectException:
-        ">=Cancun": TR_IntrinsicGas
+        ">=Cancun": TransactionException.INTRINSIC_GAS_TOO_LOW
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys: []
@@ -1090,7 +1090,7 @@ intrinsicOrFail:
     - data: :raw 0x000000000000000000000000000000000000000000000000000000000000000000
 #                  010203040506070809101112131415161718192021222324252627282930313233
       expectException:
-        ">=Cancun": TR_IntrinsicGas
+        ">=Cancun": TransactionException.INTRINSIC_GAS_TOO_LOW
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys: []
@@ -1120,7 +1120,7 @@ intrinsicOrFail:
 
     - data: :raw 0x000000000000000000000000000000000000000000000000000000000000000000010203040506070809101112131415161718192021222324252627282930313233
       expectException:
-        ">=Cancun": TR_IntrinsicGas
+        ">=Cancun": TransactionException.INTRINSIC_GAS_TOO_LOW
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys: []
@@ -1149,7 +1149,7 @@ intrinsicOrFail:
 
     - data: ''
       expectException:
-        ">=Cancun": TR_IntrinsicGas
+        ">=Cancun": TransactionException.INTRINSIC_GAS_TOO_LOW
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys:
@@ -1181,7 +1181,7 @@ intrinsicOrFail:
 
     - data: :raw 0x11
       expectException:
-        ">=Cancun": TR_IntrinsicGas
+        ">=Cancun": TransactionException.INTRINSIC_GAS_TOO_LOW
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys:
@@ -1212,7 +1212,7 @@ intrinsicOrFail:
 
     - data: :raw 0x1122
       expectException:
-        ">=Cancun": TR_IntrinsicGas
+        ">=Cancun": TransactionException.INTRINSIC_GAS_TOO_LOW
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys:
@@ -1243,7 +1243,7 @@ intrinsicOrFail:
 
     - data: :raw 0x0011
       expectException:
-        ">=Cancun": TR_IntrinsicGas
+        ">=Cancun": TransactionException.INTRINSIC_GAS_TOO_LOW
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys:
@@ -1275,7 +1275,7 @@ intrinsicOrFail:
 
     - data: :raw 0x0000
       expectException:
-        ">=Cancun": TR_IntrinsicGas
+        ">=Cancun": TransactionException.INTRINSIC_GAS_TOO_LOW
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys:
@@ -1307,7 +1307,7 @@ intrinsicOrFail:
 
     - data: :raw 0x01020304050607080910111213141516171819202122232425262728293031
       expectException:
-        ">=Cancun": TR_IntrinsicGas
+        ">=Cancun": TransactionException.INTRINSIC_GAS_TOO_LOW
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys:
@@ -1338,7 +1338,7 @@ intrinsicOrFail:
 
     - data: :raw 0x0102030405060708091011121314151617181920212223242526272829303132
       expectException:
-        ">=Cancun": TR_IntrinsicGas
+        ">=Cancun": TransactionException.INTRINSIC_GAS_TOO_LOW
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys:
@@ -1368,7 +1368,7 @@ intrinsicOrFail:
 
     - data: :raw 0x010203040506070809101112131415161718192021222324252627282930313233
       expectException:
-        ">=Cancun": TR_IntrinsicGas
+        ">=Cancun": TransactionException.INTRINSIC_GAS_TOO_LOW
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys:
@@ -1400,7 +1400,7 @@ intrinsicOrFail:
     - data: :raw 0x000000000000000000000000000000000000000000000000000000000000000000
 #                  010203040506070809101112131415161718192021222324252627282930313233
       expectException:
-        ">=Cancun": TR_IntrinsicGas
+        ">=Cancun": TransactionException.INTRINSIC_GAS_TOO_LOW
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys:
@@ -1430,7 +1430,7 @@ intrinsicOrFail:
 
     - data: :raw 0x000000000000000000000000000000000000000000000000000000000000000000010203040506070809101112131415161718192021222324252627282930313233
       expectException:
-        ">=Cancun": TR_IntrinsicGas
+        ">=Cancun": TransactionException.INTRINSIC_GAS_TOO_LOW
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys:
@@ -1462,7 +1462,7 @@ intrinsicOrFail:
 
     - data: ''
       expectException:
-        ">=Cancun": TR_IntrinsicGas
+        ">=Cancun": TransactionException.INTRINSIC_GAS_TOO_LOW
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys:
@@ -1494,7 +1494,7 @@ intrinsicOrFail:
 
     - data: :raw 0x11
       expectException:
-        ">=Cancun": TR_IntrinsicGas
+        ">=Cancun": TransactionException.INTRINSIC_GAS_TOO_LOW
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys:
@@ -1526,7 +1526,7 @@ intrinsicOrFail:
 
     - data: :raw 0x1122
       expectException:
-        ">=Cancun": TR_IntrinsicGas
+        ">=Cancun": TransactionException.INTRINSIC_GAS_TOO_LOW
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys:
@@ -1560,7 +1560,7 @@ intrinsicOrFail:
 
     - data: :raw 0x0011
       expectException:
-        ">=Cancun": TR_IntrinsicGas
+        ">=Cancun": TransactionException.INTRINSIC_GAS_TOO_LOW
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys:
@@ -1592,7 +1592,7 @@ intrinsicOrFail:
 
     - data: :raw 0x0000
       expectException:
-        ">=Cancun": TR_IntrinsicGas
+        ">=Cancun": TransactionException.INTRINSIC_GAS_TOO_LOW
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys:
@@ -1624,7 +1624,7 @@ intrinsicOrFail:
 
     - data: :raw 0x01020304050607080910111213141516171819202122232425262728293031
       expectException:
-        ">=Cancun": TR_IntrinsicGas
+        ">=Cancun": TransactionException.INTRINSIC_GAS_TOO_LOW
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys:
@@ -1656,7 +1656,7 @@ intrinsicOrFail:
 
     - data: :raw 0x0102030405060708091011121314151617181920212223242526272829303132
       expectException:
-        ">=Cancun": TR_IntrinsicGas
+        ">=Cancun": TransactionException.INTRINSIC_GAS_TOO_LOW
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys:
@@ -1688,7 +1688,7 @@ intrinsicOrFail:
 
     - data: :raw 0x010203040506070809101112131415161718192021222324252627282930313233
       expectException:
-        ">=Cancun": TR_IntrinsicGas
+        ">=Cancun": TransactionException.INTRINSIC_GAS_TOO_LOW
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys:
@@ -1720,7 +1720,7 @@ intrinsicOrFail:
 
     - data: :raw 0x000000000000000000000000000000000000000000000000000000000000000000
       expectException:
-        ">=Cancun": TR_IntrinsicGas
+        ">=Cancun": TransactionException.INTRINSIC_GAS_TOO_LOW
 #                  010203040506070809101112131415161718192021222324252627282930313233
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
@@ -1755,7 +1755,7 @@ intrinsicOrFail:
 
     - data: :raw 0x000000000000000000000000000000000000000000000000000000000000000000010203040506070809101112131415161718192021222324252627282930313233
       expectException:
-        ">=Cancun": TR_IntrinsicGas
+        ">=Cancun": TransactionException.INTRINSIC_GAS_TOO_LOW
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys:
@@ -1791,7 +1791,7 @@ intrinsicOrFail:
 
     - data: ''
       expectException:
-        ">=Cancun": TR_IntrinsicGas
+        ">=Cancun": TransactionException.INTRINSIC_GAS_TOO_LOW
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys:
@@ -1827,7 +1827,7 @@ intrinsicOrFail:
 
     - data: :raw 0x11
       expectException:
-        ">=Cancun": TR_IntrinsicGas
+        ">=Cancun": TransactionException.INTRINSIC_GAS_TOO_LOW
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys:
@@ -1862,7 +1862,7 @@ intrinsicOrFail:
 
     - data: :raw 0x1122
       expectException:
-        ">=Cancun": TR_IntrinsicGas
+        ">=Cancun": TransactionException.INTRINSIC_GAS_TOO_LOW
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys:
@@ -1899,7 +1899,7 @@ intrinsicOrFail:
 
     - data: :raw 0x0011
       expectException:
-        ">=Cancun": TR_IntrinsicGas
+        ">=Cancun": TransactionException.INTRINSIC_GAS_TOO_LOW
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys:
@@ -1935,7 +1935,7 @@ intrinsicOrFail:
 
     - data: :raw 0x0000
       expectException:
-        ">=Cancun": TR_IntrinsicGas
+        ">=Cancun": TransactionException.INTRINSIC_GAS_TOO_LOW
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys:
@@ -1971,7 +1971,7 @@ intrinsicOrFail:
 
     - data: :raw 0x01020304050607080910111213141516171819202122232425262728293031
       expectException:
-        ">=Cancun": TR_IntrinsicGas
+        ">=Cancun": TransactionException.INTRINSIC_GAS_TOO_LOW
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys:
@@ -2007,7 +2007,7 @@ intrinsicOrFail:
 
     - data: :raw 0x0102030405060708091011121314151617181920212223242526272829303132
       expectException:
-        ">=Cancun": TR_IntrinsicGas
+        ">=Cancun": TransactionException.INTRINSIC_GAS_TOO_LOW
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys:
@@ -2045,7 +2045,7 @@ intrinsicOrFail:
 
     - data: :raw 0x010203040506070809101112131415161718192021222324252627282930313233
       expectException:
-        ">=Cancun": TR_IntrinsicGas
+        ">=Cancun": TransactionException.INTRINSIC_GAS_TOO_LOW
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys:
@@ -2084,7 +2084,7 @@ intrinsicOrFail:
     - data: :raw 0x000000000000000000000000000000000000000000000000000000000000000000
 #                  010203040506070809101112131415161718192021222324252627282930313233
       expectException:
-        ">=Cancun": TR_IntrinsicGas
+        ">=Cancun": TransactionException.INTRINSIC_GAS_TOO_LOW
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys:
@@ -2123,7 +2123,7 @@ intrinsicOrFail:
 
     - data: :raw 0x000000000000000000000000000000000000000000000000000000000000000000010203040506070809101112131415161718192021222324252627282930313233
       expectException:
-        ">=Cancun": TR_IntrinsicGas
+        ">=Cancun": TransactionException.INTRINSIC_GAS_TOO_LOW
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys:
@@ -2223,7 +2223,7 @@ intrinsicOrFail:
 
     - data: ''
       expectException:
-        ">=Cancun": TR_IntrinsicGas
+        ">=Cancun": TransactionException.INTRINSIC_GAS_TOO_LOW
       accessList:
       - address: 0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
         storageKeys:
@@ -2450,7 +2450,7 @@ intrinsicOrFail:
         - 0xBEEF
       gasLimit: 129615
       expectException:
-        ">=Cancun": TR_IntrinsicGas
+        ">=Cancun": TransactionException.INTRINSIC_GAS_TOO_LOW
       maxPriorityFeePerGas: 0x00
       maxFeePerGas: 100000
       nonce: 1
@@ -2606,7 +2606,7 @@ intrinsicOrFail:
         - 0x60A7
         - 0xBEEF
       expectException:
-        ">=Cancun": TR_IntrinsicGas
+        ">=Cancun": TransactionException.INTRINSIC_GAS_TOO_LOW
       gasLimit: 129631	
       maxPriorityFeePerGas: 0x00
       maxFeePerGas: 100000
@@ -2685,7 +2685,7 @@ intrinsicOrFail:
         - 0xBEEF
       gasLimit: 129631
       expectException:
-        ">=Cancun": TR_IntrinsicGas
+        ">=Cancun": TransactionException.INTRINSIC_GAS_TOO_LOW
       maxPriorityFeePerGas: 0x00
       maxFeePerGas: 100000
       nonce: 1
@@ -2842,7 +2842,7 @@ intrinsicOrFail:
         - 0xBEEF
       gasLimit: 129619
       expectException:
-        ">=Cancun": TR_IntrinsicGas
+        ">=Cancun": TransactionException.INTRINSIC_GAS_TOO_LOW
       maxPriorityFeePerGas: 0x00
       maxFeePerGas: 100000
       nonce: 1
@@ -3000,7 +3000,7 @@ intrinsicOrFail:
         - 0xBEEF
       gasLimit: 129607
       expectException:
-        ">=Cancun": TR_IntrinsicGas
+        ">=Cancun": TransactionException.INTRINSIC_GAS_TOO_LOW
       maxPriorityFeePerGas: 0x00
       maxFeePerGas: 100000
       nonce: 1
@@ -3159,7 +3159,7 @@ intrinsicOrFail:
         - 0xBEEF
       gasLimit: 130095
       expectException:
-        ">=Cancun": TR_IntrinsicGas
+        ">=Cancun": TransactionException.INTRINSIC_GAS_TOO_LOW
       maxPriorityFeePerGas: 0x00
       maxFeePerGas: 100000
       nonce: 1
@@ -3315,7 +3315,7 @@ intrinsicOrFail:
         - 0xBEEF
       gasLimit: 130111
       expectException:
-        ">=Cancun": TR_IntrinsicGas
+        ">=Cancun": TransactionException.INTRINSIC_GAS_TOO_LOW
       maxPriorityFeePerGas: 0x00
       maxFeePerGas: 100000
       nonce: 1
@@ -3473,7 +3473,7 @@ intrinsicOrFail:
         - 0xBEEF
       gasLimit: 130127
       expectException:
-        ">=Cancun": TR_IntrinsicGas
+        ">=Cancun": TransactionException.INTRINSIC_GAS_TOO_LOW
       maxPriorityFeePerGas: 0x00
       maxFeePerGas: 100000
       nonce: 1
@@ -3632,7 +3632,7 @@ intrinsicOrFail:
         - 0xBEEF
       gasLimit: 129731
       expectException:
-        ">=Cancun": TR_IntrinsicGas
+        ">=Cancun": TransactionException.INTRINSIC_GAS_TOO_LOW
       maxPriorityFeePerGas: 0x00
       maxFeePerGas: 100000
       nonce: 1
@@ -3789,7 +3789,7 @@ intrinsicOrFail:
         - 0xBEEF
       gasLimit: 130259
       expectException:
-        ">=Cancun": TR_IntrinsicGas
+        ">=Cancun": TransactionException.INTRINSIC_GAS_TOO_LOW
       maxPriorityFeePerGas: 0x00
       maxFeePerGas: 100000
       nonce: 1
