@@ -65,7 +65,7 @@ NoSrcAccount:
         gas: 0-1
         value: !!int -1
       expectException:
-        ">=Frontier" : "TR_NoFunds"
+        ">=Frontier" : "TransactionException.INSUFFICIENT_ACCOUNT_FUNDS"
       result: {}
 
 
@@ -76,7 +76,7 @@ NoSrcAccount:
         gas: !!int 0
         value: !!int -1
       expectException:
-        ">=Frontier" : "TR_NoFundsOrGas"            # Nimbus check triggers a different exception in this case
+        ">=Frontier" : "TransactionException.INSUFFICIENT_ACCOUNT_FUNDS|TransactionException.INTRINSIC_GAS_TOO_LOW"            # Nimbus check triggers a different exception in this case
       result: {}
 
     - network:
@@ -86,7 +86,7 @@ NoSrcAccount:
         gas: !!int 1
         value: !!int -1
       expectException:
-        ">=Frontier" : "TR_NoFunds"
+        ">=Frontier" : "TransactionException.INSUFFICIENT_ACCOUNT_FUNDS"
       result: {}
 
 
@@ -99,7 +99,7 @@ NoSrcAccount:
         gas: !!int 2
         value: !!int 1
       expectException:
-        ">=Frontier" : "TR_NoFundsOrGas"
+        ">=Frontier" : "TransactionException.INSUFFICIENT_ACCOUNT_FUNDS|TransactionException.INTRINSIC_GAS_TOO_LOW"
       result: {}
 
 
@@ -112,7 +112,7 @@ NoSrcAccount:
         gas: !!int 2
         value: !!int 0
       expectException:
-        ">=Frontier" : "IntrinsicGas"
+        ">=Frontier" : "TransactionException.INTRINSIC_GAS_TOO_LOW"
       result: {}
 
 
@@ -126,8 +126,8 @@ NoSrcAccount:
         gas: !!int 0
         value: !!int -1
       expectException:
-        ">=Cancun" : "TR_NoFundsOrGas"  # Nimbus check triggers a different exception in this case
-        "<Berlin" : "TR_TypeNotSupported"
+        ">=Cancun" : "TransactionException.INSUFFICIENT_ACCOUNT_FUNDS|TransactionException.INTRINSIC_GAS_TOO_LOW"  # Nimbus check triggers a different exception in this case
+        "<Berlin" : "TransactionException.TYPE_NOT_SUPPORTED"
       result: {}
     - network:
         - '>=Cancun'
@@ -136,8 +136,8 @@ NoSrcAccount:
         gas: !!int 1
         value: !!int -1
       expectException:
-        ">=Cancun" : "TR_NoFunds"
-        "<Berlin" : "TR_TypeNotSupported"
+        ">=Cancun" : "TransactionException.INSUFFICIENT_ACCOUNT_FUNDS"
+        "<Berlin" : "TransactionException.TYPE_NOT_SUPPORTED"
       result: {}
     - network:
         - '>=Cancun'
@@ -146,8 +146,8 @@ NoSrcAccount:
         gas: !!int 0
         value: !!int -1
       expectException:
-        ">=Cancun" : "TR_NoFundsOrGas" # Nimbus check triggers a different exception in this case
-        "<Berlin" : "TR_TypeNotSupported"
+        ">=Cancun" : "TransactionException.INSUFFICIENT_ACCOUNT_FUNDS|TransactionException.INTRINSIC_GAS_TOO_LOW" # Nimbus check triggers a different exception in this case
+        "<Berlin" : "TransactionException.TYPE_NOT_SUPPORTED"
       result: {}
     - network:
         - '>=Cancun'
@@ -156,8 +156,8 @@ NoSrcAccount:
         gas: !!int 1
         value: !!int -1
       expectException:
-        ">=Cancun" : "TR_NoFunds"
-        "<Berlin" : "TR_TypeNotSupported"
+        ">=Cancun" : "TransactionException.INSUFFICIENT_ACCOUNT_FUNDS"
+        "<Berlin" : "TransactionException.TYPE_NOT_SUPPORTED"
       result: {}
     - network:
         - '>=Cancun'
@@ -166,8 +166,8 @@ NoSrcAccount:
         gas: !!int 0
         value: !!int -1
       expectException:
-        ">=Cancun" : "TR_NoFundsOrGas" # Nimbus check triggers a different exception in this case
-        "<Berlin" : "TR_TypeNotSupported"
+        ">=Cancun" : "TransactionException.INSUFFICIENT_ACCOUNT_FUNDS|TransactionException.INTRINSIC_GAS_TOO_LOW" # Nimbus check triggers a different exception in this case
+        "<Berlin" : "TransactionException.TYPE_NOT_SUPPORTED"
       result: {}
     - network:
         - '>=Cancun'
@@ -176,8 +176,8 @@ NoSrcAccount:
         gas: !!int 1
         value: !!int -1
       expectException:
-        ">=Cancun" : "TR_NoFunds"
-        "<Berlin" : "TR_TypeNotSupported"
+        ">=Cancun" : "TransactionException.INSUFFICIENT_ACCOUNT_FUNDS"
+        "<Berlin" : "TransactionException.TYPE_NOT_SUPPORTED"
       result: {}
 
 
@@ -189,8 +189,8 @@ NoSrcAccount:
         gas: !!int 2
         value: !!int 1
       expectException:
-        ">=Cancun" : "TR_NoFundsOrGas"
-        "<Berlin" : "TR_TypeNotSupported"
+        ">=Cancun" : "TransactionException.INSUFFICIENT_ACCOUNT_FUNDS|TransactionException.INTRINSIC_GAS_TOO_LOW"
+        "<Berlin" : "TransactionException.TYPE_NOT_SUPPORTED"
       result: {}
 
 
@@ -203,7 +203,7 @@ NoSrcAccount:
         gas: !!int 2
         value: !!int 0
       expectException:
-        ">=Cancun" : "IntrinsicGas"
-        "<Berlin" : "TR_TypeNotSupported"
+        ">=Cancun" : "TransactionException.INTRINSIC_GAS_TOO_LOW"
+        "<Berlin" : "TransactionException.TYPE_NOT_SUPPORTED"
       result: {}
 

@@ -55,7 +55,7 @@ transactionFromSelfDestructedContract:
 
   blocks:
   - expectException:
-     ">=Cancun": "SenderNotEOAorNoCASH"
+     ">=Cancun": "TransactionException.SENDER_NOT_EOA|TransactionException.INSUFFICIENT_ACCOUNT_FUNDS"
 
     transactions:
     # We call the contract so it self-destructs
@@ -79,7 +79,7 @@ transactionFromSelfDestructedContract:
     # Finally send a transaction signed by the self-destructed contract
     - data: ''
       expectException:
-        ">=Cancun": "SenderNotEOA"
+        ">=Cancun": "TransactionException.SENDER_NOT_EOA"
       gasLimit: 50000
       gasPrice: 100
       nonce: 0

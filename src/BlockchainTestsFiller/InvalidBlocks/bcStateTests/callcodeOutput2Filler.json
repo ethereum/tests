@@ -65,16 +65,16 @@
             {
                 "blocknumber" : "1",
                 "expectException" : {
-                    "Istanbul" : "TR_GasLimitReached",
-                    "Berlin" : "TR_GasLimitReached",
-                    ">=Cancun" : "TR_FeeCapLessThanBlocksORGasLimitReached"
+                    "Istanbul" : "TransactionException.GAS_ALLOWANCE_EXCEEDED",
+                    "Berlin" : "TransactionException.GAS_ALLOWANCE_EXCEEDED",
+                    ">=Cancun" : "TransactionException.INSUFFICIENT_MAX_FEE_PER_GAS|TransactionException.GAS_ALLOWANCE_EXCEEDED"
                 },
                 "transactions" : [
                      {
                         "expectException" : {
-                            "Istanbul" : "TR_GasLimitReached",
-                            "Berlin" : "TR_GasLimitReached",
-                            ">=Cancun" : "TR_FeeCapLessThanBlocksORGasLimitReached"
+                            "Istanbul" : "TransactionException.GAS_ALLOWANCE_EXCEEDED",
+                            "Berlin" : "TransactionException.GAS_ALLOWANCE_EXCEEDED",
+                            ">=Cancun" : "TransactionException.INSUFFICIENT_MAX_FEE_PER_GAS|TransactionException.GAS_ALLOWANCE_EXCEEDED"
                         },
                         "data" : "",
                         "gasLimit" : "1100000",
@@ -107,12 +107,12 @@
            {
                "blocknumber" : "2",
                "expectException" : {
-                    ">=Cancun" : "TR_FeeCapLessThanBlocks"
+                    ">=Cancun" : "TransactionException.INSUFFICIENT_MAX_FEE_PER_GAS"
                 },
                 "transactions" : [
                      {
                         "expectException" : {
-                            ">=Cancun" : "TR_FeeCapLessThanBlocks"
+                            ">=Cancun" : "TransactionException.INSUFFICIENT_MAX_FEE_PER_GAS"
                         },
                         "data" : "",
                         "gasLimit" : "100000",

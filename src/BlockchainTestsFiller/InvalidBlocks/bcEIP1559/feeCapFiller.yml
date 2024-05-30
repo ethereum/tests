@@ -195,7 +195,7 @@ feeCap:
     # Type 0 transaction with insufficiently high gasPrice
     - data: ''
       expectException:
-        ">=Cancun": TR_FeeCapLessThanBlocks
+        ">=Cancun": TransactionException.INSUFFICIENT_MAX_FEE_PER_GAS
       gasLimit: 50000	
       gasPrice: 874
       nonce: 0x0e
@@ -206,7 +206,7 @@ feeCap:
     # Type 1 transaction with insufficiently high gasPrice
     - data: ''
       expectException:
-        ">=Cancun": TR_FeeCapLessThanBlocks
+        ">=Cancun": TransactionException.INSUFFICIENT_MAX_FEE_PER_GAS
       accessList: []
       gasLimit: 50000	
       gasPrice: 874
@@ -218,7 +218,7 @@ feeCap:
     # Type 2 transaction with insufficiently high max
     - data: ''
       expectException:
-        ">=Cancun": TR_FeeCapLessThanBlocks
+        ">=Cancun": TransactionException.INSUFFICIENT_MAX_FEE_PER_GAS
       accessList: []
       gasLimit: 50000	
       maxFeePerGas: 874

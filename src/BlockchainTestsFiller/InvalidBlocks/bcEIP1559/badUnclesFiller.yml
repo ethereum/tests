@@ -58,9 +58,9 @@ badUncles:
       - populateFromBlock: 1
         gasLimit: 10230000
     expectException:
-      'London': InvalidGasLimit2
-      'Paris': 3675PreParis1559BlockRejected
-      '>=Cancun': PostParisUncleHashIsNotEmpty
+      'London': BlockException.INVALID_GASLIMIT
+      'Paris': BlockException.IMPORT_IMPOSSIBLE_LONDON_OVER_PARIS
+      '>=Cancun': BlockException.IMPORT_IMPOSSIBLE_UNCLES_OVER_PARIS
 
   # Excessively high gasLimit in uncle
   - transactions: []
@@ -69,9 +69,9 @@ badUncles:
       - populateFromBlock: 1
         gasLimit: 10250000
     expectException:
-      'London': InvalidGasLimit2
-      'Paris': 3675PreParis1559BlockRejected
-      '>=Cancun': PostParisUncleHashIsNotEmpty
+      'London': BlockException.INVALID_GASLIMIT
+      'Paris': BlockException.IMPORT_IMPOSSIBLE_LONDON_OVER_PARIS
+      '>=Cancun': BlockException.IMPORT_IMPOSSIBLE_UNCLES_OVER_PARIS
 
 
   # Acceptable gasLimit (same as the previous one)
@@ -83,8 +83,8 @@ badUncles:
       - populateFromBlock: 1
         gasLimit: 10240000
     expectException:
-      'Paris': 3675PreParis1559BlockRejected
-      '>=Cancun': PostParisUncleHashIsNotEmpty
+      'Paris': BlockException.IMPORT_IMPOSSIBLE_LONDON_OVER_PARIS
+      '>=Cancun': BlockException.IMPORT_IMPOSSIBLE_UNCLES_OVER_PARIS
 
 
   # Acceptable gasLimit (almost too low)
@@ -96,8 +96,8 @@ badUncles:
       - populateFromBlock: 1
         gasLimit: 10230001
     expectException:
-      'Paris': 3675PreParis1559BlockRejected
-      '>=Cancun': PostParisUncleHashIsNotEmpty
+      'Paris': BlockException.IMPORT_IMPOSSIBLE_LONDON_OVER_PARIS
+      '>=Cancun': BlockException.IMPORT_IMPOSSIBLE_UNCLES_OVER_PARIS
 
 
   # Acceptable gasLimit (almost too high)
@@ -109,8 +109,8 @@ badUncles:
       - populateFromBlock: 1
         gasLimit: 10249999
     expectException:
-      'Paris': 3675PreParis1559BlockRejected
-      '>=Cancun': PostParisUncleHashIsNotEmpty
+      'Paris': BlockException.IMPORT_IMPOSSIBLE_LONDON_OVER_PARIS
+      '>=Cancun': BlockException.IMPORT_IMPOSSIBLE_UNCLES_OVER_PARIS
 
   # Wrong baseFee
   - transactions: []
@@ -119,9 +119,9 @@ badUncles:
       - populateFromBlock: 2
         baseFeePerGas: 670
     expectException:
-      'London': 1559BlockImportImpossible_BaseFeeWrong
-      'Paris': 3675PreParis1559BlockRejected
-      '>=Cancun': PostParisUncleHashIsNotEmpty
+      'London': BlockException.INVALID_BASEFEE_PER_GAS
+      'Paris': BlockException.IMPORT_IMPOSSIBLE_LONDON_OVER_PARIS
+      '>=Cancun': BlockException.IMPORT_IMPOSSIBLE_UNCLES_OVER_PARIS
 
   # Wrong baseFee
   - transactions: []
@@ -130,9 +130,9 @@ badUncles:
       - populateFromBlock: 2
         baseFeePerGas: 672
     expectException:
-      'London': 1559BlockImportImpossible_BaseFeeWrong
-      'Paris': 3675PreParis1559BlockRejected
-      '>=Cancun': PostParisUncleHashIsNotEmpty
+      'London': BlockException.INVALID_BASEFEE_PER_GAS
+      'Paris': BlockException.IMPORT_IMPOSSIBLE_LONDON_OVER_PARIS
+      '>=Cancun': BlockException.IMPORT_IMPOSSIBLE_UNCLES_OVER_PARIS
 
 
   # Correct baseFee
@@ -153,8 +153,8 @@ badUncles:
       - populateFromBlock: 2
         baseFeePerGas: 671
     expectException:
-      'Paris': 3675PreParis1559BlockRejected
-      '>=Cancun': PostParisUncleHashIsNotEmpty
+      'Paris': BlockException.IMPORT_IMPOSSIBLE_LONDON_OVER_PARIS
+      '>=Cancun': BlockException.IMPORT_IMPOSSIBLE_UNCLES_OVER_PARIS
 
 
 

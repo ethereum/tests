@@ -142,7 +142,7 @@ baseFee:
   # Block 3 Invalid
   - blocknumber: "3"
     expectException:
-      ">=Cancun": TR_TipGtFeeCap
+      ">=Cancun": TransactionException.PRIORITY_GREATER_THAN_MAX_FEE_PER_GAS
     transactions:
     - data: :raw 0x0301
       accessList: []
@@ -156,7 +156,7 @@ baseFee:
 
     - data: :raw 0x0302
       expectException:
-        ">=Cancun": TR_TipGtFeeCap
+        ">=Cancun": TransactionException.PRIORITY_GREATER_THAN_MAX_FEE_PER_GAS
       accessList: []
       gasLimit: 1000000000000	
       maxPriorityFeePerGas: 100000
@@ -203,7 +203,7 @@ baseFee:
   # Block 4 Invalid
   - blocknumber: "4"
     expectException:
-      ">=Cancun": TR_TipGtFeeCap
+      ">=Cancun": TransactionException.PRIORITY_GREATER_THAN_MAX_FEE_PER_GAS
     transactions:
     - data: :raw 0x0401
       accessList: []
@@ -217,7 +217,7 @@ baseFee:
 
     - data: :raw 0x0402
       expectException:
-        ">=Cancun": TR_TipGtFeeCap
+        ">=Cancun": TransactionException.PRIORITY_GREATER_THAN_MAX_FEE_PER_GAS
       accessList: []
       gasLimit: 1000000000000	
       maxPriorityFeePerGas: 100000

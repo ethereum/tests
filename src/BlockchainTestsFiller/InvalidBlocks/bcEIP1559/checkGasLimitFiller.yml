@@ -53,7 +53,7 @@ checkGasLimit:
       gasLimit: 4000000  # 4m gas
     blocknumber: "1"
     expectException:
-      ">=Cancun": TR_GasLimitReached
+      ">=Cancun": TransactionException.GAS_ALLOWANCE_EXCEEDED
     transactions:
     - data: ''
       accessList: []
@@ -84,7 +84,7 @@ checkGasLimit:
       value: 0x0
     - data: ''
       expectException:
-        ">=Cancun": TR_GasLimitReached
+        ">=Cancun": TransactionException.GAS_ALLOWANCE_EXCEEDED
       accessList: []
       gasLimit: 1000000  # 1m gas
       maxPriorityFeePerGas: 0x00
@@ -192,11 +192,11 @@ checkGasLimit:
       gasLimit: 4000000  # 4m gas
     blocknumber: "4"
     expectException:
-      ">=Cancun": TR_GasLimitReached
+      ">=Cancun": TransactionException.GAS_ALLOWANCE_EXCEEDED
     transactions:
     - data: ''
       expectException:
-        ">=Cancun": TR_GasLimitReached
+        ">=Cancun": TransactionException.GAS_ALLOWANCE_EXCEEDED
       accessList: []
       gasLimit: 4000001
       maxPriorityFeePerGas: 0x00
