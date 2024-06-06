@@ -45,7 +45,7 @@ validInvalid:
          EOF1V0016 check that data section size can be less than the declared size
 
   forks:
-    - ">=Prague"
+    - "Prague"
 
   vectors:
 
@@ -92,6 +92,8 @@ validInvalid:
            00 #  3 STOP
               # Data segment
            0bad  # 2 bytes instead of four
+    expectException:
+      "Prague" : "EOFException.TOPLEVEL_CONTAINER_TRUNCATED"
 
 
   # Data 2
@@ -116,7 +118,7 @@ validInvalid:
               # Data segment
            0bad60A70BAD  # 6 bytes instead of four
     expectException:
-      ">=Prague" : "EOF_InvalidSectionBodiesSize"
+      "Prague" : "EOF_InvalidSectionBodiesSize"
 
   # Data 3
   # EOF1V0001 Valid
@@ -162,7 +164,7 @@ validInvalid:
               # Data segment
            0bad60A7  # 4 bytes (valid)
     expectException:
-      ">=Prague" : "EOF_UndefinedInstruction"
+      "Prague" : "EOF_UndefinedInstruction"
 
 
   # Data 5
@@ -209,7 +211,7 @@ validInvalid:
               # Data segment
            ef
     expectException:
-      ">=Prague" : "EOF_HeaderTerminatorMissing"
+      "Prague" : "EOF_HeaderTerminatorMissing"
 
 
   # Data 7
@@ -258,7 +260,7 @@ validInvalid:
               # Data segment
            0bad60A7  # 4 bytes (valid)
     expectException:
-      ">=Prague" : "EOF_UnreachableCode"
+      "Prague" : "EOF_UnreachableCode"
 
   # Data 9
   # EOF1V0011 check that code that uses a new style conditional jump (5D) succeeds
@@ -395,7 +397,7 @@ validInvalid:
               # Data segment
            0bad60A7  # 4 bytes (valid)
     expectException:
-      ">=Prague" : "EOF_InvalidJumpDestination"
+      "Prague" : "EOF_InvalidJumpDestination"
 
 
 
@@ -449,7 +451,7 @@ validInvalid:
               # Data segment
            0bad60A7  # 4 bytes (valid)
     expectException:
-      ">=Prague" : "EOF_InvalidJumpDestination"
+      "Prague" : "EOF_InvalidJumpDestination"
 
   # Data 15
   # EOF1I0019 check that jumps into the middle on an opcode are not allowed
@@ -477,7 +479,7 @@ validInvalid:
               # Data segment
            0bad60A7  # 4 bytes (valid)
     expectException:
-      ">=Prague" : "EOF_InvalidJumpDestination"
+      "Prague" : "EOF_InvalidJumpDestination"
 
 
 
@@ -507,7 +509,7 @@ validInvalid:
               # Data segment
            0bad60A7  # 4 bytes (valid)
     expectException:
-      ">=Prague" : "EOF_InvalidTypeSectionSize"
+      "Prague" : "EOF_InvalidTypeSectionSize"
 
   # Data 17
   # EOF1I0018 inconsistent number of code sections (between types and code)
@@ -531,7 +533,7 @@ validInvalid:
               # Data segment
            0bad60A7  # 4 bytes (valid)
     expectException:
-      ">=Prague" : "EOF_InvalidTypeSectionSize"
+      "Prague" : "EOF_InvalidTypeSectionSize"
 
   # Data 18
   # EOF1I0015 check that code that uses removed opcodes fails
@@ -556,7 +558,7 @@ validInvalid:
               # Data segment
            ef
     expectException:
-      ">=Prague" : "EOF_UndefinedInstruction"
+      "Prague" : "EOF_UndefinedInstruction"
 
   # Data 19
   # EOF1I0015 check that code that uses removed opcodes fails
@@ -582,7 +584,7 @@ validInvalid:
               # Data segment
            ef
     expectException:
-      ">=Prague" : "EOF_UndefinedInstruction"
+      "Prague" : "EOF_UndefinedInstruction"
 
   # Data 20
   # EOF1I0015 check that code that uses removed opcodes fails
@@ -606,7 +608,7 @@ validInvalid:
               # Data segment
            ef
     expectException:
-      ">=Prague" : "EOF_UndefinedInstruction"
+      "Prague" : "EOF_UndefinedInstruction"
 
   # Data 21
   # EOF1I0015 check that code that uses removed opcodes fails
@@ -625,7 +627,7 @@ validInvalid:
         0007  # Max stack height 1
               # Code segment 0 code
     expectException:
-      ">=Prague" : "EOF_InvalidSectionBodiesSize"
+      "Prague" : "EOF_InvalidSectionBodiesSize"
 
   # Data 22
   # EOF1I0015 check that code that uses removed opcodes fails
@@ -655,7 +657,7 @@ validInvalid:
               # Data segment
            ef
     expectException:
-      ">=Prague" : "EOF_UndefinedInstruction"
+      "Prague" : "EOF_UndefinedInstruction"
 
   # Data 23
   # EOF1I0016 check that code that uses new relative jumps to outside the section fails
@@ -680,7 +682,7 @@ validInvalid:
               # Data segment
            ef
     expectException:
-      ">=Prague" : "EOF_UndefinedInstruction"
+      "Prague" : "EOF_UndefinedInstruction"
 
 
   # Data 24
@@ -770,7 +772,7 @@ validInvalid:
               # Data segment
            0bad60A7  # 4 bytes (valid)
     expectException:
-      ">=Prague" : "EOF_InvalidCodeTermination"
+      "Prague" : "EOF_InvalidCodeTermination"
 
 
   # Data 27
@@ -802,7 +804,7 @@ validInvalid:
               # Data segment
            0bad60A7  # 4 bytes (valid)
     expectException:
-      ">=Prague" : "EOF_StackUnderflow"
+      "Prague" : "EOF_StackUnderflow"
 
 
   # Data 28
@@ -943,7 +945,7 @@ validInvalid:
               # Data segment
            0bad60A7  # 4 bytes (valid)
     expectException:
-      ">=Prague" : "EOF_MaxStackHeightExceeded"
+      "Prague" : "EOF_MaxStackHeightExceeded"
 
   # Data 30
   # EOF1V0003 check that valid EOF1 with four code sections deploys
@@ -1180,7 +1182,7 @@ validInvalid:
              # Data section 
       0bad60a7
     expectException:
-      ">=Prague": "EOF_InvalidCodeSectionIndex"
+      "Prague": "EOF_InvalidCodeSectionIndex"
 
 
   # Data 34
@@ -1215,7 +1217,7 @@ validInvalid:
              # Data section 
       0bad60a7
     expectException:
-      ">=Prague" : "EOF_StackUnderflow"
+      "Prague" : "EOF_StackUnderflow"
 
 
   # Data 35
@@ -1250,7 +1252,7 @@ validInvalid:
              # Data section 
       0bad60a7
     expectException:
-      ">=Prague" : "EOF_InvalidNumberOfOutputs"
+      "Prague" : "EOF_InvalidNumberOfOutputs"
 
   # Data 36
   # EOF1I0014 check that code that looks deeper in the stack than the parameters fails
@@ -1284,7 +1286,7 @@ validInvalid:
            # Data section 
       0bad60a7
     expectException:
-      ">=Prague" : "EOF_StackUnderflow"
+      "Prague" : "EOF_StackUnderflow"
 
   # Data 37
   # EOF1I0010 check that return values are not allowed on section 0
@@ -1308,7 +1310,7 @@ validInvalid:
               # Data segment
            0bad60A7  # 4 bytes (valid)
     expectException:
-      ">=Prague" : "EOF_InvalidFirstSectionType"
+      "Prague" : "EOF_InvalidFirstSectionType"
 
   # Data 38
   # EOF1V0009 check that parameters are allowed on code sections that aren't zero
@@ -1363,7 +1365,7 @@ validInvalid:
               # Data segment
            0bad60A7  # 4 bytes (valid)
     expectException:
-      ">=Prague" : "EOF_InvalidFirstSectionType"
+      "Prague" : "EOF_InvalidFirstSectionType"
 
 
   # Data 40
@@ -1388,7 +1390,7 @@ validInvalid:
               # Data segment
            0bad60A7  # 4 bytes (valid)
     expectException:
-      ">=Prague" : "EOF_InvalidMaxStackHeight"
+      "Prague" : "EOF_InvalidMaxStackHeight"
 
   # Data 41
   # EOF1I0009 check that EOF1 with the wrong maxStackDepth fails
@@ -1414,7 +1416,7 @@ validInvalid:
               # Data segment
            0bad60A7  # 4 bytes (valid)
     expectException:
-      ">=Prague" : "EOF_InvalidSectionBodiesSize"
+      "Prague" : "EOF_InvalidSectionBodiesSize"
 
   # Data 42
   # EOF1I0007 check that EOF1 with a malformed code section fails
@@ -1438,7 +1440,7 @@ validInvalid:
               # Data segment
            0bad60A7  # 4 bytes (valid)
     expectException:
-      ">=Prague" : "EOF_TruncatedImmediate"
+      "Prague" : "EOF_TruncatedImmediate"
 
 
   # Data 43
@@ -1463,7 +1465,7 @@ validInvalid:
               # Data segment
            ef
     expectException:
-      ">=Prague" : "EOF_HeaderTerminatorMissing"
+      "Prague" : "EOF_HeaderTerminatorMissing"
 
 
   # Data 44
@@ -1488,7 +1490,7 @@ validInvalid:
               # Data segment
            ef
     expectException:
-      ">=Prague" : "EOF_InvalidPrefix"
+      "Prague" : "EOF_InvalidPrefix"
 
   # Data 45
   # EOF1I0002 check that EOF1 with a bad version number fails (ver 0)
@@ -1512,7 +1514,7 @@ validInvalid:
               # Data segment
            ef
     expectException:
-      ">=Prague" : "EOF_UnknownVersion"
+      "Prague" : "EOF_UnknownVersion"
 
   # EOF1I0002 check that EOF1 with a bad version number fails (ver 2)
   - data: |
@@ -1535,7 +1537,7 @@ validInvalid:
               # Data segment
            ef
     expectException:
-      ">=Prague" : "EOF_UnknownVersion"
+      "Prague" : "EOF_UnknownVersion"
 
   # EOF1I0003 check that EOF1 with a bad section order fails
   - data: |
@@ -1558,7 +1560,7 @@ validInvalid:
               # Data segment
            ef
     expectException:
-      ">=Prague" : "EOF_TypeSectionMissing"
+      "Prague" : "EOF_TypeSectionMissing"
 
   # EOF1I0003 check that EOF1 with a bad section order fails
   - data: |
@@ -1581,7 +1583,7 @@ validInvalid:
               # Data segment
            ef
     expectException:
-      ">=Prague" : "EOF_TypeSectionMissing"
+      "Prague" : "EOF_TypeSectionMissing"
 
 
   # EOF1I0004 check that EOF1 missing a section fails
@@ -1604,7 +1606,7 @@ validInvalid:
               # Data segment
            ef
     expectException:
-      ">=Prague" : "EOF_TypeSectionMissing"
+      "Prague" : "EOF_TypeSectionMissing"
 
   # EOF1I0004 check that EOF1 missing a section fails
   - data: |
@@ -1625,7 +1627,7 @@ validInvalid:
               # Data segment
            ef
     expectException:
-      ">=Prague" : "EOF_CodeSectionMissing"
+      "Prague" : "EOF_CodeSectionMissing"
 
   # EOF1I0004 check that EOF1 missing a section fails
   - data: |
@@ -1647,7 +1649,7 @@ validInvalid:
               # Data segment
            ef
     expectException:
-      ">=Prague" : "EOF_DataSectionMissing"
+      "Prague" : "EOF_DataSectionMissing"
 
 
   # EOF1 constructor returning an EOF1 contract
@@ -1696,5 +1698,5 @@ validInvalid:
   # # Init code which doesn't create a contract
   # - data: :label bad :raw 0x610BADFE
   #   expectException:
-  #     ">=Prague" : "EOF_InvalidMagic"
+  #     "Prague" : "EOF_InvalidMagic"
 

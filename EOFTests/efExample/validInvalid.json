@@ -2,13 +2,13 @@
     "validInvalid" : {
         "_info" : {
             "comment" : "Test various examples to see if they are valid or invalid.\nImplements\n  EOF1I0001 check that EOF1 with a bad magic number fails\n  EOF1I0002 check that EOF1 with a bad version number fails\n  EOF1I0003 check that EOF1 with a bad section order fails\n  EOF1I0004 check that EOF1 missing a section fails\n  EOF1I0005 check that EOF1 with a bad end of sections number fails\n  EOF1I0006 check that EOF1 with too many or too few bytes fails\n  EOF1I0007 check that EOF1 with a malformed code section fails\n  EOF1I0008 check that EOF1 with an illegal opcode fails\n  EOF1I0009 check that EOF1 with the wrong maxStackDepth fails\n  EOF1I0010 check that return values are not allowed on section 0\n  EOF1I0011 check that function calls to code sections that don't exist fail\n  EOF1I0012 check that code sections that cause stack underflow fail\n  EOF1I0013 check that we can't return more values than we declare\n  EOF1I0014 check that code that looks deeper in the stack than the parameters fails\n  EOF1I0015 check that code that uses removed opcodes fails\n  EOF1I0016 check that code that uses new relative jumps to outside the section fails\n  EOF1I0017 check that parameters are not allowed on section 0\n  EOF1I0018 inconsistent number of code sections (between types and code)\n  EOF1I0019 check that jumps into the middle on an opcode are not allowed\n  EOF1I0020 check that you can't get to the same opcode with two different stack heights\n  EOF1I0022 stack underflow caused by a function call\n  EOF1I0023 sections with unreachable code fail\n  EOF1I0024 sections that end with a non-terminator opcode fail\n  EOF1I0025 data stack height of 1024 is invalid\n  EOF1V0001 check that simple valid EOF1 deploys\n  EOF1V0002 check that valid EOF1 with two code sections deploys\n  EOF1V0003 check that valid EOF1 with four code sections deploys\n  EOF1V0004 check that valid EOF1 can include 0xFE, the designated invalid opcode\n  EOF1V0005 check that EOF1 with the right maxStackDepth deploys\n  EOF1V0006 check that return values are allowed on code sections that aren't zero\n  EOF1V0007 check that function calls to code sections that exist are allowed\n  EOF1V0008 check that code that uses a new style relative jump (5C) succeeds\n  EOF1V0009 check that parameters are allowed on code sections that aren't zero\n  EOF1V0010 parameters are part of the max stack height\n  EOF1V0011 check that code that uses a new style conditional jump (5D) succeeds\n  EOF1V0012 return values on code sections affect maxStackHeight of the caller\n  EOF1V0013 jump tables work\n  EOF1V0014 sections that end with a legit terminating opcode are OK\n  EOF1V0015 data stack height of 1023 is valid\n  EOF1V0016 check that data section size can be less than the declared size\n",
-            "filling-rpc-server" : "evmone-t8n 0.12.0-dev+commit.8202c81e",
-            "filling-tool-version" : "retesteth-0.3.2-cancun+commit.a7cdb586.Linux.g++",
-            "generatedTestHash" : "c62a0385dff27dfa283e037ddc2299ce1ecaa2932061306af3a7191c4dfa5f86",
-            "lllcversion" : "Error getting LLLC Version",
-            "solidity" : "Version: 0.8.25+commit.b61c2a91.Linux.g++",
+            "filling-rpc-server" : "evmone-t8n 0.12.0-dev+commit.a373fd24.dirty",
+            "filling-tool-version" : "retesteth-0.3.2-cancun+commit.2ab0208e.Linux.g++",
+            "generatedTestHash" : "052fb1a9a3cac0ac296d356a662fff92975ac57e179cac6dfc19b7974a12f91f",
+            "lllcversion" : "Version: 0.5.14-develop.2022.6.30+commit.401d5358.mod.Linux.g++",
+            "solidity" : "Version: 0.8.21-develop.2023.7.19+commit.d9974bed.Linux.g++",
             "source" : "src/EOFTestsFiller/efExample/validInvalidFiller.yml",
-            "sourceHash" : "0eb24a7a7ffb551c5816d2986e04ef73171870f7facaafb8bb91da89bb3a20a3"
+            "sourceHash" : "786b2f755b615dde19027f85d44160e8644964e13b64ea936fe1cbb3caf0b4ed"
         },
         "vectors" : {
             "validInvalid_0" : {
@@ -23,7 +23,8 @@
                 "code" : "0xef0001010004020001000304000400008000013050000bad",
                 "results" : {
                     "Prague" : {
-                        "result" : true
+                        "exception" : "EOFException.TOPLEVEL_CONTAINER_TRUNCATED",
+                        "result" : false
                     }
                 }
             },
