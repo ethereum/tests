@@ -1,3 +1,0 @@
-"""
-Revamped Call Instructions Tests
-"""
