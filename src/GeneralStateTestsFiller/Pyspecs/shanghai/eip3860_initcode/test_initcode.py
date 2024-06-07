@@ -170,7 +170,7 @@ SINGLE_BYTE_INITCODE = Initcode(
     deploy_code=bytes(),
     name="single_byte",
 )
-SINGLE_BYTE_INITCODE.bytecode = Op.STOP
+SINGLE_BYTE_INITCODE.bytecode = bytes(Op.STOP)
 SINGLE_BYTE_INITCODE.deployment_gas = 0
 SINGLE_BYTE_INITCODE.execution_gas = 0
 
@@ -483,13 +483,13 @@ class TestCreateInitcode:
             # stack: [Gas 2, Call Result, Gas 1]
             + Op.SWAP1
             # stack: [Call Result, Gas 2, Gas 1]
-            + Op.SSTORE(0)
+            + Op.SSTORE(0, unchecked=True)
             # stack: [Gas 2, Gas 1]
             + Op.SWAP1
             # stack: [Gas 1, Gas 2]
             + Op.SUB
             # stack: [Gas 1 - Gas 2]
-            + Op.SSTORE(1)
+            + Op.SSTORE(1, unchecked=True)
         )
 
     @pytest.fixture
