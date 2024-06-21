@@ -1,39 +1,25 @@
 {
-    "SuicidesAndInternlCallSuicidesSuccess" : {
+    "SuicidesAndInternalCallSuicidesBonusGasAtCall" : {
         "env" : {
             "currentCoinbase" : "b94f5374fce5edbc8e2a8697c15331677e6ebf0b",
             "currentDifficulty" : "0x020000",
-            "currentGasLimit" : "10000000",
+            "currentGasLimit" : "1000000",
             "currentNumber" : "1",
             "currentTimestamp" : "1000"
         },
         "expect" : [
             {
-                "indexes" : {
-                    "data" : 0,
-                    "gas" : -1,
-                    "value" : -1
-                },
                 "network" : [ ">=Cancun"],
                 "result" : {
                     "0000000000000000000000000000000000000001" : {
                         "shouldnotexist" : "1"
-                    }
-                }
-            },
-    	    {
-                "indexes" : {
-                    "data" : 1,
-                    "gas" : -1,
-                    "value" : -1
-                },
-                "network" : [ ">=Cancun"],
-                "result" : {
-                    "0000000000000000000000000000000000000001" : {
-                        "balance" : "1",
-                        "storage" : {
-                        }
-                    }
+                    },
+		            "c94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+    			        "balance" : "0",
+                        "nonce" : "0",
+                        "code" : "0x6000600060006000600160006000f1506000ff00",
+                        "storage" : {}
+		            }
                 }
             }
         ],
@@ -46,15 +32,15 @@
                 }
             },
             "a94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-                "balance" : "180000000",
+                "balance" : "100000000",
                 "code" : "",
                 "nonce" : "0",
                 "storage" : {
                 }
             },
             "c94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-                "balance" : "1000",
-                "code" : "{(CALL (CALLDATALOAD 0) 0x0000000000000000000000000000000000000000 1 0 0 0 0) (SELFDESTRUCT 0)}",
+                "balance" : "10",
+                "code" : "{(CALL 0 0x0000000000000000000000000000000000000000 1 0 0 0 0) (SELFDESTRUCT 0)}",
                 "nonce" : "0",
                 "storage" : {
                 }
@@ -62,11 +48,10 @@
         },
         "transaction" : {
             "data" : [
-                ":raw 0x00000000000000000000000000000000000000000000000000000000000055f0",
-                ":raw 0x000000000000000000000000000000000000000000000000000000000000aaf0"
+                ""
             ],
             "gasLimit" : [
-                "150000"
+                "50000"
             ],
             "gasPrice" : "10",
             "nonce" : "",
