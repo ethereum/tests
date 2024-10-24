@@ -4,20 +4,17 @@
             "comment" : "Test various examples to see if they are valid or invalid.\nImplements\n  EOF1I0001 check that EOF1 with a bad magic number fails\n  EOF1I0002 check that EOF1 with a bad version number fails\n  EOF1I0003 check that EOF1 with a bad section order fails\n  EOF1I0004 check that EOF1 missing a section fails\n  EOF1I0005 check that EOF1 with a bad end of sections number fails\n  EOF1I0006 check that EOF1 with too many or too few bytes fails\n  EOF1I0007 check that EOF1 with a malformed code section fails\n  EOF1I0008 check that EOF1 with an illegal opcode fails\n  EOF1I0009 check that EOF1 with the wrong maxStackDepth fails\n  EOF1I0010 check that return values are not allowed on section 0\n  EOF1I0011 check that function calls to code sections that don't exist fail\n  EOF1I0012 check that code sections that cause stack underflow fail\n  EOF1I0013 check that we can't return more values than we declare\n  EOF1I0014 check that code that looks deeper in the stack than the parameters fails\n  EOF1I0015 check that code that uses removed opcodes fails\n  EOF1I0016 check that code that uses new relative jumps to outside the section fails\n  EOF1I0017 check that parameters are not allowed on section 0\n  EOF1I0018 inconsistent number of code sections (between types and code)\n  EOF1I0019 check that jumps into the middle on an opcode are not allowed\n  EOF1I0020 check that you can't get to the same opcode with two different stack heights\n  EOF1I0022 stack underflow caused by a function call\n  EOF1I0023 sections with unreachable code fail\n  EOF1I0024 sections that end with a non-terminator opcode fail\n  EOF1I0025 data stack height of 1024 is invalid\n  EOF1V0001 check that simple valid EOF1 deploys\n  EOF1V0002 check that valid EOF1 with two code sections deploys\n  EOF1V0003 check that valid EOF1 with four code sections deploys\n  EOF1V0004 check that valid EOF1 can include 0xFE, the designated invalid opcode\n  EOF1V0005 check that EOF1 with the right maxStackDepth deploys\n  EOF1V0006 check that return values are allowed on code sections that aren't zero\n  EOF1V0007 check that function calls to code sections that exist are allowed\n  EOF1V0008 check that code that uses a new style relative jump (5C) succeeds\n  EOF1V0009 check that parameters are allowed on code sections that aren't zero\n  EOF1V0010 parameters are part of the max stack height\n  EOF1V0011 check that code that uses a new style conditional jump (5D) succeeds\n  EOF1V0012 return values on code sections affect maxStackHeight of the caller\n  EOF1V0013 jump tables work\n  EOF1V0014 sections that end with a legit terminating opcode are OK\n  EOF1V0015 data stack height of 1023 is valid\n  EOF1V0016 check that data section size can be less than the declared size\n",
             "filling-rpc-server" : "evmone-t8n 0.13.0-23+commit.71e2311c",
             "filling-tool-version" : "retesteth-0.3.2-legacy+commit.c1fb07e8.Linux.g++",
-            "generatedTestHash" : "a2218c0a7d589782c8110da49a47b3648f301555f4a440e4d28f94179e85acf8",
+            "generatedTestHash" : "573034aa5375c4215c1d59fed31bb8cdd38eada0bea38e7cec17a6263714dc27",
             "lllcversion" : "Error getting LLLC Version",
             "solidity" : "Error getting solc Version",
             "source" : "src/EOFTestsFiller/efExample/validInvalidFiller.yml",
-            "sourceHash" : "37cdb3b5b59821ff68216bc2050e2bda6549d1e6281fa607e549f4c0d74664ae"
+            "sourceHash" : "00a9b0dabc6f3c28d97e603126fca2a7ada6417dd87616939b714c70c1f0659a"
         },
         "vectors" : {
             "validInvalid_0" : {
                 "code" : "0xef000101000402000100030400010000800001305000ef",
                 "results" : {
                     "Osaka" : {
-                        "result" : true
-                    },
-                    "Prague" : {
                         "result" : true
                     }
                 }
@@ -28,10 +25,6 @@
                     "Osaka" : {
                         "exception" : "EOFException.TOPLEVEL_CONTAINER_TRUNCATED",
                         "result" : false
-                    },
-                    "Prague" : {
-                        "exception" : "EOFException.TOPLEVEL_CONTAINER_TRUNCATED",
-                        "result" : false
                     }
                 }
             },
@@ -40,9 +33,6 @@
                 "results" : {
                     "Osaka" : {
                         "result" : true
-                    },
-                    "Prague" : {
-                        "result" : true
                     }
                 }
             },
@@ -50,9 +40,6 @@
                 "code" : "0xef0001010004020001000d04000400008000016001e2010002000030503050000bad60a7",
                 "results" : {
                     "Osaka" : {
-                        "result" : true
-                    },
-                    "Prague" : {
                         "result" : true
                     }
                 }
@@ -63,10 +50,6 @@
                     "Osaka" : {
                         "exception" : "EOF_InvalidJumpDestination",
                         "result" : false
-                    },
-                    "Prague" : {
-                        "exception" : "EOF_InvalidJumpDestination",
-                        "result" : false
                     }
                 }
             },
@@ -75,9 +58,6 @@
                 "results" : {
                     "Osaka" : {
                         "result" : true
-                    },
-                    "Prague" : {
-                        "result" : true
                     }
                 }
             },
@@ -85,10 +65,6 @@
                 "code" : "0xef0001010004020001000a0400040000800000e00003e00002e0fffa000bad60a7",
                 "results" : {
                     "Osaka" : {
-                        "exception" : "EOF_InvalidJumpDestination",
-                        "result" : false
-                    },
-                    "Prague" : {
                         "exception" : "EOF_InvalidJumpDestination",
                         "result" : false
                     }
@@ -100,10 +76,6 @@
                     "Osaka" : {
                         "exception" : "EOF_InvalidJumpDestination",
                         "result" : false
-                    },
-                    "Prague" : {
-                        "exception" : "EOF_InvalidJumpDestination",
-                        "result" : false
                     }
                 }
             },
@@ -111,10 +83,6 @@
                 "code" : "0xef000101000802000100030400040000800001000000003050000bad60a7",
                 "results" : {
                     "Osaka" : {
-                        "exception" : "EOF_InvalidTypeSectionSize",
-                        "result" : false
-                    },
-                    "Prague" : {
                         "exception" : "EOF_InvalidTypeSectionSize",
                         "result" : false
                     }
@@ -126,10 +94,6 @@
                     "Osaka" : {
                         "exception" : "EOF_InvalidTypeSectionSize",
                         "result" : false
-                    },
-                    "Prague" : {
-                        "exception" : "EOF_InvalidTypeSectionSize",
-                        "result" : false
                     }
                 }
             },
@@ -137,10 +101,6 @@
                 "code" : "0xef0001010004020001000504000100008000016003565b00ef",
                 "results" : {
                     "Osaka" : {
-                        "exception" : "EOF_UndefinedInstruction",
-                        "result" : false
-                    },
-                    "Prague" : {
                         "exception" : "EOF_UndefinedInstruction",
                         "result" : false
                     }
@@ -152,10 +112,6 @@
                     "Osaka" : {
                         "exception" : "EOF_UndefinedInstruction",
                         "result" : false
-                    },
-                    "Prague" : {
-                        "exception" : "EOF_UndefinedInstruction",
-                        "result" : false
                     }
                 }
             },
@@ -163,10 +119,6 @@
                 "code" : "0xef0001010004020001000304000400008000013050000bad60a70bad",
                 "results" : {
                     "Osaka" : {
-                        "exception" : "EOF_InvalidSectionBodiesSize",
-                        "result" : false
-                    },
-                    "Prague" : {
                         "exception" : "EOF_InvalidSectionBodiesSize",
                         "result" : false
                     }
@@ -178,10 +130,6 @@
                     "Osaka" : {
                         "exception" : "EOF_UndefinedInstruction",
                         "result" : false
-                    },
-                    "Prague" : {
-                        "exception" : "EOF_UndefinedInstruction",
-                        "result" : false
                     }
                 }
             },
@@ -189,10 +137,6 @@
                 "code" : "0xef000101000402000100040400010000800007",
                 "results" : {
                     "Osaka" : {
-                        "exception" : "EOF_InvalidSectionBodiesSize",
-                        "result" : false
-                    },
-                    "Prague" : {
                         "exception" : "EOF_InvalidSectionBodiesSize",
                         "result" : false
                     }
@@ -204,10 +148,6 @@
                     "Osaka" : {
                         "exception" : "EOF_UndefinedInstruction",
                         "result" : false
-                    },
-                    "Prague" : {
-                        "exception" : "EOF_UndefinedInstruction",
-                        "result" : false
                     }
                 }
             },
@@ -215,10 +155,6 @@
                 "code" : "0xef0001010004020001000504000100008000016003565b00ef",
                 "results" : {
                     "Osaka" : {
-                        "exception" : "EOF_UndefinedInstruction",
-                        "result" : false
-                    },
-                    "Prague" : {
                         "exception" : "EOF_UndefinedInstruction",
                         "result" : false
                     }
@@ -229,9 +165,6 @@
                 "results" : {
                     "Osaka" : {
                         "result" : true
-                    },
-                    "Prague" : {
-                        "result" : true
                     }
                 }
             },
@@ -240,9 +173,6 @@
                 "results" : {
                     "Osaka" : {
                         "result" : true
-                    },
-                    "Prague" : {
-                        "result" : true
                     }
                 }
             },
@@ -250,10 +180,6 @@
                 "code" : "0xef000101000802000200030001040004000080000100010001e30001300bad60a7",
                 "results" : {
                     "Osaka" : {
-                        "exception" : "EOF_InvalidCodeTermination",
-                        "result" : false
-                    },
-                    "Prague" : {
                         "exception" : "EOF_InvalidCodeTermination",
                         "result" : false
                     }
@@ -265,10 +191,6 @@
                     "Osaka" : {
                         "exception" : "EOF_StackUnderflow",
                         "result" : false
-                    },
-                    "Prague" : {
-                        "exception" : "EOF_StackUnderflow",
-                        "result" : false
                     }
                 }
             },
@@ -276,9 +198,6 @@
                 "code" : "0xef000101000c0200030028000b001f04000400008003ff000a000a00640064e30002e30002e30002e30002e30002e30002e30002e30002e30002e30002e30001e300013030300030303030303030303030e4e30001e30001e30001e30001e30001e30001e30001e30001e30001e30001e40bad60a7",
                 "results" : {
                     "Osaka" : {
-                        "result" : true
-                    },
-                    "Prague" : {
                         "result" : true
                     }
                 }
@@ -289,10 +208,6 @@
                     "Osaka" : {
                         "exception" : "EOF_MaxStackHeightExceeded",
                         "result" : false
-                    },
-                    "Prague" : {
-                        "exception" : "EOF_MaxStackHeightExceeded",
-                        "result" : false
                     }
                 }
             },
@@ -300,9 +215,6 @@
                 "code" : "0xef0001010004020001000304000400008000013050000bad60a7",
                 "results" : {
                     "Osaka" : {
-                        "result" : true
-                    },
-                    "Prague" : {
                         "result" : true
                     }
                 }
@@ -312,9 +224,6 @@
                 "results" : {
                     "Osaka" : {
                         "result" : true
-                    },
-                    "Prague" : {
-                        "result" : true
                     }
                 }
             },
@@ -322,9 +231,6 @@
                 "code" : "0xef00010100100200040015000500070007040004000080000100800002008000030080000130505f35e202000000030006e50001e50002e50003303050500030303050505000305030503050000bad60a7",
                 "results" : {
                     "Osaka" : {
-                        "result" : true
-                    },
-                    "Prague" : {
                         "result" : true
                     }
                 }
@@ -334,9 +240,6 @@
                 "results" : {
                     "Osaka" : {
                         "result" : true
-                    },
-                    "Prague" : {
-                        "result" : true
                     }
                 }
             },
@@ -344,10 +247,6 @@
                 "code" : "0xef00010100100200040015000300070007040004000080000100800000008000030080000130505f35e202000000030006e50001e50002e50003e5000f30303050505000305030503050000bad60a7",
                 "results" : {
                     "Osaka" : {
-                        "exception" : "EOF_InvalidCodeSectionIndex",
-                        "result" : false
-                    },
-                    "Prague" : {
                         "exception" : "EOF_InvalidCodeSectionIndex",
                         "result" : false
                     }
@@ -359,10 +258,6 @@
                     "Osaka" : {
                         "exception" : "EOF_StackUnderflow",
                         "result" : false
-                    },
-                    "Prague" : {
-                        "exception" : "EOF_StackUnderflow",
-                        "result" : false
                     }
                 }
             },
@@ -370,10 +265,6 @@
                 "code" : "0xef0001010008020002000600030400040000800001000100023050e30001003030e40bad60a7",
                 "results" : {
                     "Osaka" : {
-                        "exception" : "EOF_InvalidNumberOfOutputs",
-                        "result" : false
-                    },
-                    "Prague" : {
                         "exception" : "EOF_InvalidNumberOfOutputs",
                         "result" : false
                     }
@@ -385,10 +276,6 @@
                     "Osaka" : {
                         "exception" : "EOF_StackUnderflow",
                         "result" : false
-                    },
-                    "Prague" : {
-                        "exception" : "EOF_StackUnderflow",
-                        "result" : false
                     }
                 }
             },
@@ -396,10 +283,6 @@
                 "code" : "0xef0001010004020001000304000400000100013050fe0bad60a7",
                 "results" : {
                     "Osaka" : {
-                        "exception" : "EOF_InvalidFirstSectionType",
-                        "result" : false
-                    },
-                    "Prague" : {
                         "exception" : "EOF_InvalidFirstSectionType",
                         "result" : false
                     }
@@ -410,9 +293,6 @@
                 "results" : {
                     "Osaka" : {
                         "result" : true
-                    },
-                    "Prague" : {
-                        "result" : true
                     }
                 }
             },
@@ -420,10 +300,6 @@
                 "code" : "0xef0001010004020001000304000400018000013050fe0bad60a7",
                 "results" : {
                     "Osaka" : {
-                        "exception" : "EOF_InvalidFirstSectionType",
-                        "result" : false
-                    },
-                    "Prague" : {
                         "exception" : "EOF_InvalidFirstSectionType",
                         "result" : false
                     }
@@ -435,10 +311,6 @@
                     "Osaka" : {
                         "exception" : "EOF_UndefinedInstruction",
                         "result" : false
-                    },
-                    "Prague" : {
-                        "exception" : "EOF_UndefinedInstruction",
-                        "result" : false
                     }
                 }
             },
@@ -446,10 +318,6 @@
                 "code" : "0xef0001010004020001000304000400008000033050000bad60a7",
                 "results" : {
                     "Osaka" : {
-                        "exception" : "EOF_InvalidMaxStackHeight",
-                        "result" : false
-                    },
-                    "Prague" : {
                         "exception" : "EOF_InvalidMaxStackHeight",
                         "result" : false
                     }
@@ -461,10 +329,6 @@
                     "Osaka" : {
                         "exception" : "EOF_InvalidSectionBodiesSize",
                         "result" : false
-                    },
-                    "Prague" : {
-                        "exception" : "EOF_InvalidSectionBodiesSize",
-                        "result" : false
                     }
                 }
             },
@@ -472,10 +336,6 @@
                 "code" : "0xef0001010004020001000304000400008000013050620bad60a7",
                 "results" : {
                     "Osaka" : {
-                        "exception" : "EOF_TruncatedImmediate",
-                        "result" : false
-                    },
-                    "Prague" : {
                         "exception" : "EOF_TruncatedImmediate",
                         "result" : false
                     }
@@ -487,10 +347,6 @@
                     "Osaka" : {
                         "exception" : "EOF_HeaderTerminatorMissing",
                         "result" : false
-                    },
-                    "Prague" : {
-                        "exception" : "EOF_HeaderTerminatorMissing",
-                        "result" : false
                     }
                 }
             },
@@ -498,10 +354,6 @@
                 "code" : "0xef020101000402000100030400010000800001305000ef",
                 "results" : {
                     "Osaka" : {
-                        "exception" : "EOF_InvalidPrefix",
-                        "result" : false
-                    },
-                    "Prague" : {
                         "exception" : "EOF_InvalidPrefix",
                         "result" : false
                     }
@@ -513,10 +365,6 @@
                     "Osaka" : {
                         "exception" : "EOF_UnknownVersion",
                         "result" : false
-                    },
-                    "Prague" : {
-                        "exception" : "EOF_UnknownVersion",
-                        "result" : false
                     }
                 }
             },
@@ -524,10 +372,6 @@
                 "code" : "0xef000201000402000100030400010000800001305000ef",
                 "results" : {
                     "Osaka" : {
-                        "exception" : "EOF_UnknownVersion",
-                        "result" : false
-                    },
-                    "Prague" : {
                         "exception" : "EOF_UnknownVersion",
                         "result" : false
                     }
@@ -539,10 +383,6 @@
                     "Osaka" : {
                         "exception" : "EOF_TypeSectionMissing",
                         "result" : false
-                    },
-                    "Prague" : {
-                        "exception" : "EOF_TypeSectionMissing",
-                        "result" : false
                     }
                 }
             },
@@ -550,10 +390,6 @@
                 "code" : "0xef000102000100030400010100040000800001305000ef",
                 "results" : {
                     "Osaka" : {
-                        "exception" : "EOF_TypeSectionMissing",
-                        "result" : false
-                    },
-                    "Prague" : {
                         "exception" : "EOF_TypeSectionMissing",
                         "result" : false
                     }
@@ -565,10 +401,6 @@
                     "Osaka" : {
                         "exception" : "EOF_TypeSectionMissing",
                         "result" : false
-                    },
-                    "Prague" : {
-                        "exception" : "EOF_TypeSectionMissing",
-                        "result" : false
                     }
                 }
             },
@@ -577,9 +409,6 @@
                 "results" : {
                     "Osaka" : {
                         "result" : true
-                    },
-                    "Prague" : {
-                        "result" : true
                     }
                 }
             },
@@ -587,10 +416,6 @@
                 "code" : "0xef00010100040400010000800001305000ef",
                 "results" : {
                     "Osaka" : {
-                        "exception" : "EOF_CodeSectionMissing",
-                        "result" : false
-                    },
-                    "Prague" : {
                         "exception" : "EOF_CodeSectionMissing",
                         "result" : false
                     }
@@ -602,10 +427,6 @@
                     "Osaka" : {
                         "exception" : "EOF_DataSectionMissing",
                         "result" : false
-                    },
-                    "Prague" : {
-                        "exception" : "EOF_DataSectionMissing",
-                        "result" : false
                     }
                 }
             },
@@ -613,10 +434,6 @@
                 "code" : "0xef00010100040200010003040001ff00800001305000ef",
                 "results" : {
                     "Osaka" : {
-                        "exception" : "EOF_HeaderTerminatorMissing",
-                        "result" : false
-                    },
-                    "Prague" : {
                         "exception" : "EOF_HeaderTerminatorMissing",
                         "result" : false
                     }
@@ -627,9 +444,6 @@
                 "results" : {
                     "Osaka" : {
                         "result" : true
-                    },
-                    "Prague" : {
-                        "result" : true
                     }
                 }
             },
@@ -639,10 +453,6 @@
                     "Osaka" : {
                         "exception" : "EOF_UnreachableCode",
                         "result" : false
-                    },
-                    "Prague" : {
-                        "exception" : "EOF_UnreachableCode",
-                        "result" : false
                     }
                 }
             },
@@ -650,9 +460,6 @@
                 "code" : "0xef0001010004020001000704000400008000016001e100015b000bad60a7",
                 "results" : {
                     "Osaka" : {
-                        "result" : true
-                    },
-                    "Prague" : {
                         "result" : true
                     }
                 }
