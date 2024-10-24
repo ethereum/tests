@@ -42,17 +42,17 @@ revertRetDataSize:
             (def 'NOP 0)
 
             ; Code for CREATE(2) to fail
-           
+
             (def 'codeLoc      0x0000)
             (def 'codeLength   0x0100)
-        
-            (if (= failureType oog) 
+
+            (if (= failureType oog)
                [codeLength] (lll (sha3 0 (- 0 1)) codeLoc)
                NOP
             )
 
 
-            (if (= failureType badCall) 
+            (if (= failureType badCall)
                [codeLength] (call (gas) 0xFF00 0 0 0 0 0)
                NOP
             )
@@ -69,8 +69,8 @@ revertRetDataSize:
             )
 
             (if (= failureType jmp) {
-                 (mstore8 codeLoc         0x60)     ; PUSH1 0x00                
-                 (mstore8 (+ codeLoc 1)   0x00) 
+                 (mstore8 codeLoc         0x60)     ; PUSH1 0x00
+                 (mstore8 (+ codeLoc 1)   0x00)
                  (mstore8 (+ codeLoc 2)   0x56)     ; JUMP
                  (mstore8 (+ codeLoc 2)   0x00)     ; STOP
                  [codeLength] 4
@@ -79,28 +79,28 @@ revertRetDataSize:
             )
 
             (if (= failureType jmpi) {
-                 (mstore8 codeLoc         0x60)     ; PUSH1 0x01                
-                 (mstore8 (+ codeLoc 1)   0x01) 
+                 (mstore8 codeLoc         0x60)     ; PUSH1 0x01
+                 (mstore8 (+ codeLoc 1)   0x01)
                  (mstore8 (+ codeLoc 2)   0x60)     ; PUSH1 0x01
-                 (mstore8 (+ codeLoc 3)   0x01) 
+                 (mstore8 (+ codeLoc 3)   0x01)
                  (mstore8 (+ codeLoc 4)   0x57)     ; JUMPI
                  (mstore8 (+ codeLoc 5)   0x00)     ; STOP
                  [codeLength] 6
                }
                NOP
             )
-            
+
 
 
 
             (if (= failureType badOpcode) {
                  (mstore8 codeLoc         0xFE)     ; Invalid opcode
-                 (mstore8 (+ codeLoc 1)   0x00)     ; STOP 
+                 (mstore8 (+ codeLoc 1)   0x00)     ; STOP
                  [codeLength] 2
                }
                NOP
             )
-            
+
 
 
 
@@ -108,9 +108,9 @@ revertRetDataSize:
 
             (if (and (= callType call) (= failureType oog))
                   {
-                    (call (gas) 0x100 0 0 0 0 0x40)
+                    (call (gas) 0x1000 0 0 0 0 0x40)
                     [[0]] (returndatasize)
-                    (call 0 0x100 0 0 0 0 0x40)
+                    (call 0 0x1000 0 0 0 0 0x40)
                     [[1]] (returndatasize)
                   }
                NOP)
@@ -119,7 +119,7 @@ revertRetDataSize:
             ; If failureType isn't zero, it's the address of a contract to call
             (if (and (= callType call) (> failureType 0))
                   {
-                    (call (gas) 0x100 0 0 0 0 0x40)
+                    (call (gas) 0x1000 0 0 0 0 0x40)
                     [[0]] (returndatasize)
                     (call (- (gas) 0xF0000) failureType 0 0 0 0 0x40)
                     [[1]] (returndatasize)
@@ -130,9 +130,9 @@ revertRetDataSize:
 
             (if (and (= callType callcode) (= failureType oog))
                   {
-                    (callcode (gas) 0x100 0 0 0 0 0x40)
+                    (callcode (gas) 0x1000 0 0 0 0 0x40)
                     [[0]] (returndatasize)
-                    (callcode 0 0x100 0 0 0 0 0x40)
+                    (callcode 0 0x1000 0 0 0 0 0x40)
                     [[1]] (returndatasize)
                   }
                NOP)
@@ -141,7 +141,7 @@ revertRetDataSize:
             ; If failureType isn't zero, it's the address of a contract to call
             (if (and (= callType callcode) (> failureType 0))
                   {
-                    (call (gas) 0x100 0 0 0 0 0x40)
+                    (call (gas) 0x1000 0 0 0 0 0x40)
                     [[0]] (returndatasize)
                     (callcode (gas) failureType 0 0 0 0 0x40)
                     [[1]] (returndatasize)
@@ -153,9 +153,9 @@ revertRetDataSize:
 
             (if (and (= callType delegatecall) (= failureType oog))
                   {
-                    (delegatecall (gas) 0x100 0 0 0 0x40)
+                    (delegatecall (gas) 0x1000 0 0 0 0x40)
                     [[0]] (returndatasize)
-                    (delegatecall 0 0x100 0 0 0 0x40)
+                    (delegatecall 0 0x1000 0 0 0 0x40)
                     [[1]] (returndatasize)
                   }
                NOP)
@@ -164,7 +164,7 @@ revertRetDataSize:
             ; If failureType isn't zero, it's the address of a contract to call
             (if (and (= callType delegatecall) (> failureType 0))
                   {
-                    (call (gas) 0x100 0 0 0 0 0x40)
+                    (call (gas) 0x1000 0 0 0 0 0x40)
                     [[0]] (returndatasize)
                     (delegatecall (gas) failureType 0 0 0 0x40)
                     [[1]] (returndatasize)
@@ -176,9 +176,9 @@ revertRetDataSize:
 
             (if (and (= callType staticcall) (= failureType oog))
                   {
-                    (staticcall (gas) 0x100 0 0 0 0x40)
+                    (staticcall (gas) 0x1000 0 0 0 0x40)
                     [[0]] (returndatasize)
-                    (staticcall 0 0x100 0 0 0 0x40)
+                    (staticcall 0 0x1000 0 0 0 0x40)
                     [[1]] (returndatasize)
                   }
                NOP)
@@ -187,7 +187,7 @@ revertRetDataSize:
             ; If failureType isn't zero, it's the address of a contract to call
             (if (and (= callType staticcall) (> failureType 0))
                   {
-                    (call (gas) 0x100 0 0 0 0 0x40)
+                    (call (gas) 0x1000 0 0 0 0 0x40)
                     [[0]] (returndatasize)
                     (staticcall (gas) failureType 0 0 0 0x40)
                     [[1]] (returndatasize)
@@ -195,9 +195,9 @@ revertRetDataSize:
                NOP)
 
 
-            (if (= callType create) 
+            (if (= callType create)
                   {
-                    (staticcall (gas) 0x100 0 0 0 0x40)
+                    (staticcall (gas) 0x1000 0 0 0 0x40)
                     [[0]] (returndatasize)
                     (create 0 codeLoc @codeLength)
                     [[1]] (returndatasize)
@@ -207,7 +207,7 @@ revertRetDataSize:
 
             (if (= callType create2)
                   {
-                    (staticcall (gas) 0x100 0 0 0 0x40)
+                    (staticcall (gas) 0x1000 0 0 0 0x40)
                     [[0]] (returndatasize)
                     (create2 0x5a17 0 codeLoc @codeLength)
                     [[1]] (returndatasize)
@@ -226,10 +226,10 @@ revertRetDataSize:
 
 
     # Call and try to return a 0x40 byte value
-    0000000000000000000000000000000000000100:
+    0000000000000000000000000000000000001000:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-        {  
+        {
            [0x00] (/ (- 0 1) 2)
            [0x20] (+ @0x00 1)
 
@@ -289,7 +289,7 @@ revertRetDataSize:
       code: '0x'
       nonce: '0'
       storage: {}
-      
+
 
 
 
@@ -357,8 +357,8 @@ revertRetDataSize:
     value:
     - '1'
     secretKey: "45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8"
-    
-    
+
+
   expect:
 
     # CALL/CREATE failure, including OOG, gives a RETURNDATASIZE of zero and
@@ -369,11 +369,9 @@ revertRetDataSize:
         value: !!int -1
       network:
         - '>=Cancun'
-      result: 
-        cccccccccccccccccccccccccccccccccccccccc: 
+      result:
+        cccccccccccccccccccccccccccccccccccccccc:
           storage:
             0: 0x40   # First returndatasize
             1: 0x00   # Second returndatasize
             2: 0x60A7   # GOAT at the end of the run
-
-

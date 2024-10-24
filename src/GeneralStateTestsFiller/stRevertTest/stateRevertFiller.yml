@@ -18,20 +18,20 @@ stateRevert:
     000000000000000000000000000000000000DEAD:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-        {  
+        {
             [[2]] 0x60A7
         }
       nonce: '0'
       storage: {}
-    
+
 
 
     # REVERT opcode
-    0000000000000000000000000000000000000100:
+    0000000000000000000000000000000000001000:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-        {  
-            [[1]] 0x0100
+        {
+            [[1]] 0x1000
             (delegatecall (- (gas) 30000) 0xDEAD 0 0 0 0)
             (revert 0 0x10)
         }
@@ -41,11 +41,11 @@ stateRevert:
 
 
     # Out of gas
-    0000000000000000000000000000000000000101:
+    0000000000000000000000000000000000001001:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-        {  
-            [[1]] 0x0101
+        {
+            [[1]] 0x1001
             (delegatecall (- (gas) 30000) 0xDEAD 0 0 0 0)
             (while 1 (sha3 0 0x1000000))
         }
@@ -55,11 +55,11 @@ stateRevert:
 
 
     # Extreme out of gas  (gas cost of an opcode > 2^64)
-    0000000000000000000000000000000000000102:
+    0000000000000000000000000000000000001002:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-        {  
-            [[1]] 0x0102
+        {
+            [[1]] 0x1002
             (delegatecall (- (gas) 30000) 0xDEAD 0 0 0 0)
             (sha3 0 (- 0 1))
         }
@@ -67,18 +67,18 @@ stateRevert:
       storage: {}
 
     # The next invalid states are difficult/impossible to do in LLL
-    # so they use the assembled version of contract 0x0101, except change the 
+    # so they use the assembled version of contract 0x1001, except change the
     # last part from (revert 0 0x10) to whatever is needed
 
     # Invalid opcode
-    0000000000000000000000000000000000000103:
+    0000000000000000000000000000000000001003:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: :raw 0x610103600155600060006000600061dead6175305a03f450BA
       nonce: '0'
       storage: {}
 
     # Jump to a non jumpdest (pc=0, which is a PUSH2)
-    0000000000000000000000000000000000000104:
+    0000000000000000000000000000000000001004:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: :raw 0x610104600155600060006000600061dead6175305a03f450600056
       nonce: '0'
@@ -86,7 +86,7 @@ stateRevert:
 
 
     # Stack underflow
-    0000000000000000000000000000000000000105:
+    0000000000000000000000000000000000001005:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: :raw 0x610105600155600060006000600061dead6175305a03f450010101
       nonce: '0'
@@ -94,7 +94,7 @@ stateRevert:
 
 
     # Stack overflow
-    0000000000000000000000000000000000000106:
+    0000000000000000000000000000000000001006:
       # The code that does the overflow:
       # n    5B    JUMPDEST
       # n+1  58    PC
@@ -112,9 +112,9 @@ stateRevert:
     CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-        {  
+        {
             [[0]] 0x60A7
-            (delegatecall (gas) (+ 0x100 $4) 0 0 0 0)
+            (delegatecall (gas) (+ 0x1000 $4) 0 0 0 0)
         }
       nonce: '0'
       storage: {}
@@ -125,7 +125,7 @@ stateRevert:
       code: '0x'
       nonce: '0'
       storage: {}
-      
+
 
 
 
@@ -146,11 +146,11 @@ stateRevert:
     value:
     - '1'
     secretKey: "45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8"
-    
-    
+
+
   expect:
     - indexes:
-        data: 
+        data:
         - :label revert
         - :label outOfGas
         - :label xtremeOOG
@@ -168,4 +168,3 @@ stateRevert:
             0: 0x60A7  # CCCCCCC changes state
             1:   0x00  # The contract that reverted does not
             2:   0x00  # Neither does a contract called by the reverter
-
