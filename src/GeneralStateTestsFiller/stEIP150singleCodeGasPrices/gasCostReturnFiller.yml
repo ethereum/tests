@@ -14,7 +14,7 @@ gasCostReturn:
   pre:
 
     # End with a STOP
-    0000000000000000000000000000000000000100:
+    0000000000000000000000000000000000001000:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: :raw 0x600060FF00
         # 0 PUSH1 0
@@ -25,7 +25,7 @@ gasCostReturn:
 
 
     # End with a RETURN
-    0000000000000000000000000000000000000200:
+    0000000000000000000000000000000000002000:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: :raw 0x600060FFF3
         # 0 PUSH1 0
@@ -43,7 +43,7 @@ gasCostReturn:
         {
           ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
           ; Initialization
- 
+
           ; Variables (0x20 byte wide)
           (def 'gasB4         0x000)  ; Before the action being measured
 
@@ -63,12 +63,12 @@ gasCostReturn:
           ; Run the operation
 
           [gasB4] (gas)
-          (call 0x10000 0x0100 0 0 0 0 0)
+          (call 0x10000 0x1000 0 0 0 0 0)
           [gasSTOP] (- @gasB4 (gas))
 
 
           [gasB4] (gas)
-          (call 0x10000 0x0200 0 0 0 0 0)
+          (call 0x10000 0x2000 0 0 0 0 0)
           [gasRETURN] (- @gasB4 (gas))
 
 
@@ -117,4 +117,3 @@ gasCostReturn:
           storage:
             0x00: 0
             0x01: 0
-

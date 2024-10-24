@@ -14,7 +14,7 @@ Transaction64Rule_integerBoundaries:
   pre:
 
     # End with a STOP
-    0000000000000000000000000000000000000100:
+    0000000000000000000000000000000000001000:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: :raw 0x600060FF00
         # 0 PUSH1 0
@@ -30,17 +30,17 @@ Transaction64Rule_integerBoundaries:
         {
           let initialgas := gas()
           let callgas := calldataload(0)
-        
-          pop(call(callgas, 0x100, 0, 0, 0, 0, 0x20))
+
+          pop(call(callgas, 0x1000, 0, 0, 0, 0, 0x20))
           sstore(0, lt(gas(), initialgas))
 
-          pop(callcode(callgas, 0x100, 0, 0, 0, 0, 0x20))
+          pop(callcode(callgas, 0x1000, 0, 0, 0, 0, 0x20))
           sstore(1, lt(gas(), initialgas))
 
-          pop(delegatecall(callgas, 0x100, 0, 0x20, 0, 0x20))
+          pop(delegatecall(callgas, 0x1000, 0, 0x20, 0, 0x20))
           sstore(2, lt(gas(), initialgas))
 
-          pop(staticcall(callgas, 0x100, 0, 0x20, 0, 0x20))
+          pop(staticcall(callgas, 0x1000, 0, 0x20, 0, 0x20))
           sstore(3, lt(gas(), initialgas))
         }
       nonce: '0'

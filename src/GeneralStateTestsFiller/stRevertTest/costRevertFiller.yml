@@ -19,10 +19,10 @@ costRevert:
   pre:
 
     # REVERT opcode
-    0000000000000000000000000000000000000100:
+    0000000000000000000000000000000000001000:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-        {  
+        {
             (revert 0 0x10)
         }
       nonce: '0'
@@ -31,10 +31,10 @@ costRevert:
 
 
     # Out of gas
-    0000000000000000000000000000000000000101:
+    0000000000000000000000000000000000001001:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-        {  
+        {
             (while 1 (sha3 0 0x1000000))
         }
       nonce: '0'
@@ -43,28 +43,28 @@ costRevert:
 
 
     # Extreme out of gas  (gas cost of an opcode > 2^64)
-    0000000000000000000000000000000000000102:
+    0000000000000000000000000000000000001002:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-        {  
+        {
             (sha3 0 (- 0 1))
         }
       nonce: '0'
       storage: {}
 
     # The next invalid states are difficult/impossible to do in LLL
-    # so they use the assembled version of contract 0x0101, except change the 
+    # so they use the assembled version of contract 0x1001, except change the
     # last part from (revert 0 0x10) to whatever is needed
 
     # Invalid opcode
-    0000000000000000000000000000000000000103:
+    0000000000000000000000000000000000001003:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: :raw 0x610103600155600060006000600061dead6175305a03f450BA
       nonce: '0'
       storage: {}
 
     # Jump to a non jumpdest (pc=0, which is a PUSH2)
-    0000000000000000000000000000000000000104:
+    0000000000000000000000000000000000001004:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: :raw 0x610104600155600060006000600061dead6175305a03f450600056
       nonce: '0'
@@ -72,15 +72,15 @@ costRevert:
 
 
     # Stack underflow
-    0000000000000000000000000000000000000105:
+    0000000000000000000000000000000000001005:
       balance: '0x0ba1a9ce0ba1a9ce'
-      code: :raw 0x0100
+      code: :raw 0x1000
       nonce: '0'
       storage: {}
 
 
     # Stack overflow
-    0000000000000000000000000000000000000106:
+    0000000000000000000000000000000000001006:
       # The code that does the overflow:
       #   0  5B    JUMPDEST
       #   1  58    PC
@@ -98,17 +98,17 @@ costRevert:
     CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-        {  
+        {
             (if (= $36 0) {     ; CALL
                [0x00] (gas)
 
               ; Leave us some gas even if the call takes all of it
               (call (- (gas) 30000) $4 0 0 0 0 0)
-            
+
               [0x20] (gas)
 
               ; Opcodes between the two gas measurements cost 42 gas
-  
+
               ; 0-1            GAS         2         0  79978808
               ; 1-1          PUSH1         3         2  79978806
               ; 2-1         MSTORE         6         5  79978803
@@ -139,7 +139,7 @@ costRevert:
 
               ; Leave us some gas even if the call takes all of it
               (delegatecall (- (gas) 30000) $4 0 0 0 0)
-            
+
               [0x20] (gas)
 
               ; Opcodes between the two gas measurements cost 39 gas,
@@ -158,7 +158,7 @@ costRevert:
 
               ; Leave us some gas even if the call takes all of it
               (staticcall (- (gas) 30000) $4 0 0 0 0)
-            
+
               [0x20] (gas)
 
               ; Opcodes between the two gas measurements cost 39 gas,
@@ -175,7 +175,7 @@ costRevert:
 
               ; Leave us some gas even if the call takes all of it
               (call (- (gas) 30000) $4 0 0 0 0 0)
-            
+
               [0x20] (gas)
 
               ; Calculate gas cost
@@ -183,7 +183,7 @@ costRevert:
 
             } 0)
 
-          
+
             ; If the gas cost is above 0x04000000, assume it means "all the gas"
             [[0]] (if (> @@0 0x04000000) 0xFFFFFF @@0)
         }
@@ -196,48 +196,48 @@ costRevert:
       code: '0x'
       nonce: '0'
       storage: {}
-      
+
 
 
 
   transaction:
     data:
     # CALL
-    - :label revert     :abi f(uint,uint) 0x0100 0
-    - :label outOfGas   :abi f(uint,uint) 0x0101 0
-    - :label xtremeOOG  :abi f(uint,uint) 0x0102 0 
-    - :label badOpcode  :abi f(uint,uint) 0x0103 0
-    - :label jumpBadly  :abi f(uint,uint) 0x0104 0
-    - :label stackUnder :abi f(uint,uint) 0x0105 0
-    - :label stackOver  :abi f(uint,uint) 0x0106 0
+    - :label revert     :abi f(uint,uint) 0x1000 0
+    - :label outOfGas   :abi f(uint,uint) 0x1001 0
+    - :label xtremeOOG  :abi f(uint,uint) 0x1002 0
+    - :label badOpcode  :abi f(uint,uint) 0x1003 0
+    - :label jumpBadly  :abi f(uint,uint) 0x1004 0
+    - :label stackUnder :abi f(uint,uint) 0x1005 0
+    - :label stackOver  :abi f(uint,uint) 0x1006 0
 
     # DELEGATECALL
-    - :label revert     :abi f(uint,uint) 0x0100 1
-    - :label outOfGas   :abi f(uint,uint) 0x0101 1
-    - :label xtremeOOG  :abi f(uint,uint) 0x0102 1 
-    - :label badOpcode  :abi f(uint,uint) 0x0103 1
-    - :label jumpBadly  :abi f(uint,uint) 0x0104 1
-    - :label stackUnder :abi f(uint,uint) 0x0105 1
-    - :label stackOver  :abi f(uint,uint) 0x0106 1
+    - :label revert     :abi f(uint,uint) 0x1000 1
+    - :label outOfGas   :abi f(uint,uint) 0x1001 1
+    - :label xtremeOOG  :abi f(uint,uint) 0x1002 1
+    - :label badOpcode  :abi f(uint,uint) 0x1003 1
+    - :label jumpBadly  :abi f(uint,uint) 0x1004 1
+    - :label stackUnder :abi f(uint,uint) 0x1005 1
+    - :label stackOver  :abi f(uint,uint) 0x1006 1
 
     # STATICCALL
-    - :label revert     :abi f(uint,uint) 0x0100 2
-    - :label outOfGas   :abi f(uint,uint) 0x0101 2
-    - :label xtremeOOG  :abi f(uint,uint) 0x0102 2 
-    - :label badOpcode  :abi f(uint,uint) 0x0103 2
-    - :label jumpBadly  :abi f(uint,uint) 0x0104 2
-    - :label stackUnder :abi f(uint,uint) 0x0105 2
-    - :label stackOver  :abi f(uint,uint) 0x0106 2
+    - :label revert     :abi f(uint,uint) 0x1000 2
+    - :label outOfGas   :abi f(uint,uint) 0x1001 2
+    - :label xtremeOOG  :abi f(uint,uint) 0x1002 2
+    - :label badOpcode  :abi f(uint,uint) 0x1003 2
+    - :label jumpBadly  :abi f(uint,uint) 0x1004 2
+    - :label stackUnder :abi f(uint,uint) 0x1005 2
+    - :label stackOver  :abi f(uint,uint) 0x1006 2
 
 
     # CALLCODE
-    - :label revert     :abi f(uint,uint) 0x0100 3
-    - :label outOfGas   :abi f(uint,uint) 0x0101 3
-    - :label xtremeOOG  :abi f(uint,uint) 0x0102 3 
-    - :label badOpcode  :abi f(uint,uint) 0x0103 3
-    - :label jumpBadly  :abi f(uint,uint) 0x0104 3
-    - :label stackUnder :abi f(uint,uint) 0x0105 3
-    - :label stackOver  :abi f(uint,uint) 0x0106 3
+    - :label revert     :abi f(uint,uint) 0x1000 3
+    - :label outOfGas   :abi f(uint,uint) 0x1001 3
+    - :label xtremeOOG  :abi f(uint,uint) 0x1002 3
+    - :label badOpcode  :abi f(uint,uint) 0x1003 3
+    - :label jumpBadly  :abi f(uint,uint) 0x1004 3
+    - :label stackUnder :abi f(uint,uint) 0x1005 3
+    - :label stackOver  :abi f(uint,uint) 0x1006 3
 
     gasLimit:
     - '80000000'
@@ -247,8 +247,8 @@ costRevert:
     value:
     - '1'
     secretKey: "45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8"
-    
-    
+
+
   expect:
     - indexes:
         data:
@@ -283,4 +283,3 @@ costRevert:
             # As long as the value is "all the gas", we don't
             # care how much it is exactly
             0: 0xFFFFFF
-
