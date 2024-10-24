@@ -282,7 +282,8 @@ validInvalid:
     - data: |
        :label EOF1I4750_0003 :raw 0xef000101000102000100010400000000800000fe
       expectException:
-        ">=Prague" : "EOF_InvalidSectionBodiesSize"
+        # It used to be EOF_InvalidSectionBodiesSize
+        ">=Prague" : "EOFException.INVALID_TYPE_SECTION_SIZE"
 
     # EOF1I4750_0004 (Invalid) EOF code containing type section size (Size 8 - 1 Code section) - Data index: 11
     # Code: ef000101000802000100010400000000800000fe

@@ -2,18 +2,22 @@
     "minimal_valid_EOF1_multiple_code_sections" : {
         "_info" : {
             "comment" : "",
-            "filling-rpc-server" : "evmone-t8n 0.12.0-dev+commit.d935077c",
-            "filling-tool-version" : "retesteth-0.3.2-cancun+commit.cf90baf3.Linux.g++",
-            "generatedTestHash" : "8e25ebe81e78cb5145eb0e42b3b08031d568046a6c3071b94be640c15ba76c9f",
-            "lllcversion" : "Version: 0.5.14-develop.2023.7.11+commit.c58ab2c6.mod.Linux.g++",
-            "solidity" : "Version: 0.8.21+commit.d9974bed.Linux.g++",
+            "filling-rpc-server" : "evmone-t8n 0.13.0-23+commit.71e2311c",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.c1fb07e8.Linux.g++",
+            "generatedTestHash" : "8096596a4f51a040ef34894c8c54c1f8525eace306db93c1e84405a62b7fbb7b",
+            "lllcversion" : "Error getting LLLC Version",
+            "solidity" : "Error getting solc Version",
             "source" : "src/EOFTestsFiller/efValidation/minimal_valid_EOF1_multiple_code_sections_Copier.json",
-            "sourceHash" : "642fe11d8233c8adb0bd327431a841d29c2d9ce167ca8d17ca25ae9f5073d260"
+            "sourceHash" : "0924d94f7847bc0978f4ac17021971506721f95f5744d7eea0bc639c9aceaef7"
         },
         "vectors" : {
             "no_data_section" : {
                 "code" : "0xef000101000802000200010001000080000000800000fefe",
                 "results" : {
+                    "Osaka" : {
+                        "exception" : "EOF_DataSectionMissing",
+                        "result" : false
+                    },
                     "Prague" : {
                         "exception" : "EOF_DataSectionMissing",
                         "result" : false
@@ -23,6 +27,9 @@
             "non_void_input_output" : {
                 "code" : "0xef0001010010020004000500060008000204000000008000010100000100010003020300035fe300010050e3000250e43080e300035050e480e4",
                 "results" : {
+                    "Osaka" : {
+                        "result" : true
+                    },
                     "Prague" : {
                         "result" : true
                     }
@@ -31,6 +38,9 @@
             "with_data_section" : {
                 "code" : "0xef000101000802000200030001040001000080000000800000e50001feda",
                 "results" : {
+                    "Osaka" : {
+                        "result" : true
+                    },
                     "Prague" : {
                         "result" : true
                     }
