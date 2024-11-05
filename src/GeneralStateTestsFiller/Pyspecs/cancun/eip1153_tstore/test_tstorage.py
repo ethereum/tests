@@ -9,9 +9,9 @@ from enum import unique
 
 import pytest
 
-from ethereum_test_tools import Account, Code, CodeGasMeasure, Environment
+from ethereum_test_tools import Account, Alloc, Bytecode, CodeGasMeasure, Environment
 from ethereum_test_tools import Opcodes as Op
-from ethereum_test_tools import StateTestFiller, TestAddress, Transaction
+from ethereum_test_tools import StateTestFiller, Transaction
 
 from . import PytestParameterEnum
 from .spec import Spec, ref_spec_1153
@@ -24,7 +24,7 @@ pytestmark = [pytest.mark.valid_from("Cancun")]
 code_address = 0x100
 
 
-def test_transient_storage_unset_values(state_test: StateTestFiller):
+def test_transient_storage_unset_values(state_test: StateTestFiller, pre: Alloc):
     """
     Test that tload returns zero for unset values. Loading an arbitrary value is
     0 at beginning of transaction: TLOAD(x) is 0.
@@ -34,16 +34,16 @@ def test_transient_storage_unset_values(state_test: StateTestFiller):
     env = Environment()
 
     slots_under_test = [0, 1, 2, 2**128, 2**256 - 1]
-    code = b"".join([Op.SSTORE(slot, Op.TLOAD(slot)) for slot in slots_under_test])
+    code = sum(Op.SSTORE(slot, Op.TLOAD(slot)) for slot in slots_under_test)
 
-    pre = {
-        TestAddress: Account(balance=10_000_000),
-        code_address: Account(code=code, storage={slot: 1 for slot in slots_under_test}),
-    }
+    code_address = pre.deploy_contract(
+        code=code,  # type: ignore
+        storage={slot: 1 for slot in slots_under_test},
+    )
 
     tx = Transaction(
+        sender=pre.fund_eoa(),
         to=code_address,
-        data=b"",
         gas_limit=1_000_000,
     )
 
@@ -57,7 +57,7 @@ def test_transient_storage_unset_values(state_test: StateTestFiller):
     )
 
 
-def test_tload_after_tstore(state_test: StateTestFiller):
+def test_tload_after_tstore(state_test: StateTestFiller, pre: Alloc):
     """
     Loading after storing returns the stored value: TSTORE(x, y), TLOAD(x)
     returns y.
@@ -67,18 +67,17 @@ def test_tload_after_tstore(state_test: StateTestFiller):
     env = Environment()
 
     slots_under_test = [0, 1, 2, 2**128, 2**256 - 1]
-    code = b"".join(
-        [Op.TSTORE(slot, slot) + Op.SSTORE(slot, Op.TLOAD(slot)) for slot in slots_under_test]
+    code = sum(
+        Op.TSTORE(slot, slot) + Op.SSTORE(slot, Op.TLOAD(slot)) for slot in slots_under_test
+    )
+    code_address = pre.deploy_contract(
+        code=code,  # type: ignore
+        storage={slot: 0xFF for slot in slots_under_test},
     )
 
-    pre = {
-        TestAddress: Account(balance=10_000_000),
-        code_address: Account(code=code, storage={slot: 0xFF for slot in slots_under_test}),
-    }
-
     tx = Transaction(
+        sender=pre.fund_eoa(),
         to=code_address,
-        data=b"",
         gas_limit=1_000_000,
     )
 
@@ -92,7 +91,7 @@ def test_tload_after_tstore(state_test: StateTestFiller):
     )
 
 
-def test_tload_after_sstore(state_test: StateTestFiller):
+def test_tload_after_sstore(state_test: StateTestFiller, pre: Alloc):
     """
     Loading after storing returns the stored value: TSTORE(x, y), TLOAD(x)
     returns y.
@@ -102,21 +101,18 @@ def test_tload_after_sstore(state_test: StateTestFiller):
     env = Environment()
 
     slots_under_test = [1, 3, 2**128, 2**256 - 1]
-    code = b"".join(
-        [
-            Op.SSTORE(slot - 1, 0xFF) + Op.SSTORE(slot, Op.TLOAD(slot - 1))
-            for slot in slots_under_test
-        ]
+    code = sum(
+        Op.SSTORE(slot - 1, 0xFF) + Op.SSTORE(slot, Op.TLOAD(slot - 1))
+        for slot in slots_under_test
+    )
+    code_address = pre.deploy_contract(
+        code=code,  # type: ignore
+        storage={slot: 1 for slot in slots_under_test},
     )
 
-    pre = {
-        TestAddress: Account(balance=10_000_000),
-        code_address: Account(code=code, storage={slot: 1 for slot in slots_under_test}),
-    }
-
     tx = Transaction(
+        sender=pre.fund_eoa(),
         to=code_address,
-        data=b"",
         gas_limit=1_000_000,
     )
 
@@ -136,7 +132,7 @@ def test_tload_after_sstore(state_test: StateTestFiller):
     )
 
 
-def test_tload_after_tstore_is_zero(state_test: StateTestFiller):
+def test_tload_after_tstore_is_zero(state_test: StateTestFiller, pre: Alloc):
     """
     Test that tload returns zero after tstore is called with zero.
 
@@ -148,20 +144,18 @@ def test_tload_after_tstore_is_zero(state_test: StateTestFiller):
     slots_to_read = [slot - 1 for slot in slots_to_write] + [slot + 1 for slot in slots_to_write]
     assert set.intersection(set(slots_to_write), set(slots_to_read)) == set()
 
-    code = b"".join([Op.TSTORE(slot, 1234) for slot in slots_to_write]) + b"".join(
-        [Op.SSTORE(slot, Op.TLOAD(slot)) for slot in slots_to_read]
+    code = sum(Op.TSTORE(slot, 1234) for slot in slots_to_write) + sum(
+        Op.SSTORE(slot, Op.TLOAD(slot)) for slot in slots_to_read
     )
 
-    pre = {
-        TestAddress: Account(balance=10_000_000),
-        code_address: Account(
-            code=code, storage={slot: 0xFFFF for slot in slots_to_write + slots_to_read}
-        ),
-    }
+    code_address = pre.deploy_contract(
+        code=code,  # type: ignore
+        storage={slot: 0xFFFF for slot in slots_to_write + slots_to_read},
+    )
 
     tx = Transaction(
+        sender=pre.fund_eoa(),
         to=code_address,
-        data=b"",
         gas_limit=1_000_000,
     )
 
@@ -218,7 +212,8 @@ class GasMeasureTestCases(PytestParameterEnum):
 @GasMeasureTestCases.parametrize()
 def test_gas_usage(
     state_test: StateTestFiller,
-    bytecode: Code,
+    pre: Alloc,
+    bytecode: Bytecode,
     expected_gas: int,
     overhead_cost: int,
     extra_stack_items: int,
@@ -231,18 +226,14 @@ def test_gas_usage(
     )
 
     env = Environment()
-    pre = {
-        TestAddress: Account(balance=10_000_000, nonce=0),
-        code_address: Account(code=gas_measure_bytecode),
-    }
+    code_address = pre.deploy_contract(code=gas_measure_bytecode)
     tx = Transaction(
+        sender=pre.fund_eoa(),
         to=code_address,
-        data=b"",
         gas_limit=1_000_000,
     )
     post = {
         code_address: Account(code=gas_measure_bytecode, storage={0: expected_gas}),
-        TestAddress: Account(nonce=1),
     }
     state_test(env=env, pre=pre, tx=tx, post=post)
 
@@ -273,24 +264,21 @@ class LoopRunUntilOutOfGasCases(PytestParameterEnum):
 @LoopRunUntilOutOfGasCases.parametrize()
 def test_run_until_out_of_gas(
     state_test: StateTestFiller,
-    repeat_bytecode: bytes,
+    pre: Alloc,
+    repeat_bytecode: Bytecode,
     bytecode_repeat_times: int,
 ):
     """
     Use TSTORE over and over to different keys until we run out of gas.
     """
     bytecode = Op.JUMPDEST + repeat_bytecode * bytecode_repeat_times + Op.JUMP(Op.PUSH0)
-    pre = {
-        TestAddress: Account(balance=10_000_000_000_000, nonce=0),
-        code_address: Account(code=bytecode),
-    }
+    code_address = pre.deploy_contract(code=bytecode)
     tx = Transaction(
+        sender=pre.fund_eoa(),
         to=code_address,
-        data=b"",
         gas_limit=30_000_000,
     )
     post = {
         code_address: Account(code=bytecode, storage={}),
-        TestAddress: Account(nonce=1),
     }
     state_test(env=Environment(), pre=pre, tx=tx, post=post)

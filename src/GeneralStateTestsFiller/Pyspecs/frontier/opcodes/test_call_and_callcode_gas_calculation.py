@@ -23,17 +23,18 @@ abstract: Tests the nested CALL/CALLCODE opcode gas consumption with a positive 
        verify whether the provided gas was sufficient or insufficient.
 """
 
-from dataclasses import dataclass
 from typing import Dict
 
 import pytest
 
 from ethereum_test_tools import (
+    EOA,
     Account,
     Address,
+    Alloc,
+    Bytecode,
     Environment,
     StateTestFiller,
-    TestAddress,
     Transaction,
 )
 from ethereum_test_tools.vm.opcode import Opcodes as Op
@@ -61,17 +62,37 @@ CALLCODE_GAS = 11600
 CALLCODE_SUFFICIENT_GAS = CALLCODE_GAS + CALLEE_INIT_STACK_GAS
 
 
-@dataclass(frozen=True)
-class Contract:
-    """Contract accounts used in the test."""
-
-    caller: int = 0x0A
-    callee: int = 0x0B
-    nonexistent: int = 0x0C
+@pytest.fixture
+def callee_code(callee_opcode: Op) -> Bytecode:
+    """
+    Code called by the caller contract:
+        PUSH1 0x00 * 4
+        PUSH1 0x01 <- for positive value transfer
+        PUSH2 Contract.nonexistent
+        GAS <- value doesn't matter
+        CALL/CALLCODE
+    """
+    return callee_opcode(Op.GAS(), 0xFEFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF, 1, 0, 0, 0, 0)
 
 
 @pytest.fixture
-def caller_code(caller_gas_limit: int) -> bytes:
+def sender(pre: Alloc) -> EOA:
+    """
+    Sender for all transactions.
+    """
+    return pre.fund_eoa(0x0BA1A9CE)
+
+
+@pytest.fixture
+def callee_address(pre: Alloc, callee_code: Bytecode) -> Address:
+    """
+    Address of the callee.
+    """
+    return pre.deploy_contract(callee_code, balance=0x03)
+
+
+@pytest.fixture
+def caller_code(caller_gas_limit: int, callee_address: Address) -> Bytecode:
     """
     Code to CALL the callee contract:
         PUSH1 0x00 * 5
@@ -81,58 +102,40 @@ def caller_code(caller_gas_limit: int) -> bytes:
         PUSH1 0x00
         SSTORE
     """
-    return Op.SSTORE(0, Op.CALL(caller_gas_limit, Contract.callee, 0, 0, 0, 0, 0))
+    return Op.SSTORE(0, Op.CALL(caller_gas_limit, callee_address, 0, 0, 0, 0, 0))
 
 
 @pytest.fixture
-def callee_code(callee_opcode: Op) -> bytes:
+def caller_address(pre: Alloc, caller_code: Bytecode) -> Address:
     """
-    Code called by the caller contract:
-        PUSH1 0x00 * 4
-        PUSH1 0x01 <- for positive value transfer
-        PUSH2 Contract.nonexistent
-        GAS <- value doesn't matter
-        CALL/CALLCODE
+    Code to CALL the callee contract:
+        PUSH1 0x00 * 5
+        PUSH2 Contract.callee
+        PUSH2 caller_gas <- gas limit set for CALL to callee contract
+        CALL
+        PUSH1 0x00
+        SSTORE
     """
-    return callee_opcode(Op.GAS(), Contract.nonexistent, 1, 0, 0, 0, 0)
+    return pre.deploy_contract(caller_code, balance=0x03)
 
 
 @pytest.fixture
-def caller_tx() -> Transaction:
+def caller_tx(sender: EOA, caller_address: Address) -> Transaction:
     """Transaction that performs the call to the caller contract."""
     return Transaction(
         chain_id=0x01,
-        nonce=0,
-        to=Address(Contract.caller),
+        to=caller_address,
         value=1,
         gas_limit=500000,
         gas_price=7,
+        sender=sender,
     )
 
 
 @pytest.fixture
-def pre(caller_code: bytes, callee_code: bytes) -> Dict[Address, Account]:  # noqa: D103
+def post(caller_address: Address, is_sufficient_gas: bool) -> Dict[Address, Account]:  # noqa: D103
     return {
-        Address(Contract.caller): Account(
-            balance=0x03,
-            code=caller_code,
-            nonce=1,
-        ),
-        Address(Contract.callee): Account(
-            balance=0x03,
-            code=callee_code,
-            nonce=1,
-        ),
-        TestAddress: Account(
-            balance=0x0BA1A9CE,
-        ),
-    }
-
-
-@pytest.fixture
-def post(is_sufficient_gas: bool) -> Dict[Address, Account]:  # noqa: D103
-    return {
-        Address(Contract.caller): Account(storage={0x00: 0x01 if is_sufficient_gas else 0x00}),
+        caller_address: Account(storage={0x00: 0x01 if is_sufficient_gas else 0x00}),
     }
 
 
@@ -149,7 +152,7 @@ def post(is_sufficient_gas: bool) -> Dict[Address, Account]:  # noqa: D103
 @pytest.mark.valid_until("Shanghai")
 def test_value_transfer_gas_calculation(
     state_test: StateTestFiller,
-    pre: Dict[str, Account],
+    pre: Alloc,
     caller_tx: Transaction,
     post: Dict[str, Account],
 ):
