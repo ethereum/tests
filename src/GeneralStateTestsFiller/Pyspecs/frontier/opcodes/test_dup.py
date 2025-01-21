@@ -3,12 +3,13 @@ abstract: Test DUP
     Test the DUP opcodes.
 
 """
+
 import pytest
 
 from ethereum_test_forks import Frontier, Homestead
-from ethereum_test_tools import Account, Address, Environment
+from ethereum_test_tools import Account, Alloc, Environment
 from ethereum_test_tools import Opcodes as Op
-from ethereum_test_tools import StateTestFiller, Storage, TestAddress, Transaction
+from ethereum_test_tools import StateTestFiller, Storage, Transaction
 
 
 @pytest.mark.parametrize(
@@ -33,35 +34,33 @@ from ethereum_test_tools import StateTestFiller, Storage, TestAddress, Transacti
     ],
     ids=lambda op: str(op),
 )
+@pytest.mark.with_all_evm_code_types
 def test_dup(
     state_test: StateTestFiller,
     fork: str,
     dup_opcode: Op,
+    pre: Alloc,
 ):
     """
     Test the DUP1-DUP16 opcodes.
 
-    note: Test case ported from:
-
-        - [ethereum/tests/GeneralStateTests/VMTests/vmTests/dup.json](https://github.com/ethereum/tests/blob/develop/GeneralStateTests/VMTests/vmTests/dup.json)
-        by Ori Pomerantz.
+    Note: Test case ported from [ethereum/tests](https://github.com/ethereum/tests)
+        Test ported from [ethereum/tests/GeneralStateTests/VMTests/vmTests/dup.json](https://github.com/ethereum/tests/blob/develop/GeneralStateTests/VMTests/vmTests/dup.json) by Ori Pomerantz.
     """  # noqa: E501
     env = Environment()
-    pre = {TestAddress: Account(balance=1000000000000000000000)}
+    sender = pre.fund_eoa()
     post = {}
 
-    account = Address(0x100)
-
     # Push 0x00 - 0x10 onto the stack
-    account_code = b"".join([Op.PUSH1(i) for i in range(0x11)])
+    account_code = sum(Op.PUSH1(i) for i in range(0x11))
 
     # Use the DUP opcode
     account_code += dup_opcode
 
     # Save each stack value into different keys in storage
-    account_code += b"".join([Op.PUSH1(i) + Op.SSTORE for i in range(0x11)])
+    account_code += sum(Op.PUSH1(i) + Op.SSTORE for i in range(0x11))
 
-    pre[account] = Account(code=account_code)
+    account = pre.deploy_contract(account_code)
 
     tx = Transaction(
         ty=0x0,
@@ -71,6 +70,7 @@ def test_dup(
         gas_price=10,
         protected=False if fork in [Frontier, Homestead] else True,
         data="",
+        sender=sender,
     )
 
     """

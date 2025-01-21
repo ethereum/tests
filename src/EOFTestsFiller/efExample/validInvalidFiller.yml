@@ -9,15 +9,12 @@ validInvalid:
          EOF1I0004 check that EOF1 missing a section fails
          EOF1I0005 check that EOF1 with a bad end of sections number fails
          EOF1I0006 check that EOF1 with too many or too few bytes fails
-         EOF1I0007 check that EOF1 with a malformed code section fails
-         EOF1I0008 check that EOF1 with an illegal opcode fails
          EOF1I0009 check that EOF1 with the wrong maxStackDepth fails
          EOF1I0010 check that return values are not allowed on section 0
          EOF1I0011 check that function calls to code sections that don't exist fail
          EOF1I0012 check that code sections that cause stack underflow fail
          EOF1I0013 check that we can't return more values than we declare
          EOF1I0014 check that code that looks deeper in the stack than the parameters fails
-         EOF1I0015 check that code that uses removed opcodes fails
          EOF1I0016 check that code that uses new relative jumps to outside the section fails
          EOF1I0017 check that parameters are not allowed on section 0
          EOF1I0018 inconsistent number of code sections (between types and code)
@@ -30,7 +27,6 @@ validInvalid:
          EOF1V0001 check that simple valid EOF1 deploys
          EOF1V0002 check that valid EOF1 with two code sections deploys
          EOF1V0003 check that valid EOF1 with four code sections deploys
-         EOF1V0004 check that valid EOF1 can include 0xFE, the designated invalid opcode
          EOF1V0005 check that EOF1 with the right maxStackDepth deploys
          EOF1V0006 check that return values are allowed on code sections that aren't zero
          EOF1V0007 check that function calls to code sections that exist are allowed
@@ -139,53 +135,6 @@ validInvalid:
            30 #  1 ADDRESS 
            50 #  2 POP
            00 #  3 STOP
-              # Data segment
-           0bad60A7  # 4 bytes (valid)
-
-  # Data 4
-  # EOF1I0008 check that EOF1 with an illegal opcode fails
-  - data: |
-     :label EOF1I0008 :raw 0x
-      # EOF deployed code 
-      ef0001  # Magic followed by version
-      010004  # One code segment
-      020001  # One code segment
-        0003  #   code seg 0: 3 bytes
-      040004  # Four byte data segment
-      00      # End of header
-              # Code segment 0 header
-          00  # Zero inputs
-          80  # Non-Returning Function
-        0001  # Max stack height 1
-              # Code segment 0 code
-           30 #  1 ADDRESS 
-           EF #  2 INVALID
-           00 #  3 STOP
-              # Data segment
-           0bad60A7  # 4 bytes (valid)
-    expectException:
-      ">=Osaka" : "EOF_UndefinedInstruction"
-
-
-  # Data 5
-  # EOF1V0004 check that valid EOF1 can include 0xFE, the designated invalid opcode
-  - data: |
-     :label EOF1V0004 :raw 0x
-      # EOF deployed code 
-      ef0001  # Magic followed by version
-      010004  # One code segment
-      020001  # One code segment
-        0003  #   code seg 0: 3 bytes
-      040004  # Four byte data segment
-      00      # End of header
-              # Code segment 0 header
-          00  # Zero inputs
-          80  # Non-Returning Function
-        0001  # Max stack height 1
-              # Code segment 0 code
-           30 #  1 ADDRESS 
-           50 #  2 POP
-           FE #  3 Designated invalid opcode
               # Data segment
            0bad60A7  # 4 bytes (valid)
 
@@ -535,81 +484,6 @@ validInvalid:
     expectException:
       ">=Osaka" : "EOF_InvalidTypeSectionSize"
 
-  # Data 18
-  # EOF1I0015 check that code that uses removed opcodes fails
-  - data: |
-     :label EOF1I0015 :raw 0x
-      # EOF deployed code 
-      ef0001  # Magic followed by version
-      010004  # One code segment
-      020001  # One code segment
-        0005  #   code seg 0: 5 bytes
-      040001  # One byte data segment
-      00      # End of header
-              # Code segment 0 header
-          00  # Zero inputs
-          80  # Non-Returning Function
-        0001  # Max stack height 1
-              # Code segment 0 code
-         6003 #  0 PUSH1 3
-           56 #  2 JUMP
-           5B #  3 JUMPDEST
-           00 #  4 STOP
-              # Data segment
-           ef
-    expectException:
-      ">=Osaka" : "EOF_UndefinedInstruction"
-
-  # Data 19
-  # EOF1I0015 check that code that uses removed opcodes fails
-  - data: |
-     :label EOF1I0015 :raw 0x
-      # EOF deployed code 
-      ef0001  # Magic followed by version
-      010004  # One code segment
-      020001  # One code segment
-        0007  #   code seg 0: 5 bytes
-      040001  # One byte data segment
-      00      # End of header
-              # Code segment 0 header
-          00  # Zero inputs
-          80  # Non-Returning Function
-        0001  # Max stack height 1
-              # Code segment 0 code
-         6001 #  0 PUSH1 1
-         6003 #  2 PUSH1 3
-           57 #  4 JUMPI
-           5B #  5 JUMPDEST
-           00 #  6 STOP
-              # Data segment
-           ef
-    expectException:
-      ">=Osaka" : "EOF_UndefinedInstruction"
-
-  # Data 20
-  # EOF1I0015 check that code that uses removed opcodes fails
-  - data: |
-     :label EOF1I0015 :raw 0x
-      # EOF deployed code 
-      ef0001  # Magic followed by version
-      010004  # One code segment
-      020001  # One code segment
-        0004  #   code seg 0: 4 bytes
-      040001  # One byte data segment
-      00      # End of header
-              # Code segment 0 header
-          00  # Zero inputs
-          80  # Non-Returning Function
-        0001  # Max stack height 1
-              # Code segment 0 code
-         6001 #  0 PUSH1 1
-           FF #  2 SELFDESTRUCT
-           00 #  3 STOP
-              # Data segment
-           ef
-    expectException:
-      ">=Osaka" : "EOF_UndefinedInstruction"
-
   # Data 21
   # EOF1I0015 check that code that uses removed opcodes fails
   - data: |
@@ -628,36 +502,6 @@ validInvalid:
               # Code segment 0 code
     expectException:
       ">=Osaka" : "EOF_InvalidSectionBodiesSize"
-
-  # Data 22
-  # EOF1I0015 check that code that uses removed opcodes fails
-  - data: |
-     :label EOF1I0015 :raw 0x
-      # EOF deployed code 
-      ef0001  # Magic followed by version
-      010004  # One code segment
-      020001  # One code segment
-        0010  #   code seg 0: 16 bytes
-      040001  # One byte data segment
-      00      # End of header
-              # Code segment 0 header
-          00  # Zero inputs
-          80  # Non-Returning Function
-        0001  # Max stack height 1
-              # Code segment 0 code
-        6001  # PUSH1 1
-        6002  # PUSH1 2
-        6003  # PUSH1 3
-        6004  # PUSH1 4
-        6005  # PUSH1 5
-        6006  # PUSH1 6
-        6007  # PUSH1 7
-          F2  # CALLCODE
-          00  # STOP
-              # Data segment
-           ef
-    expectException:
-      ">=Osaka" : "EOF_UndefinedInstruction"
 
   # Data 23
   # EOF1I0016 check that code that uses new relative jumps to outside the section fails
@@ -1417,31 +1261,6 @@ validInvalid:
            0bad60A7  # 4 bytes (valid)
     expectException:
       ">=Osaka" : "EOF_InvalidSectionBodiesSize"
-
-  # Data 42
-  # EOF1I0007 check that EOF1 with a malformed code section fails
-  - data: |
-     :label EOF1I0007 :raw 0x
-      # EOF deployed code 
-      ef0001  # Magic followed by version
-      010004  # One code segment
-      020001  # One code segment
-        0003  #   code seg 0: 3 bytes
-      040004  # Four byte data segment
-      00      # End of header
-              # Code segment 0 header
-          00  # Zero inputs
-          80  # Non-Returning Function
-        0001  # Max stack height 1
-              # Code segment 0 code
-           30 #  1 ADDRESS 
-           50 #  2 POP
-           62 #  3 PUSH3 (without a value)
-              # Data segment
-           0bad60A7  # 4 bytes (valid)
-    expectException:
-      ">=Osaka" : "EOF_TruncatedImmediate"
-
 
   # Data 43
   # check that EOF1 with a bad end of sections number fails

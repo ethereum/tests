@@ -80,17 +80,6 @@ random_blob_hashes = add_kzg_version(
     Spec.BLOB_COMMITMENT_VERSION_KZG,
 )
 
-# Blobhash index values for test_blobhash_gas_cost
-blobhash_index_values = [
-    0x00,
-    0x01,
-    0x02,
-    0x03,
-    0x04,
-    2**256 - 1,
-    0xA12C8B6A8B11410C7D98D790E1098F1ED6D93CB7A64711481AAAB1848E13212F,
-]
-
 
 class BlobhashContext:
     """
@@ -272,15 +261,15 @@ class BlobhashContext:
         Maps contract creation to a specific context to a specific address.
         """
         contract = {
-            "tx_created_contract": compute_create_address(TestAddress, 0),
+            "tx_created_contract": compute_create_address(address=TestAddress, nonce=0),
             "create": compute_create_address(
-                cls.address("create"),
-                0,
+                address=cls.address("create"),
+                nonce=0,
             ),
             "create2": compute_create2_address(
-                cls.address("create2"),
-                0,
-                cls.code("initcode"),
+                address=cls.address("create2"),
+                salt=0,
+                initcode=cls.code("initcode"),
             ),
         }
         contract = contract.get(context_name)
@@ -336,24 +325,24 @@ class BlobhashScenario:
         Returns BLOBHASH bytecode for the given scenario.
         """
         scenarios = {
-            "single_valid": b"".join(
+            "single_valid": sum(
                 cls.blobhash_sstore(i) for i in range(SpecHelpers.max_blobs_per_block())
             ),
-            "repeated_valid": b"".join(
-                b"".join(cls.blobhash_sstore(i) for _ in range(10))
+            "repeated_valid": sum(
+                sum(cls.blobhash_sstore(i) for _ in range(10))
                 for i in range(SpecHelpers.max_blobs_per_block())
             ),
-            "valid_invalid": b"".join(
+            "valid_invalid": sum(
                 cls.blobhash_sstore(i)
                 + cls.blobhash_sstore(SpecHelpers.max_blobs_per_block())
                 + cls.blobhash_sstore(i)
                 for i in range(SpecHelpers.max_blobs_per_block())
             ),
-            "varied_valid": b"".join(
+            "varied_valid": sum(
                 cls.blobhash_sstore(i) + cls.blobhash_sstore(i + 1) + cls.blobhash_sstore(i)
                 for i in range(SpecHelpers.max_blobs_per_block() - 1)
             ),
-            "invalid_calls": b"".join(
+            "invalid_calls": sum(
                 cls.blobhash_sstore(i) for i in range(-5, SpecHelpers.max_blobs_per_block() + 5)
             ),
         }

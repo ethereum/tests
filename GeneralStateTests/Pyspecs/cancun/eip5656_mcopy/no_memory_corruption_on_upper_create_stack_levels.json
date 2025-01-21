@@ -1,0 +1,160 @@
+{
+    "src/GeneralStateTestsFiller/Pyspecs/cancun/eip5656_mcopy/test_mcopy_contexts.py::test_no_memory_corruption_on_upper_create_stack_levels[fork_Cancun-state_test-call_opcode_CREATE2]" : {
+        "_info" : {
+            "comment" : "`execution-spec-tests` generated test",
+            "description" : "Test function documentation:\n\n    Perform a subcall with any of the following opcodes, which uses MCOPY during its execution,\n    and verify that the caller's memory is unaffected:\n      - `CREATE`\n      - `CREATE2`\n\n    TODO: [EOF] Add EOFCREATE opcode",
+            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
+            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
+            "generatedTestHash" : "705ca9db6427d44f97cd504d8fe59a46dca7975e7874f38e45b8874467f7c895",
+            "hash" : "0x62188ab21bbae0134f8cfb931cd24eb53280d4261bac3f5aef395476c9002a36",
+            "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
+            "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
+            "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip5656_mcopy/test_mcopy_contexts.py",
+            "sourceHash" : "7dee106f99b30e1f1f15ec6352108fa7c70cca69b0b997b88fc1cd6992957031",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_f13146c0_1642_4633_9b68_0b49237fcced/test_mcopy_contexts.py#L177"
+        },
+        "env" : {
+            "currentBaseFee" : "0x07",
+            "currentCoinbase" : "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba",
+            "currentDifficulty" : "0x00",
+            "currentExcessBlobGas" : "0x00",
+            "currentGasLimit" : "0x016345785d8a0000",
+            "currentNumber" : "0x01",
+            "currentRandom" : "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "currentTimestamp" : "0x03e8"
+        },
+        "post" : {
+            "Cancun" : [
+                {
+                    "hash" : "0x7ae242fcda90e4f56a894efc5ef5844910b6404b046762665a215bfeb294aace",
+                    "indexes" : {
+                        "data" : 0,
+                        "gas" : 0,
+                        "value" : 0
+                    },
+                    "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "txbytes" : "0xf860800a830f4240940000000000000000000000000000000000001100808025a0ae470d7da8404176546d3a7697b2e3ae957efde6c03d33075dcf9c70bd5f6685a038c93673ba928426221e7e315a75dd0be0e2ea74b5a0a91d7482dbfdb339b362"
+                }
+            ]
+        },
+        "pre" : {
+            "0x0000000000000000000000000000000000001000" : {
+                "balance" : "0x00",
+                "code" : "0x6001600160005e6001600060015e6020600060015e61040061040060005e600161080060005e600160006108005e600162030d405560006000f3",
+                "nonce" : "0x01",
+                "storage" : {
+                }
+            },
+            "0x0000000000000000000000000000000000001100" : {
+                "balance" : "0x00",
+                "code" : "0x7f6001600160005e6001600060015e6020600060015e61040061040060005e60016000527f61080060005e600160006108005e600162030d405560006000f33b3c3d3e3f406020527f4142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606040527f6162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f806060527f8182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa06080527fa1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc060a0527fc1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe060c0527fe1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff0160e0527f02030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f2021610100527f22232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f4041610120527f42434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f6061610140527f62636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f8081610160527f82838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1610180527fa2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c16101a0527fc2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e16101c0527fe2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff01026101e0527f030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122610200527f232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142610220527f434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162610240527f636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182610260527f838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2610280527fa3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c26102a0527fc3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e26102c0527fe3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff0102036102e0527f0405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f20212223610300527f2425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f40414243610320527f4445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f60616263610340527f6465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f80818283610360527f8485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3610380527fa4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c36103a0527fc4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e36103c0527fe4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff010203046103e0526000603a60006000f559620186a05560005160005560205160015560405160025560605160035560805160045560a05160055560c05160065560e051600755610100516008556101205160095561014051600a5561016051600b5561018051600c556101a051600d556101c051600e556101e051600f5561020051601055610220516011556102405160125561026051601355610280516014556102a0516015556102c0516016556102e051601755610300516018556103205160195561034051601a5561036051601b5561038051601c556103a051601d556103c051601e556103e051601f55",
+                "nonce" : "0x01",
+                "storage" : {
+                }
+            },
+            "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                "balance" : "0x3635c9adc5dea00000",
+                "code" : "0x",
+                "nonce" : "0x00",
+                "storage" : {
+                }
+            }
+        },
+        "transaction" : {
+            "data" : [
+                "0x"
+            ],
+            "gasLimit" : [
+                "0x0f4240"
+            ],
+            "gasPrice" : "0x0a",
+            "nonce" : "0x00",
+            "secretKey" : "0x45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8",
+            "sender" : "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b",
+            "to" : "0x0000000000000000000000000000000000001100",
+            "value" : [
+                "0x00"
+            ]
+        }
+    },
+    "src/GeneralStateTestsFiller/Pyspecs/cancun/eip5656_mcopy/test_mcopy_contexts.py::test_no_memory_corruption_on_upper_create_stack_levels[fork_Cancun-state_test-call_opcode_CREATE]" : {
+        "_info" : {
+            "comment" : "`execution-spec-tests` generated test",
+            "description" : "Test function documentation:\n\n    Perform a subcall with any of the following opcodes, which uses MCOPY during its execution,\n    and verify that the caller's memory is unaffected:\n      - `CREATE`\n      - `CREATE2`\n\n    TODO: [EOF] Add EOFCREATE opcode",
+            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
+            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
+            "generatedTestHash" : "58b1e23a4bd95e714c5a000bd65bae72a4b89b4e509da45222a7c693b7ecbbeb",
+            "hash" : "0xecbefc7d6597d6d96d1734e2741d642e638cdd5bd743e9b91d3109ca12c6c7ae",
+            "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
+            "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
+            "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip5656_mcopy/test_mcopy_contexts.py",
+            "sourceHash" : "7dee106f99b30e1f1f15ec6352108fa7c70cca69b0b997b88fc1cd6992957031",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_f13146c0_1642_4633_9b68_0b49237fcced/test_mcopy_contexts.py#L177"
+        },
+        "env" : {
+            "currentBaseFee" : "0x07",
+            "currentCoinbase" : "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba",
+            "currentDifficulty" : "0x00",
+            "currentExcessBlobGas" : "0x00",
+            "currentGasLimit" : "0x016345785d8a0000",
+            "currentNumber" : "0x01",
+            "currentRandom" : "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "currentTimestamp" : "0x03e8"
+        },
+        "post" : {
+            "Cancun" : [
+                {
+                    "hash" : "0x6a8e4d6a7db571e5153ae99329457942fb501d505e1d05985fd4a60ca1fa00a9",
+                    "indexes" : {
+                        "data" : 0,
+                        "gas" : 0,
+                        "value" : 0
+                    },
+                    "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "txbytes" : "0xf860800a830f4240940000000000000000000000000000000000001100808025a0ae470d7da8404176546d3a7697b2e3ae957efde6c03d33075dcf9c70bd5f6685a038c93673ba928426221e7e315a75dd0be0e2ea74b5a0a91d7482dbfdb339b362"
+                }
+            ]
+        },
+        "pre" : {
+            "0x0000000000000000000000000000000000001000" : {
+                "balance" : "0x00",
+                "code" : "0x6001600160005e6001600060015e6020600060015e61040061040060005e600161080060005e600160006108005e600162030d405560006000f3",
+                "nonce" : "0x01",
+                "storage" : {
+                }
+            },
+            "0x0000000000000000000000000000000000001100" : {
+                "balance" : "0x00",
+                "code" : "0x7f6001600160005e6001600060015e6020600060015e61040061040060005e60016000527f61080060005e600160006108005e600162030d405560006000f33b3c3d3e3f406020527f4142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606040527f6162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f806060527f8182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa06080527fa1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc060a0527fc1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe060c0527fe1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff0160e0527f02030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f2021610100527f22232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f4041610120527f42434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f6061610140527f62636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f8081610160527f82838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1610180527fa2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c16101a0527fc2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e16101c0527fe2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff01026101e0527f030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122610200527f232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142610220527f434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162610240527f636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182610260527f838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2610280527fa3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c26102a0527fc3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e26102c0527fe3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff0102036102e0527f0405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f20212223610300527f2425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f40414243610320527f4445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f60616263610340527f6465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f80818283610360527f8485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3610380527fa4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c36103a0527fc4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e36103c0527fe4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeff010203046103e052603a60006000f059620186a05560005160005560205160015560405160025560605160035560805160045560a05160055560c05160065560e051600755610100516008556101205160095561014051600a5561016051600b5561018051600c556101a051600d556101c051600e556101e051600f5561020051601055610220516011556102405160125561026051601355610280516014556102a0516015556102c0516016556102e051601755610300516018556103205160195561034051601a5561036051601b5561038051601c556103a051601d556103c051601e556103e051601f55",
+                "nonce" : "0x01",
+                "storage" : {
+                }
+            },
+            "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                "balance" : "0x3635c9adc5dea00000",
+                "code" : "0x",
+                "nonce" : "0x00",
+                "storage" : {
+                }
+            }
+        },
+        "transaction" : {
+            "data" : [
+                "0x"
+            ],
+            "gasLimit" : [
+                "0x0f4240"
+            ],
+            "gasPrice" : "0x0a",
+            "nonce" : "0x00",
+            "secretKey" : "0x45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8",
+            "sender" : "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b",
+            "to" : "0x0000000000000000000000000000000000001100",
+            "value" : [
+                "0x00"
+            ]
+        }
+    }
+}

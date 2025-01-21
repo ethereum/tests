@@ -4,19 +4,12 @@ abstract: Tests for [EIP-1153: Transient Storage](https://eips.ethereum.org/EIPS
 """  # noqa: E501
 
 from enum import unique
-from typing import Optional
 
 import pytest
 
-from ethereum_test_tools import Account, Address, Environment, Initcode
+from ethereum_test_tools import Account, Address, Alloc, Bytecode, Environment, Initcode
 from ethereum_test_tools import Opcodes as Op
-from ethereum_test_tools import (
-    StateTestFiller,
-    TestAddress,
-    Transaction,
-    compute_create2_address,
-    compute_create_address,
-)
+from ethereum_test_tools import StateTestFiller, Transaction, compute_create_address
 
 from . import CreateOpcodeParams, PytestParameterEnum
 from .spec import ref_spec_1153
@@ -25,9 +18,6 @@ REFERENCE_SPEC_GIT_PATH = ref_spec_1153.git_path
 REFERENCE_SPEC_VERSION = ref_spec_1153.version
 
 pytestmark = [pytest.mark.valid_from("Cancun")]
-
-# the address that creates the contract with create/create2
-creator_address = 0x100
 
 
 @unique
@@ -48,7 +38,7 @@ class InitcodeTestCases(PytestParameterEnum):
             + Op.TSTORE(0, 1)
             + Op.SSTORE(1, Op.TLOAD(0))
         ),
-        "deploy_code": b"",
+        "deploy_code": Bytecode(),
         "expected_storage": {0: 0x0000, 1: 0x0001},
     }
     IN_CONSTRUCTOR_AND_DEPLOYED_CODE = {
@@ -110,7 +100,7 @@ class InitcodeTestCases(PytestParameterEnum):
         "description": (
             "Test TLOAD and TSTORE behavior in contract deployed code with no constructor code"
         ),
-        "constructor_code": b"",
+        "constructor_code": Bytecode(),
         "deploy_code": (
             # test creator's transient storage inaccessible from deployed code
             Op.SSTORE(0, Op.TLOAD(0))
@@ -140,32 +130,24 @@ class TestTransientStorageInContractCreation:
 
     @pytest.fixture()
     def initcode(  # noqa: D102
-        self, deploy_code: bytes, constructor_code: bytes
-    ) -> Optional[bytes]:
-        initcode = Initcode(deploy_code=deploy_code, initcode_prefix=constructor_code).bytecode
-        return initcode
+        self,
+        deploy_code: Bytecode,
+        constructor_code: Bytecode,
+    ) -> Initcode:
+        return Initcode(deploy_code=deploy_code, initcode_prefix=constructor_code)
 
     @pytest.fixture()
     def creator_contract_code(  # noqa: D102
         self,
         opcode: Op,
         create2_salt: int,
-        created_contract_address: Address,
-    ) -> bytes:
-        if opcode == Op.CREATE:
-            create_call = Op.CREATE(0, 0, Op.CALLDATASIZE)
-        elif opcode == Op.CREATE2:
-            create_call = Op.CREATE2(0, 0, Op.CALLDATASIZE, create2_salt)
-        else:
-            raise Exception("Invalid opcode specified for test.")
-        contract_call = Op.SSTORE(4, Op.CALL(Op.GAS(), created_contract_address, 0, 0, 0, 0, 0))
+    ) -> Bytecode:
         return (
             Op.TSTORE(0, 0x0100)
             + Op.TSTORE(1, 0x0200)
             + Op.TSTORE(2, 0x0300)
             + Op.CALLDATACOPY(0, 0, Op.CALLDATASIZE)
-            + create_call
-            + contract_call
+            + Op.SSTORE(4, Op.CALL(address=opcode(size=Op.CALLDATASIZE, salt=create2_salt)))
             # Save the state of transient storage following call to storage; the transient
             # storage should not have been overwritten
             + Op.SSTORE(0, Op.TLOAD(0))
@@ -174,48 +156,47 @@ class TestTransientStorageInContractCreation:
         )
 
     @pytest.fixture()
+    def creator_address(self, pre: Alloc, creator_contract_code: Bytecode) -> Address:
+        """The address that creates the contract with create/create2"""
+        return pre.deploy_contract(creator_contract_code)
+
+    @pytest.fixture()
     def expected_creator_storage(self) -> dict:  # noqa: D102
         return {0: 0x0100, 1: 0x0200, 2: 0x0300, 4: 0x0001}
 
     @pytest.fixture()
     def created_contract_address(  # noqa: D102
-        self, opcode: Op, create2_salt: int, initcode: bytes
+        self, creator_address: Address, opcode: Op, create2_salt: int, initcode: Initcode
     ) -> Address:
-        if opcode == Op.CREATE:
-            return compute_create_address(address=creator_address, nonce=1)
-        if opcode == Op.CREATE2:
-            return compute_create2_address(
-                address=creator_address, salt=create2_salt, initcode=initcode
-            )
-        raise Exception("invalid opcode for generator")
+        return compute_create_address(
+            address=creator_address,
+            nonce=1,
+            salt=create2_salt,
+            initcode=initcode,
+            opcode=opcode,
+        )
 
     def test_contract_creation(
         self,
         state_test: StateTestFiller,
-        creator_contract_code: bytes,
+        pre: Alloc,
+        creator_address: Address,
         created_contract_address: Address,
-        initcode: bytes,
-        deploy_code: bytes,
+        initcode: Initcode,
+        deploy_code: Bytecode,
         expected_creator_storage: dict,
         expected_storage: dict,
     ) -> None:
         """
         Test transient storage in contract creation contexts.
         """
-        pre = {
-            TestAddress: Account(balance=100_000_000_000_000),
-            creator_address: Account(
-                code=creator_contract_code,
-                nonce=1,
-            ),
-        }
+        sender = pre.fund_eoa()
 
         tx = Transaction(
-            nonce=0,
+            sender=sender,
             to=creator_address,
             data=initcode,
-            gas_limit=1_000_000_000_000,
-            gas_price=10,
+            gas_limit=1_000_000,
         )
 
         post = {
