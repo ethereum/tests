@@ -12,7 +12,7 @@ log0:
 
   pre:
 
-    0000000000000000000000000000000000000100:
+    0000000000000000000000000000000000001000:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
         {   ; emptyMem
@@ -24,7 +24,7 @@ log0:
       storage: {}
 
 
-    0000000000000000000000000000000000000101:
+    0000000000000000000000000000000000001001:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
         {      ; memStartTooHigh
@@ -37,19 +37,19 @@ log0:
 
 
 
-    0000000000000000000000000000000000000102:
+    0000000000000000000000000000000000001002:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
         {        ; memSizeTooHigh
            [0] 0xaabbffffffffffffffffffffffffffffffffffffffffffffffffffffffffccdd
-           (log0 1 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff) 
+           (log0 1 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff)
            [[0]] 0x600D
         }
       nonce: '0'
       storage: {}
 
 
-    0000000000000000000000000000000000000103:
+    0000000000000000000000000000000000001003:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
         {        ; memSizeZero
@@ -62,19 +62,19 @@ log0:
 
 
 
-    0000000000000000000000000000000000000104:
+    0000000000000000000000000000000000001004:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
         {        ; nonEmptyMem
-           [0] 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff 
-           (log0 0 32) 
+           [0] 0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff
+           (log0 0 32)
            [[0]] 0x600D
         }
       nonce: '0'
       storage: {}
 
 
-    0000000000000000000000000000000000000105:
+    0000000000000000000000000000000000001005:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
         {        ; log_0_1
@@ -86,7 +86,7 @@ log0:
       storage: {}
 
 
-    0000000000000000000000000000000000000106:
+    0000000000000000000000000000000000001006:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
         {        ; log_31_1
@@ -98,12 +98,12 @@ log0:
       storage: {}
 
 
-    000000000000000000000000000000000000010a:
+    000000000000000000000000000000000000100a:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
         {        ; logTwice
            [0] 0xaabbffffffffffffffffffffffffffffffffffffffffffffffffffffffffccdd
-           (log0 0 32) 
+           (log0 0 32)
            (log0 2 16)
            [[0]] 0x600D
         }
@@ -115,8 +115,8 @@ log0:
     cccccccccccccccccccccccccccccccccccccccc:
       balance: '0x0ba1a9ce0ba1a9ce'
       code: |
-        {  
-            (delegatecall (gas) (+ 0x100 $4) 0 0 0 0)
+        {
+            (delegatecall (gas) (+ 0x1000 $4) 0 0 0 0)
         }
       nonce: '0'
       storage:
@@ -128,7 +128,7 @@ log0:
       code: '0x'
       nonce: '0'
       storage: {}
-      
+
 
 
 
@@ -153,18 +153,18 @@ log0:
     secretKey: "45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8"
 
   # Log tests do two things that are visible to retesteth:
-  # 
+  #
   # 1. Cost gas
   # 2. Abort or don't above the contract call
   #
   # This test checks the second one by having an SSTORE that either happens
-  # (success) or not (failure) 
+  # (success) or not (failure)
   expect:
 
 
   # All the successes
     - indexes:
-        data: 
+        data:
         - :label emptyMem
         - :label memSizeZero
         - :label nonEmptyMem
@@ -184,7 +184,7 @@ log0:
 
   # All the failures
     - indexes:
-        data: 
+        data:
         - :label memStartTooHigh
         - :label memSizeTooHigh
         gas:  !!int -1
@@ -195,4 +195,3 @@ log0:
          CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC:
            storage:
              0: 0x0BAD
-

@@ -16,37 +16,37 @@ coinbaseWarmAccountCallGasFail:
       code: |
         :yul berlin
         {
-           // Depending on the called contract here, the subcall will perform 
+           // Depending on the called contract here, the subcall will perform
            // another call/delegatecall/staticcall/callcode that will only succeed
            // if coinbase is considered warm by default (post-Shanghai).
            let calladdr := calldataload(4)
 
            let callgas := 100
            switch calladdr
-           case 0x100 {
+           case 0x1000 {
              // Extra: COINBASE + 6xPUSH1 + DUP6 + 2xPOP
              callgas := add(callgas, 27)
            }
-           case 0x200 {
+           case 0x2000 {
              // Extra: COINBASE + 6xPUSH1 + DUP6 + 2xPOP
              callgas := add(callgas, 27)
            }
-           case 0x300 {
+           case 0x3000 {
              // Extra: COINBASE + 5xPUSH1 + DUP6 + 2xPOP
              callgas := add(callgas, 24)
            }
-           case 0x400 {
+           case 0x4000 {
              // Extra: COINBASE + 5xPUSH1 + DUP6 + 2xPOP
              callgas := add(callgas, 24)
            }
            // Call and save result
-           sstore(0, call(callgas, calladdr, 0, 0, 0, 0, 0)) 
-           
+           sstore(0, call(callgas, calladdr, 0, 0, 0, 0, 0))
+
         }
       nonce: 1
       storage: {}
     # Call
-    0000000000000000000000000000000000000100:
+    0000000000000000000000000000000000001000:
       balance: '0x0ba1a9ce0ba1a9ce'
       code:  |
         :yul berlin
@@ -57,7 +57,7 @@ coinbaseWarmAccountCallGasFail:
       nonce: 1
       storage: {}
     # CallCode
-    0000000000000000000000000000000000000200:
+    0000000000000000000000000000000000002000:
       balance: '0x0ba1a9ce0ba1a9ce'
       code:  |
         :yul berlin
@@ -68,7 +68,7 @@ coinbaseWarmAccountCallGasFail:
       nonce: 1
       storage: {}
     # DelegateCall
-    0000000000000000000000000000000000000300:
+    0000000000000000000000000000000000003000:
       balance: '0x0ba1a9ce0ba1a9ce'
       code:  |
         :yul berlin
@@ -79,7 +79,7 @@ coinbaseWarmAccountCallGasFail:
       nonce: 1
       storage: {}
     # StaticCall
-    0000000000000000000000000000000000000400:
+    0000000000000000000000000000000000004000:
       balance: '0x0ba1a9ce0ba1a9ce'
       code:  |
         :yul berlin
@@ -105,13 +105,13 @@ coinbaseWarmAccountCallGasFail:
   transaction:
     data:
     # CALL - WRMCB0009
-    - :abi f(uint) 0x100
+    - :abi f(uint) 0x1000
     # CALLCODE - WRMCB0010
-    - :abi f(uint) 0x200
+    - :abi f(uint) 0x2000
     # DELEGATECALL - WRMCB0011
-    - :abi f(uint) 0x300
+    - :abi f(uint) 0x3000
     # STATICCALL - WRMCB0012
-    - :abi f(uint) 0x400
+    - :abi f(uint) 0x4000
     gasLimit:
     - 80000
     gasPrice: 10
