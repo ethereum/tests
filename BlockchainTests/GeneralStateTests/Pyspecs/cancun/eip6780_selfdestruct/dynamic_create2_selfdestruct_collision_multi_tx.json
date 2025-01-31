@@ -2,17 +2,18 @@
     "src/GeneralStateTestsFiller/Pyspecs/cancun/eip6780_selfdestruct/test_dynamic_create2_selfdestruct_collision.py::test_dynamic_create2_selfdestruct_collision_multi_tx[fork_Cancun-blockchain_test-selfdestruct_on_first_tx_False-recreate_on_first_tx_False]" : {
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
-            "description" : "Test function documentation:\nDynamic Create2->Suicide->Create2 collision scenario over multiple transactions:\n\n    Perform a CREATE2, make sure that the initcode sets at least a couple of storage keys,\n    then on a different call, in the same or different tx but same block, perform a self-destruct.\n    Then:\n        a) on the same tx, attempt to recreate the contract\n        b) on a different tx, attempt to recreate the contract\n    Perform a CREATE2, make sure that the initcode sets at least a couple of storage keys,\n    then in a different tx, perform a self-destruct.\n    Then:\n        a) on the same tx, attempt to recreate the contract       <=== Covered in this test\n        b) on a different tx, attempt to recreate the contract    <=== Covered in this test\n    Verify that the test case described\n    in https://wiki.hyperledger.org/pages/viewpage.action?pageId=117440824 is covered",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.600ac001.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "f9fb288e759d3eb8caf08c83feea5d9b1d05668008c0b44324a30a0e32ab6fbc",
-            "hash" : "0xa383d86a13010c46ca095111a6b5f2d8cb99eb718c43d697dc1ad3896b1f784b",
+            "description" : "Test function documentation:\n\n    Dynamic Create2->Suicide->Create2 collision scenario over multiple transactions.\n\n    Perform a CREATE2, make sure that the initcode sets at least a couple of storage keys,\n    then on a different call, in the same or different tx but same block, perform a self-destruct.\n    Then:\n        a) on the same tx, attempt to recreate the contract\n        b) on a different tx, attempt to recreate the contract\n    Perform a CREATE2, make sure that the initcode sets at least a couple of storage keys,\n    then in a different tx, perform a self-destruct.\n    Then:\n        a) on the same tx, attempt to recreate the contract       <=== Covered in this test\n        b) on a different tx, attempt to recreate the contract    <=== Covered in this test\n    Verify that the test case described\n    in https://wiki.hyperledger.org/pages/viewpage.action?pageId=117440824 is covered",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "blockchain_test",
+            "generatedTestHash" : "8815a4ed42f7b71388b5e53350277b765cad77ba4bb22f682b4c474b0b5916d2",
+            "hash" : "0x3bfb6e4bdb6e4dc7c7117aadd08fa1bdac259674bf1747227fe7d6d3abef1537",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip6780_selfdestruct/test_dynamic_create2_selfdestruct_collision.py",
-            "sourceHash" : "d08b028302812ac368698033359a8c3f224af566cf37e3e217af8138d687c8ad",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_de025861_a7ed_48c1_bce7_1a1622313f24/test_dynamic_create2_selfdestruct_collision.py#L477"
+            "sourceHash" : "df3700a435b15d97f6c0c695043349431701c0db4aa2b812c253f8e937cf4965",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_ca27a21b_f1a9_41e4_908e_988e1d732165/test_dynamic_create2_selfdestruct_collision.py#L479"
         },
         "blocks" : [
             {
@@ -77,6 +78,17 @@
                 ]
             }
         ],
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01",
+            "network" : "Cancun"
+        },
         "genesisBlockHeader" : {
             "baseFeePerGas" : "0x07",
             "blobGasUsed" : "0x00",
@@ -211,17 +223,18 @@
     "src/GeneralStateTestsFiller/Pyspecs/cancun/eip6780_selfdestruct/test_dynamic_create2_selfdestruct_collision.py::test_dynamic_create2_selfdestruct_collision_multi_tx[fork_Cancun-blockchain_test-selfdestruct_on_first_tx_True-recreate_on_first_tx_False]" : {
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
-            "description" : "Test function documentation:\nDynamic Create2->Suicide->Create2 collision scenario over multiple transactions:\n\n    Perform a CREATE2, make sure that the initcode sets at least a couple of storage keys,\n    then on a different call, in the same or different tx but same block, perform a self-destruct.\n    Then:\n        a) on the same tx, attempt to recreate the contract\n        b) on a different tx, attempt to recreate the contract\n    Perform a CREATE2, make sure that the initcode sets at least a couple of storage keys,\n    then in a different tx, perform a self-destruct.\n    Then:\n        a) on the same tx, attempt to recreate the contract       <=== Covered in this test\n        b) on a different tx, attempt to recreate the contract    <=== Covered in this test\n    Verify that the test case described\n    in https://wiki.hyperledger.org/pages/viewpage.action?pageId=117440824 is covered",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.600ac001.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "1c1b798e81adacd91bdd542d732c333d5b68564be413711b6ab602b748b422c7",
-            "hash" : "0x72bc7df7d3472e5e2a2872dea045bfcf1ee580cf29aa90893ea9e90dd6d88d9f",
+            "description" : "Test function documentation:\n\n    Dynamic Create2->Suicide->Create2 collision scenario over multiple transactions.\n\n    Perform a CREATE2, make sure that the initcode sets at least a couple of storage keys,\n    then on a different call, in the same or different tx but same block, perform a self-destruct.\n    Then:\n        a) on the same tx, attempt to recreate the contract\n        b) on a different tx, attempt to recreate the contract\n    Perform a CREATE2, make sure that the initcode sets at least a couple of storage keys,\n    then in a different tx, perform a self-destruct.\n    Then:\n        a) on the same tx, attempt to recreate the contract       <=== Covered in this test\n        b) on a different tx, attempt to recreate the contract    <=== Covered in this test\n    Verify that the test case described\n    in https://wiki.hyperledger.org/pages/viewpage.action?pageId=117440824 is covered",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "blockchain_test",
+            "generatedTestHash" : "39d735279617cf4701c85ada939caad5d5e9115e279ad1f742537bb9b7aa9e11",
+            "hash" : "0xda9f668081ffc67f6072b13820861da2d64cc7b1f367e2cdcae7d2e6a55c78d2",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip6780_selfdestruct/test_dynamic_create2_selfdestruct_collision.py",
-            "sourceHash" : "d08b028302812ac368698033359a8c3f224af566cf37e3e217af8138d687c8ad",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_de025861_a7ed_48c1_bce7_1a1622313f24/test_dynamic_create2_selfdestruct_collision.py#L477"
+            "sourceHash" : "df3700a435b15d97f6c0c695043349431701c0db4aa2b812c253f8e937cf4965",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_ca27a21b_f1a9_41e4_908e_988e1d732165/test_dynamic_create2_selfdestruct_collision.py#L479"
         },
         "blocks" : [
             {
@@ -286,6 +299,17 @@
                 ]
             }
         ],
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01",
+            "network" : "Cancun"
+        },
         "genesisBlockHeader" : {
             "baseFeePerGas" : "0x07",
             "blobGasUsed" : "0x00",
@@ -413,17 +437,18 @@
     "src/GeneralStateTestsFiller/Pyspecs/cancun/eip6780_selfdestruct/test_dynamic_create2_selfdestruct_collision.py::test_dynamic_create2_selfdestruct_collision_multi_tx[fork_Cancun-blockchain_test-selfdestruct_on_first_tx_True-recreate_on_first_tx_True]" : {
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
-            "description" : "Test function documentation:\nDynamic Create2->Suicide->Create2 collision scenario over multiple transactions:\n\n    Perform a CREATE2, make sure that the initcode sets at least a couple of storage keys,\n    then on a different call, in the same or different tx but same block, perform a self-destruct.\n    Then:\n        a) on the same tx, attempt to recreate the contract\n        b) on a different tx, attempt to recreate the contract\n    Perform a CREATE2, make sure that the initcode sets at least a couple of storage keys,\n    then in a different tx, perform a self-destruct.\n    Then:\n        a) on the same tx, attempt to recreate the contract       <=== Covered in this test\n        b) on a different tx, attempt to recreate the contract    <=== Covered in this test\n    Verify that the test case described\n    in https://wiki.hyperledger.org/pages/viewpage.action?pageId=117440824 is covered",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.600ac001.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "ed268c3340dbb803bb38a9e1788f7a5f00a5434067d8a7ca63e520695f161a8b",
-            "hash" : "0xe4be470646e8ee40e1187c5c3791875865b347491ce7c4dac340b8212e4a65a0",
+            "description" : "Test function documentation:\n\n    Dynamic Create2->Suicide->Create2 collision scenario over multiple transactions.\n\n    Perform a CREATE2, make sure that the initcode sets at least a couple of storage keys,\n    then on a different call, in the same or different tx but same block, perform a self-destruct.\n    Then:\n        a) on the same tx, attempt to recreate the contract\n        b) on a different tx, attempt to recreate the contract\n    Perform a CREATE2, make sure that the initcode sets at least a couple of storage keys,\n    then in a different tx, perform a self-destruct.\n    Then:\n        a) on the same tx, attempt to recreate the contract       <=== Covered in this test\n        b) on a different tx, attempt to recreate the contract    <=== Covered in this test\n    Verify that the test case described\n    in https://wiki.hyperledger.org/pages/viewpage.action?pageId=117440824 is covered",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "blockchain_test",
+            "generatedTestHash" : "1a0d60ab893ff677be93ba56269ee09c036fff41845efa1dcb36f2414fc15cb6",
+            "hash" : "0xf71d2fc226a9c5d7b4b574b8076abedfe14aab7b3af46801a5ceba0f222d8856",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip6780_selfdestruct/test_dynamic_create2_selfdestruct_collision.py",
-            "sourceHash" : "d08b028302812ac368698033359a8c3f224af566cf37e3e217af8138d687c8ad",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_de025861_a7ed_48c1_bce7_1a1622313f24/test_dynamic_create2_selfdestruct_collision.py#L477"
+            "sourceHash" : "df3700a435b15d97f6c0c695043349431701c0db4aa2b812c253f8e937cf4965",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_ca27a21b_f1a9_41e4_908e_988e1d732165/test_dynamic_create2_selfdestruct_collision.py#L479"
         },
         "blocks" : [
             {
@@ -488,6 +513,17 @@
                 ]
             }
         ],
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01",
+            "network" : "Cancun"
+        },
         "genesisBlockHeader" : {
             "baseFeePerGas" : "0x07",
             "blobGasUsed" : "0x00",
@@ -621,17 +657,18 @@
     "src/GeneralStateTestsFiller/Pyspecs/cancun/eip6780_selfdestruct/test_dynamic_create2_selfdestruct_collision.py::test_dynamic_create2_selfdestruct_collision_multi_tx[fork_Paris-blockchain_test-selfdestruct_on_first_tx_False-recreate_on_first_tx_False]" : {
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
-            "description" : "Test function documentation:\nDynamic Create2->Suicide->Create2 collision scenario over multiple transactions:\n\n    Perform a CREATE2, make sure that the initcode sets at least a couple of storage keys,\n    then on a different call, in the same or different tx but same block, perform a self-destruct.\n    Then:\n        a) on the same tx, attempt to recreate the contract\n        b) on a different tx, attempt to recreate the contract\n    Perform a CREATE2, make sure that the initcode sets at least a couple of storage keys,\n    then in a different tx, perform a self-destruct.\n    Then:\n        a) on the same tx, attempt to recreate the contract       <=== Covered in this test\n        b) on a different tx, attempt to recreate the contract    <=== Covered in this test\n    Verify that the test case described\n    in https://wiki.hyperledger.org/pages/viewpage.action?pageId=117440824 is covered",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.600ac001.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "ac0361cb2a344f28f72f603f6d50b4e1204ef5507433fa06c855d20d553d2ff9",
-            "hash" : "0xd9db4e358edeb305fc09edd3abc6a7d59695f5584673de84aff5999f1ca16f15",
+            "description" : "Test function documentation:\n\n    Dynamic Create2->Suicide->Create2 collision scenario over multiple transactions.\n\n    Perform a CREATE2, make sure that the initcode sets at least a couple of storage keys,\n    then on a different call, in the same or different tx but same block, perform a self-destruct.\n    Then:\n        a) on the same tx, attempt to recreate the contract\n        b) on a different tx, attempt to recreate the contract\n    Perform a CREATE2, make sure that the initcode sets at least a couple of storage keys,\n    then in a different tx, perform a self-destruct.\n    Then:\n        a) on the same tx, attempt to recreate the contract       <=== Covered in this test\n        b) on a different tx, attempt to recreate the contract    <=== Covered in this test\n    Verify that the test case described\n    in https://wiki.hyperledger.org/pages/viewpage.action?pageId=117440824 is covered",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "blockchain_test",
+            "generatedTestHash" : "7032aeb12cd3f61236d1c3fbc21f7156ea3fd7893ecf56da83348e594c2ee739",
+            "hash" : "0x6568e3776d3c4f46eb21a24cd2a6522df3eefb2a668d089cf6013cdf33804e43",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip6780_selfdestruct/test_dynamic_create2_selfdestruct_collision.py",
-            "sourceHash" : "d08b028302812ac368698033359a8c3f224af566cf37e3e217af8138d687c8ad",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_de025861_a7ed_48c1_bce7_1a1622313f24/test_dynamic_create2_selfdestruct_collision.py#L477"
+            "sourceHash" : "df3700a435b15d97f6c0c695043349431701c0db4aa2b812c253f8e937cf4965",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_ca27a21b_f1a9_41e4_908e_988e1d732165/test_dynamic_create2_selfdestruct_collision.py#L479"
         },
         "blocks" : [
             {
@@ -690,6 +727,10 @@
                 ]
             }
         ],
+        "config" : {
+            "chainid" : "0x01",
+            "network" : "Paris"
+        },
         "genesisBlockHeader" : {
             "baseFeePerGas" : "0x07",
             "bloom" : "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
@@ -797,17 +838,18 @@
     "src/GeneralStateTestsFiller/Pyspecs/cancun/eip6780_selfdestruct/test_dynamic_create2_selfdestruct_collision.py::test_dynamic_create2_selfdestruct_collision_multi_tx[fork_Paris-blockchain_test-selfdestruct_on_first_tx_True-recreate_on_first_tx_False]" : {
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
-            "description" : "Test function documentation:\nDynamic Create2->Suicide->Create2 collision scenario over multiple transactions:\n\n    Perform a CREATE2, make sure that the initcode sets at least a couple of storage keys,\n    then on a different call, in the same or different tx but same block, perform a self-destruct.\n    Then:\n        a) on the same tx, attempt to recreate the contract\n        b) on a different tx, attempt to recreate the contract\n    Perform a CREATE2, make sure that the initcode sets at least a couple of storage keys,\n    then in a different tx, perform a self-destruct.\n    Then:\n        a) on the same tx, attempt to recreate the contract       <=== Covered in this test\n        b) on a different tx, attempt to recreate the contract    <=== Covered in this test\n    Verify that the test case described\n    in https://wiki.hyperledger.org/pages/viewpage.action?pageId=117440824 is covered",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.600ac001.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "265dd52e8d67ecfe9a7ad9f6202fa9aa60c258600c35d21d0eaafd9457c73f72",
-            "hash" : "0xfab4110de6ea0cf3fa7739eb23b1688bd0a057d00d5276e98631c751b59f15b4",
+            "description" : "Test function documentation:\n\n    Dynamic Create2->Suicide->Create2 collision scenario over multiple transactions.\n\n    Perform a CREATE2, make sure that the initcode sets at least a couple of storage keys,\n    then on a different call, in the same or different tx but same block, perform a self-destruct.\n    Then:\n        a) on the same tx, attempt to recreate the contract\n        b) on a different tx, attempt to recreate the contract\n    Perform a CREATE2, make sure that the initcode sets at least a couple of storage keys,\n    then in a different tx, perform a self-destruct.\n    Then:\n        a) on the same tx, attempt to recreate the contract       <=== Covered in this test\n        b) on a different tx, attempt to recreate the contract    <=== Covered in this test\n    Verify that the test case described\n    in https://wiki.hyperledger.org/pages/viewpage.action?pageId=117440824 is covered",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "blockchain_test",
+            "generatedTestHash" : "22dfd8058d218cf97100a8b7a616e1c7b7a5fe020eabcadd3dfaf54f6ae90718",
+            "hash" : "0xe8896fc6f68478256d2aece443f571e463088b3142e11e2b0531ab4fdb094d1d",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip6780_selfdestruct/test_dynamic_create2_selfdestruct_collision.py",
-            "sourceHash" : "d08b028302812ac368698033359a8c3f224af566cf37e3e217af8138d687c8ad",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_de025861_a7ed_48c1_bce7_1a1622313f24/test_dynamic_create2_selfdestruct_collision.py#L477"
+            "sourceHash" : "df3700a435b15d97f6c0c695043349431701c0db4aa2b812c253f8e937cf4965",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_ca27a21b_f1a9_41e4_908e_988e1d732165/test_dynamic_create2_selfdestruct_collision.py#L479"
         },
         "blocks" : [
             {
@@ -866,6 +908,10 @@
                 ]
             }
         ],
+        "config" : {
+            "chainid" : "0x01",
+            "network" : "Paris"
+        },
         "genesisBlockHeader" : {
             "baseFeePerGas" : "0x07",
             "bloom" : "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
@@ -974,17 +1020,18 @@
     "src/GeneralStateTestsFiller/Pyspecs/cancun/eip6780_selfdestruct/test_dynamic_create2_selfdestruct_collision.py::test_dynamic_create2_selfdestruct_collision_multi_tx[fork_Paris-blockchain_test-selfdestruct_on_first_tx_True-recreate_on_first_tx_True]" : {
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
-            "description" : "Test function documentation:\nDynamic Create2->Suicide->Create2 collision scenario over multiple transactions:\n\n    Perform a CREATE2, make sure that the initcode sets at least a couple of storage keys,\n    then on a different call, in the same or different tx but same block, perform a self-destruct.\n    Then:\n        a) on the same tx, attempt to recreate the contract\n        b) on a different tx, attempt to recreate the contract\n    Perform a CREATE2, make sure that the initcode sets at least a couple of storage keys,\n    then in a different tx, perform a self-destruct.\n    Then:\n        a) on the same tx, attempt to recreate the contract       <=== Covered in this test\n        b) on a different tx, attempt to recreate the contract    <=== Covered in this test\n    Verify that the test case described\n    in https://wiki.hyperledger.org/pages/viewpage.action?pageId=117440824 is covered",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.600ac001.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "7f3127609d9419eb340d1901c20bca13c2b75a9a9b0d7b502c67cd333f180464",
-            "hash" : "0x2ca75a8de96bf6b97afabad4a54e63ee09473262b8e296aa9667fbb6573db56b",
+            "description" : "Test function documentation:\n\n    Dynamic Create2->Suicide->Create2 collision scenario over multiple transactions.\n\n    Perform a CREATE2, make sure that the initcode sets at least a couple of storage keys,\n    then on a different call, in the same or different tx but same block, perform a self-destruct.\n    Then:\n        a) on the same tx, attempt to recreate the contract\n        b) on a different tx, attempt to recreate the contract\n    Perform a CREATE2, make sure that the initcode sets at least a couple of storage keys,\n    then in a different tx, perform a self-destruct.\n    Then:\n        a) on the same tx, attempt to recreate the contract       <=== Covered in this test\n        b) on a different tx, attempt to recreate the contract    <=== Covered in this test\n    Verify that the test case described\n    in https://wiki.hyperledger.org/pages/viewpage.action?pageId=117440824 is covered",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "blockchain_test",
+            "generatedTestHash" : "bbe8d02845249d489f43c7b77db534e875c77ac72d8bf7d89d2869cc49a28703",
+            "hash" : "0x4aafac15838928cc1e4c0aa6e4cb79ee87ab0f6b41292c93c4c6835fa841e96a",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip6780_selfdestruct/test_dynamic_create2_selfdestruct_collision.py",
-            "sourceHash" : "d08b028302812ac368698033359a8c3f224af566cf37e3e217af8138d687c8ad",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_de025861_a7ed_48c1_bce7_1a1622313f24/test_dynamic_create2_selfdestruct_collision.py#L477"
+            "sourceHash" : "df3700a435b15d97f6c0c695043349431701c0db4aa2b812c253f8e937cf4965",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_ca27a21b_f1a9_41e4_908e_988e1d732165/test_dynamic_create2_selfdestruct_collision.py#L479"
         },
         "blocks" : [
             {
@@ -1043,6 +1090,10 @@
                 ]
             }
         ],
+        "config" : {
+            "chainid" : "0x01",
+            "network" : "Paris"
+        },
         "genesisBlockHeader" : {
             "baseFeePerGas" : "0x07",
             "bloom" : "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
@@ -1157,17 +1208,18 @@
     "src/GeneralStateTestsFiller/Pyspecs/cancun/eip6780_selfdestruct/test_dynamic_create2_selfdestruct_collision.py::test_dynamic_create2_selfdestruct_collision_multi_tx[fork_Shanghai-blockchain_test-selfdestruct_on_first_tx_False-recreate_on_first_tx_False]" : {
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
-            "description" : "Test function documentation:\nDynamic Create2->Suicide->Create2 collision scenario over multiple transactions:\n\n    Perform a CREATE2, make sure that the initcode sets at least a couple of storage keys,\n    then on a different call, in the same or different tx but same block, perform a self-destruct.\n    Then:\n        a) on the same tx, attempt to recreate the contract\n        b) on a different tx, attempt to recreate the contract\n    Perform a CREATE2, make sure that the initcode sets at least a couple of storage keys,\n    then in a different tx, perform a self-destruct.\n    Then:\n        a) on the same tx, attempt to recreate the contract       <=== Covered in this test\n        b) on a different tx, attempt to recreate the contract    <=== Covered in this test\n    Verify that the test case described\n    in https://wiki.hyperledger.org/pages/viewpage.action?pageId=117440824 is covered",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.600ac001.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "95be4ab7ea96bed545533a51373ef36acaac5ee57def5a214a57bbc61be4feab",
-            "hash" : "0xcdc531c5f9a943eaf9299ba29262bd3d961e7b7e5fb5d8674347272b297eb138",
+            "description" : "Test function documentation:\n\n    Dynamic Create2->Suicide->Create2 collision scenario over multiple transactions.\n\n    Perform a CREATE2, make sure that the initcode sets at least a couple of storage keys,\n    then on a different call, in the same or different tx but same block, perform a self-destruct.\n    Then:\n        a) on the same tx, attempt to recreate the contract\n        b) on a different tx, attempt to recreate the contract\n    Perform a CREATE2, make sure that the initcode sets at least a couple of storage keys,\n    then in a different tx, perform a self-destruct.\n    Then:\n        a) on the same tx, attempt to recreate the contract       <=== Covered in this test\n        b) on a different tx, attempt to recreate the contract    <=== Covered in this test\n    Verify that the test case described\n    in https://wiki.hyperledger.org/pages/viewpage.action?pageId=117440824 is covered",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "blockchain_test",
+            "generatedTestHash" : "109f66f4f804a5111a048f7131874242962a54a6f0d197915a996e4c2b4809f0",
+            "hash" : "0xd216b8e3cb0762bcd7bfe4f761cd7e57a31cfd6aa5743dd77fdaeb3f0501c0cd",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip6780_selfdestruct/test_dynamic_create2_selfdestruct_collision.py",
-            "sourceHash" : "d08b028302812ac368698033359a8c3f224af566cf37e3e217af8138d687c8ad",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_de025861_a7ed_48c1_bce7_1a1622313f24/test_dynamic_create2_selfdestruct_collision.py#L477"
+            "sourceHash" : "df3700a435b15d97f6c0c695043349431701c0db4aa2b812c253f8e937cf4965",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_ca27a21b_f1a9_41e4_908e_988e1d732165/test_dynamic_create2_selfdestruct_collision.py#L479"
         },
         "blocks" : [
             {
@@ -1229,6 +1281,10 @@
                 ]
             }
         ],
+        "config" : {
+            "chainid" : "0x01",
+            "network" : "Shanghai"
+        },
         "genesisBlockHeader" : {
             "baseFeePerGas" : "0x07",
             "bloom" : "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
@@ -1337,17 +1393,18 @@
     "src/GeneralStateTestsFiller/Pyspecs/cancun/eip6780_selfdestruct/test_dynamic_create2_selfdestruct_collision.py::test_dynamic_create2_selfdestruct_collision_multi_tx[fork_Shanghai-blockchain_test-selfdestruct_on_first_tx_True-recreate_on_first_tx_False]" : {
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
-            "description" : "Test function documentation:\nDynamic Create2->Suicide->Create2 collision scenario over multiple transactions:\n\n    Perform a CREATE2, make sure that the initcode sets at least a couple of storage keys,\n    then on a different call, in the same or different tx but same block, perform a self-destruct.\n    Then:\n        a) on the same tx, attempt to recreate the contract\n        b) on a different tx, attempt to recreate the contract\n    Perform a CREATE2, make sure that the initcode sets at least a couple of storage keys,\n    then in a different tx, perform a self-destruct.\n    Then:\n        a) on the same tx, attempt to recreate the contract       <=== Covered in this test\n        b) on a different tx, attempt to recreate the contract    <=== Covered in this test\n    Verify that the test case described\n    in https://wiki.hyperledger.org/pages/viewpage.action?pageId=117440824 is covered",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.600ac001.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "0aa2b95bebdda6dfe13bed782a8ebdfb9801561e0f063de4e2f3fa3605404159",
-            "hash" : "0x153ca008065a5d264b2063bec234c3fa37caa496958e229c024e64533f16f7e7",
+            "description" : "Test function documentation:\n\n    Dynamic Create2->Suicide->Create2 collision scenario over multiple transactions.\n\n    Perform a CREATE2, make sure that the initcode sets at least a couple of storage keys,\n    then on a different call, in the same or different tx but same block, perform a self-destruct.\n    Then:\n        a) on the same tx, attempt to recreate the contract\n        b) on a different tx, attempt to recreate the contract\n    Perform a CREATE2, make sure that the initcode sets at least a couple of storage keys,\n    then in a different tx, perform a self-destruct.\n    Then:\n        a) on the same tx, attempt to recreate the contract       <=== Covered in this test\n        b) on a different tx, attempt to recreate the contract    <=== Covered in this test\n    Verify that the test case described\n    in https://wiki.hyperledger.org/pages/viewpage.action?pageId=117440824 is covered",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "blockchain_test",
+            "generatedTestHash" : "43a42772b31e931e9c8fa656f4face0720bdc28c7c91c14683c53f83757c7619",
+            "hash" : "0xcf74935c6f2338357723e02c0e79b037be44f0398d654f482a7394e6067faaab",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip6780_selfdestruct/test_dynamic_create2_selfdestruct_collision.py",
-            "sourceHash" : "d08b028302812ac368698033359a8c3f224af566cf37e3e217af8138d687c8ad",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_de025861_a7ed_48c1_bce7_1a1622313f24/test_dynamic_create2_selfdestruct_collision.py#L477"
+            "sourceHash" : "df3700a435b15d97f6c0c695043349431701c0db4aa2b812c253f8e937cf4965",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_ca27a21b_f1a9_41e4_908e_988e1d732165/test_dynamic_create2_selfdestruct_collision.py#L479"
         },
         "blocks" : [
             {
@@ -1409,6 +1466,10 @@
                 ]
             }
         ],
+        "config" : {
+            "chainid" : "0x01",
+            "network" : "Shanghai"
+        },
         "genesisBlockHeader" : {
             "baseFeePerGas" : "0x07",
             "bloom" : "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
@@ -1518,17 +1579,18 @@
     "src/GeneralStateTestsFiller/Pyspecs/cancun/eip6780_selfdestruct/test_dynamic_create2_selfdestruct_collision.py::test_dynamic_create2_selfdestruct_collision_multi_tx[fork_Shanghai-blockchain_test-selfdestruct_on_first_tx_True-recreate_on_first_tx_True]" : {
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
-            "description" : "Test function documentation:\nDynamic Create2->Suicide->Create2 collision scenario over multiple transactions:\n\n    Perform a CREATE2, make sure that the initcode sets at least a couple of storage keys,\n    then on a different call, in the same or different tx but same block, perform a self-destruct.\n    Then:\n        a) on the same tx, attempt to recreate the contract\n        b) on a different tx, attempt to recreate the contract\n    Perform a CREATE2, make sure that the initcode sets at least a couple of storage keys,\n    then in a different tx, perform a self-destruct.\n    Then:\n        a) on the same tx, attempt to recreate the contract       <=== Covered in this test\n        b) on a different tx, attempt to recreate the contract    <=== Covered in this test\n    Verify that the test case described\n    in https://wiki.hyperledger.org/pages/viewpage.action?pageId=117440824 is covered",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.600ac001.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "ca9406c69ffa76e632400e5188fd1eeb03e0268bf0c23e4cde8b5594acc05c98",
-            "hash" : "0x770ee3a27acac5b9d1ac6c6fe49ef1706b6ab486a3866e7623ad1e17826a2e56",
+            "description" : "Test function documentation:\n\n    Dynamic Create2->Suicide->Create2 collision scenario over multiple transactions.\n\n    Perform a CREATE2, make sure that the initcode sets at least a couple of storage keys,\n    then on a different call, in the same or different tx but same block, perform a self-destruct.\n    Then:\n        a) on the same tx, attempt to recreate the contract\n        b) on a different tx, attempt to recreate the contract\n    Perform a CREATE2, make sure that the initcode sets at least a couple of storage keys,\n    then in a different tx, perform a self-destruct.\n    Then:\n        a) on the same tx, attempt to recreate the contract       <=== Covered in this test\n        b) on a different tx, attempt to recreate the contract    <=== Covered in this test\n    Verify that the test case described\n    in https://wiki.hyperledger.org/pages/viewpage.action?pageId=117440824 is covered",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "blockchain_test",
+            "generatedTestHash" : "582cd6299d7c6feb34ed0287f4dd1a3e6ec6eac43536a18b0152e50809a9cd88",
+            "hash" : "0xcb94dde4456402b91e20a765c0e0e8883029b72fec011d6567fec8edbcee0c05",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip6780_selfdestruct/test_dynamic_create2_selfdestruct_collision.py",
-            "sourceHash" : "d08b028302812ac368698033359a8c3f224af566cf37e3e217af8138d687c8ad",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_de025861_a7ed_48c1_bce7_1a1622313f24/test_dynamic_create2_selfdestruct_collision.py#L477"
+            "sourceHash" : "df3700a435b15d97f6c0c695043349431701c0db4aa2b812c253f8e937cf4965",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_ca27a21b_f1a9_41e4_908e_988e1d732165/test_dynamic_create2_selfdestruct_collision.py#L479"
         },
         "blocks" : [
             {
@@ -1590,6 +1652,10 @@
                 ]
             }
         ],
+        "config" : {
+            "chainid" : "0x01",
+            "network" : "Shanghai"
+        },
         "genesisBlockHeader" : {
             "baseFeePerGas" : "0x07",
             "bloom" : "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",

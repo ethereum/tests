@@ -3,16 +3,27 @@
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
             "description" : "Test function documentation:\n\n    Test that if an account created in the current transaction contains a self-destruct and is\n    delegate-called by an account created before the current transaction, the calling account\n    is not deleted.",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "4ffa7ba5739ee80a858fdec19ef17d5e0d6d8e26b1cae45ba1d311b994cf88ab",
-            "hash" : "0x12684a1c6f7baa9f98b10cfcfefade7a136cc4774df0f6cf0f43813c3d98e803",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "8c5f45db470b5d3ffa1094eb79f11bdec64415c4da2a2f6eacbb13701cc35100",
+            "hash" : "0xd5a2551c62af1e523ab64752c50e45416bd8b7f624b0eb27f6dfac3911784670",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip6780_selfdestruct/test_selfdestruct.py",
-            "sourceHash" : "192a0a2bfb17c1205f0abab817d7ea467678a6ed0614415bd13171bb1439bb17",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_47a8c796_98e9_4f56_91ae_6f161b117b75/test_selfdestruct.py#L1030"
+            "sourceHash" : "de1aadf9bb66472e6648582d5f645e0480f762e70cdda71ffefdb9dd85e3b9a4",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_1825ccf2_f214_46d8_bc4f_99085acb257d/test_selfdestruct.py#L1030"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -34,6 +45,66 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x6000600055",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x00" : "0x01"
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001100" : {
+                            "balance" : "0x00",
+                            "code" : "0x610013600081600b8239f3600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001200" : {
+                            "balance" : "0x00",
+                            "code" : "0x6001600154016001556000600060006000600073f495b2997c56e713469bed764d6e5e491a3b54ff5af2",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x00" : "0x01",
+                                "0x01" : "0x01"
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x0cf03c",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0x6295ee1b4f6dd65047762f924ecd367c17eabf8f" : {
+                            "balance" : "0x00",
+                            "code" : "0x00",
+                            "nonce" : "0x02",
+                            "storage" : {
+                                "0x00" : "0xf495b2997c56e713469bed764d6e5e491a3b54ff",
+                                "0x01" : "0x2a",
+                                "0x02" : "0x14408f457fc8fda396e6a3d2a8adb79eb15fd3a20b56266934fffdd2dd994a6b",
+                                "0x03" : "0x01",
+                                "0x05" : "0x2a",
+                                "0x06" : "0x14408f457fc8fda396e6a3d2a8adb79eb15fd3a20b56266934fffdd2dd994a6b"
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5de74df38",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0xf495b2997c56e713469bed764d6e5e491a3b54ff" : {
+                            "balance" : "0x00",
+                            "code" : "0x600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf89d800a8307a1208080b850601e600060006111003c6000601e60006000f56000556112003b6001556112003f6002556000600060006000600061120045f1600355611200316004556112003b6005556112003f60065560016020f325a0875bb770af183cd8348590aa2730ed52b7dc48976023eb3723889fa455504e92a017c451c8aea2264eabdb2d43f64c75eeab9a0f778214b9ce5785e8bb6c982a6d"
                 }
             ]
@@ -90,16 +161,27 @@
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
             "description" : "Test function documentation:\n\n    Test that if an account created in the current transaction contains a self-destruct and is\n    delegate-called by an account created before the current transaction, the calling account\n    is not deleted.",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "4cf442fc5b17a62beccb07be85eb9f157d8594e13c20740e56d29f823806efb6",
-            "hash" : "0x6d37741b82e3ad83a97e4954cd6857ea34829e12638f8101917100189f6aa93a",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "c818ae4dc4475da58903eabdc2b3ed2c3cd533f02b3311f56e59682dfbca4d74",
+            "hash" : "0x50329b32ecda54b500789813964704509bca0da942801b088c328e177467f76c",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip6780_selfdestruct/test_selfdestruct.py",
-            "sourceHash" : "192a0a2bfb17c1205f0abab817d7ea467678a6ed0614415bd13171bb1439bb17",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_47a8c796_98e9_4f56_91ae_6f161b117b75/test_selfdestruct.py#L1030"
+            "sourceHash" : "de1aadf9bb66472e6648582d5f645e0480f762e70cdda71ffefdb9dd85e3b9a4",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_1825ccf2_f214_46d8_bc4f_99085acb257d/test_selfdestruct.py#L1030"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -121,6 +203,66 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x6000600055",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x00" : "0x01"
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001100" : {
+                            "balance" : "0x00",
+                            "code" : "0x610013600081600b8239f3600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001200" : {
+                            "balance" : "0x00",
+                            "code" : "0x600160015401600155600060006000600060007364e2ebd6405af8cb348aec519084d3fff42ebba65af2",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x00" : "0x01",
+                                "0x01" : "0x01"
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x0cefe5",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0x6295ee1b4f6dd65047762f924ecd367c17eabf8f" : {
+                            "balance" : "0x00",
+                            "code" : "0x00",
+                            "nonce" : "0x02",
+                            "storage" : {
+                                "0x00" : "0x64e2ebd6405af8cb348aec519084d3fff42ebba6",
+                                "0x01" : "0x2a",
+                                "0x02" : "0xbf89422ad52fe8dc11081dd5d5047f15180993bcae1d3c276d79e277cf3ac4d8",
+                                "0x03" : "0x01",
+                                "0x05" : "0x2a",
+                                "0x06" : "0xbf89422ad52fe8dc11081dd5d5047f15180993bcae1d3c276d79e277cf3ac4d8"
+                            }
+                        },
+                        "0x64e2ebd6405af8cb348aec519084d3fff42ebba6" : {
+                            "balance" : "0x00",
+                            "code" : "0x600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5de74e05a",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf89b800a8307a1208080b84e601e600060006111003c601e60006000f06000556112003b6001556112003f6002556000600060006000600061120045f1600355611200316004556112003b6005556112003f60065560016020f325a0db1a3c84e77f33461979473903ffd72151faf66f2aaa12a2ef31e65dbf65a9e3a0610a9ad3e2c3e552b8ebb27d5670a4a6a92a26d87c7212972ea7960595fb4d41"
                 }
             ]
@@ -177,16 +319,27 @@
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
             "description" : "Test function documentation:\n\n    Test that if an account created in the current transaction contains a self-destruct and is\n    delegate-called by an account created before the current transaction, the calling account\n    is not deleted.",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "674c6ad287af65b3862d36561979091dd9868b244aaa9d8f18c94ceb9b64b3ff",
-            "hash" : "0xa9206452b29d82761dfc616c475ecdcf6932e625d68c44ff9850ee864223cc01",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "5c2a178236b9f6fa8a8fc69d7698aad46dea09b11c313659031b5eb4802efd09",
+            "hash" : "0x1b16b5e8c5cc847a5d49bafd07734708a00105d6e809a638c60c0fc3faf36dc3",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip6780_selfdestruct/test_selfdestruct.py",
-            "sourceHash" : "192a0a2bfb17c1205f0abab817d7ea467678a6ed0614415bd13171bb1439bb17",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_47a8c796_98e9_4f56_91ae_6f161b117b75/test_selfdestruct.py#L1030"
+            "sourceHash" : "de1aadf9bb66472e6648582d5f645e0480f762e70cdda71ffefdb9dd85e3b9a4",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_1825ccf2_f214_46d8_bc4f_99085acb257d/test_selfdestruct.py#L1030"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -208,6 +361,66 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x6000600055",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x00" : "0x01"
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001100" : {
+                            "balance" : "0x00",
+                            "code" : "0x610013600081600b8239f3600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001200" : {
+                            "balance" : "0x00",
+                            "code" : "0x600160015401600155600060006000600073f495b2997c56e713469bed764d6e5e491a3b54ff5af4",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x00" : "0x01",
+                                "0x01" : "0x01"
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x0cf033",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0x6295ee1b4f6dd65047762f924ecd367c17eabf8f" : {
+                            "balance" : "0x00",
+                            "code" : "0x00",
+                            "nonce" : "0x02",
+                            "storage" : {
+                                "0x00" : "0xf495b2997c56e713469bed764d6e5e491a3b54ff",
+                                "0x01" : "0x28",
+                                "0x02" : "0x84c5dc2653f2bf521a01b6ffa95750cbcf91b10383e68b4b09d6d3c0261adcfe",
+                                "0x03" : "0x01",
+                                "0x05" : "0x28",
+                                "0x06" : "0x84c5dc2653f2bf521a01b6ffa95750cbcf91b10383e68b4b09d6d3c0261adcfe"
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5de74df56",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0xf495b2997c56e713469bed764d6e5e491a3b54ff" : {
+                            "balance" : "0x00",
+                            "code" : "0x600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf89d800a8307a1208080b850601e600060006111003c6000601e60006000f56000556112003b6001556112003f6002556000600060006000600061120045f1600355611200316004556112003b6005556112003f60065560016020f325a0875bb770af183cd8348590aa2730ed52b7dc48976023eb3723889fa455504e92a017c451c8aea2264eabdb2d43f64c75eeab9a0f778214b9ce5785e8bb6c982a6d"
                 }
             ]
@@ -264,16 +477,27 @@
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
             "description" : "Test function documentation:\n\n    Test that if an account created in the current transaction contains a self-destruct and is\n    delegate-called by an account created before the current transaction, the calling account\n    is not deleted.",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "350f8820c0b579f5cee6732d173de7395b4c82ef8e81f6ee1aedbd5bed1954eb",
-            "hash" : "0x55d2c8dd850f0a9fee34910b035b12d0f337e76d72589323d740f17255dbb926",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "92d82e0e38fcf673d22ef71640172d65cafea9a4b5d8ec8a2fce8d452c89c6d4",
+            "hash" : "0xd2776890e52c822ded5bb6ba2bb66620e2746d3bbffbadc603789bc36f857151",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip6780_selfdestruct/test_selfdestruct.py",
-            "sourceHash" : "192a0a2bfb17c1205f0abab817d7ea467678a6ed0614415bd13171bb1439bb17",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_47a8c796_98e9_4f56_91ae_6f161b117b75/test_selfdestruct.py#L1030"
+            "sourceHash" : "de1aadf9bb66472e6648582d5f645e0480f762e70cdda71ffefdb9dd85e3b9a4",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_1825ccf2_f214_46d8_bc4f_99085acb257d/test_selfdestruct.py#L1030"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -295,6 +519,66 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x6000600055",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x00" : "0x01"
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001100" : {
+                            "balance" : "0x00",
+                            "code" : "0x610013600081600b8239f3600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001200" : {
+                            "balance" : "0x00",
+                            "code" : "0x60016001540160015560006000600060007364e2ebd6405af8cb348aec519084d3fff42ebba65af4",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x00" : "0x01",
+                                "0x01" : "0x01"
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x0cefdc",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0x6295ee1b4f6dd65047762f924ecd367c17eabf8f" : {
+                            "balance" : "0x00",
+                            "code" : "0x00",
+                            "nonce" : "0x02",
+                            "storage" : {
+                                "0x00" : "0x64e2ebd6405af8cb348aec519084d3fff42ebba6",
+                                "0x01" : "0x28",
+                                "0x02" : "0x9605c7443e82de3eedc802eded7c1f62cac1b0db92493c666b68ce12335bd78f",
+                                "0x03" : "0x01",
+                                "0x05" : "0x28",
+                                "0x06" : "0x9605c7443e82de3eedc802eded7c1f62cac1b0db92493c666b68ce12335bd78f"
+                            }
+                        },
+                        "0x64e2ebd6405af8cb348aec519084d3fff42ebba6" : {
+                            "balance" : "0x00",
+                            "code" : "0x600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5de74e078",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf89b800a8307a1208080b84e601e600060006111003c601e60006000f06000556112003b6001556112003f6002556000600060006000600061120045f1600355611200316004556112003b6005556112003f60065560016020f325a0db1a3c84e77f33461979473903ffd72151faf66f2aaa12a2ef31e65dbf65a9e3a0610a9ad3e2c3e552b8ebb27d5670a4a6a92a26d87c7212972ea7960595fb4d41"
                 }
             ]
@@ -351,16 +635,27 @@
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
             "description" : "Test function documentation:\n\n    Test that if an account created in the current transaction contains a self-destruct and is\n    delegate-called by an account created before the current transaction, the calling account\n    is not deleted.",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "36284be7634bb4072e53751091c2ee352dda64e83bf7f2e69bb6982d16a6832a",
-            "hash" : "0x80abe79b5a300e8e2199e880e7ea399f5d944e783f55a06370586c4a7b0dcd3e",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "fbe114bd52b40eb82cf9d647c2c33dac44a40f55a2aa2b96abe9a4879ee2ba77",
+            "hash" : "0xbf9e949d2c17d818d44814b0bf55e865cb7dfd2c4f689b037f97d595bb4c53cb",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip6780_selfdestruct/test_selfdestruct.py",
-            "sourceHash" : "192a0a2bfb17c1205f0abab817d7ea467678a6ed0614415bd13171bb1439bb17",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_47a8c796_98e9_4f56_91ae_6f161b117b75/test_selfdestruct.py#L1030"
+            "sourceHash" : "de1aadf9bb66472e6648582d5f645e0480f762e70cdda71ffefdb9dd85e3b9a4",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_1825ccf2_f214_46d8_bc4f_99085acb257d/test_selfdestruct.py#L1030"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -382,6 +677,66 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x6000600055",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x00" : "0x01"
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001100" : {
+                            "balance" : "0x00",
+                            "code" : "0x610013600081600b8239f3600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001200" : {
+                            "balance" : "0x00",
+                            "code" : "0x6001600154016001556000600060006000600073f495b2997c56e713469bed764d6e5e491a3b54ff5af2",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x00" : "0x01",
+                                "0x01" : "0x01"
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x0cf060",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0x6295ee1b4f6dd65047762f924ecd367c17eabf8f" : {
+                            "balance" : "0x00",
+                            "code" : "0x00",
+                            "nonce" : "0x02",
+                            "storage" : {
+                                "0x00" : "0xf495b2997c56e713469bed764d6e5e491a3b54ff",
+                                "0x01" : "0x2a",
+                                "0x02" : "0x14408f457fc8fda396e6a3d2a8adb79eb15fd3a20b56266934fffdd2dd994a6b",
+                                "0x03" : "0x01",
+                                "0x05" : "0x2a",
+                                "0x06" : "0x14408f457fc8fda396e6a3d2a8adb79eb15fd3a20b56266934fffdd2dd994a6b"
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5de74debf",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0xf495b2997c56e713469bed764d6e5e491a3b54ff" : {
+                            "balance" : "0x01",
+                            "code" : "0x600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf89d800a8307a1208001b850601e600060006111003c6000601e60006001f56000556112003b6001556112003f6002556000600060006000600061120045f1600355611200316004556112003b6005556112003f60065560016020f325a001880a46656f0f059a8d9602088e4cf0eb73ea9edb242b6fce737a4a287c5cbfa053ab7fe11c93bb37ec2bc52d3f7b171d344ad699b3897f3457882254f7ba4e6b"
                 }
             ]
@@ -438,16 +793,27 @@
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
             "description" : "Test function documentation:\n\n    Test that if an account created in the current transaction contains a self-destruct and is\n    delegate-called by an account created before the current transaction, the calling account\n    is not deleted.",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "fd09541ae0266bd842dc366a4e4aedcf454c094d189e9121620df2b8d55fcaf5",
-            "hash" : "0x12cc88f931fb9d61fdfc8f5ea853dd18bb738f58a4ada6565c708e689ed5f798",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "cc0d56d12d9f7d4e90f6ee4e96d4e5a09b2fa9345cfa2221b187a57f5261e4ab",
+            "hash" : "0x4e155d86d851998fbb307f0cefeb353c9347281f9ad57fe40820fa48dfba35fa",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip6780_selfdestruct/test_selfdestruct.py",
-            "sourceHash" : "192a0a2bfb17c1205f0abab817d7ea467678a6ed0614415bd13171bb1439bb17",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_47a8c796_98e9_4f56_91ae_6f161b117b75/test_selfdestruct.py#L1030"
+            "sourceHash" : "de1aadf9bb66472e6648582d5f645e0480f762e70cdda71ffefdb9dd85e3b9a4",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_1825ccf2_f214_46d8_bc4f_99085acb257d/test_selfdestruct.py#L1030"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -469,6 +835,66 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x6000600055",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x00" : "0x01"
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001100" : {
+                            "balance" : "0x00",
+                            "code" : "0x610013600081600b8239f3600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001200" : {
+                            "balance" : "0x00",
+                            "code" : "0x600160015401600155600060006000600060007364e2ebd6405af8cb348aec519084d3fff42ebba65af2",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x00" : "0x01",
+                                "0x01" : "0x01"
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x0cf009",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0x6295ee1b4f6dd65047762f924ecd367c17eabf8f" : {
+                            "balance" : "0x00",
+                            "code" : "0x00",
+                            "nonce" : "0x02",
+                            "storage" : {
+                                "0x00" : "0x64e2ebd6405af8cb348aec519084d3fff42ebba6",
+                                "0x01" : "0x2a",
+                                "0x02" : "0xbf89422ad52fe8dc11081dd5d5047f15180993bcae1d3c276d79e277cf3ac4d8",
+                                "0x03" : "0x01",
+                                "0x05" : "0x2a",
+                                "0x06" : "0xbf89422ad52fe8dc11081dd5d5047f15180993bcae1d3c276d79e277cf3ac4d8"
+                            }
+                        },
+                        "0x64e2ebd6405af8cb348aec519084d3fff42ebba6" : {
+                            "balance" : "0x01",
+                            "code" : "0x600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5de74dfe1",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf89b800a8307a1208001b84e601e600060006111003c601e60006001f06000556112003b6001556112003f6002556000600060006000600061120045f1600355611200316004556112003b6005556112003f60065560016020f326a0bf1e09768fe96dfe23b5211bd98efac615e73201678738ca664361f10add12f2a01ed92fceee39ce12bd7fdf5eb411eeb2fa1b4fe26347dc45df7ad888711cf190"
                 }
             ]
@@ -525,16 +951,27 @@
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
             "description" : "Test function documentation:\n\n    Test that if an account created in the current transaction contains a self-destruct and is\n    delegate-called by an account created before the current transaction, the calling account\n    is not deleted.",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "e53499dd3a661b09e40b9e3afd25e7b171e927b044b301306388dd52dc9f47b2",
-            "hash" : "0x2c2a6ac6daf99ab92d9ddaa48fdac0373dc2d2e425bb788933a823b0c0ec1d24",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "6789354f79211c026cec5bd187c1bfaff39cf99d8952533c534088802a640b48",
+            "hash" : "0xafbd3da7d83a96b66256d1d19c7b0cffd25f70b1ef3d636bcb7ec5d1ca13ac5d",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip6780_selfdestruct/test_selfdestruct.py",
-            "sourceHash" : "192a0a2bfb17c1205f0abab817d7ea467678a6ed0614415bd13171bb1439bb17",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_47a8c796_98e9_4f56_91ae_6f161b117b75/test_selfdestruct.py#L1030"
+            "sourceHash" : "de1aadf9bb66472e6648582d5f645e0480f762e70cdda71ffefdb9dd85e3b9a4",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_1825ccf2_f214_46d8_bc4f_99085acb257d/test_selfdestruct.py#L1030"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -556,6 +993,66 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x6000600055",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x00" : "0x01"
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001100" : {
+                            "balance" : "0x00",
+                            "code" : "0x610013600081600b8239f3600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001200" : {
+                            "balance" : "0x00",
+                            "code" : "0x600160015401600155600060006000600073f495b2997c56e713469bed764d6e5e491a3b54ff5af4",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x00" : "0x01",
+                                "0x01" : "0x01"
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x0cf057",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0x6295ee1b4f6dd65047762f924ecd367c17eabf8f" : {
+                            "balance" : "0x00",
+                            "code" : "0x00",
+                            "nonce" : "0x02",
+                            "storage" : {
+                                "0x00" : "0xf495b2997c56e713469bed764d6e5e491a3b54ff",
+                                "0x01" : "0x28",
+                                "0x02" : "0x84c5dc2653f2bf521a01b6ffa95750cbcf91b10383e68b4b09d6d3c0261adcfe",
+                                "0x03" : "0x01",
+                                "0x05" : "0x28",
+                                "0x06" : "0x84c5dc2653f2bf521a01b6ffa95750cbcf91b10383e68b4b09d6d3c0261adcfe"
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5de74dedd",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0xf495b2997c56e713469bed764d6e5e491a3b54ff" : {
+                            "balance" : "0x01",
+                            "code" : "0x600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf89d800a8307a1208001b850601e600060006111003c6000601e60006001f56000556112003b6001556112003f6002556000600060006000600061120045f1600355611200316004556112003b6005556112003f60065560016020f325a001880a46656f0f059a8d9602088e4cf0eb73ea9edb242b6fce737a4a287c5cbfa053ab7fe11c93bb37ec2bc52d3f7b171d344ad699b3897f3457882254f7ba4e6b"
                 }
             ]
@@ -612,16 +1109,27 @@
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
             "description" : "Test function documentation:\n\n    Test that if an account created in the current transaction contains a self-destruct and is\n    delegate-called by an account created before the current transaction, the calling account\n    is not deleted.",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "dcca52350e64b5f1639cbcd51fe5a3645c333b34d0ce14f4a8dc70a91e2de861",
-            "hash" : "0x25f3dd6ae319ae817e3c1763949121a101d0c96bb5814ca4e07346dfe5181096",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "0acf19594d2a5752e82baf8a0b6182fd50e5e75a282d0687167a9a708a463a3e",
+            "hash" : "0x6a06e02ac30d1e21004d89522ba1519b6e0ad2997a64102f790c168f5f91d6cb",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip6780_selfdestruct/test_selfdestruct.py",
-            "sourceHash" : "192a0a2bfb17c1205f0abab817d7ea467678a6ed0614415bd13171bb1439bb17",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_47a8c796_98e9_4f56_91ae_6f161b117b75/test_selfdestruct.py#L1030"
+            "sourceHash" : "de1aadf9bb66472e6648582d5f645e0480f762e70cdda71ffefdb9dd85e3b9a4",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_1825ccf2_f214_46d8_bc4f_99085acb257d/test_selfdestruct.py#L1030"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -643,6 +1151,66 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x6000600055",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x00" : "0x01"
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001100" : {
+                            "balance" : "0x00",
+                            "code" : "0x610013600081600b8239f3600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001200" : {
+                            "balance" : "0x00",
+                            "code" : "0x60016001540160015560006000600060007364e2ebd6405af8cb348aec519084d3fff42ebba65af4",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x00" : "0x01",
+                                "0x01" : "0x01"
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x0cf000",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0x6295ee1b4f6dd65047762f924ecd367c17eabf8f" : {
+                            "balance" : "0x00",
+                            "code" : "0x00",
+                            "nonce" : "0x02",
+                            "storage" : {
+                                "0x00" : "0x64e2ebd6405af8cb348aec519084d3fff42ebba6",
+                                "0x01" : "0x28",
+                                "0x02" : "0x9605c7443e82de3eedc802eded7c1f62cac1b0db92493c666b68ce12335bd78f",
+                                "0x03" : "0x01",
+                                "0x05" : "0x28",
+                                "0x06" : "0x9605c7443e82de3eedc802eded7c1f62cac1b0db92493c666b68ce12335bd78f"
+                            }
+                        },
+                        "0x64e2ebd6405af8cb348aec519084d3fff42ebba6" : {
+                            "balance" : "0x01",
+                            "code" : "0x600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5de74dfff",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf89b800a8307a1208001b84e601e600060006111003c601e60006001f06000556112003b6001556112003f6002556000600060006000600061120045f1600355611200316004556112003b6005556112003f60065560016020f326a0bf1e09768fe96dfe23b5211bd98efac615e73201678738ca664361f10add12f2a01ed92fceee39ce12bd7fdf5eb411eeb2fa1b4fe26347dc45df7ad888711cf190"
                 }
             ]
@@ -699,16 +1267,27 @@
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
             "description" : "Test function documentation:\n\n    Test that if an account created in the current transaction contains a self-destruct and is\n    delegate-called by an account created before the current transaction, the calling account\n    is not deleted.",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "d67dd1499632765d280ab7949d64f46eeb1bb694eff920592d4afcb2ade6c068",
-            "hash" : "0xaa9f48e5e6474d44f5fe16aa3da2ad69d00457c58a5528ef8b3e5158c822af20",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "b5591bc54fda26a54a71bd8c62949a13d41c8a74404e67184deb59d733e9ffa1",
+            "hash" : "0xc7075fe2dd1d58d9a81f53447e1a656f6e3de105e5bb9f746b5298523d5362f6",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip6780_selfdestruct/test_selfdestruct.py",
-            "sourceHash" : "192a0a2bfb17c1205f0abab817d7ea467678a6ed0614415bd13171bb1439bb17",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_47a8c796_98e9_4f56_91ae_6f161b117b75/test_selfdestruct.py#L1030"
+            "sourceHash" : "de1aadf9bb66472e6648582d5f645e0480f762e70cdda71ffefdb9dd85e3b9a4",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_1825ccf2_f214_46d8_bc4f_99085acb257d/test_selfdestruct.py#L1030"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -730,6 +1309,66 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x01",
+                            "code" : "0x6000600055",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x00" : "0x01"
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001100" : {
+                            "balance" : "0x00",
+                            "code" : "0x610013600081600b8239f3600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001200" : {
+                            "balance" : "0x00",
+                            "code" : "0x6001600154016001556000600060006000600073f495b2997c56e713469bed764d6e5e491a3b54ff5af2",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x00" : "0x01",
+                                "0x01" : "0x01"
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x0cf03c",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0x6295ee1b4f6dd65047762f924ecd367c17eabf8f" : {
+                            "balance" : "0x00",
+                            "code" : "0x00",
+                            "nonce" : "0x02",
+                            "storage" : {
+                                "0x00" : "0xf495b2997c56e713469bed764d6e5e491a3b54ff",
+                                "0x01" : "0x2a",
+                                "0x02" : "0x14408f457fc8fda396e6a3d2a8adb79eb15fd3a20b56266934fffdd2dd994a6b",
+                                "0x03" : "0x01",
+                                "0x05" : "0x2a",
+                                "0x06" : "0x14408f457fc8fda396e6a3d2a8adb79eb15fd3a20b56266934fffdd2dd994a6b"
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5de74df38",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0xf495b2997c56e713469bed764d6e5e491a3b54ff" : {
+                            "balance" : "0x00",
+                            "code" : "0x600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf89d800a8307a1208080b850601e600060006111003c6000601e60006000f56000556112003b6001556112003f6002556000600060006000600061120045f1600355611200316004556112003b6005556112003f60065560016020f325a0875bb770af183cd8348590aa2730ed52b7dc48976023eb3723889fa455504e92a017c451c8aea2264eabdb2d43f64c75eeab9a0f778214b9ce5785e8bb6c982a6d"
                 }
             ]
@@ -786,16 +1425,27 @@
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
             "description" : "Test function documentation:\n\n    Test that if an account created in the current transaction contains a self-destruct and is\n    delegate-called by an account created before the current transaction, the calling account\n    is not deleted.",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "dba3ea3e5da5d501ec256ae9ff5b763531e479b16ce24173bcac6de8dabb5acb",
-            "hash" : "0x42fd9c64927d3efa9034ea00a2406f5844d9fa8c9946c25f0774b01e42a34c9f",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "0301ae1eee393a19b4356fc260f11d5f43f7e66fc16a981f3adfd08226c2bcf7",
+            "hash" : "0x7ae9bac28fd23c36f07e3c57bf368266e02bd7a710a19b13a75f55f7d93e1124",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip6780_selfdestruct/test_selfdestruct.py",
-            "sourceHash" : "192a0a2bfb17c1205f0abab817d7ea467678a6ed0614415bd13171bb1439bb17",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_47a8c796_98e9_4f56_91ae_6f161b117b75/test_selfdestruct.py#L1030"
+            "sourceHash" : "de1aadf9bb66472e6648582d5f645e0480f762e70cdda71ffefdb9dd85e3b9a4",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_1825ccf2_f214_46d8_bc4f_99085acb257d/test_selfdestruct.py#L1030"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -817,6 +1467,66 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x01",
+                            "code" : "0x6000600055",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x00" : "0x01"
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001100" : {
+                            "balance" : "0x00",
+                            "code" : "0x610013600081600b8239f3600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001200" : {
+                            "balance" : "0x00",
+                            "code" : "0x600160015401600155600060006000600060007364e2ebd6405af8cb348aec519084d3fff42ebba65af2",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x00" : "0x01",
+                                "0x01" : "0x01"
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x0cefe5",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0x6295ee1b4f6dd65047762f924ecd367c17eabf8f" : {
+                            "balance" : "0x00",
+                            "code" : "0x00",
+                            "nonce" : "0x02",
+                            "storage" : {
+                                "0x00" : "0x64e2ebd6405af8cb348aec519084d3fff42ebba6",
+                                "0x01" : "0x2a",
+                                "0x02" : "0xbf89422ad52fe8dc11081dd5d5047f15180993bcae1d3c276d79e277cf3ac4d8",
+                                "0x03" : "0x01",
+                                "0x05" : "0x2a",
+                                "0x06" : "0xbf89422ad52fe8dc11081dd5d5047f15180993bcae1d3c276d79e277cf3ac4d8"
+                            }
+                        },
+                        "0x64e2ebd6405af8cb348aec519084d3fff42ebba6" : {
+                            "balance" : "0x00",
+                            "code" : "0x600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5de74e05a",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf89b800a8307a1208080b84e601e600060006111003c601e60006000f06000556112003b6001556112003f6002556000600060006000600061120045f1600355611200316004556112003b6005556112003f60065560016020f325a0db1a3c84e77f33461979473903ffd72151faf66f2aaa12a2ef31e65dbf65a9e3a0610a9ad3e2c3e552b8ebb27d5670a4a6a92a26d87c7212972ea7960595fb4d41"
                 }
             ]
@@ -873,16 +1583,27 @@
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
             "description" : "Test function documentation:\n\n    Test that if an account created in the current transaction contains a self-destruct and is\n    delegate-called by an account created before the current transaction, the calling account\n    is not deleted.",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "b8f95cb3e445794f57b54f90027f9af5779d5697a650cd595d81a513d98c4421",
-            "hash" : "0xf6e6867ee55b6a06d5d98df14e9a67f6e015a87e7a93a1ae75acbe23894d0daa",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "cdea52b09b15ae39e89ad23c497a03bf161005677ec2b63d0afdb62897f87abd",
+            "hash" : "0x48aaff6320525a14a7a04b26fd6c3feab833315910688fa7d4a5fa8973dc3459",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip6780_selfdestruct/test_selfdestruct.py",
-            "sourceHash" : "192a0a2bfb17c1205f0abab817d7ea467678a6ed0614415bd13171bb1439bb17",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_47a8c796_98e9_4f56_91ae_6f161b117b75/test_selfdestruct.py#L1030"
+            "sourceHash" : "de1aadf9bb66472e6648582d5f645e0480f762e70cdda71ffefdb9dd85e3b9a4",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_1825ccf2_f214_46d8_bc4f_99085acb257d/test_selfdestruct.py#L1030"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -904,6 +1625,66 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x01",
+                            "code" : "0x6000600055",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x00" : "0x01"
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001100" : {
+                            "balance" : "0x00",
+                            "code" : "0x610013600081600b8239f3600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001200" : {
+                            "balance" : "0x00",
+                            "code" : "0x600160015401600155600060006000600073f495b2997c56e713469bed764d6e5e491a3b54ff5af4",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x00" : "0x01",
+                                "0x01" : "0x01"
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x0cf033",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0x6295ee1b4f6dd65047762f924ecd367c17eabf8f" : {
+                            "balance" : "0x00",
+                            "code" : "0x00",
+                            "nonce" : "0x02",
+                            "storage" : {
+                                "0x00" : "0xf495b2997c56e713469bed764d6e5e491a3b54ff",
+                                "0x01" : "0x28",
+                                "0x02" : "0x84c5dc2653f2bf521a01b6ffa95750cbcf91b10383e68b4b09d6d3c0261adcfe",
+                                "0x03" : "0x01",
+                                "0x05" : "0x28",
+                                "0x06" : "0x84c5dc2653f2bf521a01b6ffa95750cbcf91b10383e68b4b09d6d3c0261adcfe"
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5de74df56",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0xf495b2997c56e713469bed764d6e5e491a3b54ff" : {
+                            "balance" : "0x00",
+                            "code" : "0x600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf89d800a8307a1208080b850601e600060006111003c6000601e60006000f56000556112003b6001556112003f6002556000600060006000600061120045f1600355611200316004556112003b6005556112003f60065560016020f325a0875bb770af183cd8348590aa2730ed52b7dc48976023eb3723889fa455504e92a017c451c8aea2264eabdb2d43f64c75eeab9a0f778214b9ce5785e8bb6c982a6d"
                 }
             ]
@@ -960,16 +1741,27 @@
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
             "description" : "Test function documentation:\n\n    Test that if an account created in the current transaction contains a self-destruct and is\n    delegate-called by an account created before the current transaction, the calling account\n    is not deleted.",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "9bb57f229ca534d00c1c8f695924d55e4088f83950bea36203b5b5728ae7ce22",
-            "hash" : "0x56ba525990c28fc2aefa6a9b88e901a6334152db5c4e4587e72971fee00cea5b",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "78e8ef89109c9ee58b10045857fa088f77f7f66a75913320c2bcf8e5663e6e48",
+            "hash" : "0xd83718e0f5ac11a7e9746dc654dbca7d59ca3f21b0b2960014c0e5ee3361eb23",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip6780_selfdestruct/test_selfdestruct.py",
-            "sourceHash" : "192a0a2bfb17c1205f0abab817d7ea467678a6ed0614415bd13171bb1439bb17",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_47a8c796_98e9_4f56_91ae_6f161b117b75/test_selfdestruct.py#L1030"
+            "sourceHash" : "de1aadf9bb66472e6648582d5f645e0480f762e70cdda71ffefdb9dd85e3b9a4",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_1825ccf2_f214_46d8_bc4f_99085acb257d/test_selfdestruct.py#L1030"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -991,6 +1783,66 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x01",
+                            "code" : "0x6000600055",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x00" : "0x01"
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001100" : {
+                            "balance" : "0x00",
+                            "code" : "0x610013600081600b8239f3600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001200" : {
+                            "balance" : "0x00",
+                            "code" : "0x60016001540160015560006000600060007364e2ebd6405af8cb348aec519084d3fff42ebba65af4",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x00" : "0x01",
+                                "0x01" : "0x01"
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x0cefdc",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0x6295ee1b4f6dd65047762f924ecd367c17eabf8f" : {
+                            "balance" : "0x00",
+                            "code" : "0x00",
+                            "nonce" : "0x02",
+                            "storage" : {
+                                "0x00" : "0x64e2ebd6405af8cb348aec519084d3fff42ebba6",
+                                "0x01" : "0x28",
+                                "0x02" : "0x9605c7443e82de3eedc802eded7c1f62cac1b0db92493c666b68ce12335bd78f",
+                                "0x03" : "0x01",
+                                "0x05" : "0x28",
+                                "0x06" : "0x9605c7443e82de3eedc802eded7c1f62cac1b0db92493c666b68ce12335bd78f"
+                            }
+                        },
+                        "0x64e2ebd6405af8cb348aec519084d3fff42ebba6" : {
+                            "balance" : "0x00",
+                            "code" : "0x600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5de74e078",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf89b800a8307a1208080b84e601e600060006111003c601e60006000f06000556112003b6001556112003f6002556000600060006000600061120045f1600355611200316004556112003b6005556112003f60065560016020f325a0db1a3c84e77f33461979473903ffd72151faf66f2aaa12a2ef31e65dbf65a9e3a0610a9ad3e2c3e552b8ebb27d5670a4a6a92a26d87c7212972ea7960595fb4d41"
                 }
             ]
@@ -1047,16 +1899,27 @@
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
             "description" : "Test function documentation:\n\n    Test that if an account created in the current transaction contains a self-destruct and is\n    delegate-called by an account created before the current transaction, the calling account\n    is not deleted.",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "ddfb01cd84a64473c368003616b780472929d7119d19e03b0262e38076462ab0",
-            "hash" : "0x53c877b31b2e64bc635a193d5f9bad66beaffd9d267076f81a11a16275300d68",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "d568c08626ac2dad1b03b23d2a38d5a5bea0cefe243708976408e3424e11c297",
+            "hash" : "0x6aa6038b17c1be9bb016f09c806aaf6d8eb19648ef6236f3b6d34876c3476ca5",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip6780_selfdestruct/test_selfdestruct.py",
-            "sourceHash" : "192a0a2bfb17c1205f0abab817d7ea467678a6ed0614415bd13171bb1439bb17",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_47a8c796_98e9_4f56_91ae_6f161b117b75/test_selfdestruct.py#L1030"
+            "sourceHash" : "de1aadf9bb66472e6648582d5f645e0480f762e70cdda71ffefdb9dd85e3b9a4",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_1825ccf2_f214_46d8_bc4f_99085acb257d/test_selfdestruct.py#L1030"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -1078,6 +1941,66 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x01",
+                            "code" : "0x6000600055",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x00" : "0x01"
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001100" : {
+                            "balance" : "0x00",
+                            "code" : "0x610013600081600b8239f3600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001200" : {
+                            "balance" : "0x00",
+                            "code" : "0x6001600154016001556000600060006000600073f495b2997c56e713469bed764d6e5e491a3b54ff5af2",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x00" : "0x01",
+                                "0x01" : "0x01"
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x0cf060",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0x6295ee1b4f6dd65047762f924ecd367c17eabf8f" : {
+                            "balance" : "0x00",
+                            "code" : "0x00",
+                            "nonce" : "0x02",
+                            "storage" : {
+                                "0x00" : "0xf495b2997c56e713469bed764d6e5e491a3b54ff",
+                                "0x01" : "0x2a",
+                                "0x02" : "0x14408f457fc8fda396e6a3d2a8adb79eb15fd3a20b56266934fffdd2dd994a6b",
+                                "0x03" : "0x01",
+                                "0x05" : "0x2a",
+                                "0x06" : "0x14408f457fc8fda396e6a3d2a8adb79eb15fd3a20b56266934fffdd2dd994a6b"
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5de74debf",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0xf495b2997c56e713469bed764d6e5e491a3b54ff" : {
+                            "balance" : "0x01",
+                            "code" : "0x600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf89d800a8307a1208001b850601e600060006111003c6000601e60006001f56000556112003b6001556112003f6002556000600060006000600061120045f1600355611200316004556112003b6005556112003f60065560016020f325a001880a46656f0f059a8d9602088e4cf0eb73ea9edb242b6fce737a4a287c5cbfa053ab7fe11c93bb37ec2bc52d3f7b171d344ad699b3897f3457882254f7ba4e6b"
                 }
             ]
@@ -1134,16 +2057,27 @@
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
             "description" : "Test function documentation:\n\n    Test that if an account created in the current transaction contains a self-destruct and is\n    delegate-called by an account created before the current transaction, the calling account\n    is not deleted.",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "697c865baf92e3a8688b21474179f9abf99c409da884b0d6e9fdd8618678bd5c",
-            "hash" : "0x49ef412ea941a5fa45ac7e84d077d7ab4576de31e00c7f1616b698ba4cb95d46",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "82d8393d2ee2a134b44e80e74aec8b20098a459c42253d7dbe8adcbd61918ba0",
+            "hash" : "0xd9e3bf9ade283407ab336b6189765eb52a3a8cff281bf2514cf3ec0d42207405",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip6780_selfdestruct/test_selfdestruct.py",
-            "sourceHash" : "192a0a2bfb17c1205f0abab817d7ea467678a6ed0614415bd13171bb1439bb17",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_47a8c796_98e9_4f56_91ae_6f161b117b75/test_selfdestruct.py#L1030"
+            "sourceHash" : "de1aadf9bb66472e6648582d5f645e0480f762e70cdda71ffefdb9dd85e3b9a4",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_1825ccf2_f214_46d8_bc4f_99085acb257d/test_selfdestruct.py#L1030"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -1165,6 +2099,66 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x01",
+                            "code" : "0x6000600055",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x00" : "0x01"
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001100" : {
+                            "balance" : "0x00",
+                            "code" : "0x610013600081600b8239f3600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001200" : {
+                            "balance" : "0x00",
+                            "code" : "0x600160015401600155600060006000600060007364e2ebd6405af8cb348aec519084d3fff42ebba65af2",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x00" : "0x01",
+                                "0x01" : "0x01"
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x0cf009",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0x6295ee1b4f6dd65047762f924ecd367c17eabf8f" : {
+                            "balance" : "0x00",
+                            "code" : "0x00",
+                            "nonce" : "0x02",
+                            "storage" : {
+                                "0x00" : "0x64e2ebd6405af8cb348aec519084d3fff42ebba6",
+                                "0x01" : "0x2a",
+                                "0x02" : "0xbf89422ad52fe8dc11081dd5d5047f15180993bcae1d3c276d79e277cf3ac4d8",
+                                "0x03" : "0x01",
+                                "0x05" : "0x2a",
+                                "0x06" : "0xbf89422ad52fe8dc11081dd5d5047f15180993bcae1d3c276d79e277cf3ac4d8"
+                            }
+                        },
+                        "0x64e2ebd6405af8cb348aec519084d3fff42ebba6" : {
+                            "balance" : "0x01",
+                            "code" : "0x600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5de74dfe1",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf89b800a8307a1208001b84e601e600060006111003c601e60006001f06000556112003b6001556112003f6002556000600060006000600061120045f1600355611200316004556112003b6005556112003f60065560016020f326a0bf1e09768fe96dfe23b5211bd98efac615e73201678738ca664361f10add12f2a01ed92fceee39ce12bd7fdf5eb411eeb2fa1b4fe26347dc45df7ad888711cf190"
                 }
             ]
@@ -1221,16 +2215,27 @@
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
             "description" : "Test function documentation:\n\n    Test that if an account created in the current transaction contains a self-destruct and is\n    delegate-called by an account created before the current transaction, the calling account\n    is not deleted.",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "b0d9b17098243f8847c9715fdfa4213b2fbc685cc80da8f651439e3ef826c54a",
-            "hash" : "0x2daf33c59d321a314bd219027ee4209aa60583a5a1ced52966b9b1dc0c54baf4",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "f0e9ddf8975a2c9e57204d7e7c1debe8afe66ac573fb7264a941b82f2cb87b07",
+            "hash" : "0x4a032e412b008e137cfdf37fae773762888163c346f149e03a836aa0c1063d49",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip6780_selfdestruct/test_selfdestruct.py",
-            "sourceHash" : "192a0a2bfb17c1205f0abab817d7ea467678a6ed0614415bd13171bb1439bb17",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_47a8c796_98e9_4f56_91ae_6f161b117b75/test_selfdestruct.py#L1030"
+            "sourceHash" : "de1aadf9bb66472e6648582d5f645e0480f762e70cdda71ffefdb9dd85e3b9a4",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_1825ccf2_f214_46d8_bc4f_99085acb257d/test_selfdestruct.py#L1030"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -1252,6 +2257,66 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x01",
+                            "code" : "0x6000600055",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x00" : "0x01"
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001100" : {
+                            "balance" : "0x00",
+                            "code" : "0x610013600081600b8239f3600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001200" : {
+                            "balance" : "0x00",
+                            "code" : "0x600160015401600155600060006000600073f495b2997c56e713469bed764d6e5e491a3b54ff5af4",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x00" : "0x01",
+                                "0x01" : "0x01"
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x0cf057",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0x6295ee1b4f6dd65047762f924ecd367c17eabf8f" : {
+                            "balance" : "0x00",
+                            "code" : "0x00",
+                            "nonce" : "0x02",
+                            "storage" : {
+                                "0x00" : "0xf495b2997c56e713469bed764d6e5e491a3b54ff",
+                                "0x01" : "0x28",
+                                "0x02" : "0x84c5dc2653f2bf521a01b6ffa95750cbcf91b10383e68b4b09d6d3c0261adcfe",
+                                "0x03" : "0x01",
+                                "0x05" : "0x28",
+                                "0x06" : "0x84c5dc2653f2bf521a01b6ffa95750cbcf91b10383e68b4b09d6d3c0261adcfe"
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5de74dedd",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0xf495b2997c56e713469bed764d6e5e491a3b54ff" : {
+                            "balance" : "0x01",
+                            "code" : "0x600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf89d800a8307a1208001b850601e600060006111003c6000601e60006001f56000556112003b6001556112003f6002556000600060006000600061120045f1600355611200316004556112003b6005556112003f60065560016020f325a001880a46656f0f059a8d9602088e4cf0eb73ea9edb242b6fce737a4a287c5cbfa053ab7fe11c93bb37ec2bc52d3f7b171d344ad699b3897f3457882254f7ba4e6b"
                 }
             ]
@@ -1308,16 +2373,27 @@
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
             "description" : "Test function documentation:\n\n    Test that if an account created in the current transaction contains a self-destruct and is\n    delegate-called by an account created before the current transaction, the calling account\n    is not deleted.",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "590f1b8976ba2cedec546db5f2d1c74a11caaecbf1801b6cf2ec0e7d02ab56ac",
-            "hash" : "0x4c75c8b0c55ed45e10450c5e9fa8aef37138455c55679c572d4ac10332fd5d98",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "4a4a1acc1a4e37ae75ca55182316aa79dca45475baf2ec40ac0571c47cf76660",
+            "hash" : "0x57a419eee762e87c9af82be40faed88e6ea229f1b8ddb8617f1349b4906f6f70",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip6780_selfdestruct/test_selfdestruct.py",
-            "sourceHash" : "192a0a2bfb17c1205f0abab817d7ea467678a6ed0614415bd13171bb1439bb17",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_47a8c796_98e9_4f56_91ae_6f161b117b75/test_selfdestruct.py#L1030"
+            "sourceHash" : "de1aadf9bb66472e6648582d5f645e0480f762e70cdda71ffefdb9dd85e3b9a4",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_1825ccf2_f214_46d8_bc4f_99085acb257d/test_selfdestruct.py#L1030"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -1339,6 +2415,66 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x01",
+                            "code" : "0x6000600055",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x00" : "0x01"
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001100" : {
+                            "balance" : "0x00",
+                            "code" : "0x610013600081600b8239f3600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001200" : {
+                            "balance" : "0x00",
+                            "code" : "0x60016001540160015560006000600060007364e2ebd6405af8cb348aec519084d3fff42ebba65af4",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x00" : "0x01",
+                                "0x01" : "0x01"
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x0cf000",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0x6295ee1b4f6dd65047762f924ecd367c17eabf8f" : {
+                            "balance" : "0x00",
+                            "code" : "0x00",
+                            "nonce" : "0x02",
+                            "storage" : {
+                                "0x00" : "0x64e2ebd6405af8cb348aec519084d3fff42ebba6",
+                                "0x01" : "0x28",
+                                "0x02" : "0x9605c7443e82de3eedc802eded7c1f62cac1b0db92493c666b68ce12335bd78f",
+                                "0x03" : "0x01",
+                                "0x05" : "0x28",
+                                "0x06" : "0x9605c7443e82de3eedc802eded7c1f62cac1b0db92493c666b68ce12335bd78f"
+                            }
+                        },
+                        "0x64e2ebd6405af8cb348aec519084d3fff42ebba6" : {
+                            "balance" : "0x01",
+                            "code" : "0x600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5de74dfff",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf89b800a8307a1208001b84e601e600060006111003c601e60006001f06000556112003b6001556112003f6002556000600060006000600061120045f1600355611200316004556112003b6005556112003f60065560016020f326a0bf1e09768fe96dfe23b5211bd98efac615e73201678738ca664361f10add12f2a01ed92fceee39ce12bd7fdf5eb411eeb2fa1b4fe26347dc45df7ad888711cf190"
                 }
             ]
@@ -1395,16 +2531,20 @@
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
             "description" : "Test function documentation:\n\n    Test that if an account created in the current transaction contains a self-destruct and is\n    delegate-called by an account created before the current transaction, the calling account\n    is not deleted.",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "9107bf04ee5d0237c1afeafbbe51aa434df156712a3e54bccced544cc3032a04",
-            "hash" : "0x931aac24edcd2ec1c979e1cecd81eb954c457beba980eeca53beb5be78a20495",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "da7107ba4cc5e507fa888ce75cfba8f41917619f01d62a12f6293b61e0520967",
+            "hash" : "0xc47c40a828255e809e6d87a3846987612b8df72fbe211020d26184c55981ab8a",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip6780_selfdestruct/test_selfdestruct.py",
-            "sourceHash" : "192a0a2bfb17c1205f0abab817d7ea467678a6ed0614415bd13171bb1439bb17",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_47a8c796_98e9_4f56_91ae_6f161b117b75/test_selfdestruct.py#L1030"
+            "sourceHash" : "de1aadf9bb66472e6648582d5f645e0480f762e70cdda71ffefdb9dd85e3b9a4",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_1825ccf2_f214_46d8_bc4f_99085acb257d/test_selfdestruct.py#L1030"
+        },
+        "config" : {
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -1425,6 +2565,57 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x6000600055",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x00" : "0x01"
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001100" : {
+                            "balance" : "0x00",
+                            "code" : "0x610013600081600b8239f3600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x0cf03c",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0x6295ee1b4f6dd65047762f924ecd367c17eabf8f" : {
+                            "balance" : "0x00",
+                            "code" : "0x00",
+                            "nonce" : "0x02",
+                            "storage" : {
+                                "0x00" : "0xf495b2997c56e713469bed764d6e5e491a3b54ff",
+                                "0x01" : "0x2a",
+                                "0x02" : "0x14408f457fc8fda396e6a3d2a8adb79eb15fd3a20b56266934fffdd2dd994a6b",
+                                "0x03" : "0x01",
+                                "0x05" : "0x2a",
+                                "0x06" : "0x14408f457fc8fda396e6a3d2a8adb79eb15fd3a20b56266934fffdd2dd994a6b"
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5de74df38",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0xf495b2997c56e713469bed764d6e5e491a3b54ff" : {
+                            "balance" : "0x00",
+                            "code" : "0x600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf89d800a8307a1208080b850601e600060006111003c6000601e60006000f56000556112003b6001556112003f6002556000600060006000600061120045f1600355611200316004556112003b6005556112003f60065560016020f325a0875bb770af183cd8348590aa2730ed52b7dc48976023eb3723889fa455504e92a017c451c8aea2264eabdb2d43f64c75eeab9a0f778214b9ce5785e8bb6c982a6d"
                 }
             ]
@@ -1481,16 +2672,20 @@
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
             "description" : "Test function documentation:\n\n    Test that if an account created in the current transaction contains a self-destruct and is\n    delegate-called by an account created before the current transaction, the calling account\n    is not deleted.",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "ef04337385798ab15c000b3a45d97e2901a8029e995066bf8d765141f45d767c",
-            "hash" : "0x959ab3d2fdb1effce83de681d0a42aa03de1683713142692430077771f231bbf",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "4a7bd9e4e821c41496585fd9169aa8a9f0729dbb7df9fc65130a2e4217cfa7ea",
+            "hash" : "0xa321a3d5f95d3acf02547cbef08c9884f7def64a7007b42b8c78890c652cffa5",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip6780_selfdestruct/test_selfdestruct.py",
-            "sourceHash" : "192a0a2bfb17c1205f0abab817d7ea467678a6ed0614415bd13171bb1439bb17",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_47a8c796_98e9_4f56_91ae_6f161b117b75/test_selfdestruct.py#L1030"
+            "sourceHash" : "de1aadf9bb66472e6648582d5f645e0480f762e70cdda71ffefdb9dd85e3b9a4",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_1825ccf2_f214_46d8_bc4f_99085acb257d/test_selfdestruct.py#L1030"
+        },
+        "config" : {
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -1511,6 +2706,57 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x6000600055",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x00" : "0x01"
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001100" : {
+                            "balance" : "0x00",
+                            "code" : "0x610013600081600b8239f3600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x0cefe5",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0x6295ee1b4f6dd65047762f924ecd367c17eabf8f" : {
+                            "balance" : "0x00",
+                            "code" : "0x00",
+                            "nonce" : "0x02",
+                            "storage" : {
+                                "0x00" : "0x64e2ebd6405af8cb348aec519084d3fff42ebba6",
+                                "0x01" : "0x2a",
+                                "0x02" : "0xbf89422ad52fe8dc11081dd5d5047f15180993bcae1d3c276d79e277cf3ac4d8",
+                                "0x03" : "0x01",
+                                "0x05" : "0x2a",
+                                "0x06" : "0xbf89422ad52fe8dc11081dd5d5047f15180993bcae1d3c276d79e277cf3ac4d8"
+                            }
+                        },
+                        "0x64e2ebd6405af8cb348aec519084d3fff42ebba6" : {
+                            "balance" : "0x00",
+                            "code" : "0x600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5de74e05a",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf89b800a8307a1208080b84e601e600060006111003c601e60006000f06000556112003b6001556112003f6002556000600060006000600061120045f1600355611200316004556112003b6005556112003f60065560016020f325a0db1a3c84e77f33461979473903ffd72151faf66f2aaa12a2ef31e65dbf65a9e3a0610a9ad3e2c3e552b8ebb27d5670a4a6a92a26d87c7212972ea7960595fb4d41"
                 }
             ]
@@ -1567,16 +2813,20 @@
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
             "description" : "Test function documentation:\n\n    Test that if an account created in the current transaction contains a self-destruct and is\n    delegate-called by an account created before the current transaction, the calling account\n    is not deleted.",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "2a9560352a169382b55907069a612bcae5fa763c2a0e310b6e57efd7b93b54a7",
-            "hash" : "0x226df08bb5b58fd2c28c404d910682e91d66d8973f6436f9ffb04199e6667f9a",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "95d4c3626a4122a0dcf520d87854dd1ebc81554f0cf692fa9e45ceddbecf92b7",
+            "hash" : "0xa5e59469c51a90aa4e868ac2d9a8e6a0e11786ff35dcf43752e6600e7d1ebefa",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip6780_selfdestruct/test_selfdestruct.py",
-            "sourceHash" : "192a0a2bfb17c1205f0abab817d7ea467678a6ed0614415bd13171bb1439bb17",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_47a8c796_98e9_4f56_91ae_6f161b117b75/test_selfdestruct.py#L1030"
+            "sourceHash" : "de1aadf9bb66472e6648582d5f645e0480f762e70cdda71ffefdb9dd85e3b9a4",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_1825ccf2_f214_46d8_bc4f_99085acb257d/test_selfdestruct.py#L1030"
+        },
+        "config" : {
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -1597,6 +2847,57 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x6000600055",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x00" : "0x01"
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001100" : {
+                            "balance" : "0x00",
+                            "code" : "0x610013600081600b8239f3600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x0cf033",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0x6295ee1b4f6dd65047762f924ecd367c17eabf8f" : {
+                            "balance" : "0x00",
+                            "code" : "0x00",
+                            "nonce" : "0x02",
+                            "storage" : {
+                                "0x00" : "0xf495b2997c56e713469bed764d6e5e491a3b54ff",
+                                "0x01" : "0x28",
+                                "0x02" : "0x84c5dc2653f2bf521a01b6ffa95750cbcf91b10383e68b4b09d6d3c0261adcfe",
+                                "0x03" : "0x01",
+                                "0x05" : "0x28",
+                                "0x06" : "0x84c5dc2653f2bf521a01b6ffa95750cbcf91b10383e68b4b09d6d3c0261adcfe"
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5de74df56",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0xf495b2997c56e713469bed764d6e5e491a3b54ff" : {
+                            "balance" : "0x00",
+                            "code" : "0x600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf89d800a8307a1208080b850601e600060006111003c6000601e60006000f56000556112003b6001556112003f6002556000600060006000600061120045f1600355611200316004556112003b6005556112003f60065560016020f325a0875bb770af183cd8348590aa2730ed52b7dc48976023eb3723889fa455504e92a017c451c8aea2264eabdb2d43f64c75eeab9a0f778214b9ce5785e8bb6c982a6d"
                 }
             ]
@@ -1653,16 +2954,20 @@
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
             "description" : "Test function documentation:\n\n    Test that if an account created in the current transaction contains a self-destruct and is\n    delegate-called by an account created before the current transaction, the calling account\n    is not deleted.",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "1edbc4371883306bb6ec9207119a8509f3d320c443b2a4c543ebb32f0a4ef706",
-            "hash" : "0x59f73529cbb3791366756f8b4f51a34fcc4d83b025954818d6cc88641c73141e",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "fd5709bba0b9c760867d3bdac4982f69c33900496d4375232214d7cb09621f06",
+            "hash" : "0x95cdb444acb5a58aa7edf9cb34cbcee3629375fafbb7649ae33fc3e032c0e2e8",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip6780_selfdestruct/test_selfdestruct.py",
-            "sourceHash" : "192a0a2bfb17c1205f0abab817d7ea467678a6ed0614415bd13171bb1439bb17",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_47a8c796_98e9_4f56_91ae_6f161b117b75/test_selfdestruct.py#L1030"
+            "sourceHash" : "de1aadf9bb66472e6648582d5f645e0480f762e70cdda71ffefdb9dd85e3b9a4",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_1825ccf2_f214_46d8_bc4f_99085acb257d/test_selfdestruct.py#L1030"
+        },
+        "config" : {
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -1683,6 +2988,57 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x6000600055",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x00" : "0x01"
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001100" : {
+                            "balance" : "0x00",
+                            "code" : "0x610013600081600b8239f3600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x0cefdc",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0x6295ee1b4f6dd65047762f924ecd367c17eabf8f" : {
+                            "balance" : "0x00",
+                            "code" : "0x00",
+                            "nonce" : "0x02",
+                            "storage" : {
+                                "0x00" : "0x64e2ebd6405af8cb348aec519084d3fff42ebba6",
+                                "0x01" : "0x28",
+                                "0x02" : "0x9605c7443e82de3eedc802eded7c1f62cac1b0db92493c666b68ce12335bd78f",
+                                "0x03" : "0x01",
+                                "0x05" : "0x28",
+                                "0x06" : "0x9605c7443e82de3eedc802eded7c1f62cac1b0db92493c666b68ce12335bd78f"
+                            }
+                        },
+                        "0x64e2ebd6405af8cb348aec519084d3fff42ebba6" : {
+                            "balance" : "0x00",
+                            "code" : "0x600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5de74e078",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf89b800a8307a1208080b84e601e600060006111003c601e60006000f06000556112003b6001556112003f6002556000600060006000600061120045f1600355611200316004556112003b6005556112003f60065560016020f325a0db1a3c84e77f33461979473903ffd72151faf66f2aaa12a2ef31e65dbf65a9e3a0610a9ad3e2c3e552b8ebb27d5670a4a6a92a26d87c7212972ea7960595fb4d41"
                 }
             ]
@@ -1739,16 +3095,20 @@
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
             "description" : "Test function documentation:\n\n    Test that if an account created in the current transaction contains a self-destruct and is\n    delegate-called by an account created before the current transaction, the calling account\n    is not deleted.",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "d8e31a2ab1e77856e6fa74514050009fb82903ad5b36553eb2c96fde77c4d57a",
-            "hash" : "0x6508f91af07cf5145d4a402629d0df0ca80da3a83266afa7bba5b13ef4339f0f",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "650dbdb2850b9cb3b08ee7b8ee94a635f2af184290181be9b8d7bda0d1eefaf9",
+            "hash" : "0x0b7e8182f247d2eac1795ecb806e59dd320bf471b808479c3fb47d436ce61698",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip6780_selfdestruct/test_selfdestruct.py",
-            "sourceHash" : "192a0a2bfb17c1205f0abab817d7ea467678a6ed0614415bd13171bb1439bb17",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_47a8c796_98e9_4f56_91ae_6f161b117b75/test_selfdestruct.py#L1030"
+            "sourceHash" : "de1aadf9bb66472e6648582d5f645e0480f762e70cdda71ffefdb9dd85e3b9a4",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_1825ccf2_f214_46d8_bc4f_99085acb257d/test_selfdestruct.py#L1030"
+        },
+        "config" : {
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -1769,6 +3129,57 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x6000600055",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x00" : "0x01"
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001100" : {
+                            "balance" : "0x00",
+                            "code" : "0x610013600081600b8239f3600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x0cf060",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0x6295ee1b4f6dd65047762f924ecd367c17eabf8f" : {
+                            "balance" : "0x00",
+                            "code" : "0x00",
+                            "nonce" : "0x02",
+                            "storage" : {
+                                "0x00" : "0xf495b2997c56e713469bed764d6e5e491a3b54ff",
+                                "0x01" : "0x2a",
+                                "0x02" : "0x14408f457fc8fda396e6a3d2a8adb79eb15fd3a20b56266934fffdd2dd994a6b",
+                                "0x03" : "0x01",
+                                "0x05" : "0x2a",
+                                "0x06" : "0x14408f457fc8fda396e6a3d2a8adb79eb15fd3a20b56266934fffdd2dd994a6b"
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5de74debf",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0xf495b2997c56e713469bed764d6e5e491a3b54ff" : {
+                            "balance" : "0x01",
+                            "code" : "0x600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf89d800a8307a1208001b850601e600060006111003c6000601e60006001f56000556112003b6001556112003f6002556000600060006000600061120045f1600355611200316004556112003b6005556112003f60065560016020f325a001880a46656f0f059a8d9602088e4cf0eb73ea9edb242b6fce737a4a287c5cbfa053ab7fe11c93bb37ec2bc52d3f7b171d344ad699b3897f3457882254f7ba4e6b"
                 }
             ]
@@ -1825,16 +3236,20 @@
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
             "description" : "Test function documentation:\n\n    Test that if an account created in the current transaction contains a self-destruct and is\n    delegate-called by an account created before the current transaction, the calling account\n    is not deleted.",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "87be6564b24a00cc2bf15524d51bd3b093d829a157d136aa71bed1dd53a912db",
-            "hash" : "0x046d7abe1aab2fa04485ec2c62b694e99973185eabb1dd9445a10ef654a71b89",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "21eca7b7cdc8a34b4e9a4ae310666bbf5a3da2a2635ac462516312900f616379",
+            "hash" : "0x99fce6773048e65504e8294e3b9c1edeb1cfcbf13582314aa208ba124749bf7b",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip6780_selfdestruct/test_selfdestruct.py",
-            "sourceHash" : "192a0a2bfb17c1205f0abab817d7ea467678a6ed0614415bd13171bb1439bb17",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_47a8c796_98e9_4f56_91ae_6f161b117b75/test_selfdestruct.py#L1030"
+            "sourceHash" : "de1aadf9bb66472e6648582d5f645e0480f762e70cdda71ffefdb9dd85e3b9a4",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_1825ccf2_f214_46d8_bc4f_99085acb257d/test_selfdestruct.py#L1030"
+        },
+        "config" : {
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -1855,6 +3270,57 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x6000600055",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x00" : "0x01"
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001100" : {
+                            "balance" : "0x00",
+                            "code" : "0x610013600081600b8239f3600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x0cf009",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0x6295ee1b4f6dd65047762f924ecd367c17eabf8f" : {
+                            "balance" : "0x00",
+                            "code" : "0x00",
+                            "nonce" : "0x02",
+                            "storage" : {
+                                "0x00" : "0x64e2ebd6405af8cb348aec519084d3fff42ebba6",
+                                "0x01" : "0x2a",
+                                "0x02" : "0xbf89422ad52fe8dc11081dd5d5047f15180993bcae1d3c276d79e277cf3ac4d8",
+                                "0x03" : "0x01",
+                                "0x05" : "0x2a",
+                                "0x06" : "0xbf89422ad52fe8dc11081dd5d5047f15180993bcae1d3c276d79e277cf3ac4d8"
+                            }
+                        },
+                        "0x64e2ebd6405af8cb348aec519084d3fff42ebba6" : {
+                            "balance" : "0x01",
+                            "code" : "0x600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5de74dfe1",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf89b800a8307a1208001b84e601e600060006111003c601e60006001f06000556112003b6001556112003f6002556000600060006000600061120045f1600355611200316004556112003b6005556112003f60065560016020f326a0bf1e09768fe96dfe23b5211bd98efac615e73201678738ca664361f10add12f2a01ed92fceee39ce12bd7fdf5eb411eeb2fa1b4fe26347dc45df7ad888711cf190"
                 }
             ]
@@ -1911,16 +3377,20 @@
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
             "description" : "Test function documentation:\n\n    Test that if an account created in the current transaction contains a self-destruct and is\n    delegate-called by an account created before the current transaction, the calling account\n    is not deleted.",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "3a3aa2e9f86951df6eae0ef5d5e4df9739a837e0ceffefe850c89dd09eef1a92",
-            "hash" : "0x0b46b39d34a6f9e53c080c2f2b31ea00633281fcd3211ab312ea498b32c2fd85",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "ed37ead86aafe898482f86e04e9afff68ba312ca92a70f8b57b5afaccdbf90c5",
+            "hash" : "0x9b22f435792b9065e07492186751afc58f095509e9f6b09b030ab9cb4c341db7",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip6780_selfdestruct/test_selfdestruct.py",
-            "sourceHash" : "192a0a2bfb17c1205f0abab817d7ea467678a6ed0614415bd13171bb1439bb17",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_47a8c796_98e9_4f56_91ae_6f161b117b75/test_selfdestruct.py#L1030"
+            "sourceHash" : "de1aadf9bb66472e6648582d5f645e0480f762e70cdda71ffefdb9dd85e3b9a4",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_1825ccf2_f214_46d8_bc4f_99085acb257d/test_selfdestruct.py#L1030"
+        },
+        "config" : {
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -1941,6 +3411,57 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x6000600055",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x00" : "0x01"
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001100" : {
+                            "balance" : "0x00",
+                            "code" : "0x610013600081600b8239f3600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x0cf057",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0x6295ee1b4f6dd65047762f924ecd367c17eabf8f" : {
+                            "balance" : "0x00",
+                            "code" : "0x00",
+                            "nonce" : "0x02",
+                            "storage" : {
+                                "0x00" : "0xf495b2997c56e713469bed764d6e5e491a3b54ff",
+                                "0x01" : "0x28",
+                                "0x02" : "0x84c5dc2653f2bf521a01b6ffa95750cbcf91b10383e68b4b09d6d3c0261adcfe",
+                                "0x03" : "0x01",
+                                "0x05" : "0x28",
+                                "0x06" : "0x84c5dc2653f2bf521a01b6ffa95750cbcf91b10383e68b4b09d6d3c0261adcfe"
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5de74dedd",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0xf495b2997c56e713469bed764d6e5e491a3b54ff" : {
+                            "balance" : "0x01",
+                            "code" : "0x600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf89d800a8307a1208001b850601e600060006111003c6000601e60006001f56000556112003b6001556112003f6002556000600060006000600061120045f1600355611200316004556112003b6005556112003f60065560016020f325a001880a46656f0f059a8d9602088e4cf0eb73ea9edb242b6fce737a4a287c5cbfa053ab7fe11c93bb37ec2bc52d3f7b171d344ad699b3897f3457882254f7ba4e6b"
                 }
             ]
@@ -1997,16 +3518,20 @@
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
             "description" : "Test function documentation:\n\n    Test that if an account created in the current transaction contains a self-destruct and is\n    delegate-called by an account created before the current transaction, the calling account\n    is not deleted.",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "55f62beb68d99f3bd2e03ae0d45509cbbc8183be9d390cba50c0e31a6401a778",
-            "hash" : "0xdfe4d2fc50a7384866e66cc7e5b29407f05796990421bab0c2d01c5ea7621646",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "f4f27fdf2e8c2b84afce564a96713a97c10f21c19821c91cff1538f6e08719d9",
+            "hash" : "0x1ce673f8d883e0b0309d1574385ff26538a7a36c20752491c57de53913157085",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip6780_selfdestruct/test_selfdestruct.py",
-            "sourceHash" : "192a0a2bfb17c1205f0abab817d7ea467678a6ed0614415bd13171bb1439bb17",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_47a8c796_98e9_4f56_91ae_6f161b117b75/test_selfdestruct.py#L1030"
+            "sourceHash" : "de1aadf9bb66472e6648582d5f645e0480f762e70cdda71ffefdb9dd85e3b9a4",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_1825ccf2_f214_46d8_bc4f_99085acb257d/test_selfdestruct.py#L1030"
+        },
+        "config" : {
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -2027,6 +3552,57 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x6000600055",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x00" : "0x01"
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001100" : {
+                            "balance" : "0x00",
+                            "code" : "0x610013600081600b8239f3600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x0cf000",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0x6295ee1b4f6dd65047762f924ecd367c17eabf8f" : {
+                            "balance" : "0x00",
+                            "code" : "0x00",
+                            "nonce" : "0x02",
+                            "storage" : {
+                                "0x00" : "0x64e2ebd6405af8cb348aec519084d3fff42ebba6",
+                                "0x01" : "0x28",
+                                "0x02" : "0x9605c7443e82de3eedc802eded7c1f62cac1b0db92493c666b68ce12335bd78f",
+                                "0x03" : "0x01",
+                                "0x05" : "0x28",
+                                "0x06" : "0x9605c7443e82de3eedc802eded7c1f62cac1b0db92493c666b68ce12335bd78f"
+                            }
+                        },
+                        "0x64e2ebd6405af8cb348aec519084d3fff42ebba6" : {
+                            "balance" : "0x01",
+                            "code" : "0x600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5de74dfff",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf89b800a8307a1208001b84e601e600060006111003c601e60006001f06000556112003b6001556112003f6002556000600060006000600061120045f1600355611200316004556112003b6005556112003f60065560016020f326a0bf1e09768fe96dfe23b5211bd98efac615e73201678738ca664361f10add12f2a01ed92fceee39ce12bd7fdf5eb411eeb2fa1b4fe26347dc45df7ad888711cf190"
                 }
             ]
@@ -2083,16 +3659,20 @@
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
             "description" : "Test function documentation:\n\n    Test that if an account created in the current transaction contains a self-destruct and is\n    delegate-called by an account created before the current transaction, the calling account\n    is not deleted.",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "5191d1a42ef0460f4328a1bb52249c94a8163331baeca874c6d5b20ff7187dc0",
-            "hash" : "0x64b9d9540cbb4a54cc837b134d6a585d2fc0cac62647cde9a1b3299364ee4f89",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "7e483a978da497d80cd1e0bf3073cee3d61aed72f1ddb81dfff0e0919f24c17c",
+            "hash" : "0xa89f14d33c028326fd60cc8a5cce5af2eea6ba48eb0ecb26e64e06cb8a89bd6d",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip6780_selfdestruct/test_selfdestruct.py",
-            "sourceHash" : "192a0a2bfb17c1205f0abab817d7ea467678a6ed0614415bd13171bb1439bb17",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_47a8c796_98e9_4f56_91ae_6f161b117b75/test_selfdestruct.py#L1030"
+            "sourceHash" : "de1aadf9bb66472e6648582d5f645e0480f762e70cdda71ffefdb9dd85e3b9a4",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_1825ccf2_f214_46d8_bc4f_99085acb257d/test_selfdestruct.py#L1030"
+        },
+        "config" : {
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -2113,6 +3693,57 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x01",
+                            "code" : "0x6000600055",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x00" : "0x01"
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001100" : {
+                            "balance" : "0x00",
+                            "code" : "0x610013600081600b8239f3600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x0cf03c",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0x6295ee1b4f6dd65047762f924ecd367c17eabf8f" : {
+                            "balance" : "0x00",
+                            "code" : "0x00",
+                            "nonce" : "0x02",
+                            "storage" : {
+                                "0x00" : "0xf495b2997c56e713469bed764d6e5e491a3b54ff",
+                                "0x01" : "0x2a",
+                                "0x02" : "0x14408f457fc8fda396e6a3d2a8adb79eb15fd3a20b56266934fffdd2dd994a6b",
+                                "0x03" : "0x01",
+                                "0x05" : "0x2a",
+                                "0x06" : "0x14408f457fc8fda396e6a3d2a8adb79eb15fd3a20b56266934fffdd2dd994a6b"
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5de74df38",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0xf495b2997c56e713469bed764d6e5e491a3b54ff" : {
+                            "balance" : "0x00",
+                            "code" : "0x600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf89d800a8307a1208080b850601e600060006111003c6000601e60006000f56000556112003b6001556112003f6002556000600060006000600061120045f1600355611200316004556112003b6005556112003f60065560016020f325a0875bb770af183cd8348590aa2730ed52b7dc48976023eb3723889fa455504e92a017c451c8aea2264eabdb2d43f64c75eeab9a0f778214b9ce5785e8bb6c982a6d"
                 }
             ]
@@ -2169,16 +3800,20 @@
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
             "description" : "Test function documentation:\n\n    Test that if an account created in the current transaction contains a self-destruct and is\n    delegate-called by an account created before the current transaction, the calling account\n    is not deleted.",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "141ffc0909319e86bf4dd337a034182cc53cc0cd942c7774cd0197b56678910d",
-            "hash" : "0xf55abdb1c2a684393c5bb3eb5fe130d1e1e6e35d9b4021c8338c0de3730f00e2",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "e2e2d5117d5861722c7a153c9f405fc7d0227d873ce211d64b13509d88222586",
+            "hash" : "0xff2452472d520aff4ca841ecdc3f6630b116be4f62feafa50ef7b8fe3b7ea82d",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip6780_selfdestruct/test_selfdestruct.py",
-            "sourceHash" : "192a0a2bfb17c1205f0abab817d7ea467678a6ed0614415bd13171bb1439bb17",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_47a8c796_98e9_4f56_91ae_6f161b117b75/test_selfdestruct.py#L1030"
+            "sourceHash" : "de1aadf9bb66472e6648582d5f645e0480f762e70cdda71ffefdb9dd85e3b9a4",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_1825ccf2_f214_46d8_bc4f_99085acb257d/test_selfdestruct.py#L1030"
+        },
+        "config" : {
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -2199,6 +3834,57 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x01",
+                            "code" : "0x6000600055",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x00" : "0x01"
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001100" : {
+                            "balance" : "0x00",
+                            "code" : "0x610013600081600b8239f3600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x0cefe5",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0x6295ee1b4f6dd65047762f924ecd367c17eabf8f" : {
+                            "balance" : "0x00",
+                            "code" : "0x00",
+                            "nonce" : "0x02",
+                            "storage" : {
+                                "0x00" : "0x64e2ebd6405af8cb348aec519084d3fff42ebba6",
+                                "0x01" : "0x2a",
+                                "0x02" : "0xbf89422ad52fe8dc11081dd5d5047f15180993bcae1d3c276d79e277cf3ac4d8",
+                                "0x03" : "0x01",
+                                "0x05" : "0x2a",
+                                "0x06" : "0xbf89422ad52fe8dc11081dd5d5047f15180993bcae1d3c276d79e277cf3ac4d8"
+                            }
+                        },
+                        "0x64e2ebd6405af8cb348aec519084d3fff42ebba6" : {
+                            "balance" : "0x00",
+                            "code" : "0x600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5de74e05a",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf89b800a8307a1208080b84e601e600060006111003c601e60006000f06000556112003b6001556112003f6002556000600060006000600061120045f1600355611200316004556112003b6005556112003f60065560016020f325a0db1a3c84e77f33461979473903ffd72151faf66f2aaa12a2ef31e65dbf65a9e3a0610a9ad3e2c3e552b8ebb27d5670a4a6a92a26d87c7212972ea7960595fb4d41"
                 }
             ]
@@ -2255,16 +3941,20 @@
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
             "description" : "Test function documentation:\n\n    Test that if an account created in the current transaction contains a self-destruct and is\n    delegate-called by an account created before the current transaction, the calling account\n    is not deleted.",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "5a119cddbf7a448f7e026b347f06d74cd27bdb9270d723cd8cfb9a456028e480",
-            "hash" : "0x23dafbbf9c207559075b6cbe4f9592c33ee84f511efd83894dab36cf0beb88f6",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "658565e093a20beeb5096a75fdcd68d6a61c70f73b288fdf18dd46e7a02a76cb",
+            "hash" : "0x5460fcea5fd724c20f8e047cf491b2bf9a4b716d5aecae6f5ab1e2675930c8f1",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip6780_selfdestruct/test_selfdestruct.py",
-            "sourceHash" : "192a0a2bfb17c1205f0abab817d7ea467678a6ed0614415bd13171bb1439bb17",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_47a8c796_98e9_4f56_91ae_6f161b117b75/test_selfdestruct.py#L1030"
+            "sourceHash" : "de1aadf9bb66472e6648582d5f645e0480f762e70cdda71ffefdb9dd85e3b9a4",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_1825ccf2_f214_46d8_bc4f_99085acb257d/test_selfdestruct.py#L1030"
+        },
+        "config" : {
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -2285,6 +3975,57 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x01",
+                            "code" : "0x6000600055",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x00" : "0x01"
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001100" : {
+                            "balance" : "0x00",
+                            "code" : "0x610013600081600b8239f3600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x0cf033",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0x6295ee1b4f6dd65047762f924ecd367c17eabf8f" : {
+                            "balance" : "0x00",
+                            "code" : "0x00",
+                            "nonce" : "0x02",
+                            "storage" : {
+                                "0x00" : "0xf495b2997c56e713469bed764d6e5e491a3b54ff",
+                                "0x01" : "0x28",
+                                "0x02" : "0x84c5dc2653f2bf521a01b6ffa95750cbcf91b10383e68b4b09d6d3c0261adcfe",
+                                "0x03" : "0x01",
+                                "0x05" : "0x28",
+                                "0x06" : "0x84c5dc2653f2bf521a01b6ffa95750cbcf91b10383e68b4b09d6d3c0261adcfe"
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5de74df56",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0xf495b2997c56e713469bed764d6e5e491a3b54ff" : {
+                            "balance" : "0x00",
+                            "code" : "0x600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf89d800a8307a1208080b850601e600060006111003c6000601e60006000f56000556112003b6001556112003f6002556000600060006000600061120045f1600355611200316004556112003b6005556112003f60065560016020f325a0875bb770af183cd8348590aa2730ed52b7dc48976023eb3723889fa455504e92a017c451c8aea2264eabdb2d43f64c75eeab9a0f778214b9ce5785e8bb6c982a6d"
                 }
             ]
@@ -2341,16 +4082,20 @@
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
             "description" : "Test function documentation:\n\n    Test that if an account created in the current transaction contains a self-destruct and is\n    delegate-called by an account created before the current transaction, the calling account\n    is not deleted.",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "155ba6cacaa7f8e08e45bfba441192319e4012dbfa48cbe2b1d9e6f9498f0559",
-            "hash" : "0x569e927a2a1b5d4581674d9b9dc98c1462604510f083a2b9a4637afdbc90ae58",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "843549ce6c7ce6dc1be8db5c267be48fd35306e84bcb6cbc13c645d82d8f3461",
+            "hash" : "0xace84e4757c1dbc8d19bd46854eff813565e83d41b1829e228089b3a4c4775a8",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip6780_selfdestruct/test_selfdestruct.py",
-            "sourceHash" : "192a0a2bfb17c1205f0abab817d7ea467678a6ed0614415bd13171bb1439bb17",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_47a8c796_98e9_4f56_91ae_6f161b117b75/test_selfdestruct.py#L1030"
+            "sourceHash" : "de1aadf9bb66472e6648582d5f645e0480f762e70cdda71ffefdb9dd85e3b9a4",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_1825ccf2_f214_46d8_bc4f_99085acb257d/test_selfdestruct.py#L1030"
+        },
+        "config" : {
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -2371,6 +4116,57 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x01",
+                            "code" : "0x6000600055",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x00" : "0x01"
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001100" : {
+                            "balance" : "0x00",
+                            "code" : "0x610013600081600b8239f3600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x0cefdc",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0x6295ee1b4f6dd65047762f924ecd367c17eabf8f" : {
+                            "balance" : "0x00",
+                            "code" : "0x00",
+                            "nonce" : "0x02",
+                            "storage" : {
+                                "0x00" : "0x64e2ebd6405af8cb348aec519084d3fff42ebba6",
+                                "0x01" : "0x28",
+                                "0x02" : "0x9605c7443e82de3eedc802eded7c1f62cac1b0db92493c666b68ce12335bd78f",
+                                "0x03" : "0x01",
+                                "0x05" : "0x28",
+                                "0x06" : "0x9605c7443e82de3eedc802eded7c1f62cac1b0db92493c666b68ce12335bd78f"
+                            }
+                        },
+                        "0x64e2ebd6405af8cb348aec519084d3fff42ebba6" : {
+                            "balance" : "0x00",
+                            "code" : "0x600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5de74e078",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf89b800a8307a1208080b84e601e600060006111003c601e60006000f06000556112003b6001556112003f6002556000600060006000600061120045f1600355611200316004556112003b6005556112003f60065560016020f325a0db1a3c84e77f33461979473903ffd72151faf66f2aaa12a2ef31e65dbf65a9e3a0610a9ad3e2c3e552b8ebb27d5670a4a6a92a26d87c7212972ea7960595fb4d41"
                 }
             ]
@@ -2427,16 +4223,20 @@
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
             "description" : "Test function documentation:\n\n    Test that if an account created in the current transaction contains a self-destruct and is\n    delegate-called by an account created before the current transaction, the calling account\n    is not deleted.",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "0edc1b54f572f0c7bce60c1c82f837c8cb9417bb82e3f004bb0987d59cf0457e",
-            "hash" : "0x7b9e0783738f10720f40e331256b1da5af4db02e1ecab384e72b9490c937790d",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "e8a33a5f7553abd8ba5d9d72cc68f78e983ef8559182c26f0c91b05b4b30d434",
+            "hash" : "0x62e3d8ba1c6ab975e697dd130150ef5f2a8ea8389f7b9fcd40030d3d87b11bf3",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip6780_selfdestruct/test_selfdestruct.py",
-            "sourceHash" : "192a0a2bfb17c1205f0abab817d7ea467678a6ed0614415bd13171bb1439bb17",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_47a8c796_98e9_4f56_91ae_6f161b117b75/test_selfdestruct.py#L1030"
+            "sourceHash" : "de1aadf9bb66472e6648582d5f645e0480f762e70cdda71ffefdb9dd85e3b9a4",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_1825ccf2_f214_46d8_bc4f_99085acb257d/test_selfdestruct.py#L1030"
+        },
+        "config" : {
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -2457,6 +4257,57 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x01",
+                            "code" : "0x6000600055",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x00" : "0x01"
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001100" : {
+                            "balance" : "0x00",
+                            "code" : "0x610013600081600b8239f3600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x0cf060",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0x6295ee1b4f6dd65047762f924ecd367c17eabf8f" : {
+                            "balance" : "0x00",
+                            "code" : "0x00",
+                            "nonce" : "0x02",
+                            "storage" : {
+                                "0x00" : "0xf495b2997c56e713469bed764d6e5e491a3b54ff",
+                                "0x01" : "0x2a",
+                                "0x02" : "0x14408f457fc8fda396e6a3d2a8adb79eb15fd3a20b56266934fffdd2dd994a6b",
+                                "0x03" : "0x01",
+                                "0x05" : "0x2a",
+                                "0x06" : "0x14408f457fc8fda396e6a3d2a8adb79eb15fd3a20b56266934fffdd2dd994a6b"
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5de74debf",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0xf495b2997c56e713469bed764d6e5e491a3b54ff" : {
+                            "balance" : "0x01",
+                            "code" : "0x600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf89d800a8307a1208001b850601e600060006111003c6000601e60006001f56000556112003b6001556112003f6002556000600060006000600061120045f1600355611200316004556112003b6005556112003f60065560016020f325a001880a46656f0f059a8d9602088e4cf0eb73ea9edb242b6fce737a4a287c5cbfa053ab7fe11c93bb37ec2bc52d3f7b171d344ad699b3897f3457882254f7ba4e6b"
                 }
             ]
@@ -2513,16 +4364,20 @@
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
             "description" : "Test function documentation:\n\n    Test that if an account created in the current transaction contains a self-destruct and is\n    delegate-called by an account created before the current transaction, the calling account\n    is not deleted.",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "cbbdf33db58226f41a70bac67813b7a06fcf3454148135eeb18cfbb5f2d1a1ef",
-            "hash" : "0x05e866f7073d471c396c27ad0a6924e74e69d6fe044d9b0d01d94cfeb40bfb0f",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "f0cbb33ce9ad88775be739614a0a7865f4dadb637ef1de490cea7408a5010677",
+            "hash" : "0x965b5f2fb54ec13c60c9a27f6504608b18079279ac83387f214bafac845ebd2b",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip6780_selfdestruct/test_selfdestruct.py",
-            "sourceHash" : "192a0a2bfb17c1205f0abab817d7ea467678a6ed0614415bd13171bb1439bb17",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_47a8c796_98e9_4f56_91ae_6f161b117b75/test_selfdestruct.py#L1030"
+            "sourceHash" : "de1aadf9bb66472e6648582d5f645e0480f762e70cdda71ffefdb9dd85e3b9a4",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_1825ccf2_f214_46d8_bc4f_99085acb257d/test_selfdestruct.py#L1030"
+        },
+        "config" : {
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -2543,6 +4398,57 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x01",
+                            "code" : "0x6000600055",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x00" : "0x01"
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001100" : {
+                            "balance" : "0x00",
+                            "code" : "0x610013600081600b8239f3600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x0cf009",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0x6295ee1b4f6dd65047762f924ecd367c17eabf8f" : {
+                            "balance" : "0x00",
+                            "code" : "0x00",
+                            "nonce" : "0x02",
+                            "storage" : {
+                                "0x00" : "0x64e2ebd6405af8cb348aec519084d3fff42ebba6",
+                                "0x01" : "0x2a",
+                                "0x02" : "0xbf89422ad52fe8dc11081dd5d5047f15180993bcae1d3c276d79e277cf3ac4d8",
+                                "0x03" : "0x01",
+                                "0x05" : "0x2a",
+                                "0x06" : "0xbf89422ad52fe8dc11081dd5d5047f15180993bcae1d3c276d79e277cf3ac4d8"
+                            }
+                        },
+                        "0x64e2ebd6405af8cb348aec519084d3fff42ebba6" : {
+                            "balance" : "0x01",
+                            "code" : "0x600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5de74dfe1",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf89b800a8307a1208001b84e601e600060006111003c601e60006001f06000556112003b6001556112003f6002556000600060006000600061120045f1600355611200316004556112003b6005556112003f60065560016020f326a0bf1e09768fe96dfe23b5211bd98efac615e73201678738ca664361f10add12f2a01ed92fceee39ce12bd7fdf5eb411eeb2fa1b4fe26347dc45df7ad888711cf190"
                 }
             ]
@@ -2599,16 +4505,20 @@
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
             "description" : "Test function documentation:\n\n    Test that if an account created in the current transaction contains a self-destruct and is\n    delegate-called by an account created before the current transaction, the calling account\n    is not deleted.",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "aa2278762f55a1712728d7ece99365db54bda8c5daab0d79ed2acabc52a14ff9",
-            "hash" : "0xe71500062142af3568869aea8453cd3222bc19e161edf956fa98be065279df99",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "d221231fc6fc82f598529bb4ed7fc3320020db810482334eeeb8be4d6e6f53ee",
+            "hash" : "0x4ee8cc884521b1b53af7be47c3192fbf90dec053991b0f67f2de242cb1332962",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip6780_selfdestruct/test_selfdestruct.py",
-            "sourceHash" : "192a0a2bfb17c1205f0abab817d7ea467678a6ed0614415bd13171bb1439bb17",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_47a8c796_98e9_4f56_91ae_6f161b117b75/test_selfdestruct.py#L1030"
+            "sourceHash" : "de1aadf9bb66472e6648582d5f645e0480f762e70cdda71ffefdb9dd85e3b9a4",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_1825ccf2_f214_46d8_bc4f_99085acb257d/test_selfdestruct.py#L1030"
+        },
+        "config" : {
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -2629,6 +4539,57 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x01",
+                            "code" : "0x6000600055",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x00" : "0x01"
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001100" : {
+                            "balance" : "0x00",
+                            "code" : "0x610013600081600b8239f3600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x0cf057",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0x6295ee1b4f6dd65047762f924ecd367c17eabf8f" : {
+                            "balance" : "0x00",
+                            "code" : "0x00",
+                            "nonce" : "0x02",
+                            "storage" : {
+                                "0x00" : "0xf495b2997c56e713469bed764d6e5e491a3b54ff",
+                                "0x01" : "0x28",
+                                "0x02" : "0x84c5dc2653f2bf521a01b6ffa95750cbcf91b10383e68b4b09d6d3c0261adcfe",
+                                "0x03" : "0x01",
+                                "0x05" : "0x28",
+                                "0x06" : "0x84c5dc2653f2bf521a01b6ffa95750cbcf91b10383e68b4b09d6d3c0261adcfe"
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5de74dedd",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0xf495b2997c56e713469bed764d6e5e491a3b54ff" : {
+                            "balance" : "0x01",
+                            "code" : "0x600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf89d800a8307a1208001b850601e600060006111003c6000601e60006001f56000556112003b6001556112003f6002556000600060006000600061120045f1600355611200316004556112003b6005556112003f60065560016020f325a001880a46656f0f059a8d9602088e4cf0eb73ea9edb242b6fce737a4a287c5cbfa053ab7fe11c93bb37ec2bc52d3f7b171d344ad699b3897f3457882254f7ba4e6b"
                 }
             ]
@@ -2685,16 +4646,20 @@
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
             "description" : "Test function documentation:\n\n    Test that if an account created in the current transaction contains a self-destruct and is\n    delegate-called by an account created before the current transaction, the calling account\n    is not deleted.",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "4ce799a7d3e07327eedcf40e5387896e9844b2bfdc9f937e63a2e01d8606d701",
-            "hash" : "0x47638e632d3f842a9dcecc31eabe9f001a7ae311862571e70784beadaebfce68",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "3e5cd5fb2863b5bd8fb2dec132d7e73303e560ff50f792150b78addd948279ef",
+            "hash" : "0x85f32d95e708a08b4ce04ff5f0e0fb5c9b0d1207958307e4df9e1b1a17f92323",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip6780_selfdestruct/test_selfdestruct.py",
-            "sourceHash" : "192a0a2bfb17c1205f0abab817d7ea467678a6ed0614415bd13171bb1439bb17",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_47a8c796_98e9_4f56_91ae_6f161b117b75/test_selfdestruct.py#L1030"
+            "sourceHash" : "de1aadf9bb66472e6648582d5f645e0480f762e70cdda71ffefdb9dd85e3b9a4",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_1825ccf2_f214_46d8_bc4f_99085acb257d/test_selfdestruct.py#L1030"
+        },
+        "config" : {
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -2715,6 +4680,57 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x01",
+                            "code" : "0x6000600055",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x00" : "0x01"
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001100" : {
+                            "balance" : "0x00",
+                            "code" : "0x610013600081600b8239f3600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x0cf000",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0x6295ee1b4f6dd65047762f924ecd367c17eabf8f" : {
+                            "balance" : "0x00",
+                            "code" : "0x00",
+                            "nonce" : "0x02",
+                            "storage" : {
+                                "0x00" : "0x64e2ebd6405af8cb348aec519084d3fff42ebba6",
+                                "0x01" : "0x28",
+                                "0x02" : "0x9605c7443e82de3eedc802eded7c1f62cac1b0db92493c666b68ce12335bd78f",
+                                "0x03" : "0x01",
+                                "0x05" : "0x28",
+                                "0x06" : "0x9605c7443e82de3eedc802eded7c1f62cac1b0db92493c666b68ce12335bd78f"
+                            }
+                        },
+                        "0x64e2ebd6405af8cb348aec519084d3fff42ebba6" : {
+                            "balance" : "0x01",
+                            "code" : "0x600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5de74dfff",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf89b800a8307a1208001b84e601e600060006111003c601e60006001f06000556112003b6001556112003f6002556000600060006000600061120045f1600355611200316004556112003b6005556112003f60065560016020f326a0bf1e09768fe96dfe23b5211bd98efac615e73201678738ca664361f10add12f2a01ed92fceee39ce12bd7fdf5eb411eeb2fa1b4fe26347dc45df7ad888711cf190"
                 }
             ]

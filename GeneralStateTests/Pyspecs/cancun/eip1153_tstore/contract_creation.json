@@ -2,17 +2,28 @@
     "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tstorage_create_contexts.py::TestTransientStorageInContractCreation::test_contract_creation[fork_Cancun-state_test-across_constructor_and_deployed_code_v0-create2]" : {
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
-            "description" : "Test class documentation:\n\n    Test transient storage in contract creation contexts:\n\n    - TSTORE/TLOAD in initcode should not be able to access the creator's transient storage.\n    - TSTORE/TLOAD in initcode should be able to access the created contract's transient\n        storage.\n    - TSTORE/TLOAD in creator contract should be able to use its own transient storage.\n    \n\nTest function documentation:\n\n        Test transient storage in contract creation contexts.",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "50509e6ba248e672ed918b51e4b84b9dbbf96b6f60e235e2e205024c412bf606",
-            "hash" : "0x072c7015b9c6e99859001bcb8f7a0bd0324fb9a943989c41674f98fd551d18c7",
+            "description" : "Test class documentation:\n\n    Test transient storage in contract creation contexts.\n    - TSTORE/TLOAD in initcode should not be able to access the creator's transient storage.\n    - TSTORE/TLOAD in initcode should be able to access the created contract's transient\n        storage.\n    - TSTORE/TLOAD in creator contract should be able to use its own transient storage.\n    \n\nTest function documentation:\nTest transient storage in contract creation contexts.",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "6c8e06ec0a940fe740c61ee8df1cf79987f656c868bf1de30cd0b1068883e72e",
+            "hash" : "0x64285d4b81109760670f4d2e09ef21b19705d21500bb71368498bcda76f11b61",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tstorage_create_contexts.py",
-            "sourceHash" : "c2f0f03ac754f90e19467269b492082dbb52539cf11e8cf11cf40e3509a4d541",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_92132895_6c7a_4d2c_9622_0935947052dc/test_tstorage_create_contexts.py#L179"
+            "sourceHash" : "f9999a35648ad4e07769ca2cfeb17ddb5fb225f585dd48f3f6001020cdddd368",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_40981f82_f789_47b9_bee7_c2340bf50063/test_tstorage_create_contexts.py#L187"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -34,6 +45,42 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x61010060005d61020060015d61030060025d3660006000376000600060006000600063deadbeef3660006000f55af160045560005c60005560015c60015560025c600255",
+                            "nonce" : "0x02",
+                            "storage" : {
+                                "0x00" : "0x0100",
+                                "0x01" : "0x0200",
+                                "0x02" : "0x0300",
+                                "0x04" : "0x01"
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x08e560",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0x4c2d49af200ddce2d74781cd55646dfa4917f412" : {
+                            "balance" : "0x00",
+                            "code" : "0x60005c60005560015c600155600160025d60025c600255",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x01" : "0x01",
+                                "0x02" : "0x01"
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5de8258c0",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf887800a830f424094000000000000000000000000000000000000100080a7600160015d61001760008160108239f360005c60005560015c600155600160025d60025c60025526a09d207178868692e3896f70242cf642010b56838d1b46b94c67b6b6386875c198a03a9a2096a362ac68ef4723cb7d88135f5c396b0e4bda544a99a17d798a5978f2"
                 }
             ]
@@ -74,17 +121,28 @@
     "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tstorage_create_contexts.py::TestTransientStorageInContractCreation::test_contract_creation[fork_Cancun-state_test-across_constructor_and_deployed_code_v0-create]" : {
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
-            "description" : "Test class documentation:\n\n    Test transient storage in contract creation contexts:\n\n    - TSTORE/TLOAD in initcode should not be able to access the creator's transient storage.\n    - TSTORE/TLOAD in initcode should be able to access the created contract's transient\n        storage.\n    - TSTORE/TLOAD in creator contract should be able to use its own transient storage.\n    \n\nTest function documentation:\n\n        Test transient storage in contract creation contexts.",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "c4ee0a517ff8d6d779fdc7174f827ab3953e88dca5d464777b10d2478599255a",
-            "hash" : "0x327254068628a857a767c3d16d6e9568647bb85bc28f9dfcdbb44c8e10f34954",
+            "description" : "Test class documentation:\n\n    Test transient storage in contract creation contexts.\n    - TSTORE/TLOAD in initcode should not be able to access the creator's transient storage.\n    - TSTORE/TLOAD in initcode should be able to access the created contract's transient\n        storage.\n    - TSTORE/TLOAD in creator contract should be able to use its own transient storage.\n    \n\nTest function documentation:\nTest transient storage in contract creation contexts.",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "59c931c6605a416e9c267a5f5faa4087400ad7a1774d3db1dc07909a41308fa5",
+            "hash" : "0x884ec26b1bd33ac269087327fe55f0056d3fb04ae84bc4f0387c4a4b46238dfb",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tstorage_create_contexts.py",
-            "sourceHash" : "c2f0f03ac754f90e19467269b492082dbb52539cf11e8cf11cf40e3509a4d541",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_92132895_6c7a_4d2c_9622_0935947052dc/test_tstorage_create_contexts.py#L179"
+            "sourceHash" : "f9999a35648ad4e07769ca2cfeb17ddb5fb225f585dd48f3f6001020cdddd368",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_40981f82_f789_47b9_bee7_c2340bf50063/test_tstorage_create_contexts.py#L187"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -106,6 +164,42 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x61010060005d61020060015d61030060025d366000600037600060006000600060003660006000f05af160045560005c60005560015c60015560025c600255",
+                            "nonce" : "0x02",
+                            "storage" : {
+                                "0x00" : "0x0100",
+                                "0x01" : "0x0200",
+                                "0x02" : "0x0300",
+                                "0x04" : "0x01"
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x08e533",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0x5bafcc0c93ecd8022925d7fd89da1c6250850e19" : {
+                            "balance" : "0x00",
+                            "code" : "0x60005c60005560015c600155600160025d60025c600255",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x01" : "0x01",
+                                "0x02" : "0x01"
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5de825956",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf887800a830f424094000000000000000000000000000000000000100080a7600160015d61001760008160108239f360005c60005560015c600155600160025d60025c60025526a09d207178868692e3896f70242cf642010b56838d1b46b94c67b6b6386875c198a03a9a2096a362ac68ef4723cb7d88135f5c396b0e4bda544a99a17d798a5978f2"
                 }
             ]
@@ -146,17 +240,28 @@
     "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tstorage_create_contexts.py::TestTransientStorageInContractCreation::test_contract_creation[fork_Cancun-state_test-across_constructor_and_deployed_code_v1-create2]" : {
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
-            "description" : "Test class documentation:\n\n    Test transient storage in contract creation contexts:\n\n    - TSTORE/TLOAD in initcode should not be able to access the creator's transient storage.\n    - TSTORE/TLOAD in initcode should be able to access the created contract's transient\n        storage.\n    - TSTORE/TLOAD in creator contract should be able to use its own transient storage.\n    \n\nTest function documentation:\n\n        Test transient storage in contract creation contexts.",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "a7354c622add746d4b04dde06ae47b7cb7fbef5733550cfda5b70af19e88c652",
-            "hash" : "0x688d23d358c4bc157a001ba44c089f2ce349c734caa961c8d190ec948c76e4aa",
+            "description" : "Test class documentation:\n\n    Test transient storage in contract creation contexts.\n    - TSTORE/TLOAD in initcode should not be able to access the creator's transient storage.\n    - TSTORE/TLOAD in initcode should be able to access the created contract's transient\n        storage.\n    - TSTORE/TLOAD in creator contract should be able to use its own transient storage.\n    \n\nTest function documentation:\nTest transient storage in contract creation contexts.",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "bc740fbc9effc108cdb056be961a6396eb6cc89ad2934d6f75efe64c5d4a1319",
+            "hash" : "0xe01c23cfc1af8216d5cd161fc4d9bef8a133e818c3981ff04fe8bccb3f386de6",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tstorage_create_contexts.py",
-            "sourceHash" : "c2f0f03ac754f90e19467269b492082dbb52539cf11e8cf11cf40e3509a4d541",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_92132895_6c7a_4d2c_9622_0935947052dc/test_tstorage_create_contexts.py#L179"
+            "sourceHash" : "f9999a35648ad4e07769ca2cfeb17ddb5fb225f585dd48f3f6001020cdddd368",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_40981f82_f789_47b9_bee7_c2340bf50063/test_tstorage_create_contexts.py#L187"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -178,6 +283,43 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x61010060005d61020060015d61030060025d3660006000376000600060006000600063deadbeef3660006000f55af160045560005c60005560015c60015560025c600255",
+                            "nonce" : "0x02",
+                            "storage" : {
+                                "0x00" : "0x0100",
+                                "0x01" : "0x0200",
+                                "0x02" : "0x0300",
+                                "0x04" : "0x01"
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x0a06bc",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0x8997fdcdaca4713f1314c1216daa5ba237989b32" : {
+                            "balance" : "0x00",
+                            "code" : "0x60005c60025560015c600355600160025d60025c600455",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x01" : "0x01",
+                                "0x03" : "0x01",
+                                "0x04" : "0x01"
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5de7e9438",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf893800a830f424094000000000000000000000000000000000000100080b360005c600055600160015d60015c600155610017600081601c8239f360005c60025560015c600355600160025d60025c60045525a0d4edf50f1663d61d7151d2fdb6c99c235a806bd03061692886d437d5ca8010fba058c4530781ab690510e0d7ea971e3566fa79f9ec9eac51497ce69f9b9507d40c"
                 }
             ]
@@ -218,17 +360,28 @@
     "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tstorage_create_contexts.py::TestTransientStorageInContractCreation::test_contract_creation[fork_Cancun-state_test-across_constructor_and_deployed_code_v1-create]" : {
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
-            "description" : "Test class documentation:\n\n    Test transient storage in contract creation contexts:\n\n    - TSTORE/TLOAD in initcode should not be able to access the creator's transient storage.\n    - TSTORE/TLOAD in initcode should be able to access the created contract's transient\n        storage.\n    - TSTORE/TLOAD in creator contract should be able to use its own transient storage.\n    \n\nTest function documentation:\n\n        Test transient storage in contract creation contexts.",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "d997e3de427b1532dd96ba562f7c8eee7509067b0977d4320c74816ee70434ff",
-            "hash" : "0xf5f21ce5fc675e2498111d05916b4d71fd13eddb406b4bbf402d65870ed00d82",
+            "description" : "Test class documentation:\n\n    Test transient storage in contract creation contexts.\n    - TSTORE/TLOAD in initcode should not be able to access the creator's transient storage.\n    - TSTORE/TLOAD in initcode should be able to access the created contract's transient\n        storage.\n    - TSTORE/TLOAD in creator contract should be able to use its own transient storage.\n    \n\nTest function documentation:\nTest transient storage in contract creation contexts.",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "3a0affa6d8d24ecedadb77a46ea32f2e9f07b7f9e24bb2400590f1c8786a394c",
+            "hash" : "0x2c1841519e737000217b7e349fa646a492226f83238eee4b7ffdefbbd2aa16e7",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tstorage_create_contexts.py",
-            "sourceHash" : "c2f0f03ac754f90e19467269b492082dbb52539cf11e8cf11cf40e3509a4d541",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_92132895_6c7a_4d2c_9622_0935947052dc/test_tstorage_create_contexts.py#L179"
+            "sourceHash" : "f9999a35648ad4e07769ca2cfeb17ddb5fb225f585dd48f3f6001020cdddd368",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_40981f82_f789_47b9_bee7_c2340bf50063/test_tstorage_create_contexts.py#L187"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -250,6 +403,43 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x61010060005d61020060015d61030060025d366000600037600060006000600060003660006000f05af160045560005c60005560015c60015560025c600255",
+                            "nonce" : "0x02",
+                            "storage" : {
+                                "0x00" : "0x0100",
+                                "0x01" : "0x0200",
+                                "0x02" : "0x0300",
+                                "0x04" : "0x01"
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x0a068f",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0x5bafcc0c93ecd8022925d7fd89da1c6250850e19" : {
+                            "balance" : "0x00",
+                            "code" : "0x60005c60025560015c600355600160025d60025c600455",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x01" : "0x01",
+                                "0x03" : "0x01",
+                                "0x04" : "0x01"
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5de7e94ce",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf893800a830f424094000000000000000000000000000000000000100080b360005c600055600160015d60015c600155610017600081601c8239f360005c60025560015c600355600160025d60025c60045525a0d4edf50f1663d61d7151d2fdb6c99c235a806bd03061692886d437d5ca8010fba058c4530781ab690510e0d7ea971e3566fa79f9ec9eac51497ce69f9b9507d40c"
                 }
             ]
@@ -290,17 +480,28 @@
     "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tstorage_create_contexts.py::TestTransientStorageInContractCreation::test_contract_creation[fork_Cancun-state_test-in_constructor_and_deployed_code-create2]" : {
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
-            "description" : "Test class documentation:\n\n    Test transient storage in contract creation contexts:\n\n    - TSTORE/TLOAD in initcode should not be able to access the creator's transient storage.\n    - TSTORE/TLOAD in initcode should be able to access the created contract's transient\n        storage.\n    - TSTORE/TLOAD in creator contract should be able to use its own transient storage.\n    \n\nTest function documentation:\n\n        Test transient storage in contract creation contexts.",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "a78ae97f642261a76daefcddc17f46f2566ff4c1fdc25172d3ef1994f2704285",
-            "hash" : "0x3bda2a8d16e17c5ed7065a014db648dfbd532f9d9875977b5861033ef77a0f4f",
+            "description" : "Test class documentation:\n\n    Test transient storage in contract creation contexts.\n    - TSTORE/TLOAD in initcode should not be able to access the creator's transient storage.\n    - TSTORE/TLOAD in initcode should be able to access the created contract's transient\n        storage.\n    - TSTORE/TLOAD in creator contract should be able to use its own transient storage.\n    \n\nTest function documentation:\nTest transient storage in contract creation contexts.",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "559be45f524cee4f6b9c34050343d86c3d4e9969cbb05b3eeb19c4ec4dd17081",
+            "hash" : "0xa87853b750517924dba6bfbf27b1e0ecf38e3f99af68536a61a72352445f8b14",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tstorage_create_contexts.py",
-            "sourceHash" : "c2f0f03ac754f90e19467269b492082dbb52539cf11e8cf11cf40e3509a4d541",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_92132895_6c7a_4d2c_9622_0935947052dc/test_tstorage_create_contexts.py#L179"
+            "sourceHash" : "f9999a35648ad4e07769ca2cfeb17ddb5fb225f585dd48f3f6001020cdddd368",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_40981f82_f789_47b9_bee7_c2340bf50063/test_tstorage_create_contexts.py#L187"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -322,6 +523,41 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x61010060005d61020060015d61030060025d3660006000376000600060006000600063deadbeef3660006000f55af160045560005c60005560015c60015560025c600255",
+                            "nonce" : "0x02",
+                            "storage" : {
+                                "0x00" : "0x0100",
+                                "0x01" : "0x0200",
+                                "0x02" : "0x0300",
+                                "0x04" : "0x01"
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x07ebca",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0xa877d924ab9856c2c2f55a2be0b624f7407b74cc" : {
+                            "balance" : "0x00",
+                            "code" : "0x60005c600155600160015d60015c600255",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x02" : "0x01"
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5de8598b4",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf882800a830f424094000000000000000000000000000000000000100080a260005c60005561001160008160118239f360005c600155600160015d60015c60025526a00d932d9f3e7ce25b1a8f0750f650e29cd2667e039523976ccb35b8ee2671e77aa01c2a28b887b9eb3b130bb60cc2dd59d816335a40fb1111ab073b849931211ae1"
                 }
             ]
@@ -362,17 +598,28 @@
     "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tstorage_create_contexts.py::TestTransientStorageInContractCreation::test_contract_creation[fork_Cancun-state_test-in_constructor_and_deployed_code-create]" : {
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
-            "description" : "Test class documentation:\n\n    Test transient storage in contract creation contexts:\n\n    - TSTORE/TLOAD in initcode should not be able to access the creator's transient storage.\n    - TSTORE/TLOAD in initcode should be able to access the created contract's transient\n        storage.\n    - TSTORE/TLOAD in creator contract should be able to use its own transient storage.\n    \n\nTest function documentation:\n\n        Test transient storage in contract creation contexts.",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "58e38f0c94f66764bfd6460445f24caee056825ef58978294370eabe54146d9f",
-            "hash" : "0x8ff44acc8f86e55b4b743e7f64c312a2c95632b337d957c467f0c4e5eee20267",
+            "description" : "Test class documentation:\n\n    Test transient storage in contract creation contexts.\n    - TSTORE/TLOAD in initcode should not be able to access the creator's transient storage.\n    - TSTORE/TLOAD in initcode should be able to access the created contract's transient\n        storage.\n    - TSTORE/TLOAD in creator contract should be able to use its own transient storage.\n    \n\nTest function documentation:\nTest transient storage in contract creation contexts.",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "f33b422be24ce1e0cb19182860ecf2caf8ea9e6dac3e7f18d4033f6ba8e5d791",
+            "hash" : "0xeccfb82dd63f98b892fe8ee76a95ed2a203b32a3d5b0642fd99d9b33819f2f73",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tstorage_create_contexts.py",
-            "sourceHash" : "c2f0f03ac754f90e19467269b492082dbb52539cf11e8cf11cf40e3509a4d541",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_92132895_6c7a_4d2c_9622_0935947052dc/test_tstorage_create_contexts.py#L179"
+            "sourceHash" : "f9999a35648ad4e07769ca2cfeb17ddb5fb225f585dd48f3f6001020cdddd368",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_40981f82_f789_47b9_bee7_c2340bf50063/test_tstorage_create_contexts.py#L187"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -394,6 +641,41 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x61010060005d61020060015d61030060025d366000600037600060006000600060003660006000f05af160045560005c60005560015c60015560025c600255",
+                            "nonce" : "0x02",
+                            "storage" : {
+                                "0x00" : "0x0100",
+                                "0x01" : "0x0200",
+                                "0x02" : "0x0300",
+                                "0x04" : "0x01"
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x07eb9d",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0x5bafcc0c93ecd8022925d7fd89da1c6250850e19" : {
+                            "balance" : "0x00",
+                            "code" : "0x60005c600155600160015d60015c600255",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x02" : "0x01"
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5de85994a",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf882800a830f424094000000000000000000000000000000000000100080a260005c60005561001160008160118239f360005c600155600160015d60015c60025526a00d932d9f3e7ce25b1a8f0750f650e29cd2667e039523976ccb35b8ee2671e77aa01c2a28b887b9eb3b130bb60cc2dd59d816335a40fb1111ab073b849931211ae1"
                 }
             ]
@@ -434,17 +716,28 @@
     "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tstorage_create_contexts.py::TestTransientStorageInContractCreation::test_contract_creation[fork_Cancun-state_test-no_constructor_code-create2]" : {
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
-            "description" : "Test class documentation:\n\n    Test transient storage in contract creation contexts:\n\n    - TSTORE/TLOAD in initcode should not be able to access the creator's transient storage.\n    - TSTORE/TLOAD in initcode should be able to access the created contract's transient\n        storage.\n    - TSTORE/TLOAD in creator contract should be able to use its own transient storage.\n    \n\nTest function documentation:\n\n        Test transient storage in contract creation contexts.",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "256fd9226ffbff09938e79e689340e7a27cf228c56624e19f9c4f37010182a5b",
-            "hash" : "0x52763efbffe4d80424db28cae86966941ba196406b864d57e3a0d0949a34b591",
+            "description" : "Test class documentation:\n\n    Test transient storage in contract creation contexts.\n    - TSTORE/TLOAD in initcode should not be able to access the creator's transient storage.\n    - TSTORE/TLOAD in initcode should be able to access the created contract's transient\n        storage.\n    - TSTORE/TLOAD in creator contract should be able to use its own transient storage.\n    \n\nTest function documentation:\nTest transient storage in contract creation contexts.",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "ce178b30d826b38cbd6d03b44ac0da757d88d697c4c25d74cfe52b41ceb0654d",
+            "hash" : "0x1c3f61550492d37606ff9c228edafc5dc30f55a27c696914c599a10c5c782567",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tstorage_create_contexts.py",
-            "sourceHash" : "c2f0f03ac754f90e19467269b492082dbb52539cf11e8cf11cf40e3509a4d541",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_92132895_6c7a_4d2c_9622_0935947052dc/test_tstorage_create_contexts.py#L179"
+            "sourceHash" : "f9999a35648ad4e07769ca2cfeb17ddb5fb225f585dd48f3f6001020cdddd368",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_40981f82_f789_47b9_bee7_c2340bf50063/test_tstorage_create_contexts.py#L187"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -466,6 +759,41 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x61010060005d61020060015d61030060025d3660006000376000600060006000600063deadbeef3660006000f55af160045560005c60005560015c60015560025c600255",
+                            "nonce" : "0x02",
+                            "storage" : {
+                                "0x00" : "0x0100",
+                                "0x01" : "0x0200",
+                                "0x02" : "0x0300",
+                                "0x04" : "0x01"
+                            }
+                        },
+                        "0x21f217c0008fdc8b01d290034e6e5803cd6b0cae" : {
+                            "balance" : "0x00",
+                            "code" : "0x60005c600055600160005d60005c600155",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x01" : "0x01"
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x07cf56",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5de85f78c",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf87c800a830f4240940000000000000000000000000000000000001000809c610011600081600b8239f360005c600055600160005d60005c60015525a06804d2eaf90e83bf6342b8dedb3f8493afd7b669d0da1b9d43adda2f3235b33ca02b6f2aec2225cf9f7adbb5d742512e09cb0ac9583e2a983aefe5a5fdc83f7d1d"
                 }
             ]
@@ -506,17 +834,28 @@
     "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tstorage_create_contexts.py::TestTransientStorageInContractCreation::test_contract_creation[fork_Cancun-state_test-no_constructor_code-create]" : {
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
-            "description" : "Test class documentation:\n\n    Test transient storage in contract creation contexts:\n\n    - TSTORE/TLOAD in initcode should not be able to access the creator's transient storage.\n    - TSTORE/TLOAD in initcode should be able to access the created contract's transient\n        storage.\n    - TSTORE/TLOAD in creator contract should be able to use its own transient storage.\n    \n\nTest function documentation:\n\n        Test transient storage in contract creation contexts.",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "0db2607fa59572807d26d819e34c6b7f5d1cd5a2307429fae0306621a0fe3f5f",
-            "hash" : "0xb064a2fd80fbb0a708ba56e6132cb2aaf8e735023f715369de82df9f1c581aa0",
+            "description" : "Test class documentation:\n\n    Test transient storage in contract creation contexts.\n    - TSTORE/TLOAD in initcode should not be able to access the creator's transient storage.\n    - TSTORE/TLOAD in initcode should be able to access the created contract's transient\n        storage.\n    - TSTORE/TLOAD in creator contract should be able to use its own transient storage.\n    \n\nTest function documentation:\nTest transient storage in contract creation contexts.",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "ca8d51124021f2ec221aecf75b8b9991b3fc782f5471fe6a5bee6733721fbf55",
+            "hash" : "0xe999c64e8aa584006d31e0866f0dc0597d5efc4ca8e9668b8941cfb86c19a8eb",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tstorage_create_contexts.py",
-            "sourceHash" : "c2f0f03ac754f90e19467269b492082dbb52539cf11e8cf11cf40e3509a4d541",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_92132895_6c7a_4d2c_9622_0935947052dc/test_tstorage_create_contexts.py#L179"
+            "sourceHash" : "f9999a35648ad4e07769ca2cfeb17ddb5fb225f585dd48f3f6001020cdddd368",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_40981f82_f789_47b9_bee7_c2340bf50063/test_tstorage_create_contexts.py#L187"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -538,6 +877,41 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x61010060005d61020060015d61030060025d366000600037600060006000600060003660006000f05af160045560005c60005560015c60015560025c600255",
+                            "nonce" : "0x02",
+                            "storage" : {
+                                "0x00" : "0x0100",
+                                "0x01" : "0x0200",
+                                "0x02" : "0x0300",
+                                "0x04" : "0x01"
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x07cf3b",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0x5bafcc0c93ecd8022925d7fd89da1c6250850e19" : {
+                            "balance" : "0x00",
+                            "code" : "0x60005c600055600160005d60005c600155",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x01" : "0x01"
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5de85f7e6",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf87c800a830f4240940000000000000000000000000000000000001000809c610011600081600b8239f360005c600055600160005d60005c60015525a06804d2eaf90e83bf6342b8dedb3f8493afd7b669d0da1b9d43adda2f3235b33ca02b6f2aec2225cf9f7adbb5d742512e09cb0ac9583e2a983aefe5a5fdc83f7d1d"
                 }
             ]
@@ -578,17 +952,28 @@
     "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tstorage_create_contexts.py::TestTransientStorageInContractCreation::test_contract_creation[fork_Cancun-state_test-only_constructor_code-create2]" : {
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
-            "description" : "Test class documentation:\n\n    Test transient storage in contract creation contexts:\n\n    - TSTORE/TLOAD in initcode should not be able to access the creator's transient storage.\n    - TSTORE/TLOAD in initcode should be able to access the created contract's transient\n        storage.\n    - TSTORE/TLOAD in creator contract should be able to use its own transient storage.\n    \n\nTest function documentation:\n\n        Test transient storage in contract creation contexts.",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "e74ff11d1842e7a8755b5503bd4bedc1310c06a832f16f307c6854d389ac91ef",
-            "hash" : "0x400d6245d944f33498dfd5f93103e27f294f5e029d198f0e275488707d4d6dec",
+            "description" : "Test class documentation:\n\n    Test transient storage in contract creation contexts.\n    - TSTORE/TLOAD in initcode should not be able to access the creator's transient storage.\n    - TSTORE/TLOAD in initcode should be able to access the created contract's transient\n        storage.\n    - TSTORE/TLOAD in creator contract should be able to use its own transient storage.\n    \n\nTest function documentation:\nTest transient storage in contract creation contexts.",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "4ee5ccb63201d488907cc9ea55927a70fa8083c254a99dd646dc3957d323f287",
+            "hash" : "0x80f9a99c9822d9405b02c18b3d7c32992ab1e1eb01170c52248f60ff940f1091",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tstorage_create_contexts.py",
-            "sourceHash" : "c2f0f03ac754f90e19467269b492082dbb52539cf11e8cf11cf40e3509a4d541",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_92132895_6c7a_4d2c_9622_0935947052dc/test_tstorage_create_contexts.py#L179"
+            "sourceHash" : "f9999a35648ad4e07769ca2cfeb17ddb5fb225f585dd48f3f6001020cdddd368",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_40981f82_f789_47b9_bee7_c2340bf50063/test_tstorage_create_contexts.py#L187"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -610,6 +995,41 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x61010060005d61020060015d61030060025d3660006000376000600060006000600063deadbeef3660006000f55af160045560005c60005560015c60015560025c600255",
+                            "nonce" : "0x02",
+                            "storage" : {
+                                "0x00" : "0x0100",
+                                "0x01" : "0x0200",
+                                "0x02" : "0x0300",
+                                "0x04" : "0x01"
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x07a748",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0x54bd6a94f5b1f0540e538a0b47c561e3c39716bc" : {
+                            "balance" : "0x00",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x01" : "0x01"
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5de867d10",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf87c800a830f4240940000000000000000000000000000000000001000809c60005c600055600160005d60005c600155610000600081601c8239f325a0796ec54a30276a8b7b9b226e162ed3f186ed842723b397e612fc44d3fda74e06a025c30a92a75d8cb4a02bce7028575fb2a0aeb27986cb94e68d0543aa36f3b78f"
                 }
             ]
@@ -650,17 +1070,28 @@
     "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tstorage_create_contexts.py::TestTransientStorageInContractCreation::test_contract_creation[fork_Cancun-state_test-only_constructor_code-create]" : {
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
-            "description" : "Test class documentation:\n\n    Test transient storage in contract creation contexts:\n\n    - TSTORE/TLOAD in initcode should not be able to access the creator's transient storage.\n    - TSTORE/TLOAD in initcode should be able to access the created contract's transient\n        storage.\n    - TSTORE/TLOAD in creator contract should be able to use its own transient storage.\n    \n\nTest function documentation:\n\n        Test transient storage in contract creation contexts.",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "10546adc69d0238ac2e00f16296f4bce679c2e7fa8b773a2bb725e2c2c9f0ced",
-            "hash" : "0xe218f2132861b961790e4d645ce52ff49d1c4605a78d7a798032e68a4d087409",
+            "description" : "Test class documentation:\n\n    Test transient storage in contract creation contexts.\n    - TSTORE/TLOAD in initcode should not be able to access the creator's transient storage.\n    - TSTORE/TLOAD in initcode should be able to access the created contract's transient\n        storage.\n    - TSTORE/TLOAD in creator contract should be able to use its own transient storage.\n    \n\nTest function documentation:\nTest transient storage in contract creation contexts.",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "6f1401f4580c369f93483def84f8aab03fbf792a8360b95e6efe6b0af5703b93",
+            "hash" : "0xd974aa8b4be1d9a7388e0c7a6f92afe43efe9af851249a650a3385105a0e874d",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tstorage_create_contexts.py",
-            "sourceHash" : "c2f0f03ac754f90e19467269b492082dbb52539cf11e8cf11cf40e3509a4d541",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_92132895_6c7a_4d2c_9622_0935947052dc/test_tstorage_create_contexts.py#L179"
+            "sourceHash" : "f9999a35648ad4e07769ca2cfeb17ddb5fb225f585dd48f3f6001020cdddd368",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_40981f82_f789_47b9_bee7_c2340bf50063/test_tstorage_create_contexts.py#L187"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -682,6 +1113,41 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x61010060005d61020060015d61030060025d366000600037600060006000600060003660006000f05af160045560005c60005560015c60015560025c600255",
+                            "nonce" : "0x02",
+                            "storage" : {
+                                "0x00" : "0x0100",
+                                "0x01" : "0x0200",
+                                "0x02" : "0x0300",
+                                "0x04" : "0x01"
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x07a72d",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0x5bafcc0c93ecd8022925d7fd89da1c6250850e19" : {
+                            "balance" : "0x00",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x01" : "0x01"
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5de867d6a",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf87c800a830f4240940000000000000000000000000000000000001000809c60005c600055600160005d60005c600155610000600081601c8239f325a0796ec54a30276a8b7b9b226e162ed3f186ed842723b397e612fc44d3fda74e06a025c30a92a75d8cb4a02bce7028575fb2a0aeb27986cb94e68d0543aa36f3b78f"
                 }
             ]

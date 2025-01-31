@@ -3,16 +3,17 @@
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
             "description" : "Test function documentation:\n\n    Tests that the `BLOBHASH` opcode returns a zeroed `bytes32` value for invalid\n    indexes.\n\n    Includes cases where the index is negative (`index < 0`) or\n    exceeds the maximum number of `blob_versioned_hash` values stored:\n    (`index >= len(tx.message.blob_versioned_hashes)`).\n\n    It confirms that the returned value is a zeroed `bytes32` for each case.",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.600ac001.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "711b39f8c6fd337749b02239ae0ddbf9d83684aebda79187ca93a5beca9fdc99",
-            "hash" : "0x719e8194bfbebe793a1c958af2003e52089fc8610a29766f734fc0bc45d5c43a",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "blockchain_test",
+            "generatedTestHash" : "f89532ede111a7f20f9b25b6b4c9a273880b32fcc43a63b861b10643fc608b98",
+            "hash" : "0xf7b7d287dd762c54a79a7b3f7ef1490618e495cf508d05c1c0e98c50a47b8032",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip4844_blobs/test_blobhash_opcode.py",
-            "sourceHash" : "e1adb0d17acf87e434cdebce14f68dd64f55ae0c5d1ecc6f210380f0feacb74a",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_4cc4f70b_8707_4a60_ad4e_845a247141ae/test_blobhash_opcode.py#L168"
+            "sourceHash" : "fcb64fc17a63c561d9a2a12a8903899dfbdf7575c78a3e60ce9e4cfe5b6e26e2",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_976acf6d_de5f_4fd1_bc27_8d95296f3f98/test_blobhash_opcode.py#L175"
         },
         "blocks" : [
             {
@@ -296,6 +297,17 @@
                 ]
             }
         ],
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01",
+            "network" : "Cancun"
+        },
         "genesisBlockHeader" : {
             "baseFeePerGas" : "0x07",
             "blobGasUsed" : "0x00",

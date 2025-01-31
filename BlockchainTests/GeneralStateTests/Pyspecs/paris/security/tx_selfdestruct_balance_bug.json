@@ -2,17 +2,18 @@
     "src/GeneralStateTestsFiller/Pyspecs/paris/security/test_selfdestruct_balance_bug.py::test_tx_selfdestruct_balance_bug[fork_Berlin-blockchain_test]" : {
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
-            "description" : "Test function documentation:\n\n    Test that the vulnerability is not present by checking the balance of the\n    `0xaa` contract after executing specific transactions:\n\n    1. Start with contract `0xaa` which has initial balance of 3 wei.\n        `0xaa` contract code simply performs a self-destruct to itself.\n\n    2. Send a transaction (tx 1) to invoke caller contract `0xcc` (which\n        has a balance of 1 wei), which in turn invokes `0xaa` with a 1 wei call.\n\n    3. Store the balance of `0xaa` after the first transaction\n        is processed. `0xaa` self-destructed. Expected outcome: 0 wei.\n\n    4. Send another transaction (tx 2) to call 0xaa with 5 wei.\n\n    5. Store the balance of `0xaa` after the second transaction\n        is processed. No self-destruct. Expected outcome: 5 wei.\n\n    6. Verify that:\n        - Call within tx 1 is successful, i.e `0xaa` self-destructed.\n        - The balances of `0xaa` after each tx are correct.\n        - During tx 2, code in `0xaa` does not execute,\n            hence self-destruct mechanism does not trigger.\n\n    TODO: EOF - This test could be parametrized for EOFCREATE",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.600ac001.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "2bd608920bd6e693e6bbbfaed6c4b824831f38e9033142d55989315978af794e",
-            "hash" : "0x9f9471ce1151a27bd287bfa2250e0511e514be824b7c3411b5dcf88060310c6c",
+            "description" : "Test function documentation:\n\n    Test that the vulnerability is not present by checking the balance of the\n    `0xaa` contract after executing specific transactions.\n\n    1. Start with contract `0xaa` which has initial balance of 3 wei.\n        `0xaa` contract code simply performs a self-destruct to itself.\n\n    2. Send a transaction (tx 1) to invoke caller contract `0xcc` (which\n        has a balance of 1 wei), which in turn invokes `0xaa` with a 1 wei call.\n\n    3. Store the balance of `0xaa` after the first transaction\n        is processed. `0xaa` self-destructed. Expected outcome: 0 wei.\n\n    4. Send another transaction (tx 2) to call 0xaa with 5 wei.\n\n    5. Store the balance of `0xaa` after the second transaction\n        is processed. No self-destruct. Expected outcome: 5 wei.\n\n    6. Verify that:\n        - Call within tx 1 is successful, i.e `0xaa` self-destructed.\n        - The balances of `0xaa` after each tx are correct.\n        - During tx 2, code in `0xaa` does not execute,\n            hence self-destruct mechanism does not trigger.\n\n    TODO: EOF - This test could be parametrized for EOFCREATE",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "blockchain_test",
+            "generatedTestHash" : "24f3df8b364d73848367af4de40742868c2a7803f73ba842ab53d1d5736d3a95",
+            "hash" : "0xbb98114edfb3a5570932e08f05f4974c615fc447febe4032e1870272fcd9cd50",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/paris/security/test_selfdestruct_balance_bug.py",
-            "sourceHash" : "5cdc5a9ba7d05573d44aa046c0a3276b59cef10d2529a3ee24e3112386856550",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_495b0014_aac1_4903_9f1b_282c9548b0d6/test_selfdestruct_balance_bug.py#L29"
+            "sourceHash" : "6f704712339667a775b6cc58f4de87d48c651f7f5ac6484c7307445ae351a968",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_5689aadb_c2c9_49c7_a338_c19e9206b4d0/test_selfdestruct_balance_bug.py#L29"
         },
         "blocks" : [
             {
@@ -98,6 +99,10 @@
                 ]
             }
         ],
+        "config" : {
+            "chainid" : "0x01",
+            "network" : "Berlin"
+        },
         "genesisBlockHeader" : {
             "bloom" : "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
             "coinbase" : "0x0000000000000000000000000000000000000000",
@@ -200,17 +205,18 @@
     "src/GeneralStateTestsFiller/Pyspecs/paris/security/test_selfdestruct_balance_bug.py::test_tx_selfdestruct_balance_bug[fork_Cancun-blockchain_test]" : {
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
-            "description" : "Test function documentation:\n\n    Test that the vulnerability is not present by checking the balance of the\n    `0xaa` contract after executing specific transactions:\n\n    1. Start with contract `0xaa` which has initial balance of 3 wei.\n        `0xaa` contract code simply performs a self-destruct to itself.\n\n    2. Send a transaction (tx 1) to invoke caller contract `0xcc` (which\n        has a balance of 1 wei), which in turn invokes `0xaa` with a 1 wei call.\n\n    3. Store the balance of `0xaa` after the first transaction\n        is processed. `0xaa` self-destructed. Expected outcome: 0 wei.\n\n    4. Send another transaction (tx 2) to call 0xaa with 5 wei.\n\n    5. Store the balance of `0xaa` after the second transaction\n        is processed. No self-destruct. Expected outcome: 5 wei.\n\n    6. Verify that:\n        - Call within tx 1 is successful, i.e `0xaa` self-destructed.\n        - The balances of `0xaa` after each tx are correct.\n        - During tx 2, code in `0xaa` does not execute,\n            hence self-destruct mechanism does not trigger.\n\n    TODO: EOF - This test could be parametrized for EOFCREATE",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.600ac001.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "54d4750ea4cf15eaa83755c41ce7a6b29084e6c40fbf1207e8a75ca9a5bfc8f9",
-            "hash" : "0x796f68773eee43e435651392ef77b94c8e49759732adfa92dd0886e2e0dd9d08",
+            "description" : "Test function documentation:\n\n    Test that the vulnerability is not present by checking the balance of the\n    `0xaa` contract after executing specific transactions.\n\n    1. Start with contract `0xaa` which has initial balance of 3 wei.\n        `0xaa` contract code simply performs a self-destruct to itself.\n\n    2. Send a transaction (tx 1) to invoke caller contract `0xcc` (which\n        has a balance of 1 wei), which in turn invokes `0xaa` with a 1 wei call.\n\n    3. Store the balance of `0xaa` after the first transaction\n        is processed. `0xaa` self-destructed. Expected outcome: 0 wei.\n\n    4. Send another transaction (tx 2) to call 0xaa with 5 wei.\n\n    5. Store the balance of `0xaa` after the second transaction\n        is processed. No self-destruct. Expected outcome: 5 wei.\n\n    6. Verify that:\n        - Call within tx 1 is successful, i.e `0xaa` self-destructed.\n        - The balances of `0xaa` after each tx are correct.\n        - During tx 2, code in `0xaa` does not execute,\n            hence self-destruct mechanism does not trigger.\n\n    TODO: EOF - This test could be parametrized for EOFCREATE",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "blockchain_test",
+            "generatedTestHash" : "f714a61ba41c6f8ad21b3f640c72e56d5b8c3eec55d872ec0cc63071bdb880a8",
+            "hash" : "0x4d6f5dd8a9b2d5d035a3439362245e247d8e85175366ac13cb0aa8e4a3d017a0",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/paris/security/test_selfdestruct_balance_bug.py",
-            "sourceHash" : "5cdc5a9ba7d05573d44aa046c0a3276b59cef10d2529a3ee24e3112386856550",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_495b0014_aac1_4903_9f1b_282c9548b0d6/test_selfdestruct_balance_bug.py#L29"
+            "sourceHash" : "6f704712339667a775b6cc58f4de87d48c651f7f5ac6484c7307445ae351a968",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_5689aadb_c2c9_49c7_a338_c19e9206b4d0/test_selfdestruct_balance_bug.py#L29"
         },
         "blocks" : [
             {
@@ -303,6 +309,17 @@
                 ]
             }
         ],
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01",
+            "network" : "Cancun"
+        },
         "genesisBlockHeader" : {
             "baseFeePerGas" : "0x07",
             "blobGasUsed" : "0x00",
@@ -422,218 +439,21 @@
         },
         "sealEngine" : "NoProof"
     },
-    "src/GeneralStateTestsFiller/Pyspecs/paris/security/test_selfdestruct_balance_bug.py::test_tx_selfdestruct_balance_bug[fork_Constantinople-blockchain_test]" : {
-        "_info" : {
-            "comment" : "`execution-spec-tests` generated test",
-            "description" : "Test function documentation:\n\n    Test that the vulnerability is not present by checking the balance of the\n    `0xaa` contract after executing specific transactions:\n\n    1. Start with contract `0xaa` which has initial balance of 3 wei.\n        `0xaa` contract code simply performs a self-destruct to itself.\n\n    2. Send a transaction (tx 1) to invoke caller contract `0xcc` (which\n        has a balance of 1 wei), which in turn invokes `0xaa` with a 1 wei call.\n\n    3. Store the balance of `0xaa` after the first transaction\n        is processed. `0xaa` self-destructed. Expected outcome: 0 wei.\n\n    4. Send another transaction (tx 2) to call 0xaa with 5 wei.\n\n    5. Store the balance of `0xaa` after the second transaction\n        is processed. No self-destruct. Expected outcome: 5 wei.\n\n    6. Verify that:\n        - Call within tx 1 is successful, i.e `0xaa` self-destructed.\n        - The balances of `0xaa` after each tx are correct.\n        - During tx 2, code in `0xaa` does not execute,\n            hence self-destruct mechanism does not trigger.\n\n    TODO: EOF - This test could be parametrized for EOFCREATE",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.600ac001.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "195fdbfb8bf215761e7b5285eb4a1cb50e9f17ddd1b7b9dbe1878d2c496ab4c8",
-            "hash" : "0xe61d22630aebde8159e1496d190a926a15d1051bf7f4638bbf98f2bd32a2be56",
-            "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
-            "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
-            "source" : "src/GeneralStateTestsFiller/Pyspecs/paris/security/test_selfdestruct_balance_bug.py",
-            "sourceHash" : "5cdc5a9ba7d05573d44aa046c0a3276b59cef10d2529a3ee24e3112386856550",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_495b0014_aac1_4903_9f1b_282c9548b0d6/test_selfdestruct_balance_bug.py#L29"
-        },
-        "blocks" : [
-            {
-                "blockHeader" : {
-                    "bloom" : "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
-                    "coinbase" : "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba",
-                    "difficulty" : "0x020000",
-                    "extraData" : "0x",
-                    "gasLimit" : "0x016345785d8a0000",
-                    "gasUsed" : "0x028550",
-                    "hash" : "0x849012597d35df741b49f1abe9bbd04f1704d36efd1b4f288830b9ba5199dd1d",
-                    "mixHash" : "0x0000000000000000000000000000000000000000000000000000000000000000",
-                    "nonce" : "0x0000000000000000",
-                    "number" : "0x01",
-                    "parentHash" : "0x32241ee421be924ccde37981c17cf9ad541d41808e6ff621c6cd28984b688314",
-                    "receiptTrie" : "0x70bf34e916a637c1082370c57a28dcb992a4efa0e692c4baed62ab3d1650e103",
-                    "stateRoot" : "0xa33d83d8da10dd765d1f54b7e9f91becbd161d2afd145e32c31623aa2100c7ee",
-                    "timestamp" : "0x0c",
-                    "transactionsTrie" : "0x23417d3a45f23153c608ab5667e7883d96d9e57079295bc7c686fe7681b15b82",
-                    "uncleHash" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347"
-                },
-                "blocknumber" : "1",
-                "rlp" : "0xf903c9f901fba032241ee421be924ccde37981c17cf9ad541d41808e6ff621c6cd28984b688314a01dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347942adc25665018aa1fe0e6bc666dac8fc2697ff9baa0a33d83d8da10dd765d1f54b7e9f91becbd161d2afd145e32c31623aa2100c7eea023417d3a45f23153c608ab5667e7883d96d9e57079295bc7c686fe7681b15b82a070bf34e916a637c1082370c57a28dcb992a4efa0e692c4baed62ab3d1650e103b9010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000830200000188016345785d8a0000830285500c80a00000000000000000000000000000000000000000000000000000000000000000880000000000000000f901c7f89f800a830f424094000000000000000000000000000000000000100080b83e610033600081600b8239f36000600035146022580157600160003514600d58015760006000fd60155801565b47600055600b5801565b30ff60035801565b25a06f102a5f8d9d85926022afb127c84a80dfb55cdfdc02c3d3e0e86da9bd65d10ea061d20ffb953ecdcc225ac5fbdb9c4bac58235bac1a3ec1ca86f7f5ac12013063f860010a830186a0940000000000000000000000000000000000001100808026a0294267ab844d7d97bd0d071372f649f09134d4364e1f63ef46beb2ace934bc06a033564821d5b9ad88ff2c215517a87a2d8497c135934d3c07da93399888c2a61ff860020a830186a0945bafcc0c93ecd8022925d7fd89da1c6250850e19058025a0bb72a78933c6ff85b3684381be03f8292f5d3a3bc6ef4cb6c45f58d951d82b68a04f176e80d8c876bc6c8ee64892be9217ffdfab927699813433491dd2665b8665f860030a830186a0940000000000000000000000000000000000001200808026a0f69c3b987fe2f94c649650996b2d51de79246f5d80676fabac8c8d5c42ee0c8da009b3c8ce80cf0f2879aabc2e2b5287f2b171c4ecdd4114eaa896a123710e8651c0",
-                "transactions" : [
-                    {
-                        "chainId" : "0x01",
-                        "data" : "0x610033600081600b8239f36000600035146022580157600160003514600d58015760006000fd60155801565b47600055600b5801565b30ff60035801565b",
-                        "gasLimit" : "0x0f4240",
-                        "gasPrice" : "0x0a",
-                        "nonce" : "0x00",
-                        "r" : "0x6f102a5f8d9d85926022afb127c84a80dfb55cdfdc02c3d3e0e86da9bd65d10e",
-                        "s" : "0x61d20ffb953ecdcc225ac5fbdb9c4bac58235bac1a3ec1ca86f7f5ac12013063",
-                        "sender" : "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b",
-                        "to" : "0x0000000000000000000000000000000000001000",
-                        "type" : "0x00",
-                        "v" : "0x25",
-                        "value" : "0x00"
-                    },
-                    {
-                        "chainId" : "0x01",
-                        "data" : "0x",
-                        "gasLimit" : "0x0186a0",
-                        "gasPrice" : "0x0a",
-                        "nonce" : "0x01",
-                        "r" : "0x294267ab844d7d97bd0d071372f649f09134d4364e1f63ef46beb2ace934bc06",
-                        "s" : "0x33564821d5b9ad88ff2c215517a87a2d8497c135934d3c07da93399888c2a61f",
-                        "sender" : "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b",
-                        "to" : "0x0000000000000000000000000000000000001100",
-                        "type" : "0x00",
-                        "v" : "0x26",
-                        "value" : "0x00"
-                    },
-                    {
-                        "chainId" : "0x01",
-                        "data" : "0x",
-                        "gasLimit" : "0x0186a0",
-                        "gasPrice" : "0x0a",
-                        "nonce" : "0x02",
-                        "r" : "0xbb72a78933c6ff85b3684381be03f8292f5d3a3bc6ef4cb6c45f58d951d82b68",
-                        "s" : "0x4f176e80d8c876bc6c8ee64892be9217ffdfab927699813433491dd2665b8665",
-                        "sender" : "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b",
-                        "to" : "0x5bafcc0c93ecd8022925d7fd89da1c6250850e19",
-                        "type" : "0x00",
-                        "v" : "0x25",
-                        "value" : "0x05"
-                    },
-                    {
-                        "chainId" : "0x01",
-                        "data" : "0x",
-                        "gasLimit" : "0x0186a0",
-                        "gasPrice" : "0x0a",
-                        "nonce" : "0x03",
-                        "r" : "0xf69c3b987fe2f94c649650996b2d51de79246f5d80676fabac8c8d5c42ee0c8d",
-                        "s" : "0x09b3c8ce80cf0f2879aabc2e2b5287f2b171c4ecdd4114eaa896a123710e8651",
-                        "sender" : "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b",
-                        "to" : "0x0000000000000000000000000000000000001200",
-                        "type" : "0x00",
-                        "v" : "0x26",
-                        "value" : "0x00"
-                    }
-                ],
-                "uncleHeaders" : [
-                ]
-            }
-        ],
-        "genesisBlockHeader" : {
-            "bloom" : "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
-            "coinbase" : "0x0000000000000000000000000000000000000000",
-            "difficulty" : "0x020000",
-            "extraData" : "0x00",
-            "gasLimit" : "0x016345785d8a0000",
-            "gasUsed" : "0x00",
-            "hash" : "0x32241ee421be924ccde37981c17cf9ad541d41808e6ff621c6cd28984b688314",
-            "mixHash" : "0x0000000000000000000000000000000000000000000000000000000000000000",
-            "nonce" : "0x0000000000000000",
-            "number" : "0x00",
-            "parentHash" : "0x0000000000000000000000000000000000000000000000000000000000000000",
-            "receiptTrie" : "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
-            "stateRoot" : "0x363c3393167d873567db48af0073548a45b2efb6ac0eeac2d4ce926b70df91a9",
-            "timestamp" : "0x00",
-            "transactionsTrie" : "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
-            "uncleHash" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347"
-        },
-        "genesisRLP" : "0xf901fdf901f8a00000000000000000000000000000000000000000000000000000000000000000a01dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347940000000000000000000000000000000000000000a0363c3393167d873567db48af0073548a45b2efb6ac0eeac2d4ce926b70df91a9a056e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421a056e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421b9010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000830200008088016345785d8a0000808000a00000000000000000000000000000000000000000000000000000000000000000880000000000000000c0c0",
-        "lastblockhash" : "0x849012597d35df741b49f1abe9bbd04f1704d36efd1b4f288830b9ba5199dd1d",
-        "network" : "Constantinople",
-        "postState" : {
-            "0x0000000000000000000000000000000000001000" : {
-                "balance" : "0x3b9ac9fc",
-                "code" : "0x3660006000373660006003f060005260006000600060006000600051620186a0f162ca11015560006000600060006001600051620186a0f1",
-                "nonce" : "0x02",
-                "storage" : {
-                    "0xca1101" : "0x01"
-                }
-            },
-            "0x0000000000000000000000000000000000001100" : {
-                "balance" : "0x00",
-                "code" : "0x735bafcc0c93ecd8022925d7fd89da1c6250850e1931620ba1aa55",
-                "nonce" : "0x01",
-                "storage" : {
-                }
-            },
-            "0x0000000000000000000000000000000000001200" : {
-                "balance" : "0x00",
-                "code" : "0x735bafcc0c93ecd8022925d7fd89da1c6250850e1931620ba1aa55",
-                "nonce" : "0x01",
-                "storage" : {
-                    "0x0ba1aa" : "0x05"
-                }
-            },
-            "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
-                "balance" : "0x1bc16d674ee13520",
-                "code" : "0x",
-                "nonce" : "0x00",
-                "storage" : {
-                }
-            },
-            "0x5bafcc0c93ecd8022925d7fd89da1c6250850e19" : {
-                "balance" : "0x05",
-                "code" : "0x",
-                "nonce" : "0x00",
-                "storage" : {
-                }
-            },
-            "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-                "balance" : "0x3635c9adc5de86cadb",
-                "code" : "0x",
-                "nonce" : "0x04",
-                "storage" : {
-                }
-            }
-        },
-        "pre" : {
-            "0x0000000000000000000000000000000000001000" : {
-                "balance" : "0x3b9aca00",
-                "code" : "0x3660006000373660006003f060005260006000600060006000600051620186a0f162ca11015560006000600060006001600051620186a0f1",
-                "nonce" : "0x01",
-                "storage" : {
-                }
-            },
-            "0x0000000000000000000000000000000000001100" : {
-                "balance" : "0x00",
-                "code" : "0x735bafcc0c93ecd8022925d7fd89da1c6250850e1931620ba1aa55",
-                "nonce" : "0x01",
-                "storage" : {
-                }
-            },
-            "0x0000000000000000000000000000000000001200" : {
-                "balance" : "0x00",
-                "code" : "0x735bafcc0c93ecd8022925d7fd89da1c6250850e1931620ba1aa55",
-                "nonce" : "0x01",
-                "storage" : {
-                }
-            },
-            "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-                "balance" : "0x3635c9adc5dea00000",
-                "code" : "0x",
-                "nonce" : "0x00",
-                "storage" : {
-                }
-            }
-        },
-        "sealEngine" : "NoProof"
-    },
     "src/GeneralStateTestsFiller/Pyspecs/paris/security/test_selfdestruct_balance_bug.py::test_tx_selfdestruct_balance_bug[fork_ConstantinopleFix-blockchain_test]" : {
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
-            "description" : "Test function documentation:\n\n    Test that the vulnerability is not present by checking the balance of the\n    `0xaa` contract after executing specific transactions:\n\n    1. Start with contract `0xaa` which has initial balance of 3 wei.\n        `0xaa` contract code simply performs a self-destruct to itself.\n\n    2. Send a transaction (tx 1) to invoke caller contract `0xcc` (which\n        has a balance of 1 wei), which in turn invokes `0xaa` with a 1 wei call.\n\n    3. Store the balance of `0xaa` after the first transaction\n        is processed. `0xaa` self-destructed. Expected outcome: 0 wei.\n\n    4. Send another transaction (tx 2) to call 0xaa with 5 wei.\n\n    5. Store the balance of `0xaa` after the second transaction\n        is processed. No self-destruct. Expected outcome: 5 wei.\n\n    6. Verify that:\n        - Call within tx 1 is successful, i.e `0xaa` self-destructed.\n        - The balances of `0xaa` after each tx are correct.\n        - During tx 2, code in `0xaa` does not execute,\n            hence self-destruct mechanism does not trigger.\n\n    TODO: EOF - This test could be parametrized for EOFCREATE",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.600ac001.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "b7af3c336305742088fff996f7679ba8db4628fe709f4b4e05f9c0ba59636b05",
-            "hash" : "0x4ef6c534c336576535a4d441c81c438ac579b0a7401b6f2fd51496c91df7d862",
+            "description" : "Test function documentation:\n\n    Test that the vulnerability is not present by checking the balance of the\n    `0xaa` contract after executing specific transactions.\n\n    1. Start with contract `0xaa` which has initial balance of 3 wei.\n        `0xaa` contract code simply performs a self-destruct to itself.\n\n    2. Send a transaction (tx 1) to invoke caller contract `0xcc` (which\n        has a balance of 1 wei), which in turn invokes `0xaa` with a 1 wei call.\n\n    3. Store the balance of `0xaa` after the first transaction\n        is processed. `0xaa` self-destructed. Expected outcome: 0 wei.\n\n    4. Send another transaction (tx 2) to call 0xaa with 5 wei.\n\n    5. Store the balance of `0xaa` after the second transaction\n        is processed. No self-destruct. Expected outcome: 5 wei.\n\n    6. Verify that:\n        - Call within tx 1 is successful, i.e `0xaa` self-destructed.\n        - The balances of `0xaa` after each tx are correct.\n        - During tx 2, code in `0xaa` does not execute,\n            hence self-destruct mechanism does not trigger.\n\n    TODO: EOF - This test could be parametrized for EOFCREATE",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "blockchain_test",
+            "generatedTestHash" : "dfe5cd5de493bb3004e78c7dc89410a26b5e41b1403317ea86013a44d41ccfc6",
+            "hash" : "0x80f68b1cc24c15850bc4c9e0b97ae814a0106c736bcfba55a3f2db99ce79287f",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/paris/security/test_selfdestruct_balance_bug.py",
-            "sourceHash" : "5cdc5a9ba7d05573d44aa046c0a3276b59cef10d2529a3ee24e3112386856550",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_495b0014_aac1_4903_9f1b_282c9548b0d6/test_selfdestruct_balance_bug.py#L29"
+            "sourceHash" : "6f704712339667a775b6cc58f4de87d48c651f7f5ac6484c7307445ae351a968",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_5689aadb_c2c9_49c7_a338_c19e9206b4d0/test_selfdestruct_balance_bug.py#L29"
         },
         "blocks" : [
             {
@@ -719,6 +539,10 @@
                 ]
             }
         ],
+        "config" : {
+            "chainid" : "0x01",
+            "network" : "ConstantinopleFix"
+        },
         "genesisBlockHeader" : {
             "bloom" : "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
             "coinbase" : "0x0000000000000000000000000000000000000000",
@@ -821,17 +645,18 @@
     "src/GeneralStateTestsFiller/Pyspecs/paris/security/test_selfdestruct_balance_bug.py::test_tx_selfdestruct_balance_bug[fork_Istanbul-blockchain_test]" : {
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
-            "description" : "Test function documentation:\n\n    Test that the vulnerability is not present by checking the balance of the\n    `0xaa` contract after executing specific transactions:\n\n    1. Start with contract `0xaa` which has initial balance of 3 wei.\n        `0xaa` contract code simply performs a self-destruct to itself.\n\n    2. Send a transaction (tx 1) to invoke caller contract `0xcc` (which\n        has a balance of 1 wei), which in turn invokes `0xaa` with a 1 wei call.\n\n    3. Store the balance of `0xaa` after the first transaction\n        is processed. `0xaa` self-destructed. Expected outcome: 0 wei.\n\n    4. Send another transaction (tx 2) to call 0xaa with 5 wei.\n\n    5. Store the balance of `0xaa` after the second transaction\n        is processed. No self-destruct. Expected outcome: 5 wei.\n\n    6. Verify that:\n        - Call within tx 1 is successful, i.e `0xaa` self-destructed.\n        - The balances of `0xaa` after each tx are correct.\n        - During tx 2, code in `0xaa` does not execute,\n            hence self-destruct mechanism does not trigger.\n\n    TODO: EOF - This test could be parametrized for EOFCREATE",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.600ac001.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "8eb620655bdd5bbc63765774b0e1468d7f2874877209b8388d1883e40d2cfd3d",
-            "hash" : "0xb91a4b63671dba303bfdda9838ac83a6baec968f22e4023d6f47f0744b935f00",
+            "description" : "Test function documentation:\n\n    Test that the vulnerability is not present by checking the balance of the\n    `0xaa` contract after executing specific transactions.\n\n    1. Start with contract `0xaa` which has initial balance of 3 wei.\n        `0xaa` contract code simply performs a self-destruct to itself.\n\n    2. Send a transaction (tx 1) to invoke caller contract `0xcc` (which\n        has a balance of 1 wei), which in turn invokes `0xaa` with a 1 wei call.\n\n    3. Store the balance of `0xaa` after the first transaction\n        is processed. `0xaa` self-destructed. Expected outcome: 0 wei.\n\n    4. Send another transaction (tx 2) to call 0xaa with 5 wei.\n\n    5. Store the balance of `0xaa` after the second transaction\n        is processed. No self-destruct. Expected outcome: 5 wei.\n\n    6. Verify that:\n        - Call within tx 1 is successful, i.e `0xaa` self-destructed.\n        - The balances of `0xaa` after each tx are correct.\n        - During tx 2, code in `0xaa` does not execute,\n            hence self-destruct mechanism does not trigger.\n\n    TODO: EOF - This test could be parametrized for EOFCREATE",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "blockchain_test",
+            "generatedTestHash" : "b2b725e5f53f0bc0f495580b6884b5593b4b759d08f8208151429c2b79d1dd29",
+            "hash" : "0xf5545538ccb406f3967b99f6289c8a62dd2699ec273b3f7841bc184a4d1d8965",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/paris/security/test_selfdestruct_balance_bug.py",
-            "sourceHash" : "5cdc5a9ba7d05573d44aa046c0a3276b59cef10d2529a3ee24e3112386856550",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_495b0014_aac1_4903_9f1b_282c9548b0d6/test_selfdestruct_balance_bug.py#L29"
+            "sourceHash" : "6f704712339667a775b6cc58f4de87d48c651f7f5ac6484c7307445ae351a968",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_5689aadb_c2c9_49c7_a338_c19e9206b4d0/test_selfdestruct_balance_bug.py#L29"
         },
         "blocks" : [
             {
@@ -917,6 +742,10 @@
                 ]
             }
         ],
+        "config" : {
+            "chainid" : "0x01",
+            "network" : "Istanbul"
+        },
         "genesisBlockHeader" : {
             "bloom" : "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
             "coinbase" : "0x0000000000000000000000000000000000000000",
@@ -1019,17 +848,18 @@
     "src/GeneralStateTestsFiller/Pyspecs/paris/security/test_selfdestruct_balance_bug.py::test_tx_selfdestruct_balance_bug[fork_London-blockchain_test]" : {
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
-            "description" : "Test function documentation:\n\n    Test that the vulnerability is not present by checking the balance of the\n    `0xaa` contract after executing specific transactions:\n\n    1. Start with contract `0xaa` which has initial balance of 3 wei.\n        `0xaa` contract code simply performs a self-destruct to itself.\n\n    2. Send a transaction (tx 1) to invoke caller contract `0xcc` (which\n        has a balance of 1 wei), which in turn invokes `0xaa` with a 1 wei call.\n\n    3. Store the balance of `0xaa` after the first transaction\n        is processed. `0xaa` self-destructed. Expected outcome: 0 wei.\n\n    4. Send another transaction (tx 2) to call 0xaa with 5 wei.\n\n    5. Store the balance of `0xaa` after the second transaction\n        is processed. No self-destruct. Expected outcome: 5 wei.\n\n    6. Verify that:\n        - Call within tx 1 is successful, i.e `0xaa` self-destructed.\n        - The balances of `0xaa` after each tx are correct.\n        - During tx 2, code in `0xaa` does not execute,\n            hence self-destruct mechanism does not trigger.\n\n    TODO: EOF - This test could be parametrized for EOFCREATE",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.600ac001.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "a9aa2693ad2a2b65b03587f7e17daa0a5b488136ab40e974501e4751fcc9cca7",
-            "hash" : "0xf5a0a08d006ca45402b3a5f629f00582a5d33aac90a021ce7cb99cd80a4a02de",
+            "description" : "Test function documentation:\n\n    Test that the vulnerability is not present by checking the balance of the\n    `0xaa` contract after executing specific transactions.\n\n    1. Start with contract `0xaa` which has initial balance of 3 wei.\n        `0xaa` contract code simply performs a self-destruct to itself.\n\n    2. Send a transaction (tx 1) to invoke caller contract `0xcc` (which\n        has a balance of 1 wei), which in turn invokes `0xaa` with a 1 wei call.\n\n    3. Store the balance of `0xaa` after the first transaction\n        is processed. `0xaa` self-destructed. Expected outcome: 0 wei.\n\n    4. Send another transaction (tx 2) to call 0xaa with 5 wei.\n\n    5. Store the balance of `0xaa` after the second transaction\n        is processed. No self-destruct. Expected outcome: 5 wei.\n\n    6. Verify that:\n        - Call within tx 1 is successful, i.e `0xaa` self-destructed.\n        - The balances of `0xaa` after each tx are correct.\n        - During tx 2, code in `0xaa` does not execute,\n            hence self-destruct mechanism does not trigger.\n\n    TODO: EOF - This test could be parametrized for EOFCREATE",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "blockchain_test",
+            "generatedTestHash" : "efc28773f2c75021171cb542075e83bddfa6cbcdc6a4aeffb6bd0dcd8c93cd9c",
+            "hash" : "0xa2c9382734fec2b312c13fec7c2e78e9229a9941dbbbaa8eeb6910974517cce7",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/paris/security/test_selfdestruct_balance_bug.py",
-            "sourceHash" : "5cdc5a9ba7d05573d44aa046c0a3276b59cef10d2529a3ee24e3112386856550",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_495b0014_aac1_4903_9f1b_282c9548b0d6/test_selfdestruct_balance_bug.py#L29"
+            "sourceHash" : "6f704712339667a775b6cc58f4de87d48c651f7f5ac6484c7307445ae351a968",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_5689aadb_c2c9_49c7_a338_c19e9206b4d0/test_selfdestruct_balance_bug.py#L29"
         },
         "blocks" : [
             {
@@ -1116,6 +946,10 @@
                 ]
             }
         ],
+        "config" : {
+            "chainid" : "0x01",
+            "network" : "London"
+        },
         "genesisBlockHeader" : {
             "baseFeePerGas" : "0x07",
             "bloom" : "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
@@ -1219,17 +1053,18 @@
     "src/GeneralStateTestsFiller/Pyspecs/paris/security/test_selfdestruct_balance_bug.py::test_tx_selfdestruct_balance_bug[fork_Paris-blockchain_test]" : {
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
-            "description" : "Test function documentation:\n\n    Test that the vulnerability is not present by checking the balance of the\n    `0xaa` contract after executing specific transactions:\n\n    1. Start with contract `0xaa` which has initial balance of 3 wei.\n        `0xaa` contract code simply performs a self-destruct to itself.\n\n    2. Send a transaction (tx 1) to invoke caller contract `0xcc` (which\n        has a balance of 1 wei), which in turn invokes `0xaa` with a 1 wei call.\n\n    3. Store the balance of `0xaa` after the first transaction\n        is processed. `0xaa` self-destructed. Expected outcome: 0 wei.\n\n    4. Send another transaction (tx 2) to call 0xaa with 5 wei.\n\n    5. Store the balance of `0xaa` after the second transaction\n        is processed. No self-destruct. Expected outcome: 5 wei.\n\n    6. Verify that:\n        - Call within tx 1 is successful, i.e `0xaa` self-destructed.\n        - The balances of `0xaa` after each tx are correct.\n        - During tx 2, code in `0xaa` does not execute,\n            hence self-destruct mechanism does not trigger.\n\n    TODO: EOF - This test could be parametrized for EOFCREATE",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.600ac001.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "b79558864c6002d93f7549746156ed47e2506b4d9bcb25ef674876a3e0717d85",
-            "hash" : "0x086374f0b89b9c9c7690f3958bb6eaac8ecc2d761008ba01a38a739db7116982",
+            "description" : "Test function documentation:\n\n    Test that the vulnerability is not present by checking the balance of the\n    `0xaa` contract after executing specific transactions.\n\n    1. Start with contract `0xaa` which has initial balance of 3 wei.\n        `0xaa` contract code simply performs a self-destruct to itself.\n\n    2. Send a transaction (tx 1) to invoke caller contract `0xcc` (which\n        has a balance of 1 wei), which in turn invokes `0xaa` with a 1 wei call.\n\n    3. Store the balance of `0xaa` after the first transaction\n        is processed. `0xaa` self-destructed. Expected outcome: 0 wei.\n\n    4. Send another transaction (tx 2) to call 0xaa with 5 wei.\n\n    5. Store the balance of `0xaa` after the second transaction\n        is processed. No self-destruct. Expected outcome: 5 wei.\n\n    6. Verify that:\n        - Call within tx 1 is successful, i.e `0xaa` self-destructed.\n        - The balances of `0xaa` after each tx are correct.\n        - During tx 2, code in `0xaa` does not execute,\n            hence self-destruct mechanism does not trigger.\n\n    TODO: EOF - This test could be parametrized for EOFCREATE",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "blockchain_test",
+            "generatedTestHash" : "47733697f2013a07338131bd40027483d783ecbbc0edb520e34cf2986326d8f8",
+            "hash" : "0x9c7249d0ed5dde28a10e4b52bf75b336837ab32a24602bc4781a4ffda983d3b3",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/paris/security/test_selfdestruct_balance_bug.py",
-            "sourceHash" : "5cdc5a9ba7d05573d44aa046c0a3276b59cef10d2529a3ee24e3112386856550",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_495b0014_aac1_4903_9f1b_282c9548b0d6/test_selfdestruct_balance_bug.py#L29"
+            "sourceHash" : "6f704712339667a775b6cc58f4de87d48c651f7f5ac6484c7307445ae351a968",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_5689aadb_c2c9_49c7_a338_c19e9206b4d0/test_selfdestruct_balance_bug.py#L29"
         },
         "blocks" : [
             {
@@ -1316,6 +1151,10 @@
                 ]
             }
         ],
+        "config" : {
+            "chainid" : "0x01",
+            "network" : "Paris"
+        },
         "genesisBlockHeader" : {
             "baseFeePerGas" : "0x07",
             "bloom" : "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
@@ -1419,17 +1258,18 @@
     "src/GeneralStateTestsFiller/Pyspecs/paris/security/test_selfdestruct_balance_bug.py::test_tx_selfdestruct_balance_bug[fork_Shanghai-blockchain_test]" : {
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
-            "description" : "Test function documentation:\n\n    Test that the vulnerability is not present by checking the balance of the\n    `0xaa` contract after executing specific transactions:\n\n    1. Start with contract `0xaa` which has initial balance of 3 wei.\n        `0xaa` contract code simply performs a self-destruct to itself.\n\n    2. Send a transaction (tx 1) to invoke caller contract `0xcc` (which\n        has a balance of 1 wei), which in turn invokes `0xaa` with a 1 wei call.\n\n    3. Store the balance of `0xaa` after the first transaction\n        is processed. `0xaa` self-destructed. Expected outcome: 0 wei.\n\n    4. Send another transaction (tx 2) to call 0xaa with 5 wei.\n\n    5. Store the balance of `0xaa` after the second transaction\n        is processed. No self-destruct. Expected outcome: 5 wei.\n\n    6. Verify that:\n        - Call within tx 1 is successful, i.e `0xaa` self-destructed.\n        - The balances of `0xaa` after each tx are correct.\n        - During tx 2, code in `0xaa` does not execute,\n            hence self-destruct mechanism does not trigger.\n\n    TODO: EOF - This test could be parametrized for EOFCREATE",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.600ac001.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "deea2b0f8ef887d8f14195354c6032d4ecb50025aa147e5456af720f7837744c",
-            "hash" : "0x7bc668e4a751218aeacfb506164d38c01726a774d819d1a191c2f541cb3a8896",
+            "description" : "Test function documentation:\n\n    Test that the vulnerability is not present by checking the balance of the\n    `0xaa` contract after executing specific transactions.\n\n    1. Start with contract `0xaa` which has initial balance of 3 wei.\n        `0xaa` contract code simply performs a self-destruct to itself.\n\n    2. Send a transaction (tx 1) to invoke caller contract `0xcc` (which\n        has a balance of 1 wei), which in turn invokes `0xaa` with a 1 wei call.\n\n    3. Store the balance of `0xaa` after the first transaction\n        is processed. `0xaa` self-destructed. Expected outcome: 0 wei.\n\n    4. Send another transaction (tx 2) to call 0xaa with 5 wei.\n\n    5. Store the balance of `0xaa` after the second transaction\n        is processed. No self-destruct. Expected outcome: 5 wei.\n\n    6. Verify that:\n        - Call within tx 1 is successful, i.e `0xaa` self-destructed.\n        - The balances of `0xaa` after each tx are correct.\n        - During tx 2, code in `0xaa` does not execute,\n            hence self-destruct mechanism does not trigger.\n\n    TODO: EOF - This test could be parametrized for EOFCREATE",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "blockchain_test",
+            "generatedTestHash" : "914acefdf2b3d4958a2fb7f5e4421f7afe7eece08557a928698761bb7ece674e",
+            "hash" : "0x2279f43532d1f8405e0b40a56a7c069694fe55178613a4b4d92070246a4837e8",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/paris/security/test_selfdestruct_balance_bug.py",
-            "sourceHash" : "5cdc5a9ba7d05573d44aa046c0a3276b59cef10d2529a3ee24e3112386856550",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_495b0014_aac1_4903_9f1b_282c9548b0d6/test_selfdestruct_balance_bug.py#L29"
+            "sourceHash" : "6f704712339667a775b6cc58f4de87d48c651f7f5ac6484c7307445ae351a968",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_5689aadb_c2c9_49c7_a338_c19e9206b4d0/test_selfdestruct_balance_bug.py#L29"
         },
         "blocks" : [
             {
@@ -1519,6 +1359,10 @@
                 ]
             }
         ],
+        "config" : {
+            "chainid" : "0x01",
+            "network" : "Shanghai"
+        },
         "genesisBlockHeader" : {
             "baseFeePerGas" : "0x07",
             "bloom" : "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
