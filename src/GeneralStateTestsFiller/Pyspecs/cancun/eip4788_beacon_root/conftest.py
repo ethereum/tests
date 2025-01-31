@@ -1,12 +1,11 @@
-"""
-Shared pytest definitions local to EIP-4788 tests.
-"""
+"""Shared pytest definitions local to EIP-4788 tests."""
 
 from itertools import count
 from typing import Dict, Iterator, List
 
 import pytest
 
+from ethereum_test_forks import Fork
 from ethereum_test_tools import (
     AccessList,
     Account,
@@ -20,7 +19,7 @@ from ethereum_test_tools import (
     add_kzg_version,
     keccak256,
 )
-from ethereum_test_tools.vm.opcode import Opcodes as Op
+from ethereum_test_tools import Opcodes as Op
 
 from .spec import Spec, SpecHelpers
 
@@ -34,9 +33,7 @@ def timestamp() -> int:  # noqa: D103
 
 @pytest.fixture
 def beacon_roots() -> Iterator[bytes]:
-    """
-    By default, return an iterator that returns the keccak of an internal counter.
-    """
+    """By default, return an iterator that returns the keccak of an internal counter."""
 
     class BeaconRoots:
         def __init__(self) -> None:
@@ -66,9 +63,7 @@ def env(timestamp: int, beacon_root: bytes) -> Environment:  # noqa: D103
 
 @pytest.fixture
 def call_beacon_root_contract() -> bool:
-    """
-    By default, do not directly call the beacon root contract.
-    """
+    """By default, do not directly call the beacon root contract."""
     return False
 
 
@@ -94,9 +89,7 @@ def caller_address(pre: Alloc, contract_call_code: Bytecode) -> Address:  # noqa
 
 @pytest.fixture
 def contract_call_code(call_type: Op, call_value: int, call_gas: int) -> Bytecode:
-    """
-    Code to call the beacon root contract.
-    """
+    """Code to call the beacon root contract."""
     args_start, args_length, return_start, return_length = 0x20, Op.CALLDATASIZE, 0x00, 0x20
     contract_call_code = Op.CALLDATACOPY(args_start, 0x00, args_length)
     if call_type == Op.CALL or call_type == Op.CALLCODE:
@@ -149,33 +142,25 @@ def contract_call_code(call_type: Op, call_value: int, call_gas: int) -> Bytecod
 
 @pytest.fixture
 def valid_call() -> bool:
-    """
-    Validity of beacon root contract call: defaults to True.
-    """
+    """Beacon root contract call validity: defaults to True."""
     return True
 
 
 @pytest.fixture
 def valid_input() -> bool:
-    """
-    Validity of timestamp input to contract call: defaults to True.
-    """
+    """Timestamp input to contract call validity: defaults to True."""
     return True
 
 
 @pytest.fixture
 def system_address_balance() -> int:
-    """
-    Balance of the system address.
-    """
+    """Balance of the system address."""
     return 0
 
 
 @pytest.fixture(autouse=True)
 def pre_fund_system_address(pre: Alloc, system_address_balance: int):
-    """
-    Whether to fund the system address.
-    """
+    """Whether to fund the system address."""
     if system_address_balance > 0:
         pre.fund_address(Address(Spec.SYSTEM_ADDRESS), system_address_balance)
 
@@ -187,17 +172,13 @@ def tx_to_address(request, caller_address: Account) -> Address:  # noqa: D103
 
 @pytest.fixture
 def auto_access_list() -> bool:
-    """
-    Whether to append the accessed storage keys to the transaction.
-    """
+    """Whether to append the accessed storage keys to the transaction."""
     return False
 
 
 @pytest.fixture
 def access_list(auto_access_list: bool, timestamp: int) -> List[AccessList]:
-    """
-    Access list included in the transaction to call the beacon root contract.
-    """
+    """Access list included in the transaction to call the beacon root contract."""
     if auto_access_list:
         return [
             AccessList(
@@ -213,9 +194,7 @@ def access_list(auto_access_list: bool, timestamp: int) -> List[AccessList]:
 
 @pytest.fixture
 def tx_data(timestamp: int) -> bytes:
-    """
-    Data included in the transaction to call the beacon root contract.
-    """
+    """Tx data included in the to call the beacon root contract."""
     return Hash(timestamp)
 
 
@@ -232,15 +211,14 @@ def tx_type() -> int:
 @pytest.fixture
 def tx(
     pre: Alloc,
+    fork: Fork,
     tx_to_address: Address,
     tx_data: bytes,
     tx_type: int,
     access_list: List[AccessList],
     call_beacon_root_contract: bool,
 ) -> Transaction:
-    """
-    Prepares transaction to call the beacon root contract caller account.
-    """
+    """Prepare transaction to call the beacon root contract caller account."""
     to = Spec.BEACON_ROOTS_ADDRESS if call_beacon_root_contract else tx_to_address
     kwargs: Dict = {
         "ty": tx_type,
@@ -254,7 +232,7 @@ def tx(
         kwargs["access_list"] = access_list
 
     if tx_type == 3:
-        kwargs["max_fee_per_blob_gas"] = 1
+        kwargs["max_fee_per_blob_gas"] = fork.min_base_fee_per_blob_gas()
         kwargs["blob_versioned_hashes"] = add_kzg_version([0], BLOB_COMMITMENT_VERSION_KZG)
 
     if tx_type > 3:
@@ -272,7 +250,7 @@ def post(
     call_beacon_root_contract: bool,
 ) -> Dict:
     """
-    Prepares the expected post state for a single contract call based upon the success or
+    Prepare expected post state for a single contract call based upon the success or
     failure of the call, and the validity of the timestamp input.
     """
     storage = Storage()

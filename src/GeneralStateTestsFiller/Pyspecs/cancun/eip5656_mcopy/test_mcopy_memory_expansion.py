@@ -4,15 +4,25 @@ abstract: Tests [EIP-5656: MCOPY - Memory copying instruction](https://eips.ethe
     that produce a memory expansion, and potentially an out-of-gas error.
 
 """  # noqa: E501
+
 import itertools
-from typing import Mapping
+from typing import List, Mapping
 
 import pytest
 
-from ethereum_test_tools import Account, Address, Alloc, Bytecode, Environment
+from ethereum_test_forks import Fork
+from ethereum_test_tools import (
+    AccessList,
+    Account,
+    Address,
+    Alloc,
+    Bytecode,
+    Environment,
+    StateTestFiller,
+    Transaction,
+    TransactionReceipt,
+)
 from ethereum_test_tools import Opcodes as Op
-from ethereum_test_tools import StateTestFiller, Transaction, cost_memory_bytes
-from ethereum_test_types.helpers import eip_2028_transaction_data_cost
 
 from .common import REFERENCE_SPEC_GIT_PATH, REFERENCE_SPEC_VERSION
 
@@ -30,9 +40,7 @@ value_code_worked = 0x2015
 
 @pytest.fixture
 def callee_bytecode(dest: int, src: int, length: int) -> Bytecode:
-    """
-    Callee performs a single mcopy operation and then returns.
-    """
+    """Callee performs a single mcopy operation and then returns."""
     bytecode = Bytecode()
 
     # Copy the initial memory
@@ -52,42 +60,52 @@ def callee_bytecode(dest: int, src: int, length: int) -> Bytecode:
 
 
 @pytest.fixture
+def tx_access_list() -> List[AccessList]:
+    """Access list for the transaction."""
+    return [AccessList(address=Address(i), storage_keys=[]) for i in range(1, 10)]
+
+
+@pytest.fixture
 def call_exact_cost(
+    fork: Fork,
     initial_memory: bytes,
     dest: int,
     length: int,
+    tx_access_list: List[AccessList],
 ) -> int:
     """
-    Returns the exact cost of the subcall, based on the initial memory and the length of the copy.
+    Return the exact cost of the subcall, based on the initial memory and the length of the
+    copy.
     """
-    intrinsic_cost = 21000 + eip_2028_transaction_data_cost(initial_memory)
+    # Starting from EIP-7623, we need to use an access list to raise the intrinsic gas cost to be
+    # above the floor data cost.
+    cost_memory_bytes = fork.memory_expansion_gas_calculator()
+    gas_costs = fork.gas_costs()
+    tx_intrinsic_gas_cost_calculator = fork.transaction_intrinsic_cost_calculator()
 
     mcopy_cost = 3
     mcopy_cost += 3 * ((length + 31) // 32)
     if length > 0 and dest + length > len(initial_memory):
-        mcopy_cost += cost_memory_bytes(dest + length, len(initial_memory))
+        mcopy_cost += cost_memory_bytes(
+            new_bytes=dest + length, previous_bytes=len(initial_memory)
+        )
 
     calldatacopy_cost = 3
     calldatacopy_cost += 3 * ((len(initial_memory) + 31) // 32)
-    calldatacopy_cost += cost_memory_bytes(len(initial_memory), 0)
+    calldatacopy_cost += cost_memory_bytes(new_bytes=len(initial_memory))
 
-    pushes_cost = 3 * 9
-    calldatasize_cost = 2
+    pushes_cost = gas_costs.G_VERY_LOW * 9
+    calldatasize_cost = gas_costs.G_BASE
 
     sstore_cost = 22100
     return (
-        intrinsic_cost
+        tx_intrinsic_gas_cost_calculator(calldata=initial_memory, access_list=tx_access_list)
         + mcopy_cost
         + calldatacopy_cost
         + pushes_cost
         + calldatasize_cost
         + sstore_cost
     )
-
-
-@pytest.fixture
-def tx_max_fee_per_gas() -> int:  # noqa: D103
-    return 7
 
 
 @pytest.fixture
@@ -117,8 +135,8 @@ def caller_address(pre: Alloc, callee_bytecode: bytes) -> Address:  # noqa: D103
 
 
 @pytest.fixture
-def sender(pre: Alloc, tx_max_fee_per_gas: int, tx_gas_limit: int) -> Address:  # noqa: D103
-    return pre.fund_eoa(tx_max_fee_per_gas * tx_gas_limit)
+def sender(pre: Alloc) -> Address:  # noqa: D103
+    return pre.fund_eoa()
 
 
 @pytest.fixture
@@ -126,16 +144,16 @@ def tx(  # noqa: D103
     sender: Address,
     caller_address: Address,
     initial_memory: bytes,
-    tx_max_fee_per_gas: int,
     tx_gas_limit: int,
+    tx_access_list: List[AccessList],
 ) -> Transaction:
     return Transaction(
         sender=sender,
         to=caller_address,
+        access_list=tx_access_list,
         data=initial_memory,
         gas_limit=tx_gas_limit,
-        max_fee_per_gas=tx_max_fee_per_gas,
-        max_priority_fee_per_gas=0,
+        expected_receipt=TransactionReceipt(gas_used=tx_gas_limit),
     )
 
 
@@ -199,9 +217,7 @@ def test_mcopy_memory_expansion(
     post: Mapping[str, Account],
     tx: Transaction,
 ):
-    """
-    Perform MCOPY operations that expand the memory, and verify the gas it costs to do so.
-    """
+    """Perform MCOPY operations that expand the memory, and verify the gas it costs to do so."""
     state_test(
         env=env,
         pre=pre,

@@ -26,6 +26,7 @@ note: Adding a new test
     cases.
 
 """  # noqa: E501
+
 import glob
 import json
 import os
@@ -35,8 +36,10 @@ from typing import Dict, List, Optional
 
 import pytest
 
+from ethereum_test_forks import Fork
 from ethereum_test_tools import (
     EOA,
+    AccessList,
     Account,
     Address,
     Alloc,
@@ -47,8 +50,8 @@ from ethereum_test_tools import (
     StateTestFiller,
     Storage,
     Transaction,
+    TransactionReceipt,
     call_return_code,
-    eip_2028_transaction_data_cost,
 )
 from ethereum_test_tools.vm.opcode import Opcodes as Op
 
@@ -60,9 +63,7 @@ REFERENCE_SPEC_VERSION = ref_spec_4844.version
 
 
 class Result(str, Enum):
-    """
-    Result of the point evaluation precompile.
-    """
+    """Result of the point evaluation precompile."""
 
     SUCCESS = "success"
     FAILURE = "failure"
@@ -77,9 +78,7 @@ def precompile_input(
     y: bytes | int,
     kzg_proof: bytes | int,
 ) -> bytes:
-    """
-    Format the input for the point evaluation precompile.
-    """
+    """Format the input for the point evaluation precompile."""
     if isinstance(z, int):
         z = z.to_bytes(32, Z_Y_VALID_ENDIANNESS)
     if isinstance(y, int):
@@ -128,9 +127,7 @@ key_return_copy_2 = next(precompile_caller_storage_keys)
 
 @pytest.fixture
 def precompile_caller_storage() -> Storage.StorageDictType:
-    """
-    Storage for the precompile caller contract.
-    """
+    """Storage for the precompile caller contract."""
     return {
         key_call_return_code: 0xBA5E,
         key_return_1: 0xBA5E,
@@ -143,9 +140,7 @@ def precompile_caller_storage() -> Storage.StorageDictType:
 
 @pytest.fixture
 def precompile_caller_code(call_opcode: Op, call_gas: int) -> Bytecode:
-    """
-    Code to call the point evaluation precompile.
-    """
+    """Code to call the point evaluation precompile."""
     precompile_caller_code = Op.CALLDATACOPY(0, 0, Op.CALLDATASIZE)
     precompile_caller_code += Op.SSTORE(
         key_call_return_code,
@@ -175,9 +170,7 @@ def precompile_caller_code(call_opcode: Op, call_gas: int) -> Bytecode:
 
 @pytest.fixture
 def precompile_caller_balance() -> int:
-    """
-    Storage for the precompile caller contract.
-    """
+    """Storage for the precompile caller contract."""
     return 0
 
 
@@ -188,9 +181,7 @@ def precompile_caller_address(
     precompile_caller_storage: Storage.StorageDictType,
     precompile_caller_balance: int,
 ) -> Address:
-    """
-    Address of the code to call the point evaluation precompile.
-    """
+    """Address of the code to call the point evaluation precompile."""
     return pre.deploy_contract(
         precompile_caller_code,
         storage=precompile_caller_storage,
@@ -200,9 +191,7 @@ def precompile_caller_address(
 
 @pytest.fixture
 def sender(pre: Alloc) -> EOA:
-    """
-    Returns the sender account.
-    """
+    """Return sender account."""
     return pre.fund_eoa()
 
 
@@ -212,9 +201,7 @@ def tx(
     precompile_input: bytes,
     sender: EOA,
 ) -> Transaction:
-    """
-    Prepares transaction used to call the precompile caller account.
-    """
+    """Prepare transaction used to call the precompile caller account."""
     return Transaction(
         sender=sender,
         data=precompile_input,
@@ -228,9 +215,7 @@ def success(
     result: Result,
     call_opcode: Op,
 ) -> bool:
-    """
-    Prepares expected success or failure for each test.
-    """
+    """Prepare expected success or failure for each test."""
     if call_opcode == Op.EXTDELEGATECALL:
         return False
     if result == Result.OUT_OF_GAS and call_opcode in [Op.EXTCALL, Op.EXTSTATICCALL]:
@@ -247,10 +232,10 @@ def post(
     precompile_input: bytes,
 ) -> Dict:
     """
-    Prepares expected post for each test, depending on the success or
+    Prepare expected post for each test, depending on the success or
     failure of the precompile call.
     """
-    expected_storage: Storage.StorageDictType = dict()
+    expected_storage: Storage.StorageDictType = {}
     # CALL operation return code
     expected_storage[key_call_return_code] = call_return_code(
         call_opcode, success, revert=call_opcode == Op.EXTDELEGATECALL
@@ -353,7 +338,7 @@ def test_invalid_inputs(
     post: Dict,
 ):
     """
-    Test invalid precompile calls:
+    Test invalid precompile calls.
 
     - Out of bounds inputs `z` and `y`
     - Correct proof, commitment, z and y, but incorrect lengths
@@ -370,9 +355,7 @@ def test_invalid_inputs(
 
 
 def kzg_point_evaluation_vector_from_dict(data: dict):
-    """
-    Create a KZGPointEvaluation from a dictionary.
-    """
+    """Create a KZGPointEvaluation from a dictionary."""
     if "input" not in data:
         raise ValueError("Missing 'input' key in data")
     if "output" not in data:
@@ -382,19 +365,19 @@ def kzg_point_evaluation_vector_from_dict(data: dict):
         result = Result.SUCCESS if output else Result.FAILURE
     else:
         result = Result.FAILURE
-    input = data["input"]
-    if "commitment" not in input or not isinstance(input["commitment"], str):
+    input_value = data["input"]
+    if "commitment" not in input_value or not isinstance(input_value["commitment"], str):
         raise ValueError("Missing 'commitment' key in data['input']")
-    commitment = bytes.fromhex(input["commitment"][2:])
-    if "proof" not in input or not isinstance(input["proof"], str):
+    commitment = bytes.fromhex(input_value["commitment"][2:])
+    if "proof" not in input_value or not isinstance(input_value["proof"], str):
         raise ValueError("Missing 'proof' key in data['input']")
-    proof = bytes.fromhex(input["proof"][2:])
-    if "z" not in input or not isinstance(input["z"], str):
+    proof = bytes.fromhex(input_value["proof"][2:])
+    if "z" not in input_value or not isinstance(input_value["z"], str):
         raise ValueError("Missing 'z' key in data['input']")
-    z = bytes.fromhex(input["z"][2:])
-    if "y" not in input or not isinstance(input["y"], str):
+    z = bytes.fromhex(input_value["z"][2:])
+    if "y" not in input_value or not isinstance(input_value["y"], str):
         raise ValueError("Missing 'y' key in data['input']")
-    y = bytes.fromhex(input["y"][2:])
+    y = bytes.fromhex(input_value["y"][2:])
 
     name = data["name"] if "name" in data else ""
     return pytest.param(
@@ -410,9 +393,7 @@ def kzg_point_evaluation_vector_from_dict(data: dict):
 def load_kzg_point_evaluation_test_vectors_from_file(
     file_path: str,
 ) -> List:
-    """
-    Load KZG Point Evaluations from a directory.
-    """
+    """Load KZG Point Evaluations from a directory."""
     test_vectors = []
 
     # Load the json file as a dictionary
@@ -429,22 +410,18 @@ def load_kzg_point_evaluation_test_vectors_from_file(
 
 
 def current_python_script_directory() -> str:
-    """
-    Get the current Python script directory.
-    """
+    """Get the current Python script directory."""
     return os.path.dirname(os.path.realpath(__file__))
 
 
 def get_point_evaluation_test_files_in_directory(path: str) -> list[str]:
-    """
-    Get the point evaluation files in a directory.
-    """
+    """Get the point evaluation files in a directory."""
     return glob.glob(os.path.join(path, "*.json"))
 
 
 def all_external_vectors() -> List:
     """
-    Tests for the Point Evaluation Precompile from external sources,
+    Test for the Point Evaluation Precompile from external sources,
     contained in ./point_evaluation_vectors/.
     """
     test_cases = []
@@ -472,7 +449,7 @@ def test_external_vectors(
     post: Dict,
 ):
     """
-    Test precompile calls using external test vectors compiled from different sources:
+    Test precompile calls using external test vectors compiled from different sources.
 
     - `go_kzg_4844_verify_kzg_proof.json`: test vectors from the
     [go-kzg-4844](https://github.com/crate-crypto/go-kzg-4844) repository.
@@ -509,7 +486,7 @@ def test_call_opcode_types(
 ):
     """
     Test calling the Point Evaluation Precompile with different call types, gas
-    and parameter configuration:
+    and parameter configuration.
 
     - Using CALL, DELEGATECALL, CALLCODE and STATICCALL.
     - Using correct and incorrect proofs
@@ -542,6 +519,7 @@ def test_call_opcode_types(
 )
 @pytest.mark.valid_from("Cancun")
 def test_tx_entry_point(
+    fork: Fork,
     state_test: StateTestFiller,
     precompile_input: bytes,
     call_gas: int,
@@ -555,11 +533,17 @@ def test_tx_entry_point(
     - Using `gas_limit` with exact necessary gas, insufficient gas and extra gas.
     - Using correct and incorrect proofs
     """
-    start_balance = 10**18
-    sender = pre.fund_eoa(amount=start_balance)
+    sender = pre.fund_eoa()
+
+    # Starting from EIP-7623, we need to use an access list to raise the intrinsic gas cost to be
+    # above the floor data cost.
+    access_list = [AccessList(address=Address(i), storage_keys=[]) for i in range(1, 10)]
 
     # Gas is appended the intrinsic gas cost of the transaction
-    intrinsic_gas_cost = 21_000 + eip_2028_transaction_data_cost(precompile_input)
+    tx_intrinsic_gas_cost_calculator = fork.transaction_intrinsic_cost_calculator()
+    intrinsic_gas_cost = tx_intrinsic_gas_cost_calculator(
+        calldata=precompile_input, access_list=access_list
+    )
 
     # Consumed gas will only be the precompile gas if the proof is correct and
     # the call gas is sufficient.
@@ -568,22 +552,24 @@ def test_tx_entry_point(
         Spec.POINT_EVALUATION_PRECOMPILE_GAS
         if call_gas >= Spec.POINT_EVALUATION_PRECOMPILE_GAS and proof_correct
         else call_gas
-    ) + intrinsic_gas_cost
-
-    fee_per_gas = 7
+    ) + tx_intrinsic_gas_cost_calculator(
+        calldata=precompile_input,
+        access_list=access_list,
+        return_cost_deducted_prior_execution=True,
+    )
 
     tx = Transaction(
         sender=sender,
         data=precompile_input,
+        access_list=access_list,
         to=Address(Spec.POINT_EVALUATION_PRECOMPILE_ADDRESS),
         gas_limit=call_gas + intrinsic_gas_cost,
-        gas_price=fee_per_gas,
+        expected_receipt=TransactionReceipt(gas_used=consumed_gas),
     )
 
     post = {
         sender: Account(
             nonce=1,
-            balance=start_balance - (consumed_gas * fee_per_gas),
         )
     }
 
@@ -624,9 +610,7 @@ def test_precompile_before_fork(
     tx: Transaction,
     precompile_caller_address: Address,
 ):
-    """
-    Test calling the Point Evaluation Precompile before the appropriate fork.
-    """
+    """Test calling the Point Evaluation Precompile before the appropriate fork."""
     post = {
         precompile_caller_address: Account(
             storage={1: 1},
@@ -679,9 +663,7 @@ def test_precompile_during_fork(
     precompile_input: bytes,
     sender: EOA,
 ):
-    """
-    Test calling the Point Evaluation Precompile before the appropriate fork.
-    """
+    """Test calling the Point Evaluation Precompile before the appropriate fork."""
     # Blocks before fork
     blocks = [
         Block(
