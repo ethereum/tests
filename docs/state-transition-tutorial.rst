@@ -446,7 +446,7 @@ These are examples of the values that **:abi** can have.
   
   * A string which could be any size
 
-* **:abi g(uint256[][],string[]) [[1,2],[3],[4,5] ["one","two","three"]**: 
+* **:abi g(uint256[][],string[]) [[1,2],[3],[4,5]] ["one","two","three"]**: 
   Call **g** with two parameters, a two dimensional array of uint256 values and
   an array of strings.
 
