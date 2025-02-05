@@ -16,7 +16,7 @@ Cryptographic Tests
   <https://github.com/ethereum/tests/blob/develop/BasicTests/crypto.json>`_
 
 
-/BasicTests/crypto.json
+- `/KeyStoreTests/basic_tests.json
   <https://github.com/ethereum/tests/blob/develop/KeyStoreTests/basic_tests.json>`_
 
 

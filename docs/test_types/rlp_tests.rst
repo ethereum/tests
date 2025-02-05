@@ -5,7 +5,7 @@ RLP Test
 
 Location `/RLPTests <https://github.com/ethereum/tests/tree/develop/RLPTests>`_
 
-Describes an **RLP** (https://github.com/ethereum/wiki/wiki/RLP) encoding using the .json file.
+Describes an **RLP** (https://ethereum.org/en/developers/docs/data-structures-and-encoding/#recursive-length-prefix) encoding using the .json file.
 
 Test Implementation
 ===================

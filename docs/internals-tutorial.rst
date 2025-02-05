@@ -76,7 +76,7 @@ but any code provided source (either LLL or Solidity) is compiled.
 
 The **post:** section is the situation after the test is run. This could be different for 
 `different versions of the Ethereum protocol 
-<https://en.wikipedia.org/wiki/Ethereum#Milestones>`_, 
+<https://ethereum.org/en/history/>`_, 
 so there is a value for every version that was checked. In this case, the 
 only one is Istanbul.
 
@@ -214,9 +214,7 @@ run with depth two, etc.
 
      "depth":1,
 
-`Contracts get a refund for releasing storage they no longer need by setting it to zero) 
-<https://media.consensys.net/ethereum-gas-fuel-and-fees-3333e17fe1dc#:~:text=Gas%20refund>`_.
-This is the amount of the refund.
+Contracts get a refund for releasing storage they no longer need by setting it to zero. This is the amount of the refund.
 
 ::
 

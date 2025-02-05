@@ -50,8 +50,6 @@ Format
 
 Fields
 ------
-`You can read the definition of Ethereum block header fields here
-<https://medium.com/@derao512/ethereum-under-the-hood-part-7-blocks-7f223510ba10>`_.
 
 Note that this section only contains the fields that are relevant to single
 transaction tests.

@@ -15,7 +15,7 @@
  
       :raw 0x600160010160005500
 
-  - `Lisp Like Language (lll) <http://blog.syrinx.net/the-resurrection-of-lll-part-1/>`_, 
+  - `Lisp Like Language (lll) <https://web.archive.org/web/20220331080211/https://blog.syrinx.net/the-resurrection-of-lll-part-1/>`_, 
     for example:
    
     ::
