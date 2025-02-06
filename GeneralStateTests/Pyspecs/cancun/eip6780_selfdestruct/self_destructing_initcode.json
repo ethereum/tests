@@ -3,16 +3,27 @@
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
             "description" : "Test function documentation:\n\n    Test that a contract can self-destruct in its initcode.\n\n    Behavior is the same before and after EIP-6780.\n\n    Test using:\n        - Different initial balances for the self-destructing contract\n        - Different opcodes: CREATE, CREATE2\n        - Different number of calls to the self-destructing contract in the same tx",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "1ef4febe35bb58ac80ddedf5f3d2218386afd43d035d7ea58e2d509be08dcf13",
-            "hash" : "0x90d420248f9575a3bf4d80d3a56ae2796520035cf559fd5b8a4a89cd40f48f5e",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "59fe87cd5d07498edc5618c393efdfee3ce60e9475f47a6c5842747363498dda",
+            "hash" : "0x2e0f6427cbb42e368b4436782624344c32e8b19d91615cfcf3dffcc9adbe2e4c",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip6780_selfdestruct/test_selfdestruct.py",
-            "sourceHash" : "192a0a2bfb17c1205f0abab817d7ea467678a6ed0614415bd13171bb1439bb17",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_47a8c796_98e9_4f56_91ae_6f161b117b75/test_selfdestruct.py#L344"
+            "sourceHash" : "de1aadf9bb66472e6648582d5f645e0480f762e70cdda71ffefdb9dd85e3b9a4",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_1825ccf2_f214_46d8_bc4f_99085acb257d/test_selfdestruct.py#L344"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -34,6 +45,46 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x6000600055",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x00" : "0x01"
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001100" : {
+                            "balance" : "0x00",
+                            "code" : "0x600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x079179",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0x6295ee1b4f6dd65047762f924ecd367c17eabf8f" : {
+                            "balance" : "0x00",
+                            "code" : "0x00",
+                            "nonce" : "0x02",
+                            "storage" : {
+                                "0x00" : "0xedce294eb2e56331034f31b1cc9c48a30ffe77f1",
+                                "0x02" : "0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470"
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5de86c5c2",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf89a800a8307a1208080b84d6013600060006111003c6000601360006000f560005573edce294eb2e56331034f31b1cc9c48a30ffe77f13b60015573edce294eb2e56331034f31b1cc9c48a30ffe77f13f60025560016020f325a0cf31d5afd1d89bfdb51d8ee45f0637010729943fdeb85a18c4a5312b1d267d5aa00f220518c81c457c7267a257cce61f51c4a719614135e5c32f8b0c83f2cfc3fa"
                 }
             ]
@@ -83,16 +134,27 @@
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
             "description" : "Test function documentation:\n\n    Test that a contract can self-destruct in its initcode.\n\n    Behavior is the same before and after EIP-6780.\n\n    Test using:\n        - Different initial balances for the self-destructing contract\n        - Different opcodes: CREATE, CREATE2\n        - Different number of calls to the self-destructing contract in the same tx",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "12db0a9dd3b35b4dc1fae2a020fce1a7b2dc0387f1e423481fe6ba7d4562c1b3",
-            "hash" : "0x5e50d36e9d9822a7acf41e8b20918979c1bf30bda63b2be32979fffd624a738f",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "923c02669e20af95a653b72af8c0ec8981c72778780464fdd115a1f3474448f8",
+            "hash" : "0x2e035d3645b8b5e80659aa9486abd7d5dbe92cf38ef1e6aeaf9464f41e703f2f",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip6780_selfdestruct/test_selfdestruct.py",
-            "sourceHash" : "192a0a2bfb17c1205f0abab817d7ea467678a6ed0614415bd13171bb1439bb17",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_47a8c796_98e9_4f56_91ae_6f161b117b75/test_selfdestruct.py#L344"
+            "sourceHash" : "de1aadf9bb66472e6648582d5f645e0480f762e70cdda71ffefdb9dd85e3b9a4",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_1825ccf2_f214_46d8_bc4f_99085acb257d/test_selfdestruct.py#L344"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -114,6 +176,46 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x6000600055",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x00" : "0x01"
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001100" : {
+                            "balance" : "0x00",
+                            "code" : "0x600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x079122",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0x6295ee1b4f6dd65047762f924ecd367c17eabf8f" : {
+                            "balance" : "0x00",
+                            "code" : "0x00",
+                            "nonce" : "0x02",
+                            "storage" : {
+                                "0x00" : "0x64e2ebd6405af8cb348aec519084d3fff42ebba6",
+                                "0x02" : "0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470"
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5de86c6e4",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf898800a8307a1208080b84b6013600060006111003c601360006000f06000557364e2ebd6405af8cb348aec519084d3fff42ebba63b6001557364e2ebd6405af8cb348aec519084d3fff42ebba63f60025560016020f325a0fcc6f9a7fcf93e431743d3de6cce41392ade2a4bd4cd754cf7e49a88db152b0ca078802189847959e356135385f99d89d78c020a0411fb8ba8ed6757a254c8b5e1"
                 }
             ]
@@ -163,16 +265,27 @@
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
             "description" : "Test function documentation:\n\n    Test that a contract can self-destruct in its initcode.\n\n    Behavior is the same before and after EIP-6780.\n\n    Test using:\n        - Different initial balances for the self-destructing contract\n        - Different opcodes: CREATE, CREATE2\n        - Different number of calls to the self-destructing contract in the same tx",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "3cf6ea3995e7610a35b05021f79fa8de3f89b4c44fa564eaaca67b05161a82ad",
-            "hash" : "0x4571e5ba635678ea5721bf543ce20d45b8fa2cb8bfd3c0b31533165eef902521",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "f8950db1bb1b656ff7eb39d9e6c6a826feea6bf07f5652e3e46e9fc6bd3a2c7e",
+            "hash" : "0xc5a39cded10a5c601054759cf322c3a0d875c332310e41a870f354319b0335d1",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip6780_selfdestruct/test_selfdestruct.py",
-            "sourceHash" : "192a0a2bfb17c1205f0abab817d7ea467678a6ed0614415bd13171bb1439bb17",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_47a8c796_98e9_4f56_91ae_6f161b117b75/test_selfdestruct.py#L344"
+            "sourceHash" : "de1aadf9bb66472e6648582d5f645e0480f762e70cdda71ffefdb9dd85e3b9a4",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_1825ccf2_f214_46d8_bc4f_99085acb257d/test_selfdestruct.py#L344"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -194,6 +307,47 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x6000600055",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x00" : "0x01"
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001100" : {
+                            "balance" : "0x00",
+                            "code" : "0x600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x08bbb4",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0x6295ee1b4f6dd65047762f924ecd367c17eabf8f" : {
+                            "balance" : "0x00",
+                            "code" : "0x00",
+                            "nonce" : "0x02",
+                            "storage" : {
+                                "0x00" : "0xedce294eb2e56331034f31b1cc9c48a30ffe77f1",
+                                "0x02" : "0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470",
+                                "0x03" : "0x01"
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5de82e3a8",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf8d7800a8307a1208080b88a6013600060006111003c6000601360006000f560005573edce294eb2e56331034f31b1cc9c48a30ffe77f13b60015573edce294eb2e56331034f31b1cc9c48a30ffe77f13f6002556000600060006000600073edce294eb2e56331034f31b1cc9c48a30ffe77f145f160035573edce294eb2e56331034f31b1cc9c48a30ffe77f13160045560016020f325a0e43e59249f1702fd26df9dddd3461161884fb393e793a1a6084a981dcfdfd4c9a044f994ded62d220259f0fea64cb96560db69e603c33be7568dc9e7fa6024007f"
                 }
             ]
@@ -243,16 +397,27 @@
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
             "description" : "Test function documentation:\n\n    Test that a contract can self-destruct in its initcode.\n\n    Behavior is the same before and after EIP-6780.\n\n    Test using:\n        - Different initial balances for the self-destructing contract\n        - Different opcodes: CREATE, CREATE2\n        - Different number of calls to the self-destructing contract in the same tx",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "b9e7c4b57a58e64b15e24e861f126e5affdf4196fd603732985fa9a2530c5114",
-            "hash" : "0x39dc4f53f13fd402a4a2f849fe1fc497b203fb0ffa5a1213239cf5941abaabc2",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "a008ae79f27b5c460ca704630b7db1bac7d38d033a7eead7df16ae5da1912d0f",
+            "hash" : "0x7c9daa1d9e55aca21a31c3373d4d75ce8d5132020ed5cf3b87e1361c6bad26d8",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip6780_selfdestruct/test_selfdestruct.py",
-            "sourceHash" : "192a0a2bfb17c1205f0abab817d7ea467678a6ed0614415bd13171bb1439bb17",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_47a8c796_98e9_4f56_91ae_6f161b117b75/test_selfdestruct.py#L344"
+            "sourceHash" : "de1aadf9bb66472e6648582d5f645e0480f762e70cdda71ffefdb9dd85e3b9a4",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_1825ccf2_f214_46d8_bc4f_99085acb257d/test_selfdestruct.py#L344"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -274,6 +439,47 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x6000600055",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x00" : "0x01"
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001100" : {
+                            "balance" : "0x00",
+                            "code" : "0x600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x08bb5d",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0x6295ee1b4f6dd65047762f924ecd367c17eabf8f" : {
+                            "balance" : "0x00",
+                            "code" : "0x00",
+                            "nonce" : "0x02",
+                            "storage" : {
+                                "0x00" : "0x64e2ebd6405af8cb348aec519084d3fff42ebba6",
+                                "0x02" : "0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470",
+                                "0x03" : "0x01"
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5de82e4ca",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf8d5800a8307a1208080b8886013600060006111003c601360006000f06000557364e2ebd6405af8cb348aec519084d3fff42ebba63b6001557364e2ebd6405af8cb348aec519084d3fff42ebba63f600255600060006000600060007364e2ebd6405af8cb348aec519084d3fff42ebba645f16003557364e2ebd6405af8cb348aec519084d3fff42ebba63160045560016020f325a0932836d4c0efa2fd58f39c003383d32d250dd0ce73203c6be027fd2f2668a9a4a00e44b8774a224819a896c8c955d3f681517cdac929b9899d2a6c1fb5fe439d28"
                 }
             ]
@@ -323,16 +529,27 @@
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
             "description" : "Test function documentation:\n\n    Test that a contract can self-destruct in its initcode.\n\n    Behavior is the same before and after EIP-6780.\n\n    Test using:\n        - Different initial balances for the self-destructing contract\n        - Different opcodes: CREATE, CREATE2\n        - Different number of calls to the self-destructing contract in the same tx",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "ce04541822c9b5587d91fe8681b177d168e4bac00e021da50114aa547060b0ba",
-            "hash" : "0x61f1e8428d3822946fefca2581a95231ff65aeaecc44e21bcc903299e1f699bb",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "3ca4f2c4537a50905e88ace8da773cecd8e5ec950ee89bbe379f28932e019ceb",
+            "hash" : "0xb53287e0728a5a12c1fb155805e7366e8a4f6397773c6fe60f3281d293714585",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip6780_selfdestruct/test_selfdestruct.py",
-            "sourceHash" : "192a0a2bfb17c1205f0abab817d7ea467678a6ed0614415bd13171bb1439bb17",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_47a8c796_98e9_4f56_91ae_6f161b117b75/test_selfdestruct.py#L344"
+            "sourceHash" : "de1aadf9bb66472e6648582d5f645e0480f762e70cdda71ffefdb9dd85e3b9a4",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_1825ccf2_f214_46d8_bc4f_99085acb257d/test_selfdestruct.py#L344"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -354,6 +571,46 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x0186a0",
+                            "code" : "0x6000600055",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x00" : "0x01"
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001100" : {
+                            "balance" : "0x00",
+                            "code" : "0x600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x079179",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0x6295ee1b4f6dd65047762f924ecd367c17eabf8f" : {
+                            "balance" : "0x00",
+                            "code" : "0x00",
+                            "nonce" : "0x02",
+                            "storage" : {
+                                "0x00" : "0xedce294eb2e56331034f31b1cc9c48a30ffe77f1",
+                                "0x02" : "0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470"
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5de86c5c2",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf89a800a8307a1208080b84d6013600060006111003c6000601360006000f560005573edce294eb2e56331034f31b1cc9c48a30ffe77f13b60015573edce294eb2e56331034f31b1cc9c48a30ffe77f13f60025560016020f325a0cf31d5afd1d89bfdb51d8ee45f0637010729943fdeb85a18c4a5312b1d267d5aa00f220518c81c457c7267a257cce61f51c4a719614135e5c32f8b0c83f2cfc3fa"
                 }
             ]
@@ -410,16 +667,27 @@
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
             "description" : "Test function documentation:\n\n    Test that a contract can self-destruct in its initcode.\n\n    Behavior is the same before and after EIP-6780.\n\n    Test using:\n        - Different initial balances for the self-destructing contract\n        - Different opcodes: CREATE, CREATE2\n        - Different number of calls to the self-destructing contract in the same tx",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "eeef05663e6d85bd3f5885938b38b6ea86d926fec7845a43b35a82ac1d56aed7",
-            "hash" : "0xa14f83dd66c45b9ba066dfa7608c3646b961e7474988f415c503758f414ad0bd",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "fe4aabfbf8fa3a856888332336d13e4d16021e749b3ba1c48eb66d34fa43956a",
+            "hash" : "0x104a907f88d8e35cbfe8352d49903b2100699629901f464f8039f9e2e9910c52",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip6780_selfdestruct/test_selfdestruct.py",
-            "sourceHash" : "192a0a2bfb17c1205f0abab817d7ea467678a6ed0614415bd13171bb1439bb17",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_47a8c796_98e9_4f56_91ae_6f161b117b75/test_selfdestruct.py#L344"
+            "sourceHash" : "de1aadf9bb66472e6648582d5f645e0480f762e70cdda71ffefdb9dd85e3b9a4",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_1825ccf2_f214_46d8_bc4f_99085acb257d/test_selfdestruct.py#L344"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -441,6 +709,46 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x0186a0",
+                            "code" : "0x6000600055",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x00" : "0x01"
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001100" : {
+                            "balance" : "0x00",
+                            "code" : "0x600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x079122",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0x6295ee1b4f6dd65047762f924ecd367c17eabf8f" : {
+                            "balance" : "0x00",
+                            "code" : "0x00",
+                            "nonce" : "0x02",
+                            "storage" : {
+                                "0x00" : "0x64e2ebd6405af8cb348aec519084d3fff42ebba6",
+                                "0x02" : "0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470"
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5de86c6e4",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf898800a8307a1208080b84b6013600060006111003c601360006000f06000557364e2ebd6405af8cb348aec519084d3fff42ebba63b6001557364e2ebd6405af8cb348aec519084d3fff42ebba63f60025560016020f325a0fcc6f9a7fcf93e431743d3de6cce41392ade2a4bd4cd754cf7e49a88db152b0ca078802189847959e356135385f99d89d78c020a0411fb8ba8ed6757a254c8b5e1"
                 }
             ]
@@ -497,16 +805,27 @@
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
             "description" : "Test function documentation:\n\n    Test that a contract can self-destruct in its initcode.\n\n    Behavior is the same before and after EIP-6780.\n\n    Test using:\n        - Different initial balances for the self-destructing contract\n        - Different opcodes: CREATE, CREATE2\n        - Different number of calls to the self-destructing contract in the same tx",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "600b3f4d71e52023c8872b2084ece13d50413999f692eacc54af48ffcd59c98c",
-            "hash" : "0xe9b1727d67dad6eaea885de0cc889d47077650acf1bd928299e6d3fe6617b8dc",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "693c4b165ac2690e11d3fd8f86977fd5d0fd59e1c4564802fc99481b0aaec0d8",
+            "hash" : "0xca18d748d96db0bb162e860ad9f3fb5e25ea44e7dd465ba5e8a7c4388e66c950",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip6780_selfdestruct/test_selfdestruct.py",
-            "sourceHash" : "192a0a2bfb17c1205f0abab817d7ea467678a6ed0614415bd13171bb1439bb17",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_47a8c796_98e9_4f56_91ae_6f161b117b75/test_selfdestruct.py#L344"
+            "sourceHash" : "de1aadf9bb66472e6648582d5f645e0480f762e70cdda71ffefdb9dd85e3b9a4",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_1825ccf2_f214_46d8_bc4f_99085acb257d/test_selfdestruct.py#L344"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -528,6 +847,47 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x0186a0",
+                            "code" : "0x6000600055",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x00" : "0x01"
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001100" : {
+                            "balance" : "0x00",
+                            "code" : "0x600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x08bbb4",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0x6295ee1b4f6dd65047762f924ecd367c17eabf8f" : {
+                            "balance" : "0x00",
+                            "code" : "0x00",
+                            "nonce" : "0x02",
+                            "storage" : {
+                                "0x00" : "0xedce294eb2e56331034f31b1cc9c48a30ffe77f1",
+                                "0x02" : "0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470",
+                                "0x03" : "0x01"
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5de82e3a8",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf8d7800a8307a1208080b88a6013600060006111003c6000601360006000f560005573edce294eb2e56331034f31b1cc9c48a30ffe77f13b60015573edce294eb2e56331034f31b1cc9c48a30ffe77f13f6002556000600060006000600073edce294eb2e56331034f31b1cc9c48a30ffe77f145f160035573edce294eb2e56331034f31b1cc9c48a30ffe77f13160045560016020f325a0e43e59249f1702fd26df9dddd3461161884fb393e793a1a6084a981dcfdfd4c9a044f994ded62d220259f0fea64cb96560db69e603c33be7568dc9e7fa6024007f"
                 }
             ]
@@ -584,16 +944,27 @@
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
             "description" : "Test function documentation:\n\n    Test that a contract can self-destruct in its initcode.\n\n    Behavior is the same before and after EIP-6780.\n\n    Test using:\n        - Different initial balances for the self-destructing contract\n        - Different opcodes: CREATE, CREATE2\n        - Different number of calls to the self-destructing contract in the same tx",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "f5b309b9bf3dd15532d795b29f3613c2c10a4a505a53ee5d6a4048c3174d1da6",
-            "hash" : "0xbd9c376a3e7fdd307ff5801d2c239020ca04f4d6dde0deec1ae604485cc727b8",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "8bb49a9a79d327f32810e15ce1af40958fc186e1d50a4d2c51abfd3ba4655094",
+            "hash" : "0xd023a07e09b9f6bb59e78fbdcdb1822b5857aa1c835c48ef9baaa18d8139b5f5",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip6780_selfdestruct/test_selfdestruct.py",
-            "sourceHash" : "192a0a2bfb17c1205f0abab817d7ea467678a6ed0614415bd13171bb1439bb17",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_47a8c796_98e9_4f56_91ae_6f161b117b75/test_selfdestruct.py#L344"
+            "sourceHash" : "de1aadf9bb66472e6648582d5f645e0480f762e70cdda71ffefdb9dd85e3b9a4",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_1825ccf2_f214_46d8_bc4f_99085acb257d/test_selfdestruct.py#L344"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -615,6 +986,47 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x0186a0",
+                            "code" : "0x6000600055",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x00" : "0x01"
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001100" : {
+                            "balance" : "0x00",
+                            "code" : "0x600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x08bb5d",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0x6295ee1b4f6dd65047762f924ecd367c17eabf8f" : {
+                            "balance" : "0x00",
+                            "code" : "0x00",
+                            "nonce" : "0x02",
+                            "storage" : {
+                                "0x00" : "0x64e2ebd6405af8cb348aec519084d3fff42ebba6",
+                                "0x02" : "0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470",
+                                "0x03" : "0x01"
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5de82e4ca",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf8d5800a8307a1208080b8886013600060006111003c601360006000f06000557364e2ebd6405af8cb348aec519084d3fff42ebba63b6001557364e2ebd6405af8cb348aec519084d3fff42ebba63f600255600060006000600060007364e2ebd6405af8cb348aec519084d3fff42ebba645f16003557364e2ebd6405af8cb348aec519084d3fff42ebba63160045560016020f325a0932836d4c0efa2fd58f39c003383d32d250dd0ce73203c6be027fd2f2668a9a4a00e44b8774a224819a896c8c955d3f681517cdac929b9899d2a6c1fb5fe439d28"
                 }
             ]
@@ -671,16 +1083,20 @@
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
             "description" : "Test function documentation:\n\n    Test that a contract can self-destruct in its initcode.\n\n    Behavior is the same before and after EIP-6780.\n\n    Test using:\n        - Different initial balances for the self-destructing contract\n        - Different opcodes: CREATE, CREATE2\n        - Different number of calls to the self-destructing contract in the same tx",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "193e24e993e53da0ee0c86c64b22a17d4debb6ebda94a516047400852499131e",
-            "hash" : "0x8c9ebe32fd9d08587e20687dcbf35d04448b90b5b28125f78d2f1eb8e6e6634a",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "3fc2233a63e378c82176a55845d1ac1c5f61d7b1033fd566bfa1a3f9598645ae",
+            "hash" : "0x34ce774317b25c7e731d31f0b77814922298629002d1abc8301d9c622ced8966",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip6780_selfdestruct/test_selfdestruct.py",
-            "sourceHash" : "192a0a2bfb17c1205f0abab817d7ea467678a6ed0614415bd13171bb1439bb17",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_47a8c796_98e9_4f56_91ae_6f161b117b75/test_selfdestruct.py#L344"
+            "sourceHash" : "de1aadf9bb66472e6648582d5f645e0480f762e70cdda71ffefdb9dd85e3b9a4",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_1825ccf2_f214_46d8_bc4f_99085acb257d/test_selfdestruct.py#L344"
+        },
+        "config" : {
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -701,6 +1117,46 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x6000600055",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x00" : "0x01"
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001100" : {
+                            "balance" : "0x00",
+                            "code" : "0x600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x079179",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0x6295ee1b4f6dd65047762f924ecd367c17eabf8f" : {
+                            "balance" : "0x00",
+                            "code" : "0x00",
+                            "nonce" : "0x02",
+                            "storage" : {
+                                "0x00" : "0xedce294eb2e56331034f31b1cc9c48a30ffe77f1",
+                                "0x02" : "0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470"
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5de86c5c2",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf89a800a8307a1208080b84d6013600060006111003c6000601360006000f560005573edce294eb2e56331034f31b1cc9c48a30ffe77f13b60015573edce294eb2e56331034f31b1cc9c48a30ffe77f13f60025560016020f325a0cf31d5afd1d89bfdb51d8ee45f0637010729943fdeb85a18c4a5312b1d267d5aa00f220518c81c457c7267a257cce61f51c4a719614135e5c32f8b0c83f2cfc3fa"
                 }
             ]
@@ -750,16 +1206,20 @@
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
             "description" : "Test function documentation:\n\n    Test that a contract can self-destruct in its initcode.\n\n    Behavior is the same before and after EIP-6780.\n\n    Test using:\n        - Different initial balances for the self-destructing contract\n        - Different opcodes: CREATE, CREATE2\n        - Different number of calls to the self-destructing contract in the same tx",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "5d9f18c1901557f930e9305418824ae02c448ff93bdc02c24dc71e4012b9a61f",
-            "hash" : "0xddadb48d855d92a737b6767e133d62bb180d37f78cb4a750a99995583cda5d06",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "8ba6a287883c2a08b6f23adb52a6d7bbe2a4ee4ccc5cd8079cf17a4548633e6f",
+            "hash" : "0x30e01353b6d2c594ed668917cfe8139cbfde9daed5ecbf0d84e00f709bd72bde",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip6780_selfdestruct/test_selfdestruct.py",
-            "sourceHash" : "192a0a2bfb17c1205f0abab817d7ea467678a6ed0614415bd13171bb1439bb17",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_47a8c796_98e9_4f56_91ae_6f161b117b75/test_selfdestruct.py#L344"
+            "sourceHash" : "de1aadf9bb66472e6648582d5f645e0480f762e70cdda71ffefdb9dd85e3b9a4",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_1825ccf2_f214_46d8_bc4f_99085acb257d/test_selfdestruct.py#L344"
+        },
+        "config" : {
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -780,6 +1240,46 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x6000600055",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x00" : "0x01"
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001100" : {
+                            "balance" : "0x00",
+                            "code" : "0x600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x079122",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0x6295ee1b4f6dd65047762f924ecd367c17eabf8f" : {
+                            "balance" : "0x00",
+                            "code" : "0x00",
+                            "nonce" : "0x02",
+                            "storage" : {
+                                "0x00" : "0x64e2ebd6405af8cb348aec519084d3fff42ebba6",
+                                "0x02" : "0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470"
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5de86c6e4",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf898800a8307a1208080b84b6013600060006111003c601360006000f06000557364e2ebd6405af8cb348aec519084d3fff42ebba63b6001557364e2ebd6405af8cb348aec519084d3fff42ebba63f60025560016020f325a0fcc6f9a7fcf93e431743d3de6cce41392ade2a4bd4cd754cf7e49a88db152b0ca078802189847959e356135385f99d89d78c020a0411fb8ba8ed6757a254c8b5e1"
                 }
             ]
@@ -829,16 +1329,20 @@
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
             "description" : "Test function documentation:\n\n    Test that a contract can self-destruct in its initcode.\n\n    Behavior is the same before and after EIP-6780.\n\n    Test using:\n        - Different initial balances for the self-destructing contract\n        - Different opcodes: CREATE, CREATE2\n        - Different number of calls to the self-destructing contract in the same tx",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "1a02d9d7dbbacf2fce9fce9ad749ea6c51ccbf33305458b679bfbc3f28e2de6b",
-            "hash" : "0x1f8c3785db23308dd8e17f14bb7b24554d3553f1919986564a728663953ed277",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "65367d6e03893c19372cd140f57c0a7c3a76f30023963d8541f6797551a4a05b",
+            "hash" : "0x24c76941e5fe1af9fa15c28df316324c75808c4f1fbaab7d3c539ad361efef1a",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip6780_selfdestruct/test_selfdestruct.py",
-            "sourceHash" : "192a0a2bfb17c1205f0abab817d7ea467678a6ed0614415bd13171bb1439bb17",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_47a8c796_98e9_4f56_91ae_6f161b117b75/test_selfdestruct.py#L344"
+            "sourceHash" : "de1aadf9bb66472e6648582d5f645e0480f762e70cdda71ffefdb9dd85e3b9a4",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_1825ccf2_f214_46d8_bc4f_99085acb257d/test_selfdestruct.py#L344"
+        },
+        "config" : {
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -859,6 +1363,47 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x6000600055",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x00" : "0x01"
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001100" : {
+                            "balance" : "0x00",
+                            "code" : "0x600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x08bbb4",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0x6295ee1b4f6dd65047762f924ecd367c17eabf8f" : {
+                            "balance" : "0x00",
+                            "code" : "0x00",
+                            "nonce" : "0x02",
+                            "storage" : {
+                                "0x00" : "0xedce294eb2e56331034f31b1cc9c48a30ffe77f1",
+                                "0x02" : "0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470",
+                                "0x03" : "0x01"
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5de82e3a8",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf8d7800a8307a1208080b88a6013600060006111003c6000601360006000f560005573edce294eb2e56331034f31b1cc9c48a30ffe77f13b60015573edce294eb2e56331034f31b1cc9c48a30ffe77f13f6002556000600060006000600073edce294eb2e56331034f31b1cc9c48a30ffe77f145f160035573edce294eb2e56331034f31b1cc9c48a30ffe77f13160045560016020f325a0e43e59249f1702fd26df9dddd3461161884fb393e793a1a6084a981dcfdfd4c9a044f994ded62d220259f0fea64cb96560db69e603c33be7568dc9e7fa6024007f"
                 }
             ]
@@ -908,16 +1453,20 @@
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
             "description" : "Test function documentation:\n\n    Test that a contract can self-destruct in its initcode.\n\n    Behavior is the same before and after EIP-6780.\n\n    Test using:\n        - Different initial balances for the self-destructing contract\n        - Different opcodes: CREATE, CREATE2\n        - Different number of calls to the self-destructing contract in the same tx",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "ddfd840439d51fdfa1090a7d095ad5a8f8862049b904147e4b5326aad5033bbf",
-            "hash" : "0x22160974b297400ca2f03a9d7da89011453ca98ebff92a479499c067541b1488",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "7c4831cfcf286eee509dfdae259d31abf6374cd8522fd36bc03b48cb2b7c29ca",
+            "hash" : "0x5c21e52654723692ad27790495b4357855f86de596ce20566bffd9ae8a9a48d7",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip6780_selfdestruct/test_selfdestruct.py",
-            "sourceHash" : "192a0a2bfb17c1205f0abab817d7ea467678a6ed0614415bd13171bb1439bb17",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_47a8c796_98e9_4f56_91ae_6f161b117b75/test_selfdestruct.py#L344"
+            "sourceHash" : "de1aadf9bb66472e6648582d5f645e0480f762e70cdda71ffefdb9dd85e3b9a4",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_1825ccf2_f214_46d8_bc4f_99085acb257d/test_selfdestruct.py#L344"
+        },
+        "config" : {
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -938,6 +1487,47 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x6000600055",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x00" : "0x01"
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001100" : {
+                            "balance" : "0x00",
+                            "code" : "0x600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x08bb5d",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0x6295ee1b4f6dd65047762f924ecd367c17eabf8f" : {
+                            "balance" : "0x00",
+                            "code" : "0x00",
+                            "nonce" : "0x02",
+                            "storage" : {
+                                "0x00" : "0x64e2ebd6405af8cb348aec519084d3fff42ebba6",
+                                "0x02" : "0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470",
+                                "0x03" : "0x01"
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5de82e4ca",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf8d5800a8307a1208080b8886013600060006111003c601360006000f06000557364e2ebd6405af8cb348aec519084d3fff42ebba63b6001557364e2ebd6405af8cb348aec519084d3fff42ebba63f600255600060006000600060007364e2ebd6405af8cb348aec519084d3fff42ebba645f16003557364e2ebd6405af8cb348aec519084d3fff42ebba63160045560016020f325a0932836d4c0efa2fd58f39c003383d32d250dd0ce73203c6be027fd2f2668a9a4a00e44b8774a224819a896c8c955d3f681517cdac929b9899d2a6c1fb5fe439d28"
                 }
             ]
@@ -987,16 +1577,20 @@
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
             "description" : "Test function documentation:\n\n    Test that a contract can self-destruct in its initcode.\n\n    Behavior is the same before and after EIP-6780.\n\n    Test using:\n        - Different initial balances for the self-destructing contract\n        - Different opcodes: CREATE, CREATE2\n        - Different number of calls to the self-destructing contract in the same tx",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "fcab283924aa632bcca17d8e88774f1840f9698594f8847c4aab9a7da2e5e552",
-            "hash" : "0xa1215bba7440156354f8fbdd8e47d2412a85034778225dc0a71b6d9765454637",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "d85bdc04eb0699e11ea4c6c4ffdb6722e71a23decccb26653b831d36f2831b07",
+            "hash" : "0x68ebc9133800e6d2fbe0172c78f8a8d74dcec9ca8ad1e37d52bb6892af2142ea",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip6780_selfdestruct/test_selfdestruct.py",
-            "sourceHash" : "192a0a2bfb17c1205f0abab817d7ea467678a6ed0614415bd13171bb1439bb17",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_47a8c796_98e9_4f56_91ae_6f161b117b75/test_selfdestruct.py#L344"
+            "sourceHash" : "de1aadf9bb66472e6648582d5f645e0480f762e70cdda71ffefdb9dd85e3b9a4",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_1825ccf2_f214_46d8_bc4f_99085acb257d/test_selfdestruct.py#L344"
+        },
+        "config" : {
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -1017,6 +1611,46 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x0186a0",
+                            "code" : "0x6000600055",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x00" : "0x01"
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001100" : {
+                            "balance" : "0x00",
+                            "code" : "0x600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x079179",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0x6295ee1b4f6dd65047762f924ecd367c17eabf8f" : {
+                            "balance" : "0x00",
+                            "code" : "0x00",
+                            "nonce" : "0x02",
+                            "storage" : {
+                                "0x00" : "0xedce294eb2e56331034f31b1cc9c48a30ffe77f1",
+                                "0x02" : "0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470"
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5de86c5c2",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf89a800a8307a1208080b84d6013600060006111003c6000601360006000f560005573edce294eb2e56331034f31b1cc9c48a30ffe77f13b60015573edce294eb2e56331034f31b1cc9c48a30ffe77f13f60025560016020f325a0cf31d5afd1d89bfdb51d8ee45f0637010729943fdeb85a18c4a5312b1d267d5aa00f220518c81c457c7267a257cce61f51c4a719614135e5c32f8b0c83f2cfc3fa"
                 }
             ]
@@ -1073,16 +1707,20 @@
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
             "description" : "Test function documentation:\n\n    Test that a contract can self-destruct in its initcode.\n\n    Behavior is the same before and after EIP-6780.\n\n    Test using:\n        - Different initial balances for the self-destructing contract\n        - Different opcodes: CREATE, CREATE2\n        - Different number of calls to the self-destructing contract in the same tx",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "4cb3136f029f913765f3c72e196e4710bc768c6f3052ca8fbffb17c13d703a28",
-            "hash" : "0x689b9caf0ef1365efbe2eb218ae5439fa9dc6a9d60695e595120ff3eb4872a81",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "b1cf43031a516a018e3a3988172c8f0565836dd9fe6e66ca7fd3a2ea4cb359b3",
+            "hash" : "0xa9e8f305669bb65b8f0a235a5b8b4f35144f3edf75c64f7a27892c666aab7657",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip6780_selfdestruct/test_selfdestruct.py",
-            "sourceHash" : "192a0a2bfb17c1205f0abab817d7ea467678a6ed0614415bd13171bb1439bb17",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_47a8c796_98e9_4f56_91ae_6f161b117b75/test_selfdestruct.py#L344"
+            "sourceHash" : "de1aadf9bb66472e6648582d5f645e0480f762e70cdda71ffefdb9dd85e3b9a4",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_1825ccf2_f214_46d8_bc4f_99085acb257d/test_selfdestruct.py#L344"
+        },
+        "config" : {
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -1103,6 +1741,46 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x0186a0",
+                            "code" : "0x6000600055",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x00" : "0x01"
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001100" : {
+                            "balance" : "0x00",
+                            "code" : "0x600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x079122",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0x6295ee1b4f6dd65047762f924ecd367c17eabf8f" : {
+                            "balance" : "0x00",
+                            "code" : "0x00",
+                            "nonce" : "0x02",
+                            "storage" : {
+                                "0x00" : "0x64e2ebd6405af8cb348aec519084d3fff42ebba6",
+                                "0x02" : "0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470"
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5de86c6e4",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf898800a8307a1208080b84b6013600060006111003c601360006000f06000557364e2ebd6405af8cb348aec519084d3fff42ebba63b6001557364e2ebd6405af8cb348aec519084d3fff42ebba63f60025560016020f325a0fcc6f9a7fcf93e431743d3de6cce41392ade2a4bd4cd754cf7e49a88db152b0ca078802189847959e356135385f99d89d78c020a0411fb8ba8ed6757a254c8b5e1"
                 }
             ]
@@ -1159,16 +1837,20 @@
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
             "description" : "Test function documentation:\n\n    Test that a contract can self-destruct in its initcode.\n\n    Behavior is the same before and after EIP-6780.\n\n    Test using:\n        - Different initial balances for the self-destructing contract\n        - Different opcodes: CREATE, CREATE2\n        - Different number of calls to the self-destructing contract in the same tx",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "a13d3ce4e0d0296bc69c63b58efd6f9659b247b2ec7c11aa2e442baf6d73a74c",
-            "hash" : "0x49f752385243840290b009cb5b621622ef77bf0f3a82c5b5eeca4c5d8de40cd7",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "49a5241f9a8779316b6459dbc45227030641ca77ee8e5b991a6972575a60d77c",
+            "hash" : "0xc1262bfec2532556288e3ff76b0b7e079c1267cec82283dce05c50048078aac3",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip6780_selfdestruct/test_selfdestruct.py",
-            "sourceHash" : "192a0a2bfb17c1205f0abab817d7ea467678a6ed0614415bd13171bb1439bb17",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_47a8c796_98e9_4f56_91ae_6f161b117b75/test_selfdestruct.py#L344"
+            "sourceHash" : "de1aadf9bb66472e6648582d5f645e0480f762e70cdda71ffefdb9dd85e3b9a4",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_1825ccf2_f214_46d8_bc4f_99085acb257d/test_selfdestruct.py#L344"
+        },
+        "config" : {
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -1189,6 +1871,47 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x0186a0",
+                            "code" : "0x6000600055",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x00" : "0x01"
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001100" : {
+                            "balance" : "0x00",
+                            "code" : "0x600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x08bbb4",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0x6295ee1b4f6dd65047762f924ecd367c17eabf8f" : {
+                            "balance" : "0x00",
+                            "code" : "0x00",
+                            "nonce" : "0x02",
+                            "storage" : {
+                                "0x00" : "0xedce294eb2e56331034f31b1cc9c48a30ffe77f1",
+                                "0x02" : "0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470",
+                                "0x03" : "0x01"
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5de82e3a8",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf8d7800a8307a1208080b88a6013600060006111003c6000601360006000f560005573edce294eb2e56331034f31b1cc9c48a30ffe77f13b60015573edce294eb2e56331034f31b1cc9c48a30ffe77f13f6002556000600060006000600073edce294eb2e56331034f31b1cc9c48a30ffe77f145f160035573edce294eb2e56331034f31b1cc9c48a30ffe77f13160045560016020f325a0e43e59249f1702fd26df9dddd3461161884fb393e793a1a6084a981dcfdfd4c9a044f994ded62d220259f0fea64cb96560db69e603c33be7568dc9e7fa6024007f"
                 }
             ]
@@ -1245,16 +1968,20 @@
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
             "description" : "Test function documentation:\n\n    Test that a contract can self-destruct in its initcode.\n\n    Behavior is the same before and after EIP-6780.\n\n    Test using:\n        - Different initial balances for the self-destructing contract\n        - Different opcodes: CREATE, CREATE2\n        - Different number of calls to the self-destructing contract in the same tx",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "b28a81e71f5a1434b4cbb857301e7095d57a9c5b5c30dabdcdd9b5838c2156f0",
-            "hash" : "0xda8b0ab54718c4c8946e8d68041832174a672e613784e8fe0f304a3f34c05987",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "4ca1f846de36b729f9a5b56c44bef66e663a61ca52a1330a27df5f79bba5369b",
+            "hash" : "0xdc58eb677ac54cbc2df1337da1fff28af81300dfdd5e888c0cc771ce7b10b9b2",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip6780_selfdestruct/test_selfdestruct.py",
-            "sourceHash" : "192a0a2bfb17c1205f0abab817d7ea467678a6ed0614415bd13171bb1439bb17",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_47a8c796_98e9_4f56_91ae_6f161b117b75/test_selfdestruct.py#L344"
+            "sourceHash" : "de1aadf9bb66472e6648582d5f645e0480f762e70cdda71ffefdb9dd85e3b9a4",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_1825ccf2_f214_46d8_bc4f_99085acb257d/test_selfdestruct.py#L344"
+        },
+        "config" : {
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -1275,6 +2002,47 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x0186a0",
+                            "code" : "0x6000600055",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x00" : "0x01"
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001100" : {
+                            "balance" : "0x00",
+                            "code" : "0x600160005401600055611000ff600060005500",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x08bb5d",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0x6295ee1b4f6dd65047762f924ecd367c17eabf8f" : {
+                            "balance" : "0x00",
+                            "code" : "0x00",
+                            "nonce" : "0x02",
+                            "storage" : {
+                                "0x00" : "0x64e2ebd6405af8cb348aec519084d3fff42ebba6",
+                                "0x02" : "0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470",
+                                "0x03" : "0x01"
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5de82e4ca",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf8d5800a8307a1208080b8886013600060006111003c601360006000f06000557364e2ebd6405af8cb348aec519084d3fff42ebba63b6001557364e2ebd6405af8cb348aec519084d3fff42ebba63f600255600060006000600060007364e2ebd6405af8cb348aec519084d3fff42ebba645f16003557364e2ebd6405af8cb348aec519084d3fff42ebba63160045560016020f325a0932836d4c0efa2fd58f39c003383d32d250dd0ce73203c6be027fd2f2668a9a4a00e44b8774a224819a896c8c955d3f681517cdac929b9899d2a6c1fb5fe439d28"
                 }
             ]

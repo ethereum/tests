@@ -3,16 +3,27 @@
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
             "description" : "Test function documentation:\n\n    Perform MCOPY operations that expand the memory by huge amounts, and verify that it correctly\n    runs out of gas.",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "47ee3839634a29fb0589ad64f13d74f8964f9bd014f53fad98a05b95e2bccffe",
-            "hash" : "0xbe10e558d0930d62da9b96d6192c6f02669ff269568302fdc91f5eed408eada4",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "4d692532f06a7fadf5e351a9a8b0ad31d3915eae430fd326a3626e2786c3fe85",
+            "hash" : "0xd031c917edcdc146812275c317b4f1b4fc4e339195067743fb0528b86f1b1ac2",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip5656_mcopy/test_mcopy_memory_expansion.py",
-            "sourceHash" : "5f429346640f0bf78f41737bac4d49d9fa6da150e1c63878418b8b15c5072b37",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_d3ff6bcd_4958_48b1_8883_4c07a124b8ec/test_mcopy_memory_expansion.py#L213"
+            "sourceHash" : "ffa72899c3a0e80e588aebbf436a584be6637cbd17fad557136354daff60b1c1",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_fbff60a0_fba0_46e5_857f_0741494a0d47/test_mcopy_memory_expansion.py#L229"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -27,14 +38,37 @@
         "post" : {
             "Cancun" : [
                 {
-                    "hash" : "0x458c66b9030f54cdc9750fd74c99e53c552f6adc688e119373c60d480493ce0f",
+                    "hash" : "0xd0f864113e2da577ecca2552bc422702d2056d20a7bd88f82bbfa45636470e89",
                     "indexes" : {
                         "data" : 0,
                         "gas" : 0,
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
-                    "txbytes" : "0x02f864018080078405f5e1009400000000000000000000000000000000000010008080c001a089152de0a5d4d50cb45c1084982ccd294460331421ea63ce6dd6ca9344032df6a03cad9b251a7a20d7ad65779004c22a5d8024558703f9cbe5d6e0fab9bd8ebf98"
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x36600060003760006000612015600155600160007f7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff5ef3",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x11e1a300",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5a3053600",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
+                    "txbytes" : "0x01f9013301800a8405f5e1009400000000000000000000000000000000000010008080f8cfd6940000000000000000000000000000000000000001c0d6940000000000000000000000000000000000000002c0d6940000000000000000000000000000000000000003c0d6940000000000000000000000000000000000000004c0d6940000000000000000000000000000000000000005c0d6940000000000000000000000000000000000000006c0d6940000000000000000000000000000000000000007c0d6940000000000000000000000000000000000000008c0d6940000000000000000000000000000000000000009c001a0b24a5be01d56e53dcf457e6e73feaf946ba5801adfdc434a1f163e4500f36f09a0630315e4490d60b11dc3fbe1268ad4f7ce5454d67e7f2bdcde660630568120bb"
                 }
             ]
         },
@@ -47,7 +81,7 @@
                 }
             },
             "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-                "balance" : "0x29b92700",
+                "balance" : "0x3635c9adc5dea00000",
                 "code" : "0x",
                 "nonce" : "0x00",
                 "storage" : {
@@ -57,6 +91,51 @@
         "transaction" : {
             "accessLists" : [
                 [
+                    {
+                        "address" : "0x0000000000000000000000000000000000000001",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000002",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000003",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000004",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000005",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000006",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000007",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000008",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000009",
+                        "storageKeys" : [
+                        ]
+                    }
                 ]
             ],
             "data" : [
@@ -65,8 +144,7 @@
             "gasLimit" : [
                 "0x05f5e100"
             ],
-            "maxFeePerGas" : "0x07",
-            "maxPriorityFeePerGas" : "0x00",
+            "gasPrice" : "0x0a",
             "nonce" : "0x00",
             "secretKey" : "0x45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8",
             "sender" : "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b",
@@ -80,16 +158,27 @@
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
             "description" : "Test function documentation:\n\n    Perform MCOPY operations that expand the memory by huge amounts, and verify that it correctly\n    runs out of gas.",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "6172cb847e8f109534cb0c973318d4af016230e0891644a7af50999f6069ce7b",
-            "hash" : "0xa08e01eec6436540480225267e1976ddd7592a8b1d453c1cb8f4366466f311e4",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "7623a0be1e91c42e12a04444741c2f0588e6ad83be4cc65984513ce5d5a8c778",
+            "hash" : "0x32d7ba12d24d87b133ad539c641dbd6fa211ed7c1f03ffc324b016b63033fb91",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip5656_mcopy/test_mcopy_memory_expansion.py",
-            "sourceHash" : "5f429346640f0bf78f41737bac4d49d9fa6da150e1c63878418b8b15c5072b37",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_d3ff6bcd_4958_48b1_8883_4c07a124b8ec/test_mcopy_memory_expansion.py#L213"
+            "sourceHash" : "ffa72899c3a0e80e588aebbf436a584be6637cbd17fad557136354daff60b1c1",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_fbff60a0_fba0_46e5_857f_0741494a0d47/test_mcopy_memory_expansion.py#L229"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -104,14 +193,37 @@
         "post" : {
             "Cancun" : [
                 {
-                    "hash" : "0x213dfe2ef829d8ef94b285d5af7d0195fd7efa95068a28c34c1d301563e561cb",
+                    "hash" : "0x6066b8a97d20725811186203192628b4c9d3e24ccd23090a8ed5637012461b0a",
                     "indexes" : {
                         "data" : 0,
                         "gas" : 0,
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
-                    "txbytes" : "0x02f864018080078405f5e1009400000000000000000000000000000000000010008080c001a089152de0a5d4d50cb45c1084982ccd294460331421ea63ce6dd6ca9344032df6a03cad9b251a7a20d7ad65779004c22a5d8024558703f9cbe5d6e0fab9bd8ebf98"
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x366000600037600060006120156001557f7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff600060005ef3",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x11e1a300",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5a3053600",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
+                    "txbytes" : "0x01f9013301800a8405f5e1009400000000000000000000000000000000000010008080f8cfd6940000000000000000000000000000000000000001c0d6940000000000000000000000000000000000000002c0d6940000000000000000000000000000000000000003c0d6940000000000000000000000000000000000000004c0d6940000000000000000000000000000000000000005c0d6940000000000000000000000000000000000000006c0d6940000000000000000000000000000000000000007c0d6940000000000000000000000000000000000000008c0d6940000000000000000000000000000000000000009c001a0b24a5be01d56e53dcf457e6e73feaf946ba5801adfdc434a1f163e4500f36f09a0630315e4490d60b11dc3fbe1268ad4f7ce5454d67e7f2bdcde660630568120bb"
                 }
             ]
         },
@@ -124,7 +236,7 @@
                 }
             },
             "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-                "balance" : "0x29b92700",
+                "balance" : "0x3635c9adc5dea00000",
                 "code" : "0x",
                 "nonce" : "0x00",
                 "storage" : {
@@ -134,6 +246,51 @@
         "transaction" : {
             "accessLists" : [
                 [
+                    {
+                        "address" : "0x0000000000000000000000000000000000000001",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000002",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000003",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000004",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000005",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000006",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000007",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000008",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000009",
+                        "storageKeys" : [
+                        ]
+                    }
                 ]
             ],
             "data" : [
@@ -142,8 +299,7 @@
             "gasLimit" : [
                 "0x05f5e100"
             ],
-            "maxFeePerGas" : "0x07",
-            "maxPriorityFeePerGas" : "0x00",
+            "gasPrice" : "0x0a",
             "nonce" : "0x00",
             "secretKey" : "0x45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8",
             "sender" : "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b",
@@ -157,16 +313,27 @@
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
             "description" : "Test function documentation:\n\n    Perform MCOPY operations that expand the memory by huge amounts, and verify that it correctly\n    runs out of gas.",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "cb88eb025695cf22747d270bbfcb42677e96ec7460e88651a583f65766136791",
-            "hash" : "0xb2ca242b868a490241b39d76efb438dfb669a2e72839ad506a7c38b98f21a0d2",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "2e99de2cbe85f2583abcb27b836e3a924bd2023aa58e5149a72d48d48abcb650",
+            "hash" : "0x66d949f3b5eb558269156f5680a5c97d3d3322f8559859af66634993bdc130d8",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip5656_mcopy/test_mcopy_memory_expansion.py",
-            "sourceHash" : "5f429346640f0bf78f41737bac4d49d9fa6da150e1c63878418b8b15c5072b37",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_d3ff6bcd_4958_48b1_8883_4c07a124b8ec/test_mcopy_memory_expansion.py#L213"
+            "sourceHash" : "ffa72899c3a0e80e588aebbf436a584be6637cbd17fad557136354daff60b1c1",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_fbff60a0_fba0_46e5_857f_0741494a0d47/test_mcopy_memory_expansion.py#L229"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -181,14 +348,37 @@
         "post" : {
             "Cancun" : [
                 {
-                    "hash" : "0x7760cf8fae55840574e1e41b03d4e47651631507d98c9aa810a59a3a4d4559ba",
+                    "hash" : "0x2d4b984c837dd9c8f200250e94d69c37f50754c6bd65bea0e939eaed169b308d",
                     "indexes" : {
                         "data" : 0,
                         "gas" : 0,
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
-                    "txbytes" : "0x02f864018080078405f5e1009400000000000000000000000000000000000010008080c001a089152de0a5d4d50cb45c1084982ccd294460331421ea63ce6dd6ca9344032df6a03cad9b251a7a20d7ad65779004c22a5d8024558703f9cbe5d6e0fab9bd8ebf98"
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x3660006000376000600061201560015560017f7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff60005ef3",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x11e1a300",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5a3053600",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
+                    "txbytes" : "0x01f9013301800a8405f5e1009400000000000000000000000000000000000010008080f8cfd6940000000000000000000000000000000000000001c0d6940000000000000000000000000000000000000002c0d6940000000000000000000000000000000000000003c0d6940000000000000000000000000000000000000004c0d6940000000000000000000000000000000000000005c0d6940000000000000000000000000000000000000006c0d6940000000000000000000000000000000000000007c0d6940000000000000000000000000000000000000008c0d6940000000000000000000000000000000000000009c001a0b24a5be01d56e53dcf457e6e73feaf946ba5801adfdc434a1f163e4500f36f09a0630315e4490d60b11dc3fbe1268ad4f7ce5454d67e7f2bdcde660630568120bb"
                 }
             ]
         },
@@ -201,7 +391,7 @@
                 }
             },
             "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-                "balance" : "0x29b92700",
+                "balance" : "0x3635c9adc5dea00000",
                 "code" : "0x",
                 "nonce" : "0x00",
                 "storage" : {
@@ -211,6 +401,51 @@
         "transaction" : {
             "accessLists" : [
                 [
+                    {
+                        "address" : "0x0000000000000000000000000000000000000001",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000002",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000003",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000004",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000005",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000006",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000007",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000008",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000009",
+                        "storageKeys" : [
+                        ]
+                    }
                 ]
             ],
             "data" : [
@@ -219,8 +454,7 @@
             "gasLimit" : [
                 "0x05f5e100"
             ],
-            "maxFeePerGas" : "0x07",
-            "maxPriorityFeePerGas" : "0x00",
+            "gasPrice" : "0x0a",
             "nonce" : "0x00",
             "secretKey" : "0x45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8",
             "sender" : "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b",
@@ -234,16 +468,27 @@
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
             "description" : "Test function documentation:\n\n    Perform MCOPY operations that expand the memory by huge amounts, and verify that it correctly\n    runs out of gas.",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "244cce50704194239ef3ada78a668cd1f18e7576b67f4a8332b313a050397ceb",
-            "hash" : "0x869efb1f41e34803ade40b99f8473044ab20c71f8035832fb2ddb30be11da1da",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "2ba0b5013f0482ea5b10e6c9da73ddbe3910620787c471e59d3018f73d14d0ec",
+            "hash" : "0xfaeddb3ecb9ee8a55060fb6d97bd7cebe9aac59372b7e5855c31993b3fe36d6c",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip5656_mcopy/test_mcopy_memory_expansion.py",
-            "sourceHash" : "5f429346640f0bf78f41737bac4d49d9fa6da150e1c63878418b8b15c5072b37",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_d3ff6bcd_4958_48b1_8883_4c07a124b8ec/test_mcopy_memory_expansion.py#L213"
+            "sourceHash" : "ffa72899c3a0e80e588aebbf436a584be6637cbd17fad557136354daff60b1c1",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_fbff60a0_fba0_46e5_857f_0741494a0d47/test_mcopy_memory_expansion.py#L229"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -258,14 +503,37 @@
         "post" : {
             "Cancun" : [
                 {
-                    "hash" : "0xe7a7604246e6bf95d21d4f7777c6392c7d188af03063ba7caf4ad56073e076de",
+                    "hash" : "0x5cb2a000b511ec71a538ecac813b9b852400658df44beb33dd418e0c7709d429",
                     "indexes" : {
                         "data" : 0,
                         "gas" : 0,
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
-                    "txbytes" : "0x02f864018080078405f5e1009400000000000000000000000000000000000010008080c001a089152de0a5d4d50cb45c1084982ccd294460331421ea63ce6dd6ca9344032df6a03cad9b251a7a20d7ad65779004c22a5d8024558703f9cbe5d6e0fab9bd8ebf98"
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x36600060003760006000612015600155600160007ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe5ef3",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x11e1a300",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5a3053600",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
+                    "txbytes" : "0x01f9013301800a8405f5e1009400000000000000000000000000000000000010008080f8cfd6940000000000000000000000000000000000000001c0d6940000000000000000000000000000000000000002c0d6940000000000000000000000000000000000000003c0d6940000000000000000000000000000000000000004c0d6940000000000000000000000000000000000000005c0d6940000000000000000000000000000000000000006c0d6940000000000000000000000000000000000000007c0d6940000000000000000000000000000000000000008c0d6940000000000000000000000000000000000000009c001a0b24a5be01d56e53dcf457e6e73feaf946ba5801adfdc434a1f163e4500f36f09a0630315e4490d60b11dc3fbe1268ad4f7ce5454d67e7f2bdcde660630568120bb"
                 }
             ]
         },
@@ -278,7 +546,7 @@
                 }
             },
             "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-                "balance" : "0x29b92700",
+                "balance" : "0x3635c9adc5dea00000",
                 "code" : "0x",
                 "nonce" : "0x00",
                 "storage" : {
@@ -288,6 +556,51 @@
         "transaction" : {
             "accessLists" : [
                 [
+                    {
+                        "address" : "0x0000000000000000000000000000000000000001",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000002",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000003",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000004",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000005",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000006",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000007",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000008",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000009",
+                        "storageKeys" : [
+                        ]
+                    }
                 ]
             ],
             "data" : [
@@ -296,8 +609,7 @@
             "gasLimit" : [
                 "0x05f5e100"
             ],
-            "maxFeePerGas" : "0x07",
-            "maxPriorityFeePerGas" : "0x00",
+            "gasPrice" : "0x0a",
             "nonce" : "0x00",
             "secretKey" : "0x45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8",
             "sender" : "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b",
@@ -311,16 +623,27 @@
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
             "description" : "Test function documentation:\n\n    Perform MCOPY operations that expand the memory by huge amounts, and verify that it correctly\n    runs out of gas.",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "e674619cfee8a1fe93b4c9fda9aca6beeecd49913d759fece1cf79a6ee63abee",
-            "hash" : "0x8bb0f4896ae3c5397653b4888040089274ca08fd8784c1ca07118cb3157449d8",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "db62d19dcc9d4bb6a32f9b3b9e02058648f5e846c84ad0655b488253b80f72f1",
+            "hash" : "0xbe3e99d9b7a2539b9ff27ead3bc9589c8424e7978c701f3544369545a47b7b4d",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip5656_mcopy/test_mcopy_memory_expansion.py",
-            "sourceHash" : "5f429346640f0bf78f41737bac4d49d9fa6da150e1c63878418b8b15c5072b37",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_d3ff6bcd_4958_48b1_8883_4c07a124b8ec/test_mcopy_memory_expansion.py#L213"
+            "sourceHash" : "ffa72899c3a0e80e588aebbf436a584be6637cbd17fad557136354daff60b1c1",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_fbff60a0_fba0_46e5_857f_0741494a0d47/test_mcopy_memory_expansion.py#L229"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -335,14 +658,37 @@
         "post" : {
             "Cancun" : [
                 {
-                    "hash" : "0x707f82d74bd6511d601ccf6246723c6b8ebc3f873ab6f0f79b4e1f36980fc086",
+                    "hash" : "0x2ffe643116465f4a716b8459b2a82a67200b7a88441eb4cbb215fb4930796ac5",
                     "indexes" : {
                         "data" : 0,
                         "gas" : 0,
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
-                    "txbytes" : "0x02f864018080078405f5e1009400000000000000000000000000000000000010008080c001a089152de0a5d4d50cb45c1084982ccd294460331421ea63ce6dd6ca9344032df6a03cad9b251a7a20d7ad65779004c22a5d8024558703f9cbe5d6e0fab9bd8ebf98"
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x36600060003760006000612015600155600160007fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff5ef3",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x11e1a300",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5a3053600",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
+                    "txbytes" : "0x01f9013301800a8405f5e1009400000000000000000000000000000000000010008080f8cfd6940000000000000000000000000000000000000001c0d6940000000000000000000000000000000000000002c0d6940000000000000000000000000000000000000003c0d6940000000000000000000000000000000000000004c0d6940000000000000000000000000000000000000005c0d6940000000000000000000000000000000000000006c0d6940000000000000000000000000000000000000007c0d6940000000000000000000000000000000000000008c0d6940000000000000000000000000000000000000009c001a0b24a5be01d56e53dcf457e6e73feaf946ba5801adfdc434a1f163e4500f36f09a0630315e4490d60b11dc3fbe1268ad4f7ce5454d67e7f2bdcde660630568120bb"
                 }
             ]
         },
@@ -355,7 +701,7 @@
                 }
             },
             "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-                "balance" : "0x29b92700",
+                "balance" : "0x3635c9adc5dea00000",
                 "code" : "0x",
                 "nonce" : "0x00",
                 "storage" : {
@@ -365,6 +711,51 @@
         "transaction" : {
             "accessLists" : [
                 [
+                    {
+                        "address" : "0x0000000000000000000000000000000000000001",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000002",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000003",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000004",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000005",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000006",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000007",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000008",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000009",
+                        "storageKeys" : [
+                        ]
+                    }
                 ]
             ],
             "data" : [
@@ -373,8 +764,7 @@
             "gasLimit" : [
                 "0x05f5e100"
             ],
-            "maxFeePerGas" : "0x07",
-            "maxPriorityFeePerGas" : "0x00",
+            "gasPrice" : "0x0a",
             "nonce" : "0x00",
             "secretKey" : "0x45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8",
             "sender" : "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b",
@@ -388,16 +778,27 @@
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
             "description" : "Test function documentation:\n\n    Perform MCOPY operations that expand the memory by huge amounts, and verify that it correctly\n    runs out of gas.",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "12aa561ee4b6e8dda23c7221363801a4e8e416fcfd258a12a9371054462647ee",
-            "hash" : "0x4aa6bbfbe912f66f808dfca7e6a7aafa3bc9e24cba7295d6e3a479f60773b758",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "d6c7ee10e640d74ec0bf43b3acec85f3c0432431b1a85e1209c5b11e3ea13461",
+            "hash" : "0x1afe1513c1a518f6c88c2a0ef38f3fca4086fc7684bc10859d5ce5a52e6f1d47",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip5656_mcopy/test_mcopy_memory_expansion.py",
-            "sourceHash" : "5f429346640f0bf78f41737bac4d49d9fa6da150e1c63878418b8b15c5072b37",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_d3ff6bcd_4958_48b1_8883_4c07a124b8ec/test_mcopy_memory_expansion.py#L213"
+            "sourceHash" : "ffa72899c3a0e80e588aebbf436a584be6637cbd17fad557136354daff60b1c1",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_fbff60a0_fba0_46e5_857f_0741494a0d47/test_mcopy_memory_expansion.py#L229"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -412,14 +813,37 @@
         "post" : {
             "Cancun" : [
                 {
-                    "hash" : "0x688426665c99a1f3c2d1675a4d4ee4c76e40abd2ba17ad7c1e76642b86246c3e",
+                    "hash" : "0x077d63ca92532d72f89c14f9557fb69a08479a1d490227444490ca402e7f8a80",
                     "indexes" : {
                         "data" : 0,
                         "gas" : 0,
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
-                    "txbytes" : "0x02f864018080078405f5e1009400000000000000000000000000000000000010008080c001a089152de0a5d4d50cb45c1084982ccd294460331421ea63ce6dd6ca9344032df6a03cad9b251a7a20d7ad65779004c22a5d8024558703f9cbe5d6e0fab9bd8ebf98"
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x366000600037600060006120156001557fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff600060005ef3",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x11e1a300",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5a3053600",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
+                    "txbytes" : "0x01f9013301800a8405f5e1009400000000000000000000000000000000000010008080f8cfd6940000000000000000000000000000000000000001c0d6940000000000000000000000000000000000000002c0d6940000000000000000000000000000000000000003c0d6940000000000000000000000000000000000000004c0d6940000000000000000000000000000000000000005c0d6940000000000000000000000000000000000000006c0d6940000000000000000000000000000000000000007c0d6940000000000000000000000000000000000000008c0d6940000000000000000000000000000000000000009c001a0b24a5be01d56e53dcf457e6e73feaf946ba5801adfdc434a1f163e4500f36f09a0630315e4490d60b11dc3fbe1268ad4f7ce5454d67e7f2bdcde660630568120bb"
                 }
             ]
         },
@@ -432,7 +856,7 @@
                 }
             },
             "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-                "balance" : "0x29b92700",
+                "balance" : "0x3635c9adc5dea00000",
                 "code" : "0x",
                 "nonce" : "0x00",
                 "storage" : {
@@ -442,6 +866,51 @@
         "transaction" : {
             "accessLists" : [
                 [
+                    {
+                        "address" : "0x0000000000000000000000000000000000000001",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000002",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000003",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000004",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000005",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000006",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000007",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000008",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000009",
+                        "storageKeys" : [
+                        ]
+                    }
                 ]
             ],
             "data" : [
@@ -450,8 +919,7 @@
             "gasLimit" : [
                 "0x05f5e100"
             ],
-            "maxFeePerGas" : "0x07",
-            "maxPriorityFeePerGas" : "0x00",
+            "gasPrice" : "0x0a",
             "nonce" : "0x00",
             "secretKey" : "0x45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8",
             "sender" : "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b",
@@ -465,16 +933,27 @@
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
             "description" : "Test function documentation:\n\n    Perform MCOPY operations that expand the memory by huge amounts, and verify that it correctly\n    runs out of gas.",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "b398314af133908ce6013a0f3c000740ac124c9e8c155063da5f7314757810bc",
-            "hash" : "0x14f28bad6b88c6741fa95a953568075cb8d4caeb35a4f58370b13cf9136b8a0f",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "ec4589e266989f76b7287ba5f3aa041dd71078152ccc5348e8b8ad436718e134",
+            "hash" : "0xbd03594b0f836bbbf1910288b9acd15f3c0430491005428508b088d9cd8c667b",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip5656_mcopy/test_mcopy_memory_expansion.py",
-            "sourceHash" : "5f429346640f0bf78f41737bac4d49d9fa6da150e1c63878418b8b15c5072b37",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_d3ff6bcd_4958_48b1_8883_4c07a124b8ec/test_mcopy_memory_expansion.py#L213"
+            "sourceHash" : "ffa72899c3a0e80e588aebbf436a584be6637cbd17fad557136354daff60b1c1",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_fbff60a0_fba0_46e5_857f_0741494a0d47/test_mcopy_memory_expansion.py#L229"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -489,14 +968,37 @@
         "post" : {
             "Cancun" : [
                 {
-                    "hash" : "0xe00642c5e2aca0157a0595c9c97ebc7bcb0d4daddf82368173b99d33168e520f",
+                    "hash" : "0xffa8d7ddf5e608141bcefd09fa8a74a3f156d172a2ff4a1b58a3b9988ec7d850",
                     "indexes" : {
                         "data" : 0,
                         "gas" : 0,
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
-                    "txbytes" : "0x02f864018080078405f5e1009400000000000000000000000000000000000010008080c001a089152de0a5d4d50cb45c1084982ccd294460331421ea63ce6dd6ca9344032df6a03cad9b251a7a20d7ad65779004c22a5d8024558703f9cbe5d6e0fab9bd8ebf98"
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x366000600037600060006120156001557ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe600060005ef3",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x11e1a300",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5a3053600",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
+                    "txbytes" : "0x01f9013301800a8405f5e1009400000000000000000000000000000000000010008080f8cfd6940000000000000000000000000000000000000001c0d6940000000000000000000000000000000000000002c0d6940000000000000000000000000000000000000003c0d6940000000000000000000000000000000000000004c0d6940000000000000000000000000000000000000005c0d6940000000000000000000000000000000000000006c0d6940000000000000000000000000000000000000007c0d6940000000000000000000000000000000000000008c0d6940000000000000000000000000000000000000009c001a0b24a5be01d56e53dcf457e6e73feaf946ba5801adfdc434a1f163e4500f36f09a0630315e4490d60b11dc3fbe1268ad4f7ce5454d67e7f2bdcde660630568120bb"
                 }
             ]
         },
@@ -509,7 +1011,7 @@
                 }
             },
             "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-                "balance" : "0x29b92700",
+                "balance" : "0x3635c9adc5dea00000",
                 "code" : "0x",
                 "nonce" : "0x00",
                 "storage" : {
@@ -519,6 +1021,51 @@
         "transaction" : {
             "accessLists" : [
                 [
+                    {
+                        "address" : "0x0000000000000000000000000000000000000001",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000002",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000003",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000004",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000005",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000006",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000007",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000008",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000009",
+                        "storageKeys" : [
+                        ]
+                    }
                 ]
             ],
             "data" : [
@@ -527,8 +1074,7 @@
             "gasLimit" : [
                 "0x05f5e100"
             ],
-            "maxFeePerGas" : "0x07",
-            "maxPriorityFeePerGas" : "0x00",
+            "gasPrice" : "0x0a",
             "nonce" : "0x00",
             "secretKey" : "0x45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8",
             "sender" : "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b",
@@ -542,16 +1088,27 @@
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
             "description" : "Test function documentation:\n\n    Perform MCOPY operations that expand the memory by huge amounts, and verify that it correctly\n    runs out of gas.",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "2e824afc60a668babd21706d8e56093fe314afc2050a7bca8d2ef0c1faa2a643",
-            "hash" : "0xf09c35d97f4cabfb4a172741b15bfe1ecee7ed3544d0eeec6c9347ec7dc874da",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "3aa59399ca1f841a9cd93e79ab23d2c32fc82906b30292a36ae8f6e4d2993892",
+            "hash" : "0xe2f787914332f5ad1f44bbb16adaf7cd391b18bf349bdc77e26053db7ff13cb3",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip5656_mcopy/test_mcopy_memory_expansion.py",
-            "sourceHash" : "5f429346640f0bf78f41737bac4d49d9fa6da150e1c63878418b8b15c5072b37",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_d3ff6bcd_4958_48b1_8883_4c07a124b8ec/test_mcopy_memory_expansion.py#L213"
+            "sourceHash" : "ffa72899c3a0e80e588aebbf436a584be6637cbd17fad557136354daff60b1c1",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_fbff60a0_fba0_46e5_857f_0741494a0d47/test_mcopy_memory_expansion.py#L229"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -566,14 +1123,37 @@
         "post" : {
             "Cancun" : [
                 {
-                    "hash" : "0x81f8747c581a9dc668e76d3e056d45de4c60ce8b9526c5f3eff4409adc8de0ba",
+                    "hash" : "0xcf7378ebc502bcff845d7efd9889759460e21bf4fa44a0201e474a18f6129202",
                     "indexes" : {
                         "data" : 0,
                         "gas" : 0,
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
-                    "txbytes" : "0x02f864018080078405f5e1009400000000000000000000000000000000000010008080c001a089152de0a5d4d50cb45c1084982ccd294460331421ea63ce6dd6ca9344032df6a03cad9b251a7a20d7ad65779004c22a5d8024558703f9cbe5d6e0fab9bd8ebf98"
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x3660006000376000600061201560015560017ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe60005ef3",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x11e1a300",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5a3053600",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
+                    "txbytes" : "0x01f9013301800a8405f5e1009400000000000000000000000000000000000010008080f8cfd6940000000000000000000000000000000000000001c0d6940000000000000000000000000000000000000002c0d6940000000000000000000000000000000000000003c0d6940000000000000000000000000000000000000004c0d6940000000000000000000000000000000000000005c0d6940000000000000000000000000000000000000006c0d6940000000000000000000000000000000000000007c0d6940000000000000000000000000000000000000008c0d6940000000000000000000000000000000000000009c001a0b24a5be01d56e53dcf457e6e73feaf946ba5801adfdc434a1f163e4500f36f09a0630315e4490d60b11dc3fbe1268ad4f7ce5454d67e7f2bdcde660630568120bb"
                 }
             ]
         },
@@ -586,7 +1166,7 @@
                 }
             },
             "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-                "balance" : "0x29b92700",
+                "balance" : "0x3635c9adc5dea00000",
                 "code" : "0x",
                 "nonce" : "0x00",
                 "storage" : {
@@ -596,6 +1176,51 @@
         "transaction" : {
             "accessLists" : [
                 [
+                    {
+                        "address" : "0x0000000000000000000000000000000000000001",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000002",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000003",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000004",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000005",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000006",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000007",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000008",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000009",
+                        "storageKeys" : [
+                        ]
+                    }
                 ]
             ],
             "data" : [
@@ -604,8 +1229,7 @@
             "gasLimit" : [
                 "0x05f5e100"
             ],
-            "maxFeePerGas" : "0x07",
-            "maxPriorityFeePerGas" : "0x00",
+            "gasPrice" : "0x0a",
             "nonce" : "0x00",
             "secretKey" : "0x45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8",
             "sender" : "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b",
@@ -619,16 +1243,27 @@
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
             "description" : "Test function documentation:\n\n    Perform MCOPY operations that expand the memory by huge amounts, and verify that it correctly\n    runs out of gas.",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "876cda238f193b5ee58bfb3084de6cf930614ce1c9284bf0dc02f0a43fb6f30b",
-            "hash" : "0x916cf55178d8e99a6eb5173804f08e49ef2e8fd9126ef46c926fa85766718a0c",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "97bb26f1f65a8a031c72522f1783b424f743b6b92700cd9cf78afd0ff3903b51",
+            "hash" : "0xc52a76570a63f9fe35bbb90fe3a5c0ade8116b1fa9d3d7d7be8afd5eeebf0370",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip5656_mcopy/test_mcopy_memory_expansion.py",
-            "sourceHash" : "5f429346640f0bf78f41737bac4d49d9fa6da150e1c63878418b8b15c5072b37",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_d3ff6bcd_4958_48b1_8883_4c07a124b8ec/test_mcopy_memory_expansion.py#L213"
+            "sourceHash" : "ffa72899c3a0e80e588aebbf436a584be6637cbd17fad557136354daff60b1c1",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_fbff60a0_fba0_46e5_857f_0741494a0d47/test_mcopy_memory_expansion.py#L229"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -643,14 +1278,37 @@
         "post" : {
             "Cancun" : [
                 {
-                    "hash" : "0x3464e707d532a3aa41da2c7b1ae1e33ed74c2a99e81155f4f36ffcfe968aaba9",
+                    "hash" : "0x703494e581f833ec368ee317e48be6138d29d46de29c7fa0c93999cb53b719cd",
                     "indexes" : {
                         "data" : 0,
                         "gas" : 0,
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
-                    "txbytes" : "0x02f864018080078405f5e1009400000000000000000000000000000000000010008080c001a089152de0a5d4d50cb45c1084982ccd294460331421ea63ce6dd6ca9344032df6a03cad9b251a7a20d7ad65779004c22a5d8024558703f9cbe5d6e0fab9bd8ebf98"
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x3660006000376000600061201560015560017fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff60005ef3",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x11e1a300",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5a3053600",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
+                    "txbytes" : "0x01f9013301800a8405f5e1009400000000000000000000000000000000000010008080f8cfd6940000000000000000000000000000000000000001c0d6940000000000000000000000000000000000000002c0d6940000000000000000000000000000000000000003c0d6940000000000000000000000000000000000000004c0d6940000000000000000000000000000000000000005c0d6940000000000000000000000000000000000000006c0d6940000000000000000000000000000000000000007c0d6940000000000000000000000000000000000000008c0d6940000000000000000000000000000000000000009c001a0b24a5be01d56e53dcf457e6e73feaf946ba5801adfdc434a1f163e4500f36f09a0630315e4490d60b11dc3fbe1268ad4f7ce5454d67e7f2bdcde660630568120bb"
                 }
             ]
         },
@@ -663,7 +1321,7 @@
                 }
             },
             "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-                "balance" : "0x29b92700",
+                "balance" : "0x3635c9adc5dea00000",
                 "code" : "0x",
                 "nonce" : "0x00",
                 "storage" : {
@@ -673,6 +1331,51 @@
         "transaction" : {
             "accessLists" : [
                 [
+                    {
+                        "address" : "0x0000000000000000000000000000000000000001",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000002",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000003",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000004",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000005",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000006",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000007",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000008",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000009",
+                        "storageKeys" : [
+                        ]
+                    }
                 ]
             ],
             "data" : [
@@ -681,8 +1384,7 @@
             "gasLimit" : [
                 "0x05f5e100"
             ],
-            "maxFeePerGas" : "0x07",
-            "maxPriorityFeePerGas" : "0x00",
+            "gasPrice" : "0x0a",
             "nonce" : "0x00",
             "secretKey" : "0x45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8",
             "sender" : "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b",
@@ -696,16 +1398,27 @@
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
             "description" : "Test function documentation:\n\n    Perform MCOPY operations that expand the memory by huge amounts, and verify that it correctly\n    runs out of gas.",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "e21b4a2d10ccee9be433219eaaae2d0821924f2bca0f296f3ee03f813300361b",
-            "hash" : "0x3ef79f198dfd0b27920ced4d9f06dd22dc218f60261657757feb0622e77531f4",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "cde75320665118a521a805376fe1a1d2f769a1b1f7b2f17866eb9048b0ada3f3",
+            "hash" : "0xdfc8ee984478ef7b925822144264c0c266672d4891352370efeaebca2fd922c6",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip5656_mcopy/test_mcopy_memory_expansion.py",
-            "sourceHash" : "5f429346640f0bf78f41737bac4d49d9fa6da150e1c63878418b8b15c5072b37",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_d3ff6bcd_4958_48b1_8883_4c07a124b8ec/test_mcopy_memory_expansion.py#L213"
+            "sourceHash" : "ffa72899c3a0e80e588aebbf436a584be6637cbd17fad557136354daff60b1c1",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_fbff60a0_fba0_46e5_857f_0741494a0d47/test_mcopy_memory_expansion.py#L229"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -720,14 +1433,37 @@
         "post" : {
             "Cancun" : [
                 {
-                    "hash" : "0x458c66b9030f54cdc9750fd74c99e53c552f6adc688e119373c60d480493ce0f",
+                    "hash" : "0xd0f864113e2da577ecca2552bc422702d2056d20a7bd88f82bbfa45636470e89",
                     "indexes" : {
                         "data" : 0,
                         "gas" : 0,
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
-                    "txbytes" : "0x02f90166018080078405f5e10094000000000000000000000000000000000000100080b90100000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeffc080a02b94e63a86de700ce324dde7232f2c7986c6573a5e02ebfba1e900836945ebe3a0237b9a68a9d094600d3559c303182d96e50290ead496ecba2e0573e9b1bca88e"
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x36600060003760006000612015600155600160007f7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff5ef3",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x11e1a300",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5a3053600",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
+                    "txbytes" : "0x01f9023501800a8405f5e10094000000000000000000000000000000000000100080b90100000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfefff8cfd6940000000000000000000000000000000000000001c0d6940000000000000000000000000000000000000002c0d6940000000000000000000000000000000000000003c0d6940000000000000000000000000000000000000004c0d6940000000000000000000000000000000000000005c0d6940000000000000000000000000000000000000006c0d6940000000000000000000000000000000000000007c0d6940000000000000000000000000000000000000008c0d6940000000000000000000000000000000000000009c080a028b47bce99c9e32c99775204a9580e1388ec2c1d33bfebec07a38a28312418a5a0513acad2078a547e4251ad81240d57d6089c768a2a012058681e7fbf96ab6f79"
                 }
             ]
         },
@@ -740,7 +1476,7 @@
                 }
             },
             "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-                "balance" : "0x29b92700",
+                "balance" : "0x3635c9adc5dea00000",
                 "code" : "0x",
                 "nonce" : "0x00",
                 "storage" : {
@@ -750,6 +1486,51 @@
         "transaction" : {
             "accessLists" : [
                 [
+                    {
+                        "address" : "0x0000000000000000000000000000000000000001",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000002",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000003",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000004",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000005",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000006",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000007",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000008",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000009",
+                        "storageKeys" : [
+                        ]
+                    }
                 ]
             ],
             "data" : [
@@ -758,8 +1539,7 @@
             "gasLimit" : [
                 "0x05f5e100"
             ],
-            "maxFeePerGas" : "0x07",
-            "maxPriorityFeePerGas" : "0x00",
+            "gasPrice" : "0x0a",
             "nonce" : "0x00",
             "secretKey" : "0x45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8",
             "sender" : "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b",
@@ -773,16 +1553,27 @@
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
             "description" : "Test function documentation:\n\n    Perform MCOPY operations that expand the memory by huge amounts, and verify that it correctly\n    runs out of gas.",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "2fec076ed15fd2f1348ea6695d928234accf701d8d0b08fddd13692f0fca414b",
-            "hash" : "0x064616b668537ba781e1f20e2d6eab89fc07b7c59c1b799b4c21755425104db3",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "2ff8e56fb0fde2bdb608457c1c4e6c4ab173dd65432e7669a8ddc226898365d9",
+            "hash" : "0x0a6658f4b12b834b4762d28a054086963f1dfdb5dd4c09f59ed596016039716b",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip5656_mcopy/test_mcopy_memory_expansion.py",
-            "sourceHash" : "5f429346640f0bf78f41737bac4d49d9fa6da150e1c63878418b8b15c5072b37",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_d3ff6bcd_4958_48b1_8883_4c07a124b8ec/test_mcopy_memory_expansion.py#L213"
+            "sourceHash" : "ffa72899c3a0e80e588aebbf436a584be6637cbd17fad557136354daff60b1c1",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_fbff60a0_fba0_46e5_857f_0741494a0d47/test_mcopy_memory_expansion.py#L229"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -797,14 +1588,37 @@
         "post" : {
             "Cancun" : [
                 {
-                    "hash" : "0x213dfe2ef829d8ef94b285d5af7d0195fd7efa95068a28c34c1d301563e561cb",
+                    "hash" : "0x6066b8a97d20725811186203192628b4c9d3e24ccd23090a8ed5637012461b0a",
                     "indexes" : {
                         "data" : 0,
                         "gas" : 0,
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
-                    "txbytes" : "0x02f90166018080078405f5e10094000000000000000000000000000000000000100080b90100000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeffc080a02b94e63a86de700ce324dde7232f2c7986c6573a5e02ebfba1e900836945ebe3a0237b9a68a9d094600d3559c303182d96e50290ead496ecba2e0573e9b1bca88e"
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x366000600037600060006120156001557f7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff600060005ef3",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x11e1a300",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5a3053600",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
+                    "txbytes" : "0x01f9023501800a8405f5e10094000000000000000000000000000000000000100080b90100000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfefff8cfd6940000000000000000000000000000000000000001c0d6940000000000000000000000000000000000000002c0d6940000000000000000000000000000000000000003c0d6940000000000000000000000000000000000000004c0d6940000000000000000000000000000000000000005c0d6940000000000000000000000000000000000000006c0d6940000000000000000000000000000000000000007c0d6940000000000000000000000000000000000000008c0d6940000000000000000000000000000000000000009c080a028b47bce99c9e32c99775204a9580e1388ec2c1d33bfebec07a38a28312418a5a0513acad2078a547e4251ad81240d57d6089c768a2a012058681e7fbf96ab6f79"
                 }
             ]
         },
@@ -817,7 +1631,7 @@
                 }
             },
             "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-                "balance" : "0x29b92700",
+                "balance" : "0x3635c9adc5dea00000",
                 "code" : "0x",
                 "nonce" : "0x00",
                 "storage" : {
@@ -827,6 +1641,51 @@
         "transaction" : {
             "accessLists" : [
                 [
+                    {
+                        "address" : "0x0000000000000000000000000000000000000001",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000002",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000003",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000004",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000005",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000006",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000007",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000008",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000009",
+                        "storageKeys" : [
+                        ]
+                    }
                 ]
             ],
             "data" : [
@@ -835,8 +1694,7 @@
             "gasLimit" : [
                 "0x05f5e100"
             ],
-            "maxFeePerGas" : "0x07",
-            "maxPriorityFeePerGas" : "0x00",
+            "gasPrice" : "0x0a",
             "nonce" : "0x00",
             "secretKey" : "0x45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8",
             "sender" : "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b",
@@ -850,16 +1708,27 @@
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
             "description" : "Test function documentation:\n\n    Perform MCOPY operations that expand the memory by huge amounts, and verify that it correctly\n    runs out of gas.",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "bcc8cae19fc19952592d4063f85d1efbd648b23763459f24241019dc187a3e29",
-            "hash" : "0x52e2fd1c0c50a952ce1ffd854e6c29fa66de3d26e2f9d5e208532b01ca9196aa",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "07b0bf0bf964fe9436f6bc621f475fd3d3c0421271e59f4d43cd220d73515012",
+            "hash" : "0x659afc9ed70b9fd58c30d9be01f001d7e1042f37881f143a30f1e08c062a33ad",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip5656_mcopy/test_mcopy_memory_expansion.py",
-            "sourceHash" : "5f429346640f0bf78f41737bac4d49d9fa6da150e1c63878418b8b15c5072b37",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_d3ff6bcd_4958_48b1_8883_4c07a124b8ec/test_mcopy_memory_expansion.py#L213"
+            "sourceHash" : "ffa72899c3a0e80e588aebbf436a584be6637cbd17fad557136354daff60b1c1",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_fbff60a0_fba0_46e5_857f_0741494a0d47/test_mcopy_memory_expansion.py#L229"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -874,14 +1743,37 @@
         "post" : {
             "Cancun" : [
                 {
-                    "hash" : "0x7760cf8fae55840574e1e41b03d4e47651631507d98c9aa810a59a3a4d4559ba",
+                    "hash" : "0x2d4b984c837dd9c8f200250e94d69c37f50754c6bd65bea0e939eaed169b308d",
                     "indexes" : {
                         "data" : 0,
                         "gas" : 0,
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
-                    "txbytes" : "0x02f90166018080078405f5e10094000000000000000000000000000000000000100080b90100000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeffc080a02b94e63a86de700ce324dde7232f2c7986c6573a5e02ebfba1e900836945ebe3a0237b9a68a9d094600d3559c303182d96e50290ead496ecba2e0573e9b1bca88e"
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x3660006000376000600061201560015560017f7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff60005ef3",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x11e1a300",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5a3053600",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
+                    "txbytes" : "0x01f9023501800a8405f5e10094000000000000000000000000000000000000100080b90100000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfefff8cfd6940000000000000000000000000000000000000001c0d6940000000000000000000000000000000000000002c0d6940000000000000000000000000000000000000003c0d6940000000000000000000000000000000000000004c0d6940000000000000000000000000000000000000005c0d6940000000000000000000000000000000000000006c0d6940000000000000000000000000000000000000007c0d6940000000000000000000000000000000000000008c0d6940000000000000000000000000000000000000009c080a028b47bce99c9e32c99775204a9580e1388ec2c1d33bfebec07a38a28312418a5a0513acad2078a547e4251ad81240d57d6089c768a2a012058681e7fbf96ab6f79"
                 }
             ]
         },
@@ -894,7 +1786,7 @@
                 }
             },
             "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-                "balance" : "0x29b92700",
+                "balance" : "0x3635c9adc5dea00000",
                 "code" : "0x",
                 "nonce" : "0x00",
                 "storage" : {
@@ -904,6 +1796,51 @@
         "transaction" : {
             "accessLists" : [
                 [
+                    {
+                        "address" : "0x0000000000000000000000000000000000000001",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000002",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000003",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000004",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000005",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000006",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000007",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000008",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000009",
+                        "storageKeys" : [
+                        ]
+                    }
                 ]
             ],
             "data" : [
@@ -912,8 +1849,7 @@
             "gasLimit" : [
                 "0x05f5e100"
             ],
-            "maxFeePerGas" : "0x07",
-            "maxPriorityFeePerGas" : "0x00",
+            "gasPrice" : "0x0a",
             "nonce" : "0x00",
             "secretKey" : "0x45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8",
             "sender" : "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b",
@@ -927,16 +1863,27 @@
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
             "description" : "Test function documentation:\n\n    Perform MCOPY operations that expand the memory by huge amounts, and verify that it correctly\n    runs out of gas.",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "4c2d861cd3f5838b13b8cdb2bfca47a7cbe12b7b006e892f8ec9f0cf48a9713d",
-            "hash" : "0x70dff5c3a6a5147510af3ccfa05fb1dc015bcbf36e11d7b1463ad088c50f25c2",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "d674adea9ebab4ce053b77a2a8151b7178c478e2a829e86f47defacd51d5ee8f",
+            "hash" : "0x972072bbe0b90748c805023b3baa2c1e3a0a00890c382ea1b6760b49bb68107d",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip5656_mcopy/test_mcopy_memory_expansion.py",
-            "sourceHash" : "5f429346640f0bf78f41737bac4d49d9fa6da150e1c63878418b8b15c5072b37",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_d3ff6bcd_4958_48b1_8883_4c07a124b8ec/test_mcopy_memory_expansion.py#L213"
+            "sourceHash" : "ffa72899c3a0e80e588aebbf436a584be6637cbd17fad557136354daff60b1c1",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_fbff60a0_fba0_46e5_857f_0741494a0d47/test_mcopy_memory_expansion.py#L229"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -951,14 +1898,37 @@
         "post" : {
             "Cancun" : [
                 {
-                    "hash" : "0xe7a7604246e6bf95d21d4f7777c6392c7d188af03063ba7caf4ad56073e076de",
+                    "hash" : "0x5cb2a000b511ec71a538ecac813b9b852400658df44beb33dd418e0c7709d429",
                     "indexes" : {
                         "data" : 0,
                         "gas" : 0,
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
-                    "txbytes" : "0x02f90166018080078405f5e10094000000000000000000000000000000000000100080b90100000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeffc080a02b94e63a86de700ce324dde7232f2c7986c6573a5e02ebfba1e900836945ebe3a0237b9a68a9d094600d3559c303182d96e50290ead496ecba2e0573e9b1bca88e"
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x36600060003760006000612015600155600160007ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe5ef3",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x11e1a300",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5a3053600",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
+                    "txbytes" : "0x01f9023501800a8405f5e10094000000000000000000000000000000000000100080b90100000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfefff8cfd6940000000000000000000000000000000000000001c0d6940000000000000000000000000000000000000002c0d6940000000000000000000000000000000000000003c0d6940000000000000000000000000000000000000004c0d6940000000000000000000000000000000000000005c0d6940000000000000000000000000000000000000006c0d6940000000000000000000000000000000000000007c0d6940000000000000000000000000000000000000008c0d6940000000000000000000000000000000000000009c080a028b47bce99c9e32c99775204a9580e1388ec2c1d33bfebec07a38a28312418a5a0513acad2078a547e4251ad81240d57d6089c768a2a012058681e7fbf96ab6f79"
                 }
             ]
         },
@@ -971,7 +1941,7 @@
                 }
             },
             "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-                "balance" : "0x29b92700",
+                "balance" : "0x3635c9adc5dea00000",
                 "code" : "0x",
                 "nonce" : "0x00",
                 "storage" : {
@@ -981,6 +1951,51 @@
         "transaction" : {
             "accessLists" : [
                 [
+                    {
+                        "address" : "0x0000000000000000000000000000000000000001",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000002",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000003",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000004",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000005",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000006",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000007",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000008",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000009",
+                        "storageKeys" : [
+                        ]
+                    }
                 ]
             ],
             "data" : [
@@ -989,8 +2004,7 @@
             "gasLimit" : [
                 "0x05f5e100"
             ],
-            "maxFeePerGas" : "0x07",
-            "maxPriorityFeePerGas" : "0x00",
+            "gasPrice" : "0x0a",
             "nonce" : "0x00",
             "secretKey" : "0x45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8",
             "sender" : "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b",
@@ -1004,16 +2018,27 @@
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
             "description" : "Test function documentation:\n\n    Perform MCOPY operations that expand the memory by huge amounts, and verify that it correctly\n    runs out of gas.",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "61028b2548a757dc28af4597c868aedb26d3caded69d12657a642478ade54fb8",
-            "hash" : "0xf5f7c3385c383d6dfdda2472d17d3927ee70f229e608ace304968c0bf2dc2f16",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "e456ae674f16d56fbc54d8da7a5154d3ce280b92e9c6297dfaee4531e38cbeec",
+            "hash" : "0xbc0adab51ec955ce09e366449ef88f1575b048ab4ab6b7ade8b1d3d58fee1780",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip5656_mcopy/test_mcopy_memory_expansion.py",
-            "sourceHash" : "5f429346640f0bf78f41737bac4d49d9fa6da150e1c63878418b8b15c5072b37",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_d3ff6bcd_4958_48b1_8883_4c07a124b8ec/test_mcopy_memory_expansion.py#L213"
+            "sourceHash" : "ffa72899c3a0e80e588aebbf436a584be6637cbd17fad557136354daff60b1c1",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_fbff60a0_fba0_46e5_857f_0741494a0d47/test_mcopy_memory_expansion.py#L229"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -1028,14 +2053,37 @@
         "post" : {
             "Cancun" : [
                 {
-                    "hash" : "0x707f82d74bd6511d601ccf6246723c6b8ebc3f873ab6f0f79b4e1f36980fc086",
+                    "hash" : "0x2ffe643116465f4a716b8459b2a82a67200b7a88441eb4cbb215fb4930796ac5",
                     "indexes" : {
                         "data" : 0,
                         "gas" : 0,
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
-                    "txbytes" : "0x02f90166018080078405f5e10094000000000000000000000000000000000000100080b90100000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeffc080a02b94e63a86de700ce324dde7232f2c7986c6573a5e02ebfba1e900836945ebe3a0237b9a68a9d094600d3559c303182d96e50290ead496ecba2e0573e9b1bca88e"
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x36600060003760006000612015600155600160007fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff5ef3",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x11e1a300",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5a3053600",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
+                    "txbytes" : "0x01f9023501800a8405f5e10094000000000000000000000000000000000000100080b90100000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfefff8cfd6940000000000000000000000000000000000000001c0d6940000000000000000000000000000000000000002c0d6940000000000000000000000000000000000000003c0d6940000000000000000000000000000000000000004c0d6940000000000000000000000000000000000000005c0d6940000000000000000000000000000000000000006c0d6940000000000000000000000000000000000000007c0d6940000000000000000000000000000000000000008c0d6940000000000000000000000000000000000000009c080a028b47bce99c9e32c99775204a9580e1388ec2c1d33bfebec07a38a28312418a5a0513acad2078a547e4251ad81240d57d6089c768a2a012058681e7fbf96ab6f79"
                 }
             ]
         },
@@ -1048,7 +2096,7 @@
                 }
             },
             "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-                "balance" : "0x29b92700",
+                "balance" : "0x3635c9adc5dea00000",
                 "code" : "0x",
                 "nonce" : "0x00",
                 "storage" : {
@@ -1058,6 +2106,51 @@
         "transaction" : {
             "accessLists" : [
                 [
+                    {
+                        "address" : "0x0000000000000000000000000000000000000001",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000002",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000003",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000004",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000005",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000006",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000007",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000008",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000009",
+                        "storageKeys" : [
+                        ]
+                    }
                 ]
             ],
             "data" : [
@@ -1066,8 +2159,7 @@
             "gasLimit" : [
                 "0x05f5e100"
             ],
-            "maxFeePerGas" : "0x07",
-            "maxPriorityFeePerGas" : "0x00",
+            "gasPrice" : "0x0a",
             "nonce" : "0x00",
             "secretKey" : "0x45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8",
             "sender" : "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b",
@@ -1081,16 +2173,27 @@
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
             "description" : "Test function documentation:\n\n    Perform MCOPY operations that expand the memory by huge amounts, and verify that it correctly\n    runs out of gas.",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "9eeccf717a1e0480ca7c91ec8367d1bd6a866c767cfbf8fc18cfb73faecc9bae",
-            "hash" : "0xdf7b3cd1ecbc1762eea8a162840fc298876fc0e2142d3c0b6711bde42d56a65e",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "0ff06ed097f3dcdde708c3a20db65d914e60a544f20baa839e2f1f4fed978f74",
+            "hash" : "0xdb67d06020e7e2f5298b46862a40d1258988c49ae8bbb0c0f859e59abb5582d2",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip5656_mcopy/test_mcopy_memory_expansion.py",
-            "sourceHash" : "5f429346640f0bf78f41737bac4d49d9fa6da150e1c63878418b8b15c5072b37",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_d3ff6bcd_4958_48b1_8883_4c07a124b8ec/test_mcopy_memory_expansion.py#L213"
+            "sourceHash" : "ffa72899c3a0e80e588aebbf436a584be6637cbd17fad557136354daff60b1c1",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_fbff60a0_fba0_46e5_857f_0741494a0d47/test_mcopy_memory_expansion.py#L229"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -1105,14 +2208,37 @@
         "post" : {
             "Cancun" : [
                 {
-                    "hash" : "0x688426665c99a1f3c2d1675a4d4ee4c76e40abd2ba17ad7c1e76642b86246c3e",
+                    "hash" : "0x077d63ca92532d72f89c14f9557fb69a08479a1d490227444490ca402e7f8a80",
                     "indexes" : {
                         "data" : 0,
                         "gas" : 0,
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
-                    "txbytes" : "0x02f90166018080078405f5e10094000000000000000000000000000000000000100080b90100000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeffc080a02b94e63a86de700ce324dde7232f2c7986c6573a5e02ebfba1e900836945ebe3a0237b9a68a9d094600d3559c303182d96e50290ead496ecba2e0573e9b1bca88e"
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x366000600037600060006120156001557fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff600060005ef3",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x11e1a300",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5a3053600",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
+                    "txbytes" : "0x01f9023501800a8405f5e10094000000000000000000000000000000000000100080b90100000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfefff8cfd6940000000000000000000000000000000000000001c0d6940000000000000000000000000000000000000002c0d6940000000000000000000000000000000000000003c0d6940000000000000000000000000000000000000004c0d6940000000000000000000000000000000000000005c0d6940000000000000000000000000000000000000006c0d6940000000000000000000000000000000000000007c0d6940000000000000000000000000000000000000008c0d6940000000000000000000000000000000000000009c080a028b47bce99c9e32c99775204a9580e1388ec2c1d33bfebec07a38a28312418a5a0513acad2078a547e4251ad81240d57d6089c768a2a012058681e7fbf96ab6f79"
                 }
             ]
         },
@@ -1125,7 +2251,7 @@
                 }
             },
             "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-                "balance" : "0x29b92700",
+                "balance" : "0x3635c9adc5dea00000",
                 "code" : "0x",
                 "nonce" : "0x00",
                 "storage" : {
@@ -1135,6 +2261,51 @@
         "transaction" : {
             "accessLists" : [
                 [
+                    {
+                        "address" : "0x0000000000000000000000000000000000000001",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000002",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000003",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000004",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000005",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000006",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000007",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000008",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000009",
+                        "storageKeys" : [
+                        ]
+                    }
                 ]
             ],
             "data" : [
@@ -1143,8 +2314,7 @@
             "gasLimit" : [
                 "0x05f5e100"
             ],
-            "maxFeePerGas" : "0x07",
-            "maxPriorityFeePerGas" : "0x00",
+            "gasPrice" : "0x0a",
             "nonce" : "0x00",
             "secretKey" : "0x45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8",
             "sender" : "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b",
@@ -1158,16 +2328,27 @@
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
             "description" : "Test function documentation:\n\n    Perform MCOPY operations that expand the memory by huge amounts, and verify that it correctly\n    runs out of gas.",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "d315d1e1315a9fcd72ca66822beea7564e54c02fbd04bf6184dd778a6eda8dc3",
-            "hash" : "0x8a53742ef2a06ab61a745afae70073178ea3132ec573d6e79cd49d04ba8e39e0",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "36088060746cb5542e406f23b46d9835efe85a475838d581fb0eda77870cef40",
+            "hash" : "0xaa18580febc5fa90f682be77b93a8280650ad45c7dc4536406b5ce03e4984aae",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip5656_mcopy/test_mcopy_memory_expansion.py",
-            "sourceHash" : "5f429346640f0bf78f41737bac4d49d9fa6da150e1c63878418b8b15c5072b37",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_d3ff6bcd_4958_48b1_8883_4c07a124b8ec/test_mcopy_memory_expansion.py#L213"
+            "sourceHash" : "ffa72899c3a0e80e588aebbf436a584be6637cbd17fad557136354daff60b1c1",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_fbff60a0_fba0_46e5_857f_0741494a0d47/test_mcopy_memory_expansion.py#L229"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -1182,14 +2363,37 @@
         "post" : {
             "Cancun" : [
                 {
-                    "hash" : "0xe00642c5e2aca0157a0595c9c97ebc7bcb0d4daddf82368173b99d33168e520f",
+                    "hash" : "0xffa8d7ddf5e608141bcefd09fa8a74a3f156d172a2ff4a1b58a3b9988ec7d850",
                     "indexes" : {
                         "data" : 0,
                         "gas" : 0,
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
-                    "txbytes" : "0x02f90166018080078405f5e10094000000000000000000000000000000000000100080b90100000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeffc080a02b94e63a86de700ce324dde7232f2c7986c6573a5e02ebfba1e900836945ebe3a0237b9a68a9d094600d3559c303182d96e50290ead496ecba2e0573e9b1bca88e"
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x366000600037600060006120156001557ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe600060005ef3",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x11e1a300",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5a3053600",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
+                    "txbytes" : "0x01f9023501800a8405f5e10094000000000000000000000000000000000000100080b90100000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfefff8cfd6940000000000000000000000000000000000000001c0d6940000000000000000000000000000000000000002c0d6940000000000000000000000000000000000000003c0d6940000000000000000000000000000000000000004c0d6940000000000000000000000000000000000000005c0d6940000000000000000000000000000000000000006c0d6940000000000000000000000000000000000000007c0d6940000000000000000000000000000000000000008c0d6940000000000000000000000000000000000000009c080a028b47bce99c9e32c99775204a9580e1388ec2c1d33bfebec07a38a28312418a5a0513acad2078a547e4251ad81240d57d6089c768a2a012058681e7fbf96ab6f79"
                 }
             ]
         },
@@ -1202,7 +2406,7 @@
                 }
             },
             "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-                "balance" : "0x29b92700",
+                "balance" : "0x3635c9adc5dea00000",
                 "code" : "0x",
                 "nonce" : "0x00",
                 "storage" : {
@@ -1212,6 +2416,51 @@
         "transaction" : {
             "accessLists" : [
                 [
+                    {
+                        "address" : "0x0000000000000000000000000000000000000001",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000002",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000003",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000004",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000005",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000006",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000007",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000008",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000009",
+                        "storageKeys" : [
+                        ]
+                    }
                 ]
             ],
             "data" : [
@@ -1220,8 +2469,7 @@
             "gasLimit" : [
                 "0x05f5e100"
             ],
-            "maxFeePerGas" : "0x07",
-            "maxPriorityFeePerGas" : "0x00",
+            "gasPrice" : "0x0a",
             "nonce" : "0x00",
             "secretKey" : "0x45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8",
             "sender" : "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b",
@@ -1235,16 +2483,27 @@
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
             "description" : "Test function documentation:\n\n    Perform MCOPY operations that expand the memory by huge amounts, and verify that it correctly\n    runs out of gas.",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "86636acae3767062e23a419c1cabaf77e054a79223e343ce7e93b76a62f8789b",
-            "hash" : "0xfa666cac12bc71b6453539ba24b3533de2f7bf5d4cef374a8136aef41255febb",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "966dc5218be2ebebb500f4c2f2ad4c8d579ef9a660c489f8a7b99a9a161f7a6a",
+            "hash" : "0x0e26f746d61d89bea53f328fdc87ffd311d94fcd1cda5acd24ff230cc465b628",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip5656_mcopy/test_mcopy_memory_expansion.py",
-            "sourceHash" : "5f429346640f0bf78f41737bac4d49d9fa6da150e1c63878418b8b15c5072b37",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_d3ff6bcd_4958_48b1_8883_4c07a124b8ec/test_mcopy_memory_expansion.py#L213"
+            "sourceHash" : "ffa72899c3a0e80e588aebbf436a584be6637cbd17fad557136354daff60b1c1",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_fbff60a0_fba0_46e5_857f_0741494a0d47/test_mcopy_memory_expansion.py#L229"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -1259,14 +2518,37 @@
         "post" : {
             "Cancun" : [
                 {
-                    "hash" : "0x81f8747c581a9dc668e76d3e056d45de4c60ce8b9526c5f3eff4409adc8de0ba",
+                    "hash" : "0xcf7378ebc502bcff845d7efd9889759460e21bf4fa44a0201e474a18f6129202",
                     "indexes" : {
                         "data" : 0,
                         "gas" : 0,
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
-                    "txbytes" : "0x02f90166018080078405f5e10094000000000000000000000000000000000000100080b90100000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeffc080a02b94e63a86de700ce324dde7232f2c7986c6573a5e02ebfba1e900836945ebe3a0237b9a68a9d094600d3559c303182d96e50290ead496ecba2e0573e9b1bca88e"
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x3660006000376000600061201560015560017ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffe60005ef3",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x11e1a300",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5a3053600",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
+                    "txbytes" : "0x01f9023501800a8405f5e10094000000000000000000000000000000000000100080b90100000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfefff8cfd6940000000000000000000000000000000000000001c0d6940000000000000000000000000000000000000002c0d6940000000000000000000000000000000000000003c0d6940000000000000000000000000000000000000004c0d6940000000000000000000000000000000000000005c0d6940000000000000000000000000000000000000006c0d6940000000000000000000000000000000000000007c0d6940000000000000000000000000000000000000008c0d6940000000000000000000000000000000000000009c080a028b47bce99c9e32c99775204a9580e1388ec2c1d33bfebec07a38a28312418a5a0513acad2078a547e4251ad81240d57d6089c768a2a012058681e7fbf96ab6f79"
                 }
             ]
         },
@@ -1279,7 +2561,7 @@
                 }
             },
             "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-                "balance" : "0x29b92700",
+                "balance" : "0x3635c9adc5dea00000",
                 "code" : "0x",
                 "nonce" : "0x00",
                 "storage" : {
@@ -1289,6 +2571,51 @@
         "transaction" : {
             "accessLists" : [
                 [
+                    {
+                        "address" : "0x0000000000000000000000000000000000000001",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000002",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000003",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000004",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000005",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000006",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000007",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000008",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000009",
+                        "storageKeys" : [
+                        ]
+                    }
                 ]
             ],
             "data" : [
@@ -1297,8 +2624,7 @@
             "gasLimit" : [
                 "0x05f5e100"
             ],
-            "maxFeePerGas" : "0x07",
-            "maxPriorityFeePerGas" : "0x00",
+            "gasPrice" : "0x0a",
             "nonce" : "0x00",
             "secretKey" : "0x45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8",
             "sender" : "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b",
@@ -1312,16 +2638,27 @@
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
             "description" : "Test function documentation:\n\n    Perform MCOPY operations that expand the memory by huge amounts, and verify that it correctly\n    runs out of gas.",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "85b1781f7d0ccceada4fdd916168fc45c08478271f7f86033ffb39efe3c2a8da",
-            "hash" : "0xf41bb8b3c18a9feefe14ae104e0dd9b5df77cf94863b9f9cad31e8dee3c4bcec",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "c9768060b57f3190427a67a64b61ce44d1a59495fcddbb5a0b44625c66c6f26d",
+            "hash" : "0xbb67feae43aeaa62c67a4acce05a51e1a29e499677d56d5f3949bb079a94adfe",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip5656_mcopy/test_mcopy_memory_expansion.py",
-            "sourceHash" : "5f429346640f0bf78f41737bac4d49d9fa6da150e1c63878418b8b15c5072b37",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_d3ff6bcd_4958_48b1_8883_4c07a124b8ec/test_mcopy_memory_expansion.py#L213"
+            "sourceHash" : "ffa72899c3a0e80e588aebbf436a584be6637cbd17fad557136354daff60b1c1",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_fbff60a0_fba0_46e5_857f_0741494a0d47/test_mcopy_memory_expansion.py#L229"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -1336,14 +2673,37 @@
         "post" : {
             "Cancun" : [
                 {
-                    "hash" : "0x3464e707d532a3aa41da2c7b1ae1e33ed74c2a99e81155f4f36ffcfe968aaba9",
+                    "hash" : "0x703494e581f833ec368ee317e48be6138d29d46de29c7fa0c93999cb53b719cd",
                     "indexes" : {
                         "data" : 0,
                         "gas" : 0,
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
-                    "txbytes" : "0x02f90166018080078405f5e10094000000000000000000000000000000000000100080b90100000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfeffc080a02b94e63a86de700ce324dde7232f2c7986c6573a5e02ebfba1e900836945ebe3a0237b9a68a9d094600d3559c303182d96e50290ead496ecba2e0573e9b1bca88e"
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x3660006000376000600061201560015560017fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff60005ef3",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x11e1a300",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5a3053600",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
+                    "txbytes" : "0x01f9023501800a8405f5e10094000000000000000000000000000000000000100080b90100000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f404142434445464748494a4b4c4d4e4f505152535455565758595a5b5c5d5e5f606162636465666768696a6b6c6d6e6f707172737475767778797a7b7c7d7e7f808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9fa0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0d1d2d3d4d5d6d7d8d9dadbdcdddedfe0e1e2e3e4e5e6e7e8e9eaebecedeeeff0f1f2f3f4f5f6f7f8f9fafbfcfdfefff8cfd6940000000000000000000000000000000000000001c0d6940000000000000000000000000000000000000002c0d6940000000000000000000000000000000000000003c0d6940000000000000000000000000000000000000004c0d6940000000000000000000000000000000000000005c0d6940000000000000000000000000000000000000006c0d6940000000000000000000000000000000000000007c0d6940000000000000000000000000000000000000008c0d6940000000000000000000000000000000000000009c080a028b47bce99c9e32c99775204a9580e1388ec2c1d33bfebec07a38a28312418a5a0513acad2078a547e4251ad81240d57d6089c768a2a012058681e7fbf96ab6f79"
                 }
             ]
         },
@@ -1356,7 +2716,7 @@
                 }
             },
             "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-                "balance" : "0x29b92700",
+                "balance" : "0x3635c9adc5dea00000",
                 "code" : "0x",
                 "nonce" : "0x00",
                 "storage" : {
@@ -1366,6 +2726,51 @@
         "transaction" : {
             "accessLists" : [
                 [
+                    {
+                        "address" : "0x0000000000000000000000000000000000000001",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000002",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000003",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000004",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000005",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000006",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000007",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000008",
+                        "storageKeys" : [
+                        ]
+                    },
+                    {
+                        "address" : "0x0000000000000000000000000000000000000009",
+                        "storageKeys" : [
+                        ]
+                    }
                 ]
             ],
             "data" : [
@@ -1374,8 +2779,7 @@
             "gasLimit" : [
                 "0x05f5e100"
             ],
-            "maxFeePerGas" : "0x07",
-            "maxPriorityFeePerGas" : "0x00",
+            "gasPrice" : "0x0a",
             "nonce" : "0x00",
             "secretKey" : "0x45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8",
             "sender" : "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b",

@@ -2,17 +2,28 @@
     "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tload_reentrancy.py::test_tload_reentrancy[fork_Cancun-state_test-call_dest_type_CallDestType.EXTERNAL_CALL-call_return_OOG-call_type_CALLCODE]" : {
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
-            "description" : "Test function documentation:\n\n    Ported .json vectors:\n\n    (05_tloadReentrancyFiller.yml)\n    Reentrant calls access the same transient storage",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "2b78d570746e341c57bea603a2fb96a9ef64279b445389f1c75ca38dfc47fbec",
-            "hash" : "0x50c54fd5f0a9549f48c70d3bf0a6613d82ade34b4e6f36dbbcf5a09ea6ae6572",
+            "description" : "Test function documentation:\n\n    Ported .json vectors.\n\n    (05_tloadReentrancyFiller.yml)\n    Reentrant calls access the same transient storage",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "a6143c4eebf4862d041523b40820e3204d0dd3e8595285a14a6764acd9087500",
+            "hash" : "0xd2ab28fbf897a3cc2da2b84c86e08999f6897c3ff4bffbf18213c173a6bd5093",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tload_reentrancy.py",
-            "sourceHash" : "1ed412769d10b2d3854854a421012c11ff25135dcf44052d49928fee4dc1af67",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_4fe171b6_6cef_4c6e_9073_91f98337c6fe/test_tload_reentrancy.py#L36"
+            "sourceHash" : "3fcab3642a868ac388cbabda671477d74c3ff46f7ec3cb94d1c3e88a7e717a4b",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_ee3ffe8a_89f3_46fb_ba3b_50e7a15a7435/test_tload_reentrancy.py#L36"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -34,6 +45,39 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x60005c6000526000602064174876e800600020",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001100" : {
+                            "balance" : "0x0de0b6b3a7640000",
+                            "code" : "0x600160003514604b580157600260003514600858015760545801565b602c60005d600160005260ff602052602060206020600060006110005af260035560205160015560005c6002556001600455601c5801565b60005c6000526000602064174876e80060002060035801565b",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x01" : "0xff",
+                                "0x02" : "0x2c",
+                                "0x04" : "0x01"
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0xe1e595",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x6124fee990cb02ba",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf880800a834c4b4094000000000000000000000000000000000000110080a0000000000000000000000000000000000000000000000000000000000000000226a00cf62bc3775f0ddf2fbee7e2bc3d52a45486990eb11a18ec2b3f535af2e0b8f8a03a79cd387cfcd19f37f30e13098815bb596835991fa1c849256f049259705c78"
                 }
             ]
@@ -85,17 +129,28 @@
     "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tload_reentrancy.py::test_tload_reentrancy[fork_Cancun-state_test-call_dest_type_CallDestType.EXTERNAL_CALL-call_return_OOG-call_type_CALL]" : {
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
-            "description" : "Test function documentation:\n\n    Ported .json vectors:\n\n    (05_tloadReentrancyFiller.yml)\n    Reentrant calls access the same transient storage",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "fae4055d43cb7f3828c001bfba739ed811c6619507d8c24004467c825ad4b3e9",
-            "hash" : "0x90522fe51b0ca7db272d60a9a64025265c5041a5d117b057ef8ca647ada4b318",
+            "description" : "Test function documentation:\n\n    Ported .json vectors.\n\n    (05_tloadReentrancyFiller.yml)\n    Reentrant calls access the same transient storage",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "ed547af7649996f82c09ed3b6a8519a74cb27a7cacc252f35ab0cc8c6f7a0714",
+            "hash" : "0xdba7a06c10c20ad616337e4ce7f68a24d7141881d2572a11eac4fdc0e25da248",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tload_reentrancy.py",
-            "sourceHash" : "1ed412769d10b2d3854854a421012c11ff25135dcf44052d49928fee4dc1af67",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_4fe171b6_6cef_4c6e_9073_91f98337c6fe/test_tload_reentrancy.py#L36"
+            "sourceHash" : "3fcab3642a868ac388cbabda671477d74c3ff46f7ec3cb94d1c3e88a7e717a4b",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_ee3ffe8a_89f3_46fb_ba3b_50e7a15a7435/test_tload_reentrancy.py#L36"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -117,6 +172,39 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x60005c6000526000602064174876e800600020",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001100" : {
+                            "balance" : "0x0de0b6b3a7640000",
+                            "code" : "0x600160003514604b580157600260003514600858015760545801565b602c60005d600160005260ff602052602060206020600060006110005af160035560205160015560005c6002556001600455601c5801565b60005c6000526000602064174876e80060002060035801565b",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x01" : "0xff",
+                                "0x02" : "0x2c",
+                                "0x04" : "0x01"
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0xe1e595",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x6124fee990cb02ba",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf880800a834c4b4094000000000000000000000000000000000000110080a0000000000000000000000000000000000000000000000000000000000000000226a00cf62bc3775f0ddf2fbee7e2bc3d52a45486990eb11a18ec2b3f535af2e0b8f8a03a79cd387cfcd19f37f30e13098815bb596835991fa1c849256f049259705c78"
                 }
             ]
@@ -168,17 +256,28 @@
     "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tload_reentrancy.py::test_tload_reentrancy[fork_Cancun-state_test-call_dest_type_CallDestType.EXTERNAL_CALL-call_return_OOG-call_type_DELEGATECALL]" : {
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
-            "description" : "Test function documentation:\n\n    Ported .json vectors:\n\n    (05_tloadReentrancyFiller.yml)\n    Reentrant calls access the same transient storage",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "d2c34f1eaf01d5a74ddf27df94a1d513b6569af86e9ec2d6d2328cd6491f0e37",
-            "hash" : "0x5ff8fef67eaedffe8475e2ec9b3bc04858505f0c12ef05deb1cd2ede8d1edcb8",
+            "description" : "Test function documentation:\n\n    Ported .json vectors.\n\n    (05_tloadReentrancyFiller.yml)\n    Reentrant calls access the same transient storage",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "81fe6cb4bfe42c1db5d2086300623d46d3eb32d31e3bc9ee822af5f20d9fe190",
+            "hash" : "0x5ec66a3b6c05b83bc6c51019bd777f8960a1c1e642c6b98009e82cd89268e548",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tload_reentrancy.py",
-            "sourceHash" : "1ed412769d10b2d3854854a421012c11ff25135dcf44052d49928fee4dc1af67",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_4fe171b6_6cef_4c6e_9073_91f98337c6fe/test_tload_reentrancy.py#L36"
+            "sourceHash" : "3fcab3642a868ac388cbabda671477d74c3ff46f7ec3cb94d1c3e88a7e717a4b",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_ee3ffe8a_89f3_46fb_ba3b_50e7a15a7435/test_tload_reentrancy.py#L36"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -200,6 +299,39 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x60005c6000526000602064174876e800600020",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001100" : {
+                            "balance" : "0x0de0b6b3a7640000",
+                            "code" : "0x6001600035146049580157600260003514600858015760525801565b602c60005d600160005260ff60205260206020602060006110005af460035560205160015560005c6002556001600455601c5801565b60005c6000526000602064174876e80060002060035801565b",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x01" : "0xff",
+                                "0x02" : "0x2c",
+                                "0x04" : "0x01"
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0xe1e595",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x6124fee990cb02ba",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf880800a834c4b4094000000000000000000000000000000000000110080a0000000000000000000000000000000000000000000000000000000000000000226a00cf62bc3775f0ddf2fbee7e2bc3d52a45486990eb11a18ec2b3f535af2e0b8f8a03a79cd387cfcd19f37f30e13098815bb596835991fa1c849256f049259705c78"
                 }
             ]
@@ -251,17 +383,28 @@
     "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tload_reentrancy.py::test_tload_reentrancy[fork_Cancun-state_test-call_dest_type_CallDestType.EXTERNAL_CALL-call_return_OOG-call_type_STATICCALL]" : {
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
-            "description" : "Test function documentation:\n\n    Ported .json vectors:\n\n    (05_tloadReentrancyFiller.yml)\n    Reentrant calls access the same transient storage",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "f4e682ce2feb99861781ca9388e72e1c8b0a0d8f575775a9f6311d978ebe964c",
-            "hash" : "0x38653cf6ec96c6508142a1185d7beb8e1490b1b0ff1adf812902c5d6a0cdb79b",
+            "description" : "Test function documentation:\n\n    Ported .json vectors.\n\n    (05_tloadReentrancyFiller.yml)\n    Reentrant calls access the same transient storage",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "cda7f03b5f2a394c13a618827b726fa0725cd8d42b9de454e45ac8a792bf5b11",
+            "hash" : "0xe8bc122eb52a045da362369dc83ceac42f57dc7807c231e1635a69ef2a225ed1",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tload_reentrancy.py",
-            "sourceHash" : "1ed412769d10b2d3854854a421012c11ff25135dcf44052d49928fee4dc1af67",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_4fe171b6_6cef_4c6e_9073_91f98337c6fe/test_tload_reentrancy.py#L36"
+            "sourceHash" : "3fcab3642a868ac388cbabda671477d74c3ff46f7ec3cb94d1c3e88a7e717a4b",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_ee3ffe8a_89f3_46fb_ba3b_50e7a15a7435/test_tload_reentrancy.py#L36"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -283,6 +426,39 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x60005c6000526000602064174876e800600020",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001100" : {
+                            "balance" : "0x0de0b6b3a7640000",
+                            "code" : "0x6001600035146049580157600260003514600858015760525801565b602c60005d600160005260ff60205260206020602060006110005afa60035560205160015560005c6002556001600455601c5801565b60005c6000526000602064174876e80060002060035801565b",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x01" : "0xff",
+                                "0x02" : "0x2c",
+                                "0x04" : "0x01"
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0xe1e595",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x6124fee990cb02ba",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf880800a834c4b4094000000000000000000000000000000000000110080a0000000000000000000000000000000000000000000000000000000000000000226a00cf62bc3775f0ddf2fbee7e2bc3d52a45486990eb11a18ec2b3f535af2e0b8f8a03a79cd387cfcd19f37f30e13098815bb596835991fa1c849256f049259705c78"
                 }
             ]
@@ -334,17 +510,28 @@
     "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tload_reentrancy.py::test_tload_reentrancy[fork_Cancun-state_test-call_dest_type_CallDestType.EXTERNAL_CALL-call_return_RETURN-call_type_CALLCODE]" : {
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
-            "description" : "Test function documentation:\n\n    Ported .json vectors:\n\n    (05_tloadReentrancyFiller.yml)\n    Reentrant calls access the same transient storage",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "c7435f9c96b7d214cbc783955d1fb343c423585a2490f75c274596c9add65ae0",
-            "hash" : "0x4c530bbf681b37c9d702f2fcfc57fd401e51b81c8e5e43cddd9b392c66bd878d",
+            "description" : "Test function documentation:\n\n    Ported .json vectors.\n\n    (05_tloadReentrancyFiller.yml)\n    Reentrant calls access the same transient storage",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "376487f7ea3ac8503c795c2220f19296bad6bda975a830e650651bbc6cf941a8",
+            "hash" : "0xd4d3e9fbb3f03ebe7d34ca3e7a4fa94bd6ebf2c49ee1f9dcc2068d618a5bcef8",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tload_reentrancy.py",
-            "sourceHash" : "1ed412769d10b2d3854854a421012c11ff25135dcf44052d49928fee4dc1af67",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_4fe171b6_6cef_4c6e_9073_91f98337c6fe/test_tload_reentrancy.py#L36"
+            "sourceHash" : "3fcab3642a868ac388cbabda671477d74c3ff46f7ec3cb94d1c3e88a7e717a4b",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_ee3ffe8a_89f3_46fb_ba3b_50e7a15a7435/test_tload_reentrancy.py#L36"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -366,6 +553,40 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x60005c60005260206000f3",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001100" : {
+                            "balance" : "0x0de0b6b3a7640000",
+                            "code" : "0x600160003514604b5801576002600035146008580157604c5801565b602c60005d600160005260ff602052602060206020600060006110005af260035560205160015560005c600255600160045560145801565b60005c60005260206000f360035801565b",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x01" : "0x2c",
+                                "0x02" : "0x2c",
+                                "0x03" : "0x01",
+                                "0x04" : "0x01"
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x020616",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x6124fee993b5410c",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf880800a834c4b4094000000000000000000000000000000000000110080a0000000000000000000000000000000000000000000000000000000000000000226a00cf62bc3775f0ddf2fbee7e2bc3d52a45486990eb11a18ec2b3f535af2e0b8f8a03a79cd387cfcd19f37f30e13098815bb596835991fa1c849256f049259705c78"
                 }
             ]
@@ -417,17 +638,28 @@
     "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tload_reentrancy.py::test_tload_reentrancy[fork_Cancun-state_test-call_dest_type_CallDestType.EXTERNAL_CALL-call_return_RETURN-call_type_CALL]" : {
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
-            "description" : "Test function documentation:\n\n    Ported .json vectors:\n\n    (05_tloadReentrancyFiller.yml)\n    Reentrant calls access the same transient storage",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "f0fcad2b49ca7421a4b3cb1693de786c0a832f87084ad465e3c7065416a6b17a",
-            "hash" : "0x472cb8a33ec3aa5bb1fa77c73fe0d0c3a5ed09b8d812b0a738709048d61259fa",
+            "description" : "Test function documentation:\n\n    Ported .json vectors.\n\n    (05_tloadReentrancyFiller.yml)\n    Reentrant calls access the same transient storage",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "27206f04cf41560be2d49742d4e30dddff7bc1f30da906f7a8a131408bda657b",
+            "hash" : "0xd4c7fba7fe354876cd69297c2047304166f8297709d8df54b67134aba8f29a42",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tload_reentrancy.py",
-            "sourceHash" : "1ed412769d10b2d3854854a421012c11ff25135dcf44052d49928fee4dc1af67",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_4fe171b6_6cef_4c6e_9073_91f98337c6fe/test_tload_reentrancy.py#L36"
+            "sourceHash" : "3fcab3642a868ac388cbabda671477d74c3ff46f7ec3cb94d1c3e88a7e717a4b",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_ee3ffe8a_89f3_46fb_ba3b_50e7a15a7435/test_tload_reentrancy.py#L36"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -449,6 +681,39 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x60005c60005260206000f3",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001100" : {
+                            "balance" : "0x0de0b6b3a7640000",
+                            "code" : "0x600160003514604b5801576002600035146008580157604c5801565b602c60005d600160005260ff602052602060206020600060006110005af160035560205160015560005c600255600160045560145801565b60005c60005260206000f360035801565b",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x02" : "0x2c",
+                                "0x03" : "0x01",
+                                "0x04" : "0x01"
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x01cdd6",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x6124fee993b5fc8c",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf880800a834c4b4094000000000000000000000000000000000000110080a0000000000000000000000000000000000000000000000000000000000000000226a00cf62bc3775f0ddf2fbee7e2bc3d52a45486990eb11a18ec2b3f535af2e0b8f8a03a79cd387cfcd19f37f30e13098815bb596835991fa1c849256f049259705c78"
                 }
             ]
@@ -500,17 +765,28 @@
     "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tload_reentrancy.py::test_tload_reentrancy[fork_Cancun-state_test-call_dest_type_CallDestType.EXTERNAL_CALL-call_return_RETURN-call_type_DELEGATECALL]" : {
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
-            "description" : "Test function documentation:\n\n    Ported .json vectors:\n\n    (05_tloadReentrancyFiller.yml)\n    Reentrant calls access the same transient storage",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "96a4067504f700587056a3f12d73edc09cec440c62c15056a85b6a395786916a",
-            "hash" : "0xb699f0d5db42cb1c7a618f09d8933e1b43baf5d2ebda526abffa202e64e277a1",
+            "description" : "Test function documentation:\n\n    Ported .json vectors.\n\n    (05_tloadReentrancyFiller.yml)\n    Reentrant calls access the same transient storage",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "c016772be09f3f55c88a191dc0c396a08d245cc6b5c232e8734231da735a9b05",
+            "hash" : "0xa2efcae58ee4d7819b4dd3009d617ac5ce66dfd5fdaefc6e60d686c6f715cfe2",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tload_reentrancy.py",
-            "sourceHash" : "1ed412769d10b2d3854854a421012c11ff25135dcf44052d49928fee4dc1af67",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_4fe171b6_6cef_4c6e_9073_91f98337c6fe/test_tload_reentrancy.py#L36"
+            "sourceHash" : "3fcab3642a868ac388cbabda671477d74c3ff46f7ec3cb94d1c3e88a7e717a4b",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_ee3ffe8a_89f3_46fb_ba3b_50e7a15a7435/test_tload_reentrancy.py#L36"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -532,6 +808,40 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x60005c60005260206000f3",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001100" : {
+                            "balance" : "0x0de0b6b3a7640000",
+                            "code" : "0x60016000351460495801576002600035146008580157604a5801565b602c60005d600160005260ff60205260206020602060006110005af460035560205160015560005c600255600160045560145801565b60005c60005260206000f360035801565b",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x01" : "0x2c",
+                                "0x02" : "0x2c",
+                                "0x03" : "0x01",
+                                "0x04" : "0x01"
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x02060d",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x6124fee993b5412a",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf880800a834c4b4094000000000000000000000000000000000000110080a0000000000000000000000000000000000000000000000000000000000000000226a00cf62bc3775f0ddf2fbee7e2bc3d52a45486990eb11a18ec2b3f535af2e0b8f8a03a79cd387cfcd19f37f30e13098815bb596835991fa1c849256f049259705c78"
                 }
             ]
@@ -583,17 +893,28 @@
     "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tload_reentrancy.py::test_tload_reentrancy[fork_Cancun-state_test-call_dest_type_CallDestType.EXTERNAL_CALL-call_return_RETURN-call_type_STATICCALL]" : {
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
-            "description" : "Test function documentation:\n\n    Ported .json vectors:\n\n    (05_tloadReentrancyFiller.yml)\n    Reentrant calls access the same transient storage",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "c59ffd6d94320aabb5fe1e2bcb491ca9ab9a12e3e71000ed3b3af29b993261a4",
-            "hash" : "0x0eb2c85eb000ed05dd90e972947c21ca2cacaa8b15dff30f5715259738c6477c",
+            "description" : "Test function documentation:\n\n    Ported .json vectors.\n\n    (05_tloadReentrancyFiller.yml)\n    Reentrant calls access the same transient storage",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "8882a5017bf49373b23a83c84ca9d394448fd34060d2b25a114c5be5f41ed033",
+            "hash" : "0x3710c9209dae49e91f5ee51050645b15e1c5af243f36b2787451c04078bc6b83",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tload_reentrancy.py",
-            "sourceHash" : "1ed412769d10b2d3854854a421012c11ff25135dcf44052d49928fee4dc1af67",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_4fe171b6_6cef_4c6e_9073_91f98337c6fe/test_tload_reentrancy.py#L36"
+            "sourceHash" : "3fcab3642a868ac388cbabda671477d74c3ff46f7ec3cb94d1c3e88a7e717a4b",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_ee3ffe8a_89f3_46fb_ba3b_50e7a15a7435/test_tload_reentrancy.py#L36"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -615,6 +936,39 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x60005c60005260206000f3",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001100" : {
+                            "balance" : "0x0de0b6b3a7640000",
+                            "code" : "0x60016000351460495801576002600035146008580157604a5801565b602c60005d600160005260ff60205260206020602060006110005afa60035560205160015560005c600255600160045560145801565b60005c60005260206000f360035801565b",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x02" : "0x2c",
+                                "0x03" : "0x01",
+                                "0x04" : "0x01"
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x01cdcd",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x6124fee993b5fcaa",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf880800a834c4b4094000000000000000000000000000000000000110080a0000000000000000000000000000000000000000000000000000000000000000226a00cf62bc3775f0ddf2fbee7e2bc3d52a45486990eb11a18ec2b3f535af2e0b8f8a03a79cd387cfcd19f37f30e13098815bb596835991fa1c849256f049259705c78"
                 }
             ]
@@ -666,17 +1020,28 @@
     "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tload_reentrancy.py::test_tload_reentrancy[fork_Cancun-state_test-call_dest_type_CallDestType.EXTERNAL_CALL-call_return_REVERT-call_type_CALLCODE]" : {
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
-            "description" : "Test function documentation:\n\n    Ported .json vectors:\n\n    (05_tloadReentrancyFiller.yml)\n    Reentrant calls access the same transient storage",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "40d055bc3b30e73d2bc693db8a2a4816989d5b86697c0d98286080b2ee4a7595",
-            "hash" : "0xcfd8e348e0aa7daf50bae7f84447c0a70723712f6b30804eee63e5877b439648",
+            "description" : "Test function documentation:\n\n    Ported .json vectors.\n\n    (05_tloadReentrancyFiller.yml)\n    Reentrant calls access the same transient storage",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "97143051f2464f92b9c7dd45276078048afff88000f3db27db63cedfc345b582",
+            "hash" : "0x7431455fa568f502790af171bd7a7258f389d1b19fc9ba650aa0ad2a87350a7d",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tload_reentrancy.py",
-            "sourceHash" : "1ed412769d10b2d3854854a421012c11ff25135dcf44052d49928fee4dc1af67",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_4fe171b6_6cef_4c6e_9073_91f98337c6fe/test_tload_reentrancy.py#L36"
+            "sourceHash" : "3fcab3642a868ac388cbabda671477d74c3ff46f7ec3cb94d1c3e88a7e717a4b",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_ee3ffe8a_89f3_46fb_ba3b_50e7a15a7435/test_tload_reentrancy.py#L36"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -698,6 +1063,39 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x60005c60005260206000fd",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001100" : {
+                            "balance" : "0x0de0b6b3a7640000",
+                            "code" : "0x600160003514604b5801576002600035146008580157604c5801565b602c60005d600160005260ff602052602060206020600060006110005af260035560205160015560005c600255600160045560145801565b60005c60005260206000fd60035801565b",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x01" : "0x2c",
+                                "0x02" : "0x2c",
+                                "0x04" : "0x01"
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x01cdd6",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x6124fee993b5fc8c",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf880800a834c4b4094000000000000000000000000000000000000110080a0000000000000000000000000000000000000000000000000000000000000000226a00cf62bc3775f0ddf2fbee7e2bc3d52a45486990eb11a18ec2b3f535af2e0b8f8a03a79cd387cfcd19f37f30e13098815bb596835991fa1c849256f049259705c78"
                 }
             ]
@@ -749,17 +1147,28 @@
     "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tload_reentrancy.py::test_tload_reentrancy[fork_Cancun-state_test-call_dest_type_CallDestType.EXTERNAL_CALL-call_return_REVERT-call_type_CALL]" : {
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
-            "description" : "Test function documentation:\n\n    Ported .json vectors:\n\n    (05_tloadReentrancyFiller.yml)\n    Reentrant calls access the same transient storage",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "659efa30d6afb12839b3402b96dffed49cafc3466dbfebc42996cdb77e093f0b",
-            "hash" : "0xcbca11fed26ed23231a6e15744a32864183661d5e2c63671f39d99a5ff4dd8b4",
+            "description" : "Test function documentation:\n\n    Ported .json vectors.\n\n    (05_tloadReentrancyFiller.yml)\n    Reentrant calls access the same transient storage",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "62f20331e209441f729c42fa5d9c7398e4774344bb993ae854dc912c6e7adefb",
+            "hash" : "0x758f6f5f35401eb34de096414294f2d32a1b0d6205aeaec39c2f98280454e757",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tload_reentrancy.py",
-            "sourceHash" : "1ed412769d10b2d3854854a421012c11ff25135dcf44052d49928fee4dc1af67",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_4fe171b6_6cef_4c6e_9073_91f98337c6fe/test_tload_reentrancy.py#L36"
+            "sourceHash" : "3fcab3642a868ac388cbabda671477d74c3ff46f7ec3cb94d1c3e88a7e717a4b",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_ee3ffe8a_89f3_46fb_ba3b_50e7a15a7435/test_tload_reentrancy.py#L36"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -781,6 +1190,38 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x60005c60005260206000fd",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001100" : {
+                            "balance" : "0x0de0b6b3a7640000",
+                            "code" : "0x600160003514604b5801576002600035146008580157604c5801565b602c60005d600160005260ff602052602060206020600060006110005af160035560205160015560005c600255600160045560145801565b60005c60005260206000fd60035801565b",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x02" : "0x2c",
+                                "0x04" : "0x01"
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x019e78",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x6124fee993b69a70",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf880800a834c4b4094000000000000000000000000000000000000110080a0000000000000000000000000000000000000000000000000000000000000000226a00cf62bc3775f0ddf2fbee7e2bc3d52a45486990eb11a18ec2b3f535af2e0b8f8a03a79cd387cfcd19f37f30e13098815bb596835991fa1c849256f049259705c78"
                 }
             ]
@@ -832,17 +1273,28 @@
     "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tload_reentrancy.py::test_tload_reentrancy[fork_Cancun-state_test-call_dest_type_CallDestType.EXTERNAL_CALL-call_return_REVERT-call_type_DELEGATECALL]" : {
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
-            "description" : "Test function documentation:\n\n    Ported .json vectors:\n\n    (05_tloadReentrancyFiller.yml)\n    Reentrant calls access the same transient storage",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "701d40c606ee96178cb1056384be83c58db24d67f76400ddc59f0e1526c56bc5",
-            "hash" : "0xaa5bfe896d9a3c49d394a04ed8714b0e59069d3e3ba691846b5fcbd457c02da3",
+            "description" : "Test function documentation:\n\n    Ported .json vectors.\n\n    (05_tloadReentrancyFiller.yml)\n    Reentrant calls access the same transient storage",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "7e984525a25a4c42c4d4eda90345c2ab0866597782bce4aeb8e8441b9eafbbb7",
+            "hash" : "0xab8ffbee7425ad9c23a3b2176c32b4ce7a76de3880fb7d8c333ecc8101fb3a42",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tload_reentrancy.py",
-            "sourceHash" : "1ed412769d10b2d3854854a421012c11ff25135dcf44052d49928fee4dc1af67",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_4fe171b6_6cef_4c6e_9073_91f98337c6fe/test_tload_reentrancy.py#L36"
+            "sourceHash" : "3fcab3642a868ac388cbabda671477d74c3ff46f7ec3cb94d1c3e88a7e717a4b",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_ee3ffe8a_89f3_46fb_ba3b_50e7a15a7435/test_tload_reentrancy.py#L36"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -864,6 +1316,39 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x60005c60005260206000fd",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001100" : {
+                            "balance" : "0x0de0b6b3a7640000",
+                            "code" : "0x60016000351460495801576002600035146008580157604a5801565b602c60005d600160005260ff60205260206020602060006110005af460035560205160015560005c600255600160045560145801565b60005c60005260206000fd60035801565b",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x01" : "0x2c",
+                                "0x02" : "0x2c",
+                                "0x04" : "0x01"
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x01cdcd",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x6124fee993b5fcaa",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf880800a834c4b4094000000000000000000000000000000000000110080a0000000000000000000000000000000000000000000000000000000000000000226a00cf62bc3775f0ddf2fbee7e2bc3d52a45486990eb11a18ec2b3f535af2e0b8f8a03a79cd387cfcd19f37f30e13098815bb596835991fa1c849256f049259705c78"
                 }
             ]
@@ -915,17 +1400,28 @@
     "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tload_reentrancy.py::test_tload_reentrancy[fork_Cancun-state_test-call_dest_type_CallDestType.EXTERNAL_CALL-call_return_REVERT-call_type_STATICCALL]" : {
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
-            "description" : "Test function documentation:\n\n    Ported .json vectors:\n\n    (05_tloadReentrancyFiller.yml)\n    Reentrant calls access the same transient storage",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "48151c98823a116f35db5586d64f4cf721bbfc9e8b7a12f8503885a38eb95bb3",
-            "hash" : "0x67abc23ee21f3f8f7bcce79ed92be56f0e1e2052065fd558157a54c198f857fb",
+            "description" : "Test function documentation:\n\n    Ported .json vectors.\n\n    (05_tloadReentrancyFiller.yml)\n    Reentrant calls access the same transient storage",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "83edda277870e8aefa268e4f1b5303e0b7ef91435ad1aef2d58ceb8339a57bf0",
+            "hash" : "0xe3bb2d08e9e401e78a40ee26735f1233c00f1475bff9a799a90ee98f8523a0ff",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tload_reentrancy.py",
-            "sourceHash" : "1ed412769d10b2d3854854a421012c11ff25135dcf44052d49928fee4dc1af67",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_4fe171b6_6cef_4c6e_9073_91f98337c6fe/test_tload_reentrancy.py#L36"
+            "sourceHash" : "3fcab3642a868ac388cbabda671477d74c3ff46f7ec3cb94d1c3e88a7e717a4b",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_ee3ffe8a_89f3_46fb_ba3b_50e7a15a7435/test_tload_reentrancy.py#L36"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -947,6 +1443,38 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x60005c60005260206000fd",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001100" : {
+                            "balance" : "0x0de0b6b3a7640000",
+                            "code" : "0x60016000351460495801576002600035146008580157604a5801565b602c60005d600160005260ff60205260206020602060006110005afa60035560205160015560005c600255600160045560145801565b60005c60005260206000fd60035801565b",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x02" : "0x2c",
+                                "0x04" : "0x01"
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x019e72",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x6124fee993b69a84",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf880800a834c4b4094000000000000000000000000000000000000110080a0000000000000000000000000000000000000000000000000000000000000000226a00cf62bc3775f0ddf2fbee7e2bc3d52a45486990eb11a18ec2b3f535af2e0b8f8a03a79cd387cfcd19f37f30e13098815bb596835991fa1c849256f049259705c78"
                 }
             ]
@@ -998,17 +1526,28 @@
     "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tload_reentrancy.py::test_tload_reentrancy[fork_Cancun-state_test-call_dest_type_CallDestType.REENTRANCY-call_return_OOG-call_type_CALLCODE]" : {
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
-            "description" : "Test function documentation:\n\n    Ported .json vectors:\n\n    (05_tloadReentrancyFiller.yml)\n    Reentrant calls access the same transient storage",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "6ac97fbe9632e767d65023915a6affa21e77bedf8dc69f94149faa1e5d97dffe",
-            "hash" : "0x4ff27e2a50f5a695dc15400a9d943a13bed02983ee77f94cbfed6cdc010d8c1e",
+            "description" : "Test function documentation:\n\n    Ported .json vectors.\n\n    (05_tloadReentrancyFiller.yml)\n    Reentrant calls access the same transient storage",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "f7877ea86564df0cb099b5fd7b5376dd04e2c75eee6d2c1e86ca87d6da89780a",
+            "hash" : "0x9321fe696adcf3c5380adb600757d849909a5ec61cf7cc7b701869cc6e479e6e",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tload_reentrancy.py",
-            "sourceHash" : "1ed412769d10b2d3854854a421012c11ff25135dcf44052d49928fee4dc1af67",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_4fe171b6_6cef_4c6e_9073_91f98337c6fe/test_tload_reentrancy.py#L36"
+            "sourceHash" : "3fcab3642a868ac388cbabda671477d74c3ff46f7ec3cb94d1c3e88a7e717a4b",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_ee3ffe8a_89f3_46fb_ba3b_50e7a15a7435/test_tload_reentrancy.py#L36"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -1030,6 +1569,39 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x60005c6000526000602064174876e800600020",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001100" : {
+                            "balance" : "0x0de0b6b3a7640000",
+                            "code" : "0x6001600035146049580157600260003514600858015760525801565b602c60005d600160005260ff60205260206020602060006000305af260035560205160015560005c6002556001600455601c5801565b60005c6000526000602064174876e80060002060035801565b",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x01" : "0xff",
+                                "0x02" : "0x2c",
+                                "0x04" : "0x01"
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0xe1e520",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x6124fee990cb0440",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf880800a834c4b4094000000000000000000000000000000000000110080a0000000000000000000000000000000000000000000000000000000000000000226a00cf62bc3775f0ddf2fbee7e2bc3d52a45486990eb11a18ec2b3f535af2e0b8f8a03a79cd387cfcd19f37f30e13098815bb596835991fa1c849256f049259705c78"
                 }
             ]
@@ -1081,17 +1653,28 @@
     "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tload_reentrancy.py::test_tload_reentrancy[fork_Cancun-state_test-call_dest_type_CallDestType.REENTRANCY-call_return_OOG-call_type_CALL]" : {
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
-            "description" : "Test function documentation:\n\n    Ported .json vectors:\n\n    (05_tloadReentrancyFiller.yml)\n    Reentrant calls access the same transient storage",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "70e63b7afe6c549454ffe9302201ab3c6a2f430f30f6e66e04c308e0abd5993c",
-            "hash" : "0x06e2b77ea727750afa948d9ccbd86977cbaa0feb3d047486f0565b5cd6814cd6",
+            "description" : "Test function documentation:\n\n    Ported .json vectors.\n\n    (05_tloadReentrancyFiller.yml)\n    Reentrant calls access the same transient storage",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "c4c4479d1720b7cd16151d0bd23b0843dd1f4276f3340fb70d67046209d8e542",
+            "hash" : "0x808fda66e0444afa9b60a7c287fd79a1ffdfecf179da248ca02b787d85a812db",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tload_reentrancy.py",
-            "sourceHash" : "1ed412769d10b2d3854854a421012c11ff25135dcf44052d49928fee4dc1af67",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_4fe171b6_6cef_4c6e_9073_91f98337c6fe/test_tload_reentrancy.py#L36"
+            "sourceHash" : "3fcab3642a868ac388cbabda671477d74c3ff46f7ec3cb94d1c3e88a7e717a4b",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_ee3ffe8a_89f3_46fb_ba3b_50e7a15a7435/test_tload_reentrancy.py#L36"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -1113,6 +1696,39 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x60005c6000526000602064174876e800600020",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001100" : {
+                            "balance" : "0x0de0b6b3a7640000",
+                            "code" : "0x6001600035146049580157600260003514600858015760525801565b602c60005d600160005260ff60205260206020602060006000305af160035560205160015560005c6002556001600455601c5801565b60005c6000526000602064174876e80060002060035801565b",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x01" : "0xff",
+                                "0x02" : "0x2c",
+                                "0x04" : "0x01"
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0xe1e520",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x6124fee990cb0440",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf880800a834c4b4094000000000000000000000000000000000000110080a0000000000000000000000000000000000000000000000000000000000000000226a00cf62bc3775f0ddf2fbee7e2bc3d52a45486990eb11a18ec2b3f535af2e0b8f8a03a79cd387cfcd19f37f30e13098815bb596835991fa1c849256f049259705c78"
                 }
             ]
@@ -1164,17 +1780,28 @@
     "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tload_reentrancy.py::test_tload_reentrancy[fork_Cancun-state_test-call_dest_type_CallDestType.REENTRANCY-call_return_OOG-call_type_DELEGATECALL]" : {
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
-            "description" : "Test function documentation:\n\n    Ported .json vectors:\n\n    (05_tloadReentrancyFiller.yml)\n    Reentrant calls access the same transient storage",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "876eb7081d60bef0a932560e2eeb2546f888f9dbcbbc059e8981ce033449ccca",
-            "hash" : "0xd9c8e920178af80b87d43cd1c621589066c0cc1bd13b96a55992b85a2a30cf3d",
+            "description" : "Test function documentation:\n\n    Ported .json vectors.\n\n    (05_tloadReentrancyFiller.yml)\n    Reentrant calls access the same transient storage",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "961b6bc77c6d977bdf054caf22bf20060090e164ab681fc3f9442efd1a15adaa",
+            "hash" : "0xc551d4689e9e2f56a11cb8b8f8bd6f72489a8fc865a136fc5e3890d472f11b3f",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tload_reentrancy.py",
-            "sourceHash" : "1ed412769d10b2d3854854a421012c11ff25135dcf44052d49928fee4dc1af67",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_4fe171b6_6cef_4c6e_9073_91f98337c6fe/test_tload_reentrancy.py#L36"
+            "sourceHash" : "3fcab3642a868ac388cbabda671477d74c3ff46f7ec3cb94d1c3e88a7e717a4b",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_ee3ffe8a_89f3_46fb_ba3b_50e7a15a7435/test_tload_reentrancy.py#L36"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -1196,6 +1823,39 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x60005c6000526000602064174876e800600020",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001100" : {
+                            "balance" : "0x0de0b6b3a7640000",
+                            "code" : "0x6001600035146047580157600260003514600858015760505801565b602c60005d600160005260ff6020526020602060206000305af460035560205160015560005c6002556001600455601c5801565b60005c6000526000602064174876e80060002060035801565b",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x01" : "0xff",
+                                "0x02" : "0x2c",
+                                "0x04" : "0x01"
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0xe1e520",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x6124fee990cb0440",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf880800a834c4b4094000000000000000000000000000000000000110080a0000000000000000000000000000000000000000000000000000000000000000226a00cf62bc3775f0ddf2fbee7e2bc3d52a45486990eb11a18ec2b3f535af2e0b8f8a03a79cd387cfcd19f37f30e13098815bb596835991fa1c849256f049259705c78"
                 }
             ]
@@ -1247,17 +1907,28 @@
     "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tload_reentrancy.py::test_tload_reentrancy[fork_Cancun-state_test-call_dest_type_CallDestType.REENTRANCY-call_return_OOG-call_type_STATICCALL]" : {
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
-            "description" : "Test function documentation:\n\n    Ported .json vectors:\n\n    (05_tloadReentrancyFiller.yml)\n    Reentrant calls access the same transient storage",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "8638bf0e7f6acff4cb54f2820ff1cfc3a2ac550797ec41f14c42701112d15780",
-            "hash" : "0x81fba9d8b9861e42d1615528eb9e06dd8e5ceb1f798ac634e8d2e6e42d6bccf0",
+            "description" : "Test function documentation:\n\n    Ported .json vectors.\n\n    (05_tloadReentrancyFiller.yml)\n    Reentrant calls access the same transient storage",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "0664c72f22d125c9188d1150fa74f6ac531cc53a4608d19cb65b3c27dd645035",
+            "hash" : "0xb10b2ce46cfff6882fb92965bb73d5f99fa5c2027c44cce95b914a23125f49e1",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tload_reentrancy.py",
-            "sourceHash" : "1ed412769d10b2d3854854a421012c11ff25135dcf44052d49928fee4dc1af67",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_4fe171b6_6cef_4c6e_9073_91f98337c6fe/test_tload_reentrancy.py#L36"
+            "sourceHash" : "3fcab3642a868ac388cbabda671477d74c3ff46f7ec3cb94d1c3e88a7e717a4b",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_ee3ffe8a_89f3_46fb_ba3b_50e7a15a7435/test_tload_reentrancy.py#L36"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -1279,6 +1950,39 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x60005c6000526000602064174876e800600020",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001100" : {
+                            "balance" : "0x0de0b6b3a7640000",
+                            "code" : "0x6001600035146047580157600260003514600858015760505801565b602c60005d600160005260ff6020526020602060206000305afa60035560205160015560005c6002556001600455601c5801565b60005c6000526000602064174876e80060002060035801565b",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x01" : "0xff",
+                                "0x02" : "0x2c",
+                                "0x04" : "0x01"
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0xe1e520",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x6124fee990cb0440",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf880800a834c4b4094000000000000000000000000000000000000110080a0000000000000000000000000000000000000000000000000000000000000000226a00cf62bc3775f0ddf2fbee7e2bc3d52a45486990eb11a18ec2b3f535af2e0b8f8a03a79cd387cfcd19f37f30e13098815bb596835991fa1c849256f049259705c78"
                 }
             ]
@@ -1330,17 +2034,28 @@
     "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tload_reentrancy.py::test_tload_reentrancy[fork_Cancun-state_test-call_dest_type_CallDestType.REENTRANCY-call_return_RETURN-call_type_CALLCODE]" : {
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
-            "description" : "Test function documentation:\n\n    Ported .json vectors:\n\n    (05_tloadReentrancyFiller.yml)\n    Reentrant calls access the same transient storage",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "06a9799ea3ca987e3e0f8403597dd10d8d6775bf7bf5ac8e9d19cc3fa589c813",
-            "hash" : "0xd6445823bde399de5b9cadd928b13acdb97a686aeb7a4093f8e223ee9e8c5216",
+            "description" : "Test function documentation:\n\n    Ported .json vectors.\n\n    (05_tloadReentrancyFiller.yml)\n    Reentrant calls access the same transient storage",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "b285587b32af6261d8c7b91b9ea169eec7622190addf2fb4ff12ba2e0c314045",
+            "hash" : "0x9050122c953d320ee64212f0b99d7d9b4ba5c7f818f48e671c1b080ae9a01cba",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tload_reentrancy.py",
-            "sourceHash" : "1ed412769d10b2d3854854a421012c11ff25135dcf44052d49928fee4dc1af67",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_4fe171b6_6cef_4c6e_9073_91f98337c6fe/test_tload_reentrancy.py#L36"
+            "sourceHash" : "3fcab3642a868ac388cbabda671477d74c3ff46f7ec3cb94d1c3e88a7e717a4b",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_ee3ffe8a_89f3_46fb_ba3b_50e7a15a7435/test_tload_reentrancy.py#L36"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -1362,6 +2077,40 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x60005c60005260206000f3",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001100" : {
+                            "balance" : "0x0de0b6b3a7640000",
+                            "code" : "0x60016000351460495801576002600035146008580157604a5801565b602c60005d600160005260ff60205260206020602060006000305af260035560205160015560005c600255600160045560145801565b60005c60005260206000f360035801565b",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x01" : "0x2c",
+                                "0x02" : "0x2c",
+                                "0x03" : "0x01",
+                                "0x04" : "0x01"
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x01e924",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x6124fee993b5a188",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf880800a834c4b4094000000000000000000000000000000000000110080a0000000000000000000000000000000000000000000000000000000000000000226a00cf62bc3775f0ddf2fbee7e2bc3d52a45486990eb11a18ec2b3f535af2e0b8f8a03a79cd387cfcd19f37f30e13098815bb596835991fa1c849256f049259705c78"
                 }
             ]
@@ -1413,17 +2162,28 @@
     "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tload_reentrancy.py::test_tload_reentrancy[fork_Cancun-state_test-call_dest_type_CallDestType.REENTRANCY-call_return_RETURN-call_type_CALL]" : {
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
-            "description" : "Test function documentation:\n\n    Ported .json vectors:\n\n    (05_tloadReentrancyFiller.yml)\n    Reentrant calls access the same transient storage",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "1ded3fc7e46a1957fc70cc87a6b922ed4371ec30e8b78e3981205d8a9585166d",
-            "hash" : "0x3c0aca46bcfe391ad0b8e36281a0c69844e93c11a6b0934d3ee0c486c3f28a38",
+            "description" : "Test function documentation:\n\n    Ported .json vectors.\n\n    (05_tloadReentrancyFiller.yml)\n    Reentrant calls access the same transient storage",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "0e4c8210ed6e028d159864837c635aedcb8a0b891030bb0ba349935879cdcfc2",
+            "hash" : "0x41405ac9b4b6a3af6490d18eae205629166ca482246b5dfceb9f5913d4111981",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tload_reentrancy.py",
-            "sourceHash" : "1ed412769d10b2d3854854a421012c11ff25135dcf44052d49928fee4dc1af67",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_4fe171b6_6cef_4c6e_9073_91f98337c6fe/test_tload_reentrancy.py#L36"
+            "sourceHash" : "3fcab3642a868ac388cbabda671477d74c3ff46f7ec3cb94d1c3e88a7e717a4b",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_ee3ffe8a_89f3_46fb_ba3b_50e7a15a7435/test_tload_reentrancy.py#L36"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -1445,6 +2205,40 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x60005c60005260206000f3",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001100" : {
+                            "balance" : "0x0de0b6b3a7640000",
+                            "code" : "0x60016000351460495801576002600035146008580157604a5801565b602c60005d600160005260ff60205260206020602060006000305af160035560205160015560005c600255600160045560145801565b60005c60005260206000f360035801565b",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x01" : "0x2c",
+                                "0x02" : "0x2c",
+                                "0x03" : "0x01",
+                                "0x04" : "0x01"
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x01e924",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x6124fee993b5a188",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf880800a834c4b4094000000000000000000000000000000000000110080a0000000000000000000000000000000000000000000000000000000000000000226a00cf62bc3775f0ddf2fbee7e2bc3d52a45486990eb11a18ec2b3f535af2e0b8f8a03a79cd387cfcd19f37f30e13098815bb596835991fa1c849256f049259705c78"
                 }
             ]
@@ -1496,17 +2290,28 @@
     "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tload_reentrancy.py::test_tload_reentrancy[fork_Cancun-state_test-call_dest_type_CallDestType.REENTRANCY-call_return_RETURN-call_type_DELEGATECALL]" : {
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
-            "description" : "Test function documentation:\n\n    Ported .json vectors:\n\n    (05_tloadReentrancyFiller.yml)\n    Reentrant calls access the same transient storage",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "25bbf93b5c9c417dc41fe3c169e6f007146f6a4e79bd37b7b64cfc60d0abaaf3",
-            "hash" : "0x2df9671487e861d33237d6da850a40fa6f0f429914cf767f3c31ce7c737df05a",
+            "description" : "Test function documentation:\n\n    Ported .json vectors.\n\n    (05_tloadReentrancyFiller.yml)\n    Reentrant calls access the same transient storage",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "4a8318d2515516f42d3c0a3c82a8a75360bbf723025042b755d6d001f8cbc65f",
+            "hash" : "0xfca9d29a51a8141e34f9cb6f90313e04550aca337b3f0e431b425a33ebcfcaa0",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tload_reentrancy.py",
-            "sourceHash" : "1ed412769d10b2d3854854a421012c11ff25135dcf44052d49928fee4dc1af67",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_4fe171b6_6cef_4c6e_9073_91f98337c6fe/test_tload_reentrancy.py#L36"
+            "sourceHash" : "3fcab3642a868ac388cbabda671477d74c3ff46f7ec3cb94d1c3e88a7e717a4b",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_ee3ffe8a_89f3_46fb_ba3b_50e7a15a7435/test_tload_reentrancy.py#L36"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -1528,6 +2333,40 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x60005c60005260206000f3",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001100" : {
+                            "balance" : "0x0de0b6b3a7640000",
+                            "code" : "0x6001600035146047580157600260003514600858015760485801565b602c60005d600160005260ff6020526020602060206000305af460035560205160015560005c600255600160045560145801565b60005c60005260206000f360035801565b",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x01" : "0x2c",
+                                "0x02" : "0x2c",
+                                "0x03" : "0x01",
+                                "0x04" : "0x01"
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x01e91b",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x6124fee993b5a1a6",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf880800a834c4b4094000000000000000000000000000000000000110080a0000000000000000000000000000000000000000000000000000000000000000226a00cf62bc3775f0ddf2fbee7e2bc3d52a45486990eb11a18ec2b3f535af2e0b8f8a03a79cd387cfcd19f37f30e13098815bb596835991fa1c849256f049259705c78"
                 }
             ]
@@ -1579,17 +2418,28 @@
     "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tload_reentrancy.py::test_tload_reentrancy[fork_Cancun-state_test-call_dest_type_CallDestType.REENTRANCY-call_return_RETURN-call_type_STATICCALL]" : {
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
-            "description" : "Test function documentation:\n\n    Ported .json vectors:\n\n    (05_tloadReentrancyFiller.yml)\n    Reentrant calls access the same transient storage",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "ed0216665f7137e7d6884c68cf5ef325ed5d246c4e56c16dc3b6e9a5be2edf95",
-            "hash" : "0x10689d1a86d2957fa09ae1a1f1239fd397addeb0962601dfea1386bf8762c412",
+            "description" : "Test function documentation:\n\n    Ported .json vectors.\n\n    (05_tloadReentrancyFiller.yml)\n    Reentrant calls access the same transient storage",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "44d726490426cd8e871f7d1c05a2821cacd9e5f6d18476670d77864b205a441c",
+            "hash" : "0xf04df526187d47e700c6962e90a5a1777af4961cfe9a27189c31067e9661a17b",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tload_reentrancy.py",
-            "sourceHash" : "1ed412769d10b2d3854854a421012c11ff25135dcf44052d49928fee4dc1af67",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_4fe171b6_6cef_4c6e_9073_91f98337c6fe/test_tload_reentrancy.py#L36"
+            "sourceHash" : "3fcab3642a868ac388cbabda671477d74c3ff46f7ec3cb94d1c3e88a7e717a4b",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_ee3ffe8a_89f3_46fb_ba3b_50e7a15a7435/test_tload_reentrancy.py#L36"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -1611,6 +2461,40 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x60005c60005260206000f3",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001100" : {
+                            "balance" : "0x0de0b6b3a7640000",
+                            "code" : "0x6001600035146047580157600260003514600858015760485801565b602c60005d600160005260ff6020526020602060206000305afa60035560205160015560005c600255600160045560145801565b60005c60005260206000f360035801565b",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x01" : "0x2c",
+                                "0x02" : "0x2c",
+                                "0x03" : "0x01",
+                                "0x04" : "0x01"
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x01e91b",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x6124fee993b5a1a6",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf880800a834c4b4094000000000000000000000000000000000000110080a0000000000000000000000000000000000000000000000000000000000000000226a00cf62bc3775f0ddf2fbee7e2bc3d52a45486990eb11a18ec2b3f535af2e0b8f8a03a79cd387cfcd19f37f30e13098815bb596835991fa1c849256f049259705c78"
                 }
             ]
@@ -1662,17 +2546,28 @@
     "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tload_reentrancy.py::test_tload_reentrancy[fork_Cancun-state_test-call_dest_type_CallDestType.REENTRANCY-call_return_REVERT-call_type_CALLCODE]" : {
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
-            "description" : "Test function documentation:\n\n    Ported .json vectors:\n\n    (05_tloadReentrancyFiller.yml)\n    Reentrant calls access the same transient storage",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "c73b1d595dc1eef056bd573c12f54383e6843bf8f1a060c89806c629480e0e02",
-            "hash" : "0x8a29d47fc063a04217aa9fe55b5b31e3c5140cb08ccf641d04c643946c19fc62",
+            "description" : "Test function documentation:\n\n    Ported .json vectors.\n\n    (05_tloadReentrancyFiller.yml)\n    Reentrant calls access the same transient storage",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "8fc55a99b46d6657518896b785892440788d0e4666453a4704aa4b0df6a90230",
+            "hash" : "0x28ba8c6f1c67b71cdbfe46e56ca18175cb1dfc8e7148f514d605ea1b2f4dc20e",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tload_reentrancy.py",
-            "sourceHash" : "1ed412769d10b2d3854854a421012c11ff25135dcf44052d49928fee4dc1af67",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_4fe171b6_6cef_4c6e_9073_91f98337c6fe/test_tload_reentrancy.py#L36"
+            "sourceHash" : "3fcab3642a868ac388cbabda671477d74c3ff46f7ec3cb94d1c3e88a7e717a4b",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_ee3ffe8a_89f3_46fb_ba3b_50e7a15a7435/test_tload_reentrancy.py#L36"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -1694,6 +2589,39 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x60005c60005260206000fd",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001100" : {
+                            "balance" : "0x0de0b6b3a7640000",
+                            "code" : "0x60016000351460495801576002600035146008580157604a5801565b602c60005d600160005260ff60205260206020602060006000305af260035560205160015560005c600255600160045560145801565b60005c60005260206000fd60035801565b",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x01" : "0x2c",
+                                "0x02" : "0x2c",
+                                "0x04" : "0x01"
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x01b0e4",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x6124fee993b65d08",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf880800a834c4b4094000000000000000000000000000000000000110080a0000000000000000000000000000000000000000000000000000000000000000226a00cf62bc3775f0ddf2fbee7e2bc3d52a45486990eb11a18ec2b3f535af2e0b8f8a03a79cd387cfcd19f37f30e13098815bb596835991fa1c849256f049259705c78"
                 }
             ]
@@ -1745,17 +2673,28 @@
     "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tload_reentrancy.py::test_tload_reentrancy[fork_Cancun-state_test-call_dest_type_CallDestType.REENTRANCY-call_return_REVERT-call_type_CALL]" : {
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
-            "description" : "Test function documentation:\n\n    Ported .json vectors:\n\n    (05_tloadReentrancyFiller.yml)\n    Reentrant calls access the same transient storage",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "4438cc5f11e5f3020362ed1ed9488df2bbed3efd61680037d23f8a2e8e533b33",
-            "hash" : "0xbb152a5ad6bdca8a9d01854bbe670f5aebe291e5c6c303fc8f893cfcdc383422",
+            "description" : "Test function documentation:\n\n    Ported .json vectors.\n\n    (05_tloadReentrancyFiller.yml)\n    Reentrant calls access the same transient storage",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "e9b2e10a8a5facfdfb70593b89a3c42140b2f2611a5db46337d39ce3ae5e24f6",
+            "hash" : "0x85ffd506e5a56ba778f0095bcbc7b1e2e7311d7d4fed4f9c983e2222c9355117",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tload_reentrancy.py",
-            "sourceHash" : "1ed412769d10b2d3854854a421012c11ff25135dcf44052d49928fee4dc1af67",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_4fe171b6_6cef_4c6e_9073_91f98337c6fe/test_tload_reentrancy.py#L36"
+            "sourceHash" : "3fcab3642a868ac388cbabda671477d74c3ff46f7ec3cb94d1c3e88a7e717a4b",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_ee3ffe8a_89f3_46fb_ba3b_50e7a15a7435/test_tload_reentrancy.py#L36"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -1777,6 +2716,39 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x60005c60005260206000fd",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001100" : {
+                            "balance" : "0x0de0b6b3a7640000",
+                            "code" : "0x60016000351460495801576002600035146008580157604a5801565b602c60005d600160005260ff60205260206020602060006000305af160035560205160015560005c600255600160045560145801565b60005c60005260206000fd60035801565b",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x01" : "0x2c",
+                                "0x02" : "0x2c",
+                                "0x04" : "0x01"
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x01b0e4",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x6124fee993b65d08",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf880800a834c4b4094000000000000000000000000000000000000110080a0000000000000000000000000000000000000000000000000000000000000000226a00cf62bc3775f0ddf2fbee7e2bc3d52a45486990eb11a18ec2b3f535af2e0b8f8a03a79cd387cfcd19f37f30e13098815bb596835991fa1c849256f049259705c78"
                 }
             ]
@@ -1828,17 +2800,28 @@
     "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tload_reentrancy.py::test_tload_reentrancy[fork_Cancun-state_test-call_dest_type_CallDestType.REENTRANCY-call_return_REVERT-call_type_DELEGATECALL]" : {
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
-            "description" : "Test function documentation:\n\n    Ported .json vectors:\n\n    (05_tloadReentrancyFiller.yml)\n    Reentrant calls access the same transient storage",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "c2d41ac01d5db214236eca05abdd99305e797bd395acd64ce28d372a3373da38",
-            "hash" : "0xbdd8e2cc971e398ba706cb33b9726f27b71de457144bf78de6cd04f352674702",
+            "description" : "Test function documentation:\n\n    Ported .json vectors.\n\n    (05_tloadReentrancyFiller.yml)\n    Reentrant calls access the same transient storage",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "7520f02a2633607c0514824c6332e0f5b0ca8642bc457e4cbd467b290c2324fb",
+            "hash" : "0xdab130965af6f0dd9fa936af067927142eaf91ebe49fc5e7b96f66e6b8b9bc7e",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tload_reentrancy.py",
-            "sourceHash" : "1ed412769d10b2d3854854a421012c11ff25135dcf44052d49928fee4dc1af67",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_4fe171b6_6cef_4c6e_9073_91f98337c6fe/test_tload_reentrancy.py#L36"
+            "sourceHash" : "3fcab3642a868ac388cbabda671477d74c3ff46f7ec3cb94d1c3e88a7e717a4b",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_ee3ffe8a_89f3_46fb_ba3b_50e7a15a7435/test_tload_reentrancy.py#L36"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -1860,6 +2843,39 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x60005c60005260206000fd",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001100" : {
+                            "balance" : "0x0de0b6b3a7640000",
+                            "code" : "0x6001600035146047580157600260003514600858015760485801565b602c60005d600160005260ff6020526020602060206000305af460035560205160015560005c600255600160045560145801565b60005c60005260206000fd60035801565b",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x01" : "0x2c",
+                                "0x02" : "0x2c",
+                                "0x04" : "0x01"
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x01b0db",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x6124fee993b65d26",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf880800a834c4b4094000000000000000000000000000000000000110080a0000000000000000000000000000000000000000000000000000000000000000226a00cf62bc3775f0ddf2fbee7e2bc3d52a45486990eb11a18ec2b3f535af2e0b8f8a03a79cd387cfcd19f37f30e13098815bb596835991fa1c849256f049259705c78"
                 }
             ]
@@ -1911,17 +2927,28 @@
     "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tload_reentrancy.py::test_tload_reentrancy[fork_Cancun-state_test-call_dest_type_CallDestType.REENTRANCY-call_return_REVERT-call_type_STATICCALL]" : {
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
-            "description" : "Test function documentation:\n\n    Ported .json vectors:\n\n    (05_tloadReentrancyFiller.yml)\n    Reentrant calls access the same transient storage",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "abb41ed11f45b63480a3f97334d799e8d7cb4c785f31e6a0839682cdaa1db446",
-            "hash" : "0x4ddbd439bd4c261a46e887507585e0d9bed4b62493d1d05bdaab376dccaa9915",
+            "description" : "Test function documentation:\n\n    Ported .json vectors.\n\n    (05_tloadReentrancyFiller.yml)\n    Reentrant calls access the same transient storage",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "3c5dae23e6d1b91f0a365bd332729fe90a05d06cc027f389ec0ecc739a1d0279",
+            "hash" : "0xb6d8bb9ed2617ad0acb64f752c964020eaac5e52b7d27901fb605f438c075424",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tload_reentrancy.py",
-            "sourceHash" : "1ed412769d10b2d3854854a421012c11ff25135dcf44052d49928fee4dc1af67",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_4fe171b6_6cef_4c6e_9073_91f98337c6fe/test_tload_reentrancy.py#L36"
+            "sourceHash" : "3fcab3642a868ac388cbabda671477d74c3ff46f7ec3cb94d1c3e88a7e717a4b",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_ee3ffe8a_89f3_46fb_ba3b_50e7a15a7435/test_tload_reentrancy.py#L36"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -1943,6 +2970,39 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x60005c60005260206000fd",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001100" : {
+                            "balance" : "0x0de0b6b3a7640000",
+                            "code" : "0x6001600035146047580157600260003514600858015760485801565b602c60005d600160005260ff6020526020602060206000305afa60035560205160015560005c600255600160045560145801565b60005c60005260206000fd60035801565b",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x01" : "0x2c",
+                                "0x02" : "0x2c",
+                                "0x04" : "0x01"
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x01b0db",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x6124fee993b65d26",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf880800a834c4b4094000000000000000000000000000000000000110080a0000000000000000000000000000000000000000000000000000000000000000226a00cf62bc3775f0ddf2fbee7e2bc3d52a45486990eb11a18ec2b3f535af2e0b8f8a03a79cd387cfcd19f37f30e13098815bb596835991fa1c849256f049259705c78"
                 }
             ]

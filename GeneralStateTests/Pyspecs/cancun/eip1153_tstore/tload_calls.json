@@ -2,17 +2,28 @@
     "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tload_calls.py::test_tload_calls[fork_Cancun-state_test-call_type_CALLCODE]" : {
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
-            "description" : "Test function documentation:\n\n    Ported .json vectors:\n\n    (04_tloadAfterCallFiller.yml)\n    Loading a slot after a call to another contract is 0.\n\n    (12_tloadDelegateCallFiller.yml)\n    delegatecall reads transient storage in the context of the current address",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "6b0776c9d5c73d9d92948716016feb574176611703867ada3dfaeea1ece9c460",
-            "hash" : "0xfbc01dc6986d38df6ede00af654ab258124f94872a92c4c003377331d899f2b9",
+            "description" : "Test function documentation:\n\n    Ported .json vectors.\n\n    (04_tloadAfterCallFiller.yml)\n    Loading a slot after a call to another contract is 0.\n\n    (12_tloadDelegateCallFiller.yml)\n    delegatecall reads transient storage in the context of the current address",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "f6f02448ad6817614d5216877fa5fcde38c987cb3e8df814ce791a6ff9d5d32f",
+            "hash" : "0x8bf87279043d60c1f77b9f4ed58a0415138e3874cc175e2ff9ae7c30f7daa04e",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tload_calls.py",
-            "sourceHash" : "1f1aa2dd2567799cedf3ec0bc1fc3e2dca60287b03a07b5da8e64b1d0b404dd4",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_3e4beeaf_00cb_426f_af28_73c5a1133025/test_tload_calls.py#L16"
+            "sourceHash" : "f77f3c6c178e30a7d9e6b4571ab2261d9ff8abdae030d47a4fe0a336f8274a67",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_c2b749b9_aa6a_45c5_937a_f8264126ed69/test_tload_calls.py#L16"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -34,6 +45,42 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x0de0b6b3a7640000",
+                            "code" : "0x5b60005c600255601460005d60005c600355",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x02" : "0xff",
+                                "0x03" : "0xff"
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001100" : {
+                            "balance" : "0x0de0b6b3a7640000",
+                            "code" : "0x5b600a60005d600060006020600060006110005af260015560005c600055",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x00" : "0x14",
+                                "0x01" : "0x01",
+                                "0x02" : "0x0a",
+                                "0x03" : "0x14"
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x039642",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x6124fee993b00b24",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf860800a834c4b40940000000000000000000000000000000000001100808026a0bcf2fd7caa0e764b107b1bd87b8df4dff4aff50e6e50e16c74e0f5a3fca6a3efa00b54e10cb435246498842926bc4d5fc26ac752d0c21999bb7027da6c580425dd"
                 }
             ]
@@ -85,17 +132,28 @@
     "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tload_calls.py::test_tload_calls[fork_Cancun-state_test-call_type_CALL]" : {
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
-            "description" : "Test function documentation:\n\n    Ported .json vectors:\n\n    (04_tloadAfterCallFiller.yml)\n    Loading a slot after a call to another contract is 0.\n\n    (12_tloadDelegateCallFiller.yml)\n    delegatecall reads transient storage in the context of the current address",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "fb2a0fe3d5db021d1d05825ed0f2274503393ae37a10ea7bc997ada5eeffa320",
-            "hash" : "0x0643f4a2938969f84b2275ea321bf04d183f0486e2e1f571e5925d7b36c85e9c",
+            "description" : "Test function documentation:\n\n    Ported .json vectors.\n\n    (04_tloadAfterCallFiller.yml)\n    Loading a slot after a call to another contract is 0.\n\n    (12_tloadDelegateCallFiller.yml)\n    delegatecall reads transient storage in the context of the current address",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "1c2db1061c58e23199bfbc6b56dbca2ada23917b8bb2369843e950b43e1d1ea6",
+            "hash" : "0xdfd7ff47f3f58f964d482ec20369524972a8333be201c93e134c5d1f5367bf43",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tload_calls.py",
-            "sourceHash" : "1f1aa2dd2567799cedf3ec0bc1fc3e2dca60287b03a07b5da8e64b1d0b404dd4",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_3e4beeaf_00cb_426f_af28_73c5a1133025/test_tload_calls.py#L16"
+            "sourceHash" : "f77f3c6c178e30a7d9e6b4571ab2261d9ff8abdae030d47a4fe0a336f8274a67",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_c2b749b9_aa6a_45c5_937a_f8264126ed69/test_tload_calls.py#L16"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -117,6 +175,39 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x0de0b6b3a7640000",
+                            "code" : "0x5b60005c600255601460005d60005c600355",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x03" : "0x14"
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001100" : {
+                            "balance" : "0x0de0b6b3a7640000",
+                            "code" : "0x5b600a60005d600060006020600060006110005af160015560005c600055",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x00" : "0x0a",
+                                "0x01" : "0x01"
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x01cd3a",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x6124fee993b5fe94",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf860800a834c4b40940000000000000000000000000000000000001100808026a0bcf2fd7caa0e764b107b1bd87b8df4dff4aff50e6e50e16c74e0f5a3fca6a3efa00b54e10cb435246498842926bc4d5fc26ac752d0c21999bb7027da6c580425dd"
                 }
             ]
@@ -168,17 +259,28 @@
     "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tload_calls.py::test_tload_calls[fork_Cancun-state_test-call_type_DELEGATECALL]" : {
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
-            "description" : "Test function documentation:\n\n    Ported .json vectors:\n\n    (04_tloadAfterCallFiller.yml)\n    Loading a slot after a call to another contract is 0.\n\n    (12_tloadDelegateCallFiller.yml)\n    delegatecall reads transient storage in the context of the current address",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "6d34e2a9bc4fc58da9d1bc74f26e95c25b1f005209ea77915d6882d14fe6d76d",
-            "hash" : "0x6e9741734ed3bf6da409acf2e683c0d4ae5b7f30ee5a9551bf81e8f9bade0c3e",
+            "description" : "Test function documentation:\n\n    Ported .json vectors.\n\n    (04_tloadAfterCallFiller.yml)\n    Loading a slot after a call to another contract is 0.\n\n    (12_tloadDelegateCallFiller.yml)\n    delegatecall reads transient storage in the context of the current address",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "f9b0228194dc7a0fcc3b4820054ce655792017316fb0d2e7bd85bb33bf5402af",
+            "hash" : "0xb1005dcc5e72feec7e1ad2090bf57508915d03585acc2f2ac24731e886ba26fd",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tload_calls.py",
-            "sourceHash" : "1f1aa2dd2567799cedf3ec0bc1fc3e2dca60287b03a07b5da8e64b1d0b404dd4",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_3e4beeaf_00cb_426f_af28_73c5a1133025/test_tload_calls.py#L16"
+            "sourceHash" : "f77f3c6c178e30a7d9e6b4571ab2261d9ff8abdae030d47a4fe0a336f8274a67",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_c2b749b9_aa6a_45c5_937a_f8264126ed69/test_tload_calls.py#L16"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -200,6 +302,42 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x0de0b6b3a7640000",
+                            "code" : "0x5b60005c600255601460005d60005c600355",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x02" : "0xff",
+                                "0x03" : "0xff"
+                            }
+                        },
+                        "0x0000000000000000000000000000000000001100" : {
+                            "balance" : "0x0de0b6b3a7640000",
+                            "code" : "0x5b600a60005d60006000602060006110005af460015560005c600055",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x00" : "0x14",
+                                "0x01" : "0x01",
+                                "0x02" : "0x0a",
+                                "0x03" : "0x14"
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x039639",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x6124fee993b00b42",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf860800a834c4b40940000000000000000000000000000000000001100808026a0bcf2fd7caa0e764b107b1bd87b8df4dff4aff50e6e50e16c74e0f5a3fca6a3efa00b54e10cb435246498842926bc4d5fc26ac752d0c21999bb7027da6c580425dd"
                 }
             ]

@@ -3,16 +3,17 @@
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
             "description" : "Test function documentation:\n\n    Tests that the `BLOBHASH` opcode returns the appropriate values when there\n    is more than 1 blob tx type within a block (for tx types 2 and 3).\n\n    Scenarios involve tx type 3 followed by tx type 2 running the same code\n    within a block, including the opposite.",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.600ac001.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "c7f5de98842055938e5fdddf0d9662f486d4882e0459cfbf64b229e8142f3bb9",
-            "hash" : "0xbdcd021bc3081596068c09b8b6a466322769d61e741fe4b24ddcbbca13327b8e",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "blockchain_test",
+            "generatedTestHash" : "ee7c85ebbe57ebcc3cc47e035c31fad987a102b6dd82ceda85d92aba1a3b2819",
+            "hash" : "0x13d41aab8631b26e5360cda93f6b65205aeb8ae002ace49f69f03220ddf60640",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip4844_blobs/test_blobhash_opcode.py",
-            "sourceHash" : "e1adb0d17acf87e434cdebce14f68dd64f55ae0c5d1ecc6f210380f0feacb74a",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_4cc4f70b_8707_4a60_ad4e_845a247141ae/test_blobhash_opcode.py#L232"
+            "sourceHash" : "fcb64fc17a63c561d9a2a12a8903899dfbdf7575c78a3e60ce9e4cfe5b6e26e2",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_976acf6d_de5f_4fd1_bc27_8d95296f3f98/test_blobhash_opcode.py#L243"
         },
         "blocks" : [
             {
@@ -244,6 +245,17 @@
                 ]
             }
         ],
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01",
+            "network" : "Cancun"
+        },
         "genesisBlockHeader" : {
             "baseFeePerGas" : "0x07",
             "blobGasUsed" : "0x00",

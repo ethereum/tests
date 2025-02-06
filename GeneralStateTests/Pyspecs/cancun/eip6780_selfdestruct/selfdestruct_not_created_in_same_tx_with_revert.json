@@ -2,17 +2,28 @@
     "src/GeneralStateTestsFiller/Pyspecs/cancun/eip6780_selfdestruct/test_selfdestruct_revert.py::test_selfdestruct_not_created_in_same_tx_with_revert[fork_Cancun-state_test-no_outer_selfdestruct]" : {
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
-            "description" : "Test function documentation:\n\n    Same test as selfdestruct_created_in_same_tx_with_revert except selfdestructable contract\n    is pre-existing",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "196e66a9dd3ee40ad8cb52fe53932bf2a04599bd56aa6964c349919dee925ff0",
-            "hash" : "0xeede982efaa8b7b975187225e58fe5106b87630a0a1fa65899aab2f11ccd1c8c",
+            "description" : "Test function documentation:\n\n    Same test as selfdestruct_created_in_same_tx_with_revert except selfdestructable contract\n    is pre-existing.",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "0ba115599d0c8746fd2f6ac78ed7e7157ca47b26fda6820803a7a942261e092a",
+            "hash" : "0x5d4fde4a474dca1a50122b839f9eaa499409e100a19f5d70d94162581e839b4d",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip6780_selfdestruct/test_selfdestruct_revert.py",
-            "sourceHash" : "33c744412cd87d994f24f1a07ab1689f097d05ff175233783b36a449c78ddded",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_04217b7d_1535_4182_b5e7_32b7c7fe514e/test_selfdestruct_revert.py#L330"
+            "sourceHash" : "9968f102b5fc2efcd351f6dfe45c6cf98018b20c47566a03d66a112144a109dc",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_fdf1e0a7_ce4e_494c_9c8d_9b6519bb326f/test_selfdestruct_revert.py#L330"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -34,6 +45,45 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x00000000000000000000000000000000deadbeef" : {
+                            "balance" : "0x01",
+                            "code" : "0x5f356001815f1460385750600114601257005b60015f525f8060208160017364e2ebd6405af8cb348aec519084d3fff42ebba645f15f80fd5b5f80525f8060208160017364e2ebd6405af8cb348aec519084d3fff42ebba645f1505f525f80602081803045f1507364e2ebd6405af8cb348aec519084d3fff42ebba6316001555f80f3",
+                            "nonce" : "0x00",
+                            "storage" : {
+                                "0x01" : "0x01"
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x07d7ab",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0x6295ee1b4f6dd65047762f924ecd367c17eabf8f" : {
+                            "balance" : "0x00",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x64e2ebd6405af8cb348aec519084d3fff42ebba6" : {
+                            "balance" : "0x01",
+                            "code" : "0x5f35805f14601c57600114600f57005b6001805401600155611234ff5b60015f54015f555f80f3",
+                            "nonce" : "0x00",
+                            "storage" : {
+                                "0x00" : "0x01"
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x056bc75e2d62f5dbc6",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf85e800a8405f5e1008080916000600060006000600063deadbeef45f11ca0419971e241fd5f764e398a1f49165b4c3e6f2730a8d2a3b86828ea54af46ea83a034623f6f80d32cfdf6196c9376594571f509a163e45bfef565d60a09508aaa70"
                 }
             ]
@@ -81,17 +131,28 @@
     "src/GeneralStateTestsFiller/Pyspecs/cancun/eip6780_selfdestruct/test_selfdestruct_revert.py::test_selfdestruct_not_created_in_same_tx_with_revert[fork_Cancun-state_test-outer_selfdestruct_after_inner_call]" : {
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
-            "description" : "Test function documentation:\n\n    Same test as selfdestruct_created_in_same_tx_with_revert except selfdestructable contract\n    is pre-existing",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "52078acb4afbff7a9eeda96bc881812a12ed2bfbcedb7fbf3b296bbf701637d6",
-            "hash" : "0x2d9c372674e7637b17c3f9ec21091be26a7ae7a492c313f4b61a4d3fc5fdba5f",
+            "description" : "Test function documentation:\n\n    Same test as selfdestruct_created_in_same_tx_with_revert except selfdestructable contract\n    is pre-existing.",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "7872a74ad17dda3e056c2642b19a328f6e9108da574bfc9a7b7239bfc935bbad",
+            "hash" : "0xb4f5ebfd38febc5ba9273a4c51ff5ca2ad96649e34e8c92c6bca6d8ba34ea35a",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip6780_selfdestruct/test_selfdestruct_revert.py",
-            "sourceHash" : "33c744412cd87d994f24f1a07ab1689f097d05ff175233783b36a449c78ddded",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_04217b7d_1535_4182_b5e7_32b7c7fe514e/test_selfdestruct_revert.py#L330"
+            "sourceHash" : "9968f102b5fc2efcd351f6dfe45c6cf98018b20c47566a03d66a112144a109dc",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_fdf1e0a7_ce4e_494c_9c8d_9b6519bb326f/test_selfdestruct_revert.py#L330"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -113,6 +174,53 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001234" : {
+                            "balance" : "0x02",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0x00000000000000000000000000000000deadbeef" : {
+                            "balance" : "0x00",
+                            "code" : "0x5f356001815f1460385750600114601257005b60015f525f8060208160017364e2ebd6405af8cb348aec519084d3fff42ebba645f15f80fd5b5f80525f8060208160017364e2ebd6405af8cb348aec519084d3fff42ebba645f1505f525f80602081803045f1507364e2ebd6405af8cb348aec519084d3fff42ebba63160015560015f525f8060208160017364e2ebd6405af8cb348aec519084d3fff42ebba645f15f80f3",
+                            "nonce" : "0x00",
+                            "storage" : {
+                                "0x01" : "0x01"
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x0aa967",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0x6295ee1b4f6dd65047762f924ecd367c17eabf8f" : {
+                            "balance" : "0x00",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x64e2ebd6405af8cb348aec519084d3fff42ebba6" : {
+                            "balance" : "0x00",
+                            "code" : "0x5f35805f14601c57600114600f57005b6001805401600155611234ff5b60015f54015f555f80f3",
+                            "nonce" : "0x00",
+                            "storage" : {
+                                "0x00" : "0x01",
+                                "0x01" : "0x01"
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x056bc75e2d62ec75fe",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf85e800a8405f5e1008080916000600060006000600063deadbeef45f11ca0419971e241fd5f764e398a1f49165b4c3e6f2730a8d2a3b86828ea54af46ea83a034623f6f80d32cfdf6196c9376594571f509a163e45bfef565d60a09508aaa70"
                 }
             ]
@@ -160,17 +268,28 @@
     "src/GeneralStateTestsFiller/Pyspecs/cancun/eip6780_selfdestruct/test_selfdestruct_revert.py::test_selfdestruct_not_created_in_same_tx_with_revert[fork_Cancun-state_test-outer_selfdestruct_before_inner_call]" : {
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
-            "description" : "Test function documentation:\n\n    Same test as selfdestruct_created_in_same_tx_with_revert except selfdestructable contract\n    is pre-existing",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "e5cfbd06235105eafafc7952eb59c67ef34d097e94d2f87299b0bc21159e15b9",
-            "hash" : "0x28a8ecac9afff1c87ea731912f0255076b38e232ec26ce546fc107db6acf33b0",
+            "description" : "Test function documentation:\n\n    Same test as selfdestruct_created_in_same_tx_with_revert except selfdestructable contract\n    is pre-existing.",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "ded81bc7378b3cf229abb0162ee43cca2b609be2397214edc034cb17120bdcd9",
+            "hash" : "0x13df18e42e265752faae1ff8a247a7a808a27c7db69216344ff7a7693e08fe47",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip6780_selfdestruct/test_selfdestruct_revert.py",
-            "sourceHash" : "33c744412cd87d994f24f1a07ab1689f097d05ff175233783b36a449c78ddded",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_04217b7d_1535_4182_b5e7_32b7c7fe514e/test_selfdestruct_revert.py#L330"
+            "sourceHash" : "9968f102b5fc2efcd351f6dfe45c6cf98018b20c47566a03d66a112144a109dc",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_fdf1e0a7_ce4e_494c_9c8d_9b6519bb326f/test_selfdestruct_revert.py#L330"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -192,6 +311,53 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001234" : {
+                            "balance" : "0x01",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0x00000000000000000000000000000000deadbeef" : {
+                            "balance" : "0x00",
+                            "code" : "0x5f356001815f1460385750600114601257005b60015f525f8060208160017364e2ebd6405af8cb348aec519084d3fff42ebba645f15f80fd5b60015f525f8060208160017364e2ebd6405af8cb348aec519084d3fff42ebba645f1505f80525f8060208160017364e2ebd6405af8cb348aec519084d3fff42ebba645f1505f525f80602081803045f1507364e2ebd6405af8cb348aec519084d3fff42ebba6316001555f80f3",
+                            "nonce" : "0x00",
+                            "storage" : {
+                                "0x01" : "0x01"
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x0827b2",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0x6295ee1b4f6dd65047762f924ecd367c17eabf8f" : {
+                            "balance" : "0x00",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x64e2ebd6405af8cb348aec519084d3fff42ebba6" : {
+                            "balance" : "0x01",
+                            "code" : "0x5f35805f14601c57600114600f57005b6001805401600155611234ff5b60015f54015f555f80f3",
+                            "nonce" : "0x00",
+                            "storage" : {
+                                "0x00" : "0x01",
+                                "0x01" : "0x01"
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x056bc75e2d62f4d104",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf85e800a8405f5e1008080916000600060006000600063deadbeef45f11ca0419971e241fd5f764e398a1f49165b4c3e6f2730a8d2a3b86828ea54af46ea83a034623f6f80d32cfdf6196c9376594571f509a163e45bfef565d60a09508aaa70"
                 }
             ]
