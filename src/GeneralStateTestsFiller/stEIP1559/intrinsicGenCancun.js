@@ -10,7 +10,7 @@ const headerBoilerPlate = `
 # tests/src/GeneralStateTestsFiller/stEIP1559/intrinsicGen.js
 
 
-intrinsic:
+intrinsicCancun:
 
   _info:
     comment: Ori Pomerantz qbzzt1@gmail.com
@@ -28,7 +28,7 @@ intrinsic:
     cccccccccccccccccccccccccccccccccccccccc:
       balance: '1000000000000000000'
       code: |
-          :yul berlin
+          :yul london
           {
               sstore(0, add(1,1))
           }
@@ -182,9 +182,9 @@ ${dataList(tooLow)}
       value: !!int -1
 
     network:
-      - '>=London'
+      - 'Cancun'
     expectException:
-      '>=London': TR_IntrinsicGas
+      'Cancun': TransactionException.INTRINSIC_GAS_TOO_LOW
     result: {}
 `   // if tooLow.length > 0
 
@@ -199,7 +199,7 @@ ${dataList(okList)}
       value: !!int -1
 
     network:
-      - '>=London'
+      - 'Cancun'
     result: {}
 `   // if tooLow.length > 0
 

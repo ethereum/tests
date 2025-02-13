@@ -1,5 +1,5 @@
 # nimbus blobhash test
-blobhashListBounds7:
+blobhashListBounds10:
   _info:
     comment: BLOB006
 
@@ -14,18 +14,12 @@ blobhashListBounds7:
 
   expect:
     - network:
-        - '>=Prague'
-      result:
-        095e7baea6a6c7c4c2dfeb977efac326af552d87:
-          balance: 1000000000000100000
-         
-    - network:
-        - 'Cancun'
+        - '>=Cancun'
       result:
         095e7baea6a6c7c4c2dfeb977efac326af552d87:
           balance: 1000000000000000000
       expectException:
-         "Cancun": "TransactionException.TYPE_3_TX_BLOB_COUNT_EXCEEDED"
+         ">=Cancun": "TransactionException.TYPE_3_TX_BLOB_COUNT_EXCEEDED"
 
 
 
@@ -74,4 +68,7 @@ blobhashListBounds7:
         - "0x01a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065f0005"
         - "0x01a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065f0006"
         - "0x01a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065f0007"
+        - "0x01a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065f0008"
+        - "0x01a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065f0009"
+        - "0x01a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065f0010"
     
