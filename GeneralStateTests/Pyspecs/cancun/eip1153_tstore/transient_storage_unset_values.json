@@ -3,9 +3,14 @@
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
             "description" : "Test function documentation:\n\n    Test that tload returns zero for unset values. Loading an arbitrary value is\n    0 at beginning of transaction: TLOAD(x) is 0.\n\n    Based on [ethereum/tests/.../01_tloadBeginningTxnFiller.yml](https://github.com/ethereum/tests/blob/9b00b68593f5869eb51a6659e1cc983e875e616b/src/EIPTestsFiller/StateTests/stEIP1153-transientStorage/01_tloadBeginningTxnFiller.yml)\",",
-            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
-            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "eels-resolution" : {
+                "branch" : "master",
+                "commit" : "78fb726158c69d8fa164e28f195fabf6ab59b915",
+                "git-url" : "https://github.com/ethereum/execution-specs.git"
+            },
+            "filling-rpc-server" : "evmone-t8n 0.14.0",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.e0777df7.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.5",
             "fixture_format" : "state_test",
             "generatedTestHash" : "48e9b00d49cf62d636ff263482f29a07103a07f75131afe36386578d7a354a49",
             "hash" : "0xb1d12819959e6fc46570d9a51094f01e224a83fc22055612b8873e3474d6b6f5",
@@ -13,7 +18,7 @@
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tstorage.py",
             "sourceHash" : "f2b3728af39c3318ae757eaa1436259dec2c4ddd55e05c06e2eb403725a72af1",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_9a4fb879_6c95_4e90_8bae_48385d5cc84d/test_tstorage.py#L34"
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/5c7583f98c6eb7b291a2e38c4bf2e3a93ea9d91c/tests/tmp/tmptest_5cabc4aa_4634_453a_b7f8_fcecc7c21b66/test_tstorage.py#L34"
         },
         "config" : {
             "blobSchedule" : {
@@ -37,6 +42,127 @@
         },
         "post" : {
             "Cancun" : [
+                {
+                    "hash" : "0x279e3bf2d03c837e9a61ab1ca23bd938ec83dd5e29bcd171e7ee2b44bd95fd97",
+                    "indexes" : {
+                        "data" : 0,
+                        "gas" : 0,
+                        "value" : 0
+                    },
+                    "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x00",
+                            "code" : "0x60005c60005560015c60015560025c6002557001000000000000000000000000000000005c700100000000000000000000000000000000557fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff5c7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff55",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x01b438",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x3635c9adc5de9a51f0",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
+                    "txbytes" : "0xf860800a830f4240940000000000000000000000000000000000001000808026a07b0cbd2d85800843e73b1a917828915aaaf49021e4c7896ecc4fcc460e070cf5a071bda31b1d867df266f75bd3fb2efd3ac4aef1b574d092593346940024f69c9a"
+                }
+            ]
+        },
+        "pre" : {
+            "0x0000000000000000000000000000000000001000" : {
+                "balance" : "0x00",
+                "code" : "0x60005c60005560015c60015560025c6002557001000000000000000000000000000000005c700100000000000000000000000000000000557fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff5c7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff55",
+                "nonce" : "0x01",
+                "storage" : {
+                    "0x00" : "0x01",
+                    "0x01" : "0x01",
+                    "0x0100000000000000000000000000000000" : "0x01",
+                    "0x02" : "0x01",
+                    "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff" : "0x01"
+                }
+            },
+            "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                "balance" : "0x3635c9adc5dea00000",
+                "code" : "0x",
+                "nonce" : "0x00",
+                "storage" : {
+                }
+            }
+        },
+        "transaction" : {
+            "data" : [
+                "0x"
+            ],
+            "gasLimit" : [
+                "0x0f4240"
+            ],
+            "gasPrice" : "0x0a",
+            "nonce" : "0x00",
+            "secretKey" : "0x45a915e4d060149eb4365960e6a7a45f334393093061116b197e3240065ff2d8",
+            "sender" : "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b",
+            "to" : "0x0000000000000000000000000000000000001000",
+            "value" : [
+                "0x00"
+            ]
+        }
+    },
+    "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tstorage.py::test_transient_storage_unset_values[fork_Prague-state_test]" : {
+        "_info" : {
+            "comment" : "`execution-spec-tests` generated test",
+            "description" : "Test function documentation:\n\n    Test that tload returns zero for unset values. Loading an arbitrary value is\n    0 at beginning of transaction: TLOAD(x) is 0.\n\n    Based on [ethereum/tests/.../01_tloadBeginningTxnFiller.yml](https://github.com/ethereum/tests/blob/9b00b68593f5869eb51a6659e1cc983e875e616b/src/EIPTestsFiller/StateTests/stEIP1153-transientStorage/01_tloadBeginningTxnFiller.yml)\",",
+            "eels-resolution" : {
+                "branch" : "devnets/prague/6",
+                "commit" : "a25a8ab3a2989b15baac19eb327325e442342a60",
+                "git-url" : "https://github.com/ethereum/execution-specs.git"
+            },
+            "filling-rpc-server" : "evmone-t8n 0.14.0",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.e0777df7.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.5",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "6db1ced7c21e61925a6a757bed2efdc4bbf0ab4405e918258b6d0ac2f2bc4ad6",
+            "hash" : "0xe3528ebb9b7286d3272b33434085a9d8bae557d486e8e7556b1b2295e99d81e1",
+            "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
+            "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
+            "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip1153_tstore/test_tstorage.py",
+            "sourceHash" : "f2b3728af39c3318ae757eaa1436259dec2c4ddd55e05c06e2eb403725a72af1",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/5c7583f98c6eb7b291a2e38c4bf2e3a93ea9d91c/tests/tmp/tmptest_5cabc4aa_4634_453a_b7f8_fcecc7c21b66/test_tstorage.py#L34"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                },
+                "Prague" : {
+                    "baseFeeUpdateFraction" : "0x4c6964",
+                    "max" : "0x09",
+                    "target" : "0x06"
+                }
+            },
+            "chainid" : "0x01"
+        },
+        "env" : {
+            "currentBaseFee" : "0x07",
+            "currentCoinbase" : "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba",
+            "currentDifficulty" : "0x00",
+            "currentExcessBlobGas" : "0x00",
+            "currentGasLimit" : "0x016345785d8a0000",
+            "currentNumber" : "0x01",
+            "currentRandom" : "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "currentTimestamp" : "0x03e8"
+        },
+        "post" : {
+            "Prague" : [
                 {
                     "hash" : "0x279e3bf2d03c837e9a61ab1ca23bd938ec83dd5e29bcd171e7ee2b44bd95fd97",
                     "indexes" : {
