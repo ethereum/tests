@@ -2,13 +2,28 @@
     "OverflowGasMakeMoney" : {
         "_info" : {
             "comment" : "Apparently this test was testing theoretical issue occur when tr gas > block gas limit overflow. no longer the case",
-            "filling-rpc-server" : "evm version 1.14.4-unstable-3d8028a6-20240513",
-            "filling-tool-version" : "retesteth-0.3.2-cancun+commit.2ab0208e.Linux.g++",
-            "generatedTestHash" : "ce9c4271e66e29d8fd0325314dffb0fec7a36e719f0941b7f896dc9f6c6821de",
-            "lllcversion" : "Version: 0.5.14-develop.2023.7.11+commit.c58ab2c6.mod.Linux.g++",
-            "solidity" : "Version: 0.8.21+commit.d9974bed.Linux.g++",
+            "filling-rpc-server" : "evmone-t8n 0.13.0-82+commit.880ac821",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.882513e6.Linux.g++",
+            "generatedTestHash" : "1b130a4b33fec9b3a410e674b6ca56223591754fef2212ff8ca9b1745e98c71b",
+            "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
+            "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/stSpecialTest/OverflowGasMakeMoneyFiller.json",
             "sourceHash" : "4d8b92dae029fbcf2cb7a39ff83a96d460e4982e0087edc6954db3c6f0e57086"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                },
+                "Prague" : {
+                    "baseFeeUpdateFraction" : "0x4c6964",
+                    "max" : "0x09",
+                    "target" : "0x06"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x0a",
@@ -30,6 +45,50 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x04febffffffffcdd57",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0xb94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x01f5",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        }
+                    },
+                    "txbytes" : "0xf867800a887fe000000000000194b94f5374fce5edbc8e2a8697c15331677e6ebf0b8201f5801ba0f7572e7fd17016b64871834a291b874693988b0174142605b92de3668e8d9764a035ca59b9aa504d925da65fa750b430370bd68d89f459405601db74eadb0d1075"
+                }
+            ],
+            "Prague" : [
+                {
+                    "hash" : "0x398c6edef867518daa0d7149504aafb67b53ffc893bab1826c0001b5ad470f32",
+                    "indexes" : {
+                        "data" : 0,
+                        "gas" : 0,
+                        "value" : 0
+                    },
+                    "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x04febffffffffcdd57",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        },
+                        "0xb94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x01f5",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0xf867800a887fe000000000000194b94f5374fce5edbc8e2a8697c15331677e6ebf0b8201f5801ba0f7572e7fd17016b64871834a291b874693988b0174142605b92de3668e8d9764a035ca59b9aa504d925da65fa750b430370bd68d89f459405601db74eadb0d1075"
                 }
             ]
