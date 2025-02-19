@@ -2,11 +2,11 @@
     "suicideThenCheckBalance_Cancun" : {
         "_info" : {
             "comment" : "[2:22:42] Vitalik Buterin: another one is: (i) self-destruct contract C, (ii) in the next transaction, send 1 wei to C, (iii) verify that C's balance is 1 wei. [2:23:01] Vitalik Buterin: the reason this is important now is that with EIP98, clients will be switching to not 'committing' their caches to the trie at the end of every tx. [2:23:18] Vitalik Buterin: and this means that selfdestruct has to be handled more carefully than before. [2:23:49] Vitalik Buterin: pyethereum screwed it up and it had to get fixed, though pyethereum's bug had to do with pre-spurious dragon 'existence' so it may not be relevant now.",
-            "filling-rpc-server" : "evm version 1.14.4-unstable-3d8028a6-20240513",
-            "filling-tool-version" : "retesteth-0.3.2-cancun+commit.cae6bc33.Linux.g++",
-            "generatedTestHash" : "af88c31c79a63b8f0f137aeb4e66e298f21fde0681b25f10eb67056ef13a206a",
-            "lllcversion" : "Version: 0.5.14-develop.2023.7.11+commit.c58ab2c6.mod.Linux.g++",
-            "solidity" : "Version: 0.8.21+commit.d9974bed.Linux.g++",
+            "filling-rpc-server" : "evmone-t8n 0.14.0",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.e0777df7.Linux.g++",
+            "generatedTestHash" : "5cbb72e155a39022b2dad9f6bbc2219f9500da842f7b01002c95bf220fbf03e7",
+            "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
+            "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/BlockchainTestsFiller/ValidBlocks/bcStateTests/suicideThenCheckBalanceFiller.json",
             "sourceHash" : "9b174df848e2609798e59dd50d4f6a9d4fa99311f62e7b113ae90755d08ff78a"
         },
@@ -70,6 +70,17 @@
                 ]
             }
         ],
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01",
+            "network" : "Cancun"
+        },
         "genesisBlockHeader" : {
             "baseFeePerGas" : "0x10",
             "blobGasUsed" : "0x00",
@@ -144,6 +155,211 @@
             }
         },
         "pre" : {
+            "0x000f3df6d732807ef1319fb7b8bb8522d0beac02" : {
+                "balance" : "0x00",
+                "code" : "0x3373fffffffffffffffffffffffffffffffffffffffe14604d57602036146024575f5ffd5b5f35801560495762001fff810690815414603c575f5ffd5b62001fff01545f5260205ff35b5f5ffd5b62001fff42064281555f359062001fff015500",
+                "nonce" : "0x01",
+                "storage" : {
+                    "0x12e2" : "0x54c98c81"
+                }
+            },
+            "0xa3476106159f87477ad639e3ddcbb6b240efe459" : {
+                "balance" : "0x03e8",
+                "code" : "0x6000600060006000600173e3476106159f87477ad639e3ddcbb6b240efe4596101f4f15073e3476106159f87477ad639e3ddcbb6b240efe4593160015500",
+                "nonce" : "0x00",
+                "storage" : {
+                }
+            },
+            "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                "balance" : "0x02540be400",
+                "code" : "0x",
+                "nonce" : "0x00",
+                "storage" : {
+                }
+            },
+            "0xe3476106159f87477ad639e3ddcbb6b240efe459" : {
+                "balance" : "0x03e8",
+                "code" : "0x60036001556001ff00",
+                "nonce" : "0x00",
+                "storage" : {
+                }
+            }
+        },
+        "sealEngine" : "NoProof"
+    },
+    "suicideThenCheckBalance_Prague" : {
+        "_info" : {
+            "comment" : "[2:22:42] Vitalik Buterin: another one is: (i) self-destruct contract C, (ii) in the next transaction, send 1 wei to C, (iii) verify that C's balance is 1 wei. [2:23:01] Vitalik Buterin: the reason this is important now is that with EIP98, clients will be switching to not 'committing' their caches to the trie at the end of every tx. [2:23:18] Vitalik Buterin: and this means that selfdestruct has to be handled more carefully than before. [2:23:49] Vitalik Buterin: pyethereum screwed it up and it had to get fixed, though pyethereum's bug had to do with pre-spurious dragon 'existence' so it may not be relevant now.",
+            "filling-rpc-server" : "evmone-t8n 0.14.0",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.e0777df7.Linux.g++",
+            "generatedTestHash" : "1bddb7bc23f0478e2f5759d548fa665289097f7a64aaf072249d4733580976b1",
+            "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
+            "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
+            "source" : "src/BlockchainTestsFiller/ValidBlocks/bcStateTests/suicideThenCheckBalanceFiller.json",
+            "sourceHash" : "9b174df848e2609798e59dd50d4f6a9d4fa99311f62e7b113ae90755d08ff78a"
+        },
+        "blocks" : [
+            {
+                "blockHeader" : {
+                    "baseFeePerGas" : "0x0e",
+                    "blobGasUsed" : "0x00",
+                    "bloom" : "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+                    "coinbase" : "0x8888f1f195afa192cfee860698584c030f4c9db1",
+                    "difficulty" : "0x00",
+                    "excessBlobGas" : "0x00",
+                    "extraData" : "0x42",
+                    "gasLimit" : "0x2fefd8",
+                    "gasUsed" : "0x01a7fa",
+                    "hash" : "0xea0d60a16b5b85e912779d78dcab0291c4c416f20fbe4b14a1bec6bc7c72308f",
+                    "mixHash" : "0x0000000000000000000000000000000000000000000000000000000000020000",
+                    "nonce" : "0x0000000000000000",
+                    "number" : "0x01",
+                    "parentBeaconBlockRoot" : "0x0000000000000000000000000000000000000000000000000000000000000000",
+                    "parentHash" : "0xeb5d8f8ce178b6f6f2403d180e50c338baa95cce7251d0e175d52a0520d12d90",
+                    "receiptTrie" : "0x5f63458d6acc4fe715da982c6814033ec5f09c000ddf8e02d1ba15f54dde4a98",
+                    "requestsHash" : "0xe3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+                    "stateRoot" : "0x9daf396f357481ac5b7ee0fe36177b0bd3b53e2623002cda8bb940277ffcdeb8",
+                    "timestamp" : "0x54c99069",
+                    "transactionsTrie" : "0xb4797c60213da3acc3d7e2cf3cdd88e8ee2a7c1ef00de8339322a112c95a1b40",
+                    "uncleHash" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "withdrawalsRoot" : "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421"
+                },
+                "blocknumber" : "1",
+                "chainname" : "default",
+                "rlp" : "0xf9032cf9025da0eb5d8f8ce178b6f6f2403d180e50c338baa95cce7251d0e175d52a0520d12d90a01dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347948888f1f195afa192cfee860698584c030f4c9db1a09daf396f357481ac5b7ee0fe36177b0bd3b53e2623002cda8bb940277ffcdeb8a0b4797c60213da3acc3d7e2cf3cdd88e8ee2a7c1ef00de8339322a112c95a1b40a05f63458d6acc4fe715da982c6814033ec5f09c000ddf8e02d1ba15f54dde4a98b90100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000008001832fefd88301a7fa8454c9906942a000000000000000000000000000000000000000000000000000000000000200008800000000000000000ea056e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b4218080a00000000000000000000000000000000000000000000000000000000000000000a0e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855f8c8f862808203e883061a8094e3476106159f87477ad639e3ddcbb6b240efe45980801ba022d3acd62b67fefc11ef114c07f8dd4f771e2656e2bf909ea99102596239c67da011e12211e374cb3f17c7bb824af94de5ebf4eed2152dac112e4ae189add8ada2f862018203e883061a8094a3476106159f87477ad639e3ddcbb6b240efe45980801ca07f2a8eee7f055a4286e5d436e4cdb9fae9adf71879b5bf75bd954d296b720a21a00571f8943bcc1b7ccdd4ca9c04b11ec4c4e87408506623bbd1160f427674f09ac0c0",
+                "transactions" : [
+                    {
+                        "data" : "0x",
+                        "gasLimit" : "0x061a80",
+                        "gasPrice" : "0x03e8",
+                        "nonce" : "0x00",
+                        "r" : "0x22d3acd62b67fefc11ef114c07f8dd4f771e2656e2bf909ea99102596239c67d",
+                        "s" : "0x11e12211e374cb3f17c7bb824af94de5ebf4eed2152dac112e4ae189add8ada2",
+                        "sender" : "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b",
+                        "to" : "0xe3476106159f87477ad639e3ddcbb6b240efe459",
+                        "v" : "0x1b",
+                        "value" : "0x00"
+                    },
+                    {
+                        "data" : "0x",
+                        "gasLimit" : "0x061a80",
+                        "gasPrice" : "0x03e8",
+                        "nonce" : "0x01",
+                        "r" : "0x7f2a8eee7f055a4286e5d436e4cdb9fae9adf71879b5bf75bd954d296b720a21",
+                        "s" : "0x0571f8943bcc1b7ccdd4ca9c04b11ec4c4e87408506623bbd1160f427674f09a",
+                        "sender" : "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b",
+                        "to" : "0xa3476106159f87477ad639e3ddcbb6b240efe459",
+                        "v" : "0x1c",
+                        "value" : "0x00"
+                    }
+                ],
+                "uncleHeaders" : [
+                ],
+                "withdrawals" : [
+                ]
+            }
+        ],
+        "config" : {
+            "blobSchedule" : {
+                "Prague" : {
+                    "baseFeeUpdateFraction" : "0x4c6964",
+                    "max" : "0x09",
+                    "target" : "0x06"
+                }
+            },
+            "chainid" : "0x01",
+            "network" : "Prague"
+        },
+        "genesisBlockHeader" : {
+            "baseFeePerGas" : "0x10",
+            "blobGasUsed" : "0x00",
+            "bloom" : "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+            "coinbase" : "0x8888f1f195afa192cfee860698584c030f4c9db1",
+            "difficulty" : "0x00",
+            "excessBlobGas" : "0x00",
+            "extraData" : "0x42",
+            "gasLimit" : "0x2fefd8",
+            "gasUsed" : "0x00",
+            "hash" : "0xeb5d8f8ce178b6f6f2403d180e50c338baa95cce7251d0e175d52a0520d12d90",
+            "mixHash" : "0x0000000000000000000000000000000000000000000000000000000000020000",
+            "nonce" : "0x0000000000000000",
+            "number" : "0x00",
+            "parentBeaconBlockRoot" : "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "parentHash" : "0x0000000000000000000000000000000000000000000000000000000000000000",
+            "receiptTrie" : "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
+            "requestsHash" : "0xe3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "stateRoot" : "0x3be21c85a9a56ddfb8b3c57b17d2a7ac189f8c9281f9eae0d3c97f7292729eb5",
+            "timestamp" : "0x54c98c81",
+            "transactionsTrie" : "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421",
+            "uncleHash" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+            "withdrawalsRoot" : "0x56e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421"
+        },
+        "genesisRLP" : "0xf90260f9025aa00000000000000000000000000000000000000000000000000000000000000000a01dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347948888f1f195afa192cfee860698584c030f4c9db1a03be21c85a9a56ddfb8b3c57b17d2a7ac189f8c9281f9eae0d3c97f7292729eb5a056e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421a056e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421b90100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000008080832fefd8808454c98c8142a0000000000000000000000000000000000000000000000000000000000002000088000000000000000010a056e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b4218080a00000000000000000000000000000000000000000000000000000000000000000a0e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855c0c0c0",
+        "lastblockhash" : "0xea0d60a16b5b85e912779d78dcab0291c4c416f20fbe4b14a1bec6bc7c72308f",
+        "network" : "Prague",
+        "postState" : {
+            "0x0000000000000000000000000000000000000001" : {
+                "balance" : "0x03e8",
+                "code" : "0x",
+                "nonce" : "0x00",
+                "storage" : {
+                }
+            },
+            "0x0000f90827f1c53a10cb7a02335b175320002935" : {
+                "balance" : "0x00",
+                "code" : "0x3373fffffffffffffffffffffffffffffffffffffffe14604657602036036042575f35600143038111604257611fff81430311604257611fff9006545f5260205ff35b5f5ffd5b5f35611fff60014303065500",
+                "nonce" : "0x01",
+                "storage" : {
+                    "0x00" : "0xeb5d8f8ce178b6f6f2403d180e50c338baa95cce7251d0e175d52a0520d12d90"
+                }
+            },
+            "0x000f3df6d732807ef1319fb7b8bb8522d0beac02" : {
+                "balance" : "0x00",
+                "code" : "0x3373fffffffffffffffffffffffffffffffffffffffe14604d57602036146024575f5ffd5b5f35801560495762001fff810690815414603c575f5ffd5b62001fff01545f5260205ff35b5f5ffd5b62001fff42064281555f359062001fff015500",
+                "nonce" : "0x01",
+                "storage" : {
+                    "0x12e2" : "0x54c98c81",
+                    "0x16ca" : "0x54c99069"
+                }
+            },
+            "0x8888f1f195afa192cfee860698584c030f4c9db1" : {
+                "balance" : "0x0660f8e4",
+                "code" : "0x",
+                "nonce" : "0x00",
+                "storage" : {
+                }
+            },
+            "0xa3476106159f87477ad639e3ddcbb6b240efe459" : {
+                "balance" : "0x03e8",
+                "code" : "0x6000600060006000600173e3476106159f87477ad639e3ddcbb6b240efe4596101f4f15073e3476106159f87477ad639e3ddcbb6b240efe4593160015500",
+                "nonce" : "0x00",
+                "storage" : {
+                }
+            },
+            "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                "balance" : "0x024d93bb70",
+                "code" : "0x",
+                "nonce" : "0x02",
+                "storage" : {
+                }
+            },
+            "0xe3476106159f87477ad639e3ddcbb6b240efe459" : {
+                "balance" : "0x00",
+                "code" : "0x60036001556001ff00",
+                "nonce" : "0x00",
+                "storage" : {
+                    "0x01" : "0x03"
+                }
+            }
+        },
+        "pre" : {
+            "0x0000f90827f1c53a10cb7a02335b175320002935" : {
+                "balance" : "0x00",
+                "code" : "0x3373fffffffffffffffffffffffffffffffffffffffe14604657602036036042575f35600143038111604257611fff81430311604257611fff9006545f5260205ff35b5f5ffd5b5f35611fff60014303065500",
+                "nonce" : "0x01",
+                "storage" : {
+                }
+            },
             "0x000f3df6d732807ef1319fb7b8bb8522d0beac02" : {
                 "balance" : "0x00",
                 "code" : "0x3373fffffffffffffffffffffffffffffffffffffffe14604d57602036146024575f5ffd5b5f35801560495762001fff810690815414603c575f5ffd5b62001fff01545f5260205ff35b5f5ffd5b62001fff42064281555f359062001fff015500",
