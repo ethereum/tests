@@ -1,18 +1,29 @@
 {
-    "src/GeneralStateTestsFiller/Pyspecs/cancun/eip4844_blobs/test_blob_txs.py::test_blob_tx_attribute_gasprice_opcode[fork_Cancun-state_test-tx_gas_500000-opcode_GASPRICE-tx_max_fee_per_gas_100-tx_max_fee_per_blob_gas_1-tx_max_priority_fee_per_gas_0]" : {
+    "src/GeneralStateTestsFiller/Pyspecs/cancun/eip4844_blobs/test_blob_txs.py::test_blob_tx_attribute_gasprice_opcode[fork_Cancun-state_test-tx_gas_500000-opcode_GASPRICE-tx_max_fee_per_gas_100-tx_max_fee_per_blob_gas_delta_0-tx_max_priority_fee_per_gas_0]" : {
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
-            "description" : "Test function documentation:\n\n    Test GASPRICE opcode to sanity check that the blob gas fee does not affect\n    its calculation:\n\n    - No priority fee\n    - Priority fee below data fee\n    - Priority fee above data fee",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "71b507e5a30811ab1b49e47308dc56e1bd8d317e5555109354672c1695eae2f4",
-            "hash" : "0xba3d2ef306581bf421832fd2264987a735cdd0ac6aa7089fc4bc8966ff32190f",
+            "description" : "Test function documentation:\n\n    Test GASPRICE opcode to sanity check that the blob gas fee does not affect its calculation.\n\n    - No priority fee\n    - Priority fee below data fee\n    - Priority fee above data fee",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "c748a3de64c31c57007336bc4170bdf1b6a473ef9decdbcde57109e51bb49cbc",
+            "hash" : "0x6862fc2ef91f514f567521a65fef71f1cfb7bea014aa0a383f617520d5f6452e",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip4844_blobs/test_blob_txs.py",
-            "sourceHash" : "b4fd7ee5ea7b85dd3c709298b39c76968743e96f74aeb05df14ed2876ae53d9f",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_c493badb_1b5c_468b_a731_d86750ed6063/test_blob_txs.py#L1417"
+            "sourceHash" : "3cd8a5f6419d14c7bbb03936f24c140fcb1ae86a8f5d1011e2fd347a3b7e90af",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_44f577d6_0ab9_4cab_a379_8e18da0bcb3f/test_blob_txs.py#L1261"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -34,6 +45,23 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x01",
+                            "code" : "0x3a600055",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x00" : "0x07"
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x02f655d9",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0x03f886018080648307a1209400000000000000000000000000000000000010000180c001e1a0010000000000000000000000000000000000000000000000000000000000000001a01b115378bb9110dfe43b793d1ab294871cbe61353c5919875baf05ce80a24673a0467045b9f673e18ed5c7034faed60dd26537727fed42e584c8f7c8266a7ad525"
                 }
             ]
@@ -80,20 +108,31 @@
             ]
         }
     },
-    "src/GeneralStateTestsFiller/Pyspecs/cancun/eip4844_blobs/test_blob_txs.py::test_blob_tx_attribute_gasprice_opcode[fork_Cancun-state_test-tx_gas_500000-opcode_GASPRICE-tx_max_fee_per_gas_100-tx_max_fee_per_blob_gas_1-tx_max_priority_fee_per_gas_2]" : {
+    "src/GeneralStateTestsFiller/Pyspecs/cancun/eip4844_blobs/test_blob_txs.py::test_blob_tx_attribute_gasprice_opcode[fork_Cancun-state_test-tx_gas_500000-opcode_GASPRICE-tx_max_fee_per_gas_100-tx_max_fee_per_blob_gas_delta_0-tx_max_priority_fee_per_gas_2]" : {
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
-            "description" : "Test function documentation:\n\n    Test GASPRICE opcode to sanity check that the blob gas fee does not affect\n    its calculation:\n\n    - No priority fee\n    - Priority fee below data fee\n    - Priority fee above data fee",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "76c64c1ef7f157125a073f4c431a03b9353f529b9b99b3e8ff4e25bc7cadb06e",
-            "hash" : "0x18ee38113f88e1703a85cfe85249a62ff840968d6d6c00f94f86688c12181dc2",
+            "description" : "Test function documentation:\n\n    Test GASPRICE opcode to sanity check that the blob gas fee does not affect its calculation.\n\n    - No priority fee\n    - Priority fee below data fee\n    - Priority fee above data fee",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "b6d2d9f3b2772b082ca66d60a30329fb3dae794c1ffb5b6497435e48c06c7423",
+            "hash" : "0x30501469c7def3fc93ec9d688bb45d22abfdafd69020c2635380b68dc0610ad3",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip4844_blobs/test_blob_txs.py",
-            "sourceHash" : "b4fd7ee5ea7b85dd3c709298b39c76968743e96f74aeb05df14ed2876ae53d9f",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_c493badb_1b5c_468b_a731_d86750ed6063/test_blob_txs.py#L1417"
+            "sourceHash" : "3cd8a5f6419d14c7bbb03936f24c140fcb1ae86a8f5d1011e2fd347a3b7e90af",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_44f577d6_0ab9_4cab_a379_8e18da0bcb3f/test_blob_txs.py#L1261"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -115,6 +154,30 @@
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x01",
+                            "code" : "0x3a600055",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x00" : "0x09"
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x0150c2",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x02f50517",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
                     "txbytes" : "0x03f886018002648307a1209400000000000000000000000000000000000010000180c001e1a0010000000000000000000000000000000000000000000000000000000000000080a06e3dbe9f326ae4a3d6c3dcd494b98febdab0f61e9dfa5de0d10e36321bd9c8f8a0567701baf0eb5fcf781f37e37715af959450f7e1b07cedb75a2c733a73630bb6"
                 }
             ]
@@ -161,20 +224,31 @@
             ]
         }
     },
-    "src/GeneralStateTestsFiller/Pyspecs/cancun/eip4844_blobs/test_blob_txs.py::test_blob_tx_attribute_gasprice_opcode[fork_Cancun-state_test-tx_gas_500000-opcode_GASPRICE-tx_max_fee_per_gas_100-tx_max_fee_per_blob_gas_3-tx_max_priority_fee_per_gas_0]" : {
+    "src/GeneralStateTestsFiller/Pyspecs/cancun/eip4844_blobs/test_blob_txs.py::test_blob_tx_attribute_gasprice_opcode[fork_Cancun-state_test-tx_gas_500000-opcode_GASPRICE-tx_max_fee_per_gas_100-tx_max_fee_per_blob_gas_delta_1-tx_max_priority_fee_per_gas_0]" : {
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
-            "description" : "Test function documentation:\n\n    Test GASPRICE opcode to sanity check that the blob gas fee does not affect\n    its calculation:\n\n    - No priority fee\n    - Priority fee below data fee\n    - Priority fee above data fee",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "23fffc2b2d8b63fd64be0e0a658e985d502e0774e8723c3aaa6b8891dde69bda",
-            "hash" : "0x98dc857cd0e3ca1688a7f808f894c5f4b16a3a9d66e24c9078a0a731d1bceb94",
+            "description" : "Test function documentation:\n\n    Test GASPRICE opcode to sanity check that the blob gas fee does not affect its calculation.\n\n    - No priority fee\n    - Priority fee below data fee\n    - Priority fee above data fee",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "e98d93e517499f09d61478d373f41cc48162bec49430d8ce397f61297f870ed4",
+            "hash" : "0xde274f95ad8fb6bb164ef7409ac1c63ba8ce60cfa5c9405b20069acf832a010a",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip4844_blobs/test_blob_txs.py",
-            "sourceHash" : "b4fd7ee5ea7b85dd3c709298b39c76968743e96f74aeb05df14ed2876ae53d9f",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_c493badb_1b5c_468b_a731_d86750ed6063/test_blob_txs.py#L1417"
+            "sourceHash" : "3cd8a5f6419d14c7bbb03936f24c140fcb1ae86a8f5d1011e2fd347a3b7e90af",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_44f577d6_0ab9_4cab_a379_8e18da0bcb3f/test_blob_txs.py#L1261"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -189,14 +263,31 @@
         "post" : {
             "Cancun" : [
                 {
-                    "hash" : "0x6e6109e1a495518765fc98004c9e66cc6dcd3edf5d00349bb03c6593fb47b099",
+                    "hash" : "0x961c5d51a1255fc4dd001386e0e3c8b10771fde48afea1ac073e7174fa3c2a87",
                     "indexes" : {
                         "data" : 0,
                         "gas" : 0,
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
-                    "txbytes" : "0x03f886018080648307a1209400000000000000000000000000000000000010000180c003e1a0010000000000000000000000000000000000000000000000000000000000000001a0fed9d2c9778ae4d088b097b1c9c8bcf3cac90c92bf0ff0e15369ff854ec7a142a03dcc1ee432d1ebef46b299ab284daaaf494f41b30f330a10b7754f0433e3ddbb"
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x01",
+                            "code" : "0x3a600055",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x00" : "0x07"
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x02f855d9",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
+                    "txbytes" : "0x03f886018080648307a1209400000000000000000000000000000000000010000180c002e1a0010000000000000000000000000000000000000000000000000000000000000001a01ae50cac8f6d98d74d943c180fa1b6fc3ce04e34622e0e5744504c064067947ba04dd0b0079d96db5724fb7b087db68865ecb105e93be209cce92e274741f92a53"
                 }
             ]
         },
@@ -209,7 +300,7 @@
                 }
             },
             "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-                "balance" : "0x0300f081",
+                "balance" : "0x02fef081",
                 "code" : "0x",
                 "nonce" : "0x00",
                 "storage" : {
@@ -230,7 +321,7 @@
             "gasLimit" : [
                 "0x07a120"
             ],
-            "maxFeePerBlobGas" : "0x03",
+            "maxFeePerBlobGas" : "0x02",
             "maxFeePerGas" : "0x64",
             "maxPriorityFeePerGas" : "0x00",
             "nonce" : "0x00",
@@ -242,20 +333,31 @@
             ]
         }
     },
-    "src/GeneralStateTestsFiller/Pyspecs/cancun/eip4844_blobs/test_blob_txs.py::test_blob_tx_attribute_gasprice_opcode[fork_Cancun-state_test-tx_gas_500000-opcode_GASPRICE-tx_max_fee_per_gas_100-tx_max_fee_per_blob_gas_3-tx_max_priority_fee_per_gas_2]" : {
+    "src/GeneralStateTestsFiller/Pyspecs/cancun/eip4844_blobs/test_blob_txs.py::test_blob_tx_attribute_gasprice_opcode[fork_Cancun-state_test-tx_gas_500000-opcode_GASPRICE-tx_max_fee_per_gas_100-tx_max_fee_per_blob_gas_delta_1-tx_max_priority_fee_per_gas_2]" : {
         "_info" : {
             "comment" : "`execution-spec-tests` generated test",
-            "description" : "Test function documentation:\n\n    Test GASPRICE opcode to sanity check that the blob gas fee does not affect\n    its calculation:\n\n    - No priority fee\n    - Priority fee below data fee\n    - Priority fee above data fee",
-            "filling-rpc-server" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.be61b546.Linux.g++",
-            "filling-transition-tool" : "evm version 1.14.12-unstable-65e5ca7d-20241004",
-            "generatedTestHash" : "f9d7b8402873424bf8e28b6f3022936577cb15c33295f07b5460273f87981193",
-            "hash" : "0xbde95d33683736abae3e4249d9d28563c30fb0d971bf19d3ffccbf1d9be72f59",
+            "description" : "Test function documentation:\n\n    Test GASPRICE opcode to sanity check that the blob gas fee does not affect its calculation.\n\n    - No priority fee\n    - Priority fee below data fee\n    - Priority fee above data fee",
+            "filling-rpc-server" : "ethereum-spec-evm 0.1.0 (Git commit: 0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b)",
+            "filling-tool-version" : "retesteth-0.3.2-legacy+commit.3ee677f4.Linux.g++",
+            "filling-transition-tool" : "ethereum-spec-evm-resolver 0.0.1",
+            "fixture_format" : "state_test",
+            "generatedTestHash" : "fd79742c35b5185106ead66383351f64e34863e5832f4fe7738316231b841f1c",
+            "hash" : "0x13c1d2e87d7a27e05704fa08df36a798a07c33d19910af801ea9b46b2a9981f5",
             "lllcversion" : "Version: 0.5.14-develop.2024.11.5+commit.b2b86751.mod.Linux.g++",
             "solidity" : "Version: 0.8.24+commit.e11b9ed9.Linux.g++",
             "source" : "src/GeneralStateTestsFiller/Pyspecs/cancun/eip4844_blobs/test_blob_txs.py",
-            "sourceHash" : "b4fd7ee5ea7b85dd3c709298b39c76968743e96f74aeb05df14ed2876ae53d9f",
-            "url" : "https://github.com/ethereum/execution-spec-tests/blob/f89d09ba99a3dc680dd9410f0b8a7f8d8fc36714/tests/tmp/tmptest_c493badb_1b5c_468b_a731_d86750ed6063/test_blob_txs.py#L1417"
+            "sourceHash" : "3cd8a5f6419d14c7bbb03936f24c140fcb1ae86a8f5d1011e2fd347a3b7e90af",
+            "url" : "https://github.com/ethereum/execution-spec-tests/blob/0d5cdb0351ff34b8ef13c4c07d9fa19999c73f0b/tests/tmp/tmptest_44f577d6_0ab9_4cab_a379_8e18da0bcb3f/test_blob_txs.py#L1261"
+        },
+        "config" : {
+            "blobSchedule" : {
+                "Cancun" : {
+                    "baseFeeUpdateFraction" : "0x32f0ed",
+                    "max" : "0x06",
+                    "target" : "0x03"
+                }
+            },
+            "chainid" : "0x01"
         },
         "env" : {
             "currentBaseFee" : "0x07",
@@ -270,14 +372,38 @@
         "post" : {
             "Cancun" : [
                 {
-                    "hash" : "0x9930a6b0e209a3c51419edca39cfcf059f9df9361132e096e21b22b6ca22ce04",
+                    "hash" : "0xe0abeed5136cf68fab84ae0134d70d6b6c458b22b30b57f88b6fa053a094e4c9",
                     "indexes" : {
                         "data" : 0,
                         "gas" : 0,
                         "value" : 0
                     },
                     "logs" : "0x1dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347",
-                    "txbytes" : "0x03f886018002648307a1209400000000000000000000000000000000000010000180c003e1a0010000000000000000000000000000000000000000000000000000000000000080a097ff93cbba63c07ac04f421a8b28154bac307573929ae3e3371d386fe8596db4a06de7894aefa73a78005007d8eb9481aac521bc9d7e849cd55ab53f45a2697ed2"
+                    "state" : {
+                        "0x0000000000000000000000000000000000001000" : {
+                            "balance" : "0x01",
+                            "code" : "0x3a600055",
+                            "nonce" : "0x01",
+                            "storage" : {
+                                "0x00" : "0x09"
+                            }
+                        },
+                        "0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba" : {
+                            "balance" : "0x0150c2",
+                            "code" : "0x",
+                            "nonce" : "0x00",
+                            "storage" : {
+                            }
+                        },
+                        "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
+                            "balance" : "0x02f70517",
+                            "code" : "0x",
+                            "nonce" : "0x01",
+                            "storage" : {
+                            }
+                        }
+                    },
+                    "txbytes" : "0x03f886018002648307a1209400000000000000000000000000000000000010000180c002e1a0010000000000000000000000000000000000000000000000000000000000000001a052bc3d9a94af1ae7ebc69f74124bda8f8557501bd86523d680ced431581faa56a05b7c2f22ba16b18dce028785b64005634f0e3b0a9e44993cc88faf8683cb2214"
                 }
             ]
         },
@@ -290,7 +416,7 @@
                 }
             },
             "0xa94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-                "balance" : "0x0300f081",
+                "balance" : "0x02fef081",
                 "code" : "0x",
                 "nonce" : "0x00",
                 "storage" : {
@@ -311,7 +437,7 @@
             "gasLimit" : [
                 "0x07a120"
             ],
-            "maxFeePerBlobGas" : "0x03",
+            "maxFeePerBlobGas" : "0x02",
             "maxFeePerGas" : "0x64",
             "maxPriorityFeePerGas" : "0x02",
             "nonce" : "0x00",

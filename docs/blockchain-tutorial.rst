@@ -54,7 +54,7 @@ This section explains **05_simpleTxFiller.yml**. I am only going to document
 the things in which it is different from state transition tests.
 
 State transition tests take their 
-`genesis block <https://arvanaghi.com/blog/explaining-the-genesis-block-in-ethereum/>`_
+`genesis block <https://ethereum.org/en/glossary/#genesis-block>`_
 from the client configuration (or, failing that, from the default client configuration)
 in **retesteth**. In blockchain tests the values may be relevant to the test, so
 you specify them directly.

@@ -11,7 +11,7 @@ difficulty (post-merge)       not used anymore (value zero), identifies a block 
 gasLimit                      limit of gas usage per block
 gasUsed                       gas used by this block
 mixHash and nonce (pre-merge) used by the `proof of work algorithm 
-                              <https://en.wikipedia.org/wiki/Ethash>`_, ignored by **retesteth**.
+                              <https://web.archive.org/web/20201217082731/https://en.wikipedia.org/wiki/Ethash>`_, ignored by **retesteth**.
 mixHash (post-merge)          block random value, has to be 32 bytes (it is not automatically zero padded)
 number                        number of ancestor blocks
 parentHash                    hash of previous block
@@ -31,6 +31,4 @@ baseFeePerGas                 The base fee per gas required of transactions
                               `EIP 1559 <https://github.com/ethereum/EIPs/blob/master/EIPS/eip-1559.md>`_)
 ============================= ========================
 
-`You can read more about the block header fields here
-<https://medium.com/@derao512/ethereum-under-the-hood-part-7-blocks-7f223510ba10>`_.
 

@@ -57,7 +57,7 @@ def eip_enabled(fork: Fork) -> bool:
 
 @pytest.fixture
 def env() -> Environment:
-    """Default environment for all tests."""
+    """Environment for all tests."""
     return Environment(
         fee_recipient="0x2adc25665018aa1fe0e6bc666dac8fc2697ff9ba",
     )
@@ -128,7 +128,7 @@ def selfdestruct_code(
     sendall_recipient_addresses: List[Address],
 ) -> Bytecode:
     """
-    Creates the default self-destructing bytecode,
+    Create default self-destructing bytecode,
     which can be modified by each test if necessary.
     """
     return selfdestruct_code_preset(sendall_recipient_addresses=sendall_recipient_addresses)
@@ -237,7 +237,7 @@ def test_create_selfdestruct_same_tx(
 
     # Create a dict to record the expected final balances
     sendall_final_balances = dict(
-        zip(sendall_recipient_addresses, [0] * len(sendall_recipient_addresses))
+        zip(sendall_recipient_addresses, [0] * len(sendall_recipient_addresses), strict=False)
     )
     selfdestruct_contract_current_balance = selfdestruct_contract_initial_balance
 
@@ -693,18 +693,18 @@ def test_selfdestruct_pre_existing(
         - Different send-all recipient addresses: single, multiple, including self
         - Different initial balances for the self-destructing contract
     """
-    selfdestruct_contract_address = pre.deploy_contract(selfdestruct_code)
+    selfdestruct_contract_address = pre.deploy_contract(
+        selfdestruct_code, balance=selfdestruct_contract_initial_balance
+    )
     entry_code_storage = Storage()
 
     for i in range(len(sendall_recipient_addresses)):
         if sendall_recipient_addresses[i] == SELF_ADDRESS:
             sendall_recipient_addresses[i] = selfdestruct_contract_address
-    if selfdestruct_contract_initial_balance > 0:
-        pre.fund_address(selfdestruct_contract_address, selfdestruct_contract_initial_balance)
 
     # Create a dict to record the expected final balances
     sendall_final_balances = dict(
-        zip(sendall_recipient_addresses, [0] * len(sendall_recipient_addresses))
+        zip(sendall_recipient_addresses, [0] * len(sendall_recipient_addresses), strict=False)
     )
     selfdestruct_contract_current_balance = selfdestruct_contract_initial_balance
 
@@ -1225,7 +1225,7 @@ def test_create_selfdestruct_same_tx_increased_nonce(
 
     # Create a dict to record the expected final balances
     sendall_final_balances = dict(
-        zip(sendall_recipient_addresses, [0] * len(sendall_recipient_addresses))
+        zip(sendall_recipient_addresses, [0] * len(sendall_recipient_addresses), strict=False)
     )
     selfdestruct_contract_current_balance = selfdestruct_contract_initial_balance
 

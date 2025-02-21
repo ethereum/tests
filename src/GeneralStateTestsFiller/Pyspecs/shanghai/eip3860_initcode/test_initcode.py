@@ -7,10 +7,14 @@ note: Tests ported from:
     - [ethereum/tests/pull/1012](https://github.com/ethereum/tests/pull/990)
 """
 
+from typing import List
+
 import pytest
 
+from ethereum_test_forks import Fork
 from ethereum_test_tools import (
     EOA,
+    AccessList,
     Account,
     Address,
     Alloc,
@@ -20,20 +24,13 @@ from ethereum_test_tools import (
     StateTestFiller,
     Transaction,
     TransactionException,
-    compute_create2_address,
+    TransactionReceipt,
+    ceiling_division,
     compute_create_address,
 )
 from ethereum_test_tools.vm.opcode import Opcodes as Op
 
-from .helpers import (
-    INITCODE_RESULTING_DEPLOYED_CODE,
-    calculate_create2_word_cost,
-    calculate_create_tx_execution_cost,
-    calculate_create_tx_intrinsic_cost,
-    calculate_initcode_word_cost,
-    get_create_id,
-    get_initcode_name,
-)
+from .helpers import INITCODE_RESULTING_DEPLOYED_CODE, get_create_id, get_initcode_name
 from .spec import Spec, ref_spec_3860
 
 REFERENCE_SPEC_GIT_PATH = ref_spec_3860.git_path
@@ -201,7 +198,7 @@ def test_contract_creating_tx(
 class TestContractCreationGasUsage:
     """
     Tests the following cases that verify the gas cost behavior of a
-    contract creating transaction:
+    contract creating transaction.
 
     1. Test with exact intrinsic gas minus one, contract create fails
         and tx is invalid.
@@ -215,18 +212,39 @@ class TestContractCreationGasUsage:
     """
 
     @pytest.fixture
-    def exact_intrinsic_gas(self, initcode: Initcode) -> int:
+    def tx_access_list(self) -> List[AccessList]:
         """
-        Calculates the intrinsic tx gas cost.
+        On EIP-7623, we need to use an access list to raise the intrinsic gas cost to
+        be above the floor data cost.
         """
-        return calculate_create_tx_intrinsic_cost(initcode)
+        return [AccessList(address=Address(i), storage_keys=[]) for i in range(1, 478)]
 
     @pytest.fixture
-    def exact_execution_gas(self, initcode: Initcode) -> int:
-        """
-        Calculates the total execution gas cost.
-        """
-        return calculate_create_tx_execution_cost(initcode)
+    def exact_intrinsic_gas(
+        self, fork: Fork, initcode: Initcode, tx_access_list: List[AccessList]
+    ) -> int:
+        """Calculate the intrinsic tx gas cost."""
+        tx_intrinsic_gas_cost_calculator = fork.transaction_intrinsic_cost_calculator()
+        assert tx_intrinsic_gas_cost_calculator(
+            calldata=initcode,
+            contract_creation=True,
+            access_list=tx_access_list,
+        ) == tx_intrinsic_gas_cost_calculator(
+            calldata=initcode,
+            contract_creation=True,
+            access_list=tx_access_list,
+            return_cost_deducted_prior_execution=True,
+        )
+        return tx_intrinsic_gas_cost_calculator(
+            calldata=initcode,
+            contract_creation=True,
+            access_list=tx_access_list,
+        )
+
+    @pytest.fixture
+    def exact_execution_gas(self, exact_intrinsic_gas: int, initcode: Initcode) -> int:
+        """Calculate total execution gas cost."""
+        return exact_intrinsic_gas + initcode.deployment_gas + initcode.execution_gas
 
     @pytest.fixture
     def tx_error(self, gas_test_case: str) -> TransactionException | None:
@@ -244,6 +262,7 @@ class TestContractCreationGasUsage:
         sender: EOA,
         initcode: Initcode,
         gas_test_case: str,
+        tx_access_list: List[AccessList],
         tx_error: TransactionException | None,
         exact_intrinsic_gas: int,
         exact_execution_gas: int,
@@ -267,11 +286,14 @@ class TestContractCreationGasUsage:
         return Transaction(
             nonce=0,
             to=None,
+            access_list=tx_access_list,
             data=initcode,
             gas_limit=gas_limit,
             gas_price=10,
             error=tx_error,
             sender=sender,
+            # The entire gas limit is expected to be consumed.
+            expected_receipt=TransactionReceipt(gas_used=gas_limit),
         )
 
     @pytest.fixture
@@ -357,16 +379,12 @@ class TestCreateInitcode:
 
     @pytest.fixture
     def create2_salt(self) -> int:
-        """
-        Salt value used for CREATE2 contract creation.
-        """
+        """Salt value used for CREATE2 contract creation."""
         return 0xDEADBEEF
 
     @pytest.fixture
     def creator_code(self, opcode: Op, create2_salt: int) -> Bytecode:
-        """
-        Generates the code for the creator contract which performs the CREATE/CREATE2 operation.
-        """
+        """Generate code for the creator contract which performs the CREATE/CREATE2 operation."""
         return (
             Op.CALLDATACOPY(0, 0, Op.CALLDATASIZE)
             + Op.GAS
@@ -386,9 +404,7 @@ class TestCreateInitcode:
 
     @pytest.fixture
     def creator_contract_address(self, pre: Alloc, creator_code: Bytecode) -> Address:
-        """
-        Returns the address of creator contract.
-        """
+        """Return address of creator contract."""
         return pre.deploy_contract(creator_code)
 
     @pytest.fixture
@@ -399,43 +415,30 @@ class TestCreateInitcode:
         initcode: Initcode,
         creator_contract_address: Address,
     ) -> Address:
-        """
-        Calculates the address of the contract created by the creator contract.
-        """
-        if opcode == Op.CREATE:
-            return compute_create_address(
-                address=creator_contract_address,
-                nonce=1,
-            )
-        if opcode == Op.CREATE2:
-            return compute_create2_address(
-                address=creator_contract_address,
-                salt=create2_salt,
-                initcode=initcode,
-            )
-        raise Exception("Invalid opcode for generator")
+        """Calculate address of the contract created by the creator contract."""
+        return compute_create_address(
+            address=creator_contract_address,
+            nonce=1,
+            salt=create2_salt,
+            initcode=initcode,
+            opcode=opcode,
+        )
 
     @pytest.fixture
     def caller_code(self, creator_contract_address: Address) -> Bytecode:
-        """
-        Generates the code for the caller contract that calls the creator contract.
-        """
+        """Generate code for the caller contract that calls the creator contract."""
         return Op.CALLDATACOPY(0, 0, Op.CALLDATASIZE) + Op.SSTORE(
             Op.CALL(5000000, creator_contract_address, 0, 0, Op.CALLDATASIZE, 0, 0), 1
         )
 
     @pytest.fixture
     def caller_contract_address(self, pre: Alloc, caller_code: Bytecode) -> Address:
-        """
-        Returns the address of the caller contract.
-        """
+        """Return address of the caller contract."""
         return pre.deploy_contract(caller_code)
 
     @pytest.fixture
     def tx(self, caller_contract_address: Address, initcode: Initcode, sender: EOA) -> Transaction:
-        """
-        Generates the transaction that executes the caller contract.
-        """
+        """Generate transaction that executes the caller contract."""
         return Transaction(
             nonce=0,
             to=caller_contract_address,
@@ -446,23 +449,38 @@ class TestCreateInitcode:
         )
 
     @pytest.fixture
-    def contract_creation_gas_cost(self, opcode: Op) -> int:
-        """
-        Calculates the gas cost of the contract creation operation.
-        """
-        CREATE_CONTRACT_BASE_GAS = 32000
-        GAS_OPCODE_GAS = 2
-        PUSH_DUP_OPCODE_GAS = 3
-        CALLDATASIZE_OPCODE_GAS = 2
+    def contract_creation_gas_cost(self, fork: Fork, opcode: Op) -> int:
+        """Calculate gas cost of the contract creation operation."""
+        gas_costs = fork.gas_costs()
+
+        create_contract_base_gas = gas_costs.G_CREATE
+        gas_opcode_gas = gas_costs.G_BASE
+        push_dup_opcode_gas = gas_costs.G_VERY_LOW
+        calldatasize_opcode_gas = gas_costs.G_BASE
         contract_creation_gas_usage = (
-            CREATE_CONTRACT_BASE_GAS
-            + GAS_OPCODE_GAS
-            + (2 * PUSH_DUP_OPCODE_GAS)
-            + CALLDATASIZE_OPCODE_GAS
+            create_contract_base_gas
+            + gas_opcode_gas
+            + (2 * push_dup_opcode_gas)
+            + calldatasize_opcode_gas
         )
         if opcode == Op.CREATE2:  # Extra push operation
-            contract_creation_gas_usage += PUSH_DUP_OPCODE_GAS
+            contract_creation_gas_usage += push_dup_opcode_gas
         return contract_creation_gas_usage
+
+    @pytest.fixture
+    def initcode_word_cost(self, fork: Fork, initcode: Initcode) -> int:
+        """Calculate gas cost charged for the initcode length."""
+        gas_costs = fork.gas_costs()
+        return ceiling_division(len(initcode), 32) * gas_costs.G_INITCODE_WORD
+
+    @pytest.fixture
+    def create2_word_cost(self, opcode: Op, fork: Fork, initcode: Initcode) -> int:
+        """Calculate gas cost charged for the initcode length."""
+        if opcode == Op.CREATE:
+            return 0
+
+        gas_costs = fork.gas_costs()
+        return ceiling_division(len(initcode), 32) * gas_costs.G_KECCAK_256_WORD
 
     def test_create_opcode_initcode(
         self,
@@ -471,12 +489,13 @@ class TestCreateInitcode:
         pre: Alloc,
         post: Alloc,
         tx: Transaction,
-        opcode: Op,
         initcode: Initcode,
         caller_contract_address: Address,
         creator_contract_address: Address,
         created_contract_address: Address,
         contract_creation_gas_cost: int,
+        initcode_word_cost: int,
+        create2_word_cost: int,
     ):
         """
         Test contract creation via the CREATE/CREATE2 opcodes that have an
@@ -508,14 +527,13 @@ class TestCreateInitcode:
             # The code is only deployed if the length check succeeds
             expected_gas_usage += initcode.deployment_gas
 
-            if opcode == Op.CREATE2:
-                # CREATE2 hashing cost should only be deducted if the initcode
-                # does not exceed the max length
-                expected_gas_usage += calculate_create2_word_cost(len(initcode))
+            # CREATE2 hashing cost should only be deducted if the initcode
+            # does not exceed the max length
+            expected_gas_usage += create2_word_cost
 
             # Initcode word cost is only deducted if the length check
             # succeeds
-            expected_gas_usage += calculate_initcode_word_cost(len(initcode))
+            expected_gas_usage += initcode_word_cost
 
             # Call returns 1 as valid initcode length s[0]==1 && s[1]==1
             post[caller_contract_address] = Account(

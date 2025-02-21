@@ -12,7 +12,7 @@ Transaction Test
 
 Location `/TransactionTests <https://github.com/ethereum/tests/tree/develop/TransactionTests>`_
 
-Describes a complete transaction and its `RLP <https://github.com/ethereum/wiki/wiki/RLP>`_ representation using the .json file.
+Describes a complete transaction and its `RLP <https://ethereum.org/en/developers/docs/data-structures-and-encoding/#recursive-length-prefix>`_ representation using the .json file.
 
 Test Implementation
 ===================

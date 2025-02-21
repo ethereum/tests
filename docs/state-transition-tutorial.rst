@@ -106,7 +106,7 @@ These are the relevant addresses and their initial states before the test starts
 This is a contract address. As such it has code, which can be in one of three languages:
 
 #. Ethereum virtual machine (EVM) machine language 
-#. `Lisp Like Language (lll) <http://blog.syrinx.net/the-resurrection-of-lll-part-1/>`_. 
+#. `Lisp Like Language (lll) <https://web.archive.org/web/20220331080211/https://blog.syrinx.net/the-resurrection-of-lll-part-1/>`_. 
    One
    advantage of lll is that `it lets us use Ethereum Assembler almost directly
    <https://lll-docs.readthedocs.io/en/latest/lll_reference.html#evm-opcodes>`_.
@@ -404,9 +404,7 @@ In contrast to LLL, Solidity handles function signatures and parameters for you.
 Therefore, the transaction data has to conform to the 
 `Application Binary Interface (ABI) 
 <https://solidity.readthedocs.io/en/v0.7.0/abi-spec.html>`_. You do not have to calculate the 
-data on your own, just start it with **:abi** followed by the `function signature 
-<https://medium.com/@piyopiyo/how-to-get-ethereum-encoded-function-signatures-1449e171c840>`_
-and then the parameters. These parameters can be bool, uint, single dimension arrays, and strings.
+data on your own, just start it with **:abi** followed by the function signature and then the parameters. These parameters can be bool, uint, single dimension arrays, and strings.
 
 .. note::
    ABI support is a new feature, and may be buggy. Please report any bugs you
@@ -448,7 +446,7 @@ These are examples of the values that **:abi** can have.
   
   * A string which could be any size
 
-* **:abi g(uint256[][],string[]) [[1,2],[3],[4,5] ["one","two","three"]**: 
+* **:abi g(uint256[][],string[]) [[1,2],[3],[4,5]] ["one","two","three"]**: 
   Call **g** with two parameters, a two dimensional array of uint256 values and
   an array of strings.
 
