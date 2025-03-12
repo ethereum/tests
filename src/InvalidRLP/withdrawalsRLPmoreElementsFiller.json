@@ -1,7 +1,7 @@
 {
-    "withdrawalsIndexBounds" : {
+    "withdrawalsRLPmoreElements" : {
         "_info" : {
-            "comment" : "Test vectors BSHB0001, BSHB0002, BSHB0003"
+            "comment" : "Test vectors BSHB0013"
         },
         "genesisBlockHeader" : {
             "bloom" : "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
@@ -34,47 +34,19 @@
         },
         "blocks" : [
             {
-                "//comment" : "BSHB0001 withdrawals index upper bound is fine",
-                "blocknumber" : "1",
-                "transactions" : [],
-                "uncleHeaders" : [],
-                "withdrawals" : [
-                    {
-                        "index": "0xffffffffffffffff",
-                        "validatorIndex": "0",
-                        "address": "0xc94f5374fce5edbc8e2a8697c15331677e6ebf0b",
-                        "amount": "10000"
-                    }
-                ]
-            },
-            {
-                "//comment" : "BSHB0002 test vector, index is 2**64",
-                "blocknumber" : "2",
-                "blockHeader" : {
-                    "number" : "2"
-                },
+                "//comment" : "BSHB0013 test vector, withdrawals has 5 elements",
+                "rlp" : "0xf9023bf90219a0151934ad9b654c50197f37018ee5ee9bb922dec0a1b5e24a6d679cb111cdb107a01dcc4de8dec75d7aab85b567b6ccd41ad312451b948a7413f0a142fd40d49347942adc25665018aa1fe0e6bc666dac8fc2697ff9baa0dad70d831356887ab3660f050fd8a0ef77a80376a11d4c9c4d55b73f37de05cba056e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421a056e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b421b90100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000008001887fffffffffffffff8082079e42a056e81f171bcc55a6ff8345e692c0f86e5b48e01b996cadc001622fb5e363b4218800000000000000000aa02ae12d2df0d0293c941683db5bb9886ab93e44170b10eb80b6824a57f9c86f1ec0c0dcdb808094c94f5374fce5edbc8e2a8697c15331677e6ebf0b8203e880",
                 "expectException" : {
-                    ">=Cancun" : "BlockException.RLP_STRUCTURES_ENCODING|BlockException.RLP_INVALID_FIELD_OVERFLOW_64"
-                },
-                "transactions" : [],
-                "uncleHeaders" : [],
-                "withdrawals" : [
-                    {
-                        "//comment" : "test vector BSHB0002",
-                        "index": "0x10000000000000000",
-                        "validatorIndex": "0",
-                        "address": "0xc94f5374fce5edbc8e2a8697c15331677e6ebf0b",
-                        "amount": "10000"
-                    }
-                ]
+                    ">=Shanghai" : "RLP_BODY_UNMARSHAL_ERROR"
+                }
             }
         ],
         "expect" : [
             {
-                "network" : [">=Cancun"],
+                "network" : [">=Shanghai"],
                 "result" : {
                     "0xc94f5374fce5edbc8e2a8697c15331677e6ebf0b" : {
-                        "balance" : "10000000000000"
+                        "shouldnotexist" : "1"
                     }
                 }
             }
