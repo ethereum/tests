@@ -14,12 +14,18 @@ blobhashListBounds7:
 
   expect:
     - network:
-        - '>=Cancun'
+        - '>=Prague'
+      result:
+        095e7baea6a6c7c4c2dfeb977efac326af552d87:
+          balance: 1000000000000100000
+         
+    - network:
+        - 'Cancun'
       result:
         095e7baea6a6c7c4c2dfeb977efac326af552d87:
           balance: 1000000000000000000
       expectException:
-         ">=Cancun": "TransactionException.TYPE_3_TX_BLOB_COUNT_EXCEEDED"
+         "Cancun": "TransactionException.TYPE_3_TX_BLOB_COUNT_EXCEEDED"
 
 
 

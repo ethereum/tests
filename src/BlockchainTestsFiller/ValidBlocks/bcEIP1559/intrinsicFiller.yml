@@ -2247,7 +2247,7 @@ intrinsic:
 
   expect:
   - network:
-    - ">=Cancun"
+    - "Cancun"
     result: 
      0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC:
         storage:
@@ -2266,6 +2266,87 @@ intrinsic:
           7:   21528  # No access list, 33 non-zero byte ,  0 zero bytes 
           8:   21132  # No access list,  0 non-zero bytes, 33 zero bytes
           9:   21660  # No access list, 33 non-zero byte , 33 zero bytes 
+          10:  23400  # No call data, 1 addr, 0 storage cells
+          11:  23416  # 1 addr, 0 storage cells,  1 non-zero byte ,  0 zero bytes 
+          12:  23432  # 1 addr, 0 storage cells,  2 non-zero bytes,  0 zero bytes
+          13:  23420  # 1 addr, 0 storage cells,  1 non-zero byte ,  1 zero bytes 
+          14:  23408  # 1 addr, 0 storage cells,  0 non-zero bytes,  2 zero bytes
+          15:  23896  # 1 addr, 0 storage cells, 31 non-zero bytes,  0 zero bytes 
+          16:  23912  # 1 addr, 0 storage cells, 32 non-zero bytes,  0 zero bytes
+          17:  23928  # 1 addr, 0 storage cells, 33 non-zero byte ,  0 zero bytes 
+          18:  23532  # 1 addr, 0 storage cells,  0 non-zero bytes, 33 zero bytes
+          19:  24060  # 1 addr, 0 storage cells, 33 non-zero byte , 33 zero bytes 
+
+
+          20:  25300  # No call data, 1 addr, 1 storage cell
+          21:  25316  # 1 addr, 1 storage cell,  1 non-zero byte ,  0 zero bytes 
+          22:  25332  # 1 addr, 1 storage cell,  2 non-zero bytes,  0 zero bytes
+          23:  25320  # 1 addr, 1 storage cell,  1 non-zero byte ,  1 zero bytes 
+          24:  25308  # 1 addr, 1 storage cell,  0 non-zero bytes,  2 zero bytes
+          25:  25796  # 1 addr, 1 storage cell, 31 non-zero bytes,  0 zero bytes 
+          26:  25812  # 1 addr, 1 storage cell, 32 non-zero bytes,  0 zero bytes
+          27:  25828  # 1 addr, 1 storage cell, 33 non-zero byte ,  0 zero bytes 
+          28:  25432  # 1 addr, 1 storage cell,  0 non-zero bytes, 33 zero bytes
+          29:  25960  # 1 addr, 1 storage cell, 33 non-zero byte , 33 zero bytes 
+
+
+          30:  27200  # No call data, 1 addr, 2 storage cells
+          31:  27216  # 1 addr, 2 storage cells,  1 non-zero byte ,  0 zero bytes 
+          32:  27232  # 1 addr, 2 storage cells,  2 non-zero bytes,  0 zero bytes
+          33:  27220  # 1 addr, 2 storage cells,  1 non-zero byte ,  1 zero bytes 
+          34:  27208  # 1 addr, 2 storage cells,  0 non-zero bytes,  2 zero bytes
+          35:  27696  # 1 addr, 2 storage cells, 31 non-zero bytes,  0 zero bytes 
+          36:  27712  # 1 addr, 2 storage cells, 32 non-zero bytes,  0 zero bytes
+          37:  27728  # 1 addr, 2 storage cells, 33 non-zero byte ,  0 zero bytes 
+          38:  27332  # 1 addr, 2 storage cells,  0 non-zero bytes, 33 zero bytes
+          39:  27860  # 1 addr, 2 storage cells, 33 non-zero byte , 33 zero bytes 
+
+
+
+          40:  29600  # No call data, 2 addr, 2 storage cells
+          41:  29616  # 2 addr, 2 storage cells,  1 non-zero byte ,  0 zero bytes 
+          42:  29632  # 2 addr, 2 storage cells,  2 non-zero bytes,  0 zero bytes
+          43:  29620  # 2 addr, 2 storage cells,  1 non-zero byte ,  1 zero bytes 
+          44:  29608  # 2 addr, 2 storage cells,  0 non-zero bytes,  2 zero bytes
+          45:  30096  # 2 addr, 2 storage cells, 31 non-zero bytes,  0 zero bytes 
+          46:  30112  # 2 addr, 2 storage cells, 32 non-zero bytes,  0 zero bytes
+          47:  30128  # 2 addr, 2 storage cells, 33 non-zero byte ,  0 zero bytes 
+          48:  29732  # 2 addr, 2 storage cells,  0 non-zero bytes, 33 zero bytes
+          49:  30260  # 2 addr, 2 storage cells, 33 non-zero byte , 33 zero bytes 
+
+
+
+          50: 129600  # No call data, 12 addr, 42 storage cells
+          51: 129616  # 12 addr, 42 storage cells,  1 non-zero byte ,  0 zero bytes 
+          52: 129632  # 12 addr, 42 storage cells,  2 non-zero bytes,  0 zero bytes
+          53: 129620  # 12 addr, 42 storage cells,  1 non-zero byte ,  1 zero bytes 
+          54: 129608  # 12 addr, 42 storage cells,  0 non-zero bytes,  2 zero bytes
+          55: 130096  # 12 addr, 42 storage cells, 31 non-zero bytes,  0 zero bytes 
+          56: 130112  # 12 addr, 42 storage cells, 32 non-zero bytes,  0 zero bytes
+          57: 130128  # 12 addr, 42 storage cells, 33 non-zero byte ,  0 zero bytes 
+          58: 129732  # 12 addr, 42 storage cells,  0 non-zero bytes, 33 zero bytes
+          59: 130260  # 12 addr, 42 storage cells, 33 non-zero byte , 33 zero bytes 
+          
+  - network:
+    - ">=Prague"
+    result: 
+     0xCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC:
+        storage:
+          1: 1000 # (the base fee in block 1)
+
+
+     0x1111111111111111111111111111111111111111:
+        storage:
+          0:   21000  # No call data, no access list
+          1:   21040  # No access list,  1 non-zero byte ,  0 zero bytes 
+          2:   21080  # No access list,  2 non-zero bytes,  0 zero bytes
+          3:   21050  # No access list,  1 non-zero byte ,  1 zero bytes 
+          4:   21020  # No access list,  0 non-zero bytes,  2 zero bytes
+          5:   22240  # No access list, 31 non-zero bytes,  0 zero bytes 
+          6:   22280  # No access list, 32 non-zero bytes,  0 zero bytes
+          7:   22320  # No access list, 33 non-zero byte ,  0 zero bytes 
+          8:   21330  # No access list,  0 non-zero bytes, 33 zero bytes
+          9:   22650  # No access list, 33 non-zero byte , 33 zero bytes 
           10:  23400  # No call data, 1 addr, 0 storage cells
           11:  23416  # 1 addr, 0 storage cells,  1 non-zero byte ,  0 zero bytes 
           12:  23432  # 1 addr, 0 storage cells,  2 non-zero bytes,  0 zero bytes
