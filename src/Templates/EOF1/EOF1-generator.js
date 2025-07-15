@@ -90,7 +90,7 @@ const encode = hash => {
 // Create a valid code section in an EOF1 structure
 const createEOF1Code = (codeList, maxStacks) => {
     // Start from a valid copy
-    eof1 = cloneEof1Good()
+    let eof1 = cloneEof1Good()
 
     // Size of sections
     eof1.sections[0].size = codeList.length*4
